@@ -4,6 +4,8 @@ using Avalonia;
 using Avalonia.Markup;
 using Avalonia.Media;
 using Avalonia.BattleCity.Model;
+using Avalonia.Data.Converters;
+
 
 namespace Avalonia.BattleCity.Infrastructure
 {

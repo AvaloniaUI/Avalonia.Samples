@@ -6,6 +6,8 @@ using System.Reflection;
 using Avalonia.Markup;
 using Avalonia.Media.Imaging;
 using Avalonia.BattleCity.Model;
+using Avalonia.Data.Converters;
+
 
 namespace Avalonia.BattleCity.Infrastructure
 {

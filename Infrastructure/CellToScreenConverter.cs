@@ -2,6 +2,7 @@
 using System.Globalization;
 using Avalonia.Markup;
 using Avalonia.BattleCity.Model;
+using Avalonia.Data.Converters;
 
 namespace Avalonia.BattleCity.Infrastructure
 {

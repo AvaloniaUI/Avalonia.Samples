@@ -13,15 +13,23 @@ namespace Avalonia.BattleCity
 
         static void Main(string[] args)
         {
-            AppBuilder.Configure<App>()
-                .UsePlatformDetect()
+            BuildAvaloniaApp()
                 .Start<MainWindow>(() =>
                 {
+
                     var field = new GameField();
                     var game = new Game(field);
                     game.Start();
                     return field;
+
+
                 });
         }
+
+        static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+            .UsePlatformDetect();
+
+
     }
 }
+
