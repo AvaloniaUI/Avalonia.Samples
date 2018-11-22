@@ -32,7 +32,10 @@ namespace Avalonia.BattleCity.Model
                 if (!tank.IsMoving)
                 {
                     if (!tank.SetTarget(tank.Facing))
-                        tank.SetTarget((Facing) Random.Next(4));
+                    {
+                        if (!tank.SetTarget((Facing) Random.Next(4)))
+                            tank.SetTarget(null);
+                    }
                 }
 
             foreach(var obj in _field.GameObjects.OfType<MovingGameObject>())

@@ -91,7 +91,8 @@ namespace Avalonia.BattleCity.Model
             return CellLocation.WithX(CellLocation.X + 1);
         }
 
-        public bool SetTarget(Facing facing) => SetTarget(GetTileAtDirection(facing));
+        public bool SetTarget(Facing? facing) =>
+            SetTarget(facing.HasValue ? GetTileAtDirection(facing.Value) : CellLocation);
 
         Facing GetDirection(CellLocation current, CellLocation target)
         {

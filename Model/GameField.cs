@@ -60,7 +60,7 @@ namespace Avalonia.BattleCity.Model
                 }
             }
             GameObjects.Add(
-                Player = new Player(this, new CellLocation(width/2, height/2), Facing.North));
+                Player = new Player(this, new CellLocation(width/2, height/2), Facing.East));
 
             for (var c = 0; c < 10;)
             {
