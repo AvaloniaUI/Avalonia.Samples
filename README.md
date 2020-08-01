@@ -5,7 +5,7 @@ Port of https://github.com/hacklex/PekaCity to Avalonia.
 
 ![Demo](demo.gif?raw=true "Demo")
 
-##What is this? Why?
+## What is this? Why?
 
 Well, this is a stub for a 2D game. The purpose of the project was to demonstrate that one can write a 2D game in AvaloniaUI without writing any rendering code.
 ## Features
