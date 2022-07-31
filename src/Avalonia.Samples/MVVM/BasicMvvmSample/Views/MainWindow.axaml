@@ -10,18 +10,34 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="BasicMvvmSample">
 
-    <Design.DataContext>
+	<!--We are using Compiled bindings. This is not mandotory but makes life easier. Read more about it here:-->
+	<!-- https://docs.avaloniaui.net/docs/data-binding/compiledbindings -->
+
+	<Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
 	<TabControl>
+		
+		<!-- Our Simplie ViewModel-->
 		<TabItem Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
-				<TextBlock Classes="h1" Text="{Binding Greeting}" />
+				<TextBlock Text="{Binding Greeting}" 
+						   FontWeight="Bold" />
 			</StackPanel>
 		</TabItem>
-	</TabControl>
 
+		<!--Using Reactive UI-->
+		<TabItem Header="Reactive UI" >
+			<StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
+				<TextBlock>Enter your Name:</TextBlock>
+				<TextBox Text="{Binding Name}" />
+				<TextBlock Text="{Binding Greeting}"
+						   FontWeight="Bold" />
+			</StackPanel>
+		</TabItem>
+		
+	</TabControl>
 </Window>
