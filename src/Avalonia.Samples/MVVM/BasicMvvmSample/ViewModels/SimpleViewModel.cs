@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace BasicMvvmSample.ViewModels
             }
             set
             {
-                // We only want to update the UI if the Name actually changed
+                // We only want to update the UI if the Name actually changed, so we check if the value is actually new
                 if (_Name != value)
                 {
                     // 1. update our backing field
