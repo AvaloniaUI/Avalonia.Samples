@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BasicMvvmSample.ViewModels
 {
     // Instead of implementing "INotifyPropertyChanged" on our own we use "ReachtiveObject" as 
-    // our base class. Read more about it here: 
+    // our base class. Read more about it here: https://www.reactiveui.net
     public class ReactiveViewModel : ReactiveObject
     {
         public ReactiveViewModel()

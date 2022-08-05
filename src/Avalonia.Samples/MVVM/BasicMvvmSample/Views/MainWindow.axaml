@@ -19,23 +19,25 @@
 
 	<TabControl>
 		
-		<!-- Our Simplie ViewModel-->
+		<!-- Our Simplie ViewModel -->
 		<TabItem Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
-				<TextBlock Text="{Binding Greeting}" 
-						   FontWeight="Bold" />
+				<TextBox Text="{Binding Greeting, Mode=OneWay}"
+						 IsReadOnly="True"
+						 FontWeight="Bold" />
 			</StackPanel>
 		</TabItem>
 
-		<!--Using Reactive UI-->
+		<!-- Our ReactiveViewModel -->
 		<TabItem Header="Reactive UI" >
 			<StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
-				<TextBlock Text="{Binding Greeting}"
-						   FontWeight="Bold" />
+				<TextBox Text="{Binding Greeting, Mode=OneWay}"
+						 IsReadOnly="True"
+						 FontWeight="Bold" />
 			</StackPanel>
 		</TabItem>
 		

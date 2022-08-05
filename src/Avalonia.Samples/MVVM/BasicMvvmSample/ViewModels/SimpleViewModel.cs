@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasicMvvmSample.ViewModels
 {
@@ -12,7 +7,7 @@ namespace BasicMvvmSample.ViewModels
     // in order to notify the View if any of our properties changed.
     public class SimpleViewModel : INotifyPropertyChanged
     {
-        // This event is implemented by "INotifyPropertyChanged" and all we need to inform 
+        // This event is implemented by "INotifyPropertyChanged" and is all we need to inform 
         // our View about changes.
         public event PropertyChangedEventHandler? PropertyChanged;
 
