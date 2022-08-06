@@ -1,6 +1,6 @@
 # Basic MVVM Sample
 
-This sample will show you, how you can use the `MVVM`-pattern to receive and process text input by the user. Our sample App will have one `TextBox` where the users can enter their name and one `TextBlock` where we will send some personal greetings.
+This sample will show you how you can use the `MVVM`-pattern to receive and process text input by the user. Our sample App will have one `TextBox` where the users can enter their name and another `TextBox` where we will present some personal greetings.
 
 **Difficulty**
 
@@ -19,11 +19,11 @@ Please make sure you have setup your IDE according to the [[docs](https://docs.a
 
 We will use the `MVVM`-pattern in this sample. `MVVM` is short for **M**odel - **V**iew - **V**iew**M**odel and describes a software architectural pattern that will split the code base into three pieces:
 
-- **Model**: The `Model` will store and handle your data. The model doesn't know your `View` or `ViewModel`.
-- **View**: The `View` can be thought as the UserInterface and will interact with your `ViewModel`. 
+- **Model**: The `Model` will store and handle your data. The model doesn't know anything about your `View` or `ViewModel`.
+- **View**: The `View` can be thought as the **U**ser **I**nterface and will interact with your `ViewModel`. 
 - **ViewModel**: The `ViewModel` can be seen as a mediator between the `View` and the `Model`. It will know about the `Model` and is known by the `View`, but it doesn't know anything about the `View`. It can transform and convert the data provided by the `Model`, if needed.
 
-This pattern helps us to focus on either of the three parts. If we get new values in our `Model`, the `ViewModel` will notify the `View` about it and the `View` can update itself. We don't have to do it manually. If you want to read more about it, here is a collection of useful links:
+The `MVVM` pattern helps us to focus on either of the three parts. If we get new values in our `Model`, the `ViewModel` will notify the `View` about it and the `View` can update itself. We don't have to do it manually. If you want to read more about it, here is a collection of useful links:
 
 - <a href="https://docs.avaloniaui.net/guides/basics/mvvm" target="_blank">[Avalonia Docs]</a>
 - <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel" target="_blank">[Wikipedia]</a>
@@ -32,7 +32,7 @@ This pattern helps us to focus on either of the three parts. If we get new value
 
 ### INotifyPropertyChanged
 
-Our view needs any way to know when a property has changed and the view should update itself. To achieve this there is an interface called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
+Our `View` needs any way to know when a property has changed and the `View` should update itself. To achieve this there is an interface called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
 
 More: <a href="https://docs.microsoft.com/en-US/dotnet/api/system.componentmodel.inotifypropertychanged?view=net-6.0" target="_blank">[Microsoft Docs]</a>
 
@@ -136,7 +136,7 @@ public string Greeting
         }
         else
         {
-            // else Greet the User.
+            // else greet the User.
             return $"Hello {Name}";
         }
     }
@@ -145,7 +145,7 @@ public string Greeting
 
 ### Step 3: Add SimpleViewModel to MainWindowViewModel
 
-Our view will only consist of one [[`Window`](https://docs.avaloniaui.net/docs/controls/window)] called `MainWindow`. Its [[`DataContext`](https://docs.avaloniaui.net/docs/data-binding/the-datacontext)] is the class `MainWindowViewModel` which was added by the template. We will just add an instance of our `SimpleViewModel` to it: 
+Our view will only consist of one [[`Window`](https://docs.avaloniaui.net/docs/controls/window)] called `MainWindow`. Its [[`DataContext`](https://docs.avaloniaui.net/docs/data-binding/the-datacontext)] is the class `MainWindowViewModel` which was already added by the template. We will just add an instance of our `SimpleViewModel` to it: 
 
 ```cs
 // Add our SimpleViewModel.
@@ -180,9 +180,9 @@ We enable [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/co
 
 #### Add the Content to MainWindow
 
-Or `View` will be build using [[`TextBoxes`](https://docs.avaloniaui.net/docs/controls/textbox)]. One for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [[`Panel`](https://docs.avaloniaui.net/docs/layout)]. We will choose a [[`StackPanel`](https://docs.avaloniaui.net/docs/controls/stackpanel)], but you can use any other Panel as well. 
+Or `View` will be build using two [[`TextBoxes`](https://docs.avaloniaui.net/docs/controls/textbox)]. One for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [[`Panel`](https://docs.avaloniaui.net/docs/layout)]. We will choose a [[`StackPanel`](https://docs.avaloniaui.net/docs/controls/stackpanel)], but you can use any other `Panel` as well. 
 
-The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/data-binding/bindings)] to our `SimpleViewModel`. As the DataContext is inherited from the parent control, our `TextBoxes`  will have the same `DataContext`. Therefor we can just bind `TextBox.Text` to `Name` and `Greeting` respectively: 
+The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/data-binding/bindings)] to our `SimpleViewModel`. As the DataContext is inherited from the parent control, our `TextBoxes` will have the same `DataContext`. Therefor we can just bind `TextBox.Text` to `Name` and `Greeting` respectively: 
 
 ```xml
 <Window xmlns="https://github.com/avaloniaui"
@@ -223,11 +223,11 @@ In your IDE hit `Debug [F5]`. You should see the following result:
 
 ## Solution 2 : Using ReactiveUI
 
-We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. If you create a new "Avalonia MVVM Project", you will have already [[ReactiveUI](https://www.reactiveui.net)] installed. So let's see how we can use ReactiveUI to achieve the same sample as above.
+We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. If you create a new "Avalonia MVVM Project", you will have  [[ReactiveUI](https://www.reactiveui.net)] installed by default. So let's see how we can use ReactiveUI to achieve the same sample as above.
 
 ### Step 1: Create ReactiveViewModel
 
-Again we start by adding a new class called "ReactiveViewModel" into the `ViewModels` folder. This time we will use `ReactiveObject` as our base class. This class already implements `INotifyPropertyChanged`, so we don't need to implement it again.
+Again we start by adding a new class called "ReactiveViewModel" into the `ViewModels` folder. This time we will use `ReactiveObject` as our base class. This base class already implements `INotifyPropertyChanged`, so we don't need to implement it again.
 
 ```cs
 using ReactiveUI;
@@ -275,11 +275,11 @@ public ReactiveViewModel()
 }
 ```
 
-To explain the above code in short: `WhenAnyValue` will listen to changes of the property specified in the lambda. In `Subscribe` we define what should happen if the value changed. In our case, we want to `RaisePropertyChanged` for `Greeting`.
+To explain the above code in short: `WhenAnyValue` will listen to changes of the property specified in the lambda. In `Subscribe` we define what should happen if the value has changed. In our case, we want to `RaisePropertyChanged` for `Greeting`.
 
 ### Step 3: Add ReactiveViewModel to MainWindowViewModel
 
-similar to how we added `SimpleViewModel`
+This is similar to how we added `SimpleViewModel`:
 
 ```cs
 // Add our RactiveViewModel
