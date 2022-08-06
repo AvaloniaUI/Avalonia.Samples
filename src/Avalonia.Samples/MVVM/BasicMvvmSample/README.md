@@ -2,11 +2,11 @@
 
 This sample will show you how you can use the `MVVM`-pattern to receive and process text input by the user. Our sample App will have one `TextBox` where the users can enter their name and another `TextBox` where we will present some personal greetings.
 
-**Difficulty**
+### Difficulty
 
 :hatching_chick: Beginner :hatching_chick:
 
-**Buzz-Words**
+### Buzz-Words
 
 MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
 
