@@ -32,35 +32,52 @@ The `MVVM` pattern helps us to focus on either of the three parts. If we get new
 
 ### INotifyPropertyChanged
 
-Our `View` needs any way to know when a property has changed and the `View` should update itself. To achieve this there is an interface called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
+C# uses `Properties` to read, write, or compute the value of a private `Fields`.  C# uses `Interfaces` to define a contract that `Classes` can satisfy by providing an implementation for the members defined in the `Interface`.
+- More on Properties: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties" target="_blank">[Microsoft Docs]</a>
+- More on Fields: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields" target="_blank">[Microsoft Docs]</a>
+- More on Interfaces: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface" target="_blank">[Microsoft Docs]</a>
+- More on Classes: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/class" target="_blank">[Microsoft Docs]</a>
+
+Our `View` needs a way to know when a `Property` and that the `View` should update itself. To achieve this there is an `Interface` called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
 
 More: <a href="https://docs.microsoft.com/en-US/dotnet/api/system.componentmodel.inotifypropertychanged?view=net-6.0" target="_blank">[Microsoft Docs]</a>
 
 ### Bindings
 
-We need a way to connect the properties of our controls (like the `Text`-property of a `TextBox`) with our properties in the the `ViewModel`. Luckily we have  [[`Bindings`](https://docs.avaloniaui.net/docs/data-binding/bindings)] which will do this for us. The `Binding` will update the the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`. 
+Avalonia uses `Controls` to represent functional components of a GUI Layout.  Example `Controls` include [[`ScrollBar`](https://docs.avaloniaui.net/docs/controls/scrollbar)], [[`Button`](https://docs.avaloniaui.net/docs/controls/button)], and [[`TextBox`](https://docs.avaloniaui.net/docs/controls/textbox)]. `Properties` (like the `Text`-property of a `TextBox`) describe and allow interation with the `Controls`.
 
+We need a way to connect the `Properties` of our controls with the `Properties` in our `ViewModel`. Luckily we have  [[`Bindings`](https://docs.avaloniaui.net/docs/data-binding/bindings)] which will do this for us. The `Binding` will update the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`.
 
 ### Create a new Project
 
-Create a new "Avalonia MVVM Application" Project either via `File ► New Project ► Avalonia MVVM Project`:
+Create a new Avalonia MVVM Application using one of the following procedures, depending on your preferred development environment.
 
-![New Project dialog in Visual Studio](_docs/NewProject.png)
+#### Microsoft Visual Studio
 
-Or via command line: 
+Create a new "Avalonia MVVM Application" Project via `File ► New Project ► Avalonia MVVM Project`:
+
+![New Project dialog in Microsoft Visual Studio](_docs/NewProjectVS.png)
+
+### JetBrains Rider
+
+Create a new "Avalonia .NET Core MVVM App" Project via `File ► New... ► Avalonia .NET Core MVVM App`:
+
+![New Project dialog in JetBrains Rider](_docs/NewProjectRider.png)
+
+### Command Line
 
 ```txt
 dotnet new avalonia.mvvm -o BasicMvvmSample
 cd BasicMvvmSample
 ```
 
-## Solution 1 : Implement INotifyPropertyChanged on our own
+## Approach 1 : Implement INotifyPropertyChanged on our own
 
 In this sample we will show you how you can implement and use the interface `INotifyPropertyChanged` on your own. 
 
 ### Step 1: Create SimpleViewModel
 
-In our project structure we have a folder called `ViewModels`. We will add a new class called "SimpleViewModel" there. This class should implement `INotifyPropertyChanged` like shown below: 
+In our project structure we have a folder called `ViewModels`. The `ViewModels` act as an intermediary between the `View` and the `Model`. Add a new class called "SimpleViewModel" there. This class should implement `INotifyPropertyChanged` as shown below: 
 
 ```cs
 // Remember to add this to your usings 
@@ -79,7 +96,7 @@ namespace BasicMvvmSample.ViewModels
 }
 ```
 
-For convenience we will now add a method to our class, which will raise the event for us. We need to provide the name of the property which has changed. If we add `[CallerMemberName]` to the method argument, the compiler will add the property name for us. 
+For convenience we will now add a method to our class, which will raise the event for us. We need to provide the name of the property which has changed. If we add `[CallerMemberName]` to the method argument, the compiler will add the property name for us. Add the `using` statement to the top of `SimpleViewModel.cs` and the method inside the `SimpleViewModel` class.
 
 ```cs
 // Remember to add this to your usings
@@ -95,7 +112,7 @@ private void RaisePropertyChanged([CallerMemberName] string? propertyName = null
 
 ### Step 2: Add Properties to our ViewModel
 
-We want the user to be able to enter their name. This text will later be used to greet the user. So let's add the properties `Name` and `Greeting` to our `ViewModel`:
+We want the user to be able to enter their name. This text will later be used to greet the user. So let's add the properties `Name` and `Greeting` to our `ViewModel`.  Add the following code inside the `SimpleViewModel` class.
 
 ```cs
 private string? _Name; // This is our backing field for Name
@@ -145,7 +162,7 @@ public string Greeting
 
 ### Step 3: Add SimpleViewModel to MainWindowViewModel
 
-Our view will only consist of one [[`Window`](https://docs.avaloniaui.net/docs/controls/window)] called `MainWindow`. Its [[`DataContext`](https://docs.avaloniaui.net/docs/data-binding/the-datacontext)] is the class `MainWindowViewModel` which was already added by the template. We will just add an instance of our `SimpleViewModel` to it: 
+Remember that the `View` implements the User Interface. Our view will only consist of one [[`Window`](https://docs.avaloniaui.net/docs/controls/window)] called `MainWindow`. Its [[`DataContext`](https://docs.avaloniaui.net/docs/data-binding/the-datacontext)], which describes the default location where controls should look values when binding, is the class `MainWindowViewModel` which was already added by the template when we first created our project. We will just add an instance of our `SimpleViewModel` to it. Add the following code to the `MainWindowViewlModel` class in `MainWindowViewModel.cs`.
 
 ```cs
 // Add our SimpleViewModel.
@@ -155,13 +172,11 @@ public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
 
 ### Step 4: Setup the View 
 
-Now we can start with the UI layout. Our View will be written in [[`XAML`](https://docs.avaloniaui.net/guides/basics/introduction-to-xaml)]. 
+Now we can start with the UI layout. Our View will be written in [[`XAML`](https://docs.avaloniaui.net/guides/basics/introduction-to-xaml)] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
 
-#### Enable Compiled Bindings
+#### Setup the Window
 
-> Note: This step is optional, but highly recommended.
-
-We enable [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/compiledbindings)] in our `Window` by adding `x:DataType` and `x:CompileBindings` to the root node. This has many benefits such as better performance and better debugging experience. 
+Replace the content of `MainWindow.axaml` with the following code.
 
 ```xml
 <Window xmlns="https://github.com/avaloniaui"
@@ -178,11 +193,13 @@ We enable [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/co
 </Window>
 ```
 
+Note that the lines `x:CompileBindings="True"` and `x:DataType="vm:MainWindowViewModel"` enables [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/compiledbindings)] in our `Window`. `CompiledBindings` has many benefits such as better performance and a better debugging experience. 
+
 #### Add the Content to MainWindow
 
-Or `View` will be build using two [[`TextBoxes`](https://docs.avaloniaui.net/docs/controls/textbox)]. One for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [[`Panel`](https://docs.avaloniaui.net/docs/layout)]. We will choose a [[`StackPanel`](https://docs.avaloniaui.net/docs/controls/stackpanel)], but you can use any other `Panel` as well. 
+Our `View` will be built using two [[`TextBoxes`](https://docs.avaloniaui.net/docs/controls/textbox)]: one for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [[`Panel`](https://docs.avaloniaui.net/docs/layout)]. We will choose a [[`StackPanel`](https://docs.avaloniaui.net/docs/controls/stackpanel)], but you can use any other `Panel` variant to give you greater control over the layout. 
 
-The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/data-binding/bindings)] to our `SimpleViewModel`. As the DataContext is inherited from the parent control, our `TextBoxes` will have the same `DataContext`. Therefor we can just bind `TextBox.Text` to `Name` and `Greeting` respectively: 
+The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/data-binding/bindings)] to our `SimpleViewModel`. As the `DataContext` is inherited from the parent control, our `TextBoxes` will have the same `DataContext`. Therefore we can just bind `TextBox.Text` to `Name` and `Greeting` respectively.  The complete `MainWindow.axaml` code is shown below:
 
 ```xml
 <Window xmlns="https://github.com/avaloniaui"
@@ -196,11 +213,11 @@ The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/d
         x:Class="BasicMvvmSample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="BasicMvvmSample">
-    
-    <!-- This is just used by the designer / previewer -->
+    	
+	<!-- This is just used by the designer / previewer -->
 	<Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+        	<vm:MainWindowViewModel/>
+    	</Design.DataContext>
 
 	<!-- Our Simplie ViewModel-->
 	<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
@@ -215,19 +232,19 @@ The `StackPanel`'s `DataContext` will [[bind](https://docs.avaloniaui.net/docs/d
 
 Please note that we use `Mode=OneWay` in the `Binding` for `Greeting`, because `Greeting` is read-only and the default `Mode` of `TextBox.Text` is `TwoWay`. Moreover we made this `TextBox` read-only, so the user will not be able to change the `Text` by accident. 
 
-### Step 5: See it in action
+### Step 5: See it in Action
 
-In your IDE hit `Debug [F5]`. You should see the following result: 
+In your IDE hit `Run` or `Debug`. You should see the following result: 
 
 ![Result](_docs/result.png)
 
-## Solution 2 : Using ReactiveUI
+## Approach 2 : Using ReactiveUI
 
-We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. If you create a new "Avalonia MVVM Project", you will have  [[ReactiveUI](https://www.reactiveui.net)] installed by default. So let's see how we can use ReactiveUI to achieve the same sample as above.
+We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. [[ReactiveUI](https://www.reactiveui.net)] is a popular MVVM framework designed for `.NET`.  If you create a new Avalonia MVVM Project, you will have `ReactiveUI` installed by default. So let's see how we can use `ReactiveUI` to achieve the same results as **Approach 1** above.
 
 ### Step 1: Create ReactiveViewModel
 
-Again we start by adding a new class called "ReactiveViewModel" into the `ViewModels` folder. This time we will use `ReactiveObject` as our base class. This base class already implements `INotifyPropertyChanged`, so we don't need to implement it again.
+As before, we start by adding a new class called "ReactiveViewModel" into the `ViewModels` folder. This time we will use `ReactiveObject` as our base class. This base class already implements `INotifyPropertyChanged`, so we don't need to implement it again.  Make sure your `ReactiveViewModel.cs` file looks like the code below:
 
 ```cs
 using ReactiveUI;
@@ -245,7 +262,7 @@ namespace BasicMvvmSample.ViewModels
 
 ### Step 2: Add Properties to our ViewModel
 
-Our `Name`-property has now less boilerplate code in the setter, as we can use ReactiveUI's `RaiseAndSetIfChanged` method: 
+Our `Name`-property now has less boilerplate code in the setter, as we can use ReactiveUI's `RaiseAndSetIfChanged` method. Add the code below to the `ReactiveViewModel` class in `ReactiveViewModel.cs`
 
 ```cs
 private string? _Name; // This is our backing field for Name
@@ -264,7 +281,29 @@ public string? Name
 }
 ```
 
-`Greeting` does not need to be modified and can be copied from `SimpleViewModel`. But wait, do we notify the `View` somehow that Greeting should update? Yes, we need a way to do. In ReactiveUI we can use [[`WhenAnyValue`](https://www.reactiveui.net/docs/handbook/when-any/#whenanyvalue)] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`. 
+`Greeting` does not need to be modified and can be copied from `SimpleViewModel`.  So either copy the code below or copy the same code from `SimpleViewModel` and place it in the `ReactiveViewModel` class in `ReactiveViewModel.cs`.
+
+```
+// Greeting will change based on a Name.
+public string Greeting
+{
+    get
+    {
+        if (string.IsNullOrEmpty(Name))
+        {
+            // If no Name is provided, use a default Greeting
+            return "Hello World from Avalonia.Samples";
+        }
+        else
+        {
+            // else greet the User.
+            return $"Hello {Name}";
+        }
+    }
+}
+```
+
+But wait, how do we notify the `View` that `Greeting` should update? In ReactiveUI we can use [[`WhenAnyValue`](https://www.reactiveui.net/docs/handbook/when-any/#whenanyvalue)] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`.  Add the construtor code shown below to the `ReactiveViewModel` class.
 
 ```cs
 public ReactiveViewModel()
@@ -275,11 +314,11 @@ public ReactiveViewModel()
 }
 ```
 
-To explain the above code in short: `WhenAnyValue` will listen to changes of the property specified in the lambda. In `Subscribe` we define what should happen if the value has changed. In our case, we want to `RaisePropertyChanged` for `Greeting`.
+To explain the above code in short: `WhenAnyValue` will listen to changes of the property specified in the [[lambda](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)]. In `Subscribe` we define what should happen if the value has changed. In our case, we want to `RaisePropertyChanged` for `Greeting`.
 
 ### Step 3: Add ReactiveViewModel to MainWindowViewModel
 
-This is similar to how we added `SimpleViewModel`:
+Similarly to how we added `SimpleViewModel` we can add `ReactiveViewModel` to `MainWindowViewModel`. Add the code below to the `MainWindowViewModel` class in `MainWindowViewModel.cs` 
 
 ```cs
 // Add our RactiveViewModel
@@ -288,7 +327,7 @@ public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
 
 ### Step 4: Modify the View 
 
-We can use both `ViewModels` side by side. To demonstrate this, we will wrap both `Views` in a `TabControl`. As our properties have the same names, we can just copy & paste the view we have and just need to replace the `DataContext`:
+We can use both `ViewModels` side by side. To demonstrate this, we will wrap both `Views` in a `TabControl`. As our properties have the same names, we can just copy & paste the view we have and modify the `DataContext`.  Modify `MainWindow.axaml` to add the `ReactiveUI` view and to wrap both the `ReactiveUI` and `SimpleViewModel` controls in a `TabControl` as shown below:
 
 ```xml
 <Window xmlns="https://github.com/avaloniaui"
@@ -303,13 +342,22 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
         Icon="/Assets/avalonia-logo.ico"
         Title="BasicMvvmSample">
 
-[...]
+	<!-- This is just used by the designer / previewer -->
+    	<Design.DataContext>
+        	<vm:MainWindowViewModel/>
+    	</Design.DataContext>
 
 	<TabControl>
 		
 		<!-- Our Simplie ViewModel -->
 		<TabItem Header="Simple ViewModel" >
-			[...] <!-- See Solution 1 --> 
+			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
+				<TextBlock>Enter your Name:</TextBlock>
+				<TextBox Text="{Binding Name}" />
+				<TextBox Text="{Binding Greeting, Mode=OneWay}"
+						 IsReadOnly="True"
+						 FontWeight="Bold" />
+			</StackPanel>
 		</TabItem>
 
 		<!-- Our ReactiveViewModel -->
@@ -328,13 +376,13 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
 ```
 ### Step 5: See it in action
 
-In your IDE hit `Debug [F5]`. You should see the following result: 
+In your IDE hit `Run` or `Debug`. You should see the following result: 
 
 ![Result](_docs/result_2.png)
 
-## Solution 3 : Use any other MVVM Framework
+## Approach 3 : Use any other MVVM Framework
 
-Even though Avalonia ships ReactiveUI by default, you are not tied to it. You can use it side by side with other MVVM Frameworks or can completely replace it. Among others here is a short list of famous MVVM Frameworks:
+Even though Avalonia ships ReactiveUI by default, you are not tied to it. You can use it side by side with other MVVM Frameworks or can completely replace it. Among others here is a short list of popular MVVM Frameworks for your consideration:
 
 - <a href="https://www.reactiveui.net" target="_blank">[ReactiveUI]</a>
 - <a href="https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction" target="_blank">[CommunityToolkit.MVVM]</a>
