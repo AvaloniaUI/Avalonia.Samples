@@ -30,15 +30,19 @@ The `MVVM` pattern helps us to focus on either of the three parts. If we get new
 - <a href="https://www.codeproject.com/Articles/278901/MVVM-Pattern-Made-Simple" target="_blank">[CodeProject]</a>
 - <a href="https://www.tutorialspoint.com/mvvm/index.htm" target="_blank">[tutorialspoint]</a>
 
-### INotifyPropertyChanged
+### Properties, Fields, Classes, and Interfaces
 
-C# uses `Properties` to read, write, or compute the value of a private `Fields`.  C# uses `Interfaces` to define a contract that `Classes` can satisfy by providing an implementation for the members defined in the `Interface`.
-- More on Properties: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties" target="_blank">[Microsoft Docs]</a>
-- More on Fields: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields" target="_blank">[Microsoft Docs]</a>
+C# uses `Interfaces` to define contracts that `Classes` can satisfy by providing an implementation for the `Members` defined in the specific `Interface`. `Members` of a `Class` are comprised of `Fields` and `Methods`. `Methods` are code blocks that can be executed. `Fields` are simply variables that can hold data. `Properties` are used to read, write, or compute the value of private `Fields`.
 - More on Interfaces: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface" target="_blank">[Microsoft Docs]</a>
 - More on Classes: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/class" target="_blank">[Microsoft Docs]</a>
+- More on Members: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/members" target="_blank">[Microsoft Docs]</a>
+- More on Methods: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods" target="_blank">[Microsoft Docs]</a>
+- More on Fields: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields" target="_blank">[Microsoft Docs]</a>
+- More on Properties: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties" target="_blank">[Microsoft Docs]</a>
 
-Our `View` needs a way to know when a `Property` and that the `View` should update itself. To achieve this there is an `Interface` called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
+### INotifyPropertyChanged
+
+Our `View` needs a way to know when a `Property` has changed and that the `View` should update itself. To achieve this there is an `Interface` called `INotifyPropertyChanged` which implements the event `PropertyChanged`. If our `ViewModel` implements this interface, we can send update notifications to our `View` or any other class listening to that event. 
 
 More: <a href="https://docs.microsoft.com/en-US/dotnet/api/system.componentmodel.inotifypropertychanged?view=net-6.0" target="_blank">[Microsoft Docs]</a>
 
@@ -77,7 +81,7 @@ In this sample we will show you how you can implement and use the interface `INo
 
 ### Step 1: Create SimpleViewModel
 
-In our project structure we have a folder called `ViewModels`. The `ViewModels` act as an intermediary between the `View` and the `Model`. Add a new class called "SimpleViewModel" there. This class should implement `INotifyPropertyChanged` as shown below: 
+Add a new class called "SimpleViewModel" to the `ViewModels` project folder. This class should implement `INotifyPropertyChanged` as shown below: 
 
 ```cs
 // Remember to add this to your usings 
@@ -193,7 +197,7 @@ Replace the content of `MainWindow.axaml` with the following code.
 </Window>
 ```
 
-Note that the lines `x:CompileBindings="True"` and `x:DataType="vm:MainWindowViewModel"` enables [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/compiledbindings)] in our `Window`. `CompiledBindings` has many benefits such as better performance and a better debugging experience. 
+Note that the lines `x:CompileBindings="True"` and `x:DataType="vm:MainWindowViewModel"` enables [[`CompiledBindings`](https://docs.avaloniaui.net/docs/data-binding/compiledbindings)] in our `Window`. Enabling `CompiledBindings` is completely optional but has many benefits such as better performance and a better debugging experience. 
 
 #### Add the Content to MainWindow
 
