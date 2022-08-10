@@ -1,0 +1,109 @@
+= Avalonia image:_docs/Assets/Logo.svg[link=https://www.avaloniaui.net] Samples 
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+
+Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia. 
+
+toc::[]
+
+[#get-in-touch]
+== 🗯 Get in touch with us
+
+If you have feedback, questions or suggestions feel free to contact us via:
+
+image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia] 
+image:https://badges.gitter.im/Join%20Chat.svg[link=https://gitter.im/AvaloniaUI/Avalonia?utm_campaign=pr-badge&utm_content=badge&utm_medium=badge&utm_source=badge] 
+image:https://img.shields.io/badge/discord-join%20chat-46BC99[link=https://aka.ms/dotnet-discord]
+
+Or file a new bug-report or feature request in the https://github.com/AvaloniaUI/Avalonia.Samples/issues[`Issues`]-section.
+
+
+== 📂 Organization of the Samples
+
+Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples. 
+
+You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
+
+In every sample folder you will find a `README`-File, which describes the sample in detail and, if applicable, has links to further information and documentation. 
+
+=== 🐣 Difficulties
+
+Each sample is tagged with it's difficulty. The degree of difficulty describes how much base-knowledge a user should have. 
+
+
+[cols="1,1,2"]
+|===
+| 🔘 | Difficulty  | Degree of knowledge   
+
+| 🐣 | Beginner
+| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory 
+
+| 🐥 | Easy    
+| Some very basic knowledge of Avalonia is needed                                                                                    
+
+| 🐔 | Normal         
+| The user is somewhat experienced with Avalonia                                                                                     
+
+| 🐉 | Hard            
+| These samples are focusing on non-standard tasks, which most users will not need to know.                                          
+
+|===
+ 
+
+[#samples]
+== ✍️ Samples
+
+////
+ Copy the below for a new entry in the sample-tables and replace the text in << >> with your content.
+
+| link:src/Avalonia.Samples/<<The_Chapter>>/<<TheSubFolder>>[<<Your Title>>]
+| <<The difficutly>>
+| <<The buzz-words>>
+////
+
+
+=== 💡 MVVM-Samples
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src/Avalonia.Samples/MVVM/BasicMvvmSample[Basic MVVM Sample]
+| 🐣 Beginner
+| MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
+
+|===
+
+
+== 🪛 Contribution
+
+Is Anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea? 
+
+Fantastic! Your contribition is welcome. 
+
+NOTE: Before you start, make sure you have read the Code of Conduct 
+
+=== Code of Conduct
+This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
+
+=== Issues and Feature Requests
+If you file a new issue or feature request please fill in the templates available. If you found an issue in an existing sample, please link the sample and if possilbe the point us to what is wrong. 
+
+=== Pull Requests
+
+NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, eyery contribution is welcome.  
+
+==== Fixing an existing sample
+
+If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request. Also spelling mistakes or wrong wording can be changed and a pull request can be send.
+
+IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page. 
+
+==== Adding a new sample
+
+🚧 Under construction 🚧
