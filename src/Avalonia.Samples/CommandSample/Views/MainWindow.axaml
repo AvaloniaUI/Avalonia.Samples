@@ -1,0 +1,73 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CommandSample.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+		Width="400"
+		Height="250"
+		x:CompileBindings="True"
+		x:DataType="vm:MainWindowViewModel"
+        x:Class="CommandSample.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CommandSample">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
+		
+		<TextBlock Grid.Column="0" Grid.Row="0"
+				   Text="Me:" 
+				   FontWeight="Bold" 
+				   VerticalAlignment="Center"
+		           Margin="5" />
+		
+		<StackPanel Grid.Column="1" Grid.Row="0" 
+					Spacing="5" Margin="5" >
+
+			<!-- This button will ask for a coffee -->
+			<Button Command="{Binding BringMeACoffeeCommand}"
+					Content="Bring me a coffee" />
+			
+			<!-- This button will ask for a coffee for our friend -->
+		    <StackPanel Orientation="Horizontal" Spacing="5">
+				<TextBox Text="{Binding FriendsName}" Watermark="my friend's name"  />
+			    <Button Command="{Binding BringMyFriendACoffeeCommand}" 
+						Content="{Binding FriendsName, StringFormat='Bring {0} a coffee'}"
+						CommandParameter="{Binding FriendsName}"/>
+			</StackPanel>
+			
+			<!-- This button will ask for a cake -->
+			<Button Command="{Binding BakeUsACakeCommand}"
+					Content="Can you make a cake for us, please?" />
+		</StackPanel>
+		
+		<Separator Grid.Row="1" Grid.ColumnSpan="2" 
+				   HorizontalAlignment="Stretch" 
+				   Margin="5"
+				   Height="2"
+				   Background="LightGray"/>
+
+		<TextBlock Grid.Column="0" Grid.Row="2"
+			       Text="Wife:" 
+				   FontWeight="Bold" 
+		           Margin="5"
+		           VerticalAlignment="Center"/>
+		
+		<Border Grid.Column="1" Grid.Row="2" 
+				CornerRadius="10" Margin="5"
+			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
+				<Grid ColumnDefinitions="*,Auto">
+					<ItemsRepeater Margin="5" 
+							       Items="{Binding WhatYourWifeSaid}" />
+			<Button Grid.Column="1"
+					VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+				    Background="Transparent"
+					Command="{ReflectionBinding WhatYourWifeSaid.Clear}" 
+					Content="❌"/>
+		</Grid>
+		</Border>
+	</Grid>
+</Window>
