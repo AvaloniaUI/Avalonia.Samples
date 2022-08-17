@@ -27,11 +27,13 @@
 		<StackPanel Grid.Column="1" Grid.Row="0" 
 					Spacing="5" Margin="5" >
 
-			<!-- This button will ask for a coffee -->
+			<!-- This button will ask our wife for a coffee -->
 			<Button Command="{Binding BringMeACoffeeCommand}"
 					Content="Bring me a coffee" />
 			
-			<!-- This button will ask for a coffee for our friend -->
+			<!-- This button will ask our wife for a coffee for our friend -->
+			<!-- We use CommandParameter to provide the name of our friend-->
+			<!-- Note that the button is automatically disabled if we don't enter a name-->
 		    <StackPanel Orientation="Horizontal" Spacing="5">
 				<TextBox Text="{Binding FriendsName}" Watermark="my friend's name"  />
 			    <Button Command="{Binding BringMyFriendACoffeeCommand}" 
@@ -39,7 +41,9 @@
 						CommandParameter="{Binding FriendsName}"/>
 			</StackPanel>
 			
-			<!-- This button will ask for a cake -->
+			<!-- This button will ask our wife to make us a cake -->
+			<!-- As this is a long operation, the command is async.-->
+			<!-- Our wife will inform us about the current state.-->
 			<Button Command="{Binding BakeUsACakeCommand}"
 					Content="Can you make a cake for us, please?" />
 		</StackPanel>
@@ -51,23 +55,27 @@
 				   Background="LightGray"/>
 
 		<TextBlock Grid.Column="0" Grid.Row="2"
-			       Text="Wife:" 
-				   FontWeight="Bold" 
+			       Text="Wife:"
+				   FontWeight="Bold"
 		           Margin="5"
 		           VerticalAlignment="Center"/>
-		
-		<Border Grid.Column="1" Grid.Row="2" 
+
+		<Border Grid.Column="1" Grid.Row="2"
 				CornerRadius="10" Margin="5"
 			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
-				<Grid ColumnDefinitions="*,Auto">
-					<ItemsRepeater Margin="5" 
-							       Items="{Binding WhatYourWifeSaid}" />
-			<Button Grid.Column="1"
-					VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-				    Background="Transparent"
-					Command="{ReflectionBinding WhatYourWifeSaid.Clear}" 
-					Content="❌"/>
-		</Grid>
+			<Grid ColumnDefinitions="*,Auto">
+				<ItemsRepeater Margin="5"
+							   Items="{Binding WhatYourWifeSaid}" />
+				
+				<!-- This button will clear what our wife said recently -->
+				<!-- We use ReflectionBinding as we bind to a method instead of a Command here, 
+				     which is not supported via CompiledBinding. --> 
+				<Button Grid.Column="1"
+						VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+						Background="Transparent"
+						Command="{ReflectionBinding WhatYourWifeSaid.Clear}"
+						Content="❌"/>
+			</Grid>
 		</Border>
 	</Grid>
 </Window>

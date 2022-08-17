@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVVM", "MVVM", "{932FD4A5-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicMvvmSample", "MVVM\BasicMvvmSample\BasicMvvmSample.csproj", "{A7E12C60-7F8F-49AB-9B1F-851D570BC87F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandSample", "CommandSample\CommandSample.csproj", "{F747AA9D-F05E-4ADE-989A-86772A9337D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandSample", "MVVM\CommandSample\CommandSample.csproj", "{F747AA9D-F05E-4ADE-989A-86772A9337D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
