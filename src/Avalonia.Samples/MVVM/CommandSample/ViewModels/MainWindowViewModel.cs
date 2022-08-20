@@ -17,7 +17,7 @@ namespace CommandSample.ViewModels
             // see: https://www.reactiveui.net/docs/handbook/commands/
 
             // Init BringMeACoffeeCommand
-            BringMeACoffeeCommand = ReactiveCommand.Create(() => BringMeACoffee());
+            BringMeACoffeeCommand = ReactiveCommand.Create(BringMeACoffee);
 
             // Init BringMyFriendACoffeeCommand
             // The IObservable<bool> is needed to enable or disable the command depending on valid parameters
@@ -25,14 +25,14 @@ namespace CommandSample.ViewModels
             IObservable<bool> canExecuteBringMyFriendABeerCommand =
                 this.WhenAnyValue(vm => vm.FriendsName, (name) => !string.IsNullOrEmpty(name));
 
-            BringMyFriendACoffeeCommand = 
+            BringMyFriendACoffeeCommand =
                 ReactiveCommand.Create<string?>(name => BringMyFriendACoffee(name), canExecuteBringMyFriendABeerCommand);
 
             // Init BakeUsACakeCommand
-            BakeUsACakeCommand = ReactiveCommand.CreateFromTask(() => BakeUsACakeAsync());
+            BakeUsACakeCommand = ReactiveCommand.CreateFromTask(BakeUsACakeAsync);
         }
 
-       
+
         /// <summary>
         /// This command will ask our wife to bring us a coffee.
         /// </summary>
@@ -87,7 +87,7 @@ namespace CommandSample.ViewModels
             // wait a second
             await Task.Delay(1000);
 
-            WifeSays("I'm mixing all the integredients.");
+            WifeSays("I'm mixing all the ingredients.");
             await Task.Delay(2000);
 
             WifeSays("It's in the oven. Wait another 2 seconds.");

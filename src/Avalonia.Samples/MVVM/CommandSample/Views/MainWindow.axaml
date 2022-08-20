@@ -37,7 +37,7 @@
 		    <StackPanel Orientation="Horizontal" Spacing="5">
 				<TextBox Text="{Binding FriendsName}" Watermark="my friend's name"  />
 			    <Button Command="{Binding BringMyFriendACoffeeCommand}" 
-						Content="{Binding FriendsName, StringFormat='Bring {0} a coffee'}"
+						Content="{Binding FriendsName, StringFormat='Bring {0} a coffee', TargetNullValue='I have no friend yet'}"
 						CommandParameter="{Binding FriendsName}"/>
 			</StackPanel>
 			
