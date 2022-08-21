@@ -77,6 +77,11 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐣 Beginner
 | MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
 
+| link:src/Avalonia.Samples/MVVM/CommandSample[Command Sample]
+| 🐣 Beginner
+| Command, ICommand, CommandParameter, MVVM, ReactiveCommand, async-await
+
+
 |===
 
 
