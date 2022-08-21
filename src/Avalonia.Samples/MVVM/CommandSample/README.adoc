@@ -9,15 +9,13 @@
 :warning-caption: :warning:
 // ---------------------------------
 
-This example will show you how you can use `Commands` to run methods in your `ViewModel` invoked from your user interface. 
+This example will show you how you can use `Commands` to invoke methods in your `ViewModel` from your user interface. 
 
-// Don't touch below line. It will render a table of content.
+// Don't touch below line. It will render the table of content.
 toc::[]
 
 
-
 === Difficulty
-// Choose one of the below difficulties. You can just delete the ones you don't need.
 
 🐣 Beginner 🐣
 
@@ -35,7 +33,9 @@ In case you want to refresh your knowledge, visit the link:../BasicMvvmSample[[B
 
 === ICommand
 
-If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface it can be used to invoke a `Method` in your `ViewModel` from the UI. Moreover the interface allows you to easily enable or disable the `Command`. These interface has three members;
+If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface it can be used to execute a `Method` in your `Model` or `ViewModel`.  Moreover the interface allows you to easily enable or disable the `Control` (most often a `Button`), that your `Command` is bound to. 
+
+The interface has three members:
 
 CanExecute(Object):: Defines the method that determines whether the command can execute in its current state.
 
@@ -47,7 +47,7 @@ _Definitions copied from https://docs.microsoft.com/en-us/dotnet/api/system.wind
 
 ==== ReactiveCommand
 
-In this sample we are not going to implement `ICommand` on our own. Instead we will use the implementations that https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveUI`\]] ships out of the box.
+In this sample we are not going to implement `ICommand` on our own. Instead we will use the implementations that https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveUI`\]] ships out of the box, called `ReactiveCommand`.
 
 ==== Commands and long running Tasks
 
@@ -55,7 +55,7 @@ Some `MVVM`-libs, like `ReactiveUI`, provide an async implementations of the `IC
 
 == The Sample 
 
-The sample will show a dialog between you and your wife. You can ask her to bring you and your friend a coffee and bake a cake. Feel free to change wife into your husband, aunt, uncle, grandma, grandpa or whoever you want to interact with 😉. 
+The sample will show a dialog between you and your wife. You can ask her to bring you and your friend a coffee and to bake a cake you. Feel free to change wife into your husband, aunt, uncle, grandma, grandpa, dog or whoever you want to interact with 😉. 
 
 === Step 1: Create a new Avalonia MVVM Application
 
@@ -63,7 +63,9 @@ Create a new Project using the `Avalonia MVVM Application`-Template
 
 === Step 2: Prepare the MainWindowViewModel
 
-We want to interact with our wife. So our wife needs a way to respond to us. Let's create a method to let her talk to you and a collection to store what she said. We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[ [ObservableCollection\]`], because this collection will notify out UI whenever a line was added or removed. In the file `ViewModels ► MainWindowViewModel.cs` add the following lines:
+Open the file `ViewModels ► MainWindowViewModel.cs`.
+
+We want to interact with our wife. So our wife needs a way to respond to us. Let's create a method to let her talk to you and a collection to store what she said. We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify out UI whenever a line was added or removed. In the file `ViewModels ► MainWindowViewModel.cs` add the following lines:
 
 [source,cs]
 ----
@@ -79,12 +81,12 @@ private void WifeSays(string content)
 }
 ----
 
-Beside our wife we need to create a friend (can also be your enemy if you want). Our friend will just have a name, so let's add this property: 
+Beside our wife we need to create a friend (can also be your enemy, if you want). Our friend will just have a name, so let's add this property: 
 
 [source,cs]
 ----
 /// <summary>
-/// Enter the name of your friend here. If the name is null or empty, you have no friend to bring a coffee.
+/// The name of our Friend. If the name is null or empty, you have no friend to bring a coffee.
 /// </summary>
 public string? FriendsName
 {
@@ -136,7 +138,7 @@ This `Command` is very similar to the one above. This time we will use a `Comman
 [source,cs]
 ----
 /// <summary>
-/// This command will ask our wife to bring your friend a beer.
+/// This command will ask our wife to bring our friend a coffee.
 /// </summary>
 public ICommand BringMyFriendACoffeeCommand { get; }
 ----
@@ -154,7 +156,7 @@ private void BringMyFriendACoffee(string? friendsName)
 
 TIP: We use string interpolation in the above method. If you want to learn more about it visit https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated[[Microsoft Docs\]].
 
-Again we have to initialize our command in the constructor. We will first create an https://docs.microsoft.com/en-us/dotnet/api/system.iobservable-1?view=net-6.0[[`Observable`\]] which will listen to `FriendsName`. The observable will automatically enable our `Command` whenever `FriendsName` is not empty and disable the `Command` whenever `FriendsName` is `null` or empty. Add the following lines to our constructor: 
+Again we have to initialize our command in the constructor. We will first create an https://docs.microsoft.com/en-us/dotnet/api/system.iobservable-1?view=net-6.0[[`Observable`\]] using `ReactiveUI's` https://www.reactiveui.net/docs/handbook/when-any/#watching-single-property[[`WhenAnyValue`\]] which will listen to `FriendsName`. The `Observable` will automatically enable our `Command` whenever `FriendsName` is not null or empty and disable the `Command` whenever `FriendsName` is `null` or empty. Add the following lines to our constructor: 
 
 [source,cs]
 ----
@@ -174,7 +176,7 @@ NOTE: This time we used `ReactiveCommand.Create<string?>`. the part between `<>`
 
 === Step 5: Create "Bake us a cake" - Command
 
-Baking a cake can take long time and we will have to wait for it. While our wife is working for us, we can do other stuff like watching football. So we need to make sure that the user can interact with the UI while the task is running. In `C#` we can use https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/[[`async / await`\]] in combination with https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0[[`Tasks`\]] if we want to run things in the background while not blocking the UI. Let's add the `Command` and the `Task` to `ViewModels ► MainWindowViewModel.cs`:
+Baking a cake can take long time and we will have to wait for it. While our wife is working for us, we can do other stuff like watching football. So we need to make sure that the user can interact with the UI while the task is running. In `C#` we can use https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/[[`async / await`\]] in combination with https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0[[`Tasks`\]] if we want to run things in the background while not blocking the UI. Let's add the `Command` and the `Task` to our `ViewModel`:
 
 [source,cs]
 ----
@@ -188,16 +190,19 @@ private async Task BakeUsACakeAsync()
     await Task.Delay(1000);
 
     WifeSays("I'm mixing all the ingredients.");
+	// wait 2 seconds
     await Task.Delay(2000);
 
     WifeSays("It's in the oven. Wait another 2 seconds.");
+	// wait 2 seconds
     await Task.Delay(2000);
 
+	// finish
     WifeSays("Here is your cake, fresh from the oven.");
 }
 ----
 
-Initiating the async `Command` in the constructor is very similar to what sync `Command`:
+Initiating the async `Command` in the constructor is very similar to how you init a sync `Command`:
 
 [source,cs]
 ----
@@ -208,27 +213,80 @@ public MainWindowViewModel()
 }
 ----
 
-TIP: When you execute this command, notice that the `Button` is grayed out until the `Task` finished, so you can't ask for another cake until the first is out of the oven. You 
+TIP: When you execute this command, notice that the `Button` is disabled until the `Task` is finished, so you can't ask for another cake until the first is out of the oven.  
 
 === Step 6: Setting up the User Interface
 
 Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we bind `Button.Command` to the `ICommands` we prepared in the `ViewModel`. The second `Button` will also get a binding to `Button.CommandParameter`. 
 
+The first `Button` looks like this: 
+
+[source,xml]
+----
+<!-- This button will ask our wife for a coffee -->
+<Button Command="{Binding BringMeACoffeeCommand}"
+		Content="Bring me a coffee" />
+----
+
+The second `Button` will have a `CommandParameter` defined and more over the `Content` will change dynamically. The `Button` is rendered next to a `TextBox`, where we can enter the name of our `Friend`:
+
+[source,xml]
+----
+<!-- This button will ask our wife for a coffee for our friend -->
+<!-- We use CommandParameter to provide the name of our friend-->
+<!-- Note that the button is automatically disabled if we don't enter a name-->
+<StackPanel Orientation="Horizontal" Spacing="5">
+	<TextBox Text="{Binding FriendsName}" Watermark="my friend's name"  />
+	<Button Command="{Binding BringMyFriendACoffeeCommand}" 
+			Content="{Binding FriendsName, StringFormat='Bring {0} a coffee'}"
+			CommandParameter="{Binding FriendsName}"/>
+</StackPanel>
+----
+
+The third `Button` will bind to our `async Command`:
+
+[source,xml]
+----
+<!-- This button will ask our wife to make us a cake -->
+<!-- As this is a long operation, the command is async.-->
+<!-- Our wife will inform us about the current state.-->
+<Button Command="{Binding BakeUsACakeCommand}"
+	    Content="Can you make a cake for us, please?" />
+----
+
+We can also bind `Button.Command` to any `Method`. To demonstrate that we added another `Button` which we can use to clear what our wife said recently. 
+
+NOTE: Instead of `Binding` we need to use `ReflectionBinding`, because we enabled `CompiledBindings` in the `Window`, which don't support binding to `Methods`. https://docs.avaloniaui.net/docs/data-binding/compiledbindings#known-limitations[[more\]]
+
+[source,xml]
+----
+<!-- This button will clear what our wife said recently -->
+<!-- We use ReflectionBinding as we bind to a method instead of a Command here, 
+		which is not supported via CompiledBinding. --> 
+<Button Grid.Column="1"
+		VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+		Background="Transparent"
+		Command="{ReflectionBinding WhatYourWifeSaid.Clear}"
+		Content="❌"/>
+----
+
+Now let's put all together. Our `View` will finally look like this:
+
 [source,xml]
 ----
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:CommandSample.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:CommandSample.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" 
 		Width="400"
 		Height="250"
 		x:CompileBindings="True"
 		x:DataType="vm:MainWindowViewModel"
-        x:Class="CommandSample.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="CommandSample">
+		x:Class="CommandSample.Views.MainWindow"
+		Icon="/Assets/avalonia-logo.ico"
+		Title="CommandSample">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -249,19 +307,20 @@ Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we
 			<Button Command="{Binding BringMeACoffeeCommand}"
 					Content="Bring me a coffee" />
 			
-			<!-- This button will ask our wife for a coffee for our friend -->
-			<!-- We use CommandParameter to provide the name of our friend-->
-			<!-- Note that the button is automatically disabled if we don't enter a name-->
+			<!-- This button will ask our wife for a coffee for our friend               -->
+			<!-- We use CommandParameter to provide the name of our friend               -->
+			<!-- Note that the button is automatically disabled if we don't enter a name -->
 		    <StackPanel Orientation="Horizontal" Spacing="5">
-				<TextBox Text="{Binding FriendsName}" Watermark="my friend's name"  />
+				<TextBox Text="{Binding FriendsName}" Watermark="Enter our Friend's name"  />
 			    <Button Command="{Binding BringMyFriendACoffeeCommand}" 
-						Content="{Binding FriendsName, StringFormat='Bring {0} a coffee'}"
+						Content="{Binding FriendsName, StringFormat='Bring {0} a coffee', TargetNullValue='We have no friend yet'}"
 						CommandParameter="{Binding FriendsName}"/>
 			</StackPanel>
 			
-			<!-- This button will ask our wife to make us a cake -->
-			<!-- As this is a long operation, the command is async.-->
-			<!-- Our wife will inform us about the current state.-->
+			<!-- This button will ask our wife to make us a cake                 -->
+			<!-- As this is a long operation, the command is async.              -->
+			<!-- Our wife will inform us about the current state.                -->
+			<!-- Note: The button will be disabled while the process is running. -->
 			<Button Command="{Binding BakeUsACakeCommand}"
 					Content="Can you make a cake for us, please?" />
 		</StackPanel>
@@ -278,6 +337,7 @@ Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we
 		           Margin="5"
 		           VerticalAlignment="Center"/>
 
+		<!-- This is the area where the output of our wife is rendered -->
 		<Border Grid.Column="1" Grid.Row="2"
 				CornerRadius="10" Margin="5"
 			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
@@ -285,9 +345,9 @@ Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we
 				<ItemsRepeater Margin="5"
 							   Items="{Binding WhatYourWifeSaid}" />
 				
-				<!-- This button will clear what our wife said recently -->
-				<!-- We use ReflectionBinding as we bind to a method instead of a Command here, 
-				     which is not supported via CompiledBinding. --> 
+				<!-- This button will clear what our wife said recently                          -->
+				<!-- We use ReflectionBinding as we bind to a method instead of a Command here,  -->
+				<!-- which is not supported via CompiledBinding.                                 --> 
 				<Button Grid.Column="1"
 						VerticalAlignment="Stretch" VerticalContentAlignment="Center"
 						Background="Transparent"
@@ -298,10 +358,6 @@ Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we
 	</Grid>
 </Window>
 ----
-
-We can also bind `Button.Command` to any `Method`. To demonstrate that we added another `Button` which we can use to clear what our wife said recently. 
-
-NOTE: Instead of `Binding` we need to use `ReflectionBinding`, because we enabled `CompiledBindings` in the `Window`, which don't support binding to `Methods`. https://docs.avaloniaui.net/docs/data-binding/compiledbindings#known-limitations[[more\]]
 
 === Step 7: See it in action
 

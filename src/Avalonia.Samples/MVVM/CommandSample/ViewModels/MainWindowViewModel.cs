@@ -1,8 +1,6 @@
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -13,20 +11,21 @@ namespace CommandSample.ViewModels
         // We use the constructor to initialize the Commands.
         public MainWindowViewModel()
         {
-            // We create our Commands using ReactiveCommand.Create...
+            // We initiate our Commands using ReactiveCommand.Create...
             // see: https://www.reactiveui.net/docs/handbook/commands/
 
             // Init BringMeACoffeeCommand
             BringMeACoffeeCommand = ReactiveCommand.Create(BringMeACoffee);
 
             // Init BringMyFriendACoffeeCommand
-            // The IObservable<bool> is needed to enable or disable the command depending on valid parameters
+            // The IObservable<bool> is needed to enable or disable the command depending on the parameter
             // The Observable listens to FriendsName and will enable the Command if the name is not empty.
-            IObservable<bool> canExecuteBringMyFriendABeerCommand =
+            // See also: https://www.reactiveui.net/docs/handbook/when-any/#watching-single-property
+            IObservable<bool> canExecuteBringMyFriendACoffeeCommand =
                 this.WhenAnyValue(vm => vm.FriendsName, (name) => !string.IsNullOrEmpty(name));
 
             BringMyFriendACoffeeCommand =
-                ReactiveCommand.Create<string?>(name => BringMyFriendACoffee(name), canExecuteBringMyFriendABeerCommand);
+                ReactiveCommand.Create<string?>(name => BringMyFriendACoffee(name), canExecuteBringMyFriendACoffeeCommand);
 
             // Init BakeUsACakeCommand
             BakeUsACakeCommand = ReactiveCommand.CreateFromTask(BakeUsACakeAsync);
@@ -47,20 +46,8 @@ namespace CommandSample.ViewModels
         }
 
 
-        // Backing field for FriendsName
-        private string? _FriendsName;
-
         /// <summary>
-        /// Enter the name of your friend here. If the name is null or empty, you have no friend to bring a coffee.
-        /// </summary>
-        public string? FriendsName
-        {
-            get => _FriendsName;
-            set => this.RaiseAndSetIfChanged(ref _FriendsName, value);
-        }
-
-        /// <summary>
-        /// This command will ask our wife to bring your friend a beer.
+        /// This command will ask our wife to bring our friend a coffee.
         /// </summary>
         // Note: We use the interface ICommand here because this makes things more flexible. 
         public ICommand BringMyFriendACoffeeCommand { get; }
@@ -70,6 +57,18 @@ namespace CommandSample.ViewModels
         {
             WhatYourWifeSaid.Clear();
             WifeSays($"Dear {friendsName}, here is your coffee :-)");
+        }
+
+        // Backing field for FriendsName
+        private string? _FriendsName;
+
+        /// <summary>
+        /// The name of our Friend. If the name is null or empty, you have no friend to bring a coffee.
+        /// </summary>
+        public string? FriendsName
+        {
+            get => _FriendsName;
+            set => this.RaiseAndSetIfChanged(ref _FriendsName, value);
         }
 
 
@@ -88,11 +87,14 @@ namespace CommandSample.ViewModels
             await Task.Delay(1000);
 
             WifeSays("I'm mixing all the ingredients.");
+            // wait 2 seconds
             await Task.Delay(2000);
 
             WifeSays("It's in the oven. Wait another 2 seconds.");
+            // wait 2 seconds
             await Task.Delay(2000);
 
+            // finish
             WifeSays("Here is your cake, fresh from the oven.");
         }
 
