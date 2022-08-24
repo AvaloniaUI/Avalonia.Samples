@@ -1,4 +1,4 @@
-= Avalonia image:_docs/Assets/Logo.svg[link=https://www.avaloniaui.net] Samples 
+= Avalonia image:_docs/_Assets/Logo.svg[link=https://www.avaloniaui.net] Samples 
 :toc:
 :toc-placement!:
 :tip-caption: :bulb:
@@ -62,7 +62,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
  Copy the below for a new entry in the sample-tables and replace the text in << >> with your content.
 
 | link:src/Avalonia.Samples/<<The_Chapter>>/<<TheSubFolder>>[<<Your Title>>]
-| <<The difficutly>>
+| <<The difficulty>>
 | <<The buzz-words>>
 ////
 
@@ -84,7 +84,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 Is Anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea? 
 
-Fantastic! Your contribition is welcome. 
+Fantastic! Your contribution is welcome. 
 
 NOTE: Before you start, make sure you have read the Code of Conduct 
 
@@ -92,11 +92,11 @@ NOTE: Before you start, make sure you have read the Code of Conduct
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
 
 === Issues and Feature Requests
-If you file a new issue or feature request please fill in the templates available. If you found an issue in an existing sample, please link the sample and if possilbe the point us to what is wrong. 
+If you file a new issue or feature request please fill in the templates available. If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong. 
 
 === Pull Requests
 
-NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, eyery contribution is welcome.  
+NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, every contribution is welcome.  
 
 ==== Fixing an existing sample
 
@@ -106,4 +106,7 @@ IMPORTANT: If you change the difficulty or the buzz-words, remember to also upda
 
 ==== Adding a new sample
 
-🚧 Under construction 🚧
+. Add a new Project to the Solution `src ► Avalonia.Samples ► Avalonia.Samples.sln`
+. In the root directory of the new sample add a `ReadMe`-file. We highly suggest to use the template which you can find here: 
+  .. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template. 
+  .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template. 
