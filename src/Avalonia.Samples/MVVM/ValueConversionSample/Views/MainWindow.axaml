@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ValueConversionSample.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:conv="using:ValueConversionSample.Converter"
+        mc:Ignorable="d" Width="500" Height="200"
+        x:CompileBindings="True"
+		x:DataType="vm:MainWindowViewModel"
+		x:Class="ValueConversionSample.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ValueConversionSample">
+
+	<Window.Resources>
+		<conv:MathAddConverter x:Key="MathAddConverter" />
+		<conv:MathMultiConverter x:Key="MathMultiConverter" />
+		<x:Double x:Key="ConverterParameter">2</x:Double>
+	</Window.Resources>
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<TabControl>
+		<TabItem Header="IValueConverter">
+			<Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto">
+				<TextBlock Text="Number 1" Grid.Column="0" Grid.Row="0" />
+				<NumericUpDown Value="{Binding Number1}" Grid.Column="1" Grid.Row="0" />
+
+				<TextBlock Text="Sum" Grid.Column="0" Grid.Row="1" />
+				<NumericUpDown Value="{Binding Number2, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}"
+							   Grid.Column="1" Grid.Row="1" />
+			</Grid>
+		</TabItem>
+		
+		<TabItem Header="IMultiValueConverter">
+			<Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+
+				<TextBlock Text="Opertator" Grid.Column="0" Grid.Row="0" />
+				<ComboBox SelectedItem="{Binding Operator}" 
+						  Items="{Binding AvilableMathOperators}"
+						  Grid.Column="1" Grid.Row="0" />
+				
+				<TextBlock Text="Number 1" Grid.Column="0" Grid.Row="1" />
+				<NumericUpDown Value="{Binding Number1}" Grid.Column="1" Grid.Row="1" />
+
+				<TextBlock Text="Number 2" Grid.Column="0" Grid.Row="2" />
+				<NumericUpDown Value="{Binding Number2}"
+							   Grid.Column="1" Grid.Row="2" />
+				
+				<TextBlock Text="Sum" Grid.Column="0" Grid.Row="3" />
+				<NumericUpDown Grid.Column="1" Grid.Row="3" IsReadOnly="True" >
+					<NumericUpDown.Value>
+						<MultiBinding Converter="{StaticResource MathMultiConverter}"
+									  Mode="OneWay">
+							<Binding Path="Operator" />
+							<Binding Path="Number1" />
+							<Binding Path="Number2" />
+						</MultiBinding>
+					</NumericUpDown.Value>
+				</NumericUpDown>
+			</Grid>
+		</TabItem>
+	</TabControl>
+
+</Window>
