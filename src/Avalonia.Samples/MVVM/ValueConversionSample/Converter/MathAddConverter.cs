@@ -1,25 +1,18 @@
-﻿using Avalonia;
-using Avalonia.Data;
-using Avalonia.Data.Converters;
-using Avalonia.Data.Core;
+﻿using Avalonia.Data.Converters;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ValueConversionSample.Converter
 {
     /// <summary>
-    /// This is a converter which will add two decimal numbers
+    /// This is a converter which will add two numbers
     /// </summary>
     public class MathAddConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            // For Add this is simple. just return the sum of the value and the parameter.
-            // You may want to validate value and input in a real world App
+            // For add this is simple. just return the sum of the value and the parameter.
+            // You may want to validate value and parameter in a real world App
             return (double?)value + (double?)parameter;
         }
 

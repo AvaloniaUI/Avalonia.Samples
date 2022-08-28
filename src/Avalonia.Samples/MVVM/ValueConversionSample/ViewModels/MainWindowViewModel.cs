@@ -7,7 +7,7 @@ namespace ValueConversionSample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
+        // The initial value is 2. 
         private double? _Number1 = 2;
 
         /// <summary>

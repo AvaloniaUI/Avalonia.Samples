@@ -1,0 +1,188 @@
+= Value conversion sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+In this sample you will learn how you can use a `Converter` in your `Binding` in order to calculate a value for the UI. This can be useful if you need to do some math operations or other conversions like showing different colors for different object states. 
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐥 Easy 🐥
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+Converter, Binding, IValueConverter, IMultiValueConverter, MVVM
+
+
+== Before we start
+
+// Use that section: 
+// - to introduce new things, 
+// - tell the reader what they should read before
+// - tell the reader what they should prepare
+
+In this sample we assume that you know what a `Binding` is and that you have a basic knowledge of the `MVVM` concepts. Moreover you should already know how to create a new Avalonia project.
+
+In case you want to refresh your knowledge, visit the link:../BasicMvvmSample[[Basic MVVM Sample\]].
+
+=== IValueConverter
+
+If your class implements http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/[[`IValueConverter`\]], it can be used to convert a value provided by a `Binding` into any other `object`. The interface implements the following members:
+
+Convert:: This method will be called from your `Binding` when a new value is provided by the `Property` you bind to. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/E7851E09[[API Reference\]].
+
+ConvertBack:: This method will be called from your `Binding` when a new value is provided by the user interface and will set the bound `Property` in your `ViewModel`. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/6880ABBD[[API\]].
+
+WARNING: You should not throw exceptions inside your converter. If the value is not convertible, return a http://reference.avaloniaui.net/api/Avalonia.Data/BindingNotification/[[`BindingNotification`\]] in an error state or http://reference.avaloniaui.net/api/Avalonia.Data/BindingOperations/788823DA[[`BindingOperations.DoNothing`\]] if your converter should just not do anything. 
+
+TIP: If you don't want to support `Convert` or `ConvertBack`, you can simply return http://reference.avaloniaui.net/api/Avalonia.Data/BindingOperations/788823DA[[`BindingOperations.DoNothing`\]]. This will prevent the `Binding` from updating. 
+
+=== IMultiValueConverter
+
+If your class implements http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IMultiValueConverter/[[`IMultiValueConverter`\]], it can be used to convert an array of values provided by a `MultiBinding` into any `object`. The interface implements the following member:
+
+Convert:: This method will be called from your `Binding` when a new value is provided by the `Property` you bind to. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/E7851E09[[API Reference\]].
+
+
+WARNING: You should not throw exceptions inside your converter. If the value is not convertible, return a http://reference.avaloniaui.net/api/Avalonia.Data/BindingNotification/[[`BindingNotification`\]] in an error state or http://reference.avaloniaui.net/api/Avalonia.Data/BindingOperations/788823DA[[`BindingOperations.DoNothing`\]] if your converter should just not do anything. 
+
+NOTE: Other than in `IValueConverter` the method `ConvertBack` is not present for `IMultiValueConverter`. 
+
+
+== The Solution 1 : Using IValueConverter
+
+In this sample we will write a `Converter` that can be used to add a number to another number. The number to add will be provided by the `ConverterParameter`. In the `ConvertBack` method we will subtract the parameter. 
+
+=== Step 1: Setup your ViewModel
+
+In your `MainWindowViewModel` add a `double` called `Number1` like shown below: 
+
+[source,cs]
+----
+// The initial value is 2. 
+private double? _Number1 = 2;
+
+/// <summary>
+/// This is our Number 1
+/// </summary>
+public double? Number1
+{
+    get { return _Number1; }
+    set { this.RaiseAndSetIfChanged(ref _Number1, value); }
+}
+----
+
+=== Step 2: Create the MathAddConverter
+
+In the project we create a new folder called `Converter`. This will be the place where we keep all our converters. Inside this folder we add a `class` called `MathAddConverter.cs`. This `class` should implement `IValueConverter`. 
+
+[source,cs]
+----
+using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
+
+namespace ValueConversionSample.Converter
+{
+    /// <summary>
+    /// This is a converter which will add two numbers
+    /// </summary>
+    public class MathAddConverter : IValueConverter
+    {
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            // For add this is simple. just return the sum of the value and the parameter.
+            // You may want to validate value and parameter in a real world App
+            return (double?)value + (double?)parameter;
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            // If we want to convert back, we need to subtract instead of add.
+            return (double?)value - (double?)parameter;
+        }
+    }
+}
+----
+
+To clarify things further:
+
+value:: This is the value which is provided by the `Binding`. 
+parameter:: This is an optional converter parameter. We will see later how we can provide this parameter.
+
+=== Step 3: Setup the View
+
+First we need to create a new `MathAddConverter` and the `ConverterParameter` as a https://docs.avaloniaui.net/docs/styling/resources[[`Resource`\]] which can be used later on. We do this in the `Window`, but it can be done also in `App.axaml`. 
+
+NOTE: Each Resource must have a unique key defined using `x:Key`
+
+[source,xml]
+----
+<Window x:Class="ValueConversionSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="using:ValueConversionSample.Converter" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:vm="using:ValueConversionSample.ViewModels"
+        Title="ValueConversionSample"
+        Width="500" Height="200"
+        x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <!--  Add the MathAddConverter. Remember to add the needed namespace "conv" -->
+        <conv:MathAddConverter x:Key="MathAddConverter" />
+        <!--  This Resource will be used as our ConverterParameter  -->
+        <x:Double x:Key="ConverterParameter">2</x:Double>
+    </Window.Resources>
+</Window>
+----
+
+Now we can add two https://docs.avaloniaui.net/docs/controls/numericupdown[[`NumericUpDown`\]]-controls to our UI. Both will bind to `Number1` while the second one will use our `Converter` to calculate the sum of `Number1` and our `ConverterParameter`. 
+
+[source,xml]
+----
+<Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+    <TextBlock Grid.Row="0" Grid.Column="0"
+               Text="Number 1" />
+    <NumericUpDown Grid.Row="0" Grid.Column="1"
+                   Value="{Binding Number1}" />
+
+    <TextBlock Grid.Row="1" Grid.Column="0"
+                Text="Sum" />
+    <NumericUpDown Grid.Row="1" Grid.Column="1"
+                   Value="{Binding Number2, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
+</Grid>
+----
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
