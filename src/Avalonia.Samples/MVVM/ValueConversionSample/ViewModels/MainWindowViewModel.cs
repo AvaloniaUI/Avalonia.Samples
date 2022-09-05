@@ -20,6 +20,7 @@ namespace ValueConversionSample.ViewModels
         }
 
 
+        // The initial value is 3.
         private double? _Number2 = 3;
 
         /// <summary>
@@ -32,6 +33,7 @@ namespace ValueConversionSample.ViewModels
         }
 
 
+        // The initial value is "+" (Add).
         private string _Operator = "+";
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace ValueConversionSample.ViewModels
         /// <summary>
         /// Gets a collection of available operators
         /// </summary>
-        public string[] AvilableMathOperators { get; } = new string[]
+        public string[] AvailableMathOperators { get; } = new string[]
         {
             "+", "-", "*", "/"
         };

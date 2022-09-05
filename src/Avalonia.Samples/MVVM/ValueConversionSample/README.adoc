@@ -157,7 +157,7 @@ NOTE: Each Resource must have a unique key defined using `x:Key`
 </Window>
 ----
 
-Now we can add two https://docs.avaloniaui.net/docs/controls/numericupdown[[`NumericUpDown`\]]-controls to our UI. Both will bind to `Number1` while the second one will use our `Converter` to calculate the sum of `Number1` and our `ConverterParameter`. 
+Now we can add two https://docs.avaloniaui.net/docs/controls/numericupdown[[`NumericUpDown`\]]-controls to our UI. Both will bind to `Number1` while the second one will use our `Converter` to calculate the sum of `Number1` and the `ConverterParameter` defined in `Resources`. 
 
 [source,xml]
 ----
@@ -170,9 +170,226 @@ Now we can add two https://docs.avaloniaui.net/docs/controls/numericupdown[[`Num
     <TextBlock Grid.Row="1" Grid.Column="0"
                 Text="Sum" />
     <NumericUpDown Grid.Row="1" Grid.Column="1"
-                   Value="{Binding Number2, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
+                   Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
 </Grid>
 ----
+
+TIP: `ConverterParameter` can only be a static value. You cannot bind to it and you cannot use `DynamicResource`. If you need more flexibility, consider to do your calculations in your `ViewModel` or use a `MultiValueConverter`.
+
+=== Step 4: See it in action
+
+In your IDE select `[Run]` or `[Debug]` to see the result in action. Try to change the value in both input boxes and see how they update each other. 
+
+image::_docs/result_01.png[IValueConverter sample]
+
+
+== Solution 2 : Using IMultiValueConverter
+
+If you want to bind to more than one value in your `Converter`, you can implement the interface `IMultiValueConverter`. In this sample we will take two numbers and calculate the result using a given operator. Because we want all three parameters to be dynamic, we will not use the `ConverterParameter` here.
+
+=== Step 1:  Setup your ViewModel
+
+In addition to our `Number1` from the above sample we will add another `double` called `Number2`, the `Operator` as `string` and a list of available `Operators` the user can choose from. 
+
+TIP: The `Operator` is defined as `string` in our case, but it can also be a `char`, an `enum` or any other `object`. 
+
+[source,cs]
+----
+public class MainWindowViewModel : ViewModelBase
+{
+    // The initial value is 2. 
+    private double? _Number1 = 2;
+
+    /// <summary>
+    /// This is our Number 1
+    /// </summary>
+    public double? Number1
+    {
+        get { return _Number1; }
+        set { this.RaiseAndSetIfChanged(ref _Number1, value); }
+    }
+
+
+    // The initial value is 3.
+    private double? _Number2 = 3;
+
+    /// <summary>
+    /// This is our Number 2
+    /// </summary>
+    public double? Number2
+    {
+        get { return _Number2; }
+        set { this.RaiseAndSetIfChanged(ref _Number2, value); }
+    }
+
+
+    // The initial value is "+" (Add).
+    private string _Operator = "+";
+
+    /// <summary>
+    /// Gets or sets the operator to use. 
+    /// </summary>
+    public string Operator
+    {
+        get { return _Operator; }
+        set { this.RaiseAndSetIfChanged(ref _Operator, value); }
+    }
+
+    /// <summary>
+    /// Gets a collection of available operators
+    /// </summary>
+    public string[] AvailableMathOperators { get; } = new string[]
+    {
+        "+", "-", "*", "/"
+    };
+}
+----
+
+=== Step 2: Create the MathMultiConverter
+In the folder `Converter` add a new class called `MathMultiConverter.cs`, which implements `IMultiValueConverter` like shown below: 
+
+[source,cs]
+----
+using Avalonia.Data;
+using Avalonia.Data.Converters;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+
+namespace ValueConversionSample.Converter
+{
+    /// <summary>
+    /// This converter can calculate any number of values. 
+    /// </summary>
+    public class MathMultiConverter : IMultiValueConverter
+    {
+        public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+        {
+            // We need to validate if the provided values are valid. We need at least 3 values. 
+            // The first value is the operator and the other two values should be a double.
+            if (values.Count != 3)
+            {
+                // We can write a message into the Trace if we want to inform the user.
+                Trace.WriteLine("Exactly three values expected");
+                
+                // return "BindingOperations.DoNothing" instead of throwing an Exception.
+                // If you want, you can also return a BindingNotification with an Exception
+                return BindingOperations.DoNothing;
+            }
+
+            // The first item of values is the operation.
+            // The operation to use is stored as a string.
+            string operation = values[0] as string ?? "+";
+
+            // Create a variable result and assign the first value we have to if
+            double value1 = values[1] as double? ?? 0;
+            double value2 = values[2] as double? ?? 0;
+
+
+            // depending on the operator calculate the result.
+            switch (operation)
+            {
+                case "+":
+                    return value1 + value2;
+
+                case "-":
+                    return value1 - value2;
+
+                case "*":
+                    return value1 * value2;
+
+                case "/":
+                    // We cannot divide by zero. If value2 is '0', return an error. 
+                    if (value2 == 0)
+                    {
+                        return new BindingNotification(new DivideByZeroException("Don't do this!"), BindingErrorType.Error);
+                    }
+
+                    return value1 / value2;
+            }
+
+            // If we reach this line, something was wrong. So we return an error notification
+            return new BindingNotification(new InvalidOperationException("Something went wrong"), BindingErrorType.Error);
+        }
+    }
+}
+----
+
+IMPORTANT: The order of the `values` provided may be important like shown in our sample.  
+
+TIP: The `??` in `C#` can be used to define a default value, if the value provided is `null`. See https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator[[Microsoft Docs\]]
+
+=== Step 3: Setup the View
+
+Again we need to add a new `MathMultiConverter` into our `Resources` section:
+
+[source,xml]
+----
+<Window x:Class="ValueConversionSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="using:ValueConversionSample.Converter" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="using:ValueConversionSample.ViewModels"
+        Title="ValueConversionSample"
+        Width="500" Height="200"
+        x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Window.Resources>
+        <!--  Add the MathMultiConverter  -->
+        <conv:MathMultiConverter x:Key="MathMultiConverter" />
+    </Window.Resources>
+</Window>
+----
+
+Our view will consist of one https://docs.avaloniaui.net/docs/controls/combobox[[`ComboBox`\]] and two `NumericUpDown`-controls. In the `ComboBox` the user can select one of the available operators. 
+
+The result will be shown in another `NumericUpDown`-control, which is read-only. As we cannot convert back, a user input is not allowed here. As you can see we use a `MultiBinding` with three nested `Bindings`:
+
+[source,xml]
+----
+<Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+
+    <TextBlock Grid.Row="0" Grid.Column="0"
+                Text="Operator" />
+    <ComboBox Grid.Row="0" Grid.Column="1"
+                Items="{Binding AvailableMathOperators}"
+                SelectedItem="{Binding Operator}" />
+
+    <TextBlock Grid.Row="1" Grid.Column="0"
+                Text="Number 1" />
+    <NumericUpDown Grid.Row="1" Grid.Column="1"
+                    Value="{Binding Number1}" />
+
+    <TextBlock Grid.Row="2" Grid.Column="0"
+                Text="Number 2" />
+    <NumericUpDown Grid.Row="2" Grid.Column="1"
+                    Value="{Binding Number2}" />
+
+    <TextBlock Grid.Row="3" Grid.Column="0"
+                Text="Result" />
+    <NumericUpDown Grid.Row="3" Grid.Column="1"
+                    IsReadOnly="True">
+        <NumericUpDown.Value>
+            <MultiBinding Converter="{StaticResource MathMultiConverter}" Mode="OneWay">
+                <Binding Path="Operator" />
+                <Binding Path="Number1" />
+                <Binding Path="Number2" />
+            </MultiBinding>
+        </NumericUpDown.Value>
+    </NumericUpDown>
+</Grid>
+----
+
+WARNING: Input-controls have `Properties` that binds `TwoWay` by default, like `TextBox.Text` or `NumericUpDown.Value`. If you require a `OneWay-Binding`, you must set the https://docs.avaloniaui.net/docs/data-binding/bindings#binding-modes[[`BindingMode`\]] to `OneWay` on your own. Otherwise your App will fail when trying to set the `Binding`. 
+
+=== Step 4: See it in action
+
+In your IDE select `[Run]` or `[Debug]` to see the result in action. Try to change the value in both input boxes and the `ComboBox` and see how they update the result. 
+
+image::_docs/result_02.png[IMultiValueConverter sample]
+
 
 == Related 
 

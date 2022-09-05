@@ -33,7 +33,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Sum" />
                 <NumericUpDown Grid.Row="1" Grid.Column="1"
-                               Value="{Binding Number2, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
+                               Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
             </Grid>
         </TabItem>
 
@@ -43,7 +43,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Operator" />
                 <ComboBox Grid.Row="0" Grid.Column="1"
-                          Items="{Binding AvilableMathOperators}"
+                          Items="{Binding AvailableMathOperators}"
                           SelectedItem="{Binding Operator}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0"
@@ -57,7 +57,7 @@
                                Value="{Binding Number2}" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Sum" />
+                           Text="Result" />
                 <NumericUpDown Grid.Row="3" Grid.Column="1"
                                IsReadOnly="True">
                     <NumericUpDown.Value>

@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ValueConversionSample.Converter
 {
@@ -18,46 +15,50 @@ namespace ValueConversionSample.Converter
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
             // We need to validate if the provided values are valid. We need at least 3 values. 
-            // The first value is the operator and additionally at least 2 numbers to add are required.
-            if (values.Count < 3)
+            // The first value is the operator and the other two values should be a double.
+            if (values.Count != 3)
             {
                 // We can write a message into the Trace if we want to inform the user.
-                Trace.WriteLine("too less items provided for MathMultiConverter.");
-
+                Trace.WriteLine("Exactly three values expected");
+                
                 // return "BindingOperations.DoNothing" instead of throwing an Exception.
+                // If you want, you can also return a BindingNotification with an Exception
                 return BindingOperations.DoNothing;
             }
 
-            // The first item if values is the operation.
+            // The first item of values is the operation.
             // The operation to use is stored as a string.
-            string? operation = values[0] as string;
+            string operation = values[0] as string ?? "+";
 
-            // Create a varible result and assing the first value we have to if
-            double? result = values[1] as double?;
+            // Create a variable result and assign the first value we have to if
+            double value1 = values[1] as double? ?? 0;
+            double value2 = values[2] as double? ?? 0;
 
-            // loop over all items form i=2 to values.Count
-            for (int i = 2; i < values.Count; i++)
+
+            // depending on the operator calculate the result.
+            switch (operation)
             {
-                // depedning on the opartor calculate the result.
-                switch (operation)
-                {
-                    case "+":
-                        result += values[i] as double?;
-                        break;
-                    case "-":
-                        result -= values[i] as double?;
-                        break;
-                    case "*":
-                        result *= values[i] as double?;
-                        break;
-                    case "/":
-                        result /= values[i] as double?;
-                        break;
-                }
+                case "+":
+                    return value1 + value2;
+
+                case "-":
+                    return value1 - value2;
+
+                case "*":
+                    return value1 * value2;
+
+                case "/":
+                    // We cannot divide by zero. If value2 is '0', return an error. 
+                    if (value2 == 0)
+                    {
+                        return new BindingNotification(new DivideByZeroException("Don't do this!"), BindingErrorType.Error);
+                    }
+
+                    return value1 / value2;
             }
 
-            // finally return the result.
-            return result;
+            // If we reach this line, something was wrong. So we return an error notification
+            return new BindingNotification(new InvalidOperationException("Something went wrong"), BindingErrorType.Error);
         }
     }
 }
