@@ -42,7 +42,7 @@ If your class implements http://reference.avaloniaui.net/api/Avalonia.Data.Conve
 
 Convert:: This method will be called from your `Binding` when a new value is provided by the `Property` you bind to. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/E7851E09[[API Reference\]].
 
-ConvertBack:: This method will be called from your `Binding` when a new value is provided by the user interface and will set the bound `Property` in your `ViewModel`. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/6880ABBD[[API\]].
+ConvertBack:: This method will be called from your `Binding` when a new value is provided by the user interface and will set the bound `Property` in your `ViewModel`. For details about the parameters and return value, see the http://reference.avaloniaui.net/api/Avalonia.Data.Converters/IValueConverter/6880ABBD[[API Reference\]].
 
 WARNING: You should not throw exceptions inside your converter. If the value is not convertible, return a http://reference.avaloniaui.net/api/Avalonia.Data/BindingNotification/[[`BindingNotification`\]] in an error state or http://reference.avaloniaui.net/api/Avalonia.Data/BindingOperations/788823DA[[`BindingOperations.DoNothing`\]] if your converter should just not do anything. 
 
