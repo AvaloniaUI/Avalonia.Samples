@@ -18,7 +18,7 @@ namespace ValueConversionSample.Converter
             // The first value is the operator and the other two values should be a double.
             if (values.Count != 3)
             {
-                // We can write a message into the Trace if we want to inform the user.
+                // We can write a message into the Trace if we want to inform the developer.
                 Trace.WriteLine("Exactly three values expected");
                 
                 // return "BindingOperations.DoNothing" instead of throwing an Exception.
