@@ -81,6 +81,9 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐣 Beginner
 | Command, ICommand, CommandParameter, MVVM, ReactiveCommand, async-await
 
+| link:src/Avalonia.Samples/MVVM/ValueConversionSample[ValueConverter Sample]
+| 🐥 Easy
+| Converter, Binding, MultiBinding, IValueConverter, IMultiValueConverter, MVVM
 
 |===
 

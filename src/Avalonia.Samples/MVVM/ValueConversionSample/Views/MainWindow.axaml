@@ -12,7 +12,7 @@
         <!--  Add the MathAddConverter. Remember to add the needed namespace "conv"  -->
         <conv:MathAddConverter x:Key="MathAddConverter" />
         <!--  This Resource will be used as our ConverterParameter  -->
-        <x:Double x:Key="ConverterParameter">2</x:Double>
+        <x:Double x:Key="MyConverterParameter">2</x:Double>
 
         <!--  Add the MathMultiConverter  -->
         <conv:MathMultiConverter x:Key="MathMultiConverter" />
@@ -33,7 +33,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Sum" />
                 <NumericUpDown Grid.Row="1" Grid.Column="1"
-                               Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource ConverterParameter}}" />
+                               Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource MyConverterParameter}}" />
             </Grid>
         </TabItem>
 
