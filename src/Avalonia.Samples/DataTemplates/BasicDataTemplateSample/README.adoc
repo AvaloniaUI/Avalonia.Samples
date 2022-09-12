@@ -1,0 +1,71 @@
+= Enter the Title here
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how you can use `DataTemplates` to control how your data is displayed. You will learn how to use different `DataTemplates` for different `classes`, how to re-use existing `DataTemplates` and how to define complex `DataTemplates` in `UserControls`
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate
+
+
+
+== Before we start
+
+You should have a basic knowledge about string format in `C#` and about the `MVVM`-pattern.
+
+=== DataTemplates
+
+In Avalonia you can use https://docs.avaloniaui.net/docs/templates/data-templates[[`DataTemplates`\]] to control how your data is shown. You can define the `DataType` which the `DataTemplate` is made for. The `DataType` can be any `class` or `interface`. 
+
+=== ToString
+
+If no `DataTemplate` is found that matches your `object`, Avalonia will call `ToString()` and display the result in a `TextBlock`. You can https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-override-the-tostring-method[[override `ToString()`\]] in your own `classes`, if you want to return a custom string. 
+
+== The Solution // Approach 1 : How can one solve that topic?
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
