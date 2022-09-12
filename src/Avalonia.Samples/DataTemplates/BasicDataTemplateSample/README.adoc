@@ -22,15 +22,13 @@ toc::[]
 
 
 === Difficulty
-// Choose one of the below difficulties. You can just delete the ones you don't need.
 
 🐔 Normal 🐔
 
+
 === Buzz-Words
 
-// Write some buzz-words here. You can separate them by ", "
 DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate
-
 
 
 == Before we start
@@ -45,16 +43,195 @@ In Avalonia you can use https://docs.avaloniaui.net/docs/templates/data-template
 
 If no `DataTemplate` is found that matches your `object`, Avalonia will call `ToString()` and display the result in a `TextBlock`. You can https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-override-the-tostring-method[[override `ToString()`\]] in your own `classes`, if you want to return a custom string. 
 
-== The Solution // Approach 1 : How can one solve that topic?
+== Approach 1 : Override ToString
 
-// This is where you explain the possible solution you provide in this sample. 
-// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+In this sample we want to create a list of people in a school. 
 
-=== Step 1:
+=== Step 1: Create a new Project
 
-=== Step 2:
+Create a new Project using the `Avalonia MVVM Application`-Template.
 
-=== Step 3: 
+=== Step 2: Add the Models
+
+In a school there are students and teachers. They have in common, that they are persons having a fist name, a last name, an age and a sex. Sex is an `enum` which we have to define at first, so add a new file `Sex.cs` into your `Models` folder:
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    // Feel free to add or reorder entry based on your needs.
+    public enum Sex
+    {
+        Divers, 
+        Female, 
+        Male
+    }
+}
+----
+
+We can now add a `class` called `Person.cs` into the `Models` folder, which will be our base class for `Student` and `Teacher`. In this sample the `Properties` will be `init`-only, which means they can only be set once when the `object` is created. If you want, you can extend it from `ReactiveObject`, so you will be able to change the name, age or sex later. 
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Person
+    {
+        /// <summary>
+        /// Gets or sets the first name of the person. You can only set this property on init. 
+        /// </summary>
+        public string? FirstName { get; init; }
+
+        /// <summary>
+        /// Gets or sets the last name of the person. You can only set this property on init. 
+        /// </summary>
+        public string? LastName { get; init; }
+
+        /// <summary>
+        /// Gets or sets the age of the person. You can only set this property on init. 
+        /// </summary>
+        public int Age { get; init; }
+
+        /// <summary>
+        /// Gets or sets the sex of the person. You can only set this property on init. 
+        /// </summary>
+        public Sex Sex { get; init; }
+    }
+}
+----
+
+Now add `Student.cs`, which will be based on `Person`, but has an additional property called `Grade`: 
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Student : Person
+    {
+        /// <summary>
+        /// Gets or sets the grade of the student. You can only set this property on init. 
+        /// </summary>
+        public int Grade { get; init; }
+    }
+}
+----
+
+Last but not least add `Teacher.cs`, which will also be based on `Person`, but has an additional property called `Subject`:
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Teacher : Person
+    {
+        /// <summary>
+        /// Gets or sets the subject that the teacher is teaching. You can only set this property on init.
+        /// </summary>
+        public string? Subject { get; init; }
+    }
+}
+----
+
+=== Step 3: Add a list of Students and Teachers
+
+In the file `ViewModels ► MainWindowViewModel.cs` add a `List` of type `Person` called `People` and add one `Teacher` and two `Students` to the list: 
+
+[source,]
+----
+namespace BasicDataTemplateSample.ViewModels
+{
+    public class MainWindowViewModel : ViewModelBase
+    {
+        /// <summary>
+        /// As this is a list of Persons, we can add Students and Teachers here. 
+        /// </summary>
+        public List<Person> People { get; } = new List<Person>()
+        {
+            new Teacher
+            {
+                FirstName = "Mr.",
+                LastName = "X",
+                Age = 55,
+                Sex=Sex.Divers,
+                Subject = "My Favorite Subject"
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "World",
+                Age = 17,
+                Sex= Sex.Male,
+                Grade=12
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "Kitty",
+                Age = 12,
+                Sex= Sex.Female,
+                Grade=6
+            }
+        };
+    }
+}
+----
+
+=== Step 4: Setup the View
+
+In the file `Views ► MainWindow.axaml` add a `ListBox` and bind `Items` to `People`:
+
+[source,xml]
+----
+<Window x:Class="BasicDataTemplateSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+        Title="BasicDataTemplateSample"
+        Height="350"
+		Width="350"
+        x:CompileBindings="true"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <ListBox Items="{Binding People}" />
+
+</Window>
+----
+
+=== Step 5: Run the App
+
+Now hit `[Run]` or `[Debug]` in your IDE and see the result:
+
+image::_docs/Image_01.png[Preview of the App]
+
+You can see that all three persons are there, but the information is not really useful for us. In the next step we will fix this.
+
+=== Step 6: Override ToString
+
+In the class `Person` we will override `ToString()`. You can do the same for `Teacher` and `Student` if you want to. Just add the following lines:
+
+[source,cs]
+----
+public override string ToString()
+{
+    return $"{FirstName} {LastName} (Age: {Age}, Sex: {Sex})";
+}
+----
+
+TIP: We are using string interpolation to format the string. See the https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated[[Microsoft Docs\]] for more info.
+
+=== Step 7: Run the App again
+
+Run the App again and see the result, which is now much more useful: 
+
+image::_docs/Image_02.png[Preview of the App]
 
 
 == Related 
