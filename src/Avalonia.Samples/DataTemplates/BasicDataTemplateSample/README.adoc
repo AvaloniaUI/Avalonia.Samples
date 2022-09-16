@@ -1,4 +1,4 @@
-= Enter the Title here
+= Basic DataTemplate Sample
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
 :toc:
 :toc-placement!:
@@ -234,15 +234,208 @@ Run the App again and see the result, which is now much more useful:
 image::_docs/Image_02.png[Preview of the App]
 
 
+== Approach 2 : Create a custom DataTemplate
+
+If the result that `ToString` delivers is not enough for your use case, you can use your own `DataTemplate` for each `DataType` you have. In Avalonia you have two options to store the `DataTemplates`. You can either place them into `DataTemplates`-section or in the `Resources`-section. A `DataTemplate` inside `DataTemplates` will be applied automatically if it matches, whereas a `DataTemplate` inside `Resources` needs to be applied explicitly. We will see how that can be done in this chapter. 
+
+=== Step 1: Create a DataTemplate for "Person"
+
+In `Window.DataTemplates` we will add the following `DataTemplate`:
+
+[source,xml]
+----
+<!-- remember to add the needed namespace model -->
+<!-- xmlns:model="using:BasicDataTemplateSample.Models" -->
+<Window.DataTemplates>
+    <!--  Add a DataTemplate for any Person  -->
+    <DataTemplate DataType="model:Person">
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+            <TextBlock Grid.Row="0" Text="First Name: " />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" />
+
+            <TextBlock Grid.Row="1" Text="Last Name: " />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" />
+
+            <TextBlock Grid.Row="2" Text="Age: " />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" />
+
+            <TextBlock Grid.Row="3" Text="Sex: " />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" />
+        </Grid>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+NOTE: Also if we use `Window.DataTemplates` in this sample, it can also be `App.DataTemplates` or inside any other control.
+
+=== Step 2: Run the App
+
+We now have a much better visual representation of all people: 
+
+image::_docs/Image_03.png[]
+
+[reftext="Approach 2, Step 3"]
+[#MoreSpecificDataTemplates]
+=== Step 3: Create more specific DataTemplates
+
+But wait, `Student` and `Teacher` look exactly the same. Moreover the additional information we have about them is not visible. Let's see how we can improve this. 
+
+We want to reuse the common `DataTemplate` for `Name`, `Age` and `Sex`. If we add more specific `DataTemplates`, only the first matching `DataTemplate` will be applied. So we will move the `DataTemplate` into `Window.Resources`. That way we can call it explicitly:
+
+[source,xml]
+----
+<Window.Resources>
+    <!--  Add a DataTemplate for any Person  -->
+    <!--  We add this to the Resources section, so we can access it via it's Key explicitly.  -->
+    <DataTemplate x:Key="My.DataTemplates.Person" DataType="model:Person">
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+            <TextBlock Grid.Row="0" Text="First Name: " />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" />
+
+            <TextBlock Grid.Row="1" Text="Last Name: " />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" />
+
+            <TextBlock Grid.Row="2" Text="Age: " />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" />
+
+            <TextBlock Grid.Row="3" Text="Sex: " />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" />
+        </Grid>
+    </DataTemplate>
+</Window.Resources>
+----
+
+Now we can add the more specific `DataTemplates` for `Student` and `Teacher`. As you can see we will use a `ContentControl` where we will set `ContentTemplate` to our `DataTemplate` we have in `Resources`. 
+
+[source,xml]
+----
+<Window.DataTemplates>		
+    <!--  Add a DataTemplate for a Student  -->
+    <!--  Mind the order of the Templates. Begin with the most specific first.  -->
+    <DataTemplate DataType="model:Student">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+            <!--  We re-use the PersonTemplate here by using DynamicResource  -->
+            <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  Add a DataTemplate for a Teacher  -->
+    <DataTemplate DataType="model:Teacher">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a your teacher for: &quot;{0}&quot;'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
+        </StackPanel>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+TIP: We use `StringFormat` in the `Bindings`. if you want to know more about it, read more about it in the https://docs.avaloniaui.net/docs/data-binding/bindings#binding-stringformat[[docs\]]
+
+WARNING: The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more\]] 
+
+=== Step 4: Run it again
+
+Now our App displays the data as we want it to do:
+
+image::_docs/Image_04.png[]
+
+== Approach 3 : Place a UserControl inside a DataTemplate
+
+If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for it.  
+
+=== Step 1: Add a new UserControl
+
+Add a new `UserControl` into the `Views`-folder called "`PersonView`". In the `XAML` add the content you like to. It's very similar to how it works in a `Window`: 
+
+[source,xml]
+----
+<UserControl x:Class="BasicDataTemplateSample.Views.PersonView"
+             xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:BasicDataTemplateSample.Models" xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:CompileBindings="True" x:DataType="model:Person"
+             mc:Ignorable="d">
+    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+        <TextBlock Grid.Row="0" Text="First Name: " />
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding FirstName}" />
+
+        <TextBlock Grid.Row="1" Text="Last Name: " />
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="{Binding LastName}" />
+
+        <TextBlock Grid.Row="2" Text="Age: " />
+        <TextBlock Grid.Row="2" Grid.Column="1"
+                   Text="{Binding Age, StringFormat={}{0} years}" />
+
+        <TextBlock Grid.Row="3" Text="Sex: " />
+        <TextBlock Grid.Row="3" Grid.Column="1"
+                   Text="{Binding Sex}" />
+    </Grid>
+</UserControl>
+----
+
+=== Step 2: Add the UserControl to your DataTemplate 
+
+Let's edit the `DataTemplates` we already added in <<MoreSpecificDataTemplates>>:
+
+[source,xml]
+----
+<!-- remember to add the needed namespace view -->
+<!-- xmlns:view="using:BasicDataTemplateSample.Views" -->
+<Window.DataTemplates>		
+    <!--  Add a DataTemplate for a Student  -->
+    <!--  Mind the order of the Templates. Begin with the most specific first.  -->
+    <DataTemplate DataType="model:Student">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly-->
+            <view:PersonView />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  Add a DataTemplate for a Teacher  -->
+    <DataTemplate DataType="model:Teacher">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a your teacher for: &quot;{0}&quot;'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly-->
+            <view:PersonView />
+        </StackPanel>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+=== Step 4: Run it once again
+
+As you can see, the result is the same as before:
+
+image::_docs/Image_04.png[]
+
+
 == Related 
 
-// Any related information or further readings goes here.
+If you need more advanced `DataTemplates`, you can use `FuncDataTemplate` or implement `IDataTemplate` in your own class. 
 
-
-
-// --------------- Ascii-Doc Cheat-Sheet ------------------
-
-// visit: https://asciidoc.org 
-// visit: https://powerman.name/doc/asciidoc-compact
-
-// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
+* https://docs.avaloniaui.net/docs/templates/creating-data-templates-in-code[Creating Data Templates in Code]
+* https://docs.avaloniaui.net/docs/templates/implement-idatatemplate[Implementing IDataTemplate]
