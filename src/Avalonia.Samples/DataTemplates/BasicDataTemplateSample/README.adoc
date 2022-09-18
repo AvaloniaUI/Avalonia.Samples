@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how you can use `DataTemplates` to control how your data is displayed. You will learn how to use different `DataTemplates` for different `classes`, how to re-use existing `DataTemplates` and how to define complex `DataTemplates` in `UserControls`
+This example will show you how you can use `DataTemplates` to control how your data is displayed. You will learn how to use different `DataTemplates` for different `classes`, how to re-use existing `DataTemplates` and how to define complex `DataTemplates` using `UserControls`.
 
 
 
@@ -41,11 +41,26 @@ In Avalonia you can use https://docs.avaloniaui.net/docs/templates/data-template
 
 === ToString
 
-If no `DataTemplate` is found that matches your `object`, Avalonia will call `ToString()` and display the result in a `TextBlock`. You can https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-override-the-tostring-method[[override `ToString()`\]] in your own `classes`, if you want to return a custom string. 
+If no `DataTemplate` is found that matches your `object`, Avalonia will call `ToString()` and display the result in a `TextBlock`. You can https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-override-the-tostring-method[[override `ToString()`\]] in your own `class`, if you want to return a custom string. 
+
+=== String format
+
+If you want to learn more about possible string formats, you can find look these up in the Microsoft docs. Below you can find a list of common string formats: 
+
+* https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-6.0[General]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/formatting-types[Formatting Types in .NET]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting[Composite Formatting]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings[Standard Date and Time Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings[Custom Date and Time Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings[Standard Numeric Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings[Custom Numeric Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings[Standard TimeSpan Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings[Custom TimeSpan Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/enumeration-format-strings[Enumeration Format Strings]
 
 == Approach 1 : Override ToString
 
-In this sample we want to create a list of people in a school. 
+In this sample we want to create a list of people in a school. This can be a student, a teacher or any other person.
 
 === Step 1: Create a new Project
 
@@ -59,7 +74,7 @@ In a school there are students and teachers. They have in common, that they are 
 ----
 namespace BasicDataTemplateSample.Models
 {
-    // Feel free to add or reorder entry based on your needs.
+    // Feel free to add or reorder the entries based on your needs.
     public enum Sex
     {
         Divers, 
@@ -136,7 +151,7 @@ namespace BasicDataTemplateSample.Models
 
 In the file `ViewModels ► MainWindowViewModel.cs` add a `List` of type `Person` called `People` and add one `Teacher` and two `Students` to the list: 
 
-[source,]
+[source,cs]
 ----
 namespace BasicDataTemplateSample.ViewModels
 {
@@ -236,7 +251,7 @@ image::_docs/Image_02.png[Preview of the App]
 
 == Approach 2 : Create a custom DataTemplate
 
-If the result that `ToString` delivers is not enough for your use case, you can use your own `DataTemplate` for each `DataType` you have. In Avalonia you have two options to store the `DataTemplates`. You can either place them into `DataTemplates`-section or in the `Resources`-section. A `DataTemplate` inside `DataTemplates` will be applied automatically if it matches, whereas a `DataTemplate` inside `Resources` needs to be applied explicitly. We will see how that can be done in this chapter. 
+If the result that `ToString` delivers is not enough for your use case, you can provide your own `DataTemplate` for each `DataType` you have. In Avalonia you have several options to store a `DataTemplate`. It is most common to store them inside `DataTemplates`-section or in the `Resources`-section. A `DataTemplate` inside `DataTemplates` will be applied automatically if it matches, whereas a `DataTemplate` inside `Resources` needs to be applied explicitly. We will see how that can be done in this chapter. 
 
 === Step 1: Create a DataTemplate for "Person"
 
@@ -339,7 +354,7 @@ Now we can add the more specific `DataTemplates` for `Student` and `Teacher`. As
     <!--  Add a DataTemplate for a Teacher  -->
     <DataTemplate DataType="model:Teacher">
         <StackPanel>
-            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a your teacher for: &quot;{0}&quot;'}" />
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
             <!--  We use a UserControl here to display the data  -->
             <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
         </StackPanel>
@@ -349,7 +364,7 @@ Now we can add the more specific `DataTemplates` for `Student` and `Teacher`. As
 
 TIP: We use `StringFormat` in the `Bindings`. if you want to know more about it, read more about it in the https://docs.avaloniaui.net/docs/data-binding/bindings#binding-stringformat[[docs\]]
 
-WARNING: The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more\]] 
+WARNING: The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more in the docs\]] 
 
 === Step 4: Run it again
 
@@ -417,7 +432,7 @@ Let's edit the `DataTemplates` we already added in <<MoreSpecificDataTemplates>>
     <!--  Add a DataTemplate for a Teacher  -->
     <DataTemplate DataType="model:Teacher">
         <StackPanel>
-            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a your teacher for: &quot;{0}&quot;'}" />
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
             <!--  We use a UserControl here to display the data  -->
             <!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly-->
             <view:PersonView />

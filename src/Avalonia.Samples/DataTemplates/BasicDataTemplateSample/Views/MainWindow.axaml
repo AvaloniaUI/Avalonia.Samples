@@ -60,7 +60,7 @@
         <!--  Add a DataTemplate for a Teacher  -->
         <DataTemplate DataType="model:Teacher">
             <StackPanel>
-                <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a your teacher for: &quot;{0}&quot;'}" />
+                <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
                 <!--  We use a UserControl here to display the data  -->
                 <view:PersonView />
             </StackPanel>
