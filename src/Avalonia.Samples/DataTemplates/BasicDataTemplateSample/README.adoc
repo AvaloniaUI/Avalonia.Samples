@@ -1,0 +1,456 @@
+= Basic DataTemplate Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how you can use `DataTemplates` to control how your data is displayed. You will learn how to use different `DataTemplates` for different `classes`, how to re-use existing `DataTemplates` and how to define complex `DataTemplates` using `UserControls`.
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+
+🐔 Normal 🐔
+
+
+=== Buzz-Words
+
+DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate
+
+
+== Before we start
+
+You should have a basic knowledge about string format in `C#` and about the `MVVM`-pattern.
+
+=== DataTemplates
+
+In Avalonia you can use https://docs.avaloniaui.net/docs/templates/data-templates[[`DataTemplates`\]] to control how your data is shown. You can define the `DataType` which the `DataTemplate` is made for. The `DataType` can be any `class` or `interface`. 
+
+=== ToString
+
+If no `DataTemplate` is found that matches your `object`, Avalonia will call `ToString()` and display the result in a `TextBlock`. You can https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-override-the-tostring-method[[override `ToString()`\]] in your own `class`, if you want to return a custom string. 
+
+=== String format
+
+If you want to learn more about possible string formats, you can find look these up in the Microsoft docs. Below you can find a list of common string formats: 
+
+* https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=net-6.0[General]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/formatting-types[Formatting Types in .NET]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting[Composite Formatting]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings[Standard Date and Time Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings[Custom Date and Time Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings[Standard Numeric Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings[Custom Numeric Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings[Standard TimeSpan Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings[Custom TimeSpan Format Strings]
+* https://learn.microsoft.com/en-us/dotnet/standard/base-types/enumeration-format-strings[Enumeration Format Strings]
+
+== Approach 1 : Override ToString
+
+In this sample we want to create a list of people in a school. This can be a student, a teacher or any other person.
+
+=== Step 1: Create a new Project
+
+Create a new Project using the `Avalonia MVVM Application`-Template.
+
+=== Step 2: Add the Models
+
+In a school there are students and teachers. They have in common, that they are persons having a fist name, a last name, an age and a sex. Sex is an `enum` which we have to define at first, so add a new file `Sex.cs` into your `Models` folder:
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    // Feel free to add or reorder the entries based on your needs.
+    public enum Sex
+    {
+        Divers, 
+        Female, 
+        Male
+    }
+}
+----
+
+We can now add a `class` called `Person.cs` into the `Models` folder, which will be our base class for `Student` and `Teacher`. In this sample the `Properties` will be `init`-only, which means they can only be set once when the `object` is created. If you want, you can extend it from `ReactiveObject`, so you will be able to change the name, age or sex later. 
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Person
+    {
+        /// <summary>
+        /// Gets or sets the first name of the person. You can only set this property on init. 
+        /// </summary>
+        public string? FirstName { get; init; }
+
+        /// <summary>
+        /// Gets or sets the last name of the person. You can only set this property on init. 
+        /// </summary>
+        public string? LastName { get; init; }
+
+        /// <summary>
+        /// Gets or sets the age of the person. You can only set this property on init. 
+        /// </summary>
+        public int Age { get; init; }
+
+        /// <summary>
+        /// Gets or sets the sex of the person. You can only set this property on init. 
+        /// </summary>
+        public Sex Sex { get; init; }
+    }
+}
+----
+
+Now add `Student.cs`, which will be based on `Person`, but has an additional property called `Grade`: 
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Student : Person
+    {
+        /// <summary>
+        /// Gets or sets the grade of the student. You can only set this property on init. 
+        /// </summary>
+        public int Grade { get; init; }
+    }
+}
+----
+
+Last but not least add `Teacher.cs`, which will also be based on `Person`, but has an additional property called `Subject`:
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.Models
+{
+    public class Teacher : Person
+    {
+        /// <summary>
+        /// Gets or sets the subject that the teacher is teaching. You can only set this property on init.
+        /// </summary>
+        public string? Subject { get; init; }
+    }
+}
+----
+
+=== Step 3: Add a list of Students and Teachers
+
+In the file `ViewModels ► MainWindowViewModel.cs` add a `List` of type `Person` called `People` and add one `Teacher` and two `Students` to the list: 
+
+[source,cs]
+----
+namespace BasicDataTemplateSample.ViewModels
+{
+    public class MainWindowViewModel : ViewModelBase
+    {
+        /// <summary>
+        /// As this is a list of Persons, we can add Students and Teachers here. 
+        /// </summary>
+        public List<Person> People { get; } = new List<Person>()
+        {
+            new Teacher
+            {
+                FirstName = "Mr.",
+                LastName = "X",
+                Age = 55,
+                Sex=Sex.Divers,
+                Subject = "My Favorite Subject"
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "World",
+                Age = 17,
+                Sex= Sex.Male,
+                Grade=12
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "Kitty",
+                Age = 12,
+                Sex= Sex.Female,
+                Grade=6
+            }
+        };
+    }
+}
+----
+
+=== Step 4: Setup the View
+
+In the file `Views ► MainWindow.axaml` add a `ListBox` and bind `Items` to `People`:
+
+[source,xml]
+----
+<Window x:Class="BasicDataTemplateSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+        Title="BasicDataTemplateSample"
+        Height="350"
+		Width="350"
+        x:CompileBindings="true"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <ListBox Items="{Binding People}" />
+
+</Window>
+----
+
+=== Step 5: Run the App
+
+Now hit `[Run]` or `[Debug]` in your IDE and see the result:
+
+image::_docs/Image_01.png[Preview of the App]
+
+You can see that all three persons are there, but the information is not really useful for us. In the next step we will fix this.
+
+=== Step 6: Override ToString
+
+In the class `Person` we will override `ToString()`. You can do the same for `Teacher` and `Student` if you want to. Just add the following lines:
+
+[source,cs]
+----
+public override string ToString()
+{
+    return $"{FirstName} {LastName} (Age: {Age}, Sex: {Sex})";
+}
+----
+
+TIP: We are using string interpolation to format the string. See the https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated[[Microsoft Docs\]] for more info.
+
+=== Step 7: Run the App again
+
+Run the App again and see the result, which is now much more useful: 
+
+image::_docs/Image_02.png[Preview of the App]
+
+
+== Approach 2 : Create a custom DataTemplate
+
+If the result that `ToString` delivers is not enough for your use case, you can provide your own `DataTemplate` for each `DataType` you have. In Avalonia you have several options to store a `DataTemplate`. It is most common to store them inside `DataTemplates`-section or in the `Resources`-section. A `DataTemplate` inside `DataTemplates` will be applied automatically if it matches, whereas a `DataTemplate` inside `Resources` needs to be applied explicitly. We will see how that can be done in this chapter. 
+
+=== Step 1: Create a DataTemplate for "Person"
+
+In `Window.DataTemplates` we will add the following `DataTemplate`:
+
+[source,xml]
+----
+<!-- remember to add the needed namespace model -->
+<!-- xmlns:model="using:BasicDataTemplateSample.Models" -->
+<Window.DataTemplates>
+    <!--  Add a DataTemplate for any Person  -->
+    <DataTemplate DataType="model:Person">
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+            <TextBlock Grid.Row="0" Text="First Name: " />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" />
+
+            <TextBlock Grid.Row="1" Text="Last Name: " />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" />
+
+            <TextBlock Grid.Row="2" Text="Age: " />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" />
+
+            <TextBlock Grid.Row="3" Text="Sex: " />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" />
+        </Grid>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+NOTE: Also if we use `Window.DataTemplates` in this sample, it can also be `App.DataTemplates` or inside any other control.
+
+=== Step 2: Run the App
+
+We now have a much better visual representation of all people: 
+
+image::_docs/Image_03.png[]
+
+[reftext="Approach 2, Step 3"]
+[#MoreSpecificDataTemplates]
+=== Step 3: Create more specific DataTemplates
+
+But wait, `Student` and `Teacher` look exactly the same. Moreover the additional information we have about them is not visible. Let's see how we can improve this. 
+
+We want to reuse the common `DataTemplate` for `Name`, `Age` and `Sex`. If we add more specific `DataTemplates`, only the first matching `DataTemplate` will be applied. So we will move the `DataTemplate` into `Window.Resources`. That way we can call it explicitly:
+
+[source,xml]
+----
+<Window.Resources>
+    <!--  Add a DataTemplate for any Person  -->
+    <!--  We add this to the Resources section, so we can access it via it's Key explicitly.  -->
+    <DataTemplate x:Key="My.DataTemplates.Person" DataType="model:Person">
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+            <TextBlock Grid.Row="0" Text="First Name: " />
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" />
+
+            <TextBlock Grid.Row="1" Text="Last Name: " />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" />
+
+            <TextBlock Grid.Row="2" Text="Age: " />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" />
+
+            <TextBlock Grid.Row="3" Text="Sex: " />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" />
+        </Grid>
+    </DataTemplate>
+</Window.Resources>
+----
+
+Now we can add the more specific `DataTemplates` for `Student` and `Teacher`. As you can see we will use a `ContentControl` where we will set `ContentTemplate` to our `DataTemplate` we have in `Resources`. 
+
+[source,xml]
+----
+<Window.DataTemplates>		
+    <!--  Add a DataTemplate for a Student  -->
+    <!--  Mind the order of the Templates. Begin with the most specific first.  -->
+    <DataTemplate DataType="model:Student">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+            <!--  We re-use the PersonTemplate here by using DynamicResource  -->
+            <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  Add a DataTemplate for a Teacher  -->
+    <DataTemplate DataType="model:Teacher">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
+        </StackPanel>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+TIP: We use `StringFormat` in the `Bindings`. if you want to know more about it, read more about it in the https://docs.avaloniaui.net/docs/data-binding/bindings#binding-stringformat[[docs\]]
+
+WARNING: The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more in the docs\]] 
+
+=== Step 4: Run it again
+
+Now our App displays the data as we want it to do:
+
+image::_docs/Image_04.png[]
+
+== Approach 3 : Place a UserControl inside a DataTemplate
+
+If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for it.  
+
+=== Step 1: Add a new UserControl
+
+Add a new `UserControl` into the `Views`-folder called "`PersonView`". In the `XAML` add the content you like to. It's very similar to how it works in a `Window`: 
+
+[source,xml]
+----
+<UserControl x:Class="BasicDataTemplateSample.Views.PersonView"
+             xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:BasicDataTemplateSample.Models" xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:CompileBindings="True" x:DataType="model:Person"
+             mc:Ignorable="d">
+    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+        <TextBlock Grid.Row="0" Text="First Name: " />
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding FirstName}" />
+
+        <TextBlock Grid.Row="1" Text="Last Name: " />
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="{Binding LastName}" />
+
+        <TextBlock Grid.Row="2" Text="Age: " />
+        <TextBlock Grid.Row="2" Grid.Column="1"
+                   Text="{Binding Age, StringFormat={}{0} years}" />
+
+        <TextBlock Grid.Row="3" Text="Sex: " />
+        <TextBlock Grid.Row="3" Grid.Column="1"
+                   Text="{Binding Sex}" />
+    </Grid>
+</UserControl>
+----
+
+=== Step 2: Add the UserControl to your DataTemplate 
+
+Let's edit the `DataTemplates` we already added in <<MoreSpecificDataTemplates>>:
+
+[source,xml]
+----
+<!-- remember to add the needed namespace view -->
+<!-- xmlns:view="using:BasicDataTemplateSample.Views" -->
+<Window.DataTemplates>		
+    <!--  Add a DataTemplate for a Student  -->
+    <!--  Mind the order of the Templates. Begin with the most specific first.  -->
+    <DataTemplate DataType="model:Student">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly-->
+            <view:PersonView />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  Add a DataTemplate for a Teacher  -->
+    <DataTemplate DataType="model:Teacher">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
+            <!--  We use a UserControl here to display the data  -->
+            <!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly-->
+            <view:PersonView />
+        </StackPanel>
+    </DataTemplate>
+</Window.DataTemplates>
+----
+
+=== Step 4: Run it once again
+
+As you can see, the result is the same as before:
+
+image::_docs/Image_04.png[]
+
+
+== Related 
+
+If you need more advanced `DataTemplates`, you can use `FuncDataTemplate` or implement `IDataTemplate` in your own class. 
+
+* https://docs.avaloniaui.net/docs/templates/creating-data-templates-in-code[Creating Data Templates in Code]
+* https://docs.avaloniaui.net/docs/templates/implement-idatatemplate[Implementing IDataTemplate]

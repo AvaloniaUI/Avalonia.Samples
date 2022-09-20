@@ -1,0 +1,73 @@
+<Window x:Class="BasicDataTemplateSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="using:BasicDataTemplateSample.Models"
+        xmlns:view="using:BasicDataTemplateSample.Views"
+        xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+        Title="BasicDataTemplateSample"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:CompileBindings="true"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <!--  Add a DataTemplate for any Person  -->
+        <!--  We add this to the Resources section, so we can access it via it's Key explicitly.  -->
+        <DataTemplate x:Key="My.DataTemplates.Person" DataType="model:Person">
+            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                <TextBlock Grid.Row="0" Text="First Name: " />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding FirstName}" />
+
+                <TextBlock Grid.Row="1" Text="Last Name: " />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding LastName}" />
+
+                <TextBlock Grid.Row="2" Text="Age: " />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding Age, StringFormat={}{0} years}" />
+
+                <TextBlock Grid.Row="3" Text="Sex: " />
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding Sex}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.DataTemplates>
+        <!--  Add a DataTemplate for a Student  -->
+        <!--  Mind the order of the Templates. Begin with the most specific first.  -->
+        <DataTemplate DataType="model:Student">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+                <!--  We re-use the PersonTemplate here by using DynamicResource  -->
+                <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!--  Add a DataTemplate for a Teacher  -->
+        <DataTemplate DataType="model:Teacher">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
+                <!--  We use a UserControl here to display the data  -->
+                <view:PersonView />
+            </StackPanel>
+        </DataTemplate>
+
+    </Window.DataTemplates>
+
+    <ListBox Items="{Binding People}" />
+
+</Window>
