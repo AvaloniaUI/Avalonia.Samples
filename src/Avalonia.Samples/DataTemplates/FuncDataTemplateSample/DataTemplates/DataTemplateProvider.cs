@@ -17,14 +17,22 @@ namespace FuncDataTemplateSample.DataTemplates
     public static class DataTemplateProvider
     {
         // This FuncDataTemplate can be static, as it will not change over time.
-        public static FuncDataTemplate<Person> GenderDataTemplate { get; } = new FuncDataTemplate<Person>(
-            // Avalonia will provide the Person and the NameScope. We can use both to build up the DataTemplate.
-            (person, nameScope) =>
+        public static FuncDataTemplate<Person> GenderDataTemplate { get; } 
+            = new FuncDataTemplate<Person>(
+                // Check if we have a valid object and return true if it is valid. 
+                (person) => person is not null,
+
+                // Avalonia will provide the Person automatically as the functions parameter.
+                BuildGenderPresenter);
+
+
+        // This private function will return a control that represents our persons sex as a gender symbol.
+        private static IControl BuildGenderPresenter(Person person)
         {
             // Create a new Path as a presenter. You can also use any other control
             Path path = new Path()
             {
-                Width = 32, 
+                Width = 32,
                 Height = 32,
 
                 // We set Stretch to Uniform. That way our Path will be made as big as needed while keeping the aspect ratio.
@@ -40,7 +48,7 @@ namespace FuncDataTemplateSample.DataTemplates
                 case Sex.Divers:
                     // We use StreamGeometry.Parse() to get the needed Data.
                     path.Data = StreamGeometry.Parse("M 0,9.3750041 A 9.375,9.375 0 0 1 9.375,4.0698515e-6 h 56.25 A 9.375,9.375 0 0 1 65.625,18.750004 H 32.00625 L 65.625,52.368754 77.7375,40.237504 a 9.3868425,9.3868425 0 1 1 13.275,13.275 l -12.13125,12.1125 15.4125,15.4125 A 74.8125,74.8125 0 0 1 150,56.250004 c 22.125,0 41.98125,9.5625 55.70625,24.7875 l 62.2875,-62.2875 H 215.625 a 9.375,9.375 0 0 1 0,-18.7499999301485 h 75 A 9.375,9.375 0 0 1 300,9.3750041 V 84.375004 a 9.375,9.375 0 0 1 -18.75,0 v -52.36875 l -64.6875,64.6875 A 75,75 0 0 1 159.375,205.6875 V 243.75 H 187.5 a 9.375,9.375 0 0 1 0,18.75 h -28.125 v 28.125 a 9.375,9.375 0 0 1 -18.75,0 V 262.5 H 112.5 a 9.375,9.375 0 0 1 0,-18.75 h 28.125 V 205.6875 A 75,75 0 0 1 83.4375,96.675004 L 65.625,78.881254 53.5125,91.012504 a 9.3868425,9.3868425 0 1 1 -13.275,-13.275 L 52.36875,65.625004 18.75,32.006254 v 33.61875 a 9.375,9.375 0 0 1 -18.75,0 z M 102.9375,100.425 a 56.258862,56.258862 0 1 0 94.125,61.65 56.258862,56.258862 0 0 0 -94.125,-61.65 z");
-                    
+
                     // We can set Fill to any Brush. We can also look a Brush up in Resources, if needed. 
                     path.Fill = new LinearGradientBrush
                     {
@@ -71,6 +79,6 @@ namespace FuncDataTemplateSample.DataTemplates
             }
 
             return path;
-        });
+        }
     }
 }
