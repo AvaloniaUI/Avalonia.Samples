@@ -17,7 +17,7 @@ namespace BasicDataTemplateSample.ViewModels
                 FirstName = "Mr.",
                 LastName = "X",
                 Age = 55,
-                Sex=Sex.Divers,
+                Sex=Sex.Diverse,
                 Subject = "My Favorite Subject"
             },
             new Student
