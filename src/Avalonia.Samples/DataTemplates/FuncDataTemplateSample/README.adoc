@@ -83,7 +83,7 @@ Sex.cs::
 // Feel free to add or reorder the entries based on your needs.
 public enum Sex
 {
-    Divers,
+    Diverse,
     Female,
     Male
 }
@@ -101,7 +101,7 @@ public List<Person> People { get; } = new List<Person>()
     {
         FirstName = "Mr.",
         LastName = "X",
-        Sex=Sex.Divers
+        Sex=Sex.Diverse
     },
     new Person
     {
@@ -148,7 +148,7 @@ private static IControl BuildGenderPresenter(Person person)
 
     switch (person.Sex)
     {
-        case Sex.Divers:
+        case Sex.Diverse:
             // We use StreamGeometry.Parse() to get the needed Data.
             path.Data = StreamGeometry.Parse("...");
 

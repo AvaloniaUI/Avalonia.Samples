@@ -14,7 +14,7 @@ namespace FuncDataTemplateSample.ViewModels
             {
                 FirstName = "Mr.",
                 LastName = "X",
-                Sex=Sex.Divers
+                Sex=Sex.Diverse
             },
             new Person
             {
