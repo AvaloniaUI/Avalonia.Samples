@@ -77,7 +77,7 @@ namespace BasicDataTemplateSample.Models
     // Feel free to add or reorder the entries based on your needs.
     public enum Sex
     {
-        Divers, 
+        Diverse, 
         Female, 
         Male
     }
@@ -167,7 +167,7 @@ namespace BasicDataTemplateSample.ViewModels
                 FirstName = "Mr.",
                 LastName = "X",
                 Age = 55,
-                Sex=Sex.Divers,
+                Sex=Sex.Diverse,
                 Subject = "My Favorite Subject"
             },
             new Student
