@@ -1,0 +1,36 @@
+<Window x:Class="FuncDataTemplateSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dataTemplates="using:FuncDataTemplateSample.DataTemplates"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:FuncDataTemplateSample.Models"
+        xmlns:vm="using:FuncDataTemplateSample.ViewModels"
+        Title="FuncDataTemplateSample"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:CompileBindings="True"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <ListBox Items="{Binding People}">
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="models:Person">
+                <Grid ColumnDefinitions="Auto, *">
+                    <!--  We can use x:Static to reference a static property of any class.  -->
+                    <ContentControl Content="{Binding}" ContentTemplate="{x:Static dataTemplates:DataTemplateProvider.GenderDataTemplate}" />
+                    <TextBlock Grid.Column="1"
+                               Margin="10,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding}" />
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+
+</Window>

@@ -98,6 +98,10 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐔 Normal
 | DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate
 
+| link:src/Avalonia.Samples/DataTemplates/FuncDataTemplateSample[FuncDataTemplate Sample]
+| 🐔 Normal
+| FuncDataTemplate, DataTemplate, C#, Binding from code
+
 |===
 
 == 🪛 Contribution
