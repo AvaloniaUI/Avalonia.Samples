@@ -1,0 +1,75 @@
+= Implementing IDataTemplate Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to implement `IDataTemplate` in your own class to have full control over your `DataTemplates`. Other than in WPF, Avalonia does *not* have a https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0[[`DataTemplateSelector`\]]. Therefore you will learn in this sample how you can mimic this in Avalonia if needed.
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+IDataTemplate, DataTemplate, DataTemplateSelector
+
+
+
+== Before we start
+
+You should already have a basic knowledge of `DataTemplates`.
+
+=== IDataTemplate
+
+http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/[[`IDataTemplate`\]] is an interface which you can implement into your own class in order to be used as a `DataTemplate`. It has the following members:
+
+bool Match(object)::
+Use this function to return if the given object matches to your `DataTemplate`.
+
+IControl Build(object)::
+Use this function to build the control which represents the given object.
+
+
+== The Solution
+
+We will create a convenient way to select a matching `DataTemplate` based on an `enum` value. The possible `DataTemplates` can be defined in `XAML` which should feel familiar to most developers. 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
