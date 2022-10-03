@@ -102,6 +102,10 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐔 Normal
 | FuncDataTemplate, DataTemplate, C#, Binding from code
 
+| link:src/Avalonia.Samples/DataTemplates/IDataTemplateSample[Implementing IDataTemplate Sample]
+| 🐔 Normal
+| IDataTemplate, DataTemplate, DataTemplateSelector
+
 |===
 
 == 🪛 Contribution
