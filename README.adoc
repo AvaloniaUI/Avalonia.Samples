@@ -139,7 +139,7 @@ IMPORTANT: If you change the difficulty or the buzz-words, remember to also upda
 
 We are participating in https://hacktoberfest.com[[Hacktoberfest 2022\]]. If you submit a valid pull request within this month, we will add the `HACKTOBERFEST-ACCEPTED` label to your PR. Read more about it and how to participate https://hacktoberfest.com/participation/[[here\]]
 
-Valid PRs are: 
+Valid PRs are::
 - Adding a new sample
 - Fixing an existing sample
 - Improve an existing sample
