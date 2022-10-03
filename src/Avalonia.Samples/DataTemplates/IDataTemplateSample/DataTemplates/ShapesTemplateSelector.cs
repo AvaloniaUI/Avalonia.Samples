@@ -33,7 +33,7 @@ namespace IDataTemplateSample.DataTemplates
             // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
             var key = data.ToString();
 
-            return data is ShapeType                      // the provided data needs to be our enum type
+            return data is ShapeType                       // the provided data needs to be our enum type
                    && !string.IsNullOrEmpty(key)           // and the key must not be null or empty
                    && AvailableTemplates.ContainsKey(key); // and the key must be found in our Dictionary
         }

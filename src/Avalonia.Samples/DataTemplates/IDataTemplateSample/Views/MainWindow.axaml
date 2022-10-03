@@ -52,7 +52,6 @@
     </Window.DataTemplates>
 
     <StackPanel>
-
         <TextBlock Text="Select a Shape" />
 
         <ComboBox Items="{Binding AvailableShapes}"

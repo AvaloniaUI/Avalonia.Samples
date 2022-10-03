@@ -23,6 +23,6 @@ namespace IDataTemplateSample.ViewModels
         /// <summary>
         ///  Gets an array of all available ShapeTypes
         /// </summary>
-        public ShapeType[] AvailableShapes { get; } = (ShapeType[])Enum.GetValues(typeof(ShapeType));
+        public ShapeType[] AvailableShapes { get; } = Enum.GetValues<ShapeType>();
     }
 }
