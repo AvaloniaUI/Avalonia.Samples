@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to implement `IDataTemplate` in your own class to have full control over your `DataTemplates`. Other than in WPF, Avalonia does *not* have a https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0[[`DataTemplateSelector`\]]. Therefore you will learn in this sample how you can mimic this in Avalonia if needed.
+This example will show you how to implement `IDataTemplate` in your own class to have full control over your `DataTemplates`. Other than WPF, Avalonia does *not* have a https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0[[`DataTemplateSelector`\]]. Therefore you will learn in this sample how you can mimic it's behavior in Avalonia, if needed.
 
 
 
@@ -54,9 +54,11 @@ Use this function to build the control which represents the given object.
 
 We will create a convenient way to select a matching `DataTemplate` based on an `enum` value. The possible `DataTemplates` can be defined in `XAML` which should feel familiar to most developers. 
 
+NOTE: Also if we use an `enum` in this sample, it can be any object in your implementation.
+
 === Step 1: Create a new Avalonia Project
 
-Create a new Project using the `MVVM-Template`. 
+Create a new Project using the `Avalonia MVVM Project` template. 
 
 === Step 2: Setup the Model
 
@@ -105,9 +107,9 @@ NOTE: To get the array of available enum members we can use `Enum.GetValues`. Le
 
 === Step 4: Add the DataTemplateSelector
 
-Add a new directory called `DataTemplates`. Inside this directory add a new file called `ShapesTemplateSelector.cs`. This class should implement `IDataTemplate`. We will use a `Dictionary` where the `keys` are a `string` and the values are of type `IDataTemplate`. This dictionary will be decorated with the `ContentAttribute` which will make it easy to add several items in the `XAML` later. 
+Add a new directory called `DataTemplates`. Inside this directory add a new file called `ShapesTemplateSelector.cs`. This class should implement `IDataTemplate`. We will use a `Dictionary` where the `keys` are a `string` and the values are of type `IDataTemplate`. This dictionary will be decorated with the http://reference.avaloniaui.net/api/Avalonia.Metadata/ContentAttribute/[[`ContentAttribute`\]] which will make it easy to add several items in the `XAML` later. 
 
-We need to implement <<IDataTemplate>> in this class. Inside the `Match`-function we will check if the provided item is inside our `Dictionary`. If that is the case can use `Build` to build the control. As The values of our `Dictionary` are `IDataTemplates` on their own, we can just call their `Build`-function and return the result. 
+We need to implement <<IDataTemplate>> in this class. Inside the `Match`-function we will check if the provided item is inside our `Dictionary`. If that is the case can use `Build` to build the control. As the values of our `Dictionary` are `IDataTemplates` on their own, we can just call their `Build`-function and return the result. 
 
 [source,cs]
 ----
@@ -142,7 +144,7 @@ public class ShapesTemplateSelector : IDataTemplate
         // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
         var key = data.ToString();
 
-        return data is ShapeType                       // the provided data needs to be our enum type
+        return data is ShapeType                        // the provided data needs to be our enum type
                 && !string.IsNullOrEmpty(key)           // and the key must not be null or empty
                 && AvailableTemplates.ContainsKey(key); // and the key must be found in our Dictionary
     }
@@ -195,7 +197,9 @@ xmlns:dataTemplates="using:IDataTemplateSample.DataTemplates" -->
 
 NOTE: Each item in the `Dictionary` must have an `x:Key`. This key must represent the name of the `enum`-member in our case.
 
-Now we can add the content we like. In our case we just add a `TextBlock` and a `ComboBox`:
+NOTE: You can also define the `ShapesTemplateSelector` in `App.DataTemplates` or any other `DataTemplates` section.
+
+Now we can add the content we like to our `Window`. In our case we just add a `TextBlock` and a `ComboBox`:
 
 [source,xml]
 ----
@@ -216,4 +220,4 @@ image::_docs/Result.png[Result]
 
 == Related 
 
-You can also implement `IDataTemplate` if you want to create your own `ViewLocator`. If you use the Avalonia MVVM-Template a file called `ViewLocator.cs` is created for you. You can change or extend it to your needs. 
+You can also implement `IDataTemplate` if you want to create your own `ViewLocator`. If you use the Avalonia MVVM-Template a file called `ViewLocator.cs` is created for you. You can change or extend it to your needs. We will cover this topic in a different sample. 
