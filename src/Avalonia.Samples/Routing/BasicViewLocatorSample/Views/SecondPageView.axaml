@@ -1,0 +1,35 @@
+<UserControl x:Class="BasicViewLocatorSample.Views.SecondPageView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="vm:SecondPageViewModel"
+             mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:SecondPageViewModel />
+    </Design.DataContext>
+
+    <StackPanel VerticalAlignment="Center" Spacing="5" MaxWidth="350">
+        <TextBlock VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Enter your Credentials"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
+        <TextBox VerticalAlignment="Center"
+                 FontSize="16"
+                 Text="{Binding MailAddress}"
+                 Watermark="E-Mail Address"
+				 UseFloatingWatermark="True"/>
+		<TextBox VerticalAlignment="Center"
+                 FontSize="16"
+				 PasswordChar="$"
+                 Text="{Binding Password}"
+                 Watermark="Password"
+				 UseFloatingWatermark="True"/>
+    </StackPanel>
+</UserControl>
