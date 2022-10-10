@@ -1,0 +1,123 @@
+= Basic ViewLocator Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how use the build-in `ViewLocator` to change the contents of your UI.
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+ViewLocator, Routing, Wizard, Navigation, Page, MVVM
+
+
+== Before we start
+
+You should already know what the `MVVM` Pattern is and what `DataTemplates` in Avalonia do. If these are new to you, please study the samples provided here:
+* https://github.com/AvaloniaUI/Avalonia.Samples#mvvm-samples[[MVVM-Samples\]]
+* https://github.com/AvaloniaUI/Avalonia.Samples#%EF%B8%8F-datatemplate-samples[[DataTemplate-Samples\]]
+
+
+=== What is a ViewLocator?
+
+A `ViewLocator` is a class that helps the user interface to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
+
+If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs`:
+
+[source,cs]
+----
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
+using BasicViewLocatorSample.ViewModels;
+using System;
+
+namespace BasicViewLocatorSample
+{
+    public class ViewLocator : IDataTemplate
+    {
+        public IControl Build(object data)
+        {
+            var name = data.GetType().FullName!.Replace("ViewModel", "View");
+            var type = Type.GetType(name);
+
+            if (type != null)
+            {
+                return (Control)Activator.CreateInstance(type)!;
+            }
+            else
+            {
+                return new TextBlock { Text = "Not Found: " + name };
+            }
+        }
+
+        public bool Match(object data)
+        {
+            return data is ViewModelBase;
+        }
+    }
+}
+----
+
+Let's see what the ViewLocator does.
+
+bool Match(object data)::
+This function will return `true` id the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
+
+IControl Build(object data)::
+This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` belonging the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
++
+`MyAppsNameSpace.ViewModels.MyViewModel`
++
+Now all occurrences of `ViewModel` will be replaced by `View`:
++
+`MyAppsNameSpace.Views.MyView`
++
+In the next step we try to get a `Type` of object with the given name. If we found such a `Type`, we will create and return a new instance of the given `Type`. If we didn't find a matching `Type`, we return a `TextBlock` with a not found message. 
+
+
+== The Solution // Approach 1 : How can one solve that topic?
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
