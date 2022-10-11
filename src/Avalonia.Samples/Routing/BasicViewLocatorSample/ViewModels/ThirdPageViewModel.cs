@@ -6,15 +6,23 @@ using System.Threading.Tasks;
 
 namespace BasicViewLocatorSample.ViewModels
 {
-    public class ThirdPageViewModel : ViewModelBase, IPageNavigation
+    public class ThirdPageViewModel : PageViewModelBase
     {
-        // This is the last page, so we cannot navigate next in our sample. 
-        public bool CanNavigateNext => false;
-
-        // We navigate back form this page in any case
-        public bool CanNavigatePrevious => true;
-
         // The message to display
         public string Message => "Done";
+
+        // This is the last page, so we cannot navigate next in our sample. 
+        public override bool CanNavigateNext
+        {
+            get => false;
+            protected set => throw new NotSupportedException();
+        }
+
+        // We navigate back form this page in any case
+        public override bool CanNavigatePrevious
+        {
+            get => true;
+            protected set => throw new NotSupportedException();
+        }
     }
 }

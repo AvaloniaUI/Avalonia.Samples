@@ -9,7 +9,7 @@ namespace BasicViewLocatorSample.ViewModels
     /// <summary>
     ///  This is our ViewModel for the first page
     /// </summary>
-    public class FirstPageViewModel : ViewModelBase, IPageNavigation
+    public class FirstPageViewModel : PageViewModelBase
     {
         /// <summary>
         /// The Title of this page
@@ -22,9 +22,17 @@ namespace BasicViewLocatorSample.ViewModels
         public string Message => "Press \"Next\" to register yourself.";
 
         // This is our first page, so we can navigate to the next page in any case
-        public bool CanNavigateNext => true;
+        public override bool CanNavigateNext 
+        { 
+            get => true;
+            protected set => throw new NotSupportedException(); 
+        }
 
         // You cannot go back from this page
-        public bool CanNavigatePrevious => false;
+        public override bool CanNavigatePrevious
+        {
+            get => false;
+            protected set => throw new NotSupportedException();
+        }
     }
 }

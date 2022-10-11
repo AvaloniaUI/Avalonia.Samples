@@ -17,7 +17,7 @@
     </Design.DataContext>
 
     <Grid RowDefinitions="*,Auto" Margin="10">
-        <ContentControl Content="{Binding CurrentPage}" />
+        <TransitioningContentControl Content="{Binding CurrentPage}" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5"
 					HorizontalAlignment="Right">

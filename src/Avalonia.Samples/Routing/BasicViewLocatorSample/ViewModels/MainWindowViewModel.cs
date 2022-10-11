@@ -21,7 +21,7 @@ namespace BasicViewLocatorSample.ViewModels
         }
 
         // A read.only array of possible pages
-        private readonly IPageNavigation[] Pages = 
+        private readonly PageViewModelBase[] Pages = 
         { 
             new FirstPageViewModel(),
             new SecondPageViewModel(),
@@ -32,12 +32,12 @@ namespace BasicViewLocatorSample.ViewModels
         private int _CurrentPageIndex;
 
         // The default is the first page
-        private IPageNavigation _CurrentPage;
+        private PageViewModelBase _CurrentPage;
 
         /// <summary>
         /// Gets the current page. The property is read-only
         /// </summary>
-        public IPageNavigation CurrentPage
+        public PageViewModelBase CurrentPage
         {
             get { return _CurrentPage; }
             private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }

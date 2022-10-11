@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasicViewLocatorSample.ViewModels
 {
-    public class SecondPageViewModel : ViewModelBase, IPageNavigation
+    public class SecondPageViewModel : PageViewModelBase
     {
         public SecondPageViewModel()
         {
@@ -48,19 +48,23 @@ namespace BasicViewLocatorSample.ViewModels
         private bool _CanNavigateNext;
 
         // For this page the user can only go to the next page if all fields are valid. So we need a private setter.
-        public bool CanNavigateNext
+        public override bool CanNavigateNext
         {
             get { return _CanNavigateNext; }
-            private set { this.RaiseAndSetIfChanged(ref _CanNavigateNext, value); }
+            protected set { this.RaiseAndSetIfChanged(ref _CanNavigateNext, value); }
         }
 
 
         // We allow navigate back in any case
-        public bool CanNavigatePrevious => true;
+        public override bool CanNavigatePrevious
+        {
+            get => true;
+            protected set => throw new NotSupportedException();
+        }
 
+        // Update CanNavigateNext. Allow next page if E-Mail and Password are valid
         private void UpdateCanNavigateNext()
         {
-            // Update CanNavigateNext
             CanNavigateNext = 
                    !string.IsNullOrEmpty(_MailAddress) 
                 && _MailAddress.Contains("@")

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 namespace BasicViewLocatorSample.ViewModels
 {
     /// <summary>
-    /// An interface for page navigation.
+    /// An abstract class for enabling page navigation.
     /// </summary>
-    public interface IPageNavigation
+    public abstract class PageViewModelBase : ViewModelBase
     {
         /// <summary>
         /// Gets if the user can navigate to the next page
         /// </summary>
-        bool CanNavigateNext { get; }
+        public abstract bool CanNavigateNext { get; protected set; }
 
         /// <summary>
         /// Gets if the user can navigate to the previous page
         /// </summary>
-        bool CanNavigatePrevious { get; }
+        public abstract bool CanNavigatePrevious { get; protected set; }
     }
 }

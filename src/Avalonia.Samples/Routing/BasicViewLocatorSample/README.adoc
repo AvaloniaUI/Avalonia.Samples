@@ -10,7 +10,6 @@
 // ----------------------------------------------------------
 
 
-
 // Write a short summary here what this examples does
 This example will show you how use the build-in `ViewLocator` to change the contents of your UI.
 
@@ -44,16 +43,16 @@ You should already know what the `MVVM` Pattern is and what `DataTemplates` in A
 
 A `ViewLocator` is a class that helps the user interface to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
 
-If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs`:
+If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs` was created. This is how it looks like:
 
 [source,cs]
 ----
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using BasicViewLocatorSample.ViewModels;
+using MyNameSpace.ViewModels;
 using System;
 
-namespace BasicViewLocatorSample
+namespace MyNameSpace
 {
     public class ViewLocator : IDataTemplate
     {
@@ -86,7 +85,7 @@ bool Match(object data)::
 This function will return `true` id the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
 
 IControl Build(object data)::
-This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` belonging the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
+This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
 +
 `MyAppsNameSpace.ViewModels.MyViewModel`
 +
@@ -94,20 +93,175 @@ Now all occurrences of `ViewModel` will be replaced by `View`:
 +
 `MyAppsNameSpace.Views.MyView`
 +
-In the next step we try to get a `Type` of object with the given name. If we found such a `Type`, we will create and return a new instance of the given `Type`. If we didn't find a matching `Type`, we return a `TextBlock` with a not found message. 
+In the next step the `ViewLocator` tries to get a `Type` of object with the given name. If it found such a `Type`, it will create and return a new instance of the given `Type`. If we didn't find a matching `Type`, we return a `TextBlock` with a not found message. 
 
+NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and have "ViewModel" inside it's name. The `View` on the other hand must be in the `Views`-folder and have `View` in it's name. If you don't like this convention, feel free to change it to your needs. 
+
+=== Where do I find the ViewLocator instance? 
+
+By default a new instance of the `ViewLocator` is created inside the `App.axaml` file. See the `DataTemplates`-node: 
+
+[source,xml]
+----
+<!-- remember to add: xmlns:local="using:MyNameSpace" -->
+<Application.DataTemplates>
+    <local:ViewLocator/>
+</Application.DataTemplates>
+----
+
+If no other `DataTemplate` matches your object, this instance of the `ViewLocator` will be called. 
+
+=== Can I have more than one ViewLocator?
+
+Sometimes your `ViewModels` and `Views` may be stored in a shared library. If that is the case, you can add several `ViewLocator` classes. Just remember to initiate each one in `App.DataTemplates`.
 
 == The Solution // Approach 1 : How can one solve that topic?
 
-// This is where you explain the possible solution you provide in this sample. 
-// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+In this sample we will create a simple Wizard that consists of three pages. The user can navigate forward and backward. 
 
-=== Step 1:
+=== Step 1: Create a new Project
 
-=== Step 2:
+Create a new project using the "Avalonia MVVM Template"
 
-=== Step 3: 
+[#base-class]
+=== Step 2: Add a base class for the Page-ViewModels
 
+We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. Therefore we can either create a new `base-class` or an `interface`. In this sample we will create an https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract[[`abstract`\]] `base-class` which itself derives from `ViewModelBase`. The properties itself are also marked as `abstract` which means we have to override them in any `class` that inherits our `base-class`.
+
+In the folder `ViewModels` create the file `PageViewModelBase.cs`:
+
+[source,cs]
+----
+/// <summary>
+/// An abstract class for enabling page navigation.
+/// </summary>
+public abstract class PageViewModelBase : ViewModelBase
+{
+    /// <summary>
+    /// Gets if the user can navigate to the next page
+    /// </summary>
+    public abstract bool CanNavigateNext { get; protected set; }
+
+    /// <summary>
+    /// Gets if the user can navigate to the previous page
+    /// </summary>
+    public abstract bool CanNavigatePrevious { get; protected set; }
+}
+----
+
+NOTE: the `protected`-modifier let's us implement a setter that is not public accessible, but can be overridden in derived classes. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected[[Microsoft Docs\]]
+
+=== Step 3: Create your PageViewModels
+
+Let's create a `ViewModel` for each Wizard page we need. each `PageViewModel` must implement the above created <<base-class,base-class>>. 
+
+NOTE: You need to `override` all the `abstract` properties of our `base-class`. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/override[[Microsoft Docs\]]
+
+==== FirstPageViewModel
+
+The fist page will be our welcome page. It has a `Title` and a `Message`. The user can go to the next page in any case, but there is no page to go back to. So we don't need to implement the `setter` to indicate that we throw a `NotSupportedException`. 
+
+[source,cs]
+----
+/// <summary>
+///  This is our ViewModel for the first page
+/// </summary>
+public class FirstPageViewModel : PageViewModelBase
+{
+    /// <summary>
+    /// The Title of this page
+    /// </summary>
+    public string Title => "Welcome to our Wizard-Sample.";
+        
+    /// <summary>
+    /// The content of this page
+    /// </summary>
+    public string Message => "Press \"Next\" to register yourself.";
+
+    // This is our first page, so we can navigate to the next page in any case
+    public override bool CanNavigateNext 
+    { 
+        get => true;
+        protected set => throw new NotSupportedException(); 
+    }
+
+    // You cannot go back from this page
+    public override bool CanNavigatePrevious
+    {
+        get => false;
+        protected set => throw new NotSupportedException();
+    }
+}
+----
+
+==== SecondPageViewModel
+
+This page will have two input fields called `MailAddress` and `Password`. Inside the constructor of this class we will listen to changes of these properties and set `CanNavigateNext` to `true` if both properties matches the requirements. 
+
+[source,cs]
+----
+public class SecondPageViewModel : PageViewModelBase
+{
+    public SecondPageViewModel()
+    {
+        // Listen to changes of MailAddress and Password and update CanNavigateNext accordingly
+        this.WhenAnyValue(x => x.MailAddress, x => x.Password)
+            .Subscribe(_ => UpdateCanNavigateNext());
+    }
+
+    private string? _MailAddress;
+
+    /// <summary>
+    /// The E-Mail of the user. This field is required
+    /// </summary>
+    [Required]
+    [EmailAddress]
+    public string? MailAddress
+    {
+        get { return _MailAddress; }
+        set { this.RaiseAndSetIfChanged(ref _MailAddress, value); }
+    }
+
+    private string? _Password;
+
+    /// <summary>
+    /// The password of the user. This field is required.
+    /// </summary>
+    [Required]
+    public string? Password
+    {
+        get { return _Password; }
+        set { this.RaiseAndSetIfChanged(ref _Password, value); }
+    }
+
+    private bool _CanNavigateNext;
+
+    // For this page the user can only go to the next page if all fields are valid. So we need a private setter.
+    public override bool CanNavigateNext
+    {
+        get { return _CanNavigateNext; }
+        protected set { this.RaiseAndSetIfChanged(ref _CanNavigateNext, value); }
+    }
+
+    // We allow navigate back in any case
+    public override bool CanNavigatePrevious
+    {
+        get => true;
+        protected set => throw new NotSupportedException();
+    }
+
+    // Update CanNavigateNext. Allow next page if E-Mail and Password are valid
+    private void UpdateCanNavigateNext()
+    {
+        CanNavigateNext = 
+                !string.IsNullOrEmpty(_MailAddress) 
+            && _MailAddress.Contains("@")
+            && !string.IsNullOrEmpty(_Password);
+    }
+}
+----
+
+TIP: We use `DataAnnotations` to validate the user input. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]]
 
 == Related 
 
