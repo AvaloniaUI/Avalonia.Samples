@@ -1,3 +1,4 @@
+using DynamicData;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace BasicViewLocatorSample.ViewModels
             // Set current page to first on start up
             _CurrentPage = Pages[0];
 
+            // Create Observables which will activate to deactivate our commands based on CurrentPage state
             var canNavNext = this.WhenAnyValue(x => x.CurrentPage.CanNavigateNext);
             var canNavPrev = this.WhenAnyValue(x => x.CurrentPage.CanNavigatePrevious);
 
@@ -28,9 +30,6 @@ namespace BasicViewLocatorSample.ViewModels
             new ThirdPageViewModel()
         };
 
-        // the current index of the page
-        private int _CurrentPageIndex;
-
         // The default is the first page
         private PageViewModelBase _CurrentPage;
 
@@ -43,21 +42,32 @@ namespace BasicViewLocatorSample.ViewModels
             private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }
         }
 
+        /// <summary>
+        /// Gets a command that navigates to the next page
+        /// </summary>
         public ICommand NavigateNextCommand { get; }
 
         private void NavigateNext()
         {
-            // increment current index
-            _CurrentPageIndex++;
-            CurrentPage = Pages[_CurrentPageIndex];
+            // get the current index and add 1
+            var index = Pages.IndexOf(CurrentPage) + 1;
+
+            //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+            CurrentPage = Pages[index];
         }
 
+        /// <summary>
+        /// Gets a command that navigates to the previous page
+        /// </summary>
         public ICommand NavigatePreviousCommand { get; }
+
         private void NavigatePrevious()
         {
-            // decrement current index
-            _CurrentPageIndex--;
-            CurrentPage = Pages[_CurrentPageIndex];
+            // get the current index and subtract 1
+            var index = Pages.IndexOf(CurrentPage) - 1;
+
+            //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+            CurrentPage = Pages[index];
         }
     }
 }

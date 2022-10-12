@@ -295,7 +295,7 @@ public class ThirdPageViewModel : PageViewModelBase
 }
 ----
 
-=== Create the Page-Views
+=== Step 4: Create the Page-Views
 
 Now we will create an https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for each page. 
 
@@ -386,17 +386,143 @@ TIP: If you set any `PasswordChar` to any `TextBox` you will get a password inpu
 
 We will not implement this page yet. This way you can see what happens if a specific page is not found. Feel free to add this page later on your own. 
 
+=== Step 5: Prepare the MainWindowViewModel
 
+Now we need create the navigation logic inside the file `ViewModels ► MainWindowViewModel.cs`. We will add four things: 
+
+Pages:: An `Array` of `PageViewModels` that stores all possible pages
+CurrentPage:: Gets or sets the current `PageViewModel`
+NavigateNextCommand:: A `Command` that will navigate to the next page
+NavigatePreviousCommand:: A `Command` that will navigate to the previous page
+
+As you will see in the constructor we will use `WhenAnyValue` to activate or deactivate the `Commands`, depending if the `CurrentPage` can navigate in the considered direction. 
+
+Putting all together the `MainWindowViewModel` looks like this:
+
+[source,cs]
+----
+public class MainWindowViewModel : ViewModelBase
+{
+    public MainWindowViewModel()
+    {
+        // Set current page to first on start up
+        _CurrentPage = Pages[0];
+
+        // Create Observables which will activate to deactivate our commands based on CurrentPage state
+        var canNavNext = this.WhenAnyValue(x => x.CurrentPage.CanNavigateNext);
+        var canNavPrev = this.WhenAnyValue(x => x.CurrentPage.CanNavigatePrevious);
+
+        NavigateNextCommand = ReactiveCommand.Create(NavigateNext, canNavNext);
+        NavigatePreviousCommand = ReactiveCommand.Create(NavigatePrevious, canNavPrev);
+    }
+
+    // A read.only array of possible pages
+    private readonly PageViewModelBase[] Pages = 
+    { 
+        new FirstPageViewModel(),
+        new SecondPageViewModel(),
+        new ThirdPageViewModel()
+    };
+
+    // The default is the first page
+    private PageViewModelBase _CurrentPage;
+
+    /// <summary>
+    /// Gets the current page. The property is read-only
+    /// </summary>
+    public PageViewModelBase CurrentPage
+    {
+        get { return _CurrentPage; }
+        private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }
+    }
+
+    /// <summary>
+    /// Gets a command that navigates to the next page
+    /// </summary>
+    public ICommand NavigateNextCommand { get; }
+
+    private void NavigateNext()
+    {
+        // get the current index and add 1
+        var index = Pages.IndexOf(CurrentPage) + 1;
+
+        //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+        CurrentPage = Pages[index];
+    }
+
+    /// <summary>
+    /// Gets a command that navigates to the previous page
+    /// </summary>
+    public ICommand NavigatePreviousCommand { get; }
+
+    private void NavigatePrevious()
+    {
+        // get the current index and subtract 1
+        var index = Pages.IndexOf(CurrentPage) - 1;
+
+        //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+        CurrentPage = Pages[index];
+    }
+}
+----
+
+=== Step 6: Setup the MainWindow
+
+Now it's time to setup the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
+
+NOTE: You can use also any other `ContentControl`, but the `TransitioningContentControl` will play a nice transition when the user navigates.
+
+Note how we can just use `Content="{Binding CurrentPage}"`. The magic will happen in the `ViewLocator`.
+
+[source,xml]
+----
+<Window x:Class="BasicViewLocatorSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+        Title="BasicViewLocatorSample"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:CompileBindings="True"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,Auto" Margin="10">
+        <TransitioningContentControl Content="{Binding CurrentPage}" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5"
+					HorizontalAlignment="Right">
+            <Button Command="{Binding NavigatePreviousCommand}" Content="Back" />
+            <Button Command="{Binding NavigateNextCommand}" Content="Next" />
+        </StackPanel>
+    </Grid>
+</Window>
+
+----
+
+=== Step 6: See it in action
+
+In your IDE hit [Run] or [Debug] and see the result: 
+
+image::_docs/result.png[Result]
+
+TIP: Do you see the content of the last page? This happens because we didn't define a `View` for it and also we didn't define any `DataTemplate` for it. 
 
 == Related 
 
-// Any related information or further readings goes here.
+You can also use any third-party library which supports advanced routing:
 
+ReactiveUI::
+- https://www.reactiveui.net/docs/handbook/routing/
+- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
 
-
-// --------------- Ascii-Doc Cheat-Sheet ------------------
-
-// visit: https://asciidoc.org 
-// visit: https://powerman.name/doc/asciidoc-compact
-
-// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
+Prism::
+- https://prismlibrary.com/docs/viewmodel-locator.html
+- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
