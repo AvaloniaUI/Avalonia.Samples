@@ -41,9 +41,9 @@ You should already know what the `MVVM` Pattern is and what `DataTemplates` in A
 
 === What is a ViewLocator?
 
-A `ViewLocator` is a class that helps the user interface to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
+A `ViewLocator` is a class that helps the App to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
 
-If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs` was created. This is how it looks like:
+If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs` was created. This is how the file looks like:
 
 [source,cs]
 ----
@@ -99,7 +99,7 @@ NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and h
 
 === Where do I find the ViewLocator instance? 
 
-By default a new instance of the `ViewLocator` is created inside the `App.axaml` file. See the `DataTemplates`-node: 
+By default a new instance of the `ViewLocator` is created inside the `App.axaml` file. See the `App.DataTemplates`-node: 
 
 [source,xml]
 ----
@@ -115,7 +115,7 @@ If no other `DataTemplate` matches your object, this instance of the `ViewLocato
 
 Sometimes your `ViewModels` and `Views` may be stored in a shared library. If that is the case, you can add several `ViewLocator` classes. Just remember to initiate each one in `App.DataTemplates`.
 
-== The Solution // Approach 1 : How can one solve that topic?
+== The Solution : Usage of ViewLocator
 
 In this sample we will create a simple Wizard that consists of three pages. The user can navigate forward and backward. 
 
@@ -198,6 +198,11 @@ public class FirstPageViewModel : PageViewModelBase
 
 This page will have two input fields called `MailAddress` and `Password`. Inside the constructor of this class we will listen to changes of these properties and set `CanNavigateNext` to `true` if both properties matches the requirements. 
 
+The requirements are: 
+- `MailAddress` may not be empty
+- `Password` may not be empty
+- `MailAddress` must be a valid E-Mail-Address and thus contain an `@`
+
 [source,cs]
 ----
 public class SecondPageViewModel : PageViewModelBase
@@ -261,7 +266,127 @@ public class SecondPageViewModel : PageViewModelBase
 }
 ----
 
-TIP: We use `DataAnnotations` to validate the user input. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]]
+TIP: We use `DataAnnotations` to validate the user input inside the UI. This is totally optional. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]]
+
+==== ThirdPageViewModel
+
+This page will only show a `Message` with the content "Done". The user can still navigate back, but not to the next page as there is no next page. 
+
+[source,cs]
+----
+public class ThirdPageViewModel : PageViewModelBase
+{
+    // The message to display
+    public string Message => "Done";
+
+    // This is the last page, so we cannot navigate next in our sample. 
+    public override bool CanNavigateNext
+    {
+        get => false;
+        protected set => throw new NotSupportedException();
+    }
+
+    // We navigate back form this page in any case
+    public override bool CanNavigatePrevious
+    {
+        get => true;
+        protected set => throw new NotSupportedException();
+    }
+}
+----
+
+=== Create the Page-Views
+
+Now we will create an https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for each page. 
+
+==== FirstPageView
+
+This is the first page. We just add two `TextBlocks` which shows the `Title` and `Message`.
+
+[source,xml]
+----
+<UserControl x:Class="BasicViewLocatorSample.Views.FirstPageView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="vm:FirstPageViewModel"
+             mc:Ignorable="d">
+	<Design.DataContext>
+		<vm:FirstPageViewModel />
+	</Design.DataContext>
+
+	<StackPanel VerticalAlignment="Center" Spacing="5">
+		<TextBlock VerticalAlignment="Center"
+			       TextAlignment="Center"
+			       FontSize="16"
+			       FontWeight="SemiBold"
+                   Text="{Binding Title}"
+                   TextWrapping="Wrap" />
+		<TextBlock VerticalAlignment="Center"
+			       TextAlignment="Center"
+			       FontSize="16"
+                   Text="{Binding Message}"
+                   TextWrapping="Wrap" />
+	</StackPanel>
+</UserControl>
+----
+
+==== SecondPageView
+
+This page will contain two `TextBoxes` for the input of `MailAddress` and `Password`. 
+
+TIP: If you set any `PasswordChar` to any `TextBox` you will get a password input field.
+
+[source,xml]
+----
+<UserControl x:Class="BasicViewLocatorSample.Views.SecondPageView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="vm:SecondPageViewModel"
+             mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:SecondPageViewModel />
+    </Design.DataContext>
+
+    <StackPanel VerticalAlignment="Center" Spacing="5" MaxWidth="350">
+        <TextBlock VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Enter your Credentials"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
+        <TextBox VerticalAlignment="Center"
+                 FontSize="16"
+                 Text="{Binding MailAddress}"
+                 Watermark="E-Mail Address"
+				 UseFloatingWatermark="True"/>
+		<TextBox VerticalAlignment="Center"
+                 FontSize="16"
+				 PasswordChar="$"
+                 Text="{Binding Password}"
+                 Watermark="Password"
+				 UseFloatingWatermark="True"/>
+    </StackPanel>
+</UserControl>
+
+----
+
+==== ThirdPageView
+
+We will not implement this page yet. This way you can see what happens if a specific page is not found. Feel free to add this page later on your own. 
+
+
 
 == Related 
 
