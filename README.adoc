@@ -119,6 +119,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐔 Normal
 | ViewLocator, Routing, Wizard, Navigation, Page, MVVM
 
+|===
 
 == 🪛 Contribution
 
