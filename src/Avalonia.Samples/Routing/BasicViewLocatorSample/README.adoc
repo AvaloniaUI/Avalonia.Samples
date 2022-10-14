@@ -11,7 +11,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how use the build-in `ViewLocator` to change the contents of your UI.
+This example will show you how to use the build-in `ViewLocator` in order to change the contents of your UI.
 
 
 
@@ -41,7 +41,7 @@ You should already know what the `MVVM` Pattern is and what `DataTemplates` in A
 
 === What is a ViewLocator?
 
-A `ViewLocator` is a class that helps the App to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
+A `ViewLocator` is a class that helps your App to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
 
 If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs` was created. This is how the file looks like:
 
@@ -79,10 +79,10 @@ namespace MyNameSpace
 }
 ----
 
-Let's see what the ViewLocator does.
+Let's see what the ViewLocator does:
 
 bool Match(object data)::
-This function will return `true` id the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
+This function will return `true` if the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
 
 IControl Build(object data)::
 This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
@@ -93,7 +93,7 @@ Now all occurrences of `ViewModel` will be replaced by `View`:
 +
 `MyAppsNameSpace.Views.MyView`
 +
-In the next step the `ViewLocator` tries to get a `Type` of object with the given name. If it found such a `Type`, it will create and return a new instance of the given `Type`. If we didn't find a matching `Type`, we return a `TextBlock` with a not found message. 
+In the next step the `ViewLocator` tries to get a `Type` of object with the given name. If it finds such a `Type`, it will create and return a new instance of the given `Type`. If it didn't find a matching `Type`, it returns a `TextBlock` with a not found message. 
 
 NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and have "ViewModel" inside it's name. The `View` on the other hand must be in the `Views`-folder and have `View` in it's name. If you don't like this convention, feel free to change it to your needs. 
 
@@ -121,12 +121,12 @@ In this sample we will create a simple Wizard that consists of three pages. The 
 
 === Step 1: Create a new Project
 
-Create a new project using the "Avalonia MVVM Template"
+Create a new project using the "Avalonia MVVM Template".
 
 [#base-class]
 === Step 2: Add a base class for the Page-ViewModels
 
-We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. Therefore we can either create a new `base-class` or an `interface`. In this sample we will create an https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract[[`abstract`\]] `base-class` which itself derives from `ViewModelBase`. The properties itself are also marked as `abstract` which means we have to override them in any `class` that inherits our `base-class`.
+We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. To achieve this we can either create a new `base-class` or an `interface`. In this sample we will create an https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract[[`abstract`\]] `base-class` which itself derives from `ViewModelBase`. The properties itself are also marked as `abstract` which means we have to override them in any `class` that inherits our `base-class`.
 
 In the folder `ViewModels` create the file `PageViewModelBase.cs`:
 
@@ -153,13 +153,13 @@ NOTE: the `protected`-modifier let's us implement a setter that is not public ac
 
 === Step 3: Create your PageViewModels
 
-Let's create a `ViewModel` for each Wizard page we need. each `PageViewModel` must implement the above created <<base-class,base-class>>. 
+Let's create a `ViewModel` for each Wizard page we need. Each `PageViewModel` must implement the above created <<base-class,base-class>>. 
 
 NOTE: You need to `override` all the `abstract` properties of our `base-class`. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/override[[Microsoft Docs\]]
 
 ==== FirstPageViewModel
 
-The fist page will be our welcome page. It has a `Title` and a `Message`. The user can go to the next page in any case, but there is no page to go back to. So we don't need to implement the `setter` to indicate that we throw a `NotSupportedException`. 
+The fist page will be our welcome page. It has a `Title` and a `Message`. The user can go to the next page in any case, but there is no page to go back to. So we don't need to implement the `setter`. To indicate that we throw a https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception[[`NotSupportedException`\]]. 
 
 [source,cs]
 ----
@@ -205,6 +205,9 @@ The requirements are:
 
 [source,cs]
 ----
+/// <summary>
+///  This is our ViewModel for the second page
+/// </summary>
 public class SecondPageViewModel : PageViewModelBase
 {
     public SecondPageViewModel()
@@ -266,7 +269,7 @@ public class SecondPageViewModel : PageViewModelBase
 }
 ----
 
-TIP: We use `DataAnnotations` to validate the user input inside the UI. This is totally optional. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]]
+TIP: We use `DataAnnotations` to validate the user input inside the UI. This is totally optional. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]].
 
 ==== ThirdPageViewModel
 
@@ -274,6 +277,9 @@ This page will only show a `Message` with the content "Done". The user can still
 
 [source,cs]
 ----
+/// <summary>
+///  This is our ViewModel for the third page
+/// </summary>
 public class ThirdPageViewModel : PageViewModelBase
 {
     // The message to display
@@ -397,7 +403,7 @@ NavigatePreviousCommand:: A `Command` that will navigate to the previous page
 
 As you will see in the constructor we will use `WhenAnyValue` to activate or deactivate the `Commands`, depending if the `CurrentPage` can navigate in the considered direction. 
 
-Putting all together the `MainWindowViewModel` looks like this:
+Putting all together, the `MainWindowViewModel` looks now like this:
 
 [source,cs]
 ----
@@ -470,7 +476,7 @@ public class MainWindowViewModel : ViewModelBase
 
 Now it's time to setup the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
 
-NOTE: You can use also any other `ContentControl`, but the `TransitioningContentControl` will play a nice transition when the user navigates.
+NOTE: You can use also any other `ContentControl`, but the `TransitioningContentControl` will display a nice transition when the user navigates.
 
 Note how we can just use `Content="{Binding CurrentPage}"`. The magic will happen in the `ViewLocator`.
 
@@ -517,7 +523,7 @@ TIP: Do you see the content of the last page? This happens because we didn't def
 
 == Related 
 
-You can also use any third-party library which supports advanced routing:
+You can also use any third-party library which supports advanced routing, for example:
 
 ReactiveUI::
 - https://www.reactiveui.net/docs/handbook/routing/

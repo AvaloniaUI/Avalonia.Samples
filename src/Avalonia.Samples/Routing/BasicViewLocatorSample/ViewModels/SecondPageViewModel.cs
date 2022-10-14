@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BasicViewLocatorSample.ViewModels
 {
+    /// <summary>
+    ///  This is our ViewModel for the second page
+    /// </summary>
     public class SecondPageViewModel : PageViewModelBase
     {
         public SecondPageViewModel()

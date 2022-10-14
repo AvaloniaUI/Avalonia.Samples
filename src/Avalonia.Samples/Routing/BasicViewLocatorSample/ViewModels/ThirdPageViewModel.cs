@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BasicViewLocatorSample.ViewModels
 {
+    /// <summary>
+    ///  This is our ViewModel for the first page
+    /// </summary>
     public class ThirdPageViewModel : PageViewModelBase
     {
         // The message to display
