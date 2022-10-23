@@ -19,7 +19,7 @@ namespace ValidationSample
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new ValidationUsingExceptionInsideSetterViewModel(),
+                    DataContext = new MainWindowViewModel(),
                 };
             }
 
