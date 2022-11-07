@@ -152,9 +152,11 @@ IMPORTANT: If you change the difficulty or the buzz-words, remember to also upda
   .. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template. 
   .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template. 
 
-=== 🎃 Hacktoberfest 2022
+// Comment this in for next years hacktober fest
+//// 
+=== 🎃 Hacktoberfest 2023
 
-We are participating in https://hacktoberfest.com[[Hacktoberfest 2022\]]. If you submit a valid pull request within this month, we will add the `HACKTOBERFEST-ACCEPTED` label to your PR. Read more about it and how to participate https://hacktoberfest.com/participation/[[here\]]
+We are participating in https://hacktoberfest.com[[Hacktoberfest 2023\]]. If you submit a valid pull request within this month, we will add the `HACKTOBERFEST-ACCEPTED` label to your PR. Read more about it and how to participate https://hacktoberfest.com/participation/[[here\]]
 
 Valid PRs are::
 - Adding a new sample
@@ -165,3 +167,4 @@ Valid PRs are::
 WARNING: Spam or invalid PRs will be marked as invalid. If you are unsure if your PR will be accepted for Hacktoberfest, you can ask us here or in the image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia]. 
 
 🎃 Happy coding 🎃
+////
