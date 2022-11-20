@@ -1,0 +1,101 @@
+= Data Validation
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to validate properties and display an error message to the user if the entered values are invalid. For example if the user should enter an e-mail address into a `TextBox`, the "@"-character is required.
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐥 Easy 🐥
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+MVVM, data-validation, exception, error, error-message, binding
+
+== Before we start
+
+You should already know how to setup a new project. Moreover you should know the basics about the MVVM-concept and how to bind to your `ViewModel`. 
+
+
+== Approach 1 : Validate a Property using DataAnnotations
+
+You can use different https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started please create a new project using the `Avalonia MVVM Template`. 
+
+=== Step 1: Setup the ViewModel
+ As we want to show different validation options we add another file called `ValidationUsingDataAnnotationViewModel`. This will be added as a read-only Property into `MainWindowViewModel`
+
+[source,cs]
+----
+/// <summary>
+/// Gets a ViewModel showing how to use DataAnnations for validation
+/// </summary>
+public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewModel { get; } 
+    = new ValidationUsingDataAnnotationViewModel();
+----
+
+=== Step 2: Add the Property
+
+Let's assume you make a registration-form where an e-mail-address is required and must be a valid address. So we add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own `ValidationAttribute`.
+
+[source,cs]
+----
+private string? _EMail;
+
+/// <summary>
+/// Validation using DataAnnotation
+/// </summary>
+[Required]
+[EmailAddress]
+public string? EMail
+{
+    get { return _EMail; }
+    set { this.RaiseAndSetIfChanged(ref _EMail, value); }
+}
+----
+
+=== Step 3: Setup the View
+
+In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` represents one of our options. Inside the `TabItem` there is just one `TextBox` which binds to `EMail`. 
+
+[source,xml]
+----
+<TabControl TabStripPlacement="Bottom">
+    <!--Validation using DataAnnotations-->
+    <TabItem Header="DataAnnotations">
+        <TextBox Text="{Binding ValidationUsingDataAnnotationViewModel.EMail}" />
+    </TabItem>
+</TabControl>
+----
+
+=== Step 4: Run the App
+
+In your IDE hit `Run` or `Debug` to see the result: 
+
+.Result Option 1
+image::_docs/option1.png[Result Option 1]
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
