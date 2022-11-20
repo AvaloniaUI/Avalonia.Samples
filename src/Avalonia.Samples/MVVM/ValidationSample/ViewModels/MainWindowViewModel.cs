@@ -13,8 +13,8 @@ namespace ValidationSample.ViewModels
         /// <summary>
         /// Gets a ViewModel showing how to use DataAnnations for validation
         /// </summary>
-        public ValidationUsingDataAnnotiationViewModel ValidationUsingDataAnnotiationViewModel { get; } 
-            = new ValidationUsingDataAnnotiationViewModel();
+        public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewModel { get; } 
+            = new ValidationUsingDataAnnotationViewModel();
 
         /// <summary>
         /// Gets a ViewModel showing how to use INotifyDataErrorInfo for validation

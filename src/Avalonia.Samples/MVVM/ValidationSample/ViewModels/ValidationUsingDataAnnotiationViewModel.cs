@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ValidationSample.ViewModels
 {
-    public class ValidationUsingDataAnnotiationViewModel : ViewModelBase
+    public class ValidationUsingDataAnnotationViewModel : ViewModelBase
     {
         private string? _EMail;
 
