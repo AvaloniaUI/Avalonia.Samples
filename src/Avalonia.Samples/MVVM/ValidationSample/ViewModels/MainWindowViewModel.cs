@@ -11,7 +11,7 @@ namespace ValidationSample.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         /// <summary>
-        /// Gets a ViewModel showing how to use DataAnnations for validation
+        /// Gets a ViewModel showing how to use DataAnnotations for validation
         /// </summary>
         public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewModel { get; } 
             = new ValidationUsingDataAnnotationViewModel();
