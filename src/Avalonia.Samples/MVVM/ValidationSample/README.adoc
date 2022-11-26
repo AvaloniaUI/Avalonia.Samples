@@ -73,6 +73,7 @@ public string? EMail
 }
 ----
 
+
 === Step 3: Setup the View
 
 In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` represents one of our options. Inside the `TabItem` there is just one `TextBox` which binds to our property `EMail`. 
@@ -214,16 +215,119 @@ public class ValidationUsingINotifyDataErrorInfoViewModel : ViewModelBase, INoti
 
 === Step 2: Add the Property
 
+The property is implemented like any other property of our `ViewModel`. 
+
+[source,cs]
+----
+private string? _EMail;
+
+/// <summary>
+/// A property that is validated using INotifyDataErrorInfo
+/// </summary>
+public string? EMail
+{
+    get { return _EMail; }
+    set { this.RaiseAndSetIfChanged(ref _EMail, value); }
+}
+----
+
+In addition we will add a method called `Validate_EMail` that will validate our property.
+
+[source,cs]
+----
+private void Validate_EMail()
+{
+    // first of all clear all previous errors
+    ClearErrors(nameof(EMail));
+
+    // No empty string allowed
+    if (string.IsNullOrEmpty(EMail))
+    {
+        AddError(nameof(EMail), "This field is required");
+    }
+
+    // @-sign required
+    if (EMail is null || !EMail.Contains('@'))
+    {
+        AddError(nameof(EMail), "Don't forget the '@'-sign");
+    }
+}
+----
+
+In the constructor of our `ViewModel` we will listen to changes of the property `EMail` and run the validation with every change. Moreover we will run the validation inside the constructor in order to make sure the initial value is already validated.
+
+
+TIP: If you want to avoid using `WhenAnyValue` you can also call the validation inside the properties setter.
+
+[source,cs]
+----
+public ValidationUsingINotifyDataErrorInfoViewModel()
+{
+    // Listen to changes of "ValidationUsingINotifyDataErrorInfo" and re-evaluate the validation
+    this.WhenAnyValue(x => x.EMail)
+        .Subscribe(_ => Validate_EMail());
+
+    // run INotifyDataErrorInfo-validation on start-up
+    Validate_EMail();
+}
+----
+
 
 === Step 3: Setup the View
 
+Let's add another `TabItem` into our `TabControl`:
+
+[source,xml]
+----
+<TabControl TabStripPlacement="Bottom">
+    <!--Validation using INotifyDataErrorInfo-->
+    <TabItem Header="INotifyDataErrorInfo">
+        <TextBox Text="{Binding ValidationUsingINotifyDataErrorInfoViewModel.EMail}" />
+    </TabItem>
+</TabControl>
+----
 
 === Step 4: Run the App
 
 In your IDE hit `Run` or `Debug` to see the result: 
 
-.Result Option 
-image::_docs/option2.png[Result Option ]
+.Result Option 2
+image::_docs/option2.png[Result Option 2]
+
+
+NOTE: Some `MVVM`-frameworks like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]] implement the `INotifyDataErrorInfo`-interface, which uses https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[[disable one of the validators\]] in your App. 
+
+
+== Approach 3 : Validate a Property using Exceptions inside setters
+
+=== Step 1: Setup the ViewModel
+
+[source,cs]
+----
+
+----
+
+=== Step 2: Add the Property
+
+[source,cs]
+----
+
+----
+
+
+=== Step 3: Setup the View
+
+[source,xml]
+----
+
+----
+
+=== Step 4: Run the App
+
+In your IDE hit `Run` or `Debug` to see the result: 
+
+.Result Option 3
+image::_docs/option3.png[Result Option 3]
 
 
 == Related 
