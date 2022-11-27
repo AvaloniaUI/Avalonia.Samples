@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to https://docs.avaloniaui.net/docs/data-binding/data-validation[[validate properties\]] and display an error message to the user if the entered values are invalid. For example if the user should enter their e-mail address into a `TextBox`, the "@"-character is required and the `TextBox` may not be empty.
+This example will show you how to https://docs.avaloniaui.net/docs/data-binding/data-validation[[validate properties\]] and display an error message to the user, if the entered values are invalid. For example if the user should enter their e-mail address into a `TextBox`, the "@"-character is required and the `TextBox` may not be empty.
 
 
 
@@ -34,15 +34,16 @@ MVVM, data-validation, exception, error, error-message, binding
 
 == Before we start
 
-You should already know how to setup a new project. Moreover you should know the basics about the MVVM-concept and how to bind to your `ViewModel`. 
+You should already know how to setup a new Avalonia project. Moreover you should know the basics about the MVVM-pattern and how to bind and property of your `ViewModel` to your `View`. In this sample we will show you three options to validate a property. It's up to you, which one you prefer. You can also combine them.
 
 
 == Approach 1 : Validate a Property using DataAnnotations
 
-You can use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started please create a new project using the `Avalonia MVVM Template`. 
+In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started please create a new project using the `Avalonia MVVM Template`. 
 
 === Step 1: Setup the ViewModel
- As we want to show different validation options, we add another file called `ValidationUsingDataAnnotationViewModel` into the `ViewModels`-folder. This class will be added as a read-only Property into our `MainWindowViewModel`:
+
+As we want to show different validation options, we add another file called `ValidationUsingDataAnnotationViewModel` into the `ViewModels`-folder. This class will be added as a read-only Property into our `MainWindowViewModel`:
 
 [source,cs]
 ----
@@ -73,7 +74,6 @@ public string? EMail
 }
 ----
 
-
 === Step 3: Setup the View
 
 In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` represents one of our options. Inside the `TabItem` there is just one `TextBox` which binds to our property `EMail`. 
@@ -98,9 +98,10 @@ image::_docs/option1.png[Result Option 1]
 
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
-You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel`. Some MVVM-libraries already implement this interface by default.
+You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or it's base class. Some MVVM-libraries already implement this interface by default.
 
 === Step 1: Setup the ViewModel
+
 Again we add another file called `ValidationUsingINotifyDataErrorInfoViewModel` into the `ViewModels`-folder. This class will be added as a read-only Property into our `MainWindowViewModel`:
 
 [source,cs]
@@ -119,7 +120,7 @@ bool HasErrors:: Gets if there are any errors.
 
 void GetErrors(string? propertyName):: Gets the errors for a given property (by its name) or all errors, if property name was `null` or `string.Empty`.
 
-event ErrorsChanged:: this event is raised whenever any error changed.
+event ErrorsChanged:: this event is raised whenever any error was added or removed.
 ====
 
 In addition to the interface members we add the following items: 
@@ -134,7 +135,7 @@ protected void AddError(string propertyName, string errorMessage):: This void wi
 
 TIP: the `protected` keyword helps us to make the properties or methods available in derived classes, but not from any external class.
 
-Below you can see the final class:
+Below you can see the final implementation:
 
 [source,cs]
 ----
@@ -215,7 +216,7 @@ public class ValidationUsingINotifyDataErrorInfoViewModel : ViewModelBase, INoti
 
 === Step 2: Add the Property
 
-The property is implemented like any other property of our `ViewModel`. 
+The property is implemented like any other property of our `ViewModel`:
 
 [source,cs]
 ----
@@ -231,7 +232,7 @@ public string? EMail
 }
 ----
 
-In addition we will add a method called `Validate_EMail` that will validate our property.
+In addition we will add a method called `Validate_EMail` that will validate our property:
 
 [source,cs]
 ----
@@ -295,31 +296,80 @@ In your IDE hit `Run` or `Debug` to see the result:
 image::_docs/option2.png[Result Option 2]
 
 
-NOTE: Some `MVVM`-frameworks like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]] implement the `INotifyDataErrorInfo`-interface, which uses https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[[disable one of the validators\]] in your App. 
+NOTE: Some `MVVM`-frameworks like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]] implement the `INotifyDataErrorInfo`-interface and are using https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[[disable one of the validators\]] in your App. 
 
 
 == Approach 3 : Validate a Property using Exceptions inside setters
 
+The third option we want to show you is throwing an https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/[[Exception\]] inside the setter of your property. 
+
+IMPORTANT: This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash of your application.
+
 === Step 1: Setup the ViewModel
+
+Once again we add another file into the `ViewModels`-folder, called `ValidationUsingExceptionInsideSetterViewModel`. As before also this class is added as a read-only property into our `MainWindowViewModel`:
 
 [source,cs]
 ----
-
+/// <summary>
+/// Gets a ViewModel showing how to use Exceptions inside the setter for validation
+/// </summary>
+public ValidationUsingExceptionInsideSetterViewModel ValidationUsingExceptionInsideSetterViewModel { get; } 
+    = new ValidationUsingExceptionInsideSetterViewModel();
 ----
 
 === Step 2: Add the Property
 
+As written above we can throw exceptions inside the setter of a property. We will have a set of `if`-conditions, where we throw an `Exception` under a certain condition.
+
 [source,cs]
 ----
+public class ValidationUsingExceptionInsideSetterViewModel : ViewModelBase
+{
 
+    private string? _EMail;
+
+    /// <summary>
+    /// Validation using Exceptions (only inside setter allowed!)
+    /// </summary>
+    public string? EMail
+    {
+        get { return _EMail; }
+        set 
+        {
+            // The field may not be null or empty
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(EMail), "This field is required");
+            }
+            // The field must contain an '@' sign
+            else if (!value.Contains('@'))
+            {
+                throw new ArgumentException(nameof(EMail), "Not a valid E-Mail-Address");
+            }
+            // The checks were successful, so we can store the value
+            else
+            { 
+                this.RaiseAndSetIfChanged(ref _EMail, value); 
+            } 
+        }
+    }
+}
 ----
 
 
 === Step 3: Setup the View
 
+We add another `TabItem` into our `TabControl`.
+
 [source,xml]
 ----
-
+<TabControl TabStripPlacement="Bottom">
+    <!--Validation using Exceptions in setter-->
+    <TabItem Header="ExceptionInsideSetter">
+        <TextBox Text="{Binding ValidationUsingExceptionInsideSetterViewModel.EMail}" />
+    </TabItem>
+</TabControl>
 ----
 
 === Step 4: Run the App
@@ -332,5 +382,8 @@ image::_docs/option3.png[Result Option 3]
 
 == Related 
 
-// Any related information or further readings goes here.
+Below please find a collection with helpful links:
 
+* https://docs.avaloniaui.net/docs/data-binding/data-validation#customize-the-appearance-of-the-validation-message[How to configure the appearance of the error message]
+* https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[How to add or remove a certain validation option]
+* https://docs.avaloniaui.net/docs/authoring-controls/defining-properties#datavalidation-support[Define a custom property with validation support in a custom control]

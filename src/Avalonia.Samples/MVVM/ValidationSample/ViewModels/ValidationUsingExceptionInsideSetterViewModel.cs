@@ -21,15 +21,17 @@ namespace ValidationSample.ViewModels
             get { return _EMail; }
             set 
             {
-                // Only values >0 are allowed
+                // The field may not be null or empty
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException(nameof(EMail), "This field is required");
                 }
+                // The field must contain an '@' sign
                 else if (!value.Contains('@'))
                 {
                     throw new ArgumentException(nameof(EMail), "Not a valid E-Mail-Address");
                 }
+                // The checks were successful, so we can store the value. 
                 else
                 { 
                     this.RaiseAndSetIfChanged(ref _EMail, value); 
