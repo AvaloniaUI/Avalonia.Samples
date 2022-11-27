@@ -30,7 +30,7 @@ toc::[]
 === Buzz-Words
 
 // Write some buzz-words here. You can separate them by ", "
-MVVM, data-validation, exception, error, error-message, binding
+Data-Annotation, Data-Validation, Exception, Error, Error-Message, Binding, MVVM
 
 == Before we start
 
