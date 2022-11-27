@@ -117,7 +117,7 @@ Now we have to implement the interface, if this is not already done by the base-
 
 
 |====
-| bool HasErrors:: Gets if there are any errors.
+a| bool HasErrors:: Gets if there are any errors.
 
 void GetErrors(string? propertyName):: Gets the errors for a given property (by its name) or all errors, if property name was `null` or `string.Empty`.
 
@@ -127,7 +127,7 @@ event ErrorsChanged:: this event is raised whenever any error was added or remov
 In addition to the interface members we add the following items: 
 
 |===
-| private Dictionary errors:: A `Dictionary` that caches the errors, so we don't need to validate the properties every time.
+a| private Dictionary errors:: A `Dictionary` that caches the errors, so we don't need to validate the properties every time.
 
 protected void ClearErrors(string? propertyName = null):: This void will clear all errors for the given property name or all errors if `propertyName` was `null`. The `ErrorsChanged`-event will be raised.
 
