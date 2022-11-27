@@ -25,9 +25,10 @@ namespace ValidationSample.ViewModels
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-        // we have errors present if 
+        // we have errors present if errors.Count is greater than 0
         public bool HasErrors => errors.Count > 0;
 
+        /// <inheritdoc />
         public IEnumerable GetErrors(string? propertyName)
         {
             // Get entity-level errors when the target property is null or empty
