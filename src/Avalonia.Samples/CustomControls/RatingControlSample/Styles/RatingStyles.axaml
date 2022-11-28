@@ -1,0 +1,35 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+			<controls:Rating />
+        </Border>
+    </Design.PreviewWith>
+	
+	<!-- Add Styles Here -->
+	<Style Selector="controls|Rating">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<ItemsControl Items="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Stars}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal"
+										Spacing="5" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<PathIcon Data="M 1 0 10 20 20 5 20 20 z"
+									  Width="20" 
+									  Height="20"
+									  Foreground="Red"
+									  Background="Blue"/>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+    
+</Styles>
