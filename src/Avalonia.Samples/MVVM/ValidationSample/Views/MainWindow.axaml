@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ValidationSample.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ValidationSample.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		x:CompileBindings="True"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ValidationSample">
+
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="MinWidth" Value="200" />
+		</Style>
+	</Window.Styles>
+	
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<TabControl TabStripPlacement="Bottom">
+		<!--Validation using DataAnnotations-->
+		<TabItem Header="DataAnnotations">
+			<TextBox Text="{Binding ValidationUsingDataAnnotationViewModel.EMail}" />
+		</TabItem>
+
+		<!--Validation using INotifyDataErrorInfo-->
+		<TabItem Header="INotifyDataErrorInfo">
+			<TextBox Text="{Binding ValidationUsingINotifyDataErrorInfoViewModel.EMail}" />
+		</TabItem>
+
+		<!--Validation using Exceptions in setter-->
+		<TabItem Header="ExceptionInsideSetter">
+			<TextBox Text="{Binding ValidationUsingExceptionInsideSetterViewModel.EMail}" />
+		</TabItem>
+	</TabControl>
+
+</Window>
