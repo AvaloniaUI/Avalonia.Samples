@@ -13,6 +13,6 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <controls:Rating />
+    <controls:RatingControl Value="2" />
 	
 </Window>

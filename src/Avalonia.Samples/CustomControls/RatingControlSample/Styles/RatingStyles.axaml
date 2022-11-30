@@ -1,17 +1,22 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
 		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-			<controls:Rating />
+			<controls:RatingControl Value="2" stars="6" />
         </Border>
     </Design.PreviewWith>
 	
 	<!-- Add Styles Here -->
-	<Style Selector="controls|Rating">
+	<Style Selector="controls|RatingControl">
+		<Style.Resources>
+			<converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+		</Style.Resources>
 		<Setter Property="Template">
 			<ControlTemplate>
-				<ItemsControl Items="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Stars}">
+				<ItemsControl x:Name="PART_StarsPresenter" 
+							  Items="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Stars}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel Orientation="Horizontal"
@@ -20,16 +25,40 @@
 					</ItemsControl.ItemsPanel>
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
-							<PathIcon Data="M 1 0 10 20 20 5 20 20 z"
-									  Width="20" 
-									  Height="20"
-									  Foreground="Red"
-									  Background="Blue"/>
+							<Path Classes="star">
+								<Classes.selected>
+									<MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+										<Binding />
+										<Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
+									</MultiBinding>
+								</Classes.selected>
+							</Path>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 			</ControlTemplate>
 		</Setter>
 	</Style>
-    
+
+	<Style Selector="Path.star" >
+		<Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+		<Setter Property="Width" Value="32" />
+		<Setter Property="Height" Value="32" />
+		<Setter Property="Margin" Value="5" />
+		<Setter Property="Fill" Value="White" />
+		<Setter Property="Stroke" Value="Gray" />
+		<Setter Property="StrokeThickness" Value="2" />
+		<Setter Property="Stretch" Value="Uniform" />
+	</Style>
+
+	<Style Selector="Path.selected" >
+		<Setter Property="Fill" Value="Gold" />
+		<Setter Property="Stroke" Value="Goldenrod" />
+	</Style>
+
+	<Style Selector="Path.star:pointerover" >
+		<Setter Property="RenderTransform" Value="scale(1.3)" />
+		<Setter Property="Fill" Value="Goldenrod" />
+	</Style>
+	
 </Styles>
