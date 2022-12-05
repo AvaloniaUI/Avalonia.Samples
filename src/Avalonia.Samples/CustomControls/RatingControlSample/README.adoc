@@ -1,0 +1,88 @@
+= RatingControl Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to create a custom control. Our goal is to create a rating control, where the user can vote via clicking on of several stars.
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+
+Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme
+
+
+== Before we start
+
+This sample assumes that you know the basics of Avalonia and the MVVM pattern. 
+
+=== The concept of the Control
+
+Before you create any control, you should already have an idea which functions it should provide, how it should look like and how the user should interact with the control. Remember, the user interface is the door to your program. 
+
+First of all we will write a list of requirements: 
+
+- The developer should be able to define the number of stars. Ideally this should be reusable via `Styles`
+- The user must be able to select their rating
+- There must be a visual feedback showing the current rating
+- The user should be able to interact with the mouse 
+- The user should be able to interact via touch
+- The user should be able to interact via keyboard
+- The developer should be able to validate the input
+- Any validation error should be shown to the user
+- The visual appearance should be easy to adjust
+
+NOTE: Items listed above containing the word _should_ mean are nice to have but the control will also work without this requirement fulfilled. On the other hand, requirements with the word *must* cannot be omitted, as the function of the control will not be given.
+
+Now that we know the functions we want to serve, we can create a simple sketch of how the control should look like: 
+
+image::_docs/sketch.png[Sketch]
+
+
+
+== The Solution // Approach 1 : How can one solve that topic?
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
