@@ -102,7 +102,7 @@ namespace RatingControlSample.Controls
 
 
         /// <summary>
-        /// Defines the <see cref="Value"/> property.
+        /// Defines the <see cref="Stars"/> property.
         /// </summary>
         /// <remarks>
         /// ´This property holds a read-only array of stars. 
@@ -110,9 +110,9 @@ namespace RatingControlSample.Controls
         public static readonly DirectProperty<RatingControl, IEnumerable<int>> StarsProperty =
             AvaloniaProperty.RegisterDirect < RatingControl, IEnumerable<int>>(
                 nameof(Stars),              // The name of the Property
-                o => o.Stars);   // The getter. As don't add a setter, this property is read-only
+                o => o.Stars);   // The getter. As we don't add a setter, this property is read-only
 
-        // For read-only properties we need to have a backing field
+        // For read-only properties we need to have a backing field. The default value is [1..5]
         private IEnumerable<int> _stars = Enumerable.Range(1, 5);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace RatingControlSample.Controls
             private set { SetAndRaise(StarsProperty, ref _stars, value); } // make sure the setter is private
         }
 
-        // called then the number of stars changed
+        // called when the number of stars changed
         private void UpdateStars()
         {
             // Stars is an array from 1 to NumberOfStars
@@ -161,7 +161,7 @@ namespace RatingControlSample.Controls
             // listen to pointer-released events on the stars presenter.
             if(_starsPresenter != null)
             {
-                _starsPresenter.PointerReleased += StarsPresenter_PointerReleased; ;
+                _starsPresenter.PointerReleased += StarsPresenter_PointerReleased;
             }
         }
 
@@ -170,10 +170,11 @@ namespace RatingControlSample.Controls
         /// enabled.
         /// </summary>
         /// <param name="property">The property.</param>
-        /// <param name="state">The current data binding state.</param>
-        /// <param name="error">The current data binding error, if any.</param>
+        /// <param name="value">The current data binding state.</param>
         protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
         {
+            base.UpdateDataValidation(property, value);
+
             if(property == ValueProperty)
             {
                 DataValidationErrors.SetError(this, value.Error);

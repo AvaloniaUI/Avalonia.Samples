@@ -52,6 +52,8 @@ TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox
 
 For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/authoring-controls/types-of-control[[Documentation\]].
 
+
+
 === Properties
 
 Avalonia has a property system which is responsible for storing and receiving the current value. The property system will take care of the styling, binding, validation and many more. There are three types of `AvaloniaProperties`. When you want to register your own property, you need to decide which property type is the right one for your use-case:
@@ -63,6 +65,17 @@ DirectProperty:: A `DirectProperty` is a property which can only be read and set
 AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on it's own (e.g.: `Grid.Row`, `DockPanel.Dock`, ...)
 
 If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/authoring-controls/defining-properties[[Documentation\]]
+
+
+=== ControlTemplates
+
+In Avalonia `TemplatedControls` are lookless, which means they are not drawn by the `Control` itself. Instead, the developer needs to provide a `ControlTemplate` which is similar to a `DataTemplate`, but for the `Control`. 
+
+TemplateParts::
+Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
+
+TemplateBinding:: 
+Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/data-binding/binding-in-a-control-template[[Documentation\]].
 
 
 === The concept of the Rating-Control
@@ -105,7 +118,7 @@ public class RatingControl : TemplatedControl
 }
 ----
 
-=== Step 3: The number of stars
+=== Step 3: Add the NumberOfStars-Property
 
 If we want to create a flexible control, we should not hardcode the number of stars. Instead, the developer should be able to define it inside a `Style`. Therefore we add a `StyledProperty` called `NumberOfStars`. The type of our property is `Integer`, the default value is `5`: 
 
@@ -134,7 +147,7 @@ public int NumberOfStars
 }
 ----
 
-The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided value:
+The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided. A coerce function needs to have the current control instance (`IAvaloniaObject instance`) and the value (`int value`) as a parameter and must return the coerced value:
 
 [source,cs]
 ----
@@ -158,6 +171,207 @@ private static int CoerceNumberOfStars(IAvaloniaObject instance, int value)
     }
 }
 ----
+
+
+=== Step 4: Add the Value-Property
+
+The next property we add is the `Value` property, which will hold the current rating. This property will be set by the user and is most likely set on each control instance. Moreover, as this property is meant to receive user input, we also want to add link:../../MVVM/ValidationSample[[validation support\]]. 
+
+NOTE: We use a `DirectProperty` because it will improve performance and allows us to enable validation. The downside is, that this property cannot be set via `Styles`. 
+
+[source,cs]
+----
+/// <summary>
+/// Defines the <see cref="Value"/> property.
+/// </summary>
+/// <remarks>
+/// This property doesn't need to be styled. Therefore we can use a direct property, which improves performance and 
+/// allows us to add validation support.
+/// </remarks>
+public static readonly DirectProperty<RatingControl, int> ValueProperty =
+    AvaloniaProperty.RegisterDirect<RatingControl, int>(
+        nameof(Value),                            // The name of the property     
+        o => o.Value,                             // The getter of the property
+        (o, v) => o.Value = v,                    // The setter of the property
+        defaultBindingMode: BindingMode.TwoWay,   // We change the default binding mode to be two-way, so if the user selects a new value, it will automatically update the bound property
+        enableDataValidation: true);              // Enables DataValidation
+
+// For direct properties we need to have a backing field
+private int _value;
+
+/// <summary>
+/// Gets or sets the current value
+/// </summary>
+public int Value
+{
+    get { return _value; }
+    set { SetAndRaise(ValueProperty, ref _value, value); }
+}
+----
+
+TIP: In this sample the value is of type `int`, so only full stars can be shown. If you want to add support for half stars, consider to use `float` or `double`.
+
+We set `enableDataValidation` to `true`. But this is not enough for validation support. We also need to override `UpdateDataValidation`. This function will be called whenever a property asks for validation. Most likely we want to use set an error on the `DataValidationErrors`-control: 
+
+[source,cs]
+----
+/// <summary>
+/// Called to update the validation state for properties for which data validation is
+/// enabled.
+/// </summary>
+/// <param name="property">The property.</param>
+/// <param name="value">The current data binding state.</param>
+protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+{
+    base.UpdateDataValidation(property, value);
+
+    if(property == ValueProperty)
+    {
+        DataValidationErrors.SetError(this, value.Error);
+    }
+}
+----
+
+
+
+=== Step 5: Add the Stars-Property
+
+Now that we have the number of stars and the value property, we need a way to dynamically represent the stars. While we technically can add the stars in code, we will use a different approach here. The idea is, that will add a read-only helper property called `Stars`. This property will just provide a `Range` of `Integers`. In our `Style` we can use this property to draw the stars.
+
+[source,cs]
+----
+/// <summary>
+/// Defines the <see cref="Stars"/> property.
+/// </summary>
+/// <remarks>
+/// ´This property holds a read-only array of stars. 
+/// </remarks>
+public static readonly DirectProperty<RatingControl, IEnumerable<int>> StarsProperty =
+    AvaloniaProperty.RegisterDirect < RatingControl, IEnumerable<int>>(
+        nameof(Stars),              // The name of the Property
+        o => o.Stars);   // The getter. As we don't add a setter, this property is read-only
+
+// For read-only properties we need to have a backing field. The default value is [1..5]
+private IEnumerable<int> _stars = Enumerable.Range(1, 5);
+
+/// <summary>
+/// Gets the current collection of visible stars
+/// </summary>
+public IEnumerable<int> Stars
+{
+    get { return _stars; }
+    private set { SetAndRaise(StarsProperty, ref _stars, value); } // make sure the setter is private
+}
+----
+
+=== Step 6: Update the Stars-Property
+
+We need a way to update the `Stars` property whenever the `NumberOfStars`-Property has changed. So let's add a method to do this: 
+
+[source,cs]
+----
+// called when the number of stars changed
+private void UpdateStars()
+{
+    // Stars is an array from 1 to NumberOfStars
+    Stars = Enumerable.Range(1, NumberOfStars);
+}
+----
+
+In Avalonia each control has a `PropertyChanged`-event, which will be raised every time a property changed. We can override `OnPropertyChanged` in our control to handle this event: 
+
+[source,cs]
+----
+// We override OnPropertyChanged of the base class. That way we can react on property changes
+protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+{
+    base.OnPropertyChanged(change);
+
+    // if the changed property is the NumberOfStarsProperty, we need to update the stars
+    if (change.Property == NumberOfStarsProperty) 
+    {
+        UpdateStars();
+    }
+}
+----
+
+Moreover we want to update the `Stars`-Property as soon as a new instance of our control was created. We can do this inside the constructor:
+
+[source,cs]
+----
+public RatingControl() 
+{ 
+    // When a new instance of the control is created, we need to update the rating stars visible
+    UpdateStars();
+}
+----
+
+
+=== Step 7: Add user interaction
+
+Okay, all properties we need are there. But wait, how should the user interact with our control? At the moment, we do not handle any user interaction. At least when a user clicks on a star, the value should be set to the number that this star has. To achieve this we require the `ControlTemplate` to provide an `ItemsControl` called `PART_StarsPresenter`. Use the `TemplatePart-Attribute` to indicate this. 
+
+[source,cs]
+----
+// This Attribute specifies that "PART_StarsPresenter" is a control, which must be present in the Control-Template
+[TemplatePart("PART_StarsPresenter", typeof(ItemsControl))]
+public class RatingControl : TemplatedControl 
+{ 
+    ... 
+}
+----
+
+In order to hold a reference to this `ItemsControl`, we add a private field:
+
+[source,cs]
+----
+// this field holds a reference to the part in the control template that holds the rating stars
+private ItemsControl? _starsPresenter;
+----
+
+Last but not least we need a way to find this control inside our `ControlTemplate`. Whenever a new `ControlTemplate` is applied, the method `OnApplyTemplate` will be called. We can override it like this: 
+
+[source,cs]
+----
+// We override what happens when the control template is being applied. 
+// That way we can for example listen to events of controls which are part of the template
+protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+{
+    base.OnApplyTemplate(e);
+
+    // if we had a control template before, we need to unsubscribe any event listeners
+    if(_starsPresenter is not null)
+    {
+        _starsPresenter.PointerReleased-= StarsPresenter_PointerReleased;
+    }
+
+    // try to find the control with the given name
+    _starsPresenter = e.NameScope.Find("PART_StarsPresenter") as ItemsControl;
+
+    // listen to pointer-released events on the stars presenter.
+    if(_starsPresenter != null)
+    {
+        _starsPresenter.PointerReleased += StarsPresenter_PointerReleased; 
+    }
+}
+----
+
+As you can see we listen to the `PointerReleased`-event: 
+
+[source,cs]
+----
+private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+{
+    // e.Source is the original source of this event. In our case, if the user clicked on a star, the original source is a Path.
+    if (e.Source is Path star)
+    {
+        // The DataContext of the star is one of the numbers we have in the Stars-Collection. 
+        // Let's cast the DataContext to an int. If that cast fails, use "0" as a fallback.
+        Value = star.DataContext as int? ?? 0;
+    }
+}
+----
+
 
 == Related 
 
