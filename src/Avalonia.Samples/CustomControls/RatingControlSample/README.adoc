@@ -321,7 +321,7 @@ public class RatingControl : TemplatedControl
 }
 ----
 
-In order to hold a reference to this `ItemsControl`, we add a private field:
+In order to hold a reference to the named `ItemsControl`, we add a private field inside our `Control`:
 
 [source,cs]
 ----
@@ -356,7 +356,14 @@ protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 }
 ----
 
-As you can see we listen to the `PointerReleased`-event: 
+As you can see we did the following:
+
+. run the base method to make sure everything is set up correctly
+. unsubscribe from any previous event listeners
+. find the named control in the new template to apply
+. listen to the `PointerReleased`-event of the found `ItemsControl`
+
+By convention we know that the `Items` of our `ItemsControl` will be a `Path`. We make use of this convention by checking if the `Source` of the event is a `Path` and if it was, we know its `DataContext` will be an `Integer`. Therefore the new `Value` of our `RatingControl` is set to the given `Integer`:
 
 [source,cs]
 ----
@@ -370,6 +377,114 @@ private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.Point
         Value = star.DataContext as int? ?? 0;
     }
 }
+----
+
+NOTE: Because we use the `as`-operator, our `Value` would become `null` if the `DataContext` could not be converted to `int` for any reason and thus crash the App. To prevent such a crash we use `0` as a fallback. 
+
+
+
+=== Step 8: Add a Style for the RatingControl
+
+While we can already add a `RatingControl` to our View, we will see nothing as there is no `Style` available. To change this we add another folder called `Styles`. Add a file called `RatingStyles.axaml` which is of type `Styles (Avalonia)`. 
+
+First of all we need to add the needed namespaces to our `Style`: 
+
+[source,xml]
+----
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+</Styles>
+----
+
+[TIP]
+====
+If you want to have preview of the `Style`, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+[source,xml]
+----
+<Design.PreviewWith>
+    <StackPanel Spacing="10">
+        <controls:RatingControl Value="0" NumberOfStars="5" />
+        <controls:RatingControl Value="2" NumberOfStars="5" />
+        <controls:RatingControl Value="6" NumberOfStars="6" />
+    </StackPanel>
+</Design.PreviewWith>
+----
+====
+
+Now we can add the needed `Styles` to represent our `RatingControl`. The important part is the `ControlTemplate` which has the following hierarchy: 
+
+[source,xml]
+----
+<!--This is the Style for our RatingControl-->
+<Style Selector="controls|RatingControl">
+    <!--We need to add our IsSmallerOrEqualConverter here as a Resource-->
+    <Style.Resources>
+        <converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+    </Style.Resources>
+    
+    <!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.-->
+    <Setter Property="Template">
+        <ControlTemplate>
+
+            <!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--> 
+            <DataValidationErrors>
+                
+                <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
+                <ItemsControl x:Name="PART_StarsPresenter"
+                                Items="{TemplateBinding Stars}">
+                    <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="5" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <!--Items is an array if integer. Let's add a Path as the DataTemplate-->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Path Classes="star">
+                                <!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --> 
+                                <Classes.selected>
+                                    <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+                                        <!--This is our dataContext, so the number of this item-->
+                                        <Binding />
+                                        <!--This is the binding to the RatingControls current value-->
+                                        <Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
+                                    </MultiBinding>
+                                </Classes.selected>
+                            </Path>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DataValidationErrors>
+        </ControlTemplate>
+    </Setter>
+</Style>
+
+<!--This Style is for a Path which has the Class "star" applied.--> 
+<Style Selector="Path.star" >
+    <Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+    <Setter Property="Width" Value="32" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="Margin" Value="5" />
+    <Setter Property="Fill" Value="White" />
+    <Setter Property="Stroke" Value="Gray" />
+    <Setter Property="StrokeThickness" Value="2" />
+    <Setter Property="Stretch" Value="Uniform" />
+</Style>
+
+<Style Selector="Path.selected" >
+    <Setter Property="Fill" Value="Gold" />
+    <Setter Property="Stroke" Value="Goldenrod" />
+</Style>
+
+<Style Selector="Path.star:pointerover" >
+    <Setter Property="RenderTransform" Value="scale(1.3)" />
+    <Setter Property="Fill" Value="Goldenrod" />
+</Style>
 ----
 
 
