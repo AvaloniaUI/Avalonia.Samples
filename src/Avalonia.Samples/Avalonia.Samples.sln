@@ -29,6 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drawing", "Drawing", "{D021
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCity", "Drawing\BattleCity\BattleCity.csproj", "{17F36A0B-940E-49DB-B5B5-38C38E0947EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{97333855-9EDC-45E0-B4DF-ED492C25FF62}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\README.adoc = ..\..\README.adoc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

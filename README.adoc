@@ -91,6 +91,17 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+=== 🗺️ Drawing-Samples
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src/Avalonia.Samples/Drawing/BattleCity[BattleCity Game Sample]
+| 🐔 Normal
+| Game, Canvas, Game Loop, MVVM
+
+|===
 
 === 🎞️ DataTemplate-Samples
 
