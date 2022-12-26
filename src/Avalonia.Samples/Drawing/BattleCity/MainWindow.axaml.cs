@@ -8,12 +8,11 @@ namespace BattleCity;
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public class MainWindow : Window
+public partial class MainWindow : Window
 {
     public MainWindow()
     {
-        AvaloniaXamlLoader.Load(this);
-        this.AttachDevTools();
+        InitializeComponent();
     }
 
     protected override void OnKeyDown(KeyEventArgs e)

@@ -5,23 +5,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="BattleCity" Width="640" Height="480"
         Design.DataContext="{x:Static model:GameField.DesignInstance}"
-        x:CompileBindings="True"
         x:DataType="model:GameField">
   <Window.Styles>
     <Style Selector="ItemsControl > ContentPresenter" x:DataType="model:GameObject">
       <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
       <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
       <Setter Property="ZIndex" Value="{Binding Converter={x:Static infrastructure:ZIndexConverter.Instance }}" />
-
-      <Setter Property="Transitions">
-        <Transitions>
-          <DoubleTransition Property="Opacity" Duration="0:0:0:0.5" />
-        </Transitions>
-      </Setter>
-
-    </Style>
-    <Style Selector="ItemsControl > ContentPresenter.test:pointerover">
-      <Setter Property="Opacity" Value="0.5" />
     </Style>
   </Window.Styles>
   <ItemsControl
@@ -52,12 +41,12 @@
                            Easing="SineEaseInOut"
                            FillMode="None">
                   <KeyFrame Cue="70%">
-                    <Setter Property="ScaleTransform.ScaleX" Value="2" />
-                    <Setter Property="ScaleTransform.ScaleY" Value="2" />
+                    <Setter Property="ScaleTransform.ScaleX" Value="1.2" />
+                    <Setter Property="ScaleTransform.ScaleY" Value="1.2" />
                   </KeyFrame>
                   <KeyFrame Cue="90%">
-                    <Setter Property="ScaleTransform.ScaleX" Value="2.5" />
-                    <Setter Property="ScaleTransform.ScaleY" Value="2.5" />
+                    <Setter Property="ScaleTransform.ScaleX" Value="1.5" />
+                    <Setter Property="ScaleTransform.ScaleY" Value="1.5" />
                   </KeyFrame>
                 </Animation>
                 <Animation Duration="0:0:2"
