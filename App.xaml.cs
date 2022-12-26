@@ -1,7 +1,7 @@
-using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.BattleCity.Model;
-using Avalonia.Gtk3;
+using Avalonia.Controls.ApplicationLifetimes;
+
 namespace Avalonia.BattleCity
 {
     public class App : Application
@@ -11,25 +11,20 @@ namespace Avalonia.BattleCity
             AvaloniaXamlLoader.Load(this);
         }
 
-        static void Main(string[] args)
+        public override void OnFrameworkInitializationCompleted()
         {
-            BuildAvaloniaApp()
-                .Start<MainWindow>(() =>
-                {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+            {
+                var mainWindow = new MainWindow();
+                
+                var field = new GameField();
+                var game = new Game(field);
+                game.Start();
+                mainWindow.DataContext = field;
 
-                    var field = new GameField();
-                    var game = new Game(field);
-                    game.Start();
-                    return field;
-
-
-                });
+                lifetime.MainWindow = mainWindow;
+            }
         }
-
-        static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
-            .UsePlatformDetect().UseGtk3(new Gtk3PlatformOptions{UseGpuAcceleration=true});
-
-
     }
 }
 

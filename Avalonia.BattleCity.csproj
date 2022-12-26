@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Avalonia.BattleCity</AssemblyName>
-    <OutputType>exe</OutputType>
-    <PackageId>Avalonia.BattleCity</PackageId>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
   </PropertyGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="**\*.xaml;Assets\*;Resources\*" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
-    </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.7.1-build749-beta" />
+    <AvaloniaResource Include="**\*.xaml" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.18" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
   </ItemGroup>
 </Project>
