@@ -1,0 +1,7 @@
+<Application x:Class="BattleCity.App"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns="https://github.com/avaloniaui">
+  <Application.Styles>
+    <FluentTheme Mode="Light" />
+  </Application.Styles>
+</Application>
