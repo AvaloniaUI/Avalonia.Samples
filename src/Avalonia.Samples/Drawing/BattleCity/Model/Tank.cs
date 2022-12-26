@@ -1,4 +1,4 @@
-﻿namespace Avalonia.BattleCity.Model;
+﻿namespace BattleCity.Model;
 
 public class Tank : MovingGameObject
 {

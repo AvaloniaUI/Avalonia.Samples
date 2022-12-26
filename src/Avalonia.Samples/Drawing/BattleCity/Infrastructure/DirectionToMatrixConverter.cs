@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using Avalonia.BattleCity.Model;
+using BattleCity.Model;
+using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
-namespace Avalonia.BattleCity.Infrastructure;
+namespace BattleCity.Infrastructure;
 
 internal class DirectionToMatrixConverter : IValueConverter
 {

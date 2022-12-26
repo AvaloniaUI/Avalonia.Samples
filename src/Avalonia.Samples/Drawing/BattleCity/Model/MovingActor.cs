@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Avalonia.BattleCity.Model;
+namespace BattleCity.Model;
 
 public abstract class MovingGameObject : GameObject
 {

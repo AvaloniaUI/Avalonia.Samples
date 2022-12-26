@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Avalonia.Input;
 
-namespace Avalonia.BattleCity;
+namespace BattleCity;
 
 internal static class Keyboard
 {

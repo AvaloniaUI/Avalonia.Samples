@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
-using Avalonia.BattleCity.Model;
+using BattleCity.Model;
 using Avalonia.Data.Converters;
 
-namespace Avalonia.BattleCity.Infrastructure;
+namespace BattleCity.Infrastructure;
 
 public class CellToScreenConverter : IValueConverter
 {

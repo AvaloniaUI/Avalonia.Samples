@@ -1,4 +1,4 @@
-# Avalonia.BattleCity
+# BattleCity
 
 Port of https://github.com/hacklex/PekaCity to Avalonia.
 2D game stub rendered completely by AvaloniaUI

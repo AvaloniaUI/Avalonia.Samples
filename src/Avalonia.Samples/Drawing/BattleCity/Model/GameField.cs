@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Avalonia.BattleCity.Infrastructure;
+using Avalonia;
+using BattleCity.Infrastructure;
 
-namespace Avalonia.BattleCity.Model;
+namespace BattleCity.Model;
 
 public class GameField : PropertyChangedBase
 {

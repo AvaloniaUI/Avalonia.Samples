@@ -1,4 +1,6 @@
-﻿namespace Avalonia.BattleCity.Model;
+﻿using Avalonia;
+
+namespace BattleCity.Model;
 
 public class Apple : GameObject
 {

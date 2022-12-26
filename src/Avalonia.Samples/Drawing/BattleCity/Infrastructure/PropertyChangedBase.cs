@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Avalonia.BattleCity.Infrastructure;
+namespace BattleCity.Infrastructure;
 
 public abstract class PropertyChangedBase : INotifyPropertyChanged
 {

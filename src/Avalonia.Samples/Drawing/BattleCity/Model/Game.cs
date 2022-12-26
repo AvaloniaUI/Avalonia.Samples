@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Avalonia.Input;
 
-namespace Avalonia.BattleCity.Model;
+namespace BattleCity.Model;
 
 public class Game : GameBase
 {

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Avalonia.BattleCity.Model;
+using BattleCity.Model;
+using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 
-namespace Avalonia.BattleCity.Infrastructure;
+namespace BattleCity.Infrastructure;
 
 public class TerrainTileConverter : IValueConverter
 {
@@ -30,6 +31,6 @@ public class TerrainTileConverter : IValueConverter
 
         return _cache ??= Enum.GetValues(typeof(TerrainTileType)).OfType<TerrainTileType>().ToDictionary(
             t => t,
-            t => new Bitmap(assetLoader.Open(new Uri($"avares://Avalonia.BattleCity/Assets/{t}.png"))));
+            t => new Bitmap(assetLoader.Open(new Uri($"avares://BattleCity/Assets/{t}.png"))));
     }
 }

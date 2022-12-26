@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Threading;
 
-namespace Avalonia.BattleCity.Model;
+namespace BattleCity.Model;
 
 public abstract class GameBase
 {

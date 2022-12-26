@@ -1,6 +1,7 @@
 ﻿using System;
+using Avalonia;
 
-namespace Avalonia.BattleCity;
+namespace BattleCity;
 
 internal class Program
 {

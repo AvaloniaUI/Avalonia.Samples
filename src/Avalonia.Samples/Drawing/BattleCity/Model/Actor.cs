@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using Avalonia.BattleCity.Infrastructure;
+using BattleCity.Infrastructure;
+using Avalonia;
 
-namespace Avalonia.BattleCity.Model;
+namespace BattleCity.Model;
 
 public abstract class GameObject : PropertyChangedBase
 {

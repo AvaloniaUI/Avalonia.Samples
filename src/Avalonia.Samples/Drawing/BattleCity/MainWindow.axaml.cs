@@ -1,8 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
-namespace Avalonia.BattleCity;
+namespace BattleCity;
 
 /// <summary>
 ///     Interaction logic for MainWindow.xaml

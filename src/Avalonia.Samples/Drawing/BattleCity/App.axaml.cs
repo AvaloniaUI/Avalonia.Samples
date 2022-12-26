@@ -1,8 +1,9 @@
-using Avalonia.BattleCity.Model;
+using Avalonia;
+using BattleCity.Model;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace Avalonia.BattleCity;
+namespace BattleCity;
 
 public class App : Application
 {
