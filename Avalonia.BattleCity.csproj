@@ -4,7 +4,6 @@
         <OutputType>WinExe</OutputType>
     </PropertyGroup>
     <ItemGroup>
-        <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup>
