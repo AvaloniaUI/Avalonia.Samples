@@ -1,30 +1,28 @@
-using Avalonia.Markup.Xaml;
 using Avalonia.BattleCity.Model;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
 
-namespace Avalonia.BattleCity
+namespace Avalonia.BattleCity;
+
+public class App : Application
 {
-    public class App : Application
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+        AvaloniaXamlLoader.Load(this);
+    }
 
-        public override void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
-            {
-                var mainWindow = new MainWindow();
-                
-                var field = new GameField();
-                var game = new Game(field);
-                game.Start();
-                mainWindow.DataContext = field;
+            var mainWindow = new MainWindow();
 
-                lifetime.MainWindow = mainWindow;
-            }
+            var field = new GameField();
+            var game = new Game(field);
+            game.Start();
+            mainWindow.DataContext = field;
+
+            lifetime.MainWindow = mainWindow;
         }
     }
 }
-

@@ -1,10 +1,9 @@
-﻿namespace Avalonia.BattleCity.Model
+﻿namespace Avalonia.BattleCity.Model;
+
+public enum Facing
 {
-    public enum Facing
-    {
-        North,
-        East,
-        South,
-        West
-    }
+    North,
+    East,
+    South,
+    West
 }

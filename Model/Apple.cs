@@ -1,11 +1,8 @@
-﻿using Avalonia;
+﻿namespace Avalonia.BattleCity.Model;
 
-namespace Avalonia.BattleCity.Model
+public class Apple : GameObject
 {
-    public class Apple : GameObject
+    public Apple(Point location) : base(location)
     {
-        public Apple(Point location) : base(location)
-        {
-        }
     }
 }

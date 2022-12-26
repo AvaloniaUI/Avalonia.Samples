@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Avalonia.Input;
 
-namespace Avalonia.BattleCity
+namespace Avalonia.BattleCity;
+
+internal static class Keyboard
 {
-    static class Keyboard
+    public static readonly HashSet<Key> Keys = new();
+
+    public static bool IsKeyDown(Key key)
     {
-        public static readonly HashSet<Key> Keys = new HashSet<Key>();
-        public static bool IsKeyDown(Key key) => Keys.Contains(key);
-        
+        return Keys.Contains(key);
     }
 }

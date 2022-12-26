@@ -1,47 +1,46 @@
 <Window x:Class="Avalonia.BattleCity.MainWindow"
         xmlns="https://github.com/avaloniaui"
-        xmlns:local="using:Avalonia.BattleCity"
         xmlns:model="using:Avalonia.BattleCity.Model"
-        xmlns:tran="using:Avalonia.Animation"
         xmlns:infrastructure="using:Avalonia.BattleCity.Infrastructure"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Avalonia.BattleCity" Width="640" Height="480" Design.DataContext="{x:Static model:GameField.DesignInstance}" 
+        Title="Avalonia.BattleCity" Width="640" Height="480"
+        Design.DataContext="{x:Static model:GameField.DesignInstance}"
         x:CompileBindings="True"
         x:DataType="model:GameField">
-  <Window.Styles >
+  <Window.Styles>
     <Style Selector="ItemsControl > ContentPresenter" x:DataType="model:GameObject">
-      <Setter Property="Canvas.Left" Value="{Binding Location.X}"/>
-      <Setter Property="Canvas.Top" Value="{Binding Location.Y}"/>
+      <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+      <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
       <Setter Property="ZIndex" Value="{Binding Converter={x:Static infrastructure:ZIndexConverter.Instance }}" />
-      
-      <Setter Property="Transitions">                            
+
+      <Setter Property="Transitions">
         <Transitions>
-          <DoubleTransition  Property="Opacity" Duration="0:0:0:0.5"/>
+          <DoubleTransition Property="Opacity" Duration="0:0:0:0.5" />
         </Transitions>
       </Setter>
-      
+
     </Style>
     <Style Selector="ItemsControl > ContentPresenter.test:pointerover">
-      <Setter Property="Opacity" Value="0.5"/>
+      <Setter Property="Opacity" Value="0.5" />
     </Style>
   </Window.Styles>
   <ItemsControl
-                Items="{Binding GameObjects}"
-                Width="{Binding Width, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
-                Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}">
-    
+    Items="{Binding GameObjects}"
+    Width="{Binding Width, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
+    Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}">
+
     <ItemsControl.ItemsPanel>
       <ItemsPanelTemplate>
-        <Canvas/>
+        <Canvas />
       </ItemsPanelTemplate>
     </ItemsControl.ItemsPanel>
-    
+
     <ItemsControl.DataTemplates>
       <DataTemplate DataType="{x:Type model:TerrainTile}">
         <Image Width="32" Height="32"
-               Source="{Binding Type, Converter={x:Static infrastructure:TerrainTileConverter.Instance}}"/>
+               Source="{Binding Type, Converter={x:Static infrastructure:TerrainTileConverter.Instance}}" />
       </DataTemplate>
-      
+
       <DataTemplate DataType="{x:Type model:Player}">
         <Border ClipToBounds="False">
           <Border.Styles>
@@ -52,38 +51,39 @@
                            PlaybackDirection="Alternate"
                            Easing="SineEaseInOut"
                            FillMode="None">
-                   <KeyFrame Cue="70%">
-                      <Setter Property="ScaleTransform.ScaleX" Value="2"/>
-                      <Setter Property="ScaleTransform.ScaleY" Value="2"/>
-                    </KeyFrame>
-                    <KeyFrame Cue="90%">
-                      <Setter Property="ScaleTransform.ScaleX" Value="2.5"/>
-                      <Setter Property="ScaleTransform.ScaleY" Value="2.5"/>
-                    </KeyFrame>
-                  </Animation>
+                  <KeyFrame Cue="70%">
+                    <Setter Property="ScaleTransform.ScaleX" Value="2" />
+                    <Setter Property="ScaleTransform.ScaleY" Value="2" />
+                  </KeyFrame>
+                  <KeyFrame Cue="90%">
+                    <Setter Property="ScaleTransform.ScaleX" Value="2.5" />
+                    <Setter Property="ScaleTransform.ScaleY" Value="2.5" />
+                  </KeyFrame>
+                </Animation>
                 <Animation Duration="0:0:2"
                            IterationCount="Infinite"
                            PlaybackDirection="Alternate"
                            FillMode="None">
-                   <KeyFrame Cue="30%">
-                      <Setter Property="RotateTransform.Angle" Value="-45"/>
-                    </KeyFrame>
-                    <KeyFrame Cue="90%">
-                      <Setter Property="RotateTransform.Angle" Value="45"/>
-                    </KeyFrame>
-                  </Animation>
+                  <KeyFrame Cue="30%">
+                    <Setter Property="RotateTransform.Angle" Value="-45" />
+                  </KeyFrame>
+                  <KeyFrame Cue="90%">
+                    <Setter Property="RotateTransform.Angle" Value="45" />
+                  </KeyFrame>
+                </Animation>
 
-                </Style.Animations>
-              </Style>
-            </Border.Styles>
-            <Image Width="32" Height="32" 
-                   Source="/Assets/Player.png" 
-                   RenderTransform="{Binding Facing, Converter={x:Static infrastructure:DirectionToMatrixConverter.Instance}}"/>
-          </Border>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type model:Tank}">
-          <Image Width="32" Height="32" Source="/Assets/Tank.png" RenderTransform="{Binding Facing, Converter={x:Static infrastructure:DirectionToMatrixConverter.Instance}}"/>
-        </DataTemplate>
-      </ItemsControl.DataTemplates>
-    </ItemsControl>
-  </Window>
+              </Style.Animations>
+            </Style>
+          </Border.Styles>
+          <Image Width="32" Height="32"
+                 Source="/Assets/Player.png"
+                 RenderTransform="{Binding Facing, Converter={x:Static infrastructure:DirectionToMatrixConverter.Instance}}" />
+        </Border>
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type model:Tank}">
+        <Image Width="32" Height="32" Source="/Assets/Tank.png"
+               RenderTransform="{Binding Facing, Converter={x:Static infrastructure:DirectionToMatrixConverter.Instance}}" />
+      </DataTemplate>
+    </ItemsControl.DataTemplates>
+  </ItemsControl>
+</Window>
