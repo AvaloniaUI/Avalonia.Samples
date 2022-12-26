@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicViewLocatorSample", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationSample", "MVVM\ValidationSample\ValidationSample.csproj", "{53239038-E234-4DEF-B730-953B2F43B51E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drawing", "Drawing", "{D02161B3-8242-4BF5-96E9-780465A5023B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.BattleCity", "Drawing\BattleCity\Avalonia.BattleCity.csproj", "{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,10 @@ Global
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +84,7 @@ Global
 		{061330EE-8517-4198-A531-9091BCA9A5D5} = {C4E891B3-8A34-4BF1-9A15-03C2D5D57A03}
 		{84C1CD28-18C8-45E0-99BD-CE92BCFA8D15} = {23EBCED8-2525-4071-9F7A-348BEBA33E21}
 		{53239038-E234-4DEF-B730-953B2F43B51E} = {932FD4A5-FCE7-4428-A0C1-C0392D90A21A}
+		{768149BC-4AA1-43E2-9F9A-1D46B54B6E9C} = {D02161B3-8242-4BF5-96E9-780465A5023B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C246CAB0-0837-4EE4-A22D-28B3C74930B4}
