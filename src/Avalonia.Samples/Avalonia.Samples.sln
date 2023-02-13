@@ -25,13 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicViewLocatorSample", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidationSample", "MVVM\ValidationSample\ValidationSample.csproj", "{53239038-E234-4DEF-B730-953B2F43B51E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingControlSample", "CustomControls\RatingControlSample\RatingControlSample.csproj", "{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatingControlSample", "CustomControls\RatingControlSample\RatingControlSample.csproj", "{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomControls", "CustomControls", "{92C71AA7-E791-40C0-9F3A-2A85880B0439}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drawing", "Drawing", "{D02161B3-8242-4BF5-96E9-780465A5023B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCity", "Drawing\BattleCity\BattleCity.csproj", "{17F36A0B-940E-49DB-B5B5-38C38E0947EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleCity", "Drawing\BattleCity\BattleCity.csproj", "{17F36A0B-940E-49DB-B5B5-38C38E0947EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{97333855-9EDC-45E0-B4DF-ED492C25FF62}"
 	ProjectSection(SolutionItems) = preProject
@@ -76,6 +76,14 @@ Global
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53239038-E234-4DEF-B730-953B2F43B51E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC74DC68-A0A5-40A2-9A4D-CF110685D8C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17F36A0B-940E-49DB-B5B5-38C38E0947EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17F36A0B-940E-49DB-B5B5-38C38E0947EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17F36A0B-940E-49DB-B5B5-38C38E0947EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17F36A0B-940E-49DB-B5B5-38C38E0947EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
