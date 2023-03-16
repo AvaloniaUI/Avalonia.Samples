@@ -98,7 +98,7 @@ NOTE: Items listed above containing the word _should_ mean are nice to have but 
 
 Now that we know the functions we want to serve, we can create a simple sketch of how the control should look like: 
 
-image::_docs/sketch.png[Sketch]
+image::_docs/Sketch.png[Sketch]
 
 
 == The Solution
