@@ -91,7 +91,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
-=== 🗺️ Drawing-Samples
+=== ✒️ Drawing-Samples
 
 [cols="25h,25,50"]
 |===
