@@ -1,0 +1,592 @@
+= RatingControl Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to create a custom control. Our goal is to create a rating control, where the user can vote via clicking one of several stars.
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+
+Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme
+
+
+== Before we start
+
+This sample assumes that you know the basics of Avalonia and the MVVM pattern. 
+
+=== Some basics about Controls in Avalonia
+
+Whenever we want to create a new control, we need to derive from a valid base class, which implements the needed interfaces and functions like styling, layout and user interaction. Below you can find a list of possible base-classes:
+
+Control:: Use this as a base class if you want to render the control on your own and you want the control to look the same in every App (for example: `TextBlock`, `Image`).
+
+TemplatedControl:: Use this control as your base class if you want to have a "lookless" control, which can be re-styled in any App. 
+
+ContentControl:: This control inherits `TemplatedControl`, but adds the ability to place any content inside. 
+
+TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox`, if you want to use their functionality but adding your own logic on top. 
+
+For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/authoring-controls/types-of-control[[Documentation\]].
+
+
+
+=== Properties
+
+Avalonia has a property system which is responsible for storing and receiving the current value. The property system will take care of the styling, binding, validation and many more. There are three types of `AvaloniaProperties`. When you want to register your own property, you need to decide which property type is the right one for your use-case:
+
+StyledProperty:: A `StyledProperty` is a property, which support styling and animation. use this type of property if you think the user of your control will most likely want to define this property in a `Style` (e.g.: `Foreground`, `Background`, `Margin`, ...). 
+
+DirectProperty:: A `DirectProperty` is a property which can only be read and set in an actual control instance. Use this property if it's likely to be set individually on each instance (e.g.: `Text`, `Value`, ...) or if you need a read-only property (e.g:: `HasFocus`)
+
+AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on it's own (e.g.: `Grid.Row`, `DockPanel.Dock`, ...)
+
+If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/authoring-controls/defining-properties[[Documentation\]]
+
+
+=== ControlTemplates
+
+In Avalonia `TemplatedControls` are lookless, which means they are not drawn by the `Control` itself. Instead, the developer needs to provide a `ControlTemplate` which is similar to a `DataTemplate`, but for the `Control`. 
+
+TemplateParts::
+Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
+
+TemplateBinding:: 
+Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/data-binding/binding-in-a-control-template[[Documentation\]].
+
+
+=== The concept of the Rating-Control
+
+Before you create any control, you should already have an idea which functions it should provide, how it should look like and how the user should interact with the control. Remember, the user interface is the door to your program. 
+
+First of all we will write a list of requirements: 
+
+- The developer should be able to define the number of stars. Ideally this should be reusable via `Styles`
+- The user must be able to select their rating
+- There must be a visual feedback showing the current rating
+- The user should be able to interact with the mouse 
+- The user should be able to interact via touch
+- The user should be able to interact via keyboard
+- The developer should be able to validate the input
+- Any validation error should be shown to the user
+- The visual appearance should be easy to adjust
+
+NOTE: Items listed above containing the word _should_ mean are nice to have but the control will also work without this requirement fulfilled. On the other hand, requirements with the word *must* cannot be omitted, as the function of the control will not be given.
+
+Now that we know the functions we want to serve, we can create a simple sketch of how the control should look like: 
+
+image::_docs/Sketch.png[Sketch]
+
+
+== The Solution
+
+=== Step 1: Create a new Project
+
+In our sample we will create a new project using the `Avalonia MMVM Template`. We will place the sample App and the control together in the same project. In your real-world App you may want to create a https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview[[`class library`-project\]] for your custom controls, so they can be reused in several Apps. 
+
+=== Step 2: Add the RatingControl-class
+
+In our project we create a new folder called `Controls`. inside this folder we will add a file called `RatingControl.cs`. Now we need to decide, which base-class we want to use. We want our control to be able to be re-styled by the developer, so we decide to base on `TemplatedControl`. 
+
+[source,cs]
+----
+public class RatingControl : TemplatedControl 
+{
+}
+----
+
+=== Step 3: Add the NumberOfStars-Property
+
+If we want to create a flexible control, we should not hardcode the number of stars. Instead, the developer should be able to define it inside a `Style`. Therefore we add a `StyledProperty` called `NumberOfStars`. The type of our property is `Integer`, the default value is `5`: 
+
+[source,cs]
+----
+/// <summary>
+/// Defines the <see cref="NumberOfStars"/> property.
+/// </summary>
+/// <remarks>
+/// We define this property as a styled property, so you can set this property inside your style of the rating control. 
+/// </remarks>
+public static readonly StyledProperty<int> NumberOfStarsProperty =
+    AvaloniaProperty.Register<RatingControl, int>(
+        nameof(NumberOfStars),          // Sets the name of the property
+        defaultValue: 5,                // The default value of this property
+        coerce: CoerceNumberOfStars);   // Ensures that we always have a valid number of stars
+
+
+/// <summary>
+/// Gets or sets the number of available stars
+/// </summary>
+public int NumberOfStars
+{
+    get { return GetValue(NumberOfStarsProperty); }
+    set { SetValue(NumberOfStarsProperty, value); }
+}
+----
+
+The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided value. A coerce function needs to have the current control instance (`IAvaloniaObject instance`) and the value (`int value`) as a parameter and must return the coerced value:
+
+[source,cs]
+----
+/// <summary>
+/// This function will coerce the <see cref="NumberOfStars"/> property. The minimum allowed number is 1
+/// </summary>
+/// <param name="sender">the RatingControl-instance calling this method</param>
+/// <param name="value">the value to coerce</param>
+/// <returns>The coerced value</returns>
+private static int CoerceNumberOfStars(IAvaloniaObject instance, int value)
+{
+    // the value should not be lower than 1.
+    // Hint: You can also return Math.Max(1, value)
+    if (value < 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return value;
+    }
+}
+----
+
+
+=== Step 4: Add the Value-Property
+
+The next property we add is the `Value` property, which will hold the current rating. This property will be set by the user and is most likely set on each control instance. Moreover, as this property is meant to receive user input, we also want to add link:../../MVVM/ValidationSample[[validation support\]]. 
+
+NOTE: We use a `DirectProperty` because it will improve performance and allows us to enable validation. The downside is, that this property cannot be set via `Styles`. 
+
+[source,cs]
+----
+/// <summary>
+/// Defines the <see cref="Value"/> property.
+/// </summary>
+/// <remarks>
+/// This property doesn't need to be styled. Therefore we can use a direct property, which improves performance and 
+/// allows us to add validation support.
+/// </remarks>
+public static readonly DirectProperty<RatingControl, int> ValueProperty =
+    AvaloniaProperty.RegisterDirect<RatingControl, int>(
+        nameof(Value),                            // The name of the property     
+        o => o.Value,                             // The getter of the property
+        (o, v) => o.Value = v,                    // The setter of the property
+        defaultBindingMode: BindingMode.TwoWay,   // We change the default binding mode to be two-way, so if the user selects a new value, it will automatically update the bound property
+        enableDataValidation: true);              // Enables DataValidation
+
+// For direct properties we need to have a backing field
+private int _value;
+
+/// <summary>
+/// Gets or sets the current value
+/// </summary>
+public int Value
+{
+    get { return _value; }
+    set { SetAndRaise(ValueProperty, ref _value, value); }
+}
+----
+
+TIP: In this sample the value is of type `int`, so only full stars can be shown. If you want to add support for half stars, consider to use `float` or `double`.
+
+We set `enableDataValidation` to `true`. But this is not enough for validation support. We also need to override `UpdateDataValidation`. This function will be called whenever a property asks for validation. Most likely we want to use set an error on the `DataValidationErrors`-control: 
+
+[source,cs]
+----
+/// <summary>
+/// Called to update the validation state for properties for which data validation is
+/// enabled.
+/// </summary>
+/// <param name="property">The property.</param>
+/// <param name="value">The current data binding state.</param>
+protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+{
+    base.UpdateDataValidation(property, value);
+
+    if(property == ValueProperty)
+    {
+        DataValidationErrors.SetError(this, value.Error);
+    }
+}
+----
+
+
+
+=== Step 5: Add the Stars-Property
+
+Now that we have the number of stars and the value property, we need a way to dynamically represent the stars. While we technically can add the stars in code, we will use a different approach here. The idea is, that we add a read-only helper property called `Stars`. This property will just provide a `Range` of `Integers`. In our `Style` we can use this property to draw the stars.
+
+[source,cs]
+----
+/// <summary>
+/// Defines the <see cref="Stars"/> property.
+/// </summary>
+/// <remarks>
+/// ´This property holds a read-only array of stars. 
+/// </remarks>
+public static readonly DirectProperty<RatingControl, IEnumerable<int>> StarsProperty =
+    AvaloniaProperty.RegisterDirect < RatingControl, IEnumerable<int>>(
+        nameof(Stars),              // The name of the Property
+        o => o.Stars);   // The getter. As we don't add a setter, this property is read-only
+
+// For read-only properties we need to have a backing field. The default value is [1..5]
+private IEnumerable<int> _stars = Enumerable.Range(1, 5);
+
+/// <summary>
+/// Gets the current collection of visible stars
+/// </summary>
+public IEnumerable<int> Stars
+{
+    get { return _stars; }
+    private set { SetAndRaise(StarsProperty, ref _stars, value); } // make sure the setter is private
+}
+----
+
+=== Step 6: Update the Stars-Property
+
+We need a way to update the `Stars` property whenever the `NumberOfStars`-Property has changed. So let's add a method to do this: 
+
+[source,cs]
+----
+// called when the number of stars changed
+private void UpdateStars()
+{
+    // Stars is an array from 1 to NumberOfStars
+    Stars = Enumerable.Range(1, NumberOfStars);
+}
+----
+
+In Avalonia each control has a `PropertyChanged`-event, which will be raised every time a property changed. We can override `OnPropertyChanged` in our control to handle this event: 
+
+[source,cs]
+----
+// We override OnPropertyChanged of the base class. That way we can react on property changes
+protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+{
+    base.OnPropertyChanged(change);
+
+    // if the changed property is the NumberOfStarsProperty, we need to update the stars
+    if (change.Property == NumberOfStarsProperty) 
+    {
+        UpdateStars();
+    }
+}
+----
+
+Moreover we want to update the `Stars`-Property as soon as a new instance of our control was created. We can do this inside the constructor:
+
+[source,cs]
+----
+public RatingControl() 
+{ 
+    // When a new instance of the control is created, we need to update the rating stars visible
+    UpdateStars();
+}
+----
+
+
+=== Step 7: Add user interaction
+
+Okay, all properties we need are there. But wait, how should the user interact with our control? At the moment, we do not handle any user interaction. At least when a user clicks on a star, the value should be set to the number that this star has. To achieve this we require the `ControlTemplate` to provide an `ItemsControl` called `PART_StarsPresenter`. Use the `TemplatePart-Attribute` to indicate this. 
+
+[source,cs]
+----
+// This Attribute specifies that "PART_StarsPresenter" is a control, which must be present in the Control-Template
+[TemplatePart("PART_StarsPresenter", typeof(ItemsControl))]
+public class RatingControl : TemplatedControl 
+{ 
+    ... 
+}
+----
+
+In order to hold a reference to the named `ItemsControl`, we add a private field inside our `Control`:
+
+[source,cs]
+----
+// this field holds a reference to the part in the control template that holds the rating stars
+private ItemsControl? _starsPresenter;
+----
+
+Last but not least we need a way to find this control inside our `ControlTemplate`. Whenever a new `ControlTemplate` is applied, the method `OnApplyTemplate` will be called. We can override it like this: 
+
+[source,cs]
+----
+// We override what happens when the control template is being applied. 
+// That way we can for example listen to events of controls which are part of the template
+protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+{
+    base.OnApplyTemplate(e);
+
+    // if we had a control template before, we need to unsubscribe any event listeners
+    if(_starsPresenter is not null)
+    {
+        _starsPresenter.PointerReleased-= StarsPresenter_PointerReleased;
+    }
+
+    // try to find the control with the given name
+    _starsPresenter = e.NameScope.Find("PART_StarsPresenter") as ItemsControl;
+
+    // listen to pointer-released events on the stars presenter.
+    if(_starsPresenter != null)
+    {
+        _starsPresenter.PointerReleased += StarsPresenter_PointerReleased; 
+    }
+}
+----
+
+As you can see we did the following:
+
+. run the base method to make sure everything is set up correctly
+. unsubscribe from any previous event listeners
+. find the named control in the new template to apply
+. listen to the `PointerReleased`-event of the found `ItemsControl`
+
+By convention we know that the `Items` of our `ItemsControl` will be a `Path`. We make use of this convention by checking if the `Source` of the event is a `Path` and if it was, we know its `DataContext` will be an `Integer`. Therefore the new `Value` of our `RatingControl` is set to the given `Integer`:
+
+[source,cs]
+----
+private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+{
+    // e.Source is the original source of this event. In our case, if the user clicked on a star, the original source is a Path.
+    if (e.Source is Path star)
+    {
+        // The DataContext of the star is one of the numbers we have in the Stars-Collection. 
+        // Let's cast the DataContext to an int. If that cast fails, use "0" as a fallback.
+        Value = star.DataContext as int? ?? 0;
+    }
+}
+----
+
+NOTE: Because we use the `as`-operator, our `Value` would become `null` if the `DataContext` could not be converted to `int` for any reason and thus crash the App. To prevent such a crash we use `0` as a fallback. 
+
+
+
+=== Step 8: Add a Style for the RatingControl
+
+While we can already add a `RatingControl` to our View, we will see nothing as there is no `Style` available. To change this we add another folder called `Styles`. Add a file called `RatingStyles.axaml` which is of type `Styles (Avalonia)`. 
+
+First of all we need to add the needed namespaces to our `Style`: 
+
+[source,xml]
+----
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+</Styles>
+----
+
+[TIP]
+====
+If you want to have preview of the `Style`, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+[source,xml]
+----
+<Design.PreviewWith>
+    <StackPanel Spacing="10">
+        <controls:RatingControl Value="0" NumberOfStars="5" />
+        <controls:RatingControl Value="2" NumberOfStars="5" />
+        <controls:RatingControl Value="6" NumberOfStars="6" />
+    </StackPanel>
+</Design.PreviewWith>
+----
+====
+
+Now we can add the needed `Styles` to represent our `RatingControl`. The important part is the `ControlTemplate` which has the following hierarchy: 
+
+[source,xml]
+----
+<!--This is the Style for our RatingControl-->
+<Style Selector="controls|RatingControl">
+    <!--We need to add our IsSmallerOrEqualConverter here as a Resource-->
+    <Style.Resources>
+        <converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+    </Style.Resources>
+    
+    <!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.-->
+    <Setter Property="Template">
+        <ControlTemplate>
+
+            <!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--> 
+            <DataValidationErrors>
+                
+                <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
+                <ItemsControl x:Name="PART_StarsPresenter"
+                                Items="{TemplateBinding Stars}">
+                    <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="5" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <!--Items is an array if integer. Let's add a Path as the DataTemplate-->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Path Classes="star">
+                                <!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --> 
+                                <Classes.selected>
+                                    <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+                                        <!--This is our dataContext, so the number of this item-->
+                                        <Binding />
+                                        <!--This is the binding to the RatingControls current value-->
+                                        <Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
+                                    </MultiBinding>
+                                </Classes.selected>
+                            </Path>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DataValidationErrors>
+        </ControlTemplate>
+    </Setter>
+</Style>
+----
+
+In the above snippet you can see that the `ControlTemplate` our `RatingControl` has the following structure:
+
+----
+ControlTemplate                 -> This is our root node
+   > DataValidationErrors       -> This control will take care of displaying any validation errors
+      > ItemsControl            -> Used to display the Stars. 
+         o ItemsPanelTemplate   -> We change the ItemsPanelTemplate in order to display the Stars horizontally
+         o ItemTemplate         -> We add an ItemTemplate to render the star as a Path
+----
+
+Let us inspect the `ItemTemplate` a bit further. It is a `Path` with the class `star` applied. You can see the `Style` for the class below. It sets the `Data` and other `Properties` to render a single `Star` in the unselected state. 
+
+[source,xml]
+----
+<!--This Style is for a Path which has the Class "star" applied.--> 
+<Style Selector="Path.star" >
+    <Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+    <Setter Property="Width" Value="32" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="Margin" Value="5" />
+    <Setter Property="Fill" Value="White" />
+    <Setter Property="Stroke" Value="Gray" />
+    <Setter Property="StrokeThickness" Value="2" />
+    <Setter Property="Stretch" Value="Uniform" />
+</Style>
+----
+
+We add another class `selected`. We make use of the fact that we can https://docs.avaloniaui.net/docs/styling/styles#style-classes[[add or remove `Style-classes`\]] in Avalonia. We use a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/MVVM/ValueConversionSample[[`MultiConverter`\]] called `IsSmallerOrEqualConverter` which compare the stars number with the selected value and return `true` if the number is smaller or equal to the selected value. The code of the converter is shown below. 
+
+[source,xml]
+----
+<Style Selector="Path.selected" >
+    <Setter Property="Fill" Value="Gold" />
+    <Setter Property="Stroke" Value="Goldenrod" />
+</Style>
+----
+
+[source,cs]
+----
+/// <summary>
+/// A converter that compares two integers and returns true if the first number is smaller or equal to the second number
+/// </summary>
+public class IsSmallerOrEqualConverter : IMultiValueConverter
+{
+    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (values.Count != 2)
+        {
+            throw new ArgumentException("Expected exactly two numbers");
+        }
+        var firstNumber = values[0] as int?;
+        var secondNumber = values[1] as int?;
+
+        return firstNumber <= secondNumber;
+    }
+}
+----
+
+Last but not least we want a visual feedback if the user hovers a star with their mouse device. So we add a `Style` with the class name `star` and the https://docs.avaloniaui.net/docs/styling/styles#pseudoclasses[[pseudoclass\]] `:pointerover`.
+
+[source,xml]
+----
+<Style Selector="Path.star:pointerover" >
+    <Setter Property="RenderTransform" Value="scale(1.3)" />
+    <Setter Property="Fill" Value="Goldenrod" />
+</Style>
+----
+
+==== Step 9: Create a sample to try-out the custom Control
+
+In Avalonia an external `Style`-file needs to be added via `StyleInclude` into the `Styles`-node of your choice before it gets applied. We will add it into `App.Styles` as shown below: 
+
+[source,xml]
+----
+<Application.Styles>
+    <FluentTheme Mode="Light"/>
+    <!-- Don't miss this line -->
+    <StyleInclude Source="/Styles/RatingStyles.axaml" />
+</Application.Styles>
+----
+
+WARNING: You need to do this for every project where you want to use this control. You will not see any custom control if you forgot to add this line.
+
+Now we can use the control in any view like shown below: 
+
+[source,xml]
+----
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        [...]
+        xmlns:controls="using:RatingControlSample.Controls"
+		[...]
+        Title="RatingControlSample">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<StackPanel Spacing="5" Margin="10">
+        [...]
+		<controls:RatingControl NumberOfStars="{Binding NumberOfStars}" 
+								Value="{Binding RatingValue}" />
+	</StackPanel>
+</Window>   
+----
+
+NOTE: For the complete sample including the `ViewModel` please see the source code of this sample. 
+
+=== Step 10: See it in action
+
+We are all done. Hit [Run] or [Debug] in your IDE and you can see the control in action. 
+
+image::_docs/img/result.png[Rating Control in action]
+
+== Related 
+
+This sample has shown some basics about custom controls. If you want to use this control in production you may want to improve it further, for example: 
+
+- Add it into a controls library
+- Add keyboard support
+- Add unit tests 
+- Add animations
+- Improve the Styles
+- Add support for Theming
+- Add an event for value changed

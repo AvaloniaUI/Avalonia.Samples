@@ -136,6 +136,21 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+
+
+=== 🛠️ Custom Controls Samples
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src\Avalonia.Samples\CustomControls\RatingControlSample[RatingControl Sample]
+| 🐔 Normal
+| Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme
+
+|===
+
+
 == 🪛 Contribution
 
 Is Anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea? 
