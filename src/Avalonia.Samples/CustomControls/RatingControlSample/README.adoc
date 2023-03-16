@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to create a custom control. Our goal is to create a rating control, where the user can vote via clicking on of several stars.
+This example will show you how to create a custom control. Our goal is to create a rating control, where the user can vote via clicking one of several stars.
 
 
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
@@ -147,7 +147,7 @@ public int NumberOfStars
 }
 ----
 
-The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided. A coerce function needs to have the current control instance (`IAvaloniaObject instance`) and the value (`int value`) as a parameter and must return the coerced value:
+The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided value. A coerce function needs to have the current control instance (`IAvaloniaObject instance`) and the value (`int value`) as a parameter and must return the coerced value:
 
 [source,cs]
 ----
@@ -236,7 +236,7 @@ protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, Bi
 
 === Step 5: Add the Stars-Property
 
-Now that we have the number of stars and the value property, we need a way to dynamically represent the stars. While we technically can add the stars in code, we will use a different approach here. The idea is, that will add a read-only helper property called `Stars`. This property will just provide a `Range` of `Integers`. In our `Style` we can use this property to draw the stars.
+Now that we have the number of stars and the value property, we need a way to dynamically represent the stars. While we technically can add the stars in code, we will use a different approach here. The idea is, that we add a read-only helper property called `Stars`. This property will just provide a `Range` of `Integers`. In our `Style` we can use this property to draw the stars.
 
 [source,cs]
 ----
