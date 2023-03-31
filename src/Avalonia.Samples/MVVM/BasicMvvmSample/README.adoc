@@ -272,7 +272,7 @@ using System;
 
 namespace BasicMvvmSample.ViewModels
 {
-    // Instead of implementing "INotifyPropertyChanged" on our own we use "ReachtiveObject" as 
+    // Instead of implementing "INotifyPropertyChanged" on our own we use "ReactiveObject" as 
     // our base class. Read more about it here: https://www.reactiveui.net
     public class ReactiveViewModel : ReactiveObject
     {
@@ -369,7 +369,7 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
 
 	<TabControl>
 		
-		<!-- Our Simplie ViewModel -->
+		<!-- Our Simple ViewModel -->
 		<TabItem Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
