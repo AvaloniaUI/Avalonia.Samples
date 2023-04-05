@@ -11,7 +11,7 @@ namespace BasicMvvmSample.ViewModels
         // our View about changes.
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // For convinience we add a method which will raise the above event.
+        // For convenience we add a method which will raise the above event.
         private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

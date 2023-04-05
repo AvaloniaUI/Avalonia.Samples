@@ -3,9 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Metadata;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IDataTemplateSample.Models;
 
 namespace IDataTemplateSample.DataTemplates

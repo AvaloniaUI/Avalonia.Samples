@@ -10,7 +10,7 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="BasicMvvmSample">
 
-	<!--We are using Compiled bindings. This is not mandotory but makes life easier. Read more about it here:-->
+	<!--We are using Compiled bindings. This is not mandatory but makes life easier. Read more about it here:-->
 	<!-- https://docs.avaloniaui.net/docs/data-binding/compiledbindings -->
 
 	<Design.DataContext>
@@ -19,7 +19,7 @@
 
 	<TabControl>
 		
-		<!-- Our Simplie ViewModel -->
+		<!-- Our Simple ViewModel -->
 		<TabItem Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>

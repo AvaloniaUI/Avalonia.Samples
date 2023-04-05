@@ -4,13 +4,8 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
-using DynamicData;
-using DynamicData.Kernel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RatingControlSample.Controls
 {
@@ -59,7 +54,7 @@ namespace RatingControlSample.Controls
         /// <param name="sender">the RatingControl-instance calling this method</param>
         /// <param name="value">the value to coerce</param>
         /// <returns>The coerced value</returns>
-        private static int CoerceNumberOfStars(IAvaloniaObject instance, int value)
+        private static int CoerceNumberOfStars(IAvaloniaObject sender, int value)
         {
             // the value should not be lower than 1.
             // Hint: You can also return Math.Max(1, value)
