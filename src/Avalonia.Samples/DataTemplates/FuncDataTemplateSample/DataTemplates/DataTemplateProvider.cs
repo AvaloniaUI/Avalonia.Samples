@@ -5,11 +5,6 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Media;
 using FuncDataTemplateSample.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FuncDataTemplateSample.DataTemplates
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BasicViewLocatorSample.ViewModels
+﻿namespace BasicViewLocatorSample.ViewModels
 {
     /// <summary>
     /// An abstract class for enabling page navigation.

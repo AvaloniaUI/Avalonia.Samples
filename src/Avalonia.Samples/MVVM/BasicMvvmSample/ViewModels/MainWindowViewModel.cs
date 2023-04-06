@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace BasicMvvmSample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
@@ -11,7 +7,7 @@ namespace BasicMvvmSample.ViewModels
         public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
 
         
-        // Add our RactiveViewModel
+        // Add our ReactiveViewModel
         public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
     }
 }

@@ -1,13 +1,9 @@
 ﻿using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasicMvvmSample.ViewModels
 {
-    // Instead of implementing "INotifyPropertyChanged" on our own we use "ReachtiveObject" as 
+    // Instead of implementing "INotifyPropertyChanged" on our own we use "ReactiveObject" as 
     // our base class. Read more about it here: https://www.reactiveui.net
     public class ReactiveViewModel : ReactiveObject
     {
