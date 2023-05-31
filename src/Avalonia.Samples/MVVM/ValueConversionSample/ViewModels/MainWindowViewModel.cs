@@ -5,12 +5,12 @@ namespace ValueConversionSample.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         // The initial value is 2. 
-        private double? _Number1 = 2;
+        private decimal? _Number1 = 2;
 
         /// <summary>
         /// This is our Number 1
         /// </summary>
-        public double? Number1
+        public decimal? Number1
         {
             get { return _Number1; }
             set { this.RaiseAndSetIfChanged(ref _Number1, value); }
@@ -18,12 +18,12 @@ namespace ValueConversionSample.ViewModels
 
 
         // The initial value is 3.
-        private double? _Number2 = 3;
+        private decimal? _Number2 = 3;
 
         /// <summary>
         /// This is our Number 2
         /// </summary>
-        public double? Number2
+        public decimal? Number2
         {
             get { return _Number2; }
             set { this.RaiseAndSetIfChanged(ref _Number2, value); }

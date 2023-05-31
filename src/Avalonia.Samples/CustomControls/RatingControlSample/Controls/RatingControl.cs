@@ -4,6 +4,7 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,7 +55,7 @@ namespace RatingControlSample.Controls
         /// <param name="sender">the RatingControl-instance calling this method</param>
         /// <param name="value">the value to coerce</param>
         /// <returns>The coerced value</returns>
-        private static int CoerceNumberOfStars(IAvaloniaObject sender, int value)
+        private static int CoerceNumberOfStars(AvaloniaObject sender, int value)
         {
             // the value should not be lower than 1.
             // Hint: You can also return Math.Max(1, value)
@@ -127,7 +128,7 @@ namespace RatingControlSample.Controls
         }
 
         // We override OnPropertyChanged of the base class. That way we can react on property changes
-        protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
         {
             base.OnPropertyChanged(change);
 
@@ -166,13 +167,13 @@ namespace RatingControlSample.Controls
         /// </summary>
         /// <param name="property">The property.</param>
         /// <param name="value">The current data binding state.</param>
-        protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
+        protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
         {
-            base.UpdateDataValidation(property, value);
+            base.UpdateDataValidation(property, state, error);
 
             if(property == ValueProperty)
             {
-                DataValidationErrors.SetError(this, value.Error);
+                DataValidationErrors.SetError(this, error);
             }
         }
 

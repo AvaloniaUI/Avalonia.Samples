@@ -31,8 +31,8 @@ namespace ValueConversionSample.Converter
             string operation = values[0] as string ?? "+";
 
             // Create a variable result and assign the first value we have to if
-            double value1 = values[1] as double? ?? 0;
-            double value2 = values[2] as double? ?? 0;
+            decimal value1 = values[1] as decimal? ?? 0;
+            decimal value2 = values[2] as decimal? ?? 0;
 
 
             // depending on the operator calculate the result.

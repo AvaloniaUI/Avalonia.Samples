@@ -67,8 +67,8 @@
 				CornerRadius="10" Margin="5"
 			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
 			<Grid ColumnDefinitions="*,Auto">
-				<ItemsRepeater Margin="5"
-							   Items="{Binding ConversationLog}" />
+				<ItemsControl Margin="5"
+							   ItemsSource="{Binding ConversationLog}" />
 				
 				<!-- This button will clear the recent conversation log-->
 				<!-- We use ReflectionBinding as we bind to a method instead of a Command here,  -->

@@ -54,7 +54,7 @@
     <StackPanel>
         <TextBlock Text="Select a Shape" />
 
-        <ComboBox Items="{Binding AvailableShapes}"
+        <ComboBox ItemsSource="{Binding AvailableShapes}"
                   SelectedIndex="0"
                   SelectedItem="{Binding SelectedShape}" />
     </StackPanel>

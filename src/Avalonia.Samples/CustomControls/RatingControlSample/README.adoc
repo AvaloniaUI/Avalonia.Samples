@@ -433,7 +433,7 @@ Now we can add the needed `Styles` to represent our `RatingControl`. The importa
                 
                 <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
                 <ItemsControl x:Name="PART_StarsPresenter"
-                                Items="{TemplateBinding Stars}">
+                                ItemsSource="{TemplateBinding Stars}">
                     <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

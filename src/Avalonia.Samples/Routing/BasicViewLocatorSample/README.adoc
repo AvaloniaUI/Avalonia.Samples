@@ -56,7 +56,7 @@ namespace MyNameSpace
 {
     public class ViewLocator : IDataTemplate
     {
-        public IControl Build(object data)
+        public Control Build(object data)
         {
             var name = data.GetType().FullName!.Replace("ViewModel", "View");
             var type = Type.GetType(name);
@@ -84,7 +84,7 @@ Let's see what the ViewLocator does:
 bool Match(object data)::
 This function will return `true` if the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
 
-IControl Build(object data)::
+Control Build(object data)::
 This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
 +
 `MyAppsNameSpace.ViewModels.MyViewModel`
