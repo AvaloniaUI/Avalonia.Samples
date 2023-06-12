@@ -19,8 +19,8 @@
 		<TabItem Header="Interaction">
 			<v:InteractionView DataContext="{Binding InteractionSample}" />
 		</TabItem>
-		<TabItem Header="DialogService">
-			<v:DialogServiceView />
+		<TabItem Header="Custom Interaction">
+			<v:CustomInteractionView DataContext="{Binding CustomInteractionViewModel}" />
 		</TabItem>
 	</TabControl>
 </Window>

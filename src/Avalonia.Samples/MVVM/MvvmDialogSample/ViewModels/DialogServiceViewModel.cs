@@ -1,10 +1,6 @@
 ﻿using MvvmDialogSample.Services;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MvvmDialogSample.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
