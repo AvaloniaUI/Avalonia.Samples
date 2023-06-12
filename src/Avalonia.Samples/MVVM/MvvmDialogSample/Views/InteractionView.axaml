@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:MvvmDialogSample.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:InteractionSample"
+             x:DataType="vm:InteractionViewModel"
 			 x:Class="MvvmDialogSample.Views.InteractionView">
-	<StackPanel>
-		<TextBox Text="{Binding	SampleText}" />
-		<Button Command="{Binding SelectFileCommand}">Click Me</Button>
-	</StackPanel>
+	<Grid RowDefinitions="Auto,*,Auto">
+		<TextBlock Text="Selected Files:" />
+		<ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
+		<Button Content="Select Files"
+				Command="{Binding SelectFilesCommand}"
+				Grid.Row="2" />
+	</Grid>
 </UserControl>

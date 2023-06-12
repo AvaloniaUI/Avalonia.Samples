@@ -2,10 +2,9 @@
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public InteractionSample InteractionSample { get; } = new InteractionSample();
+        public InteractionViewModel InteractionSample { get; } = new InteractionViewModel();
 
         public CustomInteractionViewModel CustomInteractionViewModel { get; } = new CustomInteractionViewModel();
 
-        public DialogServiceViewModel DialogServiceSample { get; } = new DialogServiceViewModel();
     }
 }
