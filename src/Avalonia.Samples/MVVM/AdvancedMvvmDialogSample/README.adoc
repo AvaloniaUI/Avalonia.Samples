@@ -1,0 +1,228 @@
+= Enter the Title here
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to write a service that will help you to show dialogs in your MVVM application
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐉 Hard 🐉
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+MVVM, Dialog, FileDialogs, TopLevel, Clipboard
+
+
+
+== Before we start
+
+We assume you already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+
+
+== The Solution : Use a DialogService to show a Dialog
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1: Add a DialogService-class
+
+In our project we add a folder called `Services`. Inside we will create a class called `DialogService` which inherits `AvaloniaObject`. 
+
+NOTE: We need to inherit `AvaloniaObject` because we want to add register an `AttachedProperty`
+
+Let's add a `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View`, which we want to interact with. 
+
+```cs
+public class DialogService : AvaloniaObject
+{
+    private static readonly Dictionary<object, Visual> RegistrationMapper =
+        new Dictionary<object, Visual>();
+}
+```
+
+In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog service, which we call `Register`. Later we can bind any object to this property from every available `Visual`. 
+
+```cs
+/// <summary>
+/// This property handles the registration of Views and ViewModel
+/// </summary>
+public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Visual, object?>(
+    "Register");
+
+/// <summary>
+/// Accessor for Attached property <see cref="RegisterProperty"/>.
+/// </summary>
+public static void SetRegister(AvaloniaObject element, object value)
+{
+    element.SetValue(RegisterProperty, value);
+}
+
+/// <summary>
+/// Accessor for Attached property <see cref="RegisterProperty"/>.
+/// </summary>
+public static object? GetRegister(AvaloniaObject element)
+{
+    return element.GetValue(RegisterProperty);
+}
+```
+
+Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor. 
+
+```c#
+static DialogService()
+{
+    RegisterProperty.Changed.Subscribe(RegisterChanged);
+}
+
+private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
+{
+    if (e.Sender is not Visual sender)
+    {
+        throw new InvalidOperationException("The DialogService can only be registered on a Control");
+    }
+
+    // Unregister any old registered context
+    if (e.OldValue.Value != null)
+    {
+        RegistrationMapper.Remove(e.OldValue.Value);
+    }
+
+    // Register any new context
+    if (e.NewValue.Value != null)
+    {
+        RegistrationMapper.Add(e.NewValue.Value, sender);
+    }
+}
+```
+
+
+=== Step 2: Add methods to lookup the view
+
+To make our life easier, we add can add some static functions to lookup the registered view. 
+
+```C#
+/// <summary>
+/// Gets the associated <see cref="Visual"/> for a given context. Returns null, if none was registered
+/// </summary>
+/// <param name="context">The context to lookup</param>
+/// <returns>The registered Visual for the context or null if none was found</returns>
+public static Visual? GetVisualForContext(object context)
+{
+    return RegistrationMapper.TryGetValue(context, out var result) ? result : null;
+}
+
+/// <summary>
+/// Gets the parent <see cref="TopLevel"/> for the given context. Returns null, if no TopLevel was found
+/// </summary>
+/// <param name="context">The context to lookup</param>
+/// <returns>The registered TopLevel for the context or null if none was found</returns>
+public static TopLevel? GetTopLevelForContext(object context)
+{
+    return TopLevel.GetTopLevel(GetVisualForContext(context));
+}
+```
+
+If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line:
+
+```c#
+/// <summary>
+/// A helper class to manage dialogs via extension methods. Add more on your own
+/// </summary>
+public static class DialogHelper 
+{ 
+    /// <summary>
+    /// Shows an open file dialog for a registered context, most likely a ViewModel
+    /// </summary>
+    /// <param name="context">The context</param>
+    /// <param name="title">The dialog title or a default is null</param>
+    /// <param name="selectMany">Is selecting many files allowed?</param>
+    /// <returns>An array of file names</returns>
+    /// <exception cref="ArgumentNullException">if context was null</exception>
+    public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this object? context, string? title = null, bool selectMany = true)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        // lookup the TopLevel for the context
+        var topLevel = DialogService.GetTopLevelForContext(context);
+        
+        if(topLevel != null)
+        {
+            // Open the file dialog
+            var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
+                            new FilePickerOpenOptions()
+                            {
+                                AllowMultiple = selectMany,
+                                Title = title ?? "Select any file(s)"
+                            });
+
+            // return the result
+            return storageFiles.Select(s => s.Name);
+        }
+        return null;
+    }
+
+}
+```
+
+=== Step 4: Usage
+
+Now that we have our `DialogService` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
+
+```xml
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:dialog="using:AdvancedMvvmDialogSample.Services"
+             dialog:DialogService.Register="{Binding}">
+    <!-- Your content goes here -->
+</UserControl>
+
+```
+
+And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files:
+
+```c#
+private async Task SelectFilesAsync()
+{
+    SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
+}
+```
+
+== Related 
+
+There are more ways to show dialogs from the ViewModel, for example: 
+  
+* TODO[Interactions]
+* https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm--mvp--mvu[third party libs]
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
