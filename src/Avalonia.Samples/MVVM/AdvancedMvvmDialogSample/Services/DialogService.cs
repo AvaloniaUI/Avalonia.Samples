@@ -1,19 +1,17 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdvancedMvvmDialogSample.Services
 {
 	public class DialogService : AvaloniaObject
 	{
-	    internal static readonly Dictionary<object, Control> RegistrationMapper =
-			new Dictionary<object, Control>();
+	    private static readonly Dictionary<object, Visual> RegistrationMapper =
+			new Dictionary<object, Visual>();
 
 		static DialogService()
 		{
@@ -22,9 +20,9 @@ namespace AdvancedMvvmDialogSample.Services
 
 		private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
 		{
-			if (e.Sender is not Control sender)
+			if (e.Sender is not Visual sender)
 			{
-				throw new InvalidOperationException("The DialogService can only be registered on a Control");
+				throw new InvalidOperationException("The DialogService can only be registered on a Visual");
 			}
 
 			// Unregister any old registered context
@@ -43,10 +41,9 @@ namespace AdvancedMvvmDialogSample.Services
 		/// <summary>
 		/// This property handles the registration of Views and ViewModel
 		/// </summary>
-		public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Control, object?>(
-			"Register", null);
-
-
+		public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Visual, object?>(
+			"Register");
+		
 		/// <summary>
 		/// Accessor for Attached property <see cref="RegisterProperty"/>.
 		/// </summary>
@@ -58,14 +55,45 @@ namespace AdvancedMvvmDialogSample.Services
 		/// <summary>
 		/// Accessor for Attached property <see cref="RegisterProperty"/>.
 		/// </summary>
-		public static object GetRegister(AvaloniaObject element)
+		public static object? GetRegister(AvaloniaObject element)
 		{
 			return element.GetValue(RegisterProperty);
 		}
+
+		/// <summary>
+		/// Gets the associated <see cref="Visual"/> for a given context. Returns null, if none was registered
+		/// </summary>
+		/// <param name="context">The context to lookup</param>
+		/// <returns>The registered Visual for the context or null if none was found</returns>
+		public static Visual? GetVisualForContext(object context)
+		{
+			return RegistrationMapper.TryGetValue(context, out var result) ? result : null;
+		}
+
+		/// <summary>
+		/// Gets the parent <see cref="TopLevel"/> for the given context. Returns null, if no TopLevel was found
+		/// </summary>
+		/// <param name="context">The context to lookup</param>
+		/// <returns>The registered TopLevel for the context or null if none was found</returns>
+		public static TopLevel? GetTopLevelForContext(object context)
+		{
+			return TopLevel.GetTopLevel(GetVisualForContext(context));
+		}
 	}
 
+	/// <summary>
+	/// A helper class to manage dialogs via extension methods. Add more on your own
+	/// </summary>
 	public static class DialogHelper 
 	{ 
+		/// <summary>
+		/// Shows an open file dialog for a registered context, most likely a ViewModel
+		/// </summary>
+		/// <param name="context">The context</param>
+		/// <param name="title">The dialog title or a default is null</param>
+		/// <param name="selectMany">Is selecting many files allowed?</param>
+		/// <returns>An array of file names</returns>
+		/// <exception cref="ArgumentNullException">if context was null</exception>
 		public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this object? context, string? title = null, bool selectMany = true)
 		{
 			if (context == null)
@@ -73,18 +101,21 @@ namespace AdvancedMvvmDialogSample.Services
 				throw new ArgumentNullException(nameof(context));
 			}
 
-			if(DialogService.RegistrationMapper.TryGetValue(context, out var control))
+			// lookup the TopLevel for the context
+			var topLevel = DialogService.GetTopLevelForContext(context);
+			
+			if(topLevel != null)
 			{
-				var topLevel = TopLevel.GetTopLevel(control);
-
-                var storageFile = await topLevel!.StorageProvider.OpenFilePickerAsync(
+				// Open the file dialog
+                var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
                                 new FilePickerOpenOptions()
                                 {
                                     AllowMultiple = selectMany,
                                     Title = title ?? "Select any file(s)"
                                 });
 
-                return storageFile?.Select(s => s.Name);
+                // return the result
+                return storageFiles.Select(s => s.Name);
             }
 			return null;
 		}
