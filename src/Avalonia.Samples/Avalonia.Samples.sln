@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestableApp.Headless.NUnit"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestableApp.Headless.XUnit", "Testing\TestableApp.Headless.XUnit\TestableApp.Headless.XUnit.csproj", "{BDA7536E-26FD-436F-AAC8-F8A2B500548E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestableApp.Appium", "Testing\TestableApp.Appium\TestableApp.Appium.csproj", "{F5CB3DA2-EB59-4792-A1B3-49F600F7C130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{BDA7536E-26FD-436F-AAC8-F8A2B500548E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDA7536E-26FD-436F-AAC8-F8A2B500548E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDA7536E-26FD-436F-AAC8-F8A2B500548E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5CB3DA2-EB59-4792-A1B3-49F600F7C130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5CB3DA2-EB59-4792-A1B3-49F600F7C130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5CB3DA2-EB59-4792-A1B3-49F600F7C130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5CB3DA2-EB59-4792-A1B3-49F600F7C130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{326EF526-6200-4570-90DE-5E6D48B63EAC} = {85B157B3-F701-4F75-B4F1-EC2287729480}
 		{B8CB5C57-07ED-4BC6-ACE8-F05E428E3EB5} = {85B157B3-F701-4F75-B4F1-EC2287729480}
 		{BDA7536E-26FD-436F-AAC8-F8A2B500548E} = {85B157B3-F701-4F75-B4F1-EC2287729480}
+		{F5CB3DA2-EB59-4792-A1B3-49F600F7C130} = {85B157B3-F701-4F75-B4F1-EC2287729480}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C246CAB0-0837-4EE4-A22D-28B3C74930B4}
