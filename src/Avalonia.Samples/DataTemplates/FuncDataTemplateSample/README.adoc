@@ -124,12 +124,12 @@ In your project create a new directory called `DataTemplates`. Inside this direc
 
 NOTE: We make this class static as nothing is depending on instance members. If you need to access instance members, don't make it static. 
 
-To make it easier for maintaining, we will first write a function which takes a `Person` and returns the `IControl`, which represents the data the way we want. 
+To make it easier for maintaining, we will first write a function which takes a `Person` and returns the `Control`, which represents the data the way we want. 
 
 [source,cs]
 ----
 // This private function will return a control that represents our persons sex as a gender symbol.
-private static IControl BuildGenderPresenter(Person person)
+private static Control BuildGenderPresenter(Person person)
 {
     // Create a new Path as a presenter. You can also use any other Control. 
     // If you want to add more than one control, remember to wrap them inside a Panel.
@@ -195,7 +195,7 @@ For the `ToolTip` we create a binding in the controls constructor. In that case 
 [!MyProperty] = new Binding("The Binding Path");
 ----
 
-Read more about binding in code in the https://docs.avaloniaui.net/docs/data-binding/binding-from-code[[Docs\]]
+Read more about binding in code in the https://docs.avaloniaui.net/docs/next/guides/data-binding/binding-from-code#using-xaml-bindings-from-code[[Docs\]]
 ===============================
 
 We can now add our `FuncDataTemplate` which will consume the function we wrote above: 

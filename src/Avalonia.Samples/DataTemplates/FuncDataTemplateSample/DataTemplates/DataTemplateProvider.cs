@@ -22,7 +22,7 @@ namespace FuncDataTemplateSample.DataTemplates
 
 
         // This private function will return a control that represents our persons sex as a gender symbol.
-        private static IControl BuildGenderPresenter(Person person)
+        private static Control BuildGenderPresenter(Person person)
         {
             // Create a new Path as a presenter. You can also use any other Control.
             // If you want to add more than one control, remember to wrap them inside a Panel.
