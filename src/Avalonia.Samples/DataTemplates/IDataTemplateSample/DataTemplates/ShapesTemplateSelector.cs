@@ -14,9 +14,9 @@ namespace IDataTemplateSample.DataTemplates
         public Dictionary<string, IDataTemplate> AvailableTemplates { get; } = new Dictionary<string, IDataTemplate>();
 
         // Build the DataTemplate here
-        public IControl Build(object param)
+        public Control Build(object? param)
         {
-            var key = param.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
+            var key = param?.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
             if (key is null) // If the key is null, we throw an ArgumentNullException
             {
                 throw new ArgumentNullException(nameof(param));
@@ -25,10 +25,10 @@ namespace IDataTemplateSample.DataTemplates
         }
 
         // Check if we can accept the provided data
-        public bool Match(object data)
+        public bool Match(object? data)
         {
             // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
-            var key = data.ToString();
+            var key = data?.ToString();
 
             return data is ShapeType                       // the provided data needs to be our enum type
                    && !string.IsNullOrEmpty(key)           // and the key must not be null or empty
