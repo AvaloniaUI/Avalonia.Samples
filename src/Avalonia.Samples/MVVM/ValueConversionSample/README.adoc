@@ -66,22 +66,24 @@ In this sample we will write a `Converter` that can be used to add a constant nu
 
 === Step 1: Setup your ViewModel
 
-In your `MainWindowViewModel` add a `double` called `Number1` like shown below: 
+In your `MainWindowViewModel` add a `decimal` called `Number1` like shown below: 
 
 [source,cs]
 ----
 // The initial value is 2. 
-private double? _Number1 = 2;
+private decimal? _Number1 = 2;
 
 /// <summary>
 /// This is our Number 1
 /// </summary>
-public double? Number1
+public decimal? Number1
 {
     get { return _Number1; }
     set { this.RaiseAndSetIfChanged(ref _Number1, value); }
 }
 ----
+
+NOTE: The `NumericUpDown` control works best with `decimal` or `decimal` values as these can store exact numbers. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-podecimal-numeric-types[[more about it\]]
 
 === Step 2: Create the MathAddConverter
 
@@ -104,13 +106,13 @@ namespace ValueConversionSample.Converter
         {
             // For add this is simple. just return the sum of the value and the parameter.
             // You may want to validate value and parameter in a real world App
-            return (double?)value + (double?)parameter;
+            return (decimal?)value + (decimal?)parameter;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             // If we want to convert back, we need to subtract instead of add.
-            return (double?)value - (double?)parameter;
+            return (decimal?)value - (decimal?)parameter;
         }
     }
 }
@@ -146,7 +148,7 @@ NOTE: Each Resource must have a unique key defined by `x:Key`
         <!--  Add the MathAddConverter. Remember to add the needed namespace "conv" -->
         <conv:MathAddConverter x:Key="MathAddConverter" />
         <!--  This Resource will be used as our ConverterParameter  -->
-        <x:Double x:Key="MyConverterParameter">2</x:Double>
+        <x:Decimal x:Key="MyConverterParameter">2</x:Decimal>
     </Window.Resources>
 </Window>
 ----
@@ -183,7 +185,7 @@ If you want to bind to more than one value in your `Converter`, you can implemen
 
 === Step 1: Setup your ViewModel
 
-In addition to our `Number1` from the above sample we will add another `double` called `Number2`, the `Operator` as `string` and a list of available `Operators` the user can choose from. 
+In addition to our `Number1` from the above sample we will add another `decimal` called `Number2`, the `Operator` as `string` and a list of available `Operators` the user can choose from. 
 
 TIP: The `Operator` is defined as `string` in our case, but it can also be a `char`, an `enum` or any other `object`. 
 
@@ -192,12 +194,12 @@ TIP: The `Operator` is defined as `string` in our case, but it can also be a `ch
 public class MainWindowViewModel : ViewModelBase
 {
     // The initial value is 2. 
-    private double? _Number1 = 2;
+    private decimal? _Number1 = 2;
 
     /// <summary>
     /// This is our Number 1
     /// </summary>
-    public double? Number1
+    public decimal? Number1
     {
         get { return _Number1; }
         set { this.RaiseAndSetIfChanged(ref _Number1, value); }
@@ -205,12 +207,12 @@ public class MainWindowViewModel : ViewModelBase
 
 
     // The initial value is 3.
-    private double? _Number2 = 3;
+    private decimal? _Number2 = 3;
 
     /// <summary>
     /// This is our Number 2
     /// </summary>
-    public double? Number2
+    public decimal? Number2
     {
         get { return _Number2; }
         set { this.RaiseAndSetIfChanged(ref _Number2, value); }
@@ -263,7 +265,7 @@ namespace ValueConversionSample.Converter
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
             // We need to validate if the provided values are valid. We need at least 3 values. 
-            // The first value is the operator and the other two values should be a double.
+            // The first value is the operator and the other two values should be a decimal.
             if (values.Count != 3)
             {
                 // We can write a message into the Trace if we want to inform the developer.
@@ -279,8 +281,8 @@ namespace ValueConversionSample.Converter
             string operation = values[0] as string ?? "+";
 
             // Create a variable result and assign the first value we have to if
-            double value1 = values[1] as double? ?? 0;
-            double value2 = values[2] as double? ?? 0;
+            decimal value1 = values[1] as decimal? ?? 0;
+            decimal value2 = values[2] as decimal? ?? 0;
 
 
             // depending on the operator calculate the result.
@@ -351,7 +353,7 @@ The result will be shown in another `NumericUpDown`-control, which is read-only.
     <TextBlock Grid.Row="0" Grid.Column="0"
                 Text="Operator" />
     <ComboBox Grid.Row="0" Grid.Column="1"
-                Items="{Binding AvailableMathOperators}"
+                ItemsSource="{Binding AvailableMathOperators}"
                 SelectedItem="{Binding Operator}" />
 
     <TextBlock Grid.Row="1" Grid.Column="0"

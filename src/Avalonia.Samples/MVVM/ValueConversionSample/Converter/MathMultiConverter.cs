@@ -1,4 +1,4 @@
-﻿using Avalonia.Data;
+using Avalonia.Data;
 using Avalonia.Data.Converters;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace ValueConversionSample.Converter
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
             // We need to validate if the provided values are valid. We need at least 3 values. 
-            // The first value is the operator and the other two values should be a double.
+            // The first value is the operator and the other two values should be a decimal.
             if (values.Count != 3)
             {
                 // We can write a message into the Trace if we want to inform the developer.
@@ -31,8 +31,8 @@ namespace ValueConversionSample.Converter
             string operation = values[0] as string ?? "+";
 
             // Create a variable result and assign the first value we have to if
-            double value1 = values[1] as double? ?? 0;
-            double value2 = values[2] as double? ?? 0;
+            decimal value1 = values[1] as decimal? ?? 0;
+            decimal value2 = values[2] as decimal? ?? 0;
 
 
             // depending on the operator calculate the result.
