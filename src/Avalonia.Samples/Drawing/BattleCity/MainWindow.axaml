@@ -14,7 +14,7 @@
     </Style>
   </Window.Styles>
   <ItemsControl
-    Items="{Binding GameObjects}"
+    ItemsSource="{Binding GameObjects}"
     Width="{Binding Width, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}"
     Height="{Binding Height, Converter={x:Static infrastructure:CellToScreenConverter.Instance}, Mode=OneWay}">
 
