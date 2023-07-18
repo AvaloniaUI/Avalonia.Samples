@@ -50,7 +50,7 @@ ContentControl:: This control inherits `TemplatedControl`, but adds the ability 
 
 TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox`, if you want to use their functionality but adding your own logic on top. 
 
-For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/authoring-controls/types-of-control[[Documentation\]].
+For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/next/basics/user-interface/controls/creating-controls/choosing-a-custom-contro-type[[Documentation\]].
 
 
 
@@ -64,7 +64,7 @@ DirectProperty:: A `DirectProperty` is a property which can only be read and set
 
 AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on it's own (e.g.: `Grid.Row`, `DockPanel.Dock`, ...)
 
-If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/authoring-controls/defining-properties[[Documentation\]]
+If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/next/basics/user-interface/controls/creating-controls/defining-properties[[Documentation\]]
 
 
 === ControlTemplates
@@ -75,7 +75,7 @@ TemplateParts::
 Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
 
 TemplateBinding:: 
-Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/data-binding/binding-in-a-control-template[[Documentation\]].
+Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/next/guides/custom-controls/how-to-create-templated-controls#data-binding[[Documentation\]].
 
 
 === The concept of the Rating-Control
@@ -157,7 +157,7 @@ The number of stars must not be smaller than one. A rating control without any s
 /// <param name="sender">the RatingControl-instance calling this method</param>
 /// <param name="value">the value to coerce</param>
 /// <returns>The coerced value</returns>
-private static int CoerceNumberOfStars(IAvaloniaObject instance, int value)
+private static int CoerceNumberOfStars(AvaloniaObject instance, int value)
 {
     // the value should not be lower than 1.
     // Hint: You can also return Math.Max(1, value)
@@ -218,17 +218,18 @@ We set `enableDataValidation` to `true`. But this is not enough for validation s
 /// <summary>
 /// Called to update the validation state for properties for which data validation is
 /// enabled.
-/// </summary>
-/// <param name="property">The property.</param>
-/// <param name="value">The current data binding state.</param>
-protected override void UpdateDataValidation<T>(AvaloniaProperty<T> property, BindingValue<T> value)
-{
-    base.UpdateDataValidation(property, value);
-
-    if(property == ValueProperty)
-    {
-        DataValidationErrors.SetError(this, value.Error);
-    }
+/// </summary> 
+/// <param name="property">The property.</param> 
+/// <param name="state">The current data binding state.</param> 
+/// <param name="error">The Exception that was passed</param> 
+protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error) 
+{ 
+    base.UpdateDataValidation(property, state, error); 
+     
+    if(property == ValueProperty) 
+    { 
+        DataValidationErrors.SetError(this, error); 
+    } 
 }
 ----
 
@@ -283,7 +284,7 @@ In Avalonia each control has a `PropertyChanged`-event, which will be raised eve
 [source,cs]
 ----
 // We override OnPropertyChanged of the base class. That way we can react on property changes
-protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
 {
     base.OnPropertyChanged(change);
 
@@ -433,7 +434,7 @@ Now we can add the needed `Styles` to represent our `RatingControl`. The importa
                 
                 <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
                 <ItemsControl x:Name="PART_StarsPresenter"
-                                Items="{TemplateBinding Stars}">
+                                ItemsSource="{TemplateBinding Stars}">
                     <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
