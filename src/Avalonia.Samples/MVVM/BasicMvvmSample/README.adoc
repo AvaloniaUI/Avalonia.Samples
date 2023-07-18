@@ -40,7 +40,7 @@ ViewModel:: The `ViewModel` can be seen as a mediator between the `View` and the
 
 The `MVVM` pattern helps us to focus on either of the three parts. If we get new values in our `Model`, the `ViewModel` will notify the `View` about it and the `View` can update itself. We don't have to do it manually. If you want to read more about it, here is a collection of useful links:
 
-- https://docs.avaloniaui.net/guides/basics/mvvm[[Avalonia Docs\],window=_blank]
+- https://docs.avaloniaui.net/docs/getting-started/programming-with-avalonia/the-model-view-viewmodel-pattern-mvvm[[Avalonia Docs\],window=_blank]
 - https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel[[Wikipedia\],window=_blank]
 - https://www.codeproject.com/Articles/278901/MVVM-Pattern-Made-Simple[[CodeProject\],window=_blank]
 - https://www.tutorialspoint.com/mvvm/index.htm[[tutorialspoint\],window=_blank]
