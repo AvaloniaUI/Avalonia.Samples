@@ -1,4 +1,4 @@
-= Enter the Title here
+= Advanced MVVM Dialog Sample
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
 :toc:
 :toc-placement!:
@@ -49,9 +49,9 @@ We assume you already now how the MVVM pattern works and how dialogs, such as fi
 
 In our project we add a folder called `Services`. Inside we will create a class called `DialogService` which inherits `AvaloniaObject`. 
 
-NOTE: We need to inherit `AvaloniaObject` because we want to add register an `AttachedProperty`
+NOTE: We need to inherit `AvaloniaObject` because we want to add `Register` as an `AttachedProperty`
 
-Let's add a `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View`, which we want to interact with. 
+Let's add a static `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View` or `Control`, which we want to interact with. 
 
 ```cs
 public class DialogService : AvaloniaObject
@@ -61,7 +61,7 @@ public class DialogService : AvaloniaObject
 }
 ```
 
-In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog service, which we call `Register`. Later we can bind any object to this property from every available `Visual`. 
+In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog service, which we call `Register`. Later we can bind any object to this property from every available `Visual` in our `Views`. 
 
 ```cs
 /// <summary>
@@ -87,9 +87,10 @@ public static object? GetRegister(AvaloniaObject element)
 }
 ```
 
-Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor. 
+Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor.
 
-```c#
+[source,cs]
+----
 static DialogService()
 {
     RegisterProperty.Changed.Subscribe(RegisterChanged);
@@ -114,14 +115,15 @@ private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
         RegistrationMapper.Add(e.NewValue.Value, sender);
     }
 }
-```
+----
 
 
 === Step 2: Add methods to lookup the view
 
-To make our life easier, we add can add some static functions to lookup the registered view. 
+To make our life easier, we add can add some static functions to lookup the registered view.
 
-```C#
+[source,cs]
+----
 /// <summary>
 /// Gets the associated <see cref="Visual"/> for a given context. Returns null, if none was registered
 /// </summary>
@@ -141,11 +143,12 @@ public static TopLevel? GetTopLevelForContext(object context)
 {
     return TopLevel.GetTopLevel(GetVisualForContext(context));
 }
-```
+----
 
 If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line:
 
-```c#
+[source,cs]
+----
 /// <summary>
 /// A helper class to manage dialogs via extension methods. Add more on your own
 /// </summary>
@@ -186,35 +189,37 @@ public static class DialogHelper
     }
 
 }
-```
+----
 
 === Step 4: Usage
 
 Now that we have our `DialogService` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
 
-```xml
+[source,xml]
+----
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:dialog="using:AdvancedMvvmDialogSample.Services"
              dialog:DialogService.Register="{Binding}">
     <!-- Your content goes here -->
 </UserControl>
 
-```
+----
 
 And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files:
 
-```c#
+[source,c#]
+----
 private async Task SelectFilesAsync()
 {
     SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
 }
-```
+----
 
 == Related 
 
 There are more ways to show dialogs from the ViewModel, for example: 
   
-* TODO[Interactions]
+* link:../MvvmDialogSample[Interactions]
 * https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm--mvp--mvu[third party libs]
 // Any related information or further readings goes here.
 
