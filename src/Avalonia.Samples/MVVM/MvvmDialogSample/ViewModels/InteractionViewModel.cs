@@ -13,7 +13,7 @@ namespace MvvmDialogSample.ViewModels
     {
         public InteractionViewModel()
         {
-            selectFilesInteraction = new Interaction<string?, string[]?>();
+            _SelectFilesInteraction = new Interaction<string?, string[]?>();
             SelectFilesCommand = ReactiveCommand.CreateFromTask(SelectFiles);
         }
 
@@ -29,19 +29,19 @@ namespace MvvmDialogSample.ViewModels
         }
 
 
-        private readonly Interaction<string?, string[]?> selectFilesInteraction;
+        private readonly Interaction<string?, string[]?> _SelectFilesInteraction;
 
         /// <summary>
-        /// Gets the confirm interaction
+        /// Gets the select files interaction
         /// </summary>
-        public Interaction<string?, string[]?> SelectFilesInteraction => this.selectFilesInteraction;
+        public Interaction<string?, string[]?> SelectFilesInteraction => this._SelectFilesInteraction;
 
 
         public ICommand SelectFilesCommand { get; }
 
         private async Task SelectFiles()
         {
-            SelectedFiles = await selectFilesInteraction.Handle("Hello from Avalonia");
+            SelectedFiles = await _SelectFilesInteraction.Handle("Hello from Avalonia");
         }
     }
 }
