@@ -23,7 +23,7 @@ MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
 == Before we start
 
 === Prepare your IDE
-Please make sure you have setup your IDE according to the [https://docs.avaloniaui.net/docs/getting-started/ide-support[docs,window=_blank]]. Moreover you should have read the [https://docs.avaloniaui.net/docs/getting-started[Getting Started guide,window=_blank]]. 
+Please make sure you have setup your IDE according to the [https://docs.avaloniaui.net/docs/next/get-started/set-up-an-editor[docs,window=_blank]]. Moreover you should have read the [https://docs.avaloniaui.net/docs/next/welcome[Getting Started guide,window=_blank]]. 
 
 === The MVVM Pattern in short
 
@@ -40,7 +40,7 @@ ViewModel:: The `ViewModel` can be seen as a mediator between the `View` and the
 
 The `MVVM` pattern helps us to focus on either of the three parts. If we get new values in our `Model`, the `ViewModel` will notify the `View` about it and the `View` can update itself. We don't have to do it manually. If you want to read more about it, here is a collection of useful links:
 
-- https://docs.avaloniaui.net/docs/getting-started/programming-with-avalonia/the-model-view-viewmodel-pattern-mvvm[[Avalonia Docs\],window=_blank]
+- https://docs.avaloniaui.net/docs/next/concepts/the-mvvm-pattern/[[Avalonia Docs\],window=_blank]
 - https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel[[Wikipedia\],window=_blank]
 - https://www.codeproject.com/Articles/278901/MVVM-Pattern-Made-Simple[[CodeProject\],window=_blank]
 - https://www.tutorialspoint.com/mvvm/index.htm[[tutorialspoint\],window=_blank]
@@ -64,9 +64,9 @@ More: https://docs.microsoft.com/en-US/dotnet/api/system.componentmodel.inotifyp
 
 === Bindings
 
-Avalonia uses `Controls` to represent functional components of a GUI Layout.  Example `Controls` include [https://docs.avaloniaui.net/docs/controls/scrollbar[`ScrollBar`,window=_blank]], [https://docs.avaloniaui.net/docs/controls/button[`Button`,window=_blank]], and [https://docs.avaloniaui.net/docs/controls/textbox[`TextBox`,window=_blank]]. `Properties` (like the `Text`-property of a `TextBox`) describe and allow interation with the `Controls`.
+Avalonia uses `Controls` to represent functional components of a GUI Layout.  Example `Controls` include https://docs.avaloniaui.net/docs/next/reference/controls/scrollbar[[`ScrollBar`\]], [https://docs.avaloniaui.net/docs/next/reference/controls/buttons/button[[`Button`,window=_blank]], and [https://docs.avaloniaui.net/docs/next/reference/controls/detailed-reference/textbox[`TextBox`,window=_blank]]. `Properties` (like the `Text`-property of a `TextBox`) describe and allow interaction with the `Controls`.
 
-We need a way to connect the `Properties` of our controls with the `Properties` in our `ViewModel`. Luckily we have  [https://docs.avaloniaui.net/docs/data-binding/bindings[`Bindings`,window=_blank]] which will do this for us. The `Binding` will update the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`.
+We need a way to connect the `Properties` of our controls with the `Properties` in our `ViewModel`. Luckily we have  [https://docs.avaloniaui.net/docs/next/basics/data/data-binding/[`Bindings`,window=_blank]] which will do this for us. The `Binding` will update the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`.
 
 === Create a new Project
 
@@ -182,7 +182,7 @@ public string Greeting
 
 === Step 3: Add SimpleViewModel to MainWindowViewModel
 
-Remember that the `View` implements the User Interface. Our view will only consist of one [https://docs.avaloniaui.net/docs/controls/window[`Window`,window=_blank]] called `MainWindow`. Its [https://docs.avaloniaui.net/docs/data-binding/the-datacontext[`DataContext`,window=_blank]], which describes the default location where controls should look values when binding, is the class `MainWindowViewModel` which was already added by the template when we first created our project. We will just add an instance of our `SimpleViewModel` to it. Add the following code to the `MainWindowViewlModel` class in `MainWindowViewModel.cs`.
+Remember that the `View` implements the User Interface. Our view will only consist of one [https://docs.avaloniaui.net/docs/next/concepts/toplevel[`Window`,window=_blank]] called `MainWindow`. Its [https://docs.avaloniaui.net/docs/next/basics/data/data-binding/data-context[`DataContext`,window=_blank]], which describes the default location where controls should look values when binding, is the class `MainWindowViewModel` which was already added by the template when we first created our project. We will just add an instance of our `SimpleViewModel` to it. Add the following code to the `MainWindowViewlModel` class in `MainWindowViewModel.cs`.
 
 ```cs
 // Add our SimpleViewModel.
