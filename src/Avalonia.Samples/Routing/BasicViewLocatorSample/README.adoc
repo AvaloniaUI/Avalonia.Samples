@@ -11,7 +11,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to use the build-in `ViewLocator` in order to change the contents of your UI.
+This example will show you how to use a `ViewLocator` in order to change the contents of your UI.
 
 
 
@@ -43,7 +43,9 @@ You should already know what the `MVVM` Pattern is and what `DataTemplates` in A
 
 A `ViewLocator` is a class that helps your App to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
 
-If you create your projects using the "Avalonia MVVM Template" you might have already noticed that a file called `ViewLocator.cs` was created. This is how the file looks like:
+We can add a class called `ViewLocator` which can be used to create a new instance of a view for the given data object. In this sample we are using reflection to get the needed views. You can also use different approaches such as a `switch`-statement or a source generator.
+
+NOTE: If you have created your projects using the Avalonia version 0.10.x, you might have already noticed that a file called `ViewLocator.cs` was created. In Avalonia 11.0 or later you need to implement this class on your own if needed.
 
 [source,cs]
 ----
@@ -56,8 +58,13 @@ namespace MyNameSpace
 {
     public class ViewLocator : IDataTemplate
     {
-        public IControl Build(object data)
+        public Control Build(object? data)
         {
+            if (data is null)
+            {
+                return new TextBlock { Text = "data was null" };
+            }
+
             var name = data.GetType().FullName!.Replace("ViewModel", "View");
             var type = Type.GetType(name);
 
@@ -71,7 +78,7 @@ namespace MyNameSpace
             }
         }
 
-        public bool Match(object data)
+        public bool Match(object? data)
         {
             return data is ViewModelBase;
         }
@@ -81,10 +88,10 @@ namespace MyNameSpace
 
 Let's see what the ViewLocator does:
 
-bool Match(object data)::
+bool Match(object? data)::
 This function will return `true` if the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
 
-IControl Build(object data)::
+Control Build(object? data)::
 This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
 +
 `MyAppsNameSpace.ViewModels.MyViewModel`
@@ -99,7 +106,7 @@ NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and h
 
 === Where do I find the ViewLocator instance? 
 
-By default a new instance of the `ViewLocator` is created inside the `App.axaml` file. See the `App.DataTemplates`-node: 
+We will add a new instance of the `ViewLocator` inside `App.DataTemplates` in the file `App.axaml`:
 
 [source,xml]
 ----

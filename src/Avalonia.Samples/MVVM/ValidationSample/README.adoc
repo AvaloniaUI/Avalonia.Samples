@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to https://docs.avaloniaui.net/docs/data-binding/data-validation[[validate properties\]] and display an error message to the user, if the entered values are invalid. For example if the user should enter their e-mail address into a `TextBox`, the "@"-character is required and the `TextBox` may not be empty.
+This example will show you how to https://docs.avaloniaui.net/docs/next/guides/development-guides/data-validation[[validate properties\]] and display an error message to the user, if the entered values are invalid. For example if the user should enter their e-mail address into a `TextBox`, the "@"-character is required and the `TextBox` may not be empty.
 
 
 
@@ -298,7 +298,7 @@ In your IDE hit `Run` or `Debug` to see the result:
 image::_docs/option2.png[Result Option 2]
 
 
-NOTE: Some `MVVM`-frameworks like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]] implement the `INotifyDataErrorInfo`-interface and are using https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[[disable one of the validators\]] in your App. 
+NOTE: Some `MVVM`-frameworks like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]] implement the `INotifyDataErrorInfo`-interface and are using https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can https://docs.avaloniaui.net/docs/next/guides/development-guides/data-validation#manage-validationplugins[[disable one of the validators\]] in your App. 
 
 
 == Approach 3 : Validate a Property using Exceptions inside setters

@@ -12,7 +12,7 @@
         <!--  Add the MathAddConverter. Remember to add the needed namespace "conv"  -->
         <conv:MathAddConverter x:Key="MathAddConverter" />
         <!--  This Resource will be used as our ConverterParameter  -->
-        <x:Double x:Key="MyConverterParameter">2</x:Double>
+        <x:Decimal x:Key="MyConverterParameter">2</x:Decimal>
 
         <!--  Add the MathMultiConverter  -->
         <conv:MathMultiConverter x:Key="MathMultiConverter" />
@@ -43,7 +43,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Operator" />
                 <ComboBox Grid.Row="0" Grid.Column="1"
-                          Items="{Binding AvailableMathOperators}"
+                          ItemsSource="{Binding AvailableMathOperators}"
                           SelectedItem="{Binding Operator}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0"

@@ -27,10 +27,8 @@ public class TerrainTileConverter : IValueConverter
 
     private Dictionary<TerrainTileType, Bitmap> GetCache()
     {
-        var assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
-
         return _cache ??= Enum.GetValues(typeof(TerrainTileType)).OfType<TerrainTileType>().ToDictionary(
             t => t,
-            t => new Bitmap(assetLoader.Open(new Uri($"avares://BattleCity/Assets/{t}.png"))));
+            t => new Bitmap(AssetLoader.Open(new Uri($"avares://BattleCity/Assets/{t}.png"))));
     }
 }

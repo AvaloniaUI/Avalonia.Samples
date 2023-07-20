@@ -11,7 +11,7 @@
         Title="BasicMvvmSample">
 
 	<!--We are using Compiled bindings. This is not mandatory but makes life easier. Read more about it here:-->
-	<!-- https://docs.avaloniaui.net/docs/data-binding/compiledbindings -->
+	<!-- https://docs.avaloniaui.net/docs/next/basics/data/data-binding/compiled-bindings -->
 
 	<Design.DataContext>
         <vm:MainWindowViewModel/>

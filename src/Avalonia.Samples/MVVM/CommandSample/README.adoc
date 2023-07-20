@@ -264,19 +264,15 @@ The third `Button` will bind to our `async Command`:
         Content="Start Pod Bay Opening Sequence" />
 ----
 
-We can also bind `Button.Command` to any `Method`. To demonstrate that we added another `Button` which we can use to clear the recent conversation log. 
-
-NOTE: Instead of `Binding` we need to use `ReflectionBinding`, because we enabled `CompiledBindings` in the `Window`, which don't support binding to `Methods`. https://docs.avaloniaui.net/docs/data-binding/compiledbindings#known-limitations[[more\]]
+We can also bind `Button.Command` to any `Method`. To demonstrate that we added another `Button` which we can use to clear the recent conversation log.
 
 [source,xml]
 ----
 <!-- This button will clear the recent conversation log -->
-<!-- We use ReflectionBinding as we bind to a method instead of a Command here, 
-		which is not supported via CompiledBinding. --> 
 <Button Grid.Column="1"
 		VerticalAlignment="Stretch" VerticalContentAlignment="Center"
 		Background="Transparent"
-		Command="{ReflectionBinding ConversationLog.Clear}"
+		Command="{Binding ConversationLog.Clear}"
 		Content="❌"/>
 ----
 
@@ -353,16 +349,15 @@ Now let's put all together. Our `View` will finally look like this:
 				CornerRadius="10" Margin="5"
 			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
 			<Grid ColumnDefinitions="*,Auto">
-				<ItemsRepeater Margin="5"
-							   Items="{Binding ConversationLog}" />
+				<ItemsControl Margin="5"
+                              ItemsSource="{Binding ConversationLog}" />
 				
 				<!-- This button will clear the recent conversation log-->
-				<!-- We use ReflectionBinding as we bind to a method instead of a Command here,  -->
 				<!-- which is not supported via CompiledBinding.                                 --> 
 				<Button Grid.Column="1"
 						VerticalAlignment="Stretch" VerticalContentAlignment="Center"
 						Background="Transparent"
-						Command="{ReflectionBinding ConversationLog.Clear}"
+						Command="{Binding ConversationLog.Clear}"
 						Content="❌"/>
 			</Grid>
 		</Border>

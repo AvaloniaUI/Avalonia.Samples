@@ -68,6 +68,6 @@
 
     </Window.DataTemplates>
 
-    <ListBox Items="{Binding People}" />
+    <ListBox ItemsSource="{Binding People}" />
 
 </Window>

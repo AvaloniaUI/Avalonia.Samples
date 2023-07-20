@@ -43,10 +43,10 @@ You should already have a basic knowledge of `DataTemplates`.
 
 http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/[[`IDataTemplate`\]] is an interface which you can implement into your own class in order to be used as a `DataTemplate`. It has the following members:
 
-bool Match(object)::
+bool Match(object?)::
 Use this function to return if the given object matches to your `DataTemplate`.
 
-IControl Build(object)::
+Control Build(object?)::
 Use this function to build the control which represents the given object.
 
 
@@ -128,9 +128,9 @@ public class ShapesTemplateSelector : IDataTemplate
     public Dictionary<string, IDataTemplate> AvailableTemplates { get; } = new Dictionary<string, IDataTemplate>();
 
     // Build the DataTemplate here
-    public IControl Build(object param)
+    public Control Build(object? param)
     {
-        var key = param.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
+        var key = param?.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
         if (key is null) // If the key is null, we throw an ArgumentNullException
         {
             throw new ArgumentNullException(nameof(param));
@@ -139,10 +139,10 @@ public class ShapesTemplateSelector : IDataTemplate
     }
 
     // Check if we can accept the provided data
-    public bool Match(object data)
+    public bool Match(object? data)
     {
         // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
-        var key = data.ToString();
+        var key = data?.ToString();
 
         return data is ShapeType                        // the provided data needs to be our enum type
                 && !string.IsNullOrEmpty(key)           // and the key must not be null or empty
@@ -206,7 +206,7 @@ Now we can add the content we like to our `Window`. In our case we just add a `T
 <StackPanel>
     <TextBlock Text="Select a Shape" />
 
-    <ComboBox Items="{Binding AvailableShapes}"
+    <ComboBox ItemsSource="{Binding AvailableShapes}"
               SelectedIndex="0"
               SelectedItem="{Binding SelectedShape}" />
 </StackPanel>
