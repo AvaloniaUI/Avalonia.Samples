@@ -162,7 +162,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | link:src\Avalonia.Samples\Testing\TestableApp.Headless.NUnit[Testing with Headless NUnit]
 | 🐔 Normal
 | NUnit, Headless, Automation, UI Testing
-| link:src\Avalonia.Samples\Testing\TestableApp.Appium[Testing with Appium driver]
+| link:src\Avalonia.Samples\Testing\TestableApp.Appium[Testing with Appium]
 | 🐉 Hard
 | XUnit, Appium, WinAppDriver, Automation, UI Testing
 
