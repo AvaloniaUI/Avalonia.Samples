@@ -26,16 +26,4 @@
     <InternalsVisibleTo Include="TestableApp.Headless.NUnit" />
     <InternalsVisibleTo Include="TestableApp.Headless.XUnit" />
   </ItemGroup>
-
-  <!-- Only needed for TestableApp.Appium -->
-  <PropertyGroup>
-    <CFBundleName>TestableApp</CFBundleName>
-    <CFBundleIdentifier>net.avaloniaui.testableApp</CFBundleIdentifier>
-    <NSHighResolutionCapable>true</NSHighResolutionCapable>
-    <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Dotnet.Bundle" Version="0.9.13" />
-  </ItemGroup>
 </Project>
