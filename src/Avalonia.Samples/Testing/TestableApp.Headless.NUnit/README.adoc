@@ -1,0 +1,175 @@
+﻿= Testing with Headless NUnit
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+The headless platform in AvaloniaUI provides the capability to run Avalonia applications without a visible graphical user interface (GUI). This allows for testing and automation scenarios on systems that lack a graphical environment, such as servers or continuous integration/continuous deployment (CI/CD) environments.
+
+At the same time, Headless UI testing is easiest and fastest way to test UI controls.  
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+
+NUnit, Headless, Automation, UI Testing
+
+
+== Before we start
+
+=== Creating an application to test
+
+In this sample, we will create a simple calculator built using Avalonia. It follows the MVVM pattern, where the `MainWindowViewModel` acts as the intermediary between the `MainWindow` view and the underlying model (in this case, the arithmetic operations and the result).
+
+The `CommunityToolkit.Mvvm` library is used for the MVVM implementation, but `ReactiveUI` or any other MVVM library can be used as well.
+
+We will not go through creating this project step by step, but here are some important details from each file:
+
+* TestableApp.csproj 
+
++
+Project is generated from the Avalonia templates with a single major change needed for the automated testing:
++
+[source,xml]
+----
+<ItemGroup>
+  <InternalsVisibleTo Include="TestableApp.Headless.NUnit" />
+</ItemGroup>
+----
++
+This is needed in order to make controls marked with *Name* attribute visible in the tests project. But it can be avoided, if you use *window.Find<Button>("ButtonName")* method instead directly from the tests.
+* Program.cs, App.axaml, App.axaml.cs
++
+Default entry point and App definitions generated from the template. No additional changes required in order to make app testable.
+
+* MainWindow.axaml, MainWindow.axaml.cs
++
+The window contains two text boxes for user input, four buttons for arithmetic operations, and a text block to display the result. The buttons are bound to commands in the MainWindowViewModel.
+Important: all control that we want to have access to have *Name* attribute on them. This allows to programmatically click button or read text fro the text block.
+
+* MainWindowViewModel.cs
++
+This file contains the view model for the MainWindow.
+The view model defines observable properties FirstOperand, SecondOperand, and Result, along with corresponding RelayCommand methods for the four arithmetic operations (Add, Subtract, Multiply, and Divide).
+When the user clicks one of the operation buttons, the respective command is executed, and the result is calculated and stored in the Result property.
+
+== Preparing NUnit project
+
+To set up the NUnit project, follow their up-to-date documentation: link:https://docs.nunit.org/articles/nunit/getting-started/installation.html[NUnit Getting Started].
+
+For this sample, we have used default NUnit template:
+
+[source,bash]
+----
+dotnet new nunit
+----
+
+Next, add the following references:
+
+1. Add the NuGet package reference *Avalonia.Headless.NUnit*.
+2. Add a project reference to the project we are going to test (*TestableApp.csproj*).
+
+Finally, define an `AppBuilder` specific to the tests. Create a *TestAppBuilder.cs* file:
+
+[source,csharp]
+----
+using Avalonia;
+using Avalonia.Headless;
+using TestableApp;
+
+[assembly: AvaloniaTestApplication(typeof(TestAppBuilder))]
+
+public class TestAppBuilder
+{
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+        .UseHeadless(new AvaloniaHeadlessPlatformOptions());
+}
+----
+
+It is similar to *Program.cs* of the main project. Since we don't have *Program.cs* in unit test projects, we need to specify *BuildAvaloniaApp* in a custom file.
+
+Important parts here:
+
+- We still use the same *App* type as used in the real application.
+- *.UseHeadless()* was added to install the headless backend and services. No need to use *UsePlatformDetect()*.
+- If you use *ReactiveUI* in your project, *UseReactiveUI()* must be added here as well.
+- The *AvaloniaTestApplication* attribute is required to tell the testing framework which class to use to get the app builder.
+
+== Writing UI tests
+
+In our sample, we will write simple test cases to validate that our application works correctly.
+
+Start with creating a *CalculatorTests.cs* file.
+
+And let's add our first test:
+
+[source,csharp]
+----
+[AvaloniaTest]
+public void Should_Add_Numbers()
+{
+    // Create a window and set the view model as its data context:
+    var window = new MainWindow
+    {
+        DataContext = new MainWindowViewModel()
+    };
+
+    // Show the window, as it's required to get layout processed:
+    window.Show();
+
+    // Set values to the input boxes by simulating text input:
+    window.FirstOperandInput.Focus();
+    window.KeyTextInput("10");
+
+    // Or directly to the control:
+    window.SecondOperandInput.Text = "20";
+
+    // Raise click event on the button:
+    window.AddButton.Focus();
+    window.KeyPress(Key.Enter, RawInputModifiers.None);
+
+    Assert.That(window.ResultBox.Text, Is.EqualTo("30"));
+}
+----
+
+Important notes from this test:
+
+* Instead of the typical [Test] attribute, we need to use [AvaloniaTest] as it sets up the UI thread. Similarly, instead of [Theory], there is a [AvaloniaTheory] attribute.
+* It's easier to test when you have some top level like a Window to start with
+* Window must be shown in order to get layout processed. Note, no actual window is created, as it's a headless platform.
+* We can access control by their Name, as it was set in previous steps
+* There are many ways to simulate input in the window, commons ones are:
+** Focus target control and send events through helper methods on the Window class, like KeyTextInput or KeyPress
+** Raise event directly on the control using control.RaiseEvent() 
+** Set text directly on the control property
+** Set text directly to the view model
++
+While setting text directly is the easiest way, it doesn't really how user would act in the real application, as it skips input processing completely. Although, for many test cases it is sufficient.
+* We can read properties to validate that value was actually changed
+
+== More
+
+While this sample was pretty simple, Headless platform provides more features such as taking a screenshot of the control, so it can be compared with expected, or having input extension methods.
+
+For more information please visit detailed documentation page: https://docs.avaloniaui.net/docs/next/concepts/headless/

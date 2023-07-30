@@ -150,6 +150,24 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+=== 🧪️ Automated UI Testing
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words
+
+| link:src\Avalonia.Samples\Testing\TestableApp.Headless.XUnit[Testing with Headless XUnit]
+| 🐔 Normal
+| XUnit, Headless, Automation, UI Testing
+| link:src\Avalonia.Samples\Testing\TestableApp.Headless.NUnit[Testing with Headless NUnit]
+| 🐔 Normal
+| NUnit, Headless, Automation, UI Testing
+| link:src\Avalonia.Samples\Testing\TestableApp.Appium[Testing with Appium]
+| 🐉 Hard
+| XUnit, Appium, WinAppDriver, Automation, UI Testing
+
+|===
+
 
 == 🪛 Contribution
 

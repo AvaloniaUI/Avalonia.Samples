@@ -541,7 +541,7 @@ In Avalonia an external `Style`-file needs to be added via `StyleInclude` into t
 [source,xml]
 ----
 <Application.Styles>
-    <FluentTheme Mode="Light"/>
+    <FluentTheme />
     <!-- Don't miss this line -->
     <StyleInclude Source="/Styles/RatingStyles.axaml" />
 </Application.Styles>

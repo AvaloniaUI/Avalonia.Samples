@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TestableApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TestableApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Simple Calculator"
+        SizeToContent="WidthAndHeight"
+        CanResize="False">
+  <StackPanel Spacing="10" Margin="10" HorizontalAlignment="Left">
+    <TextBox Name="FirstOperandInput" Text="{Binding FirstOperand, Mode=TwoWay}" Watermark="Operand 1" />
+    <TextBox Name="SecondOperandInput" Text="{Binding SecondOperand, Mode=TwoWay}" Watermark="Operand 2" />
+
+    <UniformGrid Columns="4">
+      <UniformGrid.Styles>
+        <Style Selector="UniformGrid > Button">
+          <Setter Property="HorizontalContentAlignment" Value="Center" />
+          <Setter Property="Margin" Value="10" />
+          <Setter Property="MinWidth" Value="50" />
+        </Style>
+      </UniformGrid.Styles>
+      <Button Name="AddButton" Content="+" Command="{Binding AddCommand}" Classes="accent" />
+      <Button Name="SubtractButton" Content="-" Command="{Binding SubtractCommand}" Classes="accent" />
+      <Button Name="MultiplyButton" Content="*" Command="{Binding MultiplyCommand}" Classes="accent" />
+      <Button Name="DivideButton" Content="/" Command="{Binding DivideCommand}" Classes="accent" />
+    </UniformGrid>
+
+    <StackPanel Orientation="Horizontal" Spacing="10">
+      <TextBlock Text="Result:" />
+      <TextBlock x:Name="ResultBox" Text="{Binding Result}" />
+    </StackPanel>
+  </StackPanel>
+</Window>
