@@ -34,7 +34,6 @@ namespace MvvmDialogSample.Views
                             });
                
             context.SetOutput(storageFiles?.Select(x => x.Name).ToArray());
-
         }
     }
 }

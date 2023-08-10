@@ -42,11 +42,11 @@ We assume you already now how the MVVM pattern works and how dialogs, such as fi
 
 == Solution 1 : Use ReactiveUI-Interactions
 
-In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/`Interaction` in order to interact with your `View`.
+In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] in order to interact with your `View`.
 
 === Step 1: Setup the ViewModel 
 
-In our ViewModel we add a property for the `Interaction` which we can use later to interact with the `View`, for example inside a `Command:
+In our ViewModel we add a property for the `Interaction` which we can use later to interact with the `View`, for example inside a `Command`:
 
 [source,c#]
 ----
@@ -68,187 +68,76 @@ The `Interaction` is a generic class, where the first parameter defines the inpu
 
 === Step 2: Prepare the View
 
-
-
-
-
-_---- DELETE ------------
-
-=== Step 1: Add a DialogService-class
-
-In our project we add a folder called `Services`. Inside we will create a class called `DialogService` which inherits `AvaloniaObject`. 
-
-NOTE: We need to inherit `AvaloniaObject` because we want to add `Register` as an `AttachedProperty`
-
-Let's add a static `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View` or `Control`, which we want to interact with. 
-
-```cs
-public class DialogService : AvaloniaObject
-{
-    private static readonly Dictionary<object, Visual> RegistrationMapper =
-        new Dictionary<object, Visual>();
-}
-```
-
-In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog service, which we call `Register`. Later we can bind any object to this property from every available `Visual` in our `Views`. 
-
-```cs
-/// <summary>
-/// This property handles the registration of Views and ViewModel
-/// </summary>
-public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Visual, object?>(
-    "Register");
-
-/// <summary>
-/// Accessor for Attached property <see cref="RegisterProperty"/>.
-/// </summary>
-public static void SetRegister(AvaloniaObject element, object value)
-{
-    element.SetValue(RegisterProperty, value);
-}
-
-/// <summary>
-/// Accessor for Attached property <see cref="RegisterProperty"/>.
-/// </summary>
-public static object? GetRegister(AvaloniaObject element)
-{
-    return element.GetValue(RegisterProperty);
-}
-```
-
-Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor.
+We add a `ReactiveUserControl` as your view. This control gives us the ability to register a handler for our interactions. Let's add this handler in the UserControls code behind:
 
 [source,cs]
 ----
-static DialogService()
+private async Task InteractionHandler(InteractionContext<string?, string[]?> context)
 {
-    RegisterProperty.Changed.Subscribe(RegisterChanged);
-}
+    // Get our parent top level control in order to get the needed service (in our sample the storage provider. Can also be the clipboard etc.)
+    var topLevel = TopLevel.GetTopLevel(this);
 
-private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
+    var storageFiles = await topLevel!.StorageProvider
+        .OpenFilePickerAsync(
+                    new FilePickerOpenOptions()
+                    {
+                        AllowMultiple = true,
+                        Title = context.Input
+                    });
+       
+    context.SetOutput(storageFiles?.Select(x => x.Name).ToArray());
+}
+---- 
+
+NOTE: We are using an async Task to not block the UI. As parameter we need to pass an `InteractionContext` which has one generic parameter for the input (in our case a string for the dialog title) and one for the output (in our case an array of selected filed). 
+
+In the constructor of our `ReactiveUserControl` we need to setup the interaction inside `this.WhenActivated` like shown below: 
+
+[source,C#]
+----
+public InteractionView()
 {
-    if (e.Sender is not Visual sender)
-    {
-        throw new InvalidOperationException("The DialogService can only be registered on a Control");
-    }
+    InitializeComponent();
 
-    // Unregister any old registered context
-    if (e.OldValue.Value != null)
+    this.WhenActivated(d =>
     {
-        RegistrationMapper.Remove(e.OldValue.Value);
-    }
-
-    // Register any new context
-    if (e.NewValue.Value != null)
-    {
-        RegistrationMapper.Add(e.NewValue.Value, sender);
-    }
+        d(ViewModel.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
+    });
 }
 ----
 
-
-=== Step 2: Add methods to lookup the view
-
-To make our life easier, we add can add some static functions to lookup the registered view.
-
-[source,cs]
-----
-/// <summary>
-/// Gets the associated <see cref="Visual"/> for a given context. Returns null, if none was registered
-/// </summary>
-/// <param name="context">The context to lookup</param>
-/// <returns>The registered Visual for the context or null if none was found</returns>
-public static Visual? GetVisualForContext(object context)
-{
-    return RegistrationMapper.TryGetValue(context, out var result) ? result : null;
-}
-
-/// <summary>
-/// Gets the parent <see cref="TopLevel"/> for the given context. Returns null, if no TopLevel was found
-/// </summary>
-/// <param name="context">The context to lookup</param>
-/// <returns>The registered TopLevel for the context or null if none was found</returns>
-public static TopLevel? GetTopLevelForContext(object context)
-{
-    return TopLevel.GetTopLevel(GetVisualForContext(context));
-}
-----
-
-If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line:
-
-[source,cs]
-----
-/// <summary>
-/// A helper class to manage dialogs via extension methods. Add more on your own
-/// </summary>
-public static class DialogHelper 
-{ 
-    /// <summary>
-    /// Shows an open file dialog for a registered context, most likely a ViewModel
-    /// </summary>
-    /// <param name="context">The context</param>
-    /// <param name="title">The dialog title or a default is null</param>
-    /// <param name="selectMany">Is selecting many files allowed?</param>
-    /// <returns>An array of file names</returns>
-    /// <exception cref="ArgumentNullException">if context was null</exception>
-    public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this object? context, string? title = null, bool selectMany = true)
-    {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        // lookup the TopLevel for the context
-        var topLevel = DialogService.GetTopLevelForContext(context);
-        
-        if(topLevel != null)
-        {
-            // Open the file dialog
-            var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
-                            new FilePickerOpenOptions()
-                            {
-                                AllowMultiple = selectMany,
-                                Title = title ?? "Select any file(s)"
-                            });
-
-            // return the result
-            return storageFiles.Select(s => s.Name);
-        }
-        return null;
-    }
-
-}
-----
-
-=== Step 4: Usage
-
-Now that we have our `DialogService` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
+Now we can setup the `XAML` as following. Mind the binding of the `Button` to our `Command` in the `ViewModel`:
 
 [source,xml]
 ----
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:dialog="using:AdvancedMvvmDialogSample.Services"
-             dialog:DialogService.Register="{Binding}">
-    <!-- Your content goes here -->
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MvvmDialogSample.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:InteractionViewModel"
+			 x:Class="MvvmDialogSample.Views.InteractionView">
+	<Grid RowDefinitions="Auto,*,Auto">
+		<TextBlock Text="Selected Files:" />
+		<ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
+		<Button Content="Select Files"
+				Command="{Binding SelectFilesCommand}"
+				Grid.Row="2" />
+	</Grid>
 </UserControl>
-
 ----
 
-And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files:
+=== Step 3: See it in action
 
-[source,c#]
-----
-private async Task SelectFilesAsync()
-{
-    SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
-}
-----
+Running the App you should be able to select any files on your system. 
+
 
 == Related 
 
 There are more ways to show dialogs from the ViewModel, for example: 
   
-* link:../MvvmDialogSample[Interactions]
+* link:../AdvancedMvvmDialogSample[Dialog Service]
 * https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm--mvp--mvu[third party libs]
 // Any related information or further readings goes here.
 

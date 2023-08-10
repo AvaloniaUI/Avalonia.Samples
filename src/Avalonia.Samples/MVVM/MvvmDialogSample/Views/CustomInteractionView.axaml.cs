@@ -1,10 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using ReactiveUI;
 using System.Threading.Tasks;
 using System;
 using MvvmDialogSample.ViewModels;
-using System.Net.Http.Headers;
 using System.Linq;
 
 namespace MvvmDialogSample.Views
@@ -17,17 +15,17 @@ namespace MvvmDialogSample.Views
         }
 
         // Stores a reference to the disposable in order to clean it up if needed
-        IDisposable? selectFilesInteractionDisposable;
+        IDisposable? _selectFilesInteractionDisposable;
 
         protected override void OnDataContextChanged(EventArgs e)
         {
             // Dispose any old handler
-            selectFilesInteractionDisposable?.Dispose();
+            _selectFilesInteractionDisposable?.Dispose();
 
             if (DataContext is CustomInteractionViewModel vm)
             {
                 // register the interaction handler
-                selectFilesInteractionDisposable =
+                _selectFilesInteractionDisposable =
                     vm.SelectFilesInteraction.RegisterHandler(InteractionHandler);
             }
 
