@@ -105,7 +105,7 @@ And let's add our first test:
 [Fact]
 public void Should_Add_Numbers()
 {
-    // Assert:
+    // Arrange:
     var firstOperandInput = _session.FindElementByAccessibilityId("FirstOperandInput")!;
     var secondOperandInput = _session.FindElementByAccessibilityId("SecondOperandInput")!;
     var addButton = _session.FindElementByAccessibilityId("AddButton")!;
