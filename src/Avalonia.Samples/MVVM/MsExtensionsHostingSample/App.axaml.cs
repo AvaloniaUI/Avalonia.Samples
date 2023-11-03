@@ -33,6 +33,12 @@ public partial class App : Application
             {
                 DataContext = GlobalHost.Services.GetRequiredService<MainWindowViewModel>()
             };
+            desktop.Exit += (sender, args) =>
+            {
+                GlobalHost.StopAsync().GetAwaiter().GetResult();
+                GlobalHost.Dispose();
+                GlobalHost = null;
+            };
         }
 
         DataTemplates.Add(GlobalHost.Services.GetRequiredService<ViewLocator>());
@@ -59,14 +65,5 @@ public partial class App : Application
 
         builder.Services.AddView<DayReportViewModel, DayReportView>();
         return builder;
-    }
-
-    public void NotifyStopped()
-    {
-        if (GlobalHost is null) return;
-
-        GlobalHost.StopAsync().GetAwaiter().GetResult();
-        GlobalHost.Dispose();
-        GlobalHost = null;
     }
 }
