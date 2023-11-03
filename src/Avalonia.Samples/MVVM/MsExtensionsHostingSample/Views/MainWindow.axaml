@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MsExtensionsHostingSample.ViewModels"
+        xmlns:local="clr-namespace:MsExtensionsHostingSample"
+        x:Class="MsExtensionsHostingSample.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Weather Reports"
+        TransparencyLevelHint="Mica, AcrylicBlur"
+        Background="Transparent"
+        Width="400"
+        Design.DataContext="{x:Static local:DesignData.MainWindowViewModel}">
+  <ListBox Background="Transparent"
+           ItemsSource="{Binding Reports}" />
+</Window>
