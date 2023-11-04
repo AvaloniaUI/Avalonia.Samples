@@ -35,7 +35,7 @@ public partial class App : Application
             };
             desktop.Exit += (sender, args) =>
             {
-                GlobalHost.StopAsync().GetAwaiter().GetResult();
+                GlobalHost.StopAsync(TimeSpan.FromSeconds(5)).GetAwaiter().GetResult();
                 GlobalHost.Dispose();
                 GlobalHost = null;
             };

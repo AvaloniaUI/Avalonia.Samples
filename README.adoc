@@ -89,6 +89,10 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐥 Easy
 | MVVM, Data-Validation, Exception, Error, Error-Message, Binding
 
+| link:src/Avalonia.Samples/MVVM/MsExtensionsHostingSample[Avalonia and .NET Generic Host]
+| 🐥 Easy
+| .NET Generic Host, DI, Configuration, Logging, MVVM
+
 |===
 
 === ✒️ Drawing-Samples
