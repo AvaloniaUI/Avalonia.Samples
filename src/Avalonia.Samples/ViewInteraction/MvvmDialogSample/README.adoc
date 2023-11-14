@@ -89,7 +89,7 @@ private async Task InteractionHandler(InteractionContext<string?, string[]?> con
 }
 ---- 
 
-NOTE: We are using an async Task to not block the UI. As parameter we need to pass an `InteractionContext` which has one generic parameter for the input (in our case a string for the dialog title) and one for the output (in our case an array of selected filed). 
+NOTE: We are using an async Task to not block the UI. As parameter we need to pass an `InteractionContext` which has one generic parameter for the input (in our case a string for the dialog title) and one for the output (in our case an array of selected files). 
 
 In the constructor of our `ReactiveUserControl` we need to setup the interaction inside `this.WhenActivated` like shown below: 
 
@@ -130,7 +130,9 @@ Now we can setup the `XAML` as following. Mind the binding of the `Button` to ou
 
 === Step 3: See it in action
 
-Running the App you should be able to select any files on your system. 
+Running the App you should be able to select any files on your system.
+
+image::_docs/result_2.png[RectiveUI interaction sample]
 
 == Solution 2 : Write your own Interaction-class
 
@@ -292,7 +294,9 @@ private async Task<string[]?> InteractionHandler(string input)
 
 === Step 4: See it in action
 
-Run the App and try to select as many files as you like. 
+Run the App and try to select as many files as you like.
+
+image::_docs/result_1.png[Custom interaction sample]
 
 == Related 
 

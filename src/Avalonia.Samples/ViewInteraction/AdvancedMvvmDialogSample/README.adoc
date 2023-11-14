@@ -31,7 +31,7 @@ toc::[]
 === Buzz-Words
 
 // Write some buzz-words here. You can separate them by ", "
-MVVM, Dialog, FileDialogs, TopLevel, Clipboard
+MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager
 
 
 
@@ -211,9 +211,40 @@ And in the `ViewModel` we can use our extension methods anywhere. The below samp
 ----
 private async Task SelectFilesAsync()
 {
+    // Selected Files is a property of our ViewModel
     SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
 }
 ----
+
+The command itself will be created in the constructor. However you can also use the source generators that the CommunityToolkit.MVVM-package provides. 
+
+[source,c#]
+----
+public MainWindowViewModel()
+{
+    SelectFilesCommand = ReactiveCommand.CreateFromTask(SelectFilesAsync);
+}
+----
+
+Now we can add the needed `List` and `Button` in our view:
+
+[source,xml]
+----
+<Grid RowDefinitions="Auto,*,Auto">
+    <TextBlock Text="Selected Files:" />
+    <ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
+    <Button Content="Select Files"
+            Command="{Binding SelectFilesCommand}"
+            Grid.Row="2" />
+</Grid>
+----
+
+
+=== Step 5: See it in action
+
+Run the App and try to select as many files as you like.
+
+image::_docs/result.png[Advanced Dialog Sample]
 
 == Related 
 
