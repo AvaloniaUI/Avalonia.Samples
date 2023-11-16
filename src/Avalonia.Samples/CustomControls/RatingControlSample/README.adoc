@@ -384,24 +384,24 @@ NOTE: Because we use the `as`-operator, our `Value` would become `null` if the `
 
 
 
-=== Step 8: Add a Style for the RatingControl
+=== Step 8: Add a `ControlTheme` for the RatingControl
 
-While we can already add a `RatingControl` to our View, we will see nothing as there is no `Style` available. To change this we add another folder called `Styles`. Add a file called `RatingStyles.axaml` which is of type `Styles (Avalonia)`. 
+While we can already add a `RatingControl` to our View, we will see nothing as there is no `RatingControl` available. To change this we add another folder called `Styles`. Add a file called `RatingStyles.axaml` which is of type `ResourceDictionary (Avalonia)`. 
 
-First of all we need to add the needed namespaces to our `Style`: 
+First of all we need to add the needed namespaces to our `ResourceDictionary`: 
 
 [source,xml]
 ----
-<Styles xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
 		xmlns:controls="using:RatingControlSample.Controls"
 		xmlns:converter="using:RatingControlSample.Converter"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-</Styles>
+</ResourceDictionary>
 ----
 
 [TIP]
 ====
-If you want to have preview of the `Style`, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+If you want to have preview of the `ResourceDictionary`, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
 [source,xml]
 ----
 <Design.PreviewWith>
@@ -414,56 +414,56 @@ If you want to have preview of the `Style`, just add one or more `RatingControls
 ----
 ====
 
-Now we can add the needed `Styles` to represent our `RatingControl`. The important part is the `ControlTemplate` which has the following hierarchy: 
+Now we can add the needed `ControlTheme` to represent our `RatingControl`. The important part is the `ControlTemplate` which has the following hierarchy: 
 
 [source,xml]
 ----
-<!--This is the Style for our RatingControl-->
-<Style Selector="controls|RatingControl">
-    <!--We need to add our IsSmallerOrEqualConverter here as a Resource-->
-    <Style.Resources>
-        <converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
-    </Style.Resources>
-    
+  <!--This is the ControlTheme for our RatingControl-->
+  <ControlTheme x:Key="{x:Type controls:RatingControl}" TargetType="controls:RatingControl">
+    <ControlTheme.Resources>
+      <!--We need to add our IsSmallerOrEqualConverter here as a Resource-->
+      <converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+    </ControlTheme.Resources>
     <!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.-->
     <Setter Property="Template">
-        <ControlTemplate>
+      <ControlTemplate>
 
-            <!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--> 
-            <DataValidationErrors>
-                
-                <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
-                <ItemsControl x:Name="PART_StarsPresenter"
-                                ItemsSource="{TemplateBinding Stars}">
-                    <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"
-                                        Spacing="5" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    
-                    <!--Items is an array if integer. Let's add a Path as the DataTemplate-->
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Path Classes="star">
-                                <!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --> 
-                                <Classes.selected>
-                                    <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
-                                        <!--This is our dataContext, so the number of this item-->
-                                        <Binding />
-                                        <!--This is the binding to the RatingControls current value-->
-                                        <Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
-                                    </MultiBinding>
-                                </Classes.selected>
-                            </Path>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </DataValidationErrors>
-        </ControlTemplate>
+        <!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly-->
+        <DataValidationErrors>
+          <!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
+          <ItemsControl x:Name="PART_StarsPresenter"
+                  ItemsSource="{TemplateBinding Stars}">
+            <!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"
+                      Spacing="5" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <!--Items is an array if integer. Let's add a Path as the DataTemplate-->
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Path Classes="star">
+                  <!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. -->
+                  <Classes.selected>
+                    <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+                      <!--This is our dataContext, so the number of this item-->
+                      <Binding />
+                      <!--This is the binding to the RatingControls current value-->
+                      <Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
+                    </MultiBinding>
+                  </Classes.selected>
+                </Path>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+          </ItemsControl>
+        </DataValidationErrors>
+
+      </ControlTemplate>
     </Setter>
-</Style>
+  </ControlTheme>
 ----
 
 In the above snippet you can see that the `ControlTemplate` our `RatingControl` has the following structure:
@@ -534,17 +534,121 @@ Last but not least we want a visual feedback if the user hovers a star with thei
 </Style>
 ----
 
-==== Step 9: Create a sample to try-out the custom Control
+=== Step 9: Theme Variant
 
-In Avalonia an external `Style`-file needs to be added via `StyleInclude` into the `Styles`-node of your choice before it gets applied. We will add it into `App.Styles` as shown below: 
+if you want to add support to the theme variant, you need to replace the encoded setter value with `DynamicResource`. In this case we would like a different filling and stroke of the Path based on the theme variant.
+
+To do this, modify our style selector like this:
 
 [source,xml]
 ----
-<Application.Styles>
-    <FluentTheme />
-    <!-- Don't miss this line -->
-    <StyleInclude Source="/Styles/RatingStyles.axaml" />
-</Application.Styles>
+    <!--This Style is for a Path which has the Class "star" applied.-->
+    <Style Selector="Path.star" >
+        <Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokenBrush}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stretch" Value="Uniform" />
+    </Style>
+
+    <Style Selector="Path.selected" >
+        <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+    </Style>
+
+    <Style Selector="Path.star:pointerover" >
+        <Setter Property="RenderTransform" Value="scale(1.3)" />
+        <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+    </Style>
+----
+
+now, will be define Resource for each Theme Variant
+
+[source, xml]
+----
+  <!-- Define the Theme Variants -->
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Default">
+      <!-- Selected Brushes-->
+      <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Goldenrod"/>
+      <!-- Unselected Brushes-->
+      <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Light">
+      <!-- Selected Brushes-->
+      <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Gray"/>
+      <!-- Unselected Brushes-->
+      <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <!-- Selected Brushes-->
+      <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Red"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="White"/>
+      <!-- Unselected Brushes-->
+      <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="Transparent"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="White"/>
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+----
+
+[TIP]
+====
+If you want to have preview of the `ResourceDictionary` support Theme Variants, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+[source,xml]
+----
+  <!-- Design time preview -->
+  <Design.PreviewWith>
+    <StackPanel Width="400" Spacing="10">
+      <!-- Force using default Theme Variant -->
+      <ThemeVariantScope RequestedThemeVariant="Default">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:RatingControl Value="0" NumberOfStars="5" />
+          <controls:RatingControl Value="2" NumberOfStars="5" />
+          <controls:RatingControl Value="6" NumberOfStars="6" />
+        </StackPanel>
+      </ThemeVariantScope>
+      <!-- Force using Light Theme Variant -->
+      <ThemeVariantScope RequestedThemeVariant="Light">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:RatingControl Value="0" NumberOfStars="5" />
+          <controls:RatingControl Value="2" NumberOfStars="5" />
+          <controls:RatingControl Value="6" NumberOfStars="6" />
+        </StackPanel>
+      </ThemeVariantScope>
+      <!-- Force using Dark Theme Variant -->
+      <ThemeVariantScope RequestedThemeVariant="Dark">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:RatingControl Value="0" NumberOfStars="5" />
+          <controls:RatingControl Value="2" NumberOfStars="5" />
+          <controls:RatingControl Value="6" NumberOfStars="6" />
+        </StackPanel>
+      </ThemeVariantScope>
+    </StackPanel>
+  </Design.PreviewWith>
+----
+====
+
+=== Step 10: Create a sample to try-out the custom Control
+
+In Avalonia an external `ResourceDictionary`-file needs to be added via `ResourceInclude` into the `Resources`-node of your choice before it gets applied. We will add it into `App.Resources` as shown below: 
+
+[source,xml]
+----
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- Don't miss this line -->
+        <ResourceInclude Source="/Styles/RatingStyles.axaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 ----
 
 WARNING: You need to do this for every project where you want to use this control. You will not see any custom control if you forgot to add this line.
@@ -574,7 +678,7 @@ Now we can use the control in any view like shown below:
 
 NOTE: For the complete sample including the `ViewModel` please see the source code of this sample. 
 
-=== Step 10: See it in action
+=== Step 11: See it in action
 
 We are all done. Hit [Run] or [Debug] in your IDE and you can see the control in action. 
 
