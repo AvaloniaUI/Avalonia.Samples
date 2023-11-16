@@ -1,0 +1,135 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<!-- Design time preview -->
+	<Design.PreviewWith>
+		<StackPanel Width="400" Spacing="10">
+			<!-- Force using default Theme Variant -->
+			<ThemeVariantScope RequestedThemeVariant="Default">
+				<StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+					<controls:RatingControl Value="0" NumberOfStars="5" />
+					<controls:RatingControl Value="2" NumberOfStars="5" />
+					<controls:RatingControl Value="6" NumberOfStars="6" />
+				</StackPanel>
+			</ThemeVariantScope>
+			<!-- Force using Light Theme Variant -->
+			<ThemeVariantScope RequestedThemeVariant="Light">
+				<StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+					<controls:RatingControl Value="0" NumberOfStars="5" />
+					<controls:RatingControl Value="2" NumberOfStars="5" />
+					<controls:RatingControl Value="6" NumberOfStars="6" />
+				</StackPanel>
+			</ThemeVariantScope>
+			<!-- Force using Dark Theme Variant -->
+			<ThemeVariantScope RequestedThemeVariant="Dark">
+				<StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+					<controls:RatingControl Value="0" NumberOfStars="5" />
+					<controls:RatingControl Value="2" NumberOfStars="5" />
+					<controls:RatingControl Value="6" NumberOfStars="6" />
+				</StackPanel>
+			</ThemeVariantScope>
+		</StackPanel>
+	</Design.PreviewWith>
+
+	<!-- Define the Theme Variants -->
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Default">
+			<!-- Selected Brushes-->
+			<SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
+			<SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Goldenrod"/>
+			<!-- Unselected Brushes-->
+			<SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
+			<SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Light">
+			<!-- Selected Brushes-->
+			<SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
+			<SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Gray"/>
+			<!-- Unselected Brushes-->
+			<SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
+			<SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Dark">
+			<!-- Selected Brushes-->
+			<SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Red"/>
+			<SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="White"/>
+			<!-- Unselected Brushes-->
+			<SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="Transparent"/>
+			<SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="White"/>
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+
+	<!--This is the ControlTheme for our RatingControl-->
+	<ControlTheme x:Key="{x:Type controls:RatingControl}" TargetType="controls:RatingControl">
+		<ControlTheme.Resources>
+			<!--We need to add our IsSmallerOrEqualConverter here as a Resource-->
+			<converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+		</ControlTheme.Resources>
+		<!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.-->
+		<Setter Property="Template">
+			<ControlTemplate>
+
+				<!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly-->
+				<DataValidationErrors>
+					<DataValidationErrors.Styles>
+						<!--This Style is for a Path which has the Class "star" applied.-->
+						<Style Selector="Path.star" >
+							<Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+							<Setter Property="Width" Value="32" />
+							<Setter Property="Height" Value="32" />
+							<Setter Property="Margin" Value="5" />
+							<Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" />
+							<Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokenBrush}" />
+							<Setter Property="StrokeThickness" Value="2" />
+							<Setter Property="Stretch" Value="Uniform" />
+						</Style>
+
+						<Style Selector="Path.selected" >
+							<Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" />
+							<Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+						</Style>
+
+						<Style Selector="Path.star:pointerover" >
+							<Setter Property="RenderTransform" Value="scale(1.3)" />
+							<Setter Property="Fill" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+						</Style>
+					</DataValidationErrors.Styles>
+					<!--This is our stars-presenter. Make sure to set the name, so the control can be found.-->
+					<ItemsControl x:Name="PART_StarsPresenter"
+								ItemsSource="{TemplateBinding Stars}">
+						<!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly-->
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"
+											Spacing="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+
+						<!--Items is an array if integer. Let's add a Path as the DataTemplate-->
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Path Classes="star">
+									<!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. -->
+									<Classes.selected>
+										<MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+											<!--This is our dataContext, so the number of this item-->
+											<Binding />
+											<!--This is the binding to the RatingControls current value-->
+											<Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" />
+										</MultiBinding>
+									</Classes.selected>
+								</Path>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+
+					</ItemsControl>
+				</DataValidationErrors>
+
+			</ControlTemplate>
+		</Setter>
+	</ControlTheme>
+
+</ResourceDictionary>

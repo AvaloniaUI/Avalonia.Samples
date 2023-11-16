@@ -386,7 +386,7 @@ NOTE: Because we use the `as`-operator, our `Value` would become `null` if the `
 
 === Step 8: Add a `ControlTheme` for the RatingControl
 
-While we can already add a `RatingControl` to our View, we will see nothing as there is no `RatingControl` available. To change this we add another folder called `Styles`. Add a file called `RatingStyles.axaml` which is of type `ResourceDictionary (Avalonia)`. 
+While we can already add a `RatingControl` to our View, we will see nothing as there is no `RatingControl` available. To change this we add another folder called `Themes`. Add a file called `RatingStyles.axaml` which is of type `ResourceDictionary (Avalonia)`. 
 
 First of all we need to add the needed namespaces to our `ResourceDictionary`: 
 
@@ -533,6 +533,8 @@ Last but not least we want a visual feedback if the user hovers a star with thei
     <Setter Property="Fill" Value="Goldenrod" />
 </Style>
 ----
+
+NOTE: In Avalonia 11.x `Styles`(see https://github.com/AvaloniaUI/Avalonia.Samples/blob/be2895d5461fd4748044d5a81c571547965b9f9d/src/Avalonia.Samples/CustomControls/RatingControlSample/README.adoc#step-8-add-a-style-for-the-ratingcontrol[this]) is supported, but in `ControlThemes` are preferred. 
 
 === Step 9: Theme Variant
 
@@ -692,6 +694,4 @@ This sample has shown some basics about custom controls. If you want to use this
 - Add keyboard support
 - Add unit tests 
 - Add animations
-- Improve the Styles
-- Add support for Theming
 - Add an event for value changed

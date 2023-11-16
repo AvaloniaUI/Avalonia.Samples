@@ -7,7 +7,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <!-- Don't miss this line -->
-        <ResourceInclude Source="/Styles/RatingStyles.axaml"/>
+        <ResourceInclude Source="/Themes/RatingStyles.axaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
