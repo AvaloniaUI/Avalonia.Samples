@@ -536,6 +536,12 @@ Last but not least we want a visual feedback if the user hovers a star with thei
 
 NOTE: In Avalonia 11.x `Styles`(see https://github.com/AvaloniaUI/Avalonia.Samples/blob/be2895d5461fd4748044d5a81c571547965b9f9d/src/Avalonia.Samples/CustomControls/RatingControlSample/README.adoc#step-8-add-a-style-for-the-ratingcontrol[this]) is supported, but in `ControlThemes` are preferred. 
 
+.Reference
+****
+* https://docs.avaloniaui.net/docs/next/basics/user-interface/styling/styles[Styles]
+* https://docs.avaloniaui.net/docs/next/basics/user-interface/styling/control-themes[Control Themes]
+****
+
 === Step 9: Theme Variant
 
 if you want to add support to the theme variant, you need to replace the encoded setter value with `DynamicResource`. In this case we would like a different filling and stroke of the Path based on the theme variant.
