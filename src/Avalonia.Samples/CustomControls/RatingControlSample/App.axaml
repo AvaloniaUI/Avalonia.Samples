@@ -3,9 +3,16 @@
              RequestedThemeVariant="Light"
              x:Class="RatingControlSample.App">
 
-    <Application.Styles>
-        <FluentTheme />
-		<!-- Don't miss this line -->
-		<StyleInclude Source="/Styles/RatingStyles.axaml" />
-    </Application.Styles>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- Don't miss this line -->
+        <ResourceInclude Source="/Themes/RatingStyles.axaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
 </Application>
