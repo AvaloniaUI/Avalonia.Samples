@@ -414,6 +414,6 @@ Even though Avalonia ships ReactiveUI by default, you are not tied to it. You ca
 
 Are you looking for more advanced tutorials? Find them here: 
 
-- https://docs.avaloniaui.net/tutorials/todo-list-app[[ToDo List App\],window=_blank]
-- https://docs.avaloniaui.net/tutorials/music-store-app[[Music Store App\],window=_blank]
+- https://docs.avaloniaui.net/docs/next/tutorials/todo-list-app/[[ToDo List App\],window=_blank]
+- https://docs.avaloniaui.net/docs/next/tutorials/music-store-app/[[Music Store App\],window=_blank]
 - https://github.com/AvaloniaCommunity/awesome-avalonia#tutorials[[Awesome-Avalonia\],window=_blank]
