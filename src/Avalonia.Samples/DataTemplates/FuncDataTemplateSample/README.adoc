@@ -195,7 +195,7 @@ For the `ToolTip` we create a binding in the controls constructor. In that case 
 [!MyProperty] = new Binding("The Binding Path");
 ----
 
-Read more about binding in code in the https://docs.avaloniaui.net/docs/next/guides/data-binding/binding-from-code#using-xaml-bindings-from-code[[Docs\]]
+Read more about binding in code in the https://docs.avaloniaui.net/docs/guides/data-binding/binding-from-code#using-xaml-bindings-from-code[[Docs\]]
 ===============================
 
 We can now add our `FuncDataTemplate` which will consume the function we wrote above: 

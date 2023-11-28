@@ -172,4 +172,4 @@ While setting text directly is the easiest way, it doesn't really how user would
 
 While this sample was pretty simple, Headless platform provides more features such as taking a screenshot of the control, so it can be compared with expected, or having input extension methods.
 
-For more information please visit detailed documentation page: https://docs.avaloniaui.net/docs/next/concepts/headless/
+For more information please visit detailed documentation page: https://docs.avaloniaui.net/docs/concepts/headless/

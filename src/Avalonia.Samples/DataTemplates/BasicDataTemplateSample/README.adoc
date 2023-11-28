@@ -37,7 +37,7 @@ You should have a basic knowledge about string format in `C#` and about the `MVV
 
 === DataTemplates
 
-In Avalonia you can use https://docs.avaloniaui.net/docs/next/basics/data/data-templates[[`DataTemplates`\]] to control how your data is shown. You can define the `DataType` which the `DataTemplate` is made for. The `DataType` can be any `class` or `interface`. 
+In Avalonia you can use https://docs.avaloniaui.net/docs/basics/data/data-templates[[`DataTemplates`\]] to control how your data is shown. You can define the `DataType` which the `DataTemplate` is made for. The `DataType` can be any `class` or `interface`. 
 
 === ToString
 

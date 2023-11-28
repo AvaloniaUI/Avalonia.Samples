@@ -50,7 +50,7 @@ ContentControl:: This control inherits `TemplatedControl`, but adds the ability 
 
 TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox`, if you want to use their functionality but adding your own logic on top. 
 
-For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/next/basics/user-interface/controls/creating-controls/choosing-a-custom-contro-type[[Documentation\]].
+For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/choosing-a-custom-contro-type[[Documentation\]].
 
 
 
@@ -64,7 +64,7 @@ DirectProperty:: A `DirectProperty` is a property which can only be read and set
 
 AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on it's own (e.g.: `Grid.Row`, `DockPanel.Dock`, ...)
 
-If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/next/basics/user-interface/controls/creating-controls/defining-properties[[Documentation\]]
+If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/defining-properties[[Documentation\]]
 
 
 === ControlTemplates
@@ -75,7 +75,7 @@ TemplateParts::
 Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
 
 TemplateBinding:: 
-Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/next/guides/custom-controls/how-to-create-templated-controls#data-binding[[Documentation\]].
+Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-templated-controls#data-binding[[Documentation\]].
 
 
 === The concept of the Rating-Control
@@ -538,8 +538,8 @@ NOTE: In Avalonia 11.x `Styles`(see https://github.com/AvaloniaUI/Avalonia.Sampl
 
 .Reference
 ****
-* https://docs.avaloniaui.net/docs/next/basics/user-interface/styling/styles[Styles]
-* https://docs.avaloniaui.net/docs/next/basics/user-interface/styling/control-themes[Control Themes]
+* https://docs.avaloniaui.net/docs/basics/user-interface/styling/styles[Styles]
+* https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes[Control Themes]
 ****
 
 === Step 9: Theme Variant
