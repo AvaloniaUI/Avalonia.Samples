@@ -1,0 +1,38 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:MsExtensionsHostingSample.ViewModels"
+             x:Class="MsExtensionsHostingSample.Views.DayReportView"
+             x:DataType="viewModels:DayReportViewModel"
+             Padding="4"
+             Margin="4 2"
+             BorderBrush="Gray"
+             BorderThickness="1"
+             CornerRadius="4">
+  <StackPanel Spacing="4">
+    <Grid ColumnDefinitions="Auto, *">
+      <TextBlock Grid.Column="0"
+                 Text="{Binding Date, StringFormat='ddd'}"
+                 Margin="8, 0"
+                 VerticalAlignment="Center"
+                 FontSize="16" FontWeight="Bold"/>
+      <StackPanel Grid.Column="1">
+        <TextBlock FontSize="14">
+          <TextBlock.Text>
+            <MultiBinding StringFormat="{}{0}°{1}">
+              <Binding Path="Temperature" />
+              <Binding Path="TemperatureUnit" />
+            </MultiBinding>
+          </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Text="{Binding WeatherDescription}" FontSize="14"/>
+      </StackPanel>
+    </Grid>
+    <Border Background="#20D3D3D3" CornerRadius="4">
+      <TextBlock Text="{Binding WindSpeed, StringFormat='Wind Speed: {0}km/h'}" Margin="5" DockPanel.Dock="Right"/>
+    </Border>
+    <Border Background="#20D3D3D3" CornerRadius="4">
+      <TextBlock Text="{Binding RelativeHumidity, StringFormat='Humidity: {0}%'}" Margin="5" DockPanel.Dock="Right"/>
+    </Border>
+  </StackPanel>
+</UserControl>
+

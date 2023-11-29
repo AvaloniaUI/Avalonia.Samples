@@ -1,0 +1,233 @@
+= Avalonia and .NET Generic Host
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to integrate https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host[.NET Generic Host (Microsoft.Extensions.Hosting)] into Avalonia application and use some of extensions features. 
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐥 Easy 🐥
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+.NET Generic Host, DI, Configuration, Logging, MVVM
+
+
+== Before we start
+
+This example will work from `avalonia.mvvm` template. This document won't go into details of specific views and view models. However, C# project in this folder has a simple Weather Report app that uses all of mentioned below technics. 
+
+== Basic configuration
+
+With typical console or web application developers expect that .NET Generic Host is built and run directly from the Main method. But it's not really the case with GUI applications, as we don't have much control over platform rules:
+
+- Avalonia already has its own AppBuilder, and Main method is not used at all with XAML Previewer.
+- macOS apps needs to have sync Main method, so we can't run async there.
+- Browser Main method has to be async in Avalonia and it exists without closing the app.
+- Android apps don't even have a Main method.
+- Full-featured .NET Generic Host expects a strict lifetime with events of application closing.
+
+As a result, it is recommended to keep program entry point as is, and instead setup .NET Generic Host integration from the Avalonia Application class.
+
+Let's start with updating `OnFrameworkInitializationCompleted` method in `App.xaml.cs` file:
+
+[source,c#]
+----
+    public override void OnFrameworkInitializationCompleted()
+    {
+        var builder = Host.CreateApplicationBuilder(Environment.GetCommandLineArgs());
+        builder.Services.AddTransient<MainWindowViewModel>();
+        var host = builder.Build();
+
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = host.Services.GetRequiredService<MainWindowViewModel>()
+            };
+            desktop.Exit += (sender, args) =>
+            {
+                host.Dispose();
+            };
+        }
+
+        base.OnFrameworkInitializationCompleted();
+    }
+----
+
+Essentially, this is a minimal working integration of .NET Generic Host with Avalonia desktop app.
+With this, it's possible to register services in the host builder, use logger, read host configuration files and options.
+
+MainWindowViewModel is registered as a transient service, which means we now use Dependency Injection into our view models.
+
+But in order to get more features from the Generic Host, we will go into details below. 
+
+== Managing Host lifetime 
+
+In previous example we have not called Start or Stop methods on the Host object. It is enough for basic usage, but if application needs to run hosted services it is important to do some modifications.
+
+To start the host, we can run host.StartAsync() at some point after MainWindow was set. For example, in the end of the OnFrameworkInitializationCompleted method. And we can stop the host in Exit event handler right before disposing it:
+
+[source,c#]
+----
+    public override async void OnFrameworkInitializationCompleted()
+    {
+        var builder = Host.CreateApplicationBuilder(Environment.GetCommandLineArgs());
+        builder.Services.AddTransient<MainWindowViewModel>();
+        builder.Services.AddHostedService<HostedBackgroundService>();
+        var host = builder.Build();
+
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = host.Services.GetRequiredService<MainWindowViewModel>()
+            };
+            desktop.Exit += (sender, args) =>
+            {
+                host.StopAsync(TimeSpan.FromSeconds(5)).GetAwaiter().GetResult();
+                host.Dispose();
+            };
+        }
+
+        base.OnFrameworkInitializationCompleted();
+
+        await host.StartAsync();
+    }
+----
+
+New service was registered - `HostedBackgroundService`, that now can handle application start and stop events reported by the Generic Host.
+
+[source,c#]
+----
+public class HostedBackgroundService : IHostedService
+{
+    private readonly ILogger<HostedBackgroundService> _logger;
+
+    public HostedBackgroundService(ILogger<HostedBackgroundService> logger)
+    {
+        _logger = logger;
+    }
+    
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("BackgroundService started.");
+    }
+
+    public async Task StopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("BackgroundService ended.");
+    }
+}
+----
+
+NOTE: It is important to NOT run sync `host.Run()` or `host.Start()` methods, as it will block UI thread. Keep in mind, that UI apps has its own dispatcher queue that needs to be processed freely.
+
+NOTE: If your application needs to do some async logic **before** showing main window, you can skip MainWindow initialization, and then show `MainWindow` using `Show()` method on it after your async code. Note, it's only possible on desktop platforms. 
+
+== ViewLocator powered by the Microsoft DI
+
+As you might know from other samples, ViewLocator in Avalonia is a special IDataTemplate implementation that helps to glue 
+
+Before starting, don't forget to delete `ViewLocator.cs` and `ViewLocator` usage from `App.axaml` files, if you have it from the Avalonia template. 
+
+Let's create ViewLocator implementation that will accept list of registered views as a constructor argument:
+
+[source,c#]
+----
+public class ViewLocator : IDataTemplate
+{
+    private readonly Dictionary<Type, Func<Control>> _dic;
+
+    public ViewLocator(IEnumerable<ViewLocationDescriptor> descriptors)
+    {
+        _dic = descriptors.ToDictionary(x => x.ViewModel, x => x.Factory);
+    }
+        
+    public Control Build(object? param) => _dic[param!.GetType()]();
+
+    public bool Match(object? param) => param is not null && _dic.ContainsKey(param.GetType());
+    
+    public record ViewLocationDescriptor(Type ViewModel, Func<Control> Factory);
+}
+----
+
+And we need to add a extenions method which we will use to register these views to the Microsoft DI:
+
+[source,c#]
+----
+public static class ViewLocatorHelpers
+{
+    public static IServiceCollection AddView<TViewModel, TView>(this IServiceCollection services)
+        where TView : Control, new()
+        where TViewModel : ViewModelBase
+    {
+        services.AddSingleton(new ViewLocator.ViewLocationDescriptor(typeof(TViewModel), () => new TView()));
+        return services;
+    }
+} 
+----
+
+Now we can register our view locator and all views:
+
+[source,c#]
+----
+builder.Services.AddTransient<ViewLocator>();
+
+// Registering DayReportView as a view for DayReportViewModel view model.
+// For the source code of these classes, see project in the sample folder.
+builder.Services.AddView<DayReportViewModel, DayReportView>();
+----
+
+And finally, after host was built, we can use
+
+[source,c#]
+----
+var host = builder.Build();
+
+var viewLocator = host.Services.GetRequiredService<ViewLocator>();
+DataTemplates.Add(viewLocator);
+----
+
+== Integration with ReactiveUI
+
+There is no need for any special configuration of ReactiveUI and .NET Generic Host with this approach.
+You only need to remember to call `.UseReactiveUI()` in Avalonia AppBuilder, so ReactiveUI can setup proper MainThreadScheduler.
+
+== Integration with Asp.Net Core
+
+This example doesn't cover this scenario, but it can be achieved in a similar way. Except instead of 
+
+== Using .NET Generic Host in mobile and browser apps
+
+Having .NET Generic Host initialization in Application class will ensure that it will be created on all supported platforms. 
+
+However as you might have noticed, IClassicDesktopStyleApplicationLifetime was used to handle application Exit event, so we can stop and dispose .NET Generic Host.
+
+Unfortunately, there is no currently a way to trigger code on application closing on all platforms. Apps that rely on StopAsync or Host disposal need to perform clean-up logic themselves using native APIs where it's possible. 
+
+== Related 
+
+Below please find a collection with helpful links:
+
+* https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host[.NET Generic Host]
+* https://laurentkempe.com/2019/09/03/WPF-and-dotnet-Generic-Host-with-dotnet-Core-3-0/[WPF and .NET Generic Host with .NET Core 3.0]
