@@ -302,7 +302,7 @@ image::_docs/result_1.png[Custom interaction sample]
 
 There are more ways to show dialogs from the ViewModel, for example: 
   
-* link:../AdvancedMvvmDialogSample[Dialog Service]
+* link:../DialogManagerSample[DialogManager Service]
 * https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm--mvp--mvu[third party libs]
 
 

@@ -1,8 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:AdvancedMvvmDialogSample"
+             xmlns:local="using:DialogManagerSample"
 			 RequestedThemeVariant="Light"
-             x:Class="AdvancedMvvmDialogSample.App">
+             x:Class="DialogManagerSample.App">
 
     <Application.Styles>
         <FluentTheme />

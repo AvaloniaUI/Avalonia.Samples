@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvvmDialogSample", "ViewInteraction\MvvmDialogSample\MvvmDialogSample.csproj", "{48432457-6A55-4D03-9D40-260CE8E06440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedMvvmDialogSample", "ViewInteraction\AdvancedMvvmDialogSample\AdvancedMvvmDialogSample.csproj", "{0BC90E92-D8B3-4C6D-8C47-BAF57CD73CBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DialogManagerSample", "ViewInteraction\DialogManagerSample\DialogManagerSample.csproj", "{0BC90E92-D8B3-4C6D-8C47-BAF57CD73CBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{85B157B3-F701-4F75-B4F1-EC2287729480}"
 EndProject

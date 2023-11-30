@@ -1,10 +1,10 @@
-using AdvancedMvvmDialogSample.ViewModels;
-using AdvancedMvvmDialogSample.Views;
+using DialogManagerSample.ViewModels;
+using DialogManagerSample.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace AdvancedMvvmDialogSample
+namespace DialogManagerSample
 {
     public partial class App : Application
     {

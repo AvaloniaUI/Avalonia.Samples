@@ -1,4 +1,4 @@
-= Advanced MVVM Dialog Sample
+= Dialog Manager Sample
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
 :toc:
 :toc-placement!:
@@ -12,7 +12,7 @@
 
 
 // Write a short summary here what this examples does
-This example will show you how to write a service that will help you to show dialogs in your MVVM application
+This example will show you how to write a service (we will call it dialog manager) that will help you to show dialogs in your MVVM application
 
 
 
@@ -24,14 +24,14 @@ toc::[]
 === Difficulty
 // Choose one of the below difficulties. You can just delete the ones you don't need.
 
-🐉 Hard 🐉
+🐔 Normal 🐔
 
 
 
 === Buzz-Words
 
 // Write some buzz-words here. You can separate them by ", "
-MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager
+MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.MVVM
 
 
 
@@ -39,35 +39,37 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager
 
 We assume you already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
 
+NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
+
 
 == The Solution : Use a DialogService to show a Dialog
 
 // This is where you explain the possible solution you provide in this sample. 
 // If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
 
-=== Step 1: Add a DialogService-class
+=== Step 1: Add the DialogManager-class
 
-In our project we add a folder called `Services`. Inside we will create a class called `DialogService` which inherits `AvaloniaObject`. 
+In our project we add a folder called `Services`. Inside we will create a class called `DialogManager`.
 
-NOTE: We need to inherit `AvaloniaObject` because we want to add `Register` as an `AttachedProperty`
+NOTE: We do not need to inherit `AvaloniaObject` even as we want to add `Register` as an `AttachedProperty` because Avalonia supports AttachedProperties on any object
 
 Let's add a static `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View` or `Control`, which we want to interact with. 
 
 ```cs
-public class DialogService : AvaloniaObject
+public class DialogManager
 {
     private static readonly Dictionary<object, Visual> RegistrationMapper =
         new Dictionary<object, Visual>();
 }
 ```
 
-In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog service, which we call `Register`. Later we can bind any object to this property from every available `Visual` in our `Views`. 
+In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog manager, which we call `Register`. Later we can bind any object to this property from every available `Visual` in our `Views`. 
 
 ```cs
 /// <summary>
 /// This property handles the registration of Views and ViewModel
 /// </summary>
-public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Visual, object?>(
+public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogManager, Visual, object?>(
     "Register");
 
 /// <summary>
@@ -91,28 +93,28 @@ Now that we want to store or remove any new binding into our `Dictionary`, we ne
 
 [source,cs]
 ----
-static DialogService()
+static DialogManager()
 {
-    RegisterProperty.Changed.Subscribe(RegisterChanged);
+    RegisterProperty.Changed.AddClassHandler<Visual>(RegisterChanged);
 }
 
-private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
+private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventArgs e)
 {
-    if (e.Sender is not Visual sender)
+    if (sender is null)
     {
-        throw new InvalidOperationException("The DialogService can only be registered on a Control");
+        throw new InvalidOperationException("The DialogManager can only be registered on a Visual");
     }
 
     // Unregister any old registered context
-    if (e.OldValue.Value != null)
+    if (e.OldValue != null)
     {
-        RegistrationMapper.Remove(e.OldValue.Value);
+        RegistrationMapper.Remove(e.OldValue);
     }
 
     // Register any new context
-    if (e.NewValue.Value != null)
+    if (e.NewValue != null)
     {
-        RegistrationMapper.Add(e.NewValue.Value, sender);
+        RegistrationMapper.Add(e.NewValue, sender);
     }
 }
 ----
@@ -193,36 +195,27 @@ public static class DialogHelper
 
 === Step 4: Usage
 
-Now that we have our `DialogService` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
+Now that we have our `DialogManager` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
 
 [source,xml]
 ----
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:dialog="using:AdvancedMvvmDialogSample.Services"
-             dialog:DialogService.Register="{Binding}">
+             xmlns:services="using:DialogManagerSample.Services"
+             services:DialogManager.Register="{Binding}">
     <!-- Your content goes here -->
 </UserControl>
 
 ----
 
-And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files:
+And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files. The command itself will be created using the source generators that the CommunityToolkit.MVVM-package provides.
 
 [source,c#]
 ----
+[RelayCommand]
 private async Task SelectFilesAsync()
 {
     // Selected Files is a property of our ViewModel
     SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
-}
-----
-
-The command itself will be created in the constructor. However you can also use the source generators that the CommunityToolkit.MVVM-package provides. 
-
-[source,c#]
-----
-public MainWindowViewModel()
-{
-    SelectFilesCommand = ReactiveCommand.CreateFromTask(SelectFilesAsync);
 }
 ----
 

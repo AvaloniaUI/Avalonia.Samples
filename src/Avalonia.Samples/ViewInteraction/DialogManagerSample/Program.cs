@@ -1,8 +1,7 @@
 ﻿using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
 
-namespace AdvancedMvvmDialogSample
+namespace DialogManagerSample
 {
     internal class Program
     {
@@ -17,7 +16,6 @@ namespace AdvancedMvvmDialogSample
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace()
-                .UseReactiveUI();
+                .LogToTrace();
     }
 }

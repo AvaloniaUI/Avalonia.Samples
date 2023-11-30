@@ -6,42 +6,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdvancedMvvmDialogSample.Services
+namespace DialogManagerSample.Services
 {
-	public class DialogService : AvaloniaObject
+	public class DialogManager
 	{
 	    private static readonly Dictionary<object, Visual> RegistrationMapper =
 			new Dictionary<object, Visual>();
 
-		static DialogService()
+		static DialogManager()
 		{
-			RegisterProperty.Changed.Subscribe(RegisterChanged);
+			RegisterProperty.Changed.AddClassHandler<Visual>(RegisterChanged);
 		}
 
-		private static void RegisterChanged(AvaloniaPropertyChangedEventArgs<object?> e)
+		private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventArgs e)
 		{
-			if (e.Sender is not Visual sender)
+			if (sender is null)
 			{
-				throw new InvalidOperationException("The DialogService can only be registered on a Visual");
+				throw new InvalidOperationException("The DialogManager can only be registered on a Visual");
 			}
 
 			// Unregister any old registered context
-			if (e.OldValue.Value != null)
+			if (e.OldValue != null)
 			{
-				RegistrationMapper.Remove(e.OldValue.Value);
+				RegistrationMapper.Remove(e.OldValue);
 			}
 
 			// Register any new context
-			if (e.NewValue.Value != null)
+			if (e.NewValue != null)
 			{
-				RegistrationMapper.Add(e.NewValue.Value, sender);
+				RegistrationMapper.Add(e.NewValue, sender);
 			}
 		}
 
 		/// <summary>
 		/// This property handles the registration of Views and ViewModel
 		/// </summary>
-		public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogService, Visual, object?>(
+		public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogManager, Visual, object?>(
 			"Register");
 		
 		/// <summary>
@@ -102,7 +102,7 @@ namespace AdvancedMvvmDialogSample.Services
 			}
 
 			// lookup the TopLevel for the context
-			var topLevel = DialogService.GetTopLevelForContext(context);
+			var topLevel = DialogManager.GetTopLevelForContext(context);
 			
 			if(topLevel != null)
 			{
