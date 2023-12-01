@@ -1,0 +1,257 @@
+= Dialog Manager Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to write a service (we will call it dialog manager) that will help you to show dialogs in your MVVM application
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.MVVM
+
+
+
+== Before we start
+
+We assume you already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+
+NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
+
+
+== The Solution : Use a DialogService to show a Dialog
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1: Add the DialogManager-class
+
+In our project we add a folder called `Services`. Inside we will create a class called `DialogManager`.
+
+NOTE: We do not need to inherit `AvaloniaObject` even as we want to add `Register` as an `AttachedProperty` because Avalonia supports AttachedProperties on any object
+
+Let's add a static `Dictionary` where we can store the registered mappings between the context (our `ViewModel`) and the `View` or `Control`, which we want to interact with. 
+
+```cs
+public class DialogManager
+{
+    private static readonly Dictionary<object, Visual> RegistrationMapper =
+        new Dictionary<object, Visual>();
+}
+```
+
+In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog manager, which we call `Register`. Later we can bind any object to this property from every available `Visual` in our `Views`. 
+
+```cs
+/// <summary>
+/// This property handles the registration of Views and ViewModel
+/// </summary>
+public static readonly AttachedProperty<object?> RegisterProperty = AvaloniaProperty.RegisterAttached<DialogManager, Visual, object?>(
+    "Register");
+
+/// <summary>
+/// Accessor for Attached property <see cref="RegisterProperty"/>.
+/// </summary>
+public static void SetRegister(AvaloniaObject element, object value)
+{
+    element.SetValue(RegisterProperty, value);
+}
+
+/// <summary>
+/// Accessor for Attached property <see cref="RegisterProperty"/>.
+/// </summary>
+public static object? GetRegister(AvaloniaObject element)
+{
+    return element.GetValue(RegisterProperty);
+}
+```
+
+Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor.
+
+[source,cs]
+----
+static DialogManager()
+{
+    RegisterProperty.Changed.AddClassHandler<Visual>(RegisterChanged);
+}
+
+private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventArgs e)
+{
+    if (sender is null)
+    {
+        throw new InvalidOperationException("The DialogManager can only be registered on a Visual");
+    }
+
+    // Unregister any old registered context
+    if (e.OldValue != null)
+    {
+        RegistrationMapper.Remove(e.OldValue);
+    }
+
+    // Register any new context
+    if (e.NewValue != null)
+    {
+        RegistrationMapper.Add(e.NewValue, sender);
+    }
+}
+----
+
+
+=== Step 2: Add methods to lookup the view
+
+To make our life easier, we add can add some static functions to lookup the registered view.
+
+[source,cs]
+----
+/// <summary>
+/// Gets the associated <see cref="Visual"/> for a given context. Returns null, if none was registered
+/// </summary>
+/// <param name="context">The context to lookup</param>
+/// <returns>The registered Visual for the context or null if none was found</returns>
+public static Visual? GetVisualForContext(object context)
+{
+    return RegistrationMapper.TryGetValue(context, out var result) ? result : null;
+}
+
+/// <summary>
+/// Gets the parent <see cref="TopLevel"/> for the given context. Returns null, if no TopLevel was found
+/// </summary>
+/// <param name="context">The context to lookup</param>
+/// <returns>The registered TopLevel for the context or null if none was found</returns>
+public static TopLevel? GetTopLevelForContext(object context)
+{
+    return TopLevel.GetTopLevel(GetVisualForContext(context));
+}
+----
+
+If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line:
+
+[source,cs]
+----
+/// <summary>
+/// A helper class to manage dialogs via extension methods. Add more on your own
+/// </summary>
+public static class DialogHelper 
+{ 
+    /// <summary>
+    /// Shows an open file dialog for a registered context, most likely a ViewModel
+    /// </summary>
+    /// <param name="context">The context</param>
+    /// <param name="title">The dialog title or a default is null</param>
+    /// <param name="selectMany">Is selecting many files allowed?</param>
+    /// <returns>An array of file names</returns>
+    /// <exception cref="ArgumentNullException">if context was null</exception>
+    public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this object? context, string? title = null, bool selectMany = true)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        // lookup the TopLevel for the context
+        var topLevel = DialogService.GetTopLevelForContext(context);
+        
+        if(topLevel != null)
+        {
+            // Open the file dialog
+            var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
+                            new FilePickerOpenOptions()
+                            {
+                                AllowMultiple = selectMany,
+                                Title = title ?? "Select any file(s)"
+                            });
+
+            // return the result
+            return storageFiles.Select(s => s.Name);
+        }
+        return null;
+    }
+
+}
+----
+
+=== Step 4: Usage
+
+Now that we have our `DialogManager` created, we can start to register the `View` for our `ViewModel`. Thanks to our attached property, we can simply do:
+
+[source,xml]
+----
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:services="using:DialogManagerSample.Services"
+             services:DialogManager.Register="{Binding}">
+    <!-- Your content goes here -->
+</UserControl>
+
+----
+
+And in the `ViewModel` we can use our extension methods anywhere. The below sample command will ask the user to select a bunch of files. The command itself will be created using the source generators that the CommunityToolkit.MVVM-package provides.
+
+[source,c#]
+----
+[RelayCommand]
+private async Task SelectFilesAsync()
+{
+    // Selected Files is a property of our ViewModel
+    SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
+}
+----
+
+Now we can add the needed `List` and `Button` in our view:
+
+[source,xml]
+----
+<Grid RowDefinitions="Auto,*,Auto">
+    <TextBlock Text="Selected Files:" />
+    <ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
+    <Button Content="Select Files"
+            Command="{Binding SelectFilesCommand}"
+            Grid.Row="2" />
+</Grid>
+----
+
+
+=== Step 5: See it in action
+
+Run the App and try to select as many files as you like.
+
+image::_docs/result.png[Advanced Dialog Sample]
+
+== Related 
+
+There are more ways to show dialogs from the ViewModel, for example: 
+  
+* link:../MvvmDialogSample[Interactions]
+* https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm--mvp--mvu[third party libs]
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/

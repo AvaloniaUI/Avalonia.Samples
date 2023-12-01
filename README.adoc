@@ -150,6 +150,23 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+
+=== ⚡ View Interaction Samples
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src\Avalonia.Samples\ViewInteraction\MvvmDialogSample[Mvvm Dialog Sample]
+| 🐔 Normal
+| MVVM, Dialog, FileDialogs, TopLevel, Clipboard
+
+| link:src\Avalonia.Samples\ViewInteraction\DialogManagerSample[Dialog Manager Sample]
+| 🐔 Normal
+| MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.Mvvm
+
+|===
+
 === 🧪️ Automated UI Testing
 
 [cols="25h,25,50"]

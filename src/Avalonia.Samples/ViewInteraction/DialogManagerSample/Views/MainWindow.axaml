@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DialogManagerSample.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:services="using:DialogManagerSample.Services"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DialogManagerSample.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		x:CompileBindings="True"
+        services:DialogManager.Register="{Binding}"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="DialogManagerSample">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="Auto,*,Auto">
+		<TextBlock Text="Selected Files:" />
+		<ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
+		<Button Content="Select Files"
+				Command="{Binding SelectFilesCommand}"
+				Grid.Row="2" />
+	</Grid>
+</Window>
