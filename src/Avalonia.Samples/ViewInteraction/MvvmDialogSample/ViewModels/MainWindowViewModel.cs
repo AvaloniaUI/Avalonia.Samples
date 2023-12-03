@@ -1,10 +1,17 @@
-﻿namespace MvvmDialogSample.ViewModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace MvvmDialogSample.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public InteractionViewModel InteractionSample { get; } = new InteractionViewModel();
-
-        public CustomInteractionViewModel CustomInteractionViewModel { get; } = new CustomInteractionViewModel();
-
+        /// <summary>
+        /// Gets a list of available tabs
+        /// </summary>
+        public object[] Samples { get; } = 
+        {
+            new InteractionViewModel(),
+            new CustomInteractionViewModel()
+        };
     }
 }
