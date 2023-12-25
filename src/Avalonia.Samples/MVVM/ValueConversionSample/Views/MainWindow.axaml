@@ -77,11 +77,11 @@
                 
                 <!-- Visible when no text input -->
                 <TextBlock Text="You can only see me if the TextBox is empty" 
-                           IsVisible="{Binding #Input.Text.Length, Converter={x:Static conv:FuncValueMathConverters.IsZero}}" />
+                           IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsEmpty}}" />
                 
                 <!-- Visible when text is present -->
                 <TextBlock Text="{Binding #Input.Text.Length, StringFormat='You have typed {0:N0} chars'}" 
-                           IsVisible="{Binding #Input.Text.Length, Converter={x:Static conv:FuncValueMathConverters.IsNotZero}}" />
+                           IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsNotEmpty}}" />
             </StackPanel>
         </TabItem>
     </TabControl>

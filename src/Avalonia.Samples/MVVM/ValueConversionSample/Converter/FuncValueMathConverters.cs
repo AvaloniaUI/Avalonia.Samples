@@ -6,17 +6,17 @@ namespace ValueConversionSample.Converter;
 /// A static class holding our FuncValueConverter
 /// </summary>
 /// <remarks>
-/// Consume it from XAML via <code>{x:Static conv:FuncValueMathConverters.MyConverter}</code>
+/// Consume it from XAML via <code>{x:Static conv:FuncValueStringConverters.MyConverter}</code>
 /// </remarks>
-public static class FuncValueMathConverters
+public static class FuncValueStringConverters
 {
     /// <summary>
-    /// Gets a Converter that returns true if a number is 0, otherwise false
+    /// Gets a Converter that returns true if a string is null or empty, otherwise false
     /// </summary>
-    public static FuncValueConverter<int, bool> IsZero { get; } = new FuncValueConverter<int, bool>(i => i == 0);
+    public static FuncValueConverter<string?, bool> IsEmpty { get; } = new FuncValueConverter<string?, bool>(s => string.IsNullOrEmpty(s));
     
     /// <summary>
-    /// Gets a Converter that returns true if a number is not 0, otherwise false
+    /// Gets a Converter that returns true if a string is not null or empty, otherwise false
     /// </summary>
-    public static FuncValueConverter<int, bool> IsNotZero { get; } = new FuncValueConverter<int, bool>(i => i != 0);
+    public static FuncValueConverter<string?, bool> IsNotEmpty { get; } = new FuncValueConverter<string?, bool>(s => !string.IsNullOrEmpty(s));
 }
