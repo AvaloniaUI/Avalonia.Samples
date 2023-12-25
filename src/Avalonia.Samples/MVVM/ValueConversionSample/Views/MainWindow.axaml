@@ -3,7 +3,7 @@
         xmlns:conv="using:ValueConversionSample.Converter" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="using:ValueConversionSample.ViewModels"
         Title="ValueConversionSample"
-        Width="500" Height="200"
+        Width="800" Height="300"
         x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         mc:Ignorable="d">
@@ -69,6 +69,20 @@
                     </NumericUpDown.Value>
                 </NumericUpDown>
             </Grid>
+        </TabItem>
+        
+        <TabItem Header="FuncValueConverter">
+            <StackPanel Spacing="5">
+                <TextBox x:Name="Input" Watermark="Type anything" />
+                
+                <!-- Visible when no text input -->
+                <TextBlock Text="You can only see me if the TextBox is empty" 
+                           IsVisible="{Binding #Input.Text.Length, Converter={x:Static conv:FuncValueMathConverters.IsZero}}" />
+                
+                <!-- Visible when text is present -->
+                <TextBlock Text="{Binding #Input.Text.Length, StringFormat='You have typed {0:N0} chars'}" 
+                           IsVisible="{Binding #Input.Text.Length, Converter={x:Static conv:FuncValueMathConverters.IsNotZero}}" />
+            </StackPanel>
         </TabItem>
     </TabControl>
 
