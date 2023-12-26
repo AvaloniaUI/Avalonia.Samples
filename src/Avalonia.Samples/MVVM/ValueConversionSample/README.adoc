@@ -413,11 +413,11 @@ image::_docs/result_02.png[IMultiValueConverter sample]
 
 == Solution 3 : Using FuncValueConverter
 
-In case you need a converter that only converts a given input in one direction without the need of a `ConverterParameter`, you can also use a `FuncValueConverter`. The benefit is that the converter is much shorter to write. In this sample we will add two `FuncValueConverter` which will check if a given string is empty or not. We will consume the converters to show and hide content based on some user inout.
+In case you need a converter that only converts a given input in one direction without the need of a `ConverterParameter`, you can also use a `FuncValueConverter`. The benefit is, that the converter is much shorter to write. In this sample we will add a `FuncValueConverter` which will try to parse a given text into a brush representing the color name. It will return `null`, if conversion failed. We will consume the converter to preview the color, that the user typed.
 
 === Step 1 : Create the FuncValueConverters
 
-TIP: We can use a static class here as the converters will not change.
+TIP: We can use a static class with static properties here as the converters will not change.
 
 The `FuncValueConverter` has two generic parameters:
 
@@ -433,40 +433,50 @@ The constructor expects a lambda defining the function to convert.
 /// A static class holding our FuncValueConverter
 /// </summary>
 /// <remarks>
-/// Consume it from XAML via <code>{x:Static conv:FuncValueStringConverters.MyConverter}</code>
+/// Consume it from XAML via <code>{x:Static conv:FuncValueConverters.MyConverter}</code>
 /// </remarks>
-public static class FuncValueStringConverters
+public static class FuncValueConverters
 {
     /// <summary>
-    /// Gets a Converter that returns true if a string is null or empty, otherwise false
+    /// Gets a Converter that returns a parsed Brush for a given input. Returns null if the input was not parsed successfully
     /// </summary>
-    public static FuncValueConverter<string?, bool> IsEmpty { get; } = new FuncValueConverter<string?, bool>(s => string.IsNullOrEmpty(s));
-    
-    /// <summary>
-    /// Gets a Converter that returns true if a string is not null or empty, otherwise false
-    /// </summary>
-    public static FuncValueConverter<string?, bool> IsNotEmpty { get; } = new FuncValueConverter<string?, bool>(s => !string.IsNullOrEmpty(s));
+    public static FuncValueConverter<string?, Brush?> StringToBrushConverter { get; } = 
+        new FuncValueConverter<string?, Brush?>(s =>
+        {
+            // define output variable
+            Color color;
+            
+            // try parse color. If that was not successful try to add a leading '#'
+            if (Color.TryParse(s, out color) || Color.TryParse($"#{s}", out color))
+            {
+                return new SolidColorBrush(color);
+            }
+            
+            // If string was not convertible, we return null
+            return null;
+        });
 }
 ----
 
 === Step 2: Setup the View
 
-Our view will be made of one `TextBox` called "Input" and two `TextBlocks` while only one of them is visible at a time using our converter bound to the length of the text typed.
+Our view will be made of one `TextBox` which has an `Ellipse` as the `InnerLeftContent`. This Ellipse will be painted using the converter.
 
 [source,xml]
 ----
-<StackPanel Spacing="5">
-    <TextBox x:Name="Input" Watermark="Type anything" />
-    
-    <!-- Visible when no text input -->
-    <TextBlock Text="You can only see me if the TextBox is empty" 
-               IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsEmpty}}" />
-    
-    <!-- Visible when text is present -->
-    <TextBlock Text="{Binding #Input.Text.Length, StringFormat='You have typed {0:N0} chars'}" 
-               IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsNotEmpty}}" />
-</StackPanel>
+<TextBox Watermark="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
+    <TextBox.InnerLeftContent>
+        <Ellipse Fill="{Binding $parent[TextBox].Text, Converter={x:Static conv:FuncValueConverters.StringToBrushConverter}}"
+                 Width="20"
+                 Height="20"
+                 StrokeThickness="1"
+                 Margin="2"
+                 Stroke="Gray"/>
+    </TextBox.InnerLeftContent>
+</TextBox>
 ----
+
+NOTE: We use a binding to an ancestor using the `$parent`-syntax in this sample. See https://docs.avaloniaui.net/docs/guides/data-binding/binding-to-controls#binding-to-an-ancestor[[here\]] for more about it.
 
 === Step 3: See it in action
 

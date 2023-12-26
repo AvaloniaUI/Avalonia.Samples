@@ -73,15 +73,16 @@
         
         <TabItem Header="FuncValueConverter">
             <StackPanel Spacing="5">
-                <TextBox x:Name="Input" Watermark="Type anything" />
-                
-                <!-- Visible when no text input -->
-                <TextBlock Text="You can only see me if the TextBox is empty" 
-                           IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsEmpty}}" />
-                
-                <!-- Visible when text is present -->
-                <TextBlock Text="{Binding #Input.Text.Length, StringFormat='You have typed {0:N0} chars'}" 
-                           IsVisible="{Binding #Input.Text, Converter={x:Static conv:FuncValueStringConverters.IsNotEmpty}}" />
+                <TextBox Watermark="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
+                    <TextBox.InnerLeftContent>
+                        <Ellipse Fill="{Binding $parent[TextBox].Text, Converter={x:Static conv:FuncValueConverters.StringToBrushConverter}}"
+                                 Width="20"
+                                 Height="20"
+                                 StrokeThickness="1"
+                                 Margin="2"
+                                 Stroke="Gray"/>
+                    </TextBox.InnerLeftContent>
+                </TextBox>
             </StackPanel>
         </TabItem>
     </TabControl>
