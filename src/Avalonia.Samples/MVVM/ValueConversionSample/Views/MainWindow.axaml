@@ -3,7 +3,7 @@
         xmlns:conv="using:ValueConversionSample.Converter" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="using:ValueConversionSample.ViewModels"
         Title="ValueConversionSample"
-        Width="500" Height="200"
+        Width="800" Height="300"
         x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         mc:Ignorable="d">
@@ -69,6 +69,21 @@
                     </NumericUpDown.Value>
                 </NumericUpDown>
             </Grid>
+        </TabItem>
+        
+        <TabItem Header="FuncValueConverter">
+            <StackPanel Spacing="5">
+                <TextBox Watermark="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
+                    <TextBox.InnerLeftContent>
+                        <Ellipse Fill="{Binding $parent[TextBox].Text, Converter={x:Static conv:FuncValueConverters.StringToBrushConverter}}"
+                                 Width="20"
+                                 Height="20"
+                                 StrokeThickness="1"
+                                 Margin="2"
+                                 Stroke="Gray"/>
+                    </TextBox.InnerLeftContent>
+                </TextBox>
+            </StackPanel>
         </TabItem>
     </TabControl>
 
