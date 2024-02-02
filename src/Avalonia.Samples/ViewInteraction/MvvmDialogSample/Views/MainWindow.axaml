@@ -4,6 +4,7 @@
 		xmlns:vm="using:MvvmDialogSample.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MvvmDialogSample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -15,12 +16,20 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl>
-		<TabItem Header="Interaction">
-			<v:InteractionView DataContext="{Binding InteractionSample}" />
-		</TabItem>
-		<TabItem Header="Custom Interaction">
-			<v:CustomInteractionView DataContext="{Binding CustomInteractionViewModel}" />
-		</TabItem>
+	<TabControl ItemsSource="{Binding Samples}">
+		<TabControl.ContentTemplate>
+			<DataTemplate DataType="system:Object">
+				<ContentControl Content="{Binding}">
+					<ContentControl.DataTemplates>
+						<DataTemplate DataType="vm:InteractionViewModel">
+							<v:InteractionView />
+						</DataTemplate>
+						<DataTemplate DataType="vm:CustomInteractionViewModel">
+							<v:CustomInteractionView />
+						</DataTemplate>
+					</ContentControl.DataTemplates>
+				</ContentControl>
+			</DataTemplate>
+		</TabControl.ContentTemplate>
 	</TabControl>
 </Window>
