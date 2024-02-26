@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="Sketch.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.0670983"
+     inkscape:cx="522.44482"
+     inkscape:cy="504.17097"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect307"
+       width="90.116882"
+       height="124.83117"
+       x="38.57143"
+       y="57.155846"
+       ry="7.8067379" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="path363"
+       cx="119.30844"
+       cy="65.396103"
+       r="4.3831167" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="circle365"
+       cx="92.220779"
+       cy="65.396103"
+       r="4.3831167" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="circle367"
+       cx="105.10714"
+       cy="65.396103"
+       r="4.3831167" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       d="m 38.571429,73.640118 c 90.381461,0 90.381461,0 90.381461,0"
+       id="path580" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="46.366001"
+       y="65.396103"
+       id="text636"><tspan
+         sodipodi:role="line"
+         id="tspan634"
+         x="46.366001"
+         y="65.396103"
+         style="font-size:6.35px;stroke-width:0.529167">TO-DO List</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="46.164917"
+       y="86.285393"
+       id="text690"><tspan
+         sodipodi:role="line"
+         id="tspan688"
+         x="46.164917"
+         y="86.285393"
+         style="stroke-width:0.529167">   Item 01</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="94.222893"
+         style="stroke-width:0.529167"
+         id="tspan692">   Item 02</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="102.16039"
+         style="stroke-width:0.529167"
+         id="tspan694" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="110.09789"
+         style="stroke-width:0.529167"
+         id="tspan696">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="118.03539"
+         style="stroke-width:0.529167"
+         id="tspan700">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="125.97289"
+         style="stroke-width:0.529167"
+         id="tspan706">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="133.91039"
+         style="stroke-width:0.529167"
+         id="tspan708" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="141.84789"
+         style="stroke-width:0.529167"
+         id="tspan710" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="149.78539"
+         style="stroke-width:0.529167"
+         id="tspan712" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="157.72289"
+         style="stroke-width:0.529167"
+         id="tspan714">   Item n</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="165.66039"
+         style="stroke-width:0.529167"
+         id="tspan718"></tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="173.59789"
+         style="stroke-width:0.529167"
+         id="tspan724">Add new Item</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect726"
+       width="85.384712"
+       height="11.901433"
+       x="41.217266"
+       y="166.37213"
+       ry="2.1391306" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect775"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="81.417061"
+       ry="2.4341667" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect777"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="89.354568"
+       ry="2.4341667" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect779"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="152.85426"
+       ry="2.4341667" />
+  </g>
+</svg>

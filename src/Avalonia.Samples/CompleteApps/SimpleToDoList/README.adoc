@@ -1,0 +1,95 @@
+= Simple ToDo-List
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to ...
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐥 Easy 🐥
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+ToDo-List, full app, MVVM, CommunityToolkit.MVVM, source generator, styles, commands
+
+
+
+== Before we start
+
+This sample assumes that you have a basic knowledge about the following topcis:
+
+- How to create a https://docs.avaloniaui.net/docs/get-started/test-drive/create-a-project[[new Avalonia project\]]
+- Some basics about C# and https://docs.avaloniaui.net/docs/get-started/test-drive/[[XAML\]]
+- What the link:../../MVVM/BasicMvvmSample[[MVVM -pattern\]] (Model-View-ViewModel) is and how it works
+
+=== CommunityToolkit.MVVM
+
+The https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package is one of many third-party packages for MVVM-Apps. We will use it in this sample as it is very lightweight. In addition, it comes with built-in source generators which allows us to write less boilerplate code.
+
+NOTE: If you want to learn more about how these source generators work, please see https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview[[here\]] and https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview[[here\]].
+
+=== Preparation work
+
+Before we start with the actual implementation of the App we need to define a list of requirements and a sketch of the UI.
+
+**Must-Haves**
+
+- The user must be able to view a list of to-do items
+- All items must be easily discoverable
+- The user must be able to check and uncheck the to-do items
+- The user must be able to add new items
+- The user must be able to delete an item
+
+**Nice-To-Haves**
+
+- The user should have a visual feedback when hovering a to-do item
+- The user should have a visual feedback if an item can be added or not
+- The user should be able to save and load a to-do-list (not a scope of this tutorial)
+
+
+
+
+== The Solution // Approach 1 : How can one solve that topic?
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
