@@ -63,16 +63,21 @@ Before we start with the actual implementation of the App we need to define a li
 **Nice-To-Haves**
 
 - The user should have a visual feedback when hovering a to-do item
-- The user should have a visual feedback if an item can be added or not
+- The user should have a visual feedback if a new item can be added or not
 - The user should be able to save and load a to-do-list (not a scope of this tutorial)
+- The user should be able to edit an existing item (not a scope of this tutorial)
+
+**Draft UI Layout**
+
+It would be nice to have a single page user interface (UI) where the user can interact with the to-do list. We will use the system window frame to present our App. In the bottom of the page the user will have a `TextBox` where they can type any item content to add. A `Watermark` or `ToolTip` shall indicate that visually. As soon as we receive valid input for a new item, a `Button` next to the input field should be enabled. If the user invokes this `Button`, the new item will be added into our list. The list itself will fill the rest of our available space. In case the space is not enough to render all items, a `ScrollBar` will enable vertical scrolling.
+Each item in the list is going to be represented by a `CheckBox` followed by the content and a `Button` to delete the item.
+
+image::_docs/Sketch.png[Sketch of the UI]
 
 
+== The Solution
 
-
-== The Solution // Approach 1 : How can one solve that topic?
-
-// This is where you explain the possible solution you provide in this sample. 
-// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+NOTE: In this sample we will use the MVVM (Model-View-ViewModel) approach, where we will start with the Model and ViewModel first.
 
 === Step 1:
 
