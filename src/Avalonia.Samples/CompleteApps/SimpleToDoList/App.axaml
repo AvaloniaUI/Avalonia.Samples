@@ -4,10 +4,6 @@
              xmlns:local="using:SimpleToDoList"
              RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
              
      <Application.Resources>
          <!-- These are re-usable Icon data. You can get the path data from svg-files for example -->
