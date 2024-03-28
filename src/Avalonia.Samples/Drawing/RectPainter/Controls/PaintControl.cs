@@ -54,6 +54,7 @@ namespace RectPainter.Controls
             PointerMoved += PaintControl_PointerMoved;
             PointerPressed += PaintControl_PointerPressed;
             PointerReleased += PaintControl_PointerReleased;
+            PointerCaptureLost += PaintControl_PointerCaptureLost;
             SizeChanged += PaintControl_SizeChanged;
 
             KeyDownEvent.AddClassHandler<TopLevel>(PaintControl_KeyDown, handledEventsToo: true);
@@ -97,13 +98,28 @@ namespace RectPainter.Controls
         {
             if (Vm != null)
             {
-                // Finish dragging
+                if (Vm.Dragging == true)
+                {
+                    // Finish dragging
+                    Vm.Dragging = false;
+
+                    // Paint a new rectangle
+                    Vm.AddRectangle();
+
+                    // Request the updated image be rendered
+                    InvalidateVisual();
+                }
+            }
+        }
+
+        private void PaintControl_PointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
+        {
+            if (Vm != null)
+            {
+                // finish Dragging
                 Vm.Dragging = false;
 
-                // Paint a new rectangle
-                Vm.AddRectangle();
-
-                // Request the updated image be rendered
+                // Request the image be rendered (to clear any marquee)
                 InvalidateVisual();
             }
         }
@@ -120,12 +136,11 @@ namespace RectPainter.Controls
             }
         }
 
-
         private void PaintControl_KeyDown(object? sender, KeyEventArgs e)
         {
             if (Vm != null)
             {
-                // Change rectangle color
+                // Change rectangle color or cancel dragging
                 // Request the updated image be rendered, in case there is a marquee
                 switch (e.Key)
                 {
@@ -141,6 +156,11 @@ namespace RectPainter.Controls
 
                     case Key.LeftAlt:
                         Vm.Blue = 255;
+                        InvalidateVisual();
+                        break;
+
+                    case Key.Escape:
+                        Vm.Dragging = false;
                         InvalidateVisual();
                         break;
                 }
