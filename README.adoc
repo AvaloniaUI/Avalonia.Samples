@@ -101,6 +101,10 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | 🐔 Normal
 | Game, Canvas, Game Loop, MVVM
 
+| link:src/Avalonia.Samples/Drawing/RectPainter[Rect Painter Sample]
+| 🐔 Normal
+| Graphics, MVVM
+
 |===
 
 === 🎞️ DataTemplate-Samples
