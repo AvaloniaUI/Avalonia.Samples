@@ -15,7 +15,7 @@
 **If this is a new Sample**
 - [ ] Added a ReadMe-file
 - [ ] Updated the landing page
-- [ ] Consider submitting a PR to https://github.com/AvaloniaUI/Documentation with a link to your sample in the related documentation page
+- [ ] Consider submitting a PR to https://github.com/AvaloniaUI/avalonia-docs with a link to your sample in the related documentation page
 
 **In any case**
 - [ ] Spell-checking done
