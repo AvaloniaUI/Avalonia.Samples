@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SimpleToDoList.Models;
+using SimpleToDoList.Services;
 
 namespace SimpleToDoList.ViewModels;
 
@@ -17,18 +18,37 @@ public partial class MainViewModel : ViewModelBase
         // You can also use a DesignTime-ViewModel
         if (Design.IsDesignMode)
         {
-            ToDoItems = new ObservableCollection<ToDoItem>(new[]
+            ToDoItems = new ObservableCollection<ToDoItemViewModel>(new[]
             {
-                new ToDoItem() { Content = "Hello" },
-                new ToDoItem() { Content = "Avalonia", IsChecked = true}
+                new ToDoItemViewModel() { Content = "Hello" },
+                new ToDoItemViewModel() { Content = "Avalonia", IsChecked = true}
             });
+        }
+        else
+        {
+            // In production we can call init to load the last stored items
+            Init();
+        }
+    }
+
+    // Optional: Load data from disc
+    private async void Init()
+    {
+        var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
+
+        if (itemsLoaded is not null)
+        {
+            foreach (var item in itemsLoaded)
+            {
+                ToDoItems.Add(new ToDoItemViewModel(item));
+            }
         }
     }
     
     /// <summary>
     /// Gets a collection of <see cref="ToDoItem"/> which allows adding and removing items
     /// </summary>
-    public ObservableCollection<ToDoItem> ToDoItems { get; } = new ObservableCollection<ToDoItem>();
+    public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
 
     
     // -- Adding new Items --
@@ -41,7 +61,7 @@ public partial class MainViewModel : ViewModelBase
     private void AddItem(string content)
     {
         // Add a new item to the list
-        ToDoItems.Add(new ToDoItem() {Content = NewItemContent});
+        ToDoItems.Add(new ToDoItemViewModel() {Content = NewItemContent});
         
         // reset the NewItemContent
         NewItemContent = null;
@@ -51,7 +71,7 @@ public partial class MainViewModel : ViewModelBase
     /// Gets or set the content for new Items to add. If this string is not empty, the AddItemCommand will be enabled automatically
     /// </summary>
     [ObservableProperty] 
-    [NotifyCanExecuteChangedFor(nameof(AddItemCommand))]
+    [NotifyCanExecuteChangedFor(nameof(AddItemCommand))] // This attribute will invalidate the command each time this property changes
     private string? _NewItemContent;
 
     /// <summary>
@@ -66,7 +86,7 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     /// <param name="item">the item to remove</param>
     [RelayCommand]
-    private void RemoveItem(ToDoItem item)
+    private void RemoveItem(ToDoItemViewModel item)
     {
         // Add a new item to the list
         ToDoItems.Remove(item);

@@ -55,7 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewInteraction", "ViewInte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompleteApps", "CompleteApps", "{50FCF785-BBCF-4AFE-AC72-79EA9E92C43A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoList", "SimpleToDoList\SimpleToDoList.csproj", "{7D75B38A-304C-44DE-AC2F-8A461C7FC889}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoList", "CompleteApps\SimpleToDoList\SimpleToDoList.csproj", "{7D75B38A-304C-44DE-AC2F-8A461C7FC889}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RectPainter", "Drawing\RectPainter\RectPainter.csproj", "{2B746401-384F-484A-810E-7A65288165E0}"
 EndProject

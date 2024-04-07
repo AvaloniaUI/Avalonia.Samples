@@ -32,9 +32,9 @@
                 <ItemsControl.ItemTemplate>
                     <!-- The ItemTemplate defines how each item should be represented -->
                     <!-- Our Item will be represented by a CheckBox and a Delete-Button -->
-                    <DataTemplate DataType="models:ToDoItem">
+                    <DataTemplate DataType="vm:ToDoItemViewModel">
                         <Grid ColumnDefinitions="*, Auto">
-                            <CheckBox IsCancel="{Binding IsChecked}"
+                            <CheckBox IsChecked="{Binding IsChecked}"
                                       Content="{Binding Content}" />
                             
                             <!-- Note how we use the Root-Grid to get the MainViewModel here. As we use compiled bindings we have to cast the DataContext -->
