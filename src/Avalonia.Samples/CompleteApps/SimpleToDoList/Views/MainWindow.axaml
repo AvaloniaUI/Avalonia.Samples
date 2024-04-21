@@ -3,7 +3,6 @@
         xmlns:vm="using:SimpleToDoList.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:models="clr-namespace:SimpleToDoList.Models"
         mc:Ignorable="d" 
         Width="300" Height="500" Padding="4"
         x:Class="SimpleToDoList.Views.MainWindow"
@@ -25,7 +24,6 @@
         <TextBlock Text="My ToDo-List" Classes="h1"/>
         
         <ScrollViewer Grid.Row="1">
-            
             <!-- This ItemsControl show all added ToDoItems. -->
             <!-- It needs to be placed inside a ScrollViewer because other than a ListBox it has not its own -->
             <ItemsControl ItemsSource="{Binding ToDoItems}">

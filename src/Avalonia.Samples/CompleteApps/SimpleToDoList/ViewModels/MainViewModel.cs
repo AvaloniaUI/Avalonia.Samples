@@ -88,7 +88,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void RemoveItem(ToDoItemViewModel item)
     {
-        // Add a new item to the list
+        // Remove the given item from the list
         ToDoItems.Remove(item);
     }
 }
