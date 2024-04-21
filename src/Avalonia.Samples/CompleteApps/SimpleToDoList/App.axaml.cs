@@ -25,14 +25,19 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = _mainViewModel
+                DataContext = _mainViewModel // Remember to change this line to use our private reference to the MainViewModel
             };
             
+            // Listen to the ShutdownRequested-event
             desktop.ShutdownRequested += DesktopOnShutdownRequested;
         }
 
         base.OnFrameworkInitializationCompleted();
+        
+        // Init the MainViewModel 
+        InitMainViewModelAsync();
     }
+    
     
     // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed 
     // before we can actually close this window
@@ -44,16 +49,31 @@ public partial class App : Application
 
         if (!_canClose)
         {
-            // The DataContext of this Window is known to be of type MainViewModel, so we can use a direct cast here.
             // To save the items, we map them to the ToDoItem-Model which is better suited for I/O operations
             var itemsToSave = _mainViewModel.ToDoItems.Select(item => item.GetToDoItem());
-            await ToDoListFileService.SaveToFile(itemsToSave);
+            
+            await ToDoListFileService.SaveToFileAsync(itemsToSave);
             
             // Set _canClose to true and Close this Window again
             _canClose = true;
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.Shutdown();
+            }
+        }
+    }
+    
+    // Optional: Load data from disc
+    private async void InitMainViewModelAsync()
+    {
+        // get the items to load
+        var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
+
+        if (itemsLoaded is not null)
+        {
+            foreach (var item in itemsLoaded)
+            {
+                _mainViewModel.ToDoItems.Add(new ToDoItemViewModel(item));
             }
         }
     }

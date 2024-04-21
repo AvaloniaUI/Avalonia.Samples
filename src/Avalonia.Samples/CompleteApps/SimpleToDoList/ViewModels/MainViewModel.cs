@@ -24,25 +24,6 @@ public partial class MainViewModel : ViewModelBase
                 new ToDoItemViewModel() { Content = "Avalonia", IsChecked = true}
             });
         }
-        else
-        {
-            // In production we can call init to load the last stored items
-            Init();
-        }
-    }
-
-    // Optional: Load data from disc
-    private async void Init()
-    {
-        var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
-
-        if (itemsLoaded is not null)
-        {
-            foreach (var item in itemsLoaded)
-            {
-                ToDoItems.Add(new ToDoItemViewModel(item));
-            }
-        }
     }
     
     /// <summary>

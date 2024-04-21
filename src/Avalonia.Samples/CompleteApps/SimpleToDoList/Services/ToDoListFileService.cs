@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using SimpleToDoList.Models;
 
@@ -24,7 +22,7 @@ public static class ToDoListFileService
     /// Stores the given items into a file on disc
     /// </summary>
     /// <param name="itemsToSave">The items to save</param>
-    public static async Task SaveToFile(IEnumerable<ToDoItem> itemsToSave)
+    public static async Task SaveToFileAsync(IEnumerable<ToDoItem> itemsToSave)
     {
         // Ensure all directories exists
         Directory.CreateDirectory(Path.GetDirectoryName(_jsonFileName)!);
@@ -36,6 +34,10 @@ public static class ToDoListFileService
         }
     }
 
+    /// <summary>
+    /// Loads the file from disc and returns the items stored inside
+    /// </summary>
+    /// <returns>An IEnumerable of items loaded or null in case the file was not found</returns>
     public static async Task<IEnumerable<ToDoItem>?> LoadFromFileAsync()
     {
         try
