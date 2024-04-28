@@ -11,7 +11,7 @@
 
 
 
-// Write a short summary here what this examples does
+// Write a short summary here what this example does
 This example will show you how a simple ToDo-List App can be build using Avalonia in combination with the MVVM-Community-Toolkit.
 
 
@@ -29,14 +29,14 @@ toc::[]
 
 === Buzz-Words
 
-// Write some buzz-words here. You can separate them by ", "
+// Write some buzzwords here. You can separate them by ", "
 ToDo-List, complete app, MVVM, CommunityToolkit.MVVM, source generator, styles, commands
 
 
 
 == Before we start
 
-This sample assumes that you have a basic knowledge about the following topcis:
+This sample assumes that you have a basic knowledge about the following topics:
 
 - How to create a https://docs.avaloniaui.net/docs/get-started/test-drive/create-a-project[[new Avalonia project\]]
 - Some basics about C# and https://docs.avaloniaui.net/docs/get-started/test-drive/[[XAML\]]
@@ -52,21 +52,21 @@ The https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityTo
 
 [TIP]
 ====
-For example we can annotate private fields with the `[ObservableProperty]`-attribute which will let the source generator create a property for us:
+For example, we can annotate private fields with the `[ObservableProperty]`-attribute which will let the source generator create a property for us:
 
 [source,cs]
 ----
 // Using the source generator:
 [ObservableProperty]
-private bool _IsChecked;
+private bool _isChecked;
 
 // Without using the source generator we would need to write:
-private bool _IsChecked;
+private bool _isChecked;
 
 public bool IsChecked
 {
-    get { return _IsChecked; }
-    set { SetProperty(ref _IsChecked, value); }
+    get { return _isChecked; }
+    set { SetProperty(ref _isChecked, value); }
 }
 ----
 ====
@@ -103,7 +103,7 @@ image::_docs/Sketch.png[alt="Sketch of the UI", title="Sketch of the UI"]
 
 NOTE: In this sample we will use the MVVM (Model-View-ViewModel) approach, where we will start with the Model and ViewModel first.
 
-=== Step 1: Create and setup a new project
+=== Step 1: Create and set up a new project
 
 Choose your favorite IDE to create a new Avalonia-MVVM project.
 
@@ -143,9 +143,11 @@ By default, the Avalonia-MVVM template installs `Avalonia.ReactiveUI` as the MVV
 ----
 
 
-=== Step 2: Setup the Model
+=== Step 2: Set up the Model
 
 TIP: In our case we need the model for I/O operations. If you have no use for the model in your own App, feel free to skip that part.
+
+NOTE: In case the folder `Models` is missing on your side, just add it to your project.
 
 The Model will be quite simple in our case. We want to have one class called `ToDoItem`, which has two `Properties`. This model will also be used to save and restore the users ToDo-List later on. Inside the folder `Models`, add a new class called `ToDoItem`:
 
@@ -191,14 +193,13 @@ public partial class ToDoItemViewModel : ViewModelBase
     /// Gets or sets the checked status of each item
     /// </summary>
     [ObservableProperty]
-    private bool _IsChecked;
+    private bool _isChecked;
 
     /// <summary>
     /// Gets or sets the content of the to-do item
     /// </summary>
-    /// <returns></returns>
     [ObservableProperty]
-    private string? _Content;
+    private string? _content;
 }
 ----
 
@@ -252,7 +253,7 @@ Depending on the template used to create the project you should see a file calle
 
 TIP: If you see a property called `Greetings`, feel free to delete it as we don't need that in our App.
 
-Let's add an `ObservableCollection` called `ToDoItems`. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus a getter is enough here. 
+Let's add an `ObservableCollection` called `ToDoItems`. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus, a getter is enough here.
 
 [source]
 .ViewModels/MainViewModel.cs
@@ -308,7 +309,7 @@ private void AddItem(string content)
 
 Adding items is possible now, but we also want to be able to remove items. So we will add another `Command` for that. However, we need to know which item to remove. So we will pass the item to remove as a `CommandParameter`.
 
-NOTE: According to our App draft, we want to add the `Delete-Button` next to each item. Therefore we can be sure that always a valid `CommandParameter` is sent to the `Command`. Therefore we don't need to set `CanExecute` in this case.
+NOTE: According to our App draft, we want to add the `Delete-Button` next to each item. Therefore, we can be sure that always a valid `CommandParameter` is sent to the `Command`. Therefore, we don't need to set `CanExecute` in this case.
 
 [source, cs]
 ----
@@ -325,7 +326,7 @@ private void RemoveItem(ToDoItemViewModel item)
 ----
 
 
-=== Step 4: Setup the View
+=== Step 4: Set up the View
 
 NOTE: Depending on the template you used to create your project, you may see a file called `MainView` alongside `MainWindow`. In this case, please use `MainView` to add the content shown below. `MainWindow` will present this view for you.
 
@@ -392,7 +393,7 @@ image::_docs/First_Run.png[caption="Figure 3: ", title="First App run", alt="Fir
 
 We can see the title `TextBlock` is there and also the entry field for new items to add. We can add some text into the `TextBox`, however we have no button to add it into our list yet. Let's fix that.
 
-In Avalonia a TextBox has the option to add `InnerLeftContent` and `InnerRightContent`, which can be used to add any content you like. For example, we can add a button to it. The `Button` will execute the `AddItemCommand`. For convenience we also want to allow adding items using the keyboard. That is what https://docs.avaloniaui.net/docs/concepts/input/hotkeys[[`KeyBindings` and `HotKeys`\]] can be used for.
+In Avalonia a TextBox has the option to add `InnerLeftContent` and `InnerRightContent`, which can be used to add any content you like. For example, we can add a button to it. The `Button` will execute the `AddItemCommand`. For convenience, we also want to allow adding items using the keyboard. That is what https://docs.avaloniaui.net/docs/concepts/input/hotkeys[[`KeyBindings` and `HotKeys`\]] can be used for.
 
 TIP: We use `KeyBindings` here as a `HotKey` would be available for the whole view, where we want it only to work when the `TextBox` is focused.
 
@@ -424,7 +425,7 @@ Great, we can add new items to our list. However, they don't display themself as
 
 NOTE: If you want to learn more about `DataTemplates`, see these samples: https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples[[DataTemplate-Samples\]]
 
-Our `DataTemplate` uses a `CheckBox` where the `Content` is bound to `ToDoItemViewModel.Content` and `IsChecked` is bound to `ToDoItemViewModel.IsChecked`. Next to it we will add a `Button` which is there to delete the given item. The `Command` is bound to the `MainViewModel.DeleteCommand` and the `CommandParameter` is the `ToDoItemViewModel` itself.
+Our `DataTemplate` uses a `CheckBox` where the `Content` is bound to `ToDoItemViewModel.Content` and `IsChecked` is bound to `ToDoItemViewModel.IsChecked`. Next to it, we will add a `Button` which is there to delete the given item. The `Command` is bound to the `MainViewModel.DeleteCommand` and the `CommandParameter` is the `ToDoItemViewModel` itself.
 
 NOTE: Inside the `ItemTemplate` we can only use members of our `ItemViewModel`. However, the `DeleteCommand` is part of our `MainViewModel`. We can access this by accessing the parents or named controls `DataContext`. As we use compiled bindings, we have to https://docs.avaloniaui.net/docs/basics/data/data-binding/compiled-bindings#type-casting[[cast the `DataContext`\]]
 
@@ -458,7 +459,7 @@ image::_docs/Third_Run.png[caption="Figure 5: ", title="Third App run", alt="Thi
 
 === Step 5 (Optional): Add some Styles to improve the UI
 
-While our App is now fully functional and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user friendly:
+While our App is now fully functional and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user-friendly:
 
 - The Title looks exactly as any other content, this should be improved
 - The Buttons have English-only content. Having symbols would make them more understandable for all folks.
@@ -487,7 +488,7 @@ In `App.axaml` add following Style:
 Usage:
 
 [source,xml]
-.Views/MainView.axaml
+.Views/MainWindow.axaml
 ----
 <!--  This is our title text block. We use Style.Classes to style it accordingly  -->
 <TextBlock Classes="h1" Text="My ToDo-List" />
@@ -495,13 +496,13 @@ Usage:
 
 For the `CheckBox` we want to add two different `Styles`. One that applies to each `CheckBox` and sets the `HorizontalAlignment` to fill the entire available space and another one that sets a highlight color to it's background on pointer-over.
 
-TIP: Avalonia has pseudo-class selectors that can be used to style a control according to it's visual state. See https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes[[docs\]] for more info.
+TIP: Avalonia has pseudo-class selectors that can be used to style a control according to its visual state. See https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes[[docs\]] for more info.
 
 [TIP]
 ====
 Sometimes you need to apply a style to a visual child of the control template (see https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes[[docs\]]).
 To understand which selector to use, you may use https://docs.avaloniaui.net/docs/guides/implementation-guides/developer-tools[[developer tools\]] (use the visual tree tab).
-Moreover you can lookup the original styles on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls[[GitHub in source\]]
+Moreover, you can look up the original styles on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls[[GitHub in source\]]
 
 Press `[F12]` and you can expand the visual tree to see the visual children of all controls in your view
 
@@ -528,7 +529,7 @@ TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloni
 </Application.Styles>
 ----
 
-To display icons we can use `PathIcon` which accepts any path-data. This data can be taken from an svg-file.
+To display icons we can use `PathIcon` which accepts any path-data. This data can be taken from a svg-file.
 
 WARNING: If you use an icon from one of several online available icon galleries, make sure the license suits your needs.
 
@@ -545,7 +546,7 @@ WARNING: If you use an icon from one of several online available icon galleries,
 To display the icons in our App we add them as our `Buttons` content:
 
 [source,xml]
-.Views/MainView.axaml
+.Views/MainWindow.axaml
 ----
 <!-- The same applies for the Delete-Button -->
 <Button Command="{Binding AddItemCommand}">
@@ -606,7 +607,7 @@ public static class ToDoListFileService
     /// Stores the given items into a file on disc
     /// </summary>
     /// <param name="itemsToSave">The items to save</param>
-    public static async Task SaveToFile(IEnumerable<ToDoItem> itemsToSave)
+    public static async Task SaveToFileAsync(IEnumerable<ToDoItem> itemsToSave)
     {
         // Ensure all directories exists
         Directory.CreateDirectory(Path.GetDirectoryName(_jsonFileName)!);
@@ -620,7 +621,7 @@ public static class ToDoListFileService
 }
 ----
 
-To actually save the file, we need a way to call the `SaveToFileAsync`-method when the App is terminating. As we only target `Desktop`, we can do so in an event called `ShutdownRequested`. Moreover we need a reference to the `MainViewModel` to be accessible form the event, and thus we store it in a private field instead of creating in inline.
+To actually save the file, we need a way to call the `SaveToFileAsync`-method when the App is terminating. As we only target `Desktop`, we can do so in an event called `ShutdownRequested`. Moreover, we need a reference to the `MainViewModel` to be accessible form the event, and thus we store it in a private field instead of creating in inline.
 
 [source,c#]
 .App.axaml.cs
