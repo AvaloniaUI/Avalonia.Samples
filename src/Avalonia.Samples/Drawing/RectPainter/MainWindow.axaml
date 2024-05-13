@@ -19,7 +19,7 @@
 						<TextBlock Width="70" Text="Rectangle:"/>
 						<TextBlock Width="100" Text="{Binding Rect}"/>
 				</StackPanel>
-				<controls:PaintControl Vm="{Binding Vm}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
+				<TextBlock Text="Use mouse with Shift/Alt/Ctrl key modifiers pressed."/>
+				<controls:PaintControl DataContext="{Binding Vm}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 		</DockPanel>
 </Window>

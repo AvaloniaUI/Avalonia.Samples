@@ -12,41 +12,7 @@ namespace RectPainter.Controls
     /// </summary>
     public class PaintControl : Control
     {
-        // private member for the view model
-        private PaintControlViewModel? _vm = null;
-
-        // DirectProperty for the view model
-        public static readonly DirectProperty<PaintControl, PaintControlViewModel?> VmProperty =
-            AvaloniaProperty.RegisterDirect<PaintControl, PaintControlViewModel?>(
-                nameof(Vm),
-                o => o.Vm,
-                (o, v) => o.Vm = v,
-                defaultBindingMode: Avalonia.Data.BindingMode.OneWay);
-
-        // public property for the view model
-        public PaintControlViewModel? Vm
-        {
-            get => _vm;
-            set
-            {
-                if (_vm != value)
-                {
-                    // set the view model
-                    _vm = value;
-
-                    // let the view model know the PaintControl's size, so the image can be the correct size.
-                    _vm?.SetImageSize(new PixelSize((int)Bounds.Width, (int)Bounds.Height));
-
-                    // Request the image be rendered
-                    InvalidateVisual();
-                }
-            }
-        }
-
-        static PaintControl()
-        {
-
-        }
+        public PaintControlViewModel? Vm => DataContext as PaintControlViewModel;
 
         public PaintControl()
         {
@@ -59,6 +25,20 @@ namespace RectPainter.Controls
 
             KeyDownEvent.AddClassHandler<TopLevel>(PaintControl_KeyDown, handledEventsToo: true);
             KeyUpEvent.AddClassHandler<TopLevel>(PaintControl_KeyUp, handledEventsToo: true);
+        }
+
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+        {
+            base.OnPropertyChanged(change);
+
+            if (change.Property == DataContextProperty && Bounds.Size != default)
+            {
+                // let the view model know the PaintControl's size, so the image can be the correct size.
+                Vm?.SetImageSize(new PixelSize((int)Bounds.Width, (int)Bounds.Height));
+
+                // Request the image be rendered
+                InvalidateVisual();
+            }
         }
 
         private void PaintControl_PointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)

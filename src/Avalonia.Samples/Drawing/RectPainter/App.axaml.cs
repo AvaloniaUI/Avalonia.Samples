@@ -23,7 +23,7 @@ public partial class App : Application
                 Vm = new PaintControlViewModel()
             };
             mainWindow.DataContext = vm;
-    			  desktop.MainWindow = mainWindow;
+            desktop.MainWindow = mainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();
