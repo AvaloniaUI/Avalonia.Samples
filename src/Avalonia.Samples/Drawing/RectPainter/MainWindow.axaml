@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:controls="using:RectPainter.Controls"
+				xmlns:vm="using:RectPainter.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RectPainter.MainWindow"
+        Title="Rect Painter Sample - Drag out rectangles with the mouse. Use Shift/Ctrl/Alt to change color"
+				Icon="/Assets/avalonia-logo.ico">
+		<Design.DataContext>
+				<vm:MainWindowViewModel/>
+		</Design.DataContext>
+		
+		<DockPanel>
+				<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+						<TextBlock Width="50" Text="Cursor:"/>
+						<TextBlock Width="120" Text="{Binding MousePosition}"/>
+						<TextBlock Width="70" Text="Rectangle:"/>
+						<TextBlock Width="100" Text="{Binding Rect}"/>
+				</StackPanel>
+				<TextBlock Text="Use mouse with Shift/Alt/Ctrl key modifiers pressed."/>
+				<controls:PaintControl DataContext="{Binding Vm}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		</DockPanel>
+</Window>
