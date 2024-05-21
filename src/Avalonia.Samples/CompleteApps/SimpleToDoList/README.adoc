@@ -42,7 +42,7 @@ This sample assumes that you have a basic knowledge about the following topics:
 - Some basics about C# and https://docs.avaloniaui.net/docs/get-started/test-drive/[[XAML\]]
 - What the link:../../MVVM/BasicMvvmSample[[MVVM -pattern\]] (Model-View-ViewModel) is and how it works
 - What a link:../../MVVM/CommandSample[[Command\]] is and how it works
-- What a link:https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0[ObservableCollection] is and how it works
+- What a link:https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0[[ObservableCollection\]] is and how it works
 
 TIP: Some sections are optional. You can skip these if you want to.
 
@@ -255,7 +255,7 @@ TIP: If you see a property called `Greetings`, feel free to delete it as we don'
 
 Let's add an `ObservableCollection` called `ToDoItems`. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus, a getter is enough here.
 
-[source]
+[source,cs]
 .ViewModels/MainViewModel.cs
 ----
 /// <summary>
@@ -275,7 +275,7 @@ NOTE: The command and the properties will be created using the source generator 
 /// </summary>
 [ObservableProperty]
 [NotifyCanExecuteChangedFor(nameof(AddItemCommand))] // This attribute will invalidate the command each time this property changes
-private string? _NewItemContent;
+private string? _newItemContent;
 ----
 
 Next step is to create a method or a property that returns a `bool` indicating whether the `AddItemCommand` can execute:
@@ -295,9 +295,8 @@ Last but not least we can add the `Command`. If we annotate a `void` or a `Task`
 /// <summary>
 /// This command is used to add a new Item to the List
 /// </summary>
-/// <param name="content"></param>
 [RelayCommand (CanExecute = nameof(CanAddItem))]
-private void AddItem(string content)
+private void AddItem()
 {
     // Add a new item to the list
     ToDoItems.Add(new ToDoItemViewModel() {Content = NewItemContent});
@@ -333,6 +332,7 @@ NOTE: Depending on the template you used to create your project, you may see a f
 Let's recall the App-design we planned:
 
 image::_docs/Sketch.png[title="Our sketch of the App-design", alt="Our sketch of the App-design"]
+
 
 As shown above we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels[[`Panels`\]] to achieve diffrent layouts. In our case we can use a `DockPanel` or a `Grid`. We will use a `Grid` as this offers the most flexible layout.
 
@@ -391,6 +391,7 @@ We are now good to go and run our App for the first time. You should see somethi
 
 image::_docs/First_Run.png[caption="Figure 3: ", title="First App run", alt="First App run"]
 
+
 We can see the title `TextBlock` is there and also the entry field for new items to add. We can add some text into the `TextBox`, however we have no button to add it into our list yet. Let's fix that.
 
 In Avalonia a TextBox has the option to add `InnerLeftContent` and `InnerRightContent`, which can be used to add any content you like. For example, we can add a button to it. The `Button` will execute the `AddItemCommand`. For convenience, we also want to allow adding items using the keyboard. That is what https://docs.avaloniaui.net/docs/concepts/input/hotkeys[[`KeyBindings` and `HotKeys`\]] can be used for.
@@ -420,6 +421,7 @@ Here is how our modified input box looks like:
 Now, if you run your App again, you will notice that we have a Button which is grayed out if the input field is empty and gets enabled as soon as you start typing. Invoking the `Button` will add a new item to our list above.
 
 image::_docs/Second_Run.png[caption="Figure 4: ", title="Second App run", alt="Second App run"]
+
 
 Great, we can add new items to our list. However, they don't display themself as we wanted them to do. Instead of showing the content, we see the name of the `ItemViewModel`. We can fix that by defining the `ItemTemplate` for the `ItemsControl`.
 
@@ -509,7 +511,7 @@ Press `[F12]` and you can expand the visual tree to see the visual children of a
 image::_docs/DevTools.png[caption="Figure 6: ", title="DevTools in action"]
 ====
 
-TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[`DynamicResources`/]] which will make sure style follows the overall App-design. To explore the available ones from `FluentTheme`, look them up on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Accents[[GitHub in source\]]
+TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[`DynamicResources`\]] which will make sure style follows the overall App-design. To explore the available ones from `FluentTheme`, look them up on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Accents[[GitHub in source\]]
 
 [source,xml]
 .App.axaml
@@ -730,16 +732,16 @@ public static class ToDoListFileService
 [source,c#]
 .App.axaml.cs
 ----
-public override void OnFrameworkInitializationCompleted()
+public override async void OnFrameworkInitializationCompleted()
 {
     // ...
 
     // Init the MainViewModel
-    InitMainViewModelAsync();
+    await InitMainViewModelAsync();
 }
 
 // Optional: Load data from disc
-private async void InitMainViewModelAsync()
+private async Task InitMainViewModelAsync()
 {
     // get the items to load
     var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();

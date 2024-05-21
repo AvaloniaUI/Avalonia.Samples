@@ -6,7 +6,7 @@ namespace SimpleToDoList.ViewModels;
 /*   NOTE:
  *
  *   Please mind that this samples uses the CommunityToolkit.Mvvm package for the ViewModels. Feel free to use any other
- *   MVVM-Framework (like ReactiveUI or Prsim) that suits your needs best.
+ *   MVVM-Framework (like ReactiveUI or Prism) that suits your needs best.
  *
  */
 

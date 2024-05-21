@@ -37,9 +37,8 @@ public partial class MainViewModel : ViewModelBase
     /// <summary>
     /// This command is used to add a new Item to the List
     /// </summary>
-    /// <param name="content"></param>
     [RelayCommand (CanExecute = nameof(CanAddItem))]
-    private void AddItem(string content)
+    private void AddItem()
     {
         // Add a new item to the list
         ToDoItems.Add(new ToDoItemViewModel() {Content = NewItemContent});
@@ -53,7 +52,7 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     [ObservableProperty] 
     [NotifyCanExecuteChangedFor(nameof(AddItemCommand))] // This attribute will invalidate the command each time this property changes
-    private string? _NewItemContent;
+    private string? _newItemContent;
 
     /// <summary>
     /// Returns if a new Item can be added. We require to have the NewItem some Text

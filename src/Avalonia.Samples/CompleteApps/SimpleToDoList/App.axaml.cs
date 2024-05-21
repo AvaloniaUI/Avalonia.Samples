@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -19,7 +20,7 @@ public partial class App : Application
     // in your App.
     private readonly MainViewModel _mainViewModel = new MainViewModel();
     
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -35,7 +36,7 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
         
         // Init the MainViewModel 
-        InitMainViewModelAsync();
+        await InitMainViewModelAsync();
     }
     
     
@@ -64,7 +65,7 @@ public partial class App : Application
     }
     
     // Optional: Load data from disc
-    private async void InitMainViewModelAsync()
+    private async Task InitMainViewModelAsync()
     {
         // get the items to load
         var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
