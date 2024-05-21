@@ -761,6 +761,8 @@ private async Task InitMainViewModelAsync()
 
 == Related
 
+If you want to explore more samples, please also visit https://github.com/AvaloniaCommunity/awesome-avalonia.
+
 // Any related information or further readings goes here.
 
 
