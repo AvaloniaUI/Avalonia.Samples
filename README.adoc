@@ -7,7 +7,7 @@
 :caution-caption: :fire:
 :warning-caption: :warning:
 
-Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia. 
+Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia.
 
 toc::[]
 
@@ -53,7 +53,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | These samples are focusing on non-standard tasks, which most users will not need to know.                                          
 
 |===
- 
+
 
 [#samples]
 == ✍️ Samples
@@ -159,7 +159,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
 | link:src\Avalonia.Samples\ViewInteraction\MvvmDialogSample[Mvvm Dialog Sample]
 | 🐔 Normal
@@ -171,6 +171,7 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+[#_️_automated_ui_testing]
 === 🧪️ Automated UI Testing
 
 [cols="25h,25,50"]
@@ -186,6 +187,18 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 | link:src\Avalonia.Samples\Testing\TestableApp.Appium[Testing with Appium]
 | 🐉 Hard
 | XUnit, Appium, WinAppDriver, Automation, UI Testing
+
+|===
+
+[complete-apps]
+=== 🧑‍💻 Complete Apps
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words
+
+| link:src\Avalonia.Samples\CompleteApps\SimpleToDoList[Simple ToDo-List]
+| 🐥 Easy
+| ToDo-List, Complete App, MVVM, CommunityToolkit.MVVM, Source Generator, Styles, Commands
 
 |===
 
@@ -219,7 +232,7 @@ IMPORTANT: If you change the difficulty or the buzz-words, remember to also upda
 . Add a new Project to the Solution `src ► Avalonia.Samples ► Avalonia.Samples.sln`
 . In the root directory of the new sample add a `ReadMe`-file. We highly suggest to use the template which you can find here: 
   .. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template. 
-  .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template. 
+  .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template.
 
 // Comment this in for next years hacktober fest
 //// 

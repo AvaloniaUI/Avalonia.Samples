@@ -1,0 +1,40 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SimpleToDoList.App"
+             xmlns:local="using:SimpleToDoList"
+             RequestedThemeVariant="Light">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             
+     <Application.Resources>
+         <!-- These are re-usable Icon data. You can get the path data from svg-files for example -->
+         <StreamGeometry x:Key="DeleteIconData">M 16.500001 0 C 15.52778 0 14.688382 0.35533588 14.101563 0.87695315 C 13.514743 1.3985704 13.165432 2.0458273 12.939454 2.6484376 C 12.757473 3.1337185 12.652358 3.6048008 12.589844 4.0000001 L 3.0000001 4.0000001 A 1 1 0 0 0 2.0000001 5.0000002 A 1 1 0 0 0 3.0000001 6.0000002 L 4.0253908 6.0000002 A 1 1 0 0 0 4.0078126 6.1250002 L 7.1171877 31.000001 L 25.882813 31.000001 L 28.992188 6.1250002 A 1 1 0 0 0 28.996095 6.0000002 L 30.000001 6.0000002 A 1 1 0 0 0 31.000001 5.0000002 A 1 1 0 0 0 30.000001 4.0000001 L 20.410157 4.0000001 C 20.347644 3.6048008 20.24253 3.1337185 20.060548 2.6484376 C 19.834569 2.0458273 19.485258 1.3985704 18.898438 0.87695315 C 18.31162 0.35533585 17.472221 -7.4014797e-17 16.500001 0 z M 16.500001 2.0000001 C 17.027777 2.0000001 17.313384 2.1446656 17.570313 2.3730469 C 17.827243 2.6014283 18.040434 2.9541747 18.189454 3.3515626 C 18.271334 3.5699097 18.330561 3.7916862 18.375001 4.0000001 L 14.625 4.0000001 C 14.66944 3.7916862 14.728668 3.5699097 14.810547 3.3515626 C 14.959568 2.9541747 15.172758 2.6014283 15.429688 2.3730469 C 15.686617 2.1446655 15.972223 2.0000001 16.500001 2.0000001 z M 6.0078127 6.0000002 L 26.992188 6.0000002 L 24.117188 29.000001 L 8.8828128 29.000001 L 6.0078127 6.0000002 z M 16.500001 7.9199221 A 1 1 0 0 0 15.5 8.9199222 L 15.5 27.402345 A 1 1 0 0 0 16.500001 28.402345 A 1 1 0 0 0 17.500001 27.402345 L 17.500001 8.9199222 A 1 1 0 0 0 16.500001 7.9199221 z M 9.8886722 8.0058596 A 1 1 0 0 0 9.0058597 9.1113284 L 11.00586 27.111329 A 1 1 0 0 0 12.111329 27.994141 A 1 1 0 0 0 12.994141 26.888673 L 10.994141 8.8886722 A 1 1 0 0 0 9.8886722 8.0058596 z M 23.111329 8.0058596 A 1 1 0 0 0 22.00586 8.8886722 L 20.00586 26.888673 A 1 1 0 0 0 20.888673 27.994141 A 1 1 0 0 0 21.994141 27.111329 L 23.994141 9.1113284 A 1 1 0 0 0 23.111329 8.0058596 z </StreamGeometry>
+         <StreamGeometry x:Key="AcceptIconData">M 57.070314 2.7402345 C 48.797905 2.7402345 42.070314 9.4678252 42.070314 17.740235 C 42.070314 26.012646 48.797905 32.740235 57.070314 32.740235 C 65.342725 32.740235 72.070315 26.012646 72.070315 17.740235 C 72.070315 9.4678252 65.342725 2.7402345 57.070314 2.7402345 z M 57.070314 4.7402345 C 64.261847 4.7402345 70.070315 10.548703 70.070315 17.740235 C 70.070315 24.931768 64.261847 30.740235 57.070314 30.740235 C 49.878782 30.740235 44.070314 24.931768 44.070314 17.740235 C 44.070314 10.548703 49.878782 4.7402345 57.070314 4.7402345 z M 63.972658 10.779297 A 1 1 0 0 0 63.285158 11.115235 L 54.007814 21.621094 L 50.865236 17.949219 A 1 1 0 0 0 49.45508 17.837891 A 1 1 0 0 0 49.345705 19.248047 L 53.982424 24.669923 L 64.785158 12.439454 A 1 1 0 0 0 64.697268 11.029297 A 1 1 0 0 0 63.972658 10.779297 z </StreamGeometry>
+     </Application.Resources>
+  
+    <Application.Styles>
+        <FluentTheme />
+        
+        <!-- Some custom Styles -->
+        <!-- Our header Style -->
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        
+        <!-- We want our CheckBox to be stretched horizontally (the default is left-aligned) -->
+        <Style Selector="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        
+        <!-- These styles add some useful feedback for the user  -->
+        <Style Selector="CheckBox:pointerover /template/ Grid#RootGrid">
+            <Setter Property="Background" Value="{DynamicResource SystemAccentColorLight3}" />
+        </Style>
+        
+        <Style Selector="Button:disabled PathIcon">
+            <Setter Property="Opacity" Value="0.4" />
+        </Style>
+        
+    </Application.Styles>
+</Application>

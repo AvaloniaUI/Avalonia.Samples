@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SimpleToDoList.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="300" Height="500" Padding="4"
+        x:Class="SimpleToDoList.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SimpleToDoList">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <!-- We give a name to the root grid in order to access it later -->
+    <Grid RowDefinitions="Auto, *, Auto"
+          x:Name="Root">
+
+        <!-- This is our title text block. We use Style.Classes to style it accordingly -->
+        <TextBlock Text="My ToDo-List" Classes="h1" />
+
+        <ScrollViewer Grid.Row="1">
+            <!-- This ItemsControl show all added ToDoItems. -->
+            <!-- It needs to be placed inside a ScrollViewer because other than a ListBox it has not its own -->
+            <ItemsControl ItemsSource="{Binding ToDoItems}">
+                <ItemsControl.ItemTemplate>
+                    <!-- The ItemTemplate defines how each item should be represented -->
+                    <!-- Our Item will be represented by a CheckBox and a Delete-Button -->
+                    <DataTemplate DataType="vm:ToDoItemViewModel">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <CheckBox IsChecked="{Binding IsChecked}"
+                                      Content="{Binding Content}" />
+
+                            <!-- Note how we use the Root-Grid to get the MainViewModel here. As we use compiled bindings we have to cast the DataContext -->
+                            <!-- The command parameter is the local ToDoItemViewModel being processed --> 
+                            <Button Grid.Column="1"
+                                    Command="{Binding #Root.((vm:MainViewModel)DataContext).RemoveItemCommand}"
+                                    CommandParameter="{Binding .}">
+                                <PathIcon Data="{DynamicResource DeleteIconData}"
+                                          Height="15"
+                                          Foreground="Red" />
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- This TextBox can be used to add new ToDoItems -->
+        <TextBox Grid.Row="2"
+                 Text="{Binding NewItemContent}"
+                 Watermark="Add a new Item">
+            <TextBox.InnerRightContent>
+                <Button Command="{Binding AddItemCommand}">
+                    <PathIcon Data="{DynamicResource AcceptIconData}"
+                              Foreground="Green" />
+                </Button>
+            </TextBox.InnerRightContent>
+            <!-- KeyBindings allow us to define KeyGestures  -->
+            <TextBox.KeyBindings>
+                <KeyBinding Gesture="Enter" Command="{Binding AddItemCommand}" />
+            </TextBox.KeyBindings>
+        </TextBox>
+    </Grid>
+
+</Window>

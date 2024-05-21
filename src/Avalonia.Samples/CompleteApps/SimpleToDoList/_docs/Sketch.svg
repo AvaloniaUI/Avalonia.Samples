@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="264mm"
+   height="176.72728mm"
+   viewBox="0 0 264 176.72728"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="Sketch.svg"
+   inkscape:export-filename="Sketch.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.75455244"
+     inkscape:cx="724.2704"
+     inkscape:cy="493.00748"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="6.9999995"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(54,-16.48052)">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect2171"
+       width="264"
+       height="176.72728"
+       x="-54"
+       y="16.48052" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect307"
+       width="90.116882"
+       height="124.83117"
+       x="38.57143"
+       y="57.155846"
+       ry="7.8067379" />
+    <circle
+       style="fill:#ff0000;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="path363"
+       cx="119.30844"
+       cy="65.396103"
+       r="4.3831167" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="circle365"
+       cx="92.220779"
+       cy="65.396103"
+       r="4.3831167" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="circle367"
+       cx="105.10714"
+       cy="65.396103"
+       r="4.3831167" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       d="m 38.571429,73.640118 c 90.381461,0 90.381461,0 90.381461,0"
+       id="path580" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="46.366001"
+       y="65.396103"
+       id="text636"><tspan
+         sodipodi:role="line"
+         id="tspan634"
+         x="46.366001"
+         y="65.396103"
+         style="font-size:6.35px;stroke-width:0.529167">TO-DO List</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="46.164917"
+       y="86.285393"
+       id="text690"><tspan
+         sodipodi:role="line"
+         id="tspan688"
+         x="46.164917"
+         y="86.285393"
+         style="stroke-width:0.529167">   Item 01</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="94.222893"
+         style="stroke-width:0.529167"
+         id="tspan692">   Item 02</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="102.16039"
+         style="stroke-width:0.529167"
+         id="tspan694" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="110.09789"
+         style="stroke-width:0.529167"
+         id="tspan696">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="118.03539"
+         style="stroke-width:0.529167"
+         id="tspan700">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="125.97289"
+         style="stroke-width:0.529167"
+         id="tspan706">.</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="133.91039"
+         style="stroke-width:0.529167"
+         id="tspan708" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="141.84789"
+         style="stroke-width:0.529167"
+         id="tspan710" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="149.78539"
+         style="stroke-width:0.529167"
+         id="tspan712" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="157.72289"
+         style="stroke-width:0.529167"
+         id="tspan714">   Item n</tspan><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="165.66039"
+         style="stroke-width:0.529167"
+         id="tspan718" /><tspan
+         sodipodi:role="line"
+         x="46.164917"
+         y="173.59789"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#808080;stroke-width:0.529167"
+         id="tspan724">Add new Item</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect726"
+       width="85.384712"
+       height="11.901433"
+       x="41.217266"
+       y="166.37213"
+       ry="2.1391306" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect775"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="81.417061"
+       ry="2.4341667" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect777"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="89.354568"
+       ry="2.4341667" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect779"
+       width="5.2122345"
+       height="4.8683333"
+       x="40.952682"
+       y="152.85426"
+       ry="2.4341667" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       d="m 42.398857,91.788733 c 0.633227,0.509325 0.0084,-0.06687 0.309935,0.385392 0.04863,0.07294 0.128908,0.119404 0.18596,0.18596 0.06199,0.08265 0.123973,0.165298 0.18596,0.247946 0.04132,0.02066 0.0913,0.02932 0.123973,0.06199 0.03099,0.031 -0.03099,0.154969 0,0.185962 0.01461,0.01461 0.04738,-0.01461 0.06199,0 0.01461,0.01461 -0.0092,0.0435 0,0.06199 0.128987,0.257971 -0.0043,-0.06627 0.123973,0.06199 0.03267,0.03267 0.02932,0.0913 0.06199,0.123973 0.01461,0.01461 0.04738,-0.01461 0.06199,0 0.01461,0.01461 0,0.08265 0,0.06199 0,-0.04434 0.04498,-0.35492 0.06199,-0.37192 0.03267,-0.03267 0.0913,-0.02932 0.123973,-0.06199 0.09616,-0.09616 0.188687,-0.436637 0.247946,-0.495895 0.01461,-0.01461 0.04738,0.0146 0.06199,0 0.09542,-0.09542 0.152527,-0.276498 0.247946,-0.37192 0.01461,-0.01461 0.04738,0.01461 0.06199,0 0.07305,-0.07305 0.121422,-0.167272 0.185959,-0.247946 0.04654,-0.05817 0.09066,-0.119327 0.123973,-0.18596 0.0092,-0.01847 -0.0146,-0.04738 0,-0.06199 0.01461,-0.0146 0.04133,0 0.06199,0 0.04133,-0.02066 0.0913,-0.02931 0.123973,-0.06199 0.03267,-0.03267 0.02932,-0.0913 0.06199,-0.123973 0.03593,-0.03593 0.212021,-0.08805 0.247946,-0.123974 0.0146,-0.01461 -0.01064,-0.04427 0,-0.06199 0.107553,-0.179253 0.257961,-0.324951 0.37192,-0.495893 0.07967,-0.119499 0.246904,-0.247425 0.371922,-0.309933 0.01847,-0.0092 0.04738,0.0146 0.06199,0 0.01461,-0.01461 -0.0146,-0.04738 0,-0.06199 0.03267,-0.03267 0.0913,-0.02932 0.123974,-0.06199 0.0146,-0.01461 -0.01461,-0.04738 0,-0.06199 0.127881,-0.127881 0.09303,-0.04657 0.185959,-0.18596 -0.05304,-0.287581 0.133281,-0.0713 0.18596,-0.123973 0.101343,-0.101346 -0.164584,-0.235977 -0.263073,-0.340096"
+       id="path322" />
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect439"
+       width="11.805305"
+       height="11.901428"
+       x="114.79667"
+       y="166.37213"
+       ry="2.4341667" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="116.06065"
+       y="174.59297"
+       id="text545"><tspan
+         sodipodi:role="line"
+         id="tspan543"
+         x="116.06065"
+         y="174.59297"
+         style="stroke-width:0.529167">OK</tspan></text>
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect601"
+       width="17.595762"
+       height="8.153244"
+       x="96.202126"
+       y="79.774605"
+       ry="1.6675608" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.55993px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="96.441483"
+       y="86.793106"
+       id="text605"
+       transform="scale(1.0146915,0.98552119)"><tspan
+         sodipodi:role="line"
+         id="tspan603"
+         x="96.441483"
+         y="86.793106"
+         style="stroke-width:0.529167">Delete</tspan></text>
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect709"
+       width="17.595762"
+       height="8.153244"
+       x="96.202126"
+       y="88.416122"
+       ry="1.6675608" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.55993px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="96.441483"
+       y="95.561577"
+       id="text713"
+       transform="scale(1.0146915,0.9855212)"><tspan
+         sodipodi:role="line"
+         id="tspan711"
+         x="96.441483"
+         y="95.561577"
+         style="stroke-width:0.529167">Delete</tspan></text>
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect715"
+       width="17.595762"
+       height="8.153244"
+       x="94.440216"
+       y="149.21707"
+       ry="1.6675608" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.55993px;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="94.705086"
+       y="157.25578"
+       id="text719"
+       transform="scale(1.0146915,0.98552121)"><tspan
+         sodipodi:role="line"
+         id="tspan717"
+         x="94.705086"
+         y="157.25578"
+         style="stroke-width:0.529167">Delete</tspan></text>
+    <rect
+       style="fill:#f2f2f2;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect773"
+       width="5.8289781"
+       height="81.035362"
+       x="119.38626"
+       y="79.510017"
+       ry="1.6675608" />
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect776"
+       width="6.0935626"
+       height="5.2877002"
+       x="119.12167"
+       y="79.510017"
+       ry="1.6675608" />
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect778"
+       width="6.0935626"
+       height="4.5870047"
+       x="119.12167"
+       y="155.95837"
+       ry="1.6675608" />
+    <rect
+       style="fill:#cccccc;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       id="rect780"
+       width="6.0935626"
+       height="8.4517546"
+       x="119.12167"
+       y="111.57594"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="85.789505"
+       y="39.175552"
+       id="text988"><tspan
+         sodipodi:role="line"
+         id="tspan986"
+         x="85.789505"
+         y="39.175552"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">Window frame</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="140.83363"
+       y="119.9642"
+       id="text992"><tspan
+         sodipodi:role="line"
+         id="tspan990"
+         x="140.83363"
+         y="119.9642"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">ScrollBar</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="-11.541168"
+       y="83.500633"
+       id="text996"><tspan
+         sodipodi:role="line"
+         id="tspan994"
+         x="-11.541168"
+         y="83.500633"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">Checkmark</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="-23.968458"
+       y="169.66631"
+       id="text1000"><tspan
+         sodipodi:role="line"
+         id="tspan998"
+         x="-23.968458"
+         y="169.66631"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">Input new Item</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="138.60211"
+       y="174.92105"
+       id="text1004"><tspan
+         sodipodi:role="line"
+         id="tspan1002"
+         x="138.60211"
+         y="174.92105"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">Confirm new Item</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167;stroke-linecap:round;paint-order:markers stroke fill"
+       x="-42.286537"
+       y="98.559425"
+       id="text1110"><tspan
+         sodipodi:role="line"
+         id="tspan1108"
+         x="-42.286537"
+         y="98.559425"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe Script';-inkscape-font-specification:'Segoe Script Italic';fill:#000080;stroke:none;stroke-width:0.529167">Checkmark (checked)</tspan></text>
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-end:url(#Arrow3);paint-order:markers stroke fill"
+       d="M 106.36907,40.744449 98.042581,60.748401"
+       id="path1240" />
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-end:url(#Arrow3);paint-order:markers stroke fill"
+       d="m 27.91383,81.152475 13.038851,2.69875"
+       id="path2015" />
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-end:url(#Arrow3);paint-order:markers stroke fill"
+       d="m 28.267295,98.559423 12.685386,-6.77069"
+       id="path2035" />
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-start:url(#Arrow3);paint-order:markers stroke fill"
+       d="M 41.217265,172.32284 31.48921,168.17169"
+       id="path2055" />
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-start:url(#Arrow3);paint-order:markers stroke fill"
+       d="m 122.30075,127.67152 18.53288,-7.70732"
+       id="path2075" />
+    <path
+       style="fill:none;stroke:#000080;stroke-width:0.529167;stroke-linecap:round;marker-end:url(#Arrow3);paint-order:markers stroke fill"
+       d="m 138.60211,174.92105 -12.00014,-2.59821"
+       id="path2095" />
+  </g>
+</svg>
