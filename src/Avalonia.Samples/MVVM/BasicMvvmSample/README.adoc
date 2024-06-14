@@ -54,7 +54,7 @@ C# uses `Interfaces` to define contracts that `Classes` can satisfy by providing
 - More on Members: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/members[[Microsoft Docs\],window=_blank]
 - More on Methods: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods[[Microsoft Docs\],window=_blank]
 - More on Fields: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields[[Microsoft Docs\],window=_blank]
-- More on Properties: <https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties[[Microsoft Docs\],window=_blank]
+- More on Properties: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties[[Microsoft Docs\],window=_blank]
 
 === INotifyPropertyChanged
 
@@ -406,7 +406,7 @@ Even though Avalonia ships ReactiveUI by default, you are not tied to it. You ca
 
 - https://www.reactiveui.net[[ReactiveUI\],window=_blank]
 - https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction[[CommunityToolkit.MVVM\],window=_blank]
-- https://prismlibrary.com/docs/[[Prism\],window=_blank]
+- https://docs.prismlibrary.com/docs/[[Prism\],window=_blank]
 - https://caliburnmicro.com"[[Caliburn Micro\],window=_blank]
 - ... And many more.
 
