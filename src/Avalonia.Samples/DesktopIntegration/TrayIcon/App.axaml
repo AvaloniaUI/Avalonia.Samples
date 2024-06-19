@@ -14,9 +14,9 @@
             <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample">
                 <TrayIcon.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="_About" Command="{Binding ShowAboutCommand}" />
+                        <NativeMenuItem Header="_About" Command="{Binding AboutCommand}" />
                         <NativeMenuItemSeparator />
-                        <NativeMenuItem Header="E_xit" Command="{Binding ExitApplicationCommand}" />
+                        <NativeMenuItem Header="E_xit" Command="{Binding ExitCommand}" />
                     </NativeMenu>
                 </TrayIcon.Menu>
             </TrayIcon>
