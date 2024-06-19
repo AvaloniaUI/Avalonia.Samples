@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoList", "CompleteA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RectPainter", "Drawing\RectPainter\RectPainter.csproj", "{2B746401-384F-484A-810E-7A65288165E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayIcon", "DesktopIntegration\TrayIcon\TrayIcon.csproj", "{EB8D1498-2528-4FE5-B2B0-515293A8880C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{2B746401-384F-484A-810E-7A65288165E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B746401-384F-484A-810E-7A65288165E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B746401-384F-484A-810E-7A65288165E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8D1498-2528-4FE5-B2B0-515293A8880C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8D1498-2528-4FE5-B2B0-515293A8880C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8D1498-2528-4FE5-B2B0-515293A8880C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8D1498-2528-4FE5-B2B0-515293A8880C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
