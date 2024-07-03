@@ -239,7 +239,7 @@ The `StackPanel`'s `DataContext` will [https://docs.avaloniaui.net/docs/data-bin
         	<vm:MainWindowViewModel/>
     	</Design.DataContext>
 
-	<!-- Our Simplie ViewModel-->
+	<!-- Our Simple ViewModel-->
 	<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 		<TextBlock>Enter your Name:</TextBlock>
 		<TextBox Text="{Binding Name}" />
