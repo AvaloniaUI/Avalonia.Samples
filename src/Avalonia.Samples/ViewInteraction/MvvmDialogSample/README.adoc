@@ -52,7 +52,7 @@ In our ViewModel we add a property for the `Interaction` which we can use later 
 ----
 public InteractionViewModel()
 {
-    _SelectFilesInteraction = new Interaction<string?, string[]?>();
+    _selectFilesInteraction = new Interaction<string?, string[]?>();
 }
 
 private readonly Interaction<string?, string[]?> _selectFilesInteraction;

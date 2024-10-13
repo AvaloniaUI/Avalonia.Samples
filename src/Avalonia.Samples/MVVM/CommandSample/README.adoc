@@ -301,7 +301,7 @@ Now let's put all together. Our `View` will finally look like this:
 	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
 		
 		<TextBlock Grid.Column="0" Grid.Row="0"
-				   Text="Me:" 
+				   Text="Command:" 
 				   FontWeight="Bold" 
 				   VerticalAlignment="Center"
 		           Margin="5" />
@@ -339,7 +339,7 @@ Now let's put all together. Our `View` will finally look like this:
 				   Background="LightGray"/>
 
 		<TextBlock Grid.Column="0" Grid.Row="2"
-			       Text="HAL9000:"
+			       Text="HAL 9000:"
 				   FontWeight="Bold"
 		           Margin="5"
 		           VerticalAlignment="Center"/>
