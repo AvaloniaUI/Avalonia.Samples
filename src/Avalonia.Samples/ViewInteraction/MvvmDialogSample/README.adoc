@@ -52,7 +52,7 @@ In our ViewModel we add a property for the `Interaction` which we can use later 
 ----
 public InteractionViewModel()
 {
-    _SelectFilesInteraction = new Interaction<string?, string[]?>();
+    _selectFilesInteraction = new Interaction<string?, string[]?>();
 }
 
 private readonly Interaction<string?, string[]?> _selectFilesInteraction;
@@ -224,7 +224,7 @@ public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
 
 In our `CustomInteractionViewModel` we need to add a new instance of the `Interaction`. In our sample we want to provide a dialog title (`string`) as the input and we expect a list of selected files (`string[]?`)
 
-[soruce,c#]
+[source,c#]
 ----
 /// <summary>
 /// Gets an instance of our own Interaction class
@@ -234,7 +234,7 @@ public Interaction<string, string[]?> SelectFilesInteraction { get; } = new Inte
 
 In a next step we add a Command which will call the interaction:
 
-[soruce,c#]
+[source,c#]
 ----
 [RelayCommand]
 private async Task SelectFilesAsync()
@@ -247,7 +247,7 @@ private async Task SelectFilesAsync()
 
 Somehow we need to register the `View` to the `Interaction` of the `ViewModel`. In Avalonia we have an event called `OnDataContextChanged` which we can listen to, or, if we are in code behind, simply override it.
 
-[soruce, c#]
+[source, c#]
 ----
 // Stores a reference to the disposable in order to clean it up if needed
 IDisposable? _selectFilesInteractionDisposable;
@@ -272,7 +272,7 @@ WARNING: Remember that the DataContext can change several times. In order to not
 
 The interaction handler itself is quite simple
 
-[soruce,c#]
+[source,c#]
 ----
 private async Task<string[]?> InteractionHandler(string input)
 {
