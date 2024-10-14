@@ -4,7 +4,7 @@ namespace SimpleToDoList.ViewModels;
 
 /*   NOTE:
  *
- *   Please mind that this samples uses the CommunityToolkit.Mvvm package for the ViewModel. Feel free to use any other
+ *   Please mind that this sample uses the CommunityToolkit.Mvvm package for the ViewModel. Feel free to use any other
  *   MVVM-Framework (like ReactiveUI or Prsim) that suits your needs best.
  */
 
