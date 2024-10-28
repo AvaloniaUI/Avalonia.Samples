@@ -50,7 +50,7 @@ ContentControl:: This control inherits `TemplatedControl`, but adds the ability 
 
 TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox`, if you want to use their functionality but adding your own logic on top. 
 
-For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/choosing-a-custom-contro-type[[Documentation\]].
+For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/choosing-a-custom-control-type[[Documentation\]].
 
 
 
