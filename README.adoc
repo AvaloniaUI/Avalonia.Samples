@@ -91,6 +91,18 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+=== DesktopIntegration-Samples
+
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src/Avalonia.Samples/Desktop/TrayIcon[Tray Icon Sample]
+| 🐣 Beginner
+| TrayIcon, ReactiveUI, Binding
+
+|===
+
 === ✒️ Drawing-Samples
 
 [cols="25h,25,50"]
