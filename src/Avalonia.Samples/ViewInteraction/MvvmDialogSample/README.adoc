@@ -42,7 +42,7 @@ We assume you already now how the MVVM pattern works and how dialogs, such as fi
 
 == Solution 1 : Use ReactiveUI-Interactions
 
-WARNING: Solution 1 requires the use of Avalonia 11.2 or higher due to a breaking change in ReactiveUI. 
+WARNING: Solution 1 requires the use of Avalonia 11.2.0 or higher due to a breaking change in ReactiveUI.
 
 In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] in order to interact with your `View`.
 
