@@ -16,11 +16,11 @@ namespace MvvmDialogSample.Views
 
             this.WhenActivated(d =>
             {
-                d(ViewModel.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
+                d(ViewModel!.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
             });
         }
 
-        private async Task InteractionHandler(InteractionContext<string?, string[]?> context)
+        private async Task InteractionHandler(IInteractionContext<string?, string[]?> context)
         {
             // Get our parent top level control in order to get the needed service (in our sample the storage provider. Can also be the clipboard etc.)
             var topLevel = TopLevel.GetTopLevel(this);
@@ -33,7 +33,7 @@ namespace MvvmDialogSample.Views
                                 Title = context.Input
                             });
                
-            context.SetOutput(storageFiles?.Select(x => x.Name).ToArray());
+            context.SetOutput(storageFiles.Select(x => x.Name).ToArray());
         }
     }
 }
