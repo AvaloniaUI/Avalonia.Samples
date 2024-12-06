@@ -42,6 +42,8 @@ We assume you already now how the MVVM pattern works and how dialogs, such as fi
 
 == Solution 1 : Use ReactiveUI-Interactions
 
+WARNING: Solution 1 requires the use of Avalonia 11.2.0 or higher due to a breaking change in ReactiveUI.
+
 In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] in order to interact with your `View`.
 
 === Step 1: Setup the ViewModel 
@@ -70,9 +72,9 @@ The `Interaction` is a generic class, where the first parameter defines the inpu
 
 We add a `ReactiveUserControl` as your view. This control gives us the ability to register a handler for our interactions. Let's add this handler in the UserControls code behind:
 
-[source,cs]
+[source,csharp]
 ----
-private async Task InteractionHandler(InteractionContext<string?, string[]?> context)
+private async Task InteractionHandler(IInteractionContext<string?, string[]?> context)
 {
     // Get our parent top level control in order to get the needed service (in our sample the storage provider. Can also be the clipboard etc.)
     var topLevel = TopLevel.GetTopLevel(this);
@@ -85,15 +87,15 @@ private async Task InteractionHandler(InteractionContext<string?, string[]?> con
                         Title = context.Input
                     });
        
-    context.SetOutput(storageFiles?.Select(x => x.Name).ToArray());
+    context.SetOutput(storageFiles.Select(x => x.Name).ToArray());
 }
 ---- 
 
-NOTE: We are using an async Task to not block the UI. As parameter we need to pass an `InteractionContext` which has one generic parameter for the input (in our case a string for the dialog title) and one for the output (in our case an array of selected files). 
+NOTE: We are using an async Task to not block the UI. As parameter we need to pass an `IInteractionContext` which has one generic parameter for the input (in our case a string for the dialog title) and one for the output (in our case an array of selected files). 
 
 In the constructor of our `ReactiveUserControl` we need to setup the interaction inside `this.WhenActivated` like shown below: 
 
-[source,C#]
+[source,csharp]
 ----
 public InteractionView()
 {
@@ -101,7 +103,7 @@ public InteractionView()
 
     this.WhenActivated(d =>
     {
-        d(ViewModel.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
+        d(ViewModel!.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
     });
 }
 ----
