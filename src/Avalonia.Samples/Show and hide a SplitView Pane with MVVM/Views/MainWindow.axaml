@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Show_and_hide_a_SplitView_Pane_with_MVVM.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Show_and_hide_a_SplitView_Pane_with_MVVM.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Show_and_hide_a_SplitView_Pane_with_MVVM"
+		xmlns:convs="clr-namespace:Show_and_hide_a_SplitView_Pane_with_MVVM.Models">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Resources>
+		<convs:SplitViewIconConverter x:Key="SplitViewIconConverter"/>
+	</Window.Resources>
+
+	<SplitView PanePlacement="Right" DisplayMode="CompactInline" IsPaneOpen="{Binding IsSplitViewPaneOpen}">
+		<SplitView.Pane>
+			<StackPanel VerticalAlignment="Top" Margin="5" Orientation="Horizontal">
+				<Button Command="{Binding ChangeSplitViewPaneStatusCommand}" Content="{Binding Converter={StaticResource SplitViewIconConverter} Path=IsSplitViewPaneOpen} "/>
+				<TextBlock VerticalAlignment="Center" Margin="15, 0, 0, 0" FontSize="25" Text="Settings"/>
+			</StackPanel>
+		</SplitView.Pane>
+		<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="MainWindow" FontSize="25"/>
+	</SplitView>
+</Window>
