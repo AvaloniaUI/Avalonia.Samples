@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SnowFlakesControlSample.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SnowFlakesControlSample.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SnowFlakesControlSample.Views.MainWindow"
+        x:DataType="vm:SnowFlakeGameViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SnowFlakesControl">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%">
+            <GradientStop Offset="0" Color="DarkBlue" />
+            <GradientStop Offset=".85" Color="LightSkyBlue" />
+            <GradientStop Offset=".85" Color="LimeGreen" />
+            <GradientStop Offset="1" Color="DarkGreen" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:SnowFlakeGameViewModel />
+    </Design.DataContext>
+
+    <Panel>
+        <controls:SnowFlakesControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                     IsRunning="{Binding IsGameRunning}"
+                                     SnowFlakes="{Binding SnowFlakes}"
+                                     Score="{Binding Score}"/>
+        
+        <ProgressBar Maximum="{Binding SecondsGameDuration}"
+                     VerticalAlignment="Top"
+                     Foreground="Goldenrod"
+                     Margin="5"
+                     Height="3"
+                     Value="{Binding SecondsRemaining}" />
+
+        <Panel Background="#11FFFFFF"
+               IsVisible="{Binding !IsGameRunning}">
+            <Button Command="{Binding StartGameCommand}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="►"
+                    FontSize="50"
+                    CornerRadius="25" />
+        </Panel>
+
+    </Panel>
+</Window>
