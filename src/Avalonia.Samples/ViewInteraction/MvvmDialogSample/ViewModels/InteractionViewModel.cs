@@ -43,5 +43,7 @@ namespace MvvmDialogSample.ViewModels
         {
             SelectedFiles = await _SelectFilesInteraction.Handle("Hello from Avalonia");
         }
+        
+        public override string ToString() => "ReactiveUI Interaction Sample";
     }
 }

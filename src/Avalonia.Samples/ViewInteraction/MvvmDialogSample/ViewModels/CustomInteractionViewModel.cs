@@ -33,5 +33,7 @@ namespace MvvmDialogSample.ViewModels
         {
             SelectedFiles = await SelectFilesInteraction.HandleAsync("Hello from Avalonia");
         }
+
+        public override string ToString() => "Custom Interaction Sample";
     }
 }
