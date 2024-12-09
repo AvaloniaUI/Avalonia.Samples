@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,35 +12,34 @@ public partial class SnowFlakeGameViewModel : ViewModelBase
 {
     public SnowFlakeGameViewModel()
     {
-        _gameTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(50), DispatcherPriority.Background, OnGameTimerTick);
+        _gameTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(100), DispatcherPriority.Background, OnGameTimerTick);
     }
 
     private void OnGameTimerTick(object? sender, EventArgs e)
     {
-        OnPropertyChanged(nameof(TimeRemaining));
-        OnPropertyChanged(nameof(SecondsRemaining));
+        OnPropertyChanged(nameof(MilliSecondsRemaining));
 
-        if (TimeRemaining < TimeSpan.Zero)
+        if (MilliSecondsRemaining <= 0)
         {
             _gameTimer.Stop();
+            _stopwatch.Stop();
             IsGameRunning = false;
         }
     }
 
     private readonly DispatcherTimer _gameTimer;
-    private DateTime _gameStartTime = DateTime.MinValue;
-
+    private readonly Stopwatch _stopwatch = new Stopwatch();
+    
     public ObservableCollection<SnowFlake> SnowFlakes { get; } = new();
     
     [ObservableProperty] private bool _isGameRunning;
-    [ObservableProperty] private int _Score;
+    [ObservableProperty] private int _score;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SecondsGameDuration))]
-    TimeSpan _GameDuration = TimeSpan.Zero;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(MilliSecondsGameDuration))]
+    private TimeSpan _gameDuration = TimeSpan.Zero;
 
-    public TimeSpan TimeRemaining => _gameStartTime + GameDuration - DateTime.Now;
-    public double SecondsRemaining => TimeRemaining.TotalSeconds;
-    public double SecondsGameDuration => GameDuration.TotalSeconds;
+    public double MilliSecondsRemaining => (GameDuration - _stopwatch.Elapsed).TotalMilliseconds;
+    public double MilliSecondsGameDuration => GameDuration.TotalMilliseconds;
 
     [RelayCommand]
     private void StartGame()
@@ -56,7 +56,7 @@ public partial class SnowFlakeGameViewModel : ViewModelBase
                 Random.Shared.NextDouble() / 5 + 0.1));
         }
         
-        _gameStartTime = DateTime.Now;
+        _stopwatch.Restart();
         GameDuration = TimeSpan.FromMinutes(1);
         IsGameRunning = true;
         _gameTimer.Start();

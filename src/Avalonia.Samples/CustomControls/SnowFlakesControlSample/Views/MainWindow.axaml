@@ -10,15 +10,6 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="SnowFlakesControl">
 
-    <Window.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%">
-            <GradientStop Offset="0" Color="DarkBlue" />
-            <GradientStop Offset=".85" Color="LightSkyBlue" />
-            <GradientStop Offset=".85" Color="LimeGreen" />
-            <GradientStop Offset="1" Color="DarkGreen" />
-        </LinearGradientBrush>
-    </Window.Background>
-
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -26,27 +17,39 @@
     </Design.DataContext>
 
     <Panel>
+        <!-- Just some Background for a nicer UI -->
+        <Panel.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%">
+                <GradientStop Offset="0" Color="DarkBlue" />
+                <GradientStop Offset=".85" Color="LightSkyBlue" />
+                <GradientStop Offset=".85" Color="LimeGreen" />
+                <GradientStop Offset="1" Color="DarkGreen" />
+            </LinearGradientBrush>
+        </Panel.Background>
+
+        <!-- This is our SnowFlakesControl. It can be used like any other Control. -->
         <controls:SnowFlakesControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                     IsRunning="{Binding IsGameRunning}"
-                                     SnowFlakes="{Binding SnowFlakes}"
-                                     Score="{Binding Score}"/>
-        
-        <ProgressBar Maximum="{Binding SecondsGameDuration}"
+                                    IsRunning="{Binding IsGameRunning}"
+                                    SnowFlakes="{Binding SnowFlakes}"
+                                    Score="{Binding Score}" />
+
+        <!-- This ProgressBar is rendered above our SnowFlakesControl -->
+        <ProgressBar Maximum="{Binding MilliSecondsGameDuration}"
                      VerticalAlignment="Top"
                      Foreground="Goldenrod"
                      Margin="5"
                      Height="3"
-                     Value="{Binding SecondsRemaining}" />
+                     Value="{Binding MilliSecondsRemaining}" />
 
-        <Panel Background="#11FFFFFF"
-               IsVisible="{Binding !IsGameRunning}">
-            <Button Command="{Binding StartGameCommand}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="►"
-                    FontSize="50"
-                    CornerRadius="25" />
-        </Panel>
+        <!-- This Button is only visible when the game is not running. It has a Button to start the game  -->
+
+        <Button IsVisible="{Binding !IsGameRunning}"
+                Command="{Binding StartGameCommand}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="►"
+                FontSize="50"
+                CornerRadius="25" />
 
     </Panel>
 </Window>
