@@ -190,6 +190,8 @@ Remember that the `View` implements the User Interface. Our view will only consi
 public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
 ```
 
+NOTE:: Depending on the template and setting used to create your project you may find a class called `MainViewModel` instead of `MainWindowViewModel`. In this case please make sure the correct name.
+
 === Step 4: Setup the View 
 
 Now we can start with the UI layout. Our View will be written in [https://docs.avaloniaui.net/guides/basics/introduction-to-xaml[`XAML`,window=_blank]] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
@@ -260,7 +262,7 @@ image::_docs/result.png[Result]
 
 == Approach 2 : Using ReactiveUI
 
-We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. [https://www.reactiveui.net[ReactiveUI,window=_blank]] is a popular MVVM framework designed for `.NET`.  If you create a new Avalonia MVVM Project, you will have `ReactiveUI` installed by default. So let's see how we can use `ReactiveUI` to achieve the same results as **Approach 1** above.
+We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. [https://www.reactiveui.net[ReactiveUI,window=_blank]] is a popular MVVM framework designed for `.NET`.  If you create a new Avalonia MVVM Project, you will have `ReactiveUI` (or `CommunityToolkit.Mvvm` based on your choice) installed by default. So let's see how we can use `ReactiveUI` to achieve the same results as **Approach 1** above.
 
 === Step 1: Create ReactiveViewModel
 
