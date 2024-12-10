@@ -28,9 +28,10 @@
         </Panel.Background>
 
         <!-- This is our SnowFlakesControl. It can be used like any other Control. -->
-        <controls:SnowFlakesControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <controls:SnowFlakesControl HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch"
                                     IsRunning="{Binding IsGameRunning}"
-                                    SnowFlakes="{Binding SnowFlakes}"
+                                    Snowflakes="{Binding SnowFlakes}"
                                     Score="{Binding Score}" />
 
         <!-- This ProgressBar is rendered above our SnowFlakesControl -->

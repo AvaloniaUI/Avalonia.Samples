@@ -3,7 +3,8 @@
              x:Class="SnowFlakesControlSample.App"
              RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-  
+             <!-- This App uses "Dark" Theme only since the snowflakes are White and thus better visible on a dark Background -->
+             
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
