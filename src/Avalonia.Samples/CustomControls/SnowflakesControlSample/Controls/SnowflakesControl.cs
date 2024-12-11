@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -7,49 +8,66 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Media;
-using Avalonia.Media.TextFormatting;
 using Avalonia.Platform;
 using Avalonia.Rendering;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Skia;
 using Avalonia.Threading;
 using SkiaSharp;
-using SnowFlakesControlSample.Models;
+using SnowflakesControlSample.Models;
 
-namespace SnowFlakesControlSample.Controls;
+namespace SnowflakesControlSample.Controls;
 
-public class SnowFlakesControl : Control, ICustomHitTest
+/// <summary>
+/// A control to render some <see cref="Snowflake">Snowflakes</see>. This control also adds the needed interaction logic
+/// for the game to operate.
+/// </summary>
+public class SnowflakesControl : Control, ICustomHitTest
 {
-    static SnowFlakesControl()
+    static SnowflakesControl()
     {
         // Make sure Render is updated whenever one of these properties changes
-        AffectsRender<SnowFlakesControl>(IsRunningProperty, SnowflakesProperty, ScoreProperty);
+        AffectsRender<SnowflakesControl>(IsRunningProperty, SnowflakesProperty, ScoreProperty);
     }
     
+    // We use a stopwatch to measure elapsed time between two render loops as it has higher precision compared to 
+    // other options. See: https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch
     private readonly Stopwatch _stopwatch = new();
+    
+    // A collection which holds all current visible score infos to render.
+    private readonly ICollection<ScoreHint> _scoreHintsCollection = new Collection<ScoreHint>();
 
-    public static readonly DirectProperty<SnowFlakesControl, IList<SnowFlake>> SnowflakesProperty =
-        AvaloniaProperty.RegisterDirect<SnowFlakesControl, IList<SnowFlake>>(
+    /// <summary>
+    /// Defines the <see cref="Snowflakes"/> property.
+    /// </summary>
+    public static readonly DirectProperty<SnowflakesControl, IList<Snowflake>> SnowflakesProperty =
+        AvaloniaProperty.RegisterDirect<SnowflakesControl, IList<Snowflake>>(
             nameof(Snowflakes),
             o => o.Snowflakes,
             (o, v) => o.Snowflakes = v);
 
-    public static readonly DirectProperty<SnowFlakesControl, int> ScoreProperty =
-        AvaloniaProperty.RegisterDirect<SnowFlakesControl, int>(
+    /// <summary>
+    /// Defines the <see cref="Score"/> property.
+    /// </summary>
+    public static readonly DirectProperty<SnowflakesControl, int> ScoreProperty =
+        AvaloniaProperty.RegisterDirect<SnowflakesControl, int>(
             nameof(Score),
             o => o.Score,
             (o, v) => o.Score = v,
             defaultBindingMode: BindingMode.TwoWay);
 
+    /// <summary>
+    /// Defines the <see cref="IsRunning"/> property.
+    /// </summary>
     public static readonly StyledProperty<bool> IsRunningProperty =
-        AvaloniaProperty.Register<SnowFlakesControl, bool>(nameof(IsRunning));
+        AvaloniaProperty.Register<SnowflakesControl, bool>(nameof(IsRunning));
 
-    private IList<SnowFlake> _snowflakes = [];
+    private IList<Snowflake> _snowflakes = [];
     
     /// <summary>
-    /// Gets or sets a List of <see cref="SnowFlake"/>s to render
+    /// Gets or sets a List of  <see cref="Snowflake">Snowflakes</see> to render.
     /// </summary>
-    public IList<SnowFlake> Snowflakes
+    public IList<Snowflake> Snowflakes
     {
         get => _snowflakes;
         set => SetAndRaise(SnowflakesProperty, ref _snowflakes, value);
@@ -58,7 +76,7 @@ public class SnowFlakesControl : Control, ICustomHitTest
     private int _score;
     
     /// <summary>
-    /// Gets or sets the current user score
+    /// Gets or sets the current user score.
     /// </summary>
     public int Score
     {
@@ -80,12 +98,16 @@ public class SnowFlakesControl : Control, ICustomHitTest
     {
         base.OnPropertyChanged(change);
 
-        // if IsRunning is updated, we need to start or stop the stopwatch accordingly.
+        // If IsRunning is updated, we need to start or stop the stopwatch accordingly.
         if (change.Property == IsRunningProperty)
         {
             if (change.GetNewValue<bool>())
             {
+                // Resets and starts the stopwatch
                 _stopwatch.Restart();
+                
+                // Clear any previous score hints
+                _scoreHintsCollection.Clear();
             }
             else
             {
@@ -97,18 +119,18 @@ public class SnowFlakesControl : Control, ICustomHitTest
     /// <inheritdoc />
     public override void Render(DrawingContext context)
     {
-        // figure out how much time elapsed since last render loop
+        // Figure out how much time elapsed since last render loop
         var elapsedMilliseconds = _stopwatch.Elapsed.TotalMilliseconds;
 
         foreach (var snowFlake in Snowflakes)
         {
-            // if the game is running, move each flake to it's updated position
+            // If the game is running, move each flake to it's updated position
             if (IsRunning)
             {
                 snowFlake.Move(elapsedMilliseconds);
             }
 
-            // draw the snowflake (we use a simple circle here)
+            // Draw the snowflake (we use a simple circle here)
             context.DrawEllipse(
                 Brushes.White,
                 null,
@@ -117,7 +139,29 @@ public class SnowFlakesControl : Control, ICustomHitTest
                 snowFlake.Radius);
         }
 
-        // display user score
+        // Bonus: Render the score hint if any available.
+        foreach (var scoreHint in _scoreHintsCollection.ToArray())
+        {
+            // When the game is running, we want to update opacity and position. This adds a nice animation effect. 
+            if (IsRunning)
+            {
+                scoreHint.Update(elapsedMilliseconds);
+            }
+            
+            // Use a formatted text to render the score hint.
+            var formattedText =
+                new FormattedText(
+                    scoreHint.ToString(),
+                    CultureInfo.InvariantCulture,
+                    FlowDirection.LeftToRight,
+                    Typeface.Default,
+                    20,
+                    new SolidColorBrush(Colors.Yellow, scoreHint.Opacity));
+            
+            context.DrawText(formattedText, scoreHint.GetTopLeftForViewport(Bounds, new Size(formattedText.Width, formattedText.Height)));
+        }
+
+        // Display user score
         
         // OPTION 1: Use formatted Text
         //
@@ -136,7 +180,7 @@ public class SnowFlakesControl : Control, ICustomHitTest
 
         base.Render(context);
 
-        // Request next frame as soon as possible, if the game is running. Remember to restart the stopwatch.
+        // Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.
         if (IsRunning)
         {
             Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
@@ -160,6 +204,10 @@ public class SnowFlakesControl : Control, ICustomHitTest
         {
             Snowflakes.Remove(snowFlake);
             Score += snowFlake.GetHitScore();
+            
+            // Add a text hint about the earned score. We also hand over the containing collection,
+            // so it can auto-remove itself after 1 second.
+            _scoreHintsCollection.Add(new ScoreHint(snowFlake, _scoreHintsCollection));
         }
 
         return snowFlake != null;
@@ -176,10 +224,11 @@ public class SnowFlakesControl : Control, ICustomHitTest
             Text = text;
         }
 
-        // equals is not used in this sample and thus will be always false. 
+        
         /// <inheritdoc />
         public bool Equals(ICustomDrawOperation? other)
         {
+            // Equals is not used in this sample and thus will be always false. 
             return false;
         }
         
@@ -199,10 +248,10 @@ public class SnowFlakesControl : Control, ICustomHitTest
         /// <inheritdoc />
         public void Render(ImmediateDrawingContext context)
         {
-            // try to get the skia-feature.
+            // Try to get the skia-feature.
             var leaseFeature = context.TryGetFeature<ISkiaSharpApiLeaseFeature>();
             
-            // in case we didn't find it, render the text with a fallback.
+            // In case we didn't find it, render the text with a fallback.
             if (leaseFeature == null)
             {
                 var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
@@ -212,9 +261,11 @@ public class SnowFlakesControl : Control, ICustomHitTest
                     Text.AsMemory(),
                     glyphs,
                     Bounds.TopRight - new Point(50, 50));
+                
                 context.DrawGlyphRun(Brushes.Goldenrod, glyphRun.TryCreateImmutableGlyphRunReference()!);
             }
-            // otherwise use SkiaSharp to render the text and apply some glow-effect.
+            // Otherwise use SkiaSharp to render the text and apply some glow-effect.
+            // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88 
             else
             {
                 using var lease = leaseFeature.Lease();

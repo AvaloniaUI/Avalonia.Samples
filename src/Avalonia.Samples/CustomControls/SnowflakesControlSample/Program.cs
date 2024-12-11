@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace SnowFlakesControlSample;
+namespace SnowflakesControlSample;
 
 sealed class Program
 {

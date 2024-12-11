@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoList", "CompleteA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RectPainter", "Drawing\RectPainter\RectPainter.csproj", "{2B746401-384F-484A-810E-7A65288165E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowFlakesControlSample", "CustomControls\SnowFlakesControlSample\SnowFlakesControlSample.csproj", "{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowflakesControlSample", "CustomControls\SnowflakesControlSample\SnowflakesControlSample.csproj", "{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

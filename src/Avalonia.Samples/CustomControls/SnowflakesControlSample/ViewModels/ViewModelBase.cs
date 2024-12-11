@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace SnowFlakesControlSample.ViewModels;
+namespace SnowflakesControlSample.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {

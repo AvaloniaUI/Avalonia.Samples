@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace SnowFlakesControlSample.Views;
+namespace SnowflakesControlSample.Views;
 
 public partial class MainWindow : Window
 {
