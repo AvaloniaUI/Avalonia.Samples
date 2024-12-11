@@ -1,0 +1,111 @@
+= Snowflakes control sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to create a custom control that overrides `OnRender` in order to have advanced render capabilities. It also shows how custom hit-testing can help to solve special tasks. We will create a simple game where the user should collect some snow flakes with their mouse pointer.
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐔 Normal 🐔
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+Custom Control, Render, Hit-Testing, Custom Animations
+
+
+== Before we start
+
+In this sample we assume that you are familiar with Avalonia, the `MVVM`-pattern and how to create custom `Controls` and define `AvaloniaProperties`. If this is new to you, please start with other tutorials first:
+
+- xref:../../../../README.adoc#_mvvm_samples[[MVVM-Basics\]]
+- xref:../../CustomControls/RatingControlSample/README.adoc[[RatingControlSample\]]
+- https://docs.avaloniaui.net/docs/guides/custom-controls/[[Avalonia-Documentation\]]
+
+=== When to Render on your own
+
+There may be some special cases where a `TemplatedControl`, `ContentControl` or similar is not well suited, for example:
+
+* If you need to display complex geometry
+* If you have many objects to render which otherwise adds a huge layout-overhead
+* If you need to control each render step
+* if you want to use special things otherwise not available, such as https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88[[custom SkiaSharp-drawings\]]
+
+=== Defining the game concept
+
+Before we finally start to implement the game, we should make some considerations how our control should look like and how it should work. To shorten it, we use a plain list of notes:
+
+* The game will have only one level
+* The game must not run infinite -> We need a way to start and stop the game
+* The game must render several snowflakes (represented as circles)
+    ** Each snowflake should have a random start position
+    ** Each snowflake should be able move with different speed
+    ** Snowflakes should be of different sizes
+* The user should be able to collect some score
+    ** The user must be able to collect snowflakes with their mouse device
+    ** The user should be able to see their current score
+    ** Nice to have: Show a score indicator for each snowflake
+
+
+== The Solution
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+We will create a custom control that will draw itself based on the data provided.
+
+NOTE: To show you how this control can be bound to a `ViewModel` we will use the `MVVM`-pattern for demonstration here, even if it is not really needed in our case.
+
+=== Step 1: Prepare the Snowflake-Model
+
+In the folder `Models` we create a new file `Snowflake.cs` which will have the following properties:
+
+[source,csharp]
+----
+public double X { get; private set; } // the X-posotion in relative units (0 .. 1)
+public double Y { get; private set; } // the Y-posotion in relative units (0 .. 1)
+public double Diameter { get; }       // The diameter of the snowflake in pixels
+public double Radius { get; }         // The radius of the snowflake in pixels
+public double Speed { get; }          // The speed of the snowflake in pixels / second
+----
+
+As we want the control to be of any size, we store the position in relative units which we need to convert into the actual viewport on request.
+
+TIP: In Avalonia you can use `Bounds` to get the controls viewport.
+
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
