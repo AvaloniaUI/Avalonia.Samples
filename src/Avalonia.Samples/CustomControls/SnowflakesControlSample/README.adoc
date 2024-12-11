@@ -84,12 +84,37 @@ public double X { get; private set; } // the X-posotion in relative units (0 .. 
 public double Y { get; private set; } // the Y-posotion in relative units (0 .. 1)
 public double Diameter { get; }       // The diameter of the snowflake in pixels
 public double Radius { get; }         // The radius of the snowflake in pixels
-public double Speed { get; }          // The speed of the snowflake in pixels / second
+public double Speed { get; }          // The speed of the snowflake in relativeUnit / second
 ----
 
-As we want the control to be of any size, we store the position in relative units which we need to convert into the actual viewport on request.
+As we want the control to be of any size and resizeable, we store the position in relative units which we need to convert into the actual viewport on request.
 
-TIP: In Avalonia you can use `Bounds` to get the controls viewport.
+TIP: In Avalonia you can use `Bounds` to get the Controls bounds, which we here call "viewport"
+
+To achieve this conversion we add method that takes a `Rect` as parameter and returns a `Point` positioned inside this rectangle.
+
+[source,csharp]
+----
+public Point GetCenterForViewport(Rect viewport)
+{
+    return new Point(X * viewport.Width + viewport.Left,
+        Y * viewport.Height + viewport.Top);
+}
+----
+
+Now that would be enough to render the snowflakes, but these should also be able to move. Since speed is in `1/second` we can use the elapsed time between two frames to calculate the new position.
+
+[source,csharp]
+----
+public void Move(double elapsedMilliseconds)
+{
+    Y += elapsedMilliseconds * Speed / 1000.0; // Speed is in 1/sec so we have to convert it into 1/ms.
+    if (Y > 1)
+    {
+        Y = 0;
+    }
+}
+----
 
 
 === Step 2:

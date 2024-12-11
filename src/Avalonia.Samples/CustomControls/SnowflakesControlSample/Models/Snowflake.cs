@@ -15,7 +15,7 @@ public class Snowflake
     /// <param name="x">The relative position in x-direction [0 .. 1]</param>
     /// <param name="y">The relative position in x-direction [0 .. 1]</param>
     /// <param name="diameter">The diameter in pixel</param>
-    /// <param name="speed">The speed in pixel / second</param>
+    /// <param name="speed">The speed in 1/sec</param>
     public Snowflake(double x, double y, double diameter, double speed)
     {
         X = x;
@@ -46,7 +46,7 @@ public class Snowflake
     public double Radius { get; }
     
     /// <summary>
-    /// Gets the speed of the snowflake in pixel / seconds
+    /// Gets the speed of the snowflake in 1/sec.
     /// </summary>
     public double Speed { get; }
     
@@ -67,7 +67,7 @@ public class Snowflake
     /// <remarks>If the snowflakes position is >1, it starts at the top again.</remarks>
     public void Move(double elapsedMilliseconds)
     {
-        Y += elapsedMilliseconds * Speed / 1000.0; // Speed is in px/sec so we have to convert it into px/ms.
+        Y += elapsedMilliseconds * Speed / 1000.0; // Speed is in 1/sec so we have to convert it into 1/ms.
         if (Y > 1)
         {
             Y = 0;
