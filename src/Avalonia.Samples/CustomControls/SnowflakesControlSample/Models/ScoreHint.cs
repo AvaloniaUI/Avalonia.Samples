@@ -79,7 +79,7 @@ public class ScoreHint
         _elapsedMillisecondsTotal += elapsedMilliseconds;
 
         // remove this item from the collection if it was there for 1 second (1000 ms)
-        if (_elapsedMillisecondsTotal > 1000)
+        if (_elapsedMillisecondsTotal >= 1000)
         {
             _scoreHintsCollection.Remove(this);
         }

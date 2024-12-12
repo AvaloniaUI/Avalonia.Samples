@@ -78,14 +78,17 @@ NOTE: To show you how this control can be bound to a `ViewModel` we will use the
 
 In the folder `Models` we create a new file `Snowflake.cs` which will have the following properties:
 
-[source,csharp]
-----
-public double X { get; private set; } // the X-posotion in relative units (0 .. 1)
-public double Y { get; private set; } // the Y-posotion in relative units (0 .. 1)
-public double Diameter { get; }       // The diameter of the snowflake in pixels
-public double Radius { get; }         // The radius of the snowflake in pixels
-public double Speed { get; }          // The speed of the snowflake in relativeUnit / second
-----
+.Public properties of the snowflake class
+|===
+|Property |Type |Description
+
+|X          | double | Gets the horizontal position in relative unit (0 ... 1)
+|Y          | double | Gets the vertical position in relative unit (0 ... 1)
+|Diameter   | double | Gets the diameter in pixel
+|Radius     | double | Gets the radius in pixel
+|Speed      | double | Gets the peed of the snowflake in 1/second (relative unit)
+
+|===
 
 As we want the control to be of any size and resizeable, we store the position in relative units which we need to convert into the actual viewport on request.
 
@@ -108,7 +111,9 @@ Now that would be enough to render the snowflakes, but these should also be able
 ----
 public void Move(double elapsedMilliseconds)
 {
-    Y += elapsedMilliseconds * Speed / 1000.0; // Speed is in 1/sec so we have to convert it into 1/ms.
+    // Speed is in 1/sec so we have to convert it into 1/ms.
+    Y += elapsedMilliseconds * Speed / 1000.0;
+
     if (Y > 1)
     {
         Y = 0;
@@ -116,10 +121,341 @@ public void Move(double elapsedMilliseconds)
 }
 ----
 
+Since we also want the snowflake to be hit-able, we need a way to test whether a certain point is inside or outside our bounds. As we represent the snowflake as circles, this is straight forward:
 
-=== Step 2:
+[sourc,csharp]
+----
+public bool IsHit(Point point, Rect viewport)
+{
+    // since the snowflake is represented as a circle, we just can test
+    // if the distance to the center is equal of smaller than the radius.
 
-=== Step 3: 
+    var distance = ((Vector)(GetCenterForViewport(viewport) - point)).Length;
+    return distance <= Radius;
+}
+----
+
+Last but not least the hit-score can be calculated in the following way:
+[sourc,csharp]
+----
+public int GetHitScore()
+{
+    // The smaller and the faster the snowflake, the higher the score.
+    return (int)(1/Radius * 200 + Speed / 10.0);
+}
+----
+
+Here is the final class xref:Models/Snowflake.cs[]
+
+=== Step 2: Setup the GameViewModel
+
+The `ViewModel` will be responsible for creating and managing the snowflakes, tracking the game status and storing the users current score.
+
+It has the following public properties:
+
+.Public properties of the SnowflakeGameViewModel-class
+|===
+|Property |Type |Description
+
+|Snowflakes
+|ObservableCollection<Snowflake>
+|Gets a collection of available snowflakes
+
+|GameDuration
+|TimeSpan
+|Gets or sets the duration of the game. Also updates GameDurationMilliseconds.
+
+|GameDurationMilliseconds
+|double
+|Gets duration of the game in milliseconds
+
+|MillisecondsRemaining
+|double
+|Gets how many time is remaining in milliseconds
+
+|IsGameRunning
+|bool
+|Gets or sets if the game is currently running
+
+|Score
+|double
+|Gets or sets the current users score
+
+|===
+
+In addition we need these two private fields:
+
+.Private fields of the SnowflakeGameViewModel-class
+|===
+|Field |Type |Description
+
+|_gameTimer
+|DispatcherTimer
+|A readonly timer that ticks every 100 ms and updates the game status. Only active if the game is running.
+
+|_stopwatch
+|Stopwatch
+|A readonly stopwatch to measure elapsed game time. Will be reset when the game ends.
+
+|===
+
+To start a new game we add a xref:../../MVVM/CommandSample/README.adoc[[Command\]] which will clear any previous snowflakes, add some new snowflakes with random parameters and start the game:
+
+[source,csharp]
+----
+[RelayCommand]
+private void StartGame()
+{
+    // Clear all snowflakes.
+    Snowflakes.Clear();
+
+    // Reset game score.
+    Score = 0;
+
+    // Add some snowflakes at random positions, having random diameters and speed.
+    for (int i = 0; i < 200; i++)
+    {
+        Snowflakes.Add(new Snowflake(
+            Random.Shared.NextDouble(),
+            Random.Shared.NextDouble(),
+            Random.Shared.NextDouble() * 5 + 2,
+            Random.Shared.NextDouble() / 5 + 0.1));
+    }
+
+    // Set game time.
+    GameDuration = TimeSpan.FromMinutes(1);
+
+    // Indicate that game has started.
+    IsGameRunning = true;
+
+    // Start the timer and stopwatch.
+    _stopwatch.Restart();
+    _gameTimer.Start();
+}
+----
+
+Finally we need to update the game status whenever the game timer ticks. This is done in this handler:
+
+[source,csharp]
+----
+private void OnGameTimerTick(object? sender, EventArgs e)
+{
+    // Update the remaining milliseconds left.
+    OnPropertyChanged(nameof(MillisecondsRemaining));
+
+    // If no more time is left, stop the timer and stopwatch and stop the game.
+    if (MillisecondsRemaining <= 0)
+    {
+        _gameTimer.Stop();
+        _stopwatch.Stop();
+        IsGameRunning = false;
+    }
+}
+----
+
+Here is the final class: xref:ViewModels/SnowflakeGameViewModel.cs[]
+
+=== Step 3: Add the SnowflakesControl
+
+Now it's time to add the needed `Control` to render our game. Therefore we add a new folder `Controls` and inside we add a new class `SnowflakesControl.cs`. This class must inherit `Control`. In addition it want implement the interface `ICustomHitTest` in order to control hit-testing on our own.
+
+The control needs some https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-advanced-custom-controls[[AvaloniaProperties\]] to allow us to bind to it.
+
+.Public bindable properties of the SnowflakesControl-class
+
+|===
+|Property |Type |Description
+
+|Snowflakes
+|IList<Snowflake>
+|Gets or sets a list of snowflakes to render. This is a direct property.
+
+|IsRunning
+|bool
+|Gets or sets if the game is running. This is a styled property.
+
+|Score
+|double
+|Gets or sets the users score. This is a direct property.
+
+|===
+
+All the above properties should trigger a new render pass if they change. We can du this by adding the following line into the static constructor:
+
+[source,csharp]
+----
+static SnowflakesControl()
+{
+    // Make sure Render is updated whenever one of these properties changes
+    AffectsRender<SnowflakesControl>(IsRunningProperty, SnowflakesProperty, ScoreProperty);
+}
+----
+
+In addition, we have one private field as follows:
+
+.Private fields of the SnowflakesControl-class
+|===
+|Field |Type |Description
+
+|_stopwatch
+|Stopwatch
+|A readonly stopwatch to measure elapsed between two render frames. Will be reset after each render frame.
+
+|===
+
+The stopwatch will be started or stopped whenever `IsRunning` changed. We can do this by overriding `OnPropertyChanged` and filter for the property of interest accordingly:
+
+[source,csharp]
+----
+protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+{
+    base.OnPropertyChanged(change);
+
+    // If IsRunning is updated, we need to start or stop the stopwatch accordingly.
+    if (change.Property == IsRunningProperty)
+    {
+        if (change.GetNewValue<bool>())
+        {
+            // Resets and starts the stopwatch
+            _stopwatch.Restart();
+        }
+        else
+        {
+            _stopwatch.Stop();
+        }
+    }
+}
+----
+
+This is all we need to start rendering. If you override `OnRender`, you will get a `DrawingContext` that has several methods available to render low-level geometry. So let's do that and render our snowflakes:
+
+[source, cs]
+----
+public override void Render(DrawingContext context)
+{
+    // Figure out how much time elapsed since last render loop
+    var elapsedMilliseconds = _stopwatch.Elapsed.TotalMilliseconds;
+
+    foreach (var snowFlake in Snowflakes)
+    {
+        // If the game is running, move each flake to it's updated position
+        if (IsRunning)
+        {
+            snowFlake.Move(elapsedMilliseconds);
+        }
+
+        // Draw the snowflake (we use a simple circle here)
+        context.DrawEllipse(
+            Brushes.White,
+            null,
+            snowFlake.GetCenterForViewport(Bounds),
+            snowFlake.Radius,
+            snowFlake.Radius);
+    }
+
+    base.Render(context);
+
+    // Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.
+    if (IsRunning)
+    {
+        Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+        _stopwatch.Restart();
+    }
+}
+----
+
+NOTE: We use `Dispatcher.UIThread.Post` to request the next frame in order to give the UI-thread enough time to handle input etc. If we didn't use the dispatcher, the app would freeze.
+
+This is how a single render frame would look like:
+
+.Result of a single render loop
+image:_docs/single_render_frame.png[]
+
+As we wanted to implement `ICustomHitTest`, we will add the needed interface members, which is just the following method here:
+
+[source,csharp]
+----
+public bool HitTest(Point point)
+{
+    if (!IsRunning) return false;
+
+    var snowFlake = Snowflakes.FirstOrDefault(x => x.IsHit(point, Bounds));
+    if (snowFlake != null)
+    {
+        Snowflakes.Remove(snowFlake);
+        Score += snowFlake.GetHitScore();
+    }
+
+    return snowFlake != null;
+}
+----
+
+What this method does is:
+
+* If the game is not running, the control shouldn't receive any hit
+* If the game is running, search for any snowflake hit by the pointer
+** If one is found, remove it from the collection
+** If one is found, add the score to the total score
+
+Here is the final class xref:Controls/SnowflakesControl.cs[]
+
+=== Step 4: Add the control to the view
+
+To use the control, just add it to any sample view.
+
+NOTE: Remember to add the needed xml-namespaces
+
+[source,xml]
+----
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SnowflakesControlSample.Controls"
+             xmlns:viewModels="clr-namespace:SnowflakesControlSample.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SnowflakesControlSample.Views.MainView"
+             x:DataType="viewModels:SnowflakeGameViewModel">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <viewModels:SnowflakeGameViewModel />
+    </Design.DataContext>
+
+    <Panel>
+        <!-- Just some Background for a nicer UI -->
+        <Panel.Background>
+            ...
+        </Panel.Background>
+
+        <!-- This is our SnowFlakesControl. It can be used like any other Control. -->
+        <controls:SnowflakesControl HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    IsRunning="{Binding IsGameRunning}"
+                                    Snowflakes="{Binding Snowflakes}"
+                                    Score="{Binding Score}" />
+
+        <!-- Add a Progressbar to indicate the left time  here -->
+        <ProgressBar ... />
+
+        <!-- Add a Button the start command here -->
+        <Button ... />
+    </Panel>
+</UserControl>
+----
+
+TIP: In `App.axaml` set `RequestedThemeVariant` to `"Dark"` for a better visibility of the white snowflakes.
+
+This is how the control will look like now (notice how the snowflakes disappear):
+
+.First run output
+image:_docs/First_run.png[]
+
+
+Here is the final class xref:Views/MainView.axaml[]
 
 
 == Related 

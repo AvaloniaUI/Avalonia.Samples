@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -142,7 +142,7 @@ public class SnowflakesControl : Control, ICustomHitTest
         // Bonus: Render the score hint if any available.
         foreach (var scoreHint in _scoreHintsCollection.ToArray())
         {
-            // When the game is running, we want to update opacity and position. This adds a nice animation effect. 
+            // If the game is running, move each flake to it's updated position
             if (IsRunning)
             {
                 scoreHint.Update(elapsedMilliseconds);

@@ -78,7 +78,7 @@ public class Snowflake
     /// Calculates the score if the user hit this snowflake.
     /// </summary>
     /// <returns>the score for this snowflake.</returns>
-    /// <remarks>The smaller and the faster the flake, the higher the score.</remarks>
+    /// <remarks>The smaller and the faster the snowflake, the higher the score.</remarks>
     public int GetHitScore()
     {
         return (int)(1/Radius * 200 + Speed / 10.0);
@@ -95,7 +95,6 @@ public class Snowflake
         // since the snowflake is represented as a circle, we just can test if the distance to the center is 
         // equal of smaller than the radius. 
         var distance = ((Vector)(GetCenterForViewport(viewport) - point)).Length;
-       if (distance< 0) Debug.Print(distance.ToString(CultureInfo.InvariantCulture));
         return distance <= Radius;
     }
 }
