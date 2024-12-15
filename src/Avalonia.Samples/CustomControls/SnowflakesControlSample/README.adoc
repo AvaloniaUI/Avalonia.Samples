@@ -457,11 +457,216 @@ image:_docs/First_run.png[]
 
 Here is the final class xref:Views/MainView.axaml[]
 
+=== Bonus 1: Implement a custom draw operation
+
+If the provided render operations are not enough, you can create a new class which implements `ICustomDrawOperation` In this sample we want to display the user score with a nice glow effect using the https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88[[`SkiaSharp-API`\]].
+
+The interface requires the following members to be implemented:
+
+.`ICustomDrawOperation`-members
+|===
+|Name |Type |Description
+
+|Equals
+|bool
+|We can just return false here as we don't want to reuse the class. Might be a good idea for a real-world App.
+
+|Dispose
+|void
+|Use this in case you need to dispose or clean up anything.
+
+|HitTest
+|bool
+|Hit test the geometry in this node.
+
+|Render
+|void
+|This method will provide a `ImmediateDrawingContext` which gives you many low-level options to render.
+
+|Bounds
+|Rect
+|Gets the bounds of the visible content in the node in global coordinates.
+
+|===
+
+In addition to the interface members we will add one more property:
+
+.Properties of ScoreRenderer
+|===
+|Name |Type |Description
+
+|Text
+|string
+|Private readonly property which holds the text to render
+
+|===
+
+
+Let's see how the `Render`-method looks like:
+
+[source,csharp]
+====
+public void Render(ImmediateDrawingContext context)
+{
+    // Try to get the skia-feature.
+    var leaseFeature = context.TryGetFeature<ISkiaSharpApiLeaseFeature>();
+
+    // In case we didn't find it, render the text with a fallback.
+    if (leaseFeature == null)
+    {
+        var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
+
+        var glyphRun = new GlyphRun(Typeface.Default.GlyphTypeface,
+            20,
+            Text.AsMemory(),
+            glyphs,
+            Bounds.TopRight - new Point(50, 50));
+
+        context.DrawGlyphRun(Brushes.Goldenrod, glyphRun.TryCreateImmutableGlyphRunReference()!);
+    }
+    // Otherwise use SkiaSharp to render the text and apply some glow-effect.
+    // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88
+    else
+    {
+        using var lease = leaseFeature.Lease();
+        var canvas = lease.SkCanvas;
+        canvas.Save();
+
+        using (var paint = new SKPaint())
+        {
+            paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
+            paint.TextSize = 30;
+            paint.TextAlign = SKTextAlign.Right;
+
+            var origin = Bounds.TopRight.ToSKPoint();
+            origin.Offset(-25, +50);
+
+            paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
+            canvas.DrawText(Text, origin, paint);
+        }
+        canvas.Restore();
+    }
+}
+====
+
+TIP: SkiaSharp may be not always available. In this case it is highly recommended to provide a fallback.
+
+NOTE: You may see a warning about using an unstable API. This is okay to ignore, however you may need to adjust your code when you update to a newer Avalonia version.
+
+To consume the custom draw operation, add the following line into `SnowflakesControl.OnRender`:
+
+[source,csharp]
+----
+public override void Render(DrawingContext context)
+{
+    // [...]
+
+    context.Custom(new ScoreRenderer(Bounds, $"Your score: {Score:N0}"));
+
+    // [...]
+}
+----
+
+If you now run the sample again, you can see the following outcome:
+
+.Second run output
+image::_docs/Second_run.png[]
+
+
+Here is the final class xref:Controls/ScoreRenderer.cs[]
+
+=== Bonus 2: Adding some beauty to the game
+
+White snowflakes on a black screen may be boring for some users. In addition the user can't really see how much score each caught snowflake has gained. Let's improve this.
+
+In `MainView` we add a Background to the root `Panel`:
+
+[source,xml]
+----
+<Panel.Background>
+    <LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%">
+        <GradientStop Offset="0"   Color="DarkBlue" />
+        <GradientStop Offset=".85" Color="LightSkyBlue" />
+        <GradientStop Offset=".85" Color="LimeGreen" />
+        <GradientStop Offset="1"   Color="DarkGreen" />
+    </LinearGradientBrush>
+</Panel.Background>
+----
+
+Moreover we want to render some score hints for each hit snowflake. Similar to our `Snowflake`-class we will add the internal class `ScoreHint` which has the following properties:
+
+TIP: This class can be internal as it is only meant to be be consumed by the control itself.
+
+We won't go into too much detail here as the concept is very close to the already discussed `Snowflake`-class. Only noticeable difference is that it has a reference to an `ICollection<ScoreHint>` in order to remove itself after the display time:
+
+[source,csharp]
+----
+internal void Update(double elapsedMilliseconds)
+{
+    // Increment total elapsed time
+    _elapsedMillisecondsTotal += elapsedMilliseconds;
+
+    // remove this item from the collection if it was there for 1 second (1000 ms)
+    if (_elapsedMillisecondsTotal >= 1000)
+    {
+        _scoreHintsCollection.Remove(this);
+    }
+
+    // after 500 ms we wipe out the opacity and move the text upwards
+    if (_elapsedMillisecondsTotal > 500)
+    {
+        var percentage = (_elapsedMillisecondsTotal - 500) / 500;
+        Opacity = Math.Max(1.0 - percentage, 0); // Negative opacity doesn't work, so make sure it is always positive.
+        Y -= (0.01 * percentage); // move slightly up.
+    }
+}
+----
+
+Here is the final class: xref:Models/ScoreHint.cs[]
+
+We display the score hint in the `SnowflakeControl.OnRender`-method as follows:
+
+[source,charp]
+----
+public override void Render(DrawingContext context)
+{
+    foreach (var scoreHint in _scoreHintsCollection.ToArray())
+    {
+        // If the game is running, move each flake to it's updated position
+        if (IsRunning)
+        {
+            scoreHint.Update(elapsedMilliseconds);
+        }
+
+        // Use a formatted text to render the score hint.
+        var formattedText =
+            new FormattedText(
+                scoreHint.ToString(),
+                CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                Typeface.Default,
+                20,
+                new SolidColorBrush(Colors.Yellow, scoreHint.Opacity));
+
+        context.DrawText(formattedText, scoreHint.GetTopLeftForViewport(Bounds, new Size(formattedText.Width, formattedText.Height)));
+    }
+}
+----
+
+=== See it in action
+
+Hit [Run] in your IDE and enjoy your personal winter game.
+
+image::_docs/final_run.png[]
+
+
 
 == Related 
 
-// Any related information or further readings goes here.
+Today you learned how to create a control that renders itself. If you want to learn more about it, we suggest to take a look at other samples:
 
+* xref:../../../../README.adoc#_drawing_samples[Samples.DrawingSamples]
+* link:https://github.com/AvaloniaUI/Avalonia/tree/master/samples/RenderDemo[Avalonia.RenderDemo]
 
 
 // --------------- Ascii-Doc Cheat-Sheet ------------------

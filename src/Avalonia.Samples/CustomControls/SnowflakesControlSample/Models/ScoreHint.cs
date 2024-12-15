@@ -7,7 +7,7 @@ namespace SnowflakesControlSample.Models;
 /// <summary>
 /// A class which represents a score hint to display when a <see cref="Snowflake"/> was hit and added to the total score.
 /// </summary>
-public class ScoreHint
+internal class ScoreHint
 {
     /// <summary>
     /// Stores the totla elapsed time in milliseconds. 
@@ -21,7 +21,7 @@ public class ScoreHint
     /// </summary>
     /// <param name="snowflake">The <see cref="Snowflake"/> that was hit.</param>
     /// <param name="scoreHintsCollection">The reference to the collection to render this item.</param>
-    public ScoreHint(Snowflake snowflake, ICollection<ScoreHint> scoreHintsCollection)
+    internal ScoreHint(Snowflake snowflake, ICollection<ScoreHint> scoreHintsCollection)
     {
         Score = snowflake.GetHitScore();
         X = snowflake.X;
@@ -33,22 +33,22 @@ public class ScoreHint
     /// <summary>
     /// Gets the score to display.
     /// </summary>
-    public int Score { get; }
+    internal int Score { get; }
     
     /// <summary>
     /// Gets the x-position in relative coordinates [0 ... 1].
     /// </summary>
-    public double X { get; private set; }
+    internal double X { get; private set; }
     
     /// <summary>
     /// Gets the x-position in relative coordinates [0 ... 1].
     /// </summary>
-    public double Y { get; private set; }
+    internal double Y { get; private set; }
     
     /// <summary>
     /// Gets the current opacity.
     /// </summary>
-    public double Opacity { get; private set; }
+    internal double Opacity { get; private set; }
 
     /// <summary>
     /// Gets the center of the snowflake in absolute coordinates for a given Viewport.
@@ -56,7 +56,7 @@ public class ScoreHint
     /// <param name="viewport">The viewport info.</param>
     /// <param name="textSize">The size of the rendered text to calculate the offset.</param>
     /// <returns>The center point in (px, px)</returns>
-    public Point GetTopLeftForViewport(Rect viewport, Size textSize)
+    internal Point GetTopLeftForViewport(Rect viewport, Size textSize)
     {
         var left = (X * viewport.Width + viewport.Left) - textSize.Width / 2.0;
         var top = (Y * viewport.Height + viewport.Top) - textSize.Height;
@@ -73,7 +73,7 @@ public class ScoreHint
     /// Updates this items <see cref="Opacity"/> and <see cref="Y"/>-position.
     /// </summary>
     /// <param name="elapsedMilliseconds">The elapsed time in ms.</param>
-    public void Update(double elapsedMilliseconds)
+    internal void Update(double elapsedMilliseconds)
     {
         // Increment total elapsed time
         _elapsedMillisecondsTotal += elapsedMilliseconds;
