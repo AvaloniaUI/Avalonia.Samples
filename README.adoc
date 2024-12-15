@@ -161,7 +161,7 @@ Each sample is tagged with it's difficulty.The degree of difficulty describes ho
 | 🐔 Normal
 | Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme
 
-| link:src/Avalonia.Samples/CustomControls/SnowFlakesControlSample[SnowflakesControl Sample]
+| link:src/Avalonia.Samples/CustomControls/SnowflakesControlSample[SnowflakesControl Sample]
 | 🐔 Normal
 | Custom Control, Render, Hit-Testing, Custom Animations
 
