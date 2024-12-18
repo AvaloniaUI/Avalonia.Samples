@@ -10,10 +10,13 @@ namespace SnowflakesControlSample.Models;
 internal class ScoreHint
 {
     /// <summary>
-    /// Stores the totla elapsed time in milliseconds. 
+    /// Stores the total elapsed time in milliseconds. 
     /// </summary>
     private double _elapsedMillisecondsTotal;
     
+    /// <summary>
+    /// A reference to the collection which contains this instance
+    /// </summary>
     private readonly ICollection<ScoreHint> _scoreHintsCollection;
     
     /// <summary>
