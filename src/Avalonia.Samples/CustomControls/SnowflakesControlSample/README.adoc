@@ -627,7 +627,7 @@ Here is the final class: xref:Models/ScoreHint.cs[]
 
 We display the score hint in the `SnowflakeControl.OnRender`-method as follows:
 
-[source,charp]
+[source,csharp]
 ----
 public override void Render(DrawingContext context)
 {
