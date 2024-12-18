@@ -11,8 +11,8 @@
 
 
 
-// Write a short summary here what this examples does
-This example will show you how to create a custom control that overrides `OnRender` in order to have advanced render capabilities. It also shows how custom hit-testing can help to solve special tasks. We will create a simple game where the user should collect some snow flakes with their mouse pointer.
+// Write a short summary here what this example does
+This example will show you how to create a custom control that overrides `OnRender` in order to have advanced render capabilities. It also shows how custom hit-testing can help to solve special tasks. We will create a simple game where the user should collect some snowflakes with their mouse pointer.
 
 
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
@@ -34,7 +34,7 @@ Custom Control, Render, Hit-Testing, Custom Animations
 
 == Before we start
 
-In this sample we assume that you are familiar with Avalonia, the `MVVM`-pattern and how to create custom `Controls` and define `AvaloniaProperties`. If this is new to you, please start with other tutorials first:
+In this sample we assume that you are familiar with Avalonia, the `MVVM`-pattern and how to create custom `Controls`, as well as how to define `AvaloniaProperties`. If this is new to you, please start with other tutorials first:
 
 - xref:../../../../README.adoc#_mvvm_samples[[MVVM-Basics\]]
 - xref:../../CustomControls/RatingControlSample/README.adoc[[RatingControlSample\]]
@@ -42,7 +42,7 @@ In this sample we assume that you are familiar with Avalonia, the `MVVM`-pattern
 
 === When to Render on your own
 
-There may be some special cases where a `TemplatedControl`, `ContentControl` or similar is not well suited, for example:
+There may be some special cases where a `TemplatedControl`, `ContentControl` or similar base class is not well suited, for example:
 
 * If you need to display complex geometry
 * If you have many objects to render which otherwise adds a huge layout-overhead
@@ -53,16 +53,16 @@ There may be some special cases where a `TemplatedControl`, `ContentControl` or 
 
 Before we finally start to implement the game, we should make some considerations how our control should look like and how it should work. To shorten it, we use a plain list of notes:
 
-* The game will have only one level
+* The game will have just one level
 * The game must not run infinite -> We need a way to start and stop the game
 * The game must render several snowflakes (represented as circles)
     ** Each snowflake should have a random start position
-    ** Each snowflake should be able move with different speed
+    ** Each snowflake should be able to move with different speed
     ** Snowflakes should be of different sizes
 * The user should be able to collect some score
     ** The user must be able to collect snowflakes with their mouse device
-    ** The user should be able to see their current score
-    ** Nice to have: Show a score indicator for each snowflake
+    ** Nice to have: The user should be able to see their current score
+    ** Nice to have: Show a score indicator for each hit snowflake
 
 
 == The Solution
@@ -136,6 +136,7 @@ public bool IsHit(Point point, Rect viewport)
 ----
 
 Last but not least the hit-score can be calculated in the following way:
+
 [sourc,csharp]
 ----
 public int GetHitScore()
@@ -147,7 +148,7 @@ public int GetHitScore()
 
 Here is the final class xref:Models/Snowflake.cs[]
 
-=== Step 2: Setup the GameViewModel
+=== Step 2: Set up the GameViewModel
 
 The `ViewModel` will be responsible for creating and managing the snowflakes, tracking the game status and storing the users current score.
 
@@ -159,7 +160,7 @@ It has the following public properties:
 
 |Snowflakes
 |ObservableCollection<Snowflake>
-|Gets a collection of available snowflakes
+|Gets a collection of available snowflakes.
 
 |GameDuration
 |TimeSpan
@@ -167,23 +168,23 @@ It has the following public properties:
 
 |GameDurationMilliseconds
 |double
-|Gets duration of the game in milliseconds
+|Gets duration of the game in milliseconds.
 
 |MillisecondsRemaining
 |double
-|Gets how many time is remaining in milliseconds
+|Gets how many times is remaining in milliseconds.
 
 |IsGameRunning
 |bool
-|Gets or sets if the game is currently running
+|Gets or sets if the game is currently running.
 
 |Score
 |double
-|Gets or sets the current users score
+|Gets or sets the current users score.
 
 |===
 
-In addition we need these two private fields:
+In addition, we need these two private fields:
 
 .Private fields of the SnowflakeGameViewModel-class
 |===
@@ -234,7 +235,7 @@ private void StartGame()
 }
 ----
 
-Finally we need to update the game status whenever the game timer ticks. This is done in this handler:
+Finally, we need to update the game status whenever the game timer ticks. This is done in this handler:
 
 [source,csharp]
 ----
@@ -257,7 +258,7 @@ Here is the final class: xref:ViewModels/SnowflakeGameViewModel.cs[]
 
 === Step 3: Add the SnowflakesControl
 
-Now it's time to add the needed `Control` to render our game. Therefore we add a new folder `Controls` and inside we add a new class `SnowflakesControl.cs`. This class must inherit `Control`. In addition it want implement the interface `ICustomHitTest` in order to control hit-testing on our own.
+Now it's time to add the needed `Control` to render our game. Therefore, we add a new folder `Controls` and inside we add a new class `SnowflakesControl.cs`. This class must inherit `Control`. In addition, we want to implement the interface `ICustomHitTest` in order to control hit-testing on our own.
 
 The control needs some https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-advanced-custom-controls[[AvaloniaProperties\]] to allow us to bind to it.
 
@@ -459,7 +460,7 @@ Here is the final class xref:Views/MainView.axaml[]
 
 === Bonus 1: Implement a custom draw operation
 
-If the provided render operations are not enough, you can create a new class which implements `ICustomDrawOperation` In this sample we want to display the user score with a nice glow effect using the https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88[[`SkiaSharp-API`\]].
+If the provided render operations are not enough, you can create a new class which implements `ICustomDrawOperation`. In this sample we want to display the user score with a nice glow effect using the https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88[[`SkiaSharp-API`\]].
 
 The interface requires the following members to be implemented:
 
@@ -577,7 +578,7 @@ Here is the final class xref:Controls/ScoreRenderer.cs[]
 
 === Bonus 2: Adding some beauty to the game
 
-White snowflakes on a black screen may be boring for some users. In addition the user can't really see how much score each caught snowflake has gained. Let's improve this.
+White snowflakes on a black screen may be boring for some users. In addition, the user can't really see how much score each caught snowflake has gained. Let's improve this.
 
 In `MainView` we add a Background to the root `Panel`:
 
@@ -593,9 +594,9 @@ In `MainView` we add a Background to the root `Panel`:
 </Panel.Background>
 ----
 
-Moreover we want to render some score hints for each hit snowflake. Similar to our `Snowflake`-class we will add the internal class `ScoreHint` which has the following properties:
+Moreover, we want to render some score hints for each hit snowflake. Similar to our `Snowflake`-class we will add the internal class `ScoreHint` which has the following properties:
 
-TIP: This class can be internal as it is only meant to be be consumed by the control itself.
+TIP: This class can be internal as it is only meant to be consumed by the control itself.
 
 We won't go into too much detail here as the concept is very close to the already discussed `Snowflake`-class. Only noticeable difference is that it has a reference to an `ICollection<ScoreHint>` in order to remove itself after the display time:
 
@@ -662,8 +663,6 @@ image::_docs/final_run.png[]
 
 
 == Related 
-
-Today you learned how to create a control that renders itself. If you want to learn more about it, we suggest to take a look at other samples:
 
 * xref:../../../../README.adoc#_drawing_samples[Samples.DrawingSamples]
 * link:https://github.com/AvaloniaUI/Avalonia/tree/master/samples/RenderDemo[Avalonia.RenderDemo]
