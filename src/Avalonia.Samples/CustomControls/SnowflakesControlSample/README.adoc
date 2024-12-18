@@ -123,7 +123,7 @@ public void Move(double elapsedMilliseconds)
 
 Since we also want the snowflake to be hit-able, we need a way to test whether a certain point is inside or outside our bounds. As we represent the snowflake as circles, this is straight forward:
 
-[sourc,csharp]
+[source,csharp]
 ----
 public bool IsHit(Point point, Rect viewport)
 {
@@ -137,7 +137,7 @@ public bool IsHit(Point point, Rect viewport)
 
 Last but not least the hit-score can be calculated in the following way:
 
-[sourc,csharp]
+[source,csharp]
 ----
 public int GetHitScore()
 {
