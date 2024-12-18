@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoList", "CompleteA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RectPainter", "Drawing\RectPainter\RectPainter.csproj", "{2B746401-384F-484A-810E-7A65288165E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowflakesControlSample", "CustomControls\SnowflakesControlSample\SnowflakesControlSample.csproj", "{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{2B746401-384F-484A-810E-7A65288165E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B746401-384F-484A-810E-7A65288165E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B746401-384F-484A-810E-7A65288165E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +168,7 @@ Global
 		{0BC90E92-D8B3-4C6D-8C47-BAF57CD73CBA} = {2E99F15F-A82A-4734-A837-C0F768702600}
 		{7D75B38A-304C-44DE-AC2F-8A461C7FC889} = {50FCF785-BBCF-4AFE-AC72-79EA9E92C43A}
 		{2B746401-384F-484A-810E-7A65288165E0} = {D02161B3-8242-4BF5-96E9-780465A5023B}
+		{B7B246E1-26F7-4225-A8FC-4344C1D7BA17} = {92C71AA7-E791-40C0-9F3A-2A85880B0439}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C246CAB0-0837-4EE4-A22D-28B3C74930B4}

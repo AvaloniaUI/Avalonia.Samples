@@ -16,41 +16,44 @@ toc::[]
 
 If you have feedback, questions or suggestions feel free to contact us via:
 
-image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia] 
-image:https://badges.gitter.im/Join%20Chat.svg[link=https://gitter.im/AvaloniaUI/Avalonia?utm_campaign=pr-badge&utm_content=badge&utm_medium=badge&utm_source=badge] 
+image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia]
+image:https://badges.gitter.im/Join%20Chat.svg[link=https://gitter.im/AvaloniaUI/Avalonia?utm_campaign=pr-badge&utm_content=badge&utm_medium=badge&utm_source=badge]
 image:https://img.shields.io/badge/discord-join%20chat-46BC99[link=https://aka.ms/dotnet-discord]
 
 Or file a new bug-report or feature request in the https://github.com/AvaloniaUI/Avalonia.Samples/issues[`Issues`]-section.
 
 
+[#_organization_of_the_samples]
 == 📂 Organization of the Samples
 
-Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples. 
+Every sample can be found in its own sub-folder and can run without any reference to another sample.Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples.
 
-You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
+You can find the list of samples <<samples,below>>.The samples are structured in different categories and difficulties.For better search results, each sample is also tagged with some **buzz-words**.
 
-In every sample folder you will find a `README`-File, which describes the sample in detail and, if applicable, has links to further information and documentation. 
+In every sample folder you will find a `README`-File, which describes the sample in detail and, if applicable, has links to further information and documentation.
 
+
+[#_difficulties]
 === 🐣 Difficulties
 
-Each sample is tagged with it's difficulty. The degree of difficulty describes how much base-knowledge a user should have. 
+Each sample is tagged with it's difficulty.The degree of difficulty describes how much base-knowledge a user should have.
 
 
 [cols="1,1,2"]
 |===
-| 🔘 | Difficulty  | Degree of knowledge   
+| 🔘 | Difficulty  | Degree of knowledge
 
 | 🐣 | Beginner
-| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory 
+| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory
 
-| 🐥 | Easy    
-| Some very basic knowledge of Avalonia is needed                                                                                    
+| 🐥 | Easy
+| Some very basic knowledge of Avalonia is needed
 
-| 🐔 | Normal         
-| The user is somewhat experienced with Avalonia                                                                                     
+| 🐔 | Normal
+| The user is somewhat experienced with Avalonia
 
-| 🐉 | Hard            
-| These samples are focusing on non-standard tasks, which most users will not need to know.                                          
+| 🐉 | Hard
+| These samples are focusing on non-standard tasks, which most users will not need to know.
 
 |===
 
@@ -67,11 +70,12 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 ////
 
 
+[#_mvvm_samples]
 === 💡 MVVM-Samples
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
 | link:src/Avalonia.Samples/MVVM/BasicMvvmSample[Basic MVVM Sample]
 | 🐣 Beginner
@@ -91,11 +95,14 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+
+
+[#_drawing_samples]
 === ✒️ Drawing-Samples
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
 | link:src/Avalonia.Samples/Drawing/BattleCity[BattleCity Game Sample]
 | 🐔 Normal
@@ -107,11 +114,12 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 
 |===
 
+[#_datatemplate_samples]
 === 🎞️ DataTemplate-Samples
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
 | link:src/Avalonia.Samples/DataTemplates/BasicDataTemplateSample[Basic DataTemplate Sample]
 | 🐔 Normal
@@ -128,111 +136,123 @@ Each sample is tagged with it's difficulty. The degree of difficulty describes h
 |===
 
 
+[#_routing_navigation_samples]
 === 🗺️ Routing / Navigation-Samples
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
-| link:src\Avalonia.Samples\Routing\BasicViewLocatorSample[Basic ViewLocator Sample]
+| link:src/Avalonia.Samples/Routing/BasicViewLocatorSample[Basic ViewLocator Sample]
 | 🐔 Normal
 | ViewLocator, Routing, Wizard, Navigation, Page, MVVM
 
 |===
 
 
-
+[#_custom_controls_samples]
 === 🛠️ Custom Controls Samples
 
 [cols="25h,25,50"]
 |===
-| Sample | Difficulty | Buzz-Words 
+| Sample | Difficulty | Buzz-Words
 
-| link:src\Avalonia.Samples\CustomControls\RatingControlSample[RatingControl Sample]
+| link:src/Avalonia.Samples/CustomControls/RatingControlSample[RatingControl Sample]
 | 🐔 Normal
 | Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme
+
+| link:src/Avalonia.Samples/CustomControls/SnowflakesControlSample[SnowflakesControl Sample]
+| 🐔 Normal
+| Custom Control, Render, Hit-Testing, Custom Animations
 
 |===
 
 
+[#_view_interaction_samples]
 === ⚡ View Interaction Samples
 
 [cols="25h,25,50"]
 |===
 | Sample | Difficulty | Buzz-Words
 
-| link:src\Avalonia.Samples\ViewInteraction\MvvmDialogSample[Mvvm Dialog Sample]
+| link:src/Avalonia.Samples/ViewInteraction/MvvmDialogSample[Mvvm Dialog Sample]
 | 🐔 Normal
 | MVVM, Dialog, FileDialogs, TopLevel, Clipboard
 
-| link:src\Avalonia.Samples\ViewInteraction\DialogManagerSample[Dialog Manager Sample]
+| link:src/Avalonia.Samples/ViewInteraction/DialogManagerSample[Dialog Manager Sample]
 | 🐔 Normal
 | MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.Mvvm
 
 |===
 
-[#_️_automated_ui_testing]
+[#_automated_ui_testing]
 === 🧪️ Automated UI Testing
 
 [cols="25h,25,50"]
 |===
 | Sample | Difficulty | Buzz-Words
 
-| link:src\Avalonia.Samples\Testing\TestableApp.Headless.XUnit[Testing with Headless XUnit]
+| link:src/Avalonia.Samples/Testing/TestableApp.Headless.XUnit[Testing with Headless XUnit]
 | 🐔 Normal
 | XUnit, Headless, Automation, UI Testing
-| link:src\Avalonia.Samples\Testing\TestableApp.Headless.NUnit[Testing with Headless NUnit]
+| link:src/Avalonia.Samples/Testing/TestableApp.Headless.NUnit[Testing with Headless NUnit]
 | 🐔 Normal
 | NUnit, Headless, Automation, UI Testing
-| link:src\Avalonia.Samples\Testing\TestableApp.Appium[Testing with Appium]
+| link:src/Avalonia.Samples/Testing/TestableApp.Appium[Testing with Appium]
 | 🐉 Hard
 | XUnit, Appium, WinAppDriver, Automation, UI Testing
 
 |===
 
+[#_complete_apps]
 [complete-apps]
 === 🧑‍💻 Complete Apps
 [cols="25h,25,50"]
 |===
 | Sample | Difficulty | Buzz-Words
 
-| link:src\Avalonia.Samples\CompleteApps\SimpleToDoList[Simple ToDo-List]
+| link:src/Avalonia.Samples/CompleteApps/SimpleToDoList[Simple ToDo-List]
 | 🐥 Easy
 | ToDo-List, Complete App, MVVM, CommunityToolkit.MVVM, Source Generator, Styles, Commands
 
 |===
 
 
+[#_contribution]
 == 🪛 Contribution
 
-Is Anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea? 
+Is Anything missing?Have you found an error?Have you found an outdated sample?Or do you have a great idea?
 
-Fantastic! Your contribution is welcome. 
+Fantastic!Your contribution is welcome.
 
-NOTE: Before you start, make sure you have read the Code of Conduct 
+NOTE: Before you start, make sure you have read the Code of Conduct
 
 === Code of Conduct
-This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
+This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
 
+[#_issues_and_feature_requests]
 === Issues and Feature Requests
-If you file a new issue or feature request please fill in the templates available. If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong. 
+If you file a new issue or feature request please fill in the templates available.If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong.
 
+[#_pull_requests]
 === Pull Requests
 
-NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, every contribution is welcome.  
+NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end.If you are not sure, please <<get-in-touch>> first.Anyway, every contribution is welcome.
 
+[#_fixing_an_existing_sample]
 ==== Fixing an existing sample
 
-If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request. Also spelling mistakes or wrong wording can be changed and a pull request can be send.
+If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request.Also spelling mistakes or wrong wording can be changed and a pull request can be send.
 
-IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page. 
+IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page.
 
+[#_adding_a_new_sample]
 ==== Adding a new sample
 
 . Add a new Project to the Solution `src ► Avalonia.Samples ► Avalonia.Samples.sln`
-. In the root directory of the new sample add a `ReadMe`-file. We highly suggest to use the template which you can find here: 
-  .. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template. 
-  .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template.
+. In the root directory of the new sample add a `ReadMe`-file.We highly suggest to use the template which you can find here:
+.. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template.
+.. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template.
 
 // Comment this in for next years hacktober fest
 //// 
