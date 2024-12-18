@@ -506,7 +506,7 @@ In addition to the interface members we will add one more property:
 Let's see how the `Render`-method looks like:
 
 [source,csharp]
-====
+----
 public void Render(ImmediateDrawingContext context)
 {
     // Try to get the skia-feature.
@@ -548,7 +548,7 @@ public void Render(ImmediateDrawingContext context)
         canvas.Restore();
     }
 }
-====
+----
 
 TIP: SkiaSharp may be not always available. In this case it is highly recommended to provide a fallback.
 
