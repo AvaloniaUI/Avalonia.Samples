@@ -564,7 +564,7 @@ We want our icons to become semi-transparent if a `Button` is disabled. We can u
 <Application.Styles>
     <!-- ... -->
 
-    <!-- This style will make the icon semi-transparent, it a button is disabled -->
+    <!-- This style will make the icon semi-transparent, if a button is disabled -->
     <Style Selector="Button:disabled PathIcon">
         <Setter Property="Opacity" Value="0.4" />
     </Style>
