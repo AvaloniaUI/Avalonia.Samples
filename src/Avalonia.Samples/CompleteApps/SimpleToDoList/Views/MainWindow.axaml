@@ -51,11 +51,11 @@
         </ScrollViewer>
 
         <!-- This TextBox can be used to add new ToDoItems -->
-        <TextBox Grid.Row="2"
+        <TextBox Name="ItemInput" Grid.Row="2"
                  Text="{Binding NewItemContent}"
                  Watermark="Add a new Item">
             <TextBox.InnerRightContent>
-                <Button Command="{Binding AddItemCommand}">
+                <Button Name="ItemAddButton" Command="{Binding AddItemCommand}">
                     <PathIcon Data="{DynamicResource AcceptIconData}"
                               Foreground="Green" />
                 </Button>
