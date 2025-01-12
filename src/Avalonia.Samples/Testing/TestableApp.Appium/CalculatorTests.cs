@@ -6,7 +6,7 @@ namespace TestableApp.Appium;
 [Collection("Default")]
 public class CalculatorTests
 {
-    private readonly AppiumDriver<AppiumWebElement> _session;
+    private readonly AppiumDriver _session;
 
 
     public CalculatorTests(DefaultAppFixture fixture)
@@ -18,10 +18,11 @@ public class CalculatorTests
     public void Should_Add_Numbers()
     {
         // Assert:
-        var firstOperandInput = _session.FindElementByAccessibilityId("FirstOperandInput")!;
-        var secondOperandInput = _session.FindElementByAccessibilityId("SecondOperandInput")!;
-        var addButton = _session.FindElementByAccessibilityId("AddButton")!;
-        var resultBox = _session.FindElementByAccessibilityId("ResultBox")!;
+        const string ByAccessibilityId = "AccessibilityId";
+        var firstOperandInput = _session.FindElement(ByAccessibilityId, "FirstOperandInput")!;
+        var secondOperandInput = _session.FindElement(ByAccessibilityId, "SecondOperandInput")!;
+        var addButton = _session.FindElement(ByAccessibilityId, "AddButton")!;
+        var resultBox = _session.FindElement(ByAccessibilityId, "ResultBox")!;
 
         // Act:
         firstOperandInput.Clear();
@@ -39,10 +40,11 @@ public class CalculatorTests
     public void Cannot_Divide_By_Zero()
     {
         // Assert:
-        var firstOperandInput = _session.FindElementByAccessibilityId("FirstOperandInput")!;
-        var secondOperandInput = _session.FindElementByAccessibilityId("SecondOperandInput")!;
-        var divideButton = _session.FindElementByAccessibilityId("DivideButton")!;
-        var resultBox = _session.FindElementByAccessibilityId("ResultBox")!;
+        const string ByAccessibilityId = "AccessibilityId";
+        var firstOperandInput = _session.FindElement(ByAccessibilityId, "FirstOperandInput")!;
+        var secondOperandInput = _session.FindElement("AccessibilityId", "SecondOperandInput")!;
+        var divideButton = _session.FindElement("AccessibilityId", "DivideButton")!;
+        var resultBox = _session.FindElement("AccessibilityId", "ResultBox")!;
 
         // Act:
         firstOperandInput.Clear();
