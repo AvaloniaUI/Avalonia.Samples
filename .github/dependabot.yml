@@ -9,3 +9,4 @@ updates:
     directory: "/src/Avalonia.Samples" # Location of package manifests
     schedule:
       interval: "weekly"
+    target-branch: "Dependabot"
