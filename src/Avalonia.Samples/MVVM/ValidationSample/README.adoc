@@ -359,6 +359,11 @@ public class ValidationUsingExceptionInsideSetterViewModel : ViewModelBase
 }
 ----
 
+[TIP]
+====
+Depending on your IDE-Settings the debugger may stop execution when the `Exception` is hit. You can safely click `Resume` or `Mute and Resume` since the exception will be handled by Avalonia.
+====
+
 
 === Step 3: Setup the View
 
