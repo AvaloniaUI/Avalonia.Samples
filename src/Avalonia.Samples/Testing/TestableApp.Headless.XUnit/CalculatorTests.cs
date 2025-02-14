@@ -28,7 +28,7 @@ public class CalculatorTests
 
         // Raise click event on the button:
         window.AddButton.Focus();
-        window.KeyPress(Key.Enter, RawInputModifiers.None);
+        window.KeyPressQwerty(PhysicalKey.Enter, RawInputModifiers.None);
 
         Assert.Equal("30", window.ResultBox.Text);
     }
@@ -49,7 +49,7 @@ public class CalculatorTests
 
         // Raise click event on the button:
         window.DivideButton.Focus();
-        window.KeyPress(Key.Enter, RawInputModifiers.None);
+        window.KeyPressQwerty(PhysicalKey.Enter, RawInputModifiers.None);
 
         Assert.Equal("Cannot divide by zero!", window.ResultBox.Text);
     }
