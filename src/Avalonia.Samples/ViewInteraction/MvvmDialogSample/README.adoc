@@ -134,7 +134,7 @@ Now we can setup the `XAML` as following. Mind the binding of the `Button` to ou
 
 Running the App you should be able to select any files on your system.
 
-image::_docs/result_2.png[RectiveUI interaction sample]
+image::_docs/result_2.png[ReactiveUI interaction sample]
 
 == Solution 2 : Write your own Interaction-class
 

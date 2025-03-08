@@ -89,7 +89,7 @@ public static object? GetRegister(AvaloniaObject element)
 }
 ```
 
-Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegsiterProperty`. We can add such a listener inside the static constructor.
+Now that we want to store or remove any new binding into our `Dictionary`, we need to listen to changes of the `RegisterProperty`. We can add such a listener inside the static constructor.
 
 [source,cs]
 ----
