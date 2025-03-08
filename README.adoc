@@ -26,9 +26,9 @@ Or file a new bug-report or feature request in the https://github.com/AvaloniaUI
 [#_organization_of_the_samples]
 == 📂 Organization of the Samples
 
-Every sample can be found in its own sub-folder and can run without any reference to another sample.Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples.
+Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples.
 
-You can find the list of samples <<samples,below>>.The samples are structured in different categories and difficulties.For better search results, each sample is also tagged with some **buzz-words**.
+You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
 
 In every sample folder you will find a `README`-File, which describes the sample in detail and, if applicable, has links to further information and documentation.
 
@@ -36,7 +36,7 @@ In every sample folder you will find a `README`-File, which describes the sample
 [#_difficulties]
 === 🐣 Difficulties
 
-Each sample is tagged with it's difficulty.The degree of difficulty describes how much base-knowledge a user should have.
+Each sample is tagged with it's difficulty. The degree of difficulty describes how much base-knowledge a user should have.
 
 
 [cols="1,1,2"]
@@ -221,28 +221,28 @@ Each sample is tagged with it's difficulty.The degree of difficulty describes ho
 [#_contribution]
 == 🪛 Contribution
 
-Is Anything missing?Have you found an error?Have you found an outdated sample?Or do you have a great idea?
+Is anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea?
 
-Fantastic!Your contribution is welcome.
+Fantastic! Your contribution is welcome.
 
 NOTE: Before you start, make sure you have read the Code of Conduct
 
 === Code of Conduct
-This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
+This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
 
 [#_issues_and_feature_requests]
 === Issues and Feature Requests
-If you file a new issue or feature request please fill in the templates available.If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong.
+If you file a new issue or feature request please fill in the templates available. If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong.
 
 [#_pull_requests]
 === Pull Requests
 
-NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end.If you are not sure, please <<get-in-touch>> first.Anyway, every contribution is welcome.
+NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, every contribution is welcome.
 
 [#_fixing_an_existing_sample]
 ==== Fixing an existing sample
 
-If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request.Also spelling mistakes or wrong wording can be changed and a pull request can be send.
+If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request. Also spelling mistakes or wrong wording can be changed and a pull request can be send.
 
 IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page.
 
@@ -250,7 +250,7 @@ IMPORTANT: If you change the difficulty or the buzz-words, remember to also upda
 ==== Adding a new sample
 
 . Add a new Project to the Solution `src ► Avalonia.Samples ► Avalonia.Samples.sln`
-. In the root directory of the new sample add a `ReadMe`-file.We highly suggest to use the template which you can find here:
+. In the root directory of the new sample add a `ReadMe`-file. We highly suggest to use the template which you can find here:
 .. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template.
 .. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template.
 
