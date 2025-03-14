@@ -453,4 +453,4 @@ image::_docs/Image_04.png[]
 If you need more advanced `DataTemplates`, you can use `FuncDataTemplate` or implement `IDataTemplate` in your own class. 
 
 * https://docs.avaloniaui.net/docs/templates/creating-data-templates-in-code[Creating Data Templates in Code]
-* https://docs.avaloniaui.net/docs/templates/implement-idatatemplate[Implementing IDataTemplate]
+* https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[Implementing IDataTemplate]

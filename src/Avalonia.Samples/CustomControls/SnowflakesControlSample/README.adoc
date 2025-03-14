@@ -90,7 +90,7 @@ In the folder `Models` we create a new file `Snowflake.cs` which will have the f
 
 |===
 
-As we want the control to be of any size and resizeable, we store the position in relative units which we need to convert into the actual viewport on request.
+As we want the control to be of any size and resizable, we store the position in relative units which we need to convert into the actual viewport on request.
 
 TIP: In Avalonia you can use `Bounds` to get the Controls bounds, which we here call "viewport"
 

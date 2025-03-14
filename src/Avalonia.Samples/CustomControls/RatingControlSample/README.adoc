@@ -105,7 +105,7 @@ image::_docs/Sketch.png[Sketch]
 
 === Step 1: Create a new Project
 
-In our sample we will create a new project using the `Avalonia MMVM Template`. We will place the sample App and the control together in the same project. In your real-world App you may want to create a https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview[[`class library`-project\]] for your custom controls, so they can be reused in several Apps. 
+In our sample we will create a new project using the `Avalonia MVVM Template`. We will place the sample App and the control together in the same project. In your real-world App you may want to create a https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview[[`class library`-project\]] for your custom controls, so they can be reused in several Apps. 
 
 === Step 2: Add the RatingControl-class
 
