@@ -653,7 +653,7 @@ In the event itself we cancel the event as long as `_canClose` is not set to tru
 
 NOTE: It is highly recommended to run I/O-operations https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o[[`async`\]].
 
-[source]
+[source,c#]
 .App.axaml.cs
 ----
 // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
