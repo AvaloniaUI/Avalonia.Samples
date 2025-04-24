@@ -1,0 +1,77 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:CommandSample.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:ReactiveUiCommandsViewModel"
+             x:Class="CommandSample.Views.ReactiveUiCommandsSampleView">
+    <Design.DataContext>
+        <viewModels:ReactiveUiCommandsViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
+		
+		<TextBlock Grid.Column="0" Grid.Row="0"
+				   Text="Command:" 
+				   FontWeight="Bold" 
+				   VerticalAlignment="Center"
+		           Margin="5" />
+		
+		<StackPanel Grid.Column="1" Grid.Row="0" 
+					Spacing="5" Margin="5" >
+
+			<!-- This button will ask HAL to open the doors -->
+			<Button Command="{Binding OpenThePodBayDoorsDirectCommand}" 
+                    Content="Open the pod bay doors, HAL." />
+			
+			<!-- This button will ask HAL to open the doors for a fellow robot -->
+			<!-- We use CommandParameter to provide the name of the robot -->
+			<!-- Note that the button is automatically disabled if we don't enter a name-->
+			<StackPanel Orientation="Horizontal" Spacing="5">	
+				<TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
+				<Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
+						Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
+						CommandParameter="{Binding RobotName}" />
+			</StackPanel>
+			
+			<!-- This button will ask start a multi-step sequence to open the doors -->
+			<!-- As this is a long operation, the command is async.-->
+			<!-- HAL inform us about the current progress of the doors.-->
+			<!-- Note: The button will be disabled while the process is running. -->
+			<Button Command="{Binding OpenThePodBayDoorsAsyncCommand}"
+					Content="Start Pod Bay Opening Sequence" />
+
+		</StackPanel>
+		
+		<Separator Grid.Row="1" Grid.ColumnSpan="2" 
+				   HorizontalAlignment="Stretch" 
+				   Margin="5"
+				   Height="2"
+				   Background="LightGray"/>
+
+		<TextBlock Grid.Column="0" Grid.Row="2"
+			       Text="HAL 9000:"
+				   FontWeight="Bold"
+		           Margin="5"
+		           VerticalAlignment="Center"/>
+
+		<!-- This is the area where the output of HAL9000 is rendered -->
+		<Border Grid.Column="1" Grid.Row="2"
+				CornerRadius="10" Margin="5"
+			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
+			<Grid ColumnDefinitions="*,Auto">
+				<ItemsControl Margin="5"
+							   ItemsSource="{Binding ConversationLog}" />
+				
+				<!-- This button will clear the recent conversation log-->
+				<!-- which is not supported via CompiledBinding.                                 --> 
+				<Button Grid.Column="1"
+						VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+						Background="Transparent"
+						Command="{Binding ConversationLog.Clear}"
+						Content="❌"/>
+			</Grid>
+		</Border>
+	</Grid>
+</UserControl>
