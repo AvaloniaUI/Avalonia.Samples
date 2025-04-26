@@ -62,7 +62,8 @@ public partial class CommunityToolkitCommandsViewModel : ObservableObject // Not
     /// <summary>
     /// The name of a robot. If the name is null or empty, there is no other robot present.
     /// </summary>
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(OpenThePodBayDoorsFellowRobotCommand))]
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(OpenThePodBayDoorsFellowRobotCommand))]
     private string? _robotName;
 
     /// <summary>
