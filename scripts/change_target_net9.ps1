@@ -6,7 +6,7 @@ Clear-Host
 # Resolve and validate path
 $FullPath = Resolve-Path -Path $Path -ErrorAction SilentlyContinue
 if (-not $FullPath) {
-    Write-Error "The path '$Path' does not exist." -ForegroundColor Red
+    Write-Error "The path '$Path' does not exist."
     Write-Host "Please provide a valid path." -ForegroundColor Yellow
     exit 1
 }
@@ -15,7 +15,7 @@ $SearchPath = $FullPath.ToString()
 # Check if .NET 9 is installed
 $dotnetSdks = & dotnet --list-sdks
 if ($dotnetSdks -notmatch "^9\.\d+\.\d+") {
-    Write-Error ".NET 9 SDK is not installed. Please install it before running this script." -ForegroundColor Red
+    Write-Error ".NET 9 SDK is not installed. Please install it before running this script."
     Write-Host "You can download it from https://dotnet.microsoft.com/download/dotnet/9.0" -ForegroundColor Yellow
     Write-Host "Exiting script." -ForegroundColor Yellow
     exit 1

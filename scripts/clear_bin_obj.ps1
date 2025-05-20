@@ -10,7 +10,7 @@ $FullPath = Resolve-Path -Path $Path -ErrorAction SilentlyContinue
 
 # Check if the path exists
 if (-not $FullPath) {
-    Write-Error "The path '$Path' does not exist." -ForegroundColor Red
+    Write-Error "The path '$Path' does not exist."
     Write-Host "Please provide a valid path." -ForegroundColor Yellow
     exit 1
 }
