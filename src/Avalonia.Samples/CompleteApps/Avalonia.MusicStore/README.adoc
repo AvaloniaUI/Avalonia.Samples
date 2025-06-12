@@ -1,0 +1,64 @@
+= Music Store App
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+:toc:
+:toc-placement!:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to create a simple music store using Avalonia and MVVM community toolkit. You'll learn the MVVM pattern with the MVVM community toolkit to manage multiple application windows. Also you will use advanced asynchronous techniques to implement the album search and other features, so that application responsiveness is maintained.
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐥 Easy 🐥
+
+
+
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+
+Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, Commands, iTunes Api
+
+
+== Before we start
+This is a more advanced tutorial. The 'To Do List App' is a recommended prerequisite if you have limited experience with the MVVM pattern. Find 'To Do List App' tutorial link:../../CompleteApps/SimpleToDoList[here].
+
+This sample assumes that you have a basic knowledge about the following topics:
+
+- Some basics about C# and https://docs.avaloniaui.net/docs/get-started/test-drive/[[XAML\]]
+- What the link:../../MVVM/BasicMvvmSample[[MVVM -pattern\]] (Model-View-ViewModel) is and how it works
+- What a link:../../MVVM/CommandSample[[Command\]] is and how it works
+- What a link:https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0[[ObservableCollection\]] is and how it works
+
+TIP: Some sections are optional. You can skip these if you want to.
+
+=== MVVM pattern
+For information and background on the concept of the MVVM pattern, refer to the official documentation link:https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/[here].
+
+
+== The Solution
+You can follow the complete step-by-step guide for building the Music Store App in the official tutorial link:https://docs.avaloniaui.net/docs/tutorials/music-store-app/[here].
+
+== Related 
+
+This sample has shown some basics about custom controls. If you want to use this control in production you may want to improve it further, for example:
+
+- Add it into a controls library
+- Add keyboard support
+- Add unit tests
+- Add animations
+- Add an event for value changed
