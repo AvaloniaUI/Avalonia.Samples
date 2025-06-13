@@ -51,7 +51,7 @@ There are many MVVM-packages available that already have implemented the interfa
 
 ReactiveUI:: This library ships https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveCommand`\]].
 
-CommunityToolkit-MVVM:: This library ships https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand[[`RelayCommand`\]] and https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/asyncrelaycommand[[`AsyncRelayCommand`\]]. In addition it provides a https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`source generator`\]] to reduce the biolerplate code needed.  
+CommunityToolkit-MVVM:: This library ships https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand[[`RelayCommand`\]] and https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/asyncrelaycommand[[`AsyncRelayCommand`\]]. In addition it provides a https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`source generator`\]] to reduce the boilerplate code needed.  
 
 ==== Commands and long running Tasks
 
@@ -82,7 +82,7 @@ In case you don't have ReactiveUI installed, add it to your nuget-packages and m
 
 === Step 2: Add a ViewModel
 
-Add a new class into the `ViewModels`-folder called `ReactiveUiCommandsViewModel`. This class should inherit `ViewModelBase` or `ReativeObject`. 
+Add a new class into the `ViewModels`-folder called `ReactiveUiCommandsViewModel`. This class should inherit `ViewModelBase` or `ReactiveObject`. 
 Now open the file `ViewModels ► MainWindowViewModel.cs` or `MainViewModel` and add a new instance of the newly created class to it.
 
 .MainViewModel.cs
@@ -95,7 +95,7 @@ public class MainViewModel : ViewModelBase
 ----
 
 
-We want to store a record of our conversation with HAL-9000.  We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify out UI whenever a line was added or removed. In the file `ReactiveUiCommandsViewModel` add the following lines:
+We want to store a record of our conversation with HAL-9000.  We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify our UI whenever a line was added or removed. In the file `ReactiveUiCommandsViewModel` add the following lines:
 
 .ReactiveUiCommandsViewModel.cs
 [source,csharp]
@@ -429,7 +429,7 @@ image::_docs/command_sample_result.gif[Result]
 
 == Solution 2: Use CommunityTookit-MVVM
 
-In this sample we will show you how to reduce the needed boilderplate code by using the source generators provided. 
+In this sample we will show you how to reduce the needed boilerplate code by using the source generators provided. 
 
 TIP: If you don't know what a source generator does, you can learn more about it https://learn.microsoft.com/en-us/shows/on-dotnet/c-source-generators[[here\]]
 
@@ -438,9 +438,9 @@ TIP: If you don't know what a source generator does, you can learn more about it
 Add a new class into the `ViewModels`-folder called `CommunityToolkitCommandsViewModel`. This class should inherit `ViewModelBase` or `ObservableObject`.
 Now open the file `ViewModels ► MainWindowViewModel.cs` or `MainViewModel` and add a new instance of the newly created class to it.
 
-WARNING: Since our above model was using `ReativeUI`, our `ViewModelBase` inherits `ReactiveObject`. Therefore, we either need to change this or inhierit `ObservableObject` directly.
+WARNING: Since our above model was using `ReativeUI`, our `ViewModelBase` inherits `ReactiveObject`. Therefore, we either need to change this or inherit `ObservableObject` directly.
 
-NOTE: We want to use source generators here. To make this work, or class must be marked as `parial`
+NOTE: We want to use source generators here. To make this work, our class must be marked as `partial`
 
 .CommunityToolkitCommandsViewModel.cs
 [source,csharp]
@@ -480,7 +480,7 @@ private void AddToConvo(string content)
 Since HAL-9000 is not likely to listen to us, we also want to have the suggestion come
 from a fellow robot. We want a field to put in the robot's name. Let's add a property:
 
-.CommunityToolkitCommandsViewModel
+.CommunityToolkitCommandsViewModel.cs
 [source,csharp]
 ----
 /// <summary>
