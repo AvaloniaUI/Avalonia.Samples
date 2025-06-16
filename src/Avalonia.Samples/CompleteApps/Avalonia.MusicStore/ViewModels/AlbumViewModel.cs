@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,16 +19,23 @@ namespace Avalonia.MusicStore.ViewModels
 
         public string Title => _album.Title;
 
-        [ObservableProperty] public partial Bitmap? Cover { get; private set; }
+        public Task<Bitmap?> Cover => LoadCoverAsync();
 
         /// <summary>
         /// Asynchronously loads and decodes the album cover image, then assigns it to <see cref="Cover"/>.
         /// </summary>
-        public async Task LoadCover()
+        private async Task<Bitmap?> LoadCoverAsync()
         {
-            await using (var imageStream = await _album.LoadCoverBitmapAsync())
+            try
             {
-                Cover = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                await using (var imageStream = await _album.LoadCoverBitmapAsync())
+                {
+                    return await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -38,15 +46,13 @@ namespace Avalonia.MusicStore.ViewModels
         {
             await _album.SaveAsync();
 
-            if (Cover != null)
+            if (await LoadCoverAsync() is Bitmap cover)
             {
-                var bitmap = Cover;
-
                 await Task.Run(() =>
                 {
                     using (var fs = _album.SaveCoverBitmapStream())
                     {
-                        bitmap.Save(fs);
+                        cover.Save(fs);
                     }
                 });
             }
