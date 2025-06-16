@@ -42,8 +42,6 @@ namespace Avalonia.MusicStore.ViewModels
             {
                 Albums.Add(album);
             }
-            var coverTasks = albums.Select(album => album.LoadCover());
-            await Task.WhenAll(coverTasks);
         }
     }
 }
