@@ -215,6 +215,9 @@ Each sample is tagged with its difficulty. The degree of difficulty describes ho
 | 🐥 Easy
 | ToDo-List, Complete App, MVVM, CommunityToolkit.MVVM, Source Generator, Styles, Commands
 
+| link:src/Avalonia.Samples/CompleteApps/Avalonia.MusicStore[Music Store App]
+| 🐥 Easy
+| Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, Commands, iTunes Api
 |===
 
 
