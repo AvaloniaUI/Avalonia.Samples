@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Models;
@@ -6,7 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class AlbumViewModel : ViewModelBase
+    public partial class AlbumViewModel : ViewModelBase, IEquatable<AlbumViewModel>
     {
         private readonly Album _album;
 
@@ -56,6 +57,26 @@ namespace Avalonia.MusicStore.ViewModels
                     }
                 });
             }
+        }
+
+        public bool Equals(AlbumViewModel? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _album.Equals(other._album);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((AlbumViewModel)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _album.GetHashCode();
         }
     }
 }

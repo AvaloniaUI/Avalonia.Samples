@@ -9,11 +9,11 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class MainWindowViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
         public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
-        public MainWindowViewModel()
+        public MainViewModel()
         {
             LoadAlbums();
         }
@@ -25,7 +25,16 @@ namespace Avalonia.MusicStore.ViewModels
         private async Task AddAlbumAsync()
         {
             var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
-            if (album is not null)
+            
+            if (album is null)
+            {
+                WeakReferenceMessenger.Default.Send(new NotificationMessage("No Album Selected"));
+            }
+            else if (Albums.Contains(album))
+            {
+                WeakReferenceMessenger.Default.Send(new NotificationMessage("Album was already added"));
+            }
+            else
             {
                 Albums.Add(album);
                 await album.SaveToDiskAsync();
