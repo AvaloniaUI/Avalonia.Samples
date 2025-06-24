@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -8,7 +9,7 @@ using iTunesSearch.Library;
 
 namespace Avalonia.MusicStore.Models
 {
-    public class Album
+    public class Album : IEquatable<Album> 
     {
         private static iTunesSearchManager s_SearchManager = new();
         private static HttpClient s_httpClient = new();
@@ -67,7 +68,7 @@ namespace Avalonia.MusicStore.Models
                 if ((new DirectoryInfo(file).Extension) != ".json")
                     continue;
 
-                await using var fs = File.OpenRead(file);
+                await using var fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
                 results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
             }
 
@@ -81,7 +82,7 @@ namespace Avalonia.MusicStore.Models
         {
             if (File.Exists(CachePath + ".bmp"))
             {
-                return File.OpenRead(CachePath + ".bmp");
+                return File.Open(CachePath + ".bmp", FileMode.Open,  FileAccess.Read, FileShare.Read);
             }
             else
             {
@@ -134,6 +135,36 @@ namespace Avalonia.MusicStore.Models
         private static async Task SaveToStreamAsync(Album data, Stream stream)
         {
             await JsonSerializer.SerializeAsync(stream, data).ConfigureAwait(false);
+        }
+
+        public bool Equals(Album? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Artist == other.Artist && Title == other.Title;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Album)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Artist, Title);
+        }
+
+        public static bool operator ==(Album? left, Album? right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Album? left, Album? right)
+        {
+            return !Equals(left, right);
         }
     }
 }
