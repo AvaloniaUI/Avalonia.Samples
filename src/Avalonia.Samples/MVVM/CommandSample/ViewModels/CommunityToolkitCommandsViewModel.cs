@@ -74,7 +74,7 @@ public partial class CommunityToolkitCommandsViewModel : ObservableObject // Not
     /// We don't want our UI to become unresponsive.
     /// </remarks>
     [RelayCommand]
-    private async Task OpenThePodBayDoorsAsync()
+    public async Task OpenThePodBayDoorsAsync()
     {
         ConversationLog.Clear();
         AddToConvo("Preparing to open the Pod Bay...");
