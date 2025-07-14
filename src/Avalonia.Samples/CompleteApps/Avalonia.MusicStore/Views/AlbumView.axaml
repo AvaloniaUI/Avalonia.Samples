@@ -26,7 +26,7 @@
     <Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD">
         <Image Width="200" Height="200"
                Stretch="Uniform" 
-               Source="{Binding Cover, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}" />
+               Source="{Binding Cover^, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}" />
     </Border>
     <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" />
     <TextBlock HorizontalAlignment="Center" Text="{Binding Artist}" />
