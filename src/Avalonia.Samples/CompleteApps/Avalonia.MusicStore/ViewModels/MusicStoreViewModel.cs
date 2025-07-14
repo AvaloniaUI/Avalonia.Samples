@@ -35,7 +35,15 @@ namespace Avalonia.MusicStore.ViewModels
         {
             if (SelectedAlbum != null)
             {
-                WeakReferenceMessenger.Default.Send(new MusicStoreClosedMessage(SelectedAlbum));
+                var album_exists = WeakReferenceMessenger.Default.Send(new CheckAlbumAlreadyExistsMessage(SelectedAlbum));
+                if (album_exists)
+                {
+                    WeakReferenceMessenger.Default.Send(new NotificationMessage("This album was already added"));
+                }
+                else
+                {
+                    WeakReferenceMessenger.Default.Send(new MusicStoreClosedMessage(SelectedAlbum));
+                }
             }
         }
 

@@ -16,7 +16,13 @@ namespace Avalonia.MusicStore.ViewModels
         public MainViewModel()
         {
             LoadAlbums();
+            
+            WeakReferenceMessenger.Default.Register<CheckAlbumAlreadyExistsMessage>(this, (v, m) =>
+            {
+                m.Reply(Albums.Contains(m.Album));
+            });
         }
+        
 
         /// <summary>
         /// This relay command send a message to initiate album purchase, adds the result to the collection and saves it to disk.
@@ -25,16 +31,7 @@ namespace Avalonia.MusicStore.ViewModels
         private async Task AddAlbumAsync()
         {
             var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
-            
-            if (album is null)
-            {
-                WeakReferenceMessenger.Default.Send(new NotificationMessage("No Album Selected"));
-            }
-            else if (Albums.Contains(album))
-            {
-                WeakReferenceMessenger.Default.Send(new NotificationMessage("Album was already added"));
-            }
-            else
+            if (album is not null)
             {
                 Albums.Add(album);
                 await album.SaveToDiskAsync();

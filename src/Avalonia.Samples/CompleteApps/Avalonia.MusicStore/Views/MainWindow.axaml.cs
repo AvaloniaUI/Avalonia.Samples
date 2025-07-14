@@ -25,11 +25,6 @@ namespace Avalonia.MusicStore.Views
 
                 m.Reply(dialog.ShowDialog<AlbumViewModel?>(w));
             });
-            
-            WeakReferenceMessenger.Default.Register<MainWindow, NotificationMessage>(this, static (w, m) =>
-            {
-                w.NotificationManager.Show(m.Message, NotificationType.Warning, TimeSpan.FromSeconds(3));
-            });
         }
     }
 }

@@ -24,9 +24,6 @@
           MaterialOpacity="0.65" />
       </ExperimentalAcrylicBorder.Material>
     </ExperimentalAcrylicBorder>
-    
-    <WindowNotificationManager x:Name="NotificationManager"
-                               Position="TopRight" />
 
     <Panel Margin="40">
       <Button HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -49,7 +46,6 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
       </ScrollViewer>
-
     </Panel>
   </Panel>
 
