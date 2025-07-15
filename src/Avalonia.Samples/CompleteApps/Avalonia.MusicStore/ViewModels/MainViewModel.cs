@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.MusicStore.Dialogs;
 using Avalonia.MusicStore.Messages;
 using Avalonia.MusicStore.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,7 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class MainViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject, IDialogParticipant
     {
         public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
@@ -24,17 +26,9 @@ namespace Avalonia.MusicStore.ViewModels
         [RelayCommand]
         private async Task AddAlbumAsync()
         {
-            var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
-            
-            if (album is null)
-            {
-                WeakReferenceMessenger.Default.Send(new NotificationMessage("No Album Selected"));
-            }
-            else if (Albums.Contains(album))
-            {
-                WeakReferenceMessenger.Default.Send(new NotificationMessage("Album was already added"));
-            }
-            else
+            var album = await this.ShowDialogWindowAsync<AlbumViewModel>(new MusicStoreViewModel(Albums));
+
+            if (album is not null)
             {
                 Albums.Add(album);
                 await album.SaveToDiskAsync();

@@ -12,24 +12,6 @@ namespace Avalonia.MusicStore.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            if (Design.IsDesignMode)
-                return;
-
-            WeakReferenceMessenger.Default.Register<MainWindow, PurchaseAlbumMessage>(this, static (w, m) =>
-            {
-                var dialog = new MusicStoreWindow
-                {
-                    DataContext = new MusicStoreViewModel()
-                };
-
-                m.Reply(dialog.ShowDialog<AlbumViewModel?>(w));
-            });
-            
-            WeakReferenceMessenger.Default.Register<MainWindow, NotificationMessage>(this, static (w, m) =>
-            {
-                w.NotificationManager.Show(m.Message, NotificationType.Warning, TimeSpan.FromSeconds(3));
-            });
         }
     }
 }

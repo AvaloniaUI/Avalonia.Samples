@@ -9,9 +9,6 @@ namespace Avalonia.MusicStore.Views
         public MusicStoreWindow()
         {
             InitializeComponent();
-
-            WeakReferenceMessenger.Default.Register<MusicStoreWindow, MusicStoreClosedMessage>(this,
-                static (w, m) => w.Close(m.SelectedAlbum));
         }
     }
 }

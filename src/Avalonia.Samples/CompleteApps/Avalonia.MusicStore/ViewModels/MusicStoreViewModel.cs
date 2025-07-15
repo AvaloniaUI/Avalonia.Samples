@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.MusicStore.Dialogs;
 using Avalonia.MusicStore.Messages;
 using Avalonia.MusicStore.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,15 +13,19 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class MusicStoreViewModel : ViewModelBase
+    public partial class MusicStoreViewModel : ViewModelBase, IDialogParticipant
     {
+        private IList<AlbumViewModel> _availableAlbums;
         private CancellationTokenSource? _cancellationTokenSource;
 
-        [ObservableProperty]
-        public partial string? SearchText { get; set; }
+        public MusicStoreViewModel(IList<AlbumViewModel> availableAlbums)
+        {
+            _availableAlbums = availableAlbums;
+        }
 
-        [ObservableProperty]
-        public partial bool IsBusy { get; private set; }
+        [ObservableProperty] public partial string? SearchText { get; set; }
+
+        [ObservableProperty] public partial bool IsBusy { get; private set; }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
@@ -30,17 +36,25 @@ namespace Avalonia.MusicStore.ViewModels
         /// <summary>
         /// This relay command sends a message indicating that the selected album has been purchased, which will notify music store view to close.
         /// </summary>
-        [RelayCommand (CanExecute = nameof(CanBuyMusic))]
-        private void BuyMusic()
+        [RelayCommand(CanExecute = nameof(CanBuyMusic))]
+        private async Task BuyMusicAsync()
         {
-            if (SelectedAlbum != null)
+            if (SelectedAlbum == null)
             {
-                WeakReferenceMessenger.Default.Send(new MusicStoreClosedMessage(SelectedAlbum));
+                throw new NullReferenceException("SelectedAlbum is null");
+            }
+            else if (_availableAlbums.Contains(SelectedAlbum))
+            {
+                await this.ShowMessageDialogAsync("Already bought this album", "Info");
+            }
+            else
+            {
+                this.CloseDialogWindow(SelectedAlbum);
             }
         }
 
         private bool CanBuyMusic() => SelectedAlbum != null;
-        
+
         /// <summary>
         /// Performs an asynchronous search for albums based on the provided term and updates the results.
         /// </summary>
