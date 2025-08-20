@@ -21,7 +21,7 @@ toc::[]
 
 
 === Buzz-Words
-Command, ICommand, CommandParameter, MVVM, ReactiveCommand, async-await
+Command, ICommand, CommandParameter, MVVM, ReactiveCommand, RelayCommand, async-await
 
 
 
@@ -33,7 +33,7 @@ In case you want to refresh your knowledge, visit the link:../BasicMvvmSample[[B
 
 === ICommand
 
-If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface it can be used to execute a `Method` in your `Model` or `ViewModel`.  Moreover the interface allows you to easily enable or disable the `Control` (most often a `Button`), that your `Command` is bound to. 
+If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface it can be used to execute a `Method` in your `Model` or `ViewModel`.  Moreover, the interface allows you to easily enable or disable the `Control` (most often a `Button`), that your `Command` is bound to. 
 
 The interface has three members:
 
@@ -45,30 +45,60 @@ CanExecuteChanged-Event:: Occurs when changes occur that affect whether or not t
 
 _Definitions copied from https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0_
 
-==== ReactiveCommand
+==== ReactiveCommand and RelayCommand
 
-In this sample we are not going to implement `ICommand` on our own. Instead we will use the implementations that https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveUI`\]] ships out of the box, called `ReactiveCommand`.
+There are many MVVM-packages available that already have implemented the interface for us. In this sample we will use these two options:
+
+ReactiveUI:: This library ships https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveCommand`\]].
+
+CommunityToolkit-MVVM:: This library ships https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand[[`RelayCommand`\]] and https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/asyncrelaycommand[[`AsyncRelayCommand`\]]. In addition it provides a https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`source generator`\]] to reduce the boilerplate code needed.  
 
 ==== Commands and long running Tasks
 
-Some `MVVM`-libs, like `ReactiveUI`, provide an async implementations of the `ICommand` interface. That way we can execute long running tasks from our UI without blocking the UI.
+Some `MVVM`-libs, provide an async implementations of the `ICommand` interface. That way we can execute long running tasks from our UI without blocking the UI.
 
-== The Sample 
+== Solution 1: Use ReactiveUI
 
-In this sample, we will give commands to HAL-9000, a stubborn computer, in a homage to the
-famous "Open the POD bay doors" scene from the movie "2001 A Space Odyssey".
+In this sample, we will give commands to HAL-9000, a stubborn computer, in a homage to the famous "Open the POD bay doors" scene from the movie "2001 A Space Odyssey".
 
 === Step 1: Create a new Avalonia MVVM Application
 
 Create a new Project using the `Avalonia MVVM Application`-Template
 
-=== Step 2: Prepare the MainWindowViewModel
+[NOTE]
+====
+In case you don't have ReactiveUI installed, add it to your nuget-packages and make sure you have added this line in `Program.cs`:
 
-Open the file `ViewModels ► MainWindowViewModel.cs`.
+.Program.cs
+[source,diff]
+----
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .LogToTrace()
++           .UseReactiveUI();
+----
+====
 
-We want to store a record of our conversation with HAL-9000.  We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify out UI whenever a line was added or removed. In the file `ViewModels ► MainWindowViewModel.cs` add the following lines:
+=== Step 2: Add a ViewModel
 
-[source,cs]
+Add a new class into the `ViewModels`-folder called `ReactiveUiCommandsViewModel`. This class should inherit `ViewModelBase` or `ReactiveObject`. 
+Now open the file `ViewModels ► MainWindowViewModel.cs` or `MainViewModel` and add a new instance of the newly created class to it.
+
+.MainViewModel.cs
+[source,csharp]
+----
+public class MainViewModel : ViewModelBase
+{
+    public ReactiveUiCommandsViewModel ReactiveUiCommandsViewModel { get; } = new ReactiveUiCommandsViewModel();
+}
+----
+
+
+We want to store a record of our conversation with HAL-9000.  We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify our UI whenever a line was added or removed. In the file `ReactiveUiCommandsViewModel` add the following lines:
+
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 /// <summary>
 ///  This collection will store what the computer said
@@ -85,8 +115,12 @@ private void AddToConvo(string content)
 Since HAL-9000 is not likely to listen to us, we also want to have the suggestion come
 from a fellow robot. We want a field to put in the robot's name. Let's add a property:
 
-[source,cs]
+.ReactiveUiCommandsViewModel
+[source,csharp]
 ----
+// Backing field for RobotName
+private string? _RobotName;
+
 /// <summary>
 /// The name of a robot. If the name is null or empty, there is no other robot present.
 /// </summary>
@@ -100,9 +134,10 @@ public string? RobotName
 
 === Step 3: Create the "Open the POD bay doors" - Command
 
-In the file `ViewModels ► MainWindowViewModel.cs` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class, because it is more flexible. For example You can easily replace it with an async implementation if you need to.
+In the `ViewModel`` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class, because it is more flexible. For example You can easily replace it with an async implementation if you need to.
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 /// <summary>
 /// This command will ask HAL-9000 to open the pod bay doors
@@ -115,24 +150,26 @@ Now we will create a method which will be executed when the `Command` is invoked
 HAL responds to the human named "Dave" that he can't do that. 
 This is a famous line from the movie.
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 // The method that will be executed when the command is invoked
 private void OpenThePodBayDoors()
 {    
-	ConversationLog.Clear();
+    ConversationLog.Clear();
     AddToConvo( "I'm sorry, Dave, I'm afraid I can't do that.");
 }
 ----
 
 Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create())\]`] method which will take a method or a lambda as parameter.
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
-public MainWindowViewModel()
+public ReactiveUiCommandsViewModel()
 {
     // Init OpenThePodBayDoorsDirectCommand    
-	OpenThePodBayDoorsDirectCommand = ReactiveCommand.Create(OpenThePodBayDoors);
+    OpenThePodBayDoorsDirectCommand = ReactiveCommand.Create(OpenThePodBayDoors);
 }
 ----
 
@@ -142,7 +179,8 @@ Perhaps we will have more luck if the command is given by a fellow robot.
 
 This `Command` is very similar to the one above. This time we will use a `CommandParameter` which is the name of another robot, but in fact it can be any `object` depending on your needs. We will also use the `CommandParameter` to enable or disable the `Command`, depending on the state of the parameter. 
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 /// <summary>
 /// This command will ask HAL to open the pod bay doors, but this time we
@@ -153,12 +191,13 @@ public ICommand OpenThePodBayDoorsFellowRobotCommand { get; }
 
 Our method will look like this: 
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 private void OpenThePodBayDoorsFellowRobot(string? robotName)
 {
     ConversationLog.Clear();
-	AddToConvo( $"Hello {robotName}, the Pod Bay is open :-)");
+    AddToConvo( $"Hello {robotName}, the Pod Bay is open :-)");
 }
 ----
 
@@ -166,9 +205,11 @@ TIP: We use string interpolation in the above method. If you want to learn more 
 
 Again we have to initialize our command in the constructor. We will first create an https://docs.microsoft.com/en-us/dotnet/api/system.iobservable-1?view=net-6.0[[`Observable`\]] using `ReactiveUI's` https://www.reactiveui.net/docs/handbook/when-any/#watching-single-property[[`WhenAnyValue`\]] which will listen to `RobotName`. The `Observable` will automatically enable our `Command` whenever `RobotName` is not null or empty and disable the `Command` whenever `RobotName` is `null` or empty. Add the following lines to our constructor: 
 
-[source,cs]
+
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
-public MainWindowViewModel()
+public ReactiveUiCommandsViewModel()
 {
     // The IObservable<bool> is needed to enable or disable the command depending on valid parameters
     // The Observable listens to RobotName and will enable the Command if the name is not empty.
@@ -189,72 +230,78 @@ we wait for sequence of operations to complete. One way to do this in `C#` is to
 
 Let's add the `Command` and the `Task` to our `ViewModel`:
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
 // This method is an async Task because opening the pod bay doors can take long time.
 // We don't want our UI to become unresponsive.
 private async Task OpenThePodBayDoorsAsync()
 {
-	ConversationLog.Clear();
-	AddToConvo( "Preparing to open the Pod Bay...");
-	// wait a second
-	await Task.Delay(1000);
-	
-	AddToConvo( "Depressurizing Airlock...");
-	// wait 2 seconds
-	await Task.Delay(2000);
-	
-	AddToConvo( "Retracting blast doors...");
-	// wait 2 more seconds
-	await Task.Delay(2000);
-	
-	AddToConvo("Pod Bay is open to space!");
+    ConversationLog.Clear();
+    AddToConvo( "Preparing to open the Pod Bay...");
+    // wait a second
+    await Task.Delay(1000);
+    
+    AddToConvo( "Depressurizing Airlock...");
+    // wait 2 seconds
+    await Task.Delay(2000);
+    
+    AddToConvo( "Retracting blast doors...");
+    // wait 2 more seconds
+    await Task.Delay(2000);
+    
+    AddToConvo("Pod Bay is open to space!");
 }
 ----
 
 Initiating the async `Command` in the constructor is very similar to how you init a sync `Command`, except we use `CreateFromTask` instead of `Create`:
 
-[source,cs]
+.ReactiveUiCommandsViewModel.cs
+[source,csharp]
 ----
-public MainWindowViewModel()
+public ReactiveUiCommandsViewModel()
 {
     // Init OpenThePodBayDoorsAsyncCommand
-	OpenThePodBayDoorsAsyncCommand = ReactiveCommand.CreateFromTask(OpenThePodBayDoorsAsync);
+    OpenThePodBayDoorsAsyncCommand = ReactiveCommand.CreateFromTask(OpenThePodBayDoorsAsync);
 }
 ----
 
 TIP: When you execute this command, notice that the `Button` is disabled until the `Task` is finished, so you can't ask for the pod bay doors to open again while the opening sequence is running. A more complete program could keep track of the state of the Pod Bay and change the button to "close".
 
+[[Solution1-Step6]]
 === Step 6: Setting up the User Interface
 
-Open the file `Views ► MainWindow.axaml`. We will add three `Buttons` where we bind `Button.Command` to the `ICommands` we prepared in the `ViewModel`. The second `Button` will also get a binding to `Button.CommandParameter`. 
+Add a new `UserControl` into the `Views` folder called `ReactiveUiCommandsSampleView`. We will add three `Buttons` where we bind `Button.Command` to the `ICommands` we prepared in the `ViewModel`. The second `Button` will also get a binding to `Button.CommandParameter`. 
 
 The first `Button` looks like this: 
 
+.ReactiveUiCommandsSampleView.axaml
 [source,xml]
 ----
 <!-- This button will ask HAL to open the doors -->
 <Button Command="{Binding OpenThePodBayDoorsDirectCommand}" 
-                    Content="Open the pod bay doors, HAL." />
+        Content="Open the pod bay doors, HAL." />
 ----
 
 The second `Button` will have a `CommandParameter` defined and more over the `Content` will change dynamically. The `Button` is rendered next to a `TextBox`, where we can enter the name of a `Robot`:
 
+.ReactiveUiCommandsSampleView.axaml
 [source,xml]
 ----
 <!-- This button will ask HAL to open the doors for a fellow robot -->
 <!-- We use CommandParameter to provide the name of the robot -->
 <!-- Note that the button is automatically disabled if we don't enter a name-->
-<StackPanel Orientation="Horizontal" Spacing="5">	
-	<TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
-	<Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
-			Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
-			CommandParameter="{Binding RobotName}" />
+<StackPanel Orientation="Horizontal" Spacing="5">    
+    <TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
+    <Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
+            Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
+            CommandParameter="{Binding RobotName}" />
 </StackPanel>
 ----
 
 The third `Button` will bind to our `async Command`:
 
+.ReactiveUiCommandsSampleView.axaml
 [source,xml]
 ----
 <!-- This button will ask start a multi-step sequence to open the doors -->
@@ -266,104 +313,113 @@ The third `Button` will bind to our `async Command`:
 
 We can also bind `Button.Command` to any `Method`. To demonstrate that we added another `Button` which we can use to clear the recent conversation log.
 
+.ReactiveUiCommandsSampleView.axaml
 [source,xml]
 ----
 <!-- This button will clear the recent conversation log -->
 <Button Grid.Column="1"
-		VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-		Background="Transparent"
-		Command="{Binding ConversationLog.Clear}"
-		Content="❌"/>
+        VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+        Background="Transparent"
+        Command="{Binding ConversationLog.Clear}"
+        Content="❌"/>
 ----
 
 Now let's put all together. Our `View` will finally look like this:
 
+.ReactiveUiCommandsSampleView.axaml
 [source,xml]
 ----
-<Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:vm="using:CommandSample.ViewModels"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" 
-		Width="400"
-		Height="250"
-		x:CompileBindings="True"
-		x:DataType="vm:MainWindowViewModel"
-		x:Class="CommandSample.Views.MainWindow"
-		Icon="/Assets/avalonia-logo.ico"
-		Title="CommandSample">
-
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:CommandSample.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:ReactiveUiCommandsViewModel"
+             x:Class="CommandSample.Views.ReactiveUiCommandsSampleView">
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <viewModels:ReactiveUiCommandsViewModel/>
     </Design.DataContext>
 
-	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
-		
-		<TextBlock Grid.Column="0" Grid.Row="0"
-				   Text="Command:" 
-				   FontWeight="Bold" 
-				   VerticalAlignment="Center"
-		           Margin="5" />
-		
-		<StackPanel Grid.Column="1" Grid.Row="0" 
-					Spacing="5" Margin="5" >
+    <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
+        
+        <TextBlock Grid.Column="0" Grid.Row="0"
+                   Text="Command:" 
+                   FontWeight="Bold" 
+                   VerticalAlignment="Center"
+                   Margin="5" />
+        
+        <StackPanel Grid.Column="1" Grid.Row="0" 
+                    Spacing="5" Margin="5" >
 
-			<!-- This button will ask HAL to open the doors -->
-			<Button Command="{Binding OpenThePodBayDoorsDirectCommand}" 
+            <!-- This button will ask HAL to open the doors -->
+            <Button Command="{Binding OpenThePodBayDoorsDirectCommand}" 
                     Content="Open the pod bay doors, HAL." />
-			
-			<!-- This button will ask HAL to open the doors for a fellow robot -->
-			<!-- We use CommandParameter to provide the name of the robot -->
-			<!-- Note that the button is automatically disabled if we don't enter a name-->
-			<StackPanel Orientation="Horizontal" Spacing="5">	
-				<TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
-				<Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
-						Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
-						CommandParameter="{Binding RobotName}" />
-			</StackPanel>
-			
-			<!-- This button will ask start a multi-step sequence to open the doors -->
-			<!-- As this is a long operation, the command is async.-->
-			<!-- HAL inform us about the current progress of the doors.-->
-			<!-- Note: The button will be disabled while the process is running. -->
-			<Button Command="{Binding OpenThePodBayDoorsAsyncCommand}"
-					Content="Start Pod Bay Opening Sequence" />
+            
+            <!-- This button will ask HAL to open the doors for a fellow robot -->
+            <!-- We use CommandParameter to provide the name of the robot -->
+            <!-- Note that the button is automatically disabled if we don't enter a name-->
+            <StackPanel Orientation="Horizontal" Spacing="5">    
+                <TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
+                <Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
+                        Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
+                        CommandParameter="{Binding RobotName}" />
+            </StackPanel>
+            
+            <!-- This button will ask start a multi-step sequence to open the doors -->
+            <!-- As this is a long operation, the command is async.-->
+            <!-- HAL inform us about the current progress of the doors.-->
+            <!-- Note: The button will be disabled while the process is running. -->
+            <Button Command="{Binding OpenThePodBayDoorsAsyncCommand}"
+                    Content="Start Pod Bay Opening Sequence" />
 
-		</StackPanel>
-		
-		<Separator Grid.Row="1" Grid.ColumnSpan="2" 
-				   HorizontalAlignment="Stretch" 
-				   Margin="5"
-				   Height="2"
-				   Background="LightGray"/>
+        </StackPanel>
+        
+        <Separator Grid.Row="1" Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Stretch" 
+                   Margin="5"
+                   Height="2"
+                   Background="LightGray"/>
 
-		<TextBlock Grid.Column="0" Grid.Row="2"
-			       Text="HAL 9000:"
-				   FontWeight="Bold"
-		           Margin="5"
-		           VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   Text="HAL 9000:"
+                   FontWeight="Bold"
+                   Margin="5"
+                   VerticalAlignment="Center"/>
 
-		<!-- This is the area where the output of HAL9000 is rendered -->
-		<Border Grid.Column="1" Grid.Row="2"
-				CornerRadius="10" Margin="5"
-			    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
-			<Grid ColumnDefinitions="*,Auto">
-				<ItemsControl Margin="5"
+        <!-- This is the area where the output of HAL9000 is rendered -->
+        <Border Grid.Column="1" Grid.Row="2"
+                CornerRadius="10" Margin="5"
+                BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
+            <Grid ColumnDefinitions="*,Auto">
+                <ItemsControl Margin="5"
                               ItemsSource="{Binding ConversationLog}" />
-				
-				<!-- This button will clear the recent conversation log-->
-				<!-- which is not supported via CompiledBinding.                                 --> 
-				<Button Grid.Column="1"
-						VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-						Background="Transparent"
-						Command="{Binding ConversationLog.Clear}"
-						Content="❌"/>
-			</Grid>
-		</Border>
-	</Grid>
-</Window>
+                
+                <!-- This button will clear the recent conversation log-->
+                <!-- which is not supported via CompiledBinding.                                 --> 
+                <Button Grid.Column="1"
+                        VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                        Background="Transparent"
+                        Command="{Binding ConversationLog.Clear}"
+                        Content="❌"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
 ----
+
+The `UserControl` itself will be added into the file `Views ► MainWindow` or `MainView`, depending on the template used to create this App. 
+
+.MainWindow.axaml
+[source,xml]
+----
+<TabControl>
+	<TabItem Header="ReactiveUI">
+		<views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" />
+	</TabItem>
+</TabControl>
+----
+
 
 === Step 7: See it in action
 
@@ -371,9 +427,241 @@ In your IDE press `Run` or `Debug` and try the sample out. Notice how the `Butto
 
 image::_docs/command_sample_result.gif[Result]
 
+== Solution 2: Use CommunityTookit-MVVM
+
+In this sample we will show you how to reduce the needed boilerplate code by using the source generators provided. 
+
+TIP: If you don't know what a source generator does, you can learn more about it https://learn.microsoft.com/en-us/shows/on-dotnet/c-source-generators[[here\]]
+
+=== Step 1: Add a ViewModel
+
+Add a new class into the `ViewModels`-folder called `CommunityToolkitCommandsViewModel`. This class should inherit `ViewModelBase` or `ObservableObject`.
+Now open the file `ViewModels ► MainWindowViewModel.cs` or `MainViewModel` and add a new instance of the newly created class to it.
+
+WARNING: Since our above model was using `ReativeUI`, our `ViewModelBase` inherits `ReactiveObject`. Therefore, we either need to change this or inherit `ObservableObject` directly.
+
+NOTE: We want to use source generators here. To make this work, our class must be marked as `partial`
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+public partial class CommunityToolkitCommandsViewModel : ObservableObject
+{
+}
+----
+
+
+.MainViewModel.cs
+[source,csharp]
+----
+public class MainViewModel : ViewModelBase
+{
+    public CommunityToolkitCommandsViewModel CommunityToolkitCommandsViewModel { get; } = new CommunityToolkitCommandsViewModel();
+}
+----
+
+We want to store a record of our conversation with HAL-9000.  We use an https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0[`[ObservableCollection\]`], because this collection will notify out UI whenever a line was added or removed. In the file `CommunityToolkitCommandsViewModel` add the following lines:
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+/// <summary>
+///  This collection will store what the computer said
+/// </summary>
+public ObservableCollection<string> ConversationLog { get; } = new ObservableCollection<string>();
+
+// Just a helper to add content to ConversationLog
+private void AddToConvo(string content)
+{
+    ConversationLog.Add(content);
+}
+----
+
+Since HAL-9000 is not likely to listen to us, we also want to have the suggestion come
+from a fellow robot. We want a field to put in the robot's name. Let's add a property:
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+/// <summary>
+/// The name of a robot. If the name is null or empty, there is no other robot present.
+/// </summary>
+[ObservableProperty] 
+private string? _robotName;
+----
+
+TIP: Learn more about the https://learn.microsoft.com/de-de/dotnet/communitytoolkit/mvvm/generators/observableproperty[[`ObservableProperty`\]]-attribute.
+
+=== Step 2: Create the "Open the POD bay doors" - Command
+
+In the `ViewModel` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class, because it is more flexible. For example You can easily replace it with an async implementation if you need to.
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+/// <summary>
+/// This command will ask HAL-9000 to open the pod bay doors
+/// </summary>
+public ICommand OpenThePodBayDoorsDirectCommand { get; }
+----
+
+Now we will create a method which will be executed when the `Command` is invoked:
+
+HAL responds to the human named "Dave" that he can't do that.
+This is a famous line from the movie.
+
+.OpenThePodBayDoorsDirectCommand.cs
+[source,csharp]
+----
+// The method that will be executed when the command is invoked
+private void OpenThePodBayDoors()
+{    
+    ConversationLog.Clear();
+    AddToConvo( "I'm sorry, Dave, I'm afraid I can't do that.");
+}
+----
+
+Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create())\]`] method which will take a method or a lambda as parameter.
+
+.OpenThePodBayDoorsDirectCommand.cs
+[source,csharp]
+----
+public ReactiveUiCommandsViewModel()
+{
+    // Init OpenThePodBayDoorsDirectCommand    
+    OpenThePodBayDoorsDirectCommand = new RelayCommand(OpenThePodBayDoors);
+}
+----
+
+=== Step 3: Create the "Fellow Robot" - Command
+
+Perhaps we will have more luck if the command is given by a fellow robot.
+
+This `Command` is very similar to the one above. This time we will use a `CommandParameter` which is the name of another robot, but in fact it can be any `object` depending on your needs. We will also use the `CommandParameter` to enable or disable the `Command`, depending on the state of the parameter. Instead of initializing from the constructor, we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`RelayCommand`\]]-attribute
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+/// <summary>
+/// This command will ask HAL to open the pod bay doors, but this time we
+/// check that the command is issued by a fellow robot (really any non-null name)
+/// </summary>
+/// <remarks>
+/// We use the provided <see href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand">source generator</see>,
+/// since this is quite convenient. We just have to add the <c>[RelayCommand]</c>-attribute.
+/// Please visit the docs for more info about this.
+/// </remarks>
+[RelayCommand(CanExecute = nameof(CanRobotOpenTheDoor))]
+private void OpenThePodBayDoorsFellowRobot(string? robotName)
+{
+    ConversationLog.Clear();
+    AddToConvo($"Hello {robotName}, the Pod Bay is open :-)");
+}
+
+/// <summary>
+/// Check if the Robot can open the door (it needs to have a valid name)
+/// </summary>
+/// <returns>true if the robot has a name</returns>
+private bool CanRobotOpenTheDoor() => !string.IsNullOrWhiteSpace(RobotName);
+----
+
+As you can see above we have also introduced a method called `CanRobotOpenTheDoor` which is used to enable or disable the command. However, we need to actively trigger the command invalidation. That can be done via `MyCommand.NotifyCanExecuteChanged()` or via the `[NotifyCanExecuteChangedFor]`-attribute, which we will add to our `RobotName`-property:
+
+.CommunityToolkitCommandsViewModel.cs
+[source,diff]
+----
+    [ObservableProperty] 
++   [NotifyCanExecuteChangedFor(nameof(OpenThePodBayDoorsFellowRobotCommand))]
+    private string? _robotName;
+----
+
+=== Step 4: Create "Open the Pod Bay sequence" - Async Command
+
+Many operations have multiple steps and we want to keep the user interface responsive while
+we wait for sequence of operations to complete. One way to do this in `C#` is to use https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/[[`async / await`\]] in combination with https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0[[`Tasks`\]] to run things in the background while not blocking the UI.
+
+Let's add the `Command` and the `Task` to our `ViewModel`:
+
+.CommunityToolkitCommandsViewModel.cs
+[source,csharp]
+----
+/// <summary>
+/// This command will start an async task for the multi-step Pod bay opening sequence
+/// </summary>
+/// <remarks>
+/// This method is an async Task because opening the pod bay doors can take long time.
+/// We don't want our UI to become unresponsive.
+/// </remarks>
+[RelayCommand]
+private async Task OpenThePodBayDoorsAsync()
+{
+    ConversationLog.Clear();
+    AddToConvo("Preparing to open the Pod Bay...");
+    // wait a second
+    await Task.Delay(1000);
+
+    AddToConvo("Depressurizing Airlock...");
+    // wait 2 seconds
+    await Task.Delay(2000);
+
+    AddToConvo("Retracting blast doors...");
+    // wait 2 more seconds
+    await Task.Delay(2000);
+
+    AddToConvo("Pod Bay is open to space!");
+}
+----
+
+TIP: When you execute this command, notice that the `Button` is disabled until the `Task` is finished, so you can't ask for the pod bay doors to open again while the opening sequence is running. A more complete program could keep track of the state of the Pod Bay and change the button to "close".
+
+=== Step 5: Setting up the User Interface
+
+Add a new `UserControl` into the `Views` folder called `CommunityToolkitCommandsSampleView`. The content will be the same as in the above sample, see <<Solution1-Step6, Solution 1, Step 6>>
+
+Only thing we need to change is the `ViewModel`-reference:
+
+.CommunityToolkitCommandsSampleView.axaml
+[source,diff]
+----
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:CommandSample.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+!            x:DataType="viewModels:CommunityToolkitCommandsViewModel"
+             x:Class="CommandSample.Views.CommunityToolkitCommandsSampleView">
+
+    <Design.DataContext>
+!       <viewModels:CommunityToolkitCommandsViewModel/>
+    </Design.DataContext>
+----
+
+The `UserControl` itself will be added into the file `Views ► MainWindow` or `MainView`, depending on the template used to create this App.
+
+.MainWindow.axaml
+[source,xml]
+----
+<TabControl>
+	<TabItem Header="ReactiveUI">
+		<views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" />
+	</TabItem>
+    <TabItem Header="CommunityToolkit-MVVM">
+        <views:CommunityToolkitCommandsSampleView DataContext="{Binding CommunityToolkitCommandsViewModel}" />
+    </TabItem>
+</TabControl>
+----
+
+
+=== Step 6: See it in action
+
+Refer to <<_step_7_see_it_in_action>>
+
+image::_docs/command_sample_result.gif[Result]
+
 == Related 
 
-Beside the `ReactiveCommands` from `Reactive UI`, you can also try out other `ICommand` implementations. Here are a few to try: 
+Beside the options shown above, you can also try out other `ICommand` implementations. Here are a few to try: 
 
-- https://docs.microsoft.com/en-us/windows/communitytoolkit/[[RelayCommand\]] from the `MVVM Toolkit`
 - https://prismlibrary.com/docs/commands/commanding.html[[DelegateCommand\]] from `Prism Library`
+- https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-to-a-command-without-reactiveui[[Avalonia can bind to methods\]]

@@ -16,6 +16,10 @@ namespace ValidationSample.ViewModels
             get { return _EMail; }
             set 
             {
+                /* TIP:
+                 Depending on your IDE-Settings the debugger may stop execution when the `Exception` is hit.
+                 You can safely click `Resume` or `Mute and Resume` since the exception will be handled by Avalonia. */
+                
                 // The field may not be null or empty
                 if (string.IsNullOrEmpty(value))
                 {

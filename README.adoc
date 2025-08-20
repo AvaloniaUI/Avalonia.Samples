@@ -26,17 +26,17 @@ Or file a new bug-report or feature request in the https://github.com/AvaloniaUI
 [#_organization_of_the_samples]
 == 📂 Organization of the Samples
 
-Every sample can be found in its own sub-folder and can run without any reference to another sample.Nevertheless we have a `*.sln`-File which has all projects in one solution, if you are looking for a complete collection of samples.
+Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.sln`-file which has all projects in one solution, if you are looking for a complete collection of samples.
 
-You can find the list of samples <<samples,below>>.The samples are structured in different categories and difficulties.For better search results, each sample is also tagged with some **buzz-words**.
+You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
 
-In every sample folder you will find a `README`-File, which describes the sample in detail and, if applicable, has links to further information and documentation.
+In every sample folder you will find a `README`-file, which describes the sample in detail and, if applicable, has links to further information and documentation.
 
 
 [#_difficulties]
 === 🐣 Difficulties
 
-Each sample is tagged with it's difficulty.The degree of difficulty describes how much base-knowledge a user should have.
+Each sample is tagged with its difficulty. The degree of difficulty describes how much base-knowledge a user should have.
 
 
 [cols="1,1,2"]
@@ -44,13 +44,13 @@ Each sample is tagged with it's difficulty.The degree of difficulty describes ho
 | 🔘 | Difficulty  | Degree of knowledge
 
 | 🐣 | Beginner
-| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory
+| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory.
 
 | 🐥 | Easy
-| Some very basic knowledge of Avalonia is needed
+| Some very basic knowledge of Avalonia is needed.
 
 | 🐔 | Normal
-| The user is somewhat experienced with Avalonia
+| The user is somewhat experienced with Avalonia.
 
 | 🐉 | Hard
 | These samples are focusing on non-standard tasks, which most users will not need to know.
@@ -215,56 +215,59 @@ Each sample is tagged with it's difficulty.The degree of difficulty describes ho
 | 🐥 Easy
 | ToDo-List, Complete App, MVVM, CommunityToolkit.MVVM, Source Generator, Styles, Commands
 
+| link:src/Avalonia.Samples/CompleteApps/Avalonia.MusicStore[Music Store App]
+| 🐥 Easy
+| Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, Commands, iTunes Api
 |===
 
 
 [#_contribution]
 == 🪛 Contribution
 
-Is Anything missing?Have you found an error?Have you found an outdated sample?Or do you have a great idea?
+Is anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea?
 
-Fantastic!Your contribution is welcome.
+Fantastic! Your contribution is welcome.
 
-NOTE: Before you start, make sure you have read the Code of Conduct
+NOTE: Before you start, make sure you have read the Code of Conduct.
 
 === Code of Conduct
-This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct]
+This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the https://dotnetfoundation.org/code-of-conduct[Contributor Covenant Code of Conduct].
 
 [#_issues_and_feature_requests]
 === Issues and Feature Requests
-If you file a new issue or feature request please fill in the templates available.If you found an issue in an existing sample, please link the sample and if possible the point us to what is wrong.
+If you file a new issue or feature request, please fill in the templates available. If you found an issue in an existing sample, please link the sample and, if possible, point us to what is wrong.
 
 [#_pull_requests]
 === Pull Requests
 
-NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end.If you are not sure, please <<get-in-touch>> first.Anyway, every contribution is welcome.
+NOTE: Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <<get-in-touch>> first. Anyway, every contribution is welcome.
 
 [#_fixing_an_existing_sample]
 ==== Fixing an existing sample
 
-If you find that in an existing sample, that something is unclear or missing, you can update this sample and file a pull request.Also spelling mistakes or wrong wording can be changed and a pull request can be send.
+If you find that in an existing sample, that something is unclear or missing, you can update the sample and file a pull request. Spelling mistakes or wrong wording can also be changed in a pull request.
 
 IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page.
 
 [#_adding_a_new_sample]
 ==== Adding a new sample
 
-. Add a new Project to the Solution `src ► Avalonia.Samples ► Avalonia.Samples.sln`
-. In the root directory of the new sample add a `ReadMe`-file.We highly suggest to use the template which you can find here:
-.. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest to use the https://asciidoc.org[ascii-doc]-template.
-.. link:/_docs/Markdown-Template/[Markdown-Template]: If you don't like option a), you can use also the Markdown-template.
+. Add a new Project to the Solution: `src ► Avalonia.Samples ► Avalonia.Samples.sln`
+. In the root directory of the new sample add a `README`-file. We highly suggest using a template which you can find here:
+.. link:/_docs/AsciiDoc-Template/[AsciiDoc-Template]: If you want to provide richer content, we suggest using the https://asciidoc.org[ascii-doc]-template.
+.. link:/_docs/Markdown-Template/[Markdown-Template]: If you prefer not to use AsciiDoc, you can instead use the Markdown-template.
 
-// Comment this in for next years hacktober fest
+// Comment this in for next year's Hacktoberfest
 //// 
 === 🎃 Hacktoberfest 2023
 
-We are participating in https://hacktoberfest.com[[Hacktoberfest 2023\]]. If you submit a valid pull request within this month, we will add the `HACKTOBERFEST-ACCEPTED` label to your PR. Read more about it and how to participate https://hacktoberfest.com/participation/[[here\]]
+We are participating in https://hacktoberfest.com[[Hacktoberfest 2023\]]. If you submit a valid pull request within this month, we will add the `HACKTOBERFEST-ACCEPTED` label to your PR. Read more about it and how to participate https://hacktoberfest.com/participation/[[here\]].
 
 Valid PRs are::
 - Adding a new sample
 - Fixing an existing sample
-- Improve an existing sample
-- Do an overall spell-check (Not just changing a random word!)
+- Improving an existing sample
+- Doing an overall spell-check (Not just changing a random word!)
 
 WARNING: Spam or invalid PRs will be marked as invalid. If you are unsure if your PR will be accepted for Hacktoberfest, you can ask us here or in the image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia]. 
 
