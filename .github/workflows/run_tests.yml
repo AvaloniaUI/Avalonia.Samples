@@ -8,10 +8,8 @@ jobs:
     name: Build all projects to test the code
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: true
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '9.0.x'
       - name: Run build script
-        run: ./scripts/builder.ps1
+        run: ./scripts/builder.ps1 './src/'
