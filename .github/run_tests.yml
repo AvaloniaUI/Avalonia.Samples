@@ -12,4 +12,4 @@ jobs:
         with:
           dotnet-version: '9.0.x'
       - name: Run build script
-        run: ./scripts/builder.ps1
+        run: ./scripts/builder.ps1 './src/'
