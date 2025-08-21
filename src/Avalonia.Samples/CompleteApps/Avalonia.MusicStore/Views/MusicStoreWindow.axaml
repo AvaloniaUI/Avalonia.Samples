@@ -10,6 +10,7 @@
         ExtendClientAreaToDecorationsHint="True"
         Width="1000" Height="550"
         WindowStartupLocation="CenterOwner">
+
   <Panel>
     <ExperimentalAcrylicBorder IsHitTestVisible="False">
       <ExperimentalAcrylicBorder.Material>
@@ -24,5 +25,8 @@
     <Panel Margin="40">
       <views:MusicStoreView />
     </Panel>
+
+ <WindowNotificationManager x:Name="NotificationManager"
+                               Position="TopRight" />
   </Panel>
 </Window>
