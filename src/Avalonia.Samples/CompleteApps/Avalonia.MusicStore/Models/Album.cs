@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -8,7 +9,9 @@ using iTunesSearch.Library;
 
 namespace Avalonia.MusicStore.Models
 {
-    public class Album
+    // We use a record for Album since it helps to encapsulate data. 
+    // See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record 
+    public record Album
     {
         private static iTunesSearchManager s_SearchManager = new();
         private static HttpClient s_httpClient = new();
@@ -67,7 +70,7 @@ namespace Avalonia.MusicStore.Models
                 if ((new DirectoryInfo(file).Extension) != ".json")
                     continue;
 
-                await using var fs = File.OpenRead(file);
+                await using var fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
                 results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
             }
 
@@ -81,7 +84,7 @@ namespace Avalonia.MusicStore.Models
         {
             if (File.Exists(CachePath + ".bmp"))
             {
-                return File.OpenRead(CachePath + ".bmp");
+                return File.Open(CachePath + ".bmp", FileMode.Open,  FileAccess.Read, FileShare.Read);
             }
             else
             {
