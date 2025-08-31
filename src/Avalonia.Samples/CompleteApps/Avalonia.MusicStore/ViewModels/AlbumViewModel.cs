@@ -29,6 +29,10 @@ namespace Avalonia.MusicStore.ViewModels
         {
             try
             {
+                // We wait a few ms to demonstrate that the images are loaded in the background. 
+                // Remove this line in production.
+                await Task.Delay(200);
+                
                 await using (var imageStream = await _album.LoadCoverBitmapAsync())
                 {
                     return await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));

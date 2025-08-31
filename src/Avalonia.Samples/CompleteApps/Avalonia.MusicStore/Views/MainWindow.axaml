@@ -46,6 +46,12 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
       </ScrollViewer>
+      
+      <TextBlock Text="No album bought yet. Use the button at the top right corner to buy your first album."
+                 IsVisible="{Binding !Albums.Count}"
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Center"
+                 TextAlignment="Center"/>
     </Panel>
   </Panel>
 
