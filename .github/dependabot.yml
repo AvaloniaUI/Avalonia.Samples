@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/src/Avalonia.Samples" # Location of package manifests
+    directory: "/src/Avalonia.Samples/" # Location of package manifests
     schedule:
       interval: "daily"
     target-branch: "Dependabot"
