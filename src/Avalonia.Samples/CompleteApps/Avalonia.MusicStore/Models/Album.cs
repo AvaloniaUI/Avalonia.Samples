@@ -9,7 +9,9 @@ using iTunesSearch.Library;
 
 namespace Avalonia.MusicStore.Models
 {
-    public class Album : IEquatable<Album> 
+    // We use a record for Album since it helps to encapsulate data. 
+    // See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record 
+    public record Album
     {
         private static iTunesSearchManager s_SearchManager = new();
         private static HttpClient s_httpClient = new();
@@ -135,36 +137,6 @@ namespace Avalonia.MusicStore.Models
         private static async Task SaveToStreamAsync(Album data, Stream stream)
         {
             await JsonSerializer.SerializeAsync(stream, data).ConfigureAwait(false);
-        }
-
-        public bool Equals(Album? other)
-        {
-            if (other is null) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Artist == other.Artist && Title == other.Title;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Album)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Artist, Title);
-        }
-
-        public static bool operator ==(Album? left, Album? right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(Album? left, Album? right)
-        {
-            return !Equals(left, right);
         }
     }
 }
