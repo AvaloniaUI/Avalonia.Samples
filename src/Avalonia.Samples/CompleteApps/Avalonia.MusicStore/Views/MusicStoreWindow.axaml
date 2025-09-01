@@ -11,15 +11,7 @@
         Width="1000" Height="550"
         WindowStartupLocation="CenterOwner">
   <Panel>
-    <ExperimentalAcrylicBorder IsHitTestVisible="False">
-      <ExperimentalAcrylicBorder.Material>
-        <ExperimentalAcrylicMaterial
-          BackgroundSource="Digger"
-          TintColor="Black"
-          TintOpacity="1"
-          MaterialOpacity="0.65" />
-      </ExperimentalAcrylicBorder.Material>
-    </ExperimentalAcrylicBorder>
+
 
     <Panel Margin="40">
       <views:MusicStoreView />

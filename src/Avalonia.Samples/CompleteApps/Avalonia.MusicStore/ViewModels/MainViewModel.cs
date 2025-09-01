@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.MusicStore.Dialogs;
 using Avalonia.MusicStore.Messages;
 using Avalonia.MusicStore.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,11 +11,11 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class MainWindowViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject, IDialogParticipant
     {
         public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
-        public MainWindowViewModel()
+        public MainViewModel()
         {
             LoadAlbums();
         }
@@ -24,7 +26,8 @@ namespace Avalonia.MusicStore.ViewModels
         [RelayCommand]
         private async Task AddAlbumAsync()
         {
-            var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+            var album = await this.ShowDialogWindowAsync<AlbumViewModel>(new MusicStoreViewModel(Albums));
+
             if (album is not null)
             {
                 Albums.Add(album);
@@ -42,8 +45,6 @@ namespace Avalonia.MusicStore.ViewModels
             {
                 Albums.Add(album);
             }
-            var coverTasks = albums.Select(album => album.LoadCover());
-            await Task.WhenAll(coverTasks);
         }
     }
 }
