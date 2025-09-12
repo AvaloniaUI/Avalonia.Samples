@@ -1,4 +1,6 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.MusicStore.Messages;
 using Avalonia.MusicStore.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,19 +12,6 @@ namespace Avalonia.MusicStore.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            if (Design.IsDesignMode)
-                return;
-
-            WeakReferenceMessenger.Default.Register<MainWindow, PurchaseAlbumMessage>(this, static (w, m) =>
-            {
-                var dialog = new MusicStoreWindow
-                {
-                    DataContext = new MusicStoreViewModel()
-                };
-
-                m.Reply(dialog.ShowDialog<AlbumViewModel?>(w));
-            });
         }
     }
 }
