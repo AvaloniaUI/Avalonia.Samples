@@ -7,6 +7,8 @@ version: 2
 updates:
   - package-ecosystem: nuget
     directory: "/src/Avalonia.Samples/"
+    exclude-paths:
+      - "*.csproj"
     schedule:
       interval: "daily"
     groups:
