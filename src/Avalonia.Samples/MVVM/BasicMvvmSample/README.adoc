@@ -194,7 +194,7 @@ NOTE:: Depending on the template and setting used to create your project you may
 
 === Step 4: Setup the View 
 
-Now we can start with the UI layout. Our View will be written in [https://docs.avaloniaui.net/guides/basics/introduction-to-xaml[`XAML`,window=_blank]] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
+Now we can start with the UI layout. Our View will be written in [https://docs.avaloniaui.net/docs/basics/user-interface/introduction-to-xaml[`XAML`,window=_blank]] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
 
 ==== Setup the Window
 
@@ -416,6 +416,6 @@ Even though Avalonia ships ReactiveUI by default, you are not tied to it. You ca
 
 Are you looking for more advanced tutorials? Find them here: 
 
-- https://docs.avaloniaui.net/docs/tutorials/todo-list-app/[[ToDo List App\],window=_blank]
+- https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/[[ToDo List App\],window=_blank]
 - https://docs.avaloniaui.net/docs/tutorials/music-store-app/[[Music Store App\],window=_blank]
 - https://github.com/AvaloniaCommunity/awesome-avalonia#tutorials[[Awesome-Avalonia\],window=_blank]
