@@ -9,14 +9,20 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class MainWindowViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
         public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
-        public MainWindowViewModel()
+        public MainViewModel()
         {
             LoadAlbums();
+            
+            WeakReferenceMessenger.Default.Register<CheckAlbumAlreadyExistsMessage>(this, (v, m) =>
+            {
+                m.Reply(Albums.Contains(m.Album));
+            });
         }
+        
 
         /// <summary>
         /// This relay command send a message to initiate album purchase, adds the result to the collection and saves it to disk.
@@ -42,8 +48,6 @@ namespace Avalonia.MusicStore.ViewModels
             {
                 Albums.Add(album);
             }
-            var coverTasks = albums.Select(album => album.LoadCover());
-            await Task.WhenAll(coverTasks);
         }
     }
 }

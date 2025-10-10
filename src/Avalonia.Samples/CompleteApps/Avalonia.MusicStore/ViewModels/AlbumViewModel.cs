@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Avalonia.MusicStore.ViewModels
 {
-    public partial class AlbumViewModel : ViewModelBase
+    public partial class AlbumViewModel : ViewModelBase, IEquatable<AlbumViewModel>
     {
         private readonly Album _album;
 
@@ -18,16 +20,27 @@ namespace Avalonia.MusicStore.ViewModels
 
         public string Title => _album.Title;
 
-        [ObservableProperty] public partial Bitmap? Cover { get; private set; }
+        public Task<Bitmap?> Cover => LoadCoverAsync();
 
         /// <summary>
         /// Asynchronously loads and decodes the album cover image, then assigns it to <see cref="Cover"/>.
         /// </summary>
-        public async Task LoadCover()
+        private async Task<Bitmap?> LoadCoverAsync()
         {
-            await using (var imageStream = await _album.LoadCoverBitmapAsync())
+            try
             {
-                Cover = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                // We wait a few ms to demonstrate that the images are loaded in the background. 
+                // Remove this line in production.
+                await Task.Delay(200);
+                
+                await using (var imageStream = await _album.LoadCoverBitmapAsync())
+                {
+                    return await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -38,18 +51,36 @@ namespace Avalonia.MusicStore.ViewModels
         {
             await _album.SaveAsync();
 
-            if (Cover != null)
+            if (await LoadCoverAsync() is Bitmap cover)
             {
-                var bitmap = Cover;
-
                 await Task.Run(() =>
                 {
                     using (var fs = _album.SaveCoverBitmapStream())
                     {
-                        bitmap.Save(fs);
+                        cover.Save(fs);
                     }
                 });
             }
+        }
+
+        public bool Equals(AlbumViewModel? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _album.Equals(other._album);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((AlbumViewModel)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _album.GetHashCode();
         }
     }
 }

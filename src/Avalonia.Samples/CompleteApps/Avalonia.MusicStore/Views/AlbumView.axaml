@@ -7,14 +7,26 @@
              x:Class="Avalonia.MusicStore.Views.AlbumView"
              x:DataType="vm:AlbumViewModel"
              Width="200">
+  <UserControl.Resources>
+    <DrawingImage x:Key="CoverFallback">
+      <DrawingImage.Drawing>
+        <DrawingGroup >
+          <GeometryDrawing>
+            <RectangleGeometry  Rect="-2 -2 28 28" />
+          </GeometryDrawing>
+          <GeometryDrawing Brush="White" 
+                           Geometry="{DynamicResource music_regular}" />
+        </DrawingGroup>
+        
+      </DrawingImage.Drawing>
+    </DrawingImage>
+  </UserControl.Resources>
+  
   <StackPanel Spacing="5" Width="200">
-    <Border CornerRadius="10" ClipToBounds="True">
-      <Panel Background="#7FFF22DD">
-        <Image Width="200" Stretch="Uniform" Source="{Binding Cover}" />
-        <Panel Height="200" IsVisible="{Binding Cover, Converter={x:Static ObjectConverters.IsNull}}">
-          <PathIcon Height="75" Width="75" Data="{StaticResource music_regular}" />
-        </Panel>
-      </Panel>
+    <Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD">
+        <Image Width="200" Height="200"
+               Stretch="Uniform" 
+               Source="{Binding Cover^, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}" />
     </Border>
     <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" />
     <TextBlock HorizontalAlignment="Center" Text="{Binding Artist}" />
