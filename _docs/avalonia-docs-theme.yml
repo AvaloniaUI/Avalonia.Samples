@@ -1,0 +1,39 @@
+extends: default
+base:
+  font-color: #222222
+  background-color: #ffffff
+  line-height: 1.5
+  paragraph-margin-bottom: 12
+heading:
+  font-color: #0063b1
+  font-style: bold
+  h1-font-size: 22
+  h2-font-size: 17
+  h3-font-size: 13
+  h4-font-size: 11
+link:
+  font-color: #0063b1
+  font-style: underline
+  font-weight: bold
+  role:
+    hover:
+      font-color: #40bfff
+code:
+  font-color: #2d7d46
+  background-color: #f3f3f3
+  border-radius: 4
+quote:
+  font-color: #3a4a5a
+  background-color: #f6f7fa
+  border-color: #0063b1
+  border-width: 4
+  border-style: solid
+table:
+  head-background-color: #f0f2f5
+  border-color: #d1d5db
+  background-color: #f6f7fa
+admonition:
+  border-color: #0063b1
+  background-color: #f6f7fa
+  title-font-color: #0063b1
+  title-font-weight: bold
