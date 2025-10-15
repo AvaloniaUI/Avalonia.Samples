@@ -1,19 +1,11 @@
-font:
-  catalog:
-    merge: true
-  size: 12
-  family:
-  - "Segoe UI Emoji"
-  - "Segoe UI Symbol"
-  - "Segoe UI"
-  - "Arial"
-  - "sans-serif"
+extends: default
+base:
   font-color: #222222
   background-color: #ffffff
-  line-height: 1.2
-  paragraph-margin-bottom: 12px
+  line-height: 1.5
+  paragraph-margin-bottom: 12
 heading:
-  font-color: #1a1a1a
+  font-color: #0063b1
   font-style: bold
   h1-font-size: 22
   h2-font-size: 17
@@ -29,7 +21,6 @@ link:
 code:
   font-color: #2d7d46
   background-color: #f3f3f3
-  font-family: "Fira Mono"
   border-radius: 4
 quote:
   font-color: #3a4a5a
