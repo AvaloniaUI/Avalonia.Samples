@@ -126,13 +126,13 @@ Choose your favorite IDE to create a new Avalonia-MVVM project.
 
 NOTE: Depending on the IDE used to create your project, you may see a file structure that differs from the one seen in this tutorial.
 
-By default, the Avalonia-MVVM template installs `Avalonia.ReactiveUI` as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the `CommunityToolkit.Mvvm` package. We need to edit two files to get the changes applied:
+By default, the Avalonia-MVVM template installs `ReactiveUI.Avalonia` as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the `CommunityToolkit.Mvvm` package. We need to edit two files to get the changes applied:
 
 **Program.cs**:
 [source,diff]
 ----
     using Avalonia;
--   using Avalonia.ReactiveUI; // remove this using
+-   using ReactiveUI.Avalonia; // remove this using
     using System;
 
 [...]
