@@ -1,6 +1,6 @@
 using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
+using ReactiveUI.Avalonia;
 
 namespace CommandSample
 {
