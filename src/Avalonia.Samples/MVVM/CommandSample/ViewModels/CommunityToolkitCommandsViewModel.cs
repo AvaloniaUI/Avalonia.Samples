@@ -27,11 +27,9 @@ public partial class CommunityToolkitCommandsViewModel : ObservableObject // Not
     /// </summary>
     /// <remarks>
     /// Note: We use the interface ICommand here because this makes things more flexible.
-    /// </remarks> 
-    public ICommand OpenThePodBayDoorsDirectCommand { get; }
-
-    // The method that will be executed when the command is invoked
-    private void OpenThePodBayDoors()
+    /// </remarks>
+    [RelayCommand]
+    private void OpenThePodBayDoorsDirect()
     {
         ConversationLog.Clear();
         AddToConvo("I'm sorry, Dave, I'm afraid I can't do that.");
