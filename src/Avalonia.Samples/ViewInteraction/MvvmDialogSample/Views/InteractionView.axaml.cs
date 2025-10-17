@@ -1,10 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using Avalonia.ReactiveUI;
 using MvvmDialogSample.ViewModels;
 using ReactiveUI;
 using System.Linq;
 using System.Threading.Tasks;
+using ReactiveUI.Avalonia;
 
 namespace MvvmDialogSample.Views
 {
