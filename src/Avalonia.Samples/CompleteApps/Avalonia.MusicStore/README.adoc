@@ -88,7 +88,7 @@ A new project will be created with the following solution folders and files:
 .The basic structure of the created project
 image::_docs/2_rider_proj_structure.png[This is the structure of the creates project]
 
-NOTE: The file names may differ a little. For example "MainWindowViewModel.cs" may be named "MainViewModel.cs" depending on the IDE you are using.
+NOTE: The file names may differ a little. For example "MainViewModel.cs" may be named "MainViewModel.cs" depending on the IDE you are using.
 
 ==== Update Project Dependencies if needed
 
@@ -485,7 +485,7 @@ Below is a stripped down diagram showing the message flow between the components
 
 ```mermaid
 graph TD;
-    A[MainWindowViewModel] -->|Send PurchaseAlbumMessage| B(MainWindow)
+    A[MainViewModel] -->|Send PurchaseAlbumMessage| B(MainWindow)
     B -->|Show MusicStoreWindow<br>await AlbumViewModel| C[MusicStoreWindow]
     C -->|BuyMusic| D[MusicStoreViewModel]
     D -->|Send MusicStoreClosedMessage<br>with SelectedAlbum| C
@@ -588,8 +588,8 @@ public MainWindow()
 ```
 
 ==== Send the Message from the ViewModel
-Now, update the `AddAlbumAsync()` method inside `MainWindowViewModel` to send `PurchaseAlbumMessage` when the user clicks on the store button.
-- Open **MainWindowViewModel.cs**
+Now, update the `AddAlbumAsync()` method inside `MainViewModel` to send `PurchaseAlbumMessage` when the user clicks on the store button.
+- Open **MainViewModel.cs**
 - Locate the `AddAlbumAsync()` method that we added in the previous steps.
 - Edit `AddAlbumAsync()` as shown:
 ```csharp
@@ -1528,10 +1528,10 @@ private bool CanBuyMusic() => SelectedAlbum != null;
 [NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
 public partial AlbumViewModel? SelectedAlbum { get; set; }
 ```
-==== Implement the Album Existence Check in MainWindowViewModel
-The MainWindowViewModel will handle the `CheckAlbumAlreadyExistsMessage` to determine if the selected album is already in the user's collection. To do this, you will implement a message handler that checks the observable collection of albums for the presence of the selected album.
+==== Implement the Album Existence Check in MainViewModel
+The MainViewModel will handle the `CheckAlbumAlreadyExistsMessage` to determine if the selected album is already in the user's collection. To do this, you will implement a message handler that checks the observable collection of albums for the presence of the selected album.
 
-In the **MainWindowViewModel.cs** file, add the following code to the constructor:
+In the **MainViewModel.cs** file, add the following code to the constructor:
 ```csharp
 public MainViewModel()
 {
@@ -1586,8 +1586,6 @@ Your next step is bind the **Buy Album** button to the relay command in the musi
 
 You will see the dialog close, but nothing happens in the main window! 
 
-// Todo: Continue here...
-
 === Add Items to the User's Collection
 
 On this page you will implement a collection of albums that the user has selected using the search dialog and the **Buy Album** button, and display them in the main window.
@@ -1599,9 +1597,9 @@ Your first step here is to add an observable collection to the main window view 
 Follow this procedure:
 
 - Stop the app if it is running.
-- Locate and open the **MainWindowViewModel.cs** file.
+- Locate and open the **MainViewModel.cs** file.
 - Add an observable collection, as shown:
-
++
 ```csharp
 public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 ```
@@ -1610,7 +1608,7 @@ public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
 Your next step is to alter the `AddAlbumAsync` command so that it adds the dialog return object (an `AlbumViewModel`) to the observable collection. Follow this procedure:
 
-- In the same **MainWindowViewModel.cs** file update the `AddAlbumAsync()` command method:
+- In the same **MainViewModel.cs** file update the `AddAlbumAsync()` command method:
 
 ```csharp
 [RelayCommand]
@@ -1632,13 +1630,13 @@ To add the items control and its data template, follow this procedure:
 
 - Locate and open the **MainWindow.axaml** file.
 - Add the following namespace declaration to the `<Window>` element:
-
++
 ```xml
 xmlns:views="clr-namespace:Avalonia.MusicStore.Views"
 ```
 
 - Under the button element, add the XAML as shown:
-
++
 ```xml
 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 40 0 0">
   <ItemsControl ItemsSource="{Binding Albums}">
@@ -1664,6 +1662,7 @@ xmlns:views="clr-namespace:Avalonia.MusicStore.Views"
 - Click **Buy Album**.
 - Repeat another time.
 
+.Showing the user's album collection in the main window
 image::_docs/21_user_album_collection.png[User's bought albums]
 
 You will see the user's album collection building as you search and select. However, if you stop the app running and then start it again, the collection reverts to empty.
@@ -1682,7 +1681,7 @@ Follow this procedure to add persistence services (save and load) to the album m
 - Stop the app if it is running.
 - Locate and open the **Album.cs** file in the **/Models** folder.
 - Add the code to implement save to disk, as shown:
-
++
 ```csharp
 public async Task SaveAsync()
 {
@@ -1709,7 +1708,7 @@ private static async Task SaveToStreamAsync(Album data, Stream stream)
 ```
 
 - Add the code to implement load from disk, as shown:
-
++
 ```csharp
 public static async Task<Album> LoadFromStream(Stream stream)
 {
@@ -1727,7 +1726,8 @@ public static async Task<IEnumerable<Album>> LoadCachedAsync()
 
     foreach (var file in Directory.EnumerateFiles("./Cache"))
     {
-        if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension)) continue;
+        if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension)) 
+            continue;
 
         await using var fs = File.OpenRead(file);
         results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
@@ -1741,9 +1741,9 @@ public static async Task<IEnumerable<Album>> LoadCachedAsync()
 
 Your next step is to add a method to the album view model that it can call the business service persistence save methods:
 
-`SaveAsync` - persists the album text data as a JSON file,
+SaveAsync:: persists the album text data as a JSON file,
 
-`SaveCoverBitmapStream` - saves the cover art as a bitmap (.BMP) file.
+SaveCoverBitmapStream:: saves the cover art as a bitmap (.BMP) file.
 
 To alter the album view model , follow this procedure:
 
@@ -1755,7 +1755,7 @@ public async Task SaveToDiskAsync()
 {
     await _album.SaveAsync();
 
-    if (Cover != null)
+    if (await LoadCoverAsync() is Bitmap cover)
     {
         var bitmap = Cover;
 
@@ -1763,7 +1763,7 @@ public async Task SaveToDiskAsync()
         {
             using (var fs = _album.SaveCoverBitmapStream())
             {
-                bitmap.Save(fs);
+                cover.Save(fs);
             }
         });
     }
@@ -1778,7 +1778,7 @@ Lastly, you will call the new album view model persistence method `SaveToDiskAsy
 
 To alter the main window view model, follow this procedure:
 
-- Locate and open the **MainWindowViewModel.cs** file.
+- Locate and open the **MainViewModel.cs** file.
 - Add the code `await result.SaveToDiskAsync();` as shown below.
 
 Your code to initialize the relay command will now look like this:
@@ -1837,7 +1837,7 @@ You have already added code to the business service that can load both the files
 Follow this procedure to add a method to load the user's album collection from disk:
 
 - Stop the app if it is running
-- Locate and open the **MainWindowViewModel.cs** file.
+- Locate and open the **MainViewModel.cs** file.
 - Add the code as shown:
 
 ```csharp
@@ -1848,23 +1848,18 @@ private async void LoadAlbums()
     {
         Albums.Add(album);
     }
-    var coverTasks = albums.Select(album => album.LoadCover());
-    await Task.WhenAll(coverTasks);
 }
-
 ```
 
 As you can see this method uses the business service to load the list of albums from the disk cache. It then transforms each data model (`Album` class) into a view model (`AlbumViewModel` class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.
 
-You will notice that after the JSON album files are loaded, the second loop loads the cover art image files. This provides your user with visual feedback as quickly as possible (in the form of album tiles with text and the placeholder music note icon) about what albums are in the collection. The cover art is then loaded asynchronously. This ensures that the app remains responsive during the image loading process.
-
 Your next step is to schedule the `LoadAlbum` method to run when the app starts:
 
-- Keep the **MainWindowViewModel.cs** file open.
-- Call LoadAlbums() from the MainWindowViewModel constructor:
+- Keep the **MainViewModel.cs** file open.
+- Call LoadAlbums() from the MainViewModel constructor:
 
 ```csharp
-public MainWindowViewModel()
+public MainViewModel()
 {
     LoadAlbums();
 }
@@ -1873,6 +1868,7 @@ With this change, now the app will automatically load previously added albums ev
 
 - Click **Debug** to compile and run the project.
 
+.Well done, this is the final result of the Music Store App tutorial
 image::_docs/22_final_result.png[Final result]
 
 === Conclusion
