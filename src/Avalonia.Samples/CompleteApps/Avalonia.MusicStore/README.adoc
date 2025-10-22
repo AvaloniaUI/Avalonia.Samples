@@ -432,6 +432,7 @@ namespace Avalonia.MusicStore.ViewModels
     }
 }
 ```
+
 ==== How it works
 The `[RelayCommand]` attribute generates a public property for you at compile time named `AddAlbumCommand`, which implements `ICommand`.
 
@@ -1460,6 +1461,7 @@ public class NotificationMessage
     public string Message { get; }
 }
 ```
+
 ==== Register the Message Handlers in MusicStoreWindow
 To close the dialog and return the selected album to the main window, you’ll register a handler that listens for a `MusicStoreClosedMessage`. In addition we add a handler that can show notification messages to the user, in case the album already exists in the user's collection.
 - Locate and open the **MusicStoreWindow.axaml.cs** file.
@@ -1529,6 +1531,7 @@ private bool CanBuyMusic() => SelectedAlbum != null;
 [NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
 public partial AlbumViewModel? SelectedAlbum { get; set; }
 ```
+
 ==== Implement the Album Existence Check in MainViewModel
 The MainViewModel will handle the `CheckAlbumAlreadyExistsMessage` to determine if the selected album is already in the user's collection. To do this, you will implement a message handler that checks the observable collection of albums for the presence of the selected album.
 
@@ -1875,7 +1878,6 @@ image::_docs/22_final_result.png[Final result]
 === Conclusion
 
 In this tutorial you have seen how _Avalonia UI_ can be used to create a highly graphical desktop app.
-For the full source code of the Music Store App tutorial, visit the [GitHub repository](https://github.com/AvaloniaUI/MusicStoreTutorial).
 
 ==== Application Solution Architecture
 
