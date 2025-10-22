@@ -72,6 +72,8 @@ TIP: Some sections are optional. You can skip these if you want to.
 === MVVM pattern
 For information and background on the concept of the MVVM pattern, refer to the official documentation link:https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/[[here\]].
 
+=== Messengers
+This tutorial uses the messaging features of the CommunityToolkit.Mvvm to manage communication between view models and views. This is one approach to share data between different classes, without "knowing each other". If you are not familiar with it, you can read about it in the official documentation link:https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/messenger[[here\]].
 
 == The Solution
 
@@ -562,7 +564,6 @@ In _MainWindow.axaml.cs_ register a handler for `PurchaseAlbumMessage`. This han
 - Assign `MusicStoreViewModel` as its DataContext.
 - Call `ShowDialog<AlbumViewModel?>` and pass the result back via m.Reply(...).
 
-// TODO: Add Messages to the "Bevore we start section"
 
 Open _MainWindow.axaml.cs_ and add the following code into MainWindow constructor:
 ```csharp
