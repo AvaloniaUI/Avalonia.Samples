@@ -1,4 +1,4 @@
-extends: default
+extends: default-with-font-fallbacks
 base:
   font-color: #222222
   background-color: #ffffff
