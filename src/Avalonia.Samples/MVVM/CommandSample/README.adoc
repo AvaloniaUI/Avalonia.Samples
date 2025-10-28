@@ -494,44 +494,28 @@ TIP: Learn more about the https://learn.microsoft.com/de-de/dotnet/communitytool
 
 === Step 2: Create the "Open the POD bay doors" - Command
 
-In the `ViewModel` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class, because it is more flexible. For example You can easily replace it with an async implementation if you need to.
+In the `ViewModel`, we use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`RelayCommand`\]] attribute to create commands.
+The https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`RelayCommand`\]] attribute instructs the MVVM Toolkit to automatically generate an `IRelayCommand` property that wraps the annotated method.
+Even though you don’t write this property yourself, you can bind to it directly from XAML because it’s generated automatically at compile time.
+
+Now we will create a method which will be executed when the `RelayCommand` is invoked.
 
 .CommunityToolkitCommandsViewModel.cs
 [source,csharp]
 ----
 /// <summary>
-/// This command will ask HAL-9000 to open the pod bay doors
-/// </summary>
-public ICommand OpenThePodBayDoorsDirectCommand { get; }
-----
-
-Now we will create a method which will be executed when the `Command` is invoked:
-
-HAL responds to the human named "Dave" that he can't do that.
-This is a famous line from the movie.
-
-.OpenThePodBayDoorsDirectCommand.cs
-[source,csharp]
-----
-// The method that will be executed when the command is invoked
-private void OpenThePodBayDoors()
+/// The method that will be executed when the RelayCommand is invoked.
+/// HAL responds to the human named "Dave" that he can't do that. 
+/// This is a famous line from the movie.
+/// <summary>
+[RelayCommand]
+private void OpenThePodBayDoorsDirect()
 {    
     ConversationLog.Clear();
     AddToConvo( "I'm sorry, Dave, I'm afraid I can't do that.");
 }
 ----
 
-Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create())\]`] method which will take a method or a lambda as parameter.
-
-.OpenThePodBayDoorsDirectCommand.cs
-[source,csharp]
-----
-public ReactiveUiCommandsViewModel()
-{
-    // Init OpenThePodBayDoorsDirectCommand    
-    OpenThePodBayDoorsDirectCommand = new RelayCommand(OpenThePodBayDoors);
-}
-----
 
 === Step 3: Create the "Fellow Robot" - Command
 
