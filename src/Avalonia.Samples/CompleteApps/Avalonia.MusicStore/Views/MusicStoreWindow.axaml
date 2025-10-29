@@ -26,7 +26,7 @@
       <views:MusicStoreView />
     </Panel>
 
- <WindowNotificationManager x:Name="NotificationManager"
-                               Position="TopRight" />
+  <WindowNotificationManager x:Name="NotificationManager"
+                             Position="TopRight" />
   </Panel>
 </Window>
