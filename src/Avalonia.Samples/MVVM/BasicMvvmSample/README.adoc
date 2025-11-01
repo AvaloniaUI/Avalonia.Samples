@@ -1,20 +1,37 @@
 = Basic MVVM Sample
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 
 This sample will show you how you can use the `MVVM`-pattern to receive and process text input by the user. Our sample App will have one `TextBox` where the users can enter their name and another `TextBox` where we will present some personal greetings.
 
 toc::[]
 
+
+[discrete]
 === Difficulty
 
 🐣 Beginner 🐣
 
+
+[discrete]
 === Buzz-Words
 
 MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding

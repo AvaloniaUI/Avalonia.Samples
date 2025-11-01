@@ -1,7 +1,13 @@
 = Simple ToDo-List
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -10,6 +16,12 @@ ifdef::env-github[]
 :caution-caption: :fire:
 :warning-caption: :warning:
 endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+
+
 // ----------------------------------------------------------
 
 
@@ -24,12 +36,14 @@ toc::[]
 // ---------------------------------------------------------
 
 
+[discrete]
 === Difficulty
 // Choose one of the below difficulties. You can just delete the ones you don't need.
 
 🐥 Easy 🐥
 
 
+[discrete]
 === Buzz-Words
 
 // Write some buzzwords here. You can separate them by ", "
