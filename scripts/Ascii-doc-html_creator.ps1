@@ -7,6 +7,7 @@ param(
 )
 
 $themePath = Join-Path -Path (Resolve-Path ../_docs) -ChildPath "avalonia-docs-theme.css"
+$favIconPath = Join-Path -Path (Resolve-Path ../_docs) -ChildPath "_Assets/Logo.svg"
 
 # Find all .adoc files recursively
 if ($InputFiles -and $InputFiles.Count -gt 0) {
@@ -16,5 +17,5 @@ if ($InputFiles -and $InputFiles.Count -gt 0) {
 }
 
 foreach ($file in $adocFiles) {
-    asciidoctor "$($file.FullName)" -a source-highlighter=rouge -a stylesheet=$themePath --verbose
+    asciidoctor "$($file.FullName)" -a source-highlighter=rouge -a stylesheet=$themePath -a favicon=$favIconPath --verbose
 }
