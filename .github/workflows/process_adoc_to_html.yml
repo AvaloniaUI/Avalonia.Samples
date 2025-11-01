@@ -21,4 +21,4 @@ jobs:
       - name: Run
         run: |
           cd ./scripts/ 
-          Ascii-doc-html_creator.ps1
+          ./Ascii-doc-html_creator.ps1
