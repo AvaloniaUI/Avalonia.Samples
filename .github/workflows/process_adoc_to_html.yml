@@ -1,0 +1,23 @@
+name: Build or Update HTML from AsciiDoc
+
+on: 
+  push:
+    branches:
+      - main
+      - housekeeping/*
+
+jobs:  
+  run_html_build:
+    runs-on: windows-latest
+    name: Build HTML from AsciiDoc
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+      - name: install_Asciidoctor
+        run: gem install asciidoctor |
+             gem install asciidoctor-diagram |
+             gem install rouge
+      - name: Run script
+        run: ./scripts/Ascii-doc-html_creator.ps1
