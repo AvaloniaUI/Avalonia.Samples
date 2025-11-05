@@ -22,3 +22,13 @@ jobs:
         run: |
           cd ./scripts/ 
           ./Ascii-doc-html_creator.ps1
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: update asciidoc html files
+          title: Update Html from AsciiDoc
+          body: Updated HTML files generated from AsciiDoc sources.
+          branch: update-asciidoc-html
+          base: main
+
