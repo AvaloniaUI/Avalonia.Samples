@@ -7,7 +7,7 @@ param(
 )
 
 # Resolve script directory reliably
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$scriptDir = $PSScriptRoot
 $docsDir = Join-Path -Path $scriptDir -ChildPath '../_docs'
 $srcDir = Join-Path -Path $scriptDir -ChildPath '../src'
 
