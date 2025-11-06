@@ -6,14 +6,17 @@ param(
     [string[]]$InputFiles
 )
 
+# Define paths for theme and favicon
 $themePath = Join-Path -Path (Resolve-Path ../_docs) -ChildPath "avalonia-docs-theme.css"
 $favIconPath = Join-Path -Path (Resolve-Path ../_docs) -ChildPath "_Assets/Logo.svg"
 
 # Find all .adoc files recursively
 if ($InputFiles -and $InputFiles.Count -gt 0) {
     $adocFiles = $InputFiles | ForEach-Object { Get-Item $_ }
-} else {
+} else 
+{
     $adocFiles = Get-ChildItem -Path ../src/. -Filter *.adoc -Recurse
+    $adocFiles += Get-Item './../ReadMe.adoc' 
 }
 
 foreach ($file in $adocFiles) {
