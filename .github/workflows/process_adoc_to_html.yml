@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - housekeeping/*
 
 jobs:
   run_html_build:
