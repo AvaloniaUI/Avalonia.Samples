@@ -1,0 +1,42 @@
+name: Build or Update HTML from AsciiDoc
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_html_build:
+    runs-on: ubuntu-latest
+    name: Build HTML from AsciiDoc
+    # Prevent runs triggered by the create-pull-request bot to avoid loops
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install system packages for diagrams
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz plantuml default-jre
+
+      - uses: actions/setup-ruby@v1
+      - name: Install Asciidoctor gems
+        run: |
+          gem install asciidoctor
+          gem install asciidoctor-diagram
+          gem install rouge
+
+      - name: Run AsciiDoc -> HTML builder
+        working-directory: ./scripts
+        shell: pwsh
+        run: |
+          ./Ascii-doc-html_creator.ps1
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: update asciidoc html files [skip ci]
+          title: Update Html from AsciiDoc
+          body: Updated HTML files generated from AsciiDoc sources.
+          branch: update-asciidoc-html-${{ github.run_id }}
+          base: main

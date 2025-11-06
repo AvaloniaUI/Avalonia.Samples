@@ -1,12 +1,25 @@
 = Commands Example
 // --- Don't touch this section ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 // ---------------------------------
 
 This example will show you how you can use `Commands` to invoke methods in your `ViewModel` from your user interface. 
@@ -15,11 +28,13 @@ This example will show you how you can use `Commands` to invoke methods in your 
 toc::[]
 
 
+[discrete]
 === Difficulty
 
 🐣 Beginner 🐣
 
 
+[discrete]
 === Buzz-Words
 Command, ICommand, CommandParameter, MVVM, ReactiveCommand, RelayCommand, async-await
 

@@ -1,11 +1,24 @@
 = Avalonia image:_docs/_Assets/Logo.svg[link=https://www.avaloniaui.net] Samples 
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 
 Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia.
 
