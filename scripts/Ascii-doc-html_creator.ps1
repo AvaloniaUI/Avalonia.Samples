@@ -6,19 +6,44 @@ param(
     [string[]]$InputFiles
 )
 
-# Resolve script directory reliably
-$scriptDir = if ($env:GITHUB_WORKSPACE) { $env:GITHUB_WORKSPACE } else { $PSScriptRoot }
-$docsDir = Join-Path -Path $scriptDir -ChildPath '../_docs'
-$srcDir = Join-Path -Path $scriptDir -ChildPath '../src'
+# Determine repository root in a robust way:
+# - On GitHub Actions runners GITHUB_WORKSPACE is set to the repository checkout root.
+# - When running locally, derive the repo root from the script's folder (scripts/) by taking the parent.
+$repoRoot = if ($env:GITHUB_WORKSPACE) {
+    $env:GITHUB_WORKSPACE
+} elseif ($PSScriptRoot) {
+    # script is in scripts/, repository root is its parent
+    Split-Path -Path $PSScriptRoot -Parent
+} else {
+    (Get-Location).Path
+}
 
-# Resolve theme and favicon paths
-try {
-    $themePathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath 'avalonia-docs-theme.css')
-    $favIconPathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath '_Assets/Logo.svg')
-} catch {
-    Write-Error "Required files not found. Theme or favicon is missing in $_docs directory."
+Write-Output "Repository root resolved to: $repoRoot"
+
+$docsDir = Join-Path -Path $repoRoot -ChildPath '_docs'
+$srcDir  = Join-Path -Path $repoRoot -ChildPath 'src'
+
+Write-Output "Looking for docs in: $docsDir"
+Write-Output "Looking for source in: $srcDir"
+
+# Resolve theme and favicon paths (fail early with clear messages)
+$themeFile = Join-Path -Path $docsDir -ChildPath 'avalonia-docs-theme.css'
+$favFile   = Join-Path -Path $docsDir -ChildPath '_Assets/Logo.svg'
+
+if (-not (Test-Path -Path $themeFile)) {
+    Write-Error "Theme file not found at: $themeFile"
     exit 1
 }
+if (-not (Test-Path -Path $favFile)) {
+    Write-Error "Favicon file not found at: $favFile"
+    exit 1
+}
+
+$themePathObj = Resolve-Path -Path $themeFile
+$favIconPathObj = Resolve-Path -Path $favFile
+
+Write-Output "Resolved theme path: $($themePathObj.Path)"
+Write-Output "Resolved favicon path: $($favIconPathObj.Path)"
 
 if ($InputFiles -and $InputFiles.Count -gt 0) {
     $adocFiles = $InputFiles | ForEach-Object {
@@ -31,9 +56,17 @@ if ($InputFiles -and $InputFiles.Count -gt 0) {
     } | Where-Object { $_ -ne $null }
 } else {
     # Find .adoc files recursively in src
-    $adocFiles = Get-ChildItem -Path $srcDir -Include *.adoc -Recurse -File 
-    # Add the root README.adoc
-    $adocFiles += Get-Item -Path (Join-Path -Path $scriptDir -ChildPath '../README.adoc')
+    if (Test-Path -Path $srcDir) {
+        $adocFiles = Get-ChildItem -Path $srcDir -Include *.adoc -Recurse -File 
+    } else {
+        $adocFiles = @()
+    }
+
+    # Add the root README.adoc if it exists
+    $readmePath = Join-Path -Path $repoRoot -ChildPath 'README.adoc'
+    if (Test-Path -Path $readmePath) {
+        $adocFiles += Get-Item -Path $readmePath
+    }
 }
 
 if (-not $adocFiles -or $adocFiles.Count -eq 0) {
@@ -50,8 +83,10 @@ $attrs += "stylesheet=$themePath"
 $favPath = ($favIconPathObj.Path) -replace '\\', '/'
 $attrs += "favicon=$favPath"
 
-# Build asciidoctor arguments
-$attrArgs = $attrs | ForEach-Object { "-a $_" } | Join-String " "
+# Build asciidoctor arguments (join safely)
+$attrArgs = ($attrs | ForEach-Object { "-a $_" }) -join " "
+
+Write-Output "Asciidoctor attributes: $attrArgs"
 
 foreach ($file in $adocFiles) {
     try {
@@ -60,7 +95,7 @@ foreach ($file in $adocFiles) {
 
         # Call asciidoctor
         # Use --trace for verbose debugging if needed
-        asciidoctor "$filePath" $attrArgs --trace
+        & asciidoctor "$filePath" $attrArgs --trace
     } catch {
         Write-Error "Failed to process $($file.FullName): $_"
     }
