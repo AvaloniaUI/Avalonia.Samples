@@ -7,58 +7,60 @@ param(
 )
 
 # Resolve script directory reliably
-$scriptDir = $PSScriptRoot
+$scriptDir = if ($env:GITHUB_WORKSPACE) { $env:GITHUB_WORKSPACE } else { $PSScriptRoot }
 $docsDir = Join-Path -Path $scriptDir -ChildPath '../_docs'
 $srcDir = Join-Path -Path $scriptDir -ChildPath '../src'
 
-# Try to resolve theme and favicon, but continue if missing
-$themePathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath 'avalonia-docs-theme.css') -ErrorAction SilentlyContinue
-$favIconPathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath '_Assets/Logo.svg') -ErrorAction SilentlyContinue
+# Resolve theme and favicon paths
+try {
+    $themePathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath 'avalonia-docs-theme.css')
+    $favIconPathObj = Resolve-Path -Path (Join-Path -Path $docsDir -ChildPath '_Assets/Logo.svg')
+} catch {
+    Write-Error "Required files not found. Theme or favicon is missing in $_docs directory."
+    exit 1
+}
 
 if ($InputFiles -and $InputFiles.Count -gt 0) {
     $adocFiles = $InputFiles | ForEach-Object {
-        try { Get-Item $_ -ErrorAction SilentlyContinue } catch { $null }
+        try { 
+            Get-Item $_ 
+        } catch { 
+            Write-Warning "File not found: $_"
+            $null 
+        }
     } | Where-Object { $_ -ne $null }
 } else {
     # Find .adoc files recursively in src
-    $adocFiles = Get-ChildItem -Path $srcDir -Include *.adoc -Recurse -File -ErrorAction SilentlyContinue
-
-    # Try common README casings at repo root
-    $repoRoot = Join-Path -Path $scriptDir -ChildPath '..'
-    $readme = Get-ChildItem -Path $repoRoot/README.adoc
-    if ($readme) { $adocFiles += $readme }
+    $adocFiles = Get-ChildItem -Path $srcDir -Include *.adoc -Recurse -File 
+    # Add the root README.adoc
+    $adocFiles += Get-Item -Path (Join-Path -Path $scriptDir -ChildPath '../README.adoc')
 }
 
 if (-not $adocFiles -or $adocFiles.Count -eq 0) {
-    Write-Output "No AsciiDoc files found. Exiting."
+    Write-Error "No AsciiDoc files found. Exiting."
     exit 0
 }
+
+# Build attribute list
+$attrs = @("source-highlighter=rouge")
+
+$themePath = ($themePathObj.Path) -replace '\\', '/'
+$attrs += "stylesheet=$themePath"
+
+$favPath = ($favIconPathObj.Path) -replace '\\', '/'
+$attrs += "favicon=$favPath"
+
+# Build asciidoctor arguments
+$attrArgs = $attrs | ForEach-Object { "-a $_" } | Join-String " "
 
 foreach ($file in $adocFiles) {
     try {
         $filePath = $file.FullName
-
-        # Build attribute list
-        $attrs = @("source-highlighter=rouge")
-        if ($themePathObj) {
-            $themePath = ($themePathObj.Path) -replace '\\', '/'
-            $attrs += "stylesheet=$themePath"
-        } else {
-            Write-Output "Warning: theme file not found at expected location ($docsDir/avalonia-docs-theme.css). Continuing without custom stylesheet."
-        }
-        if ($favIconPathObj) {
-            $favPath = ($favIconPathObj.Path) -replace '\\', '/'
-            $attrs += "favicon=$favPath"
-        }
-
-        # Build asciidoctor arguments
-        $attrArgs = $attrs | ForEach-Object { "-a $_" } | Join-String " "
         Write-Output "Processing $filePath"
-        Write-Output "Using attributes: $($attrs -join ', ')"
 
         # Call asciidoctor
         # Use --trace for verbose debugging if needed
-        asciidoctor "$filePath" $attrArgs --verbose
+        asciidoctor "$filePath" $attrArgs --trace
     } catch {
         Write-Error "Failed to process $($file.FullName): $_"
     }
