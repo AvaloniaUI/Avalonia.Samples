@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.26">
+<title>RatingControl Sample</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>RatingControl Sample</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_before_we_start">Before we start</a>
+<ul class="sectlevel2">
+<li><a href="#_some_basics_about_controls_in_avalonia">Some basics about Controls in Avalonia</a></li>
+<li><a href="#_properties">Properties</a></li>
+<li><a href="#_controltemplates">ControlTemplates</a></li>
+<li><a href="#_the_concept_of_the_rating_control">The concept of the Rating-Control</a></li>
+</ul>
+</li>
+<li><a href="#_the_solution">The Solution</a>
+<ul class="sectlevel2">
+<li><a href="#_step_1_create_a_new_project">Step 1: Create a new Project</a></li>
+<li><a href="#_step_2_add_the_ratingcontrol_class">Step 2: Add the RatingControl-class</a></li>
+<li><a href="#_step_3_add_the_numberofstars_property">Step 3: Add the NumberOfStars-Property</a></li>
+<li><a href="#_step_4_add_the_value_property">Step 4: Add the Value-Property</a></li>
+<li><a href="#_step_5_add_the_stars_property">Step 5: Add the Stars-Property</a></li>
+<li><a href="#_step_6_update_the_stars_property">Step 6: Update the Stars-Property</a></li>
+<li><a href="#_step_7_add_user_interaction">Step 7: Add user interaction</a></li>
+<li><a href="#_step_8_add_a_controltheme_for_the_ratingcontrol">Step 8: Add a <code>ControlTheme</code> for the RatingControl</a></li>
+<li><a href="#_step_9_theme_variant">Step 9: Theme Variant</a></li>
+<li><a href="#_step_10_create_a_sample_to_try_out_the_custom_control">Step 10: Create a sample to try-out the custom Control</a></li>
+<li><a href="#_step_11_see_it_in_action">Step 11: See it in action</a></li>
+</ul>
+</li>
+<li><a href="#_related">Related</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example will show you how to create a custom control. Our goal is to create a rating control, where the user can vote via clicking one of several stars.</p>
+</div>
+<!-- toc disabled -->
+<h3 id="_difficulty" class="discrete">Difficulty</h3>
+<div class="paragraph">
+<p>🐔 Normal 🐔</p>
+</div>
+<h3 id="_buzz_words" class="discrete">Buzz-Words</h3>
+<div class="paragraph">
+<p>Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_before_we_start">Before we start</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This sample assumes that you know the basics of Avalonia and the MVVM pattern.</p>
+</div>
+<div class="sect2">
+<h3 id="_some_basics_about_controls_in_avalonia">Some basics about Controls in Avalonia</h3>
+<div class="paragraph">
+<p>Whenever we want to create a new control, we need to derive from a valid base class, which implements the needed interfaces and functions like styling, layout and user interaction. Below you can find a list of possible base-classes:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Control</dt>
+<dd>
+<p>Use this as a base class if you want to render the control on your own and you want the control to look the same in every App (for example: <code>TextBlock</code>, <code>Image</code>).</p>
+</dd>
+<dt class="hdlist1">TemplatedControl</dt>
+<dd>
+<p>Use this control as your base class if you want to have a "lookless" control, which can be re-styled in any App.</p>
+</dd>
+<dt class="hdlist1">ContentControl</dt>
+<dd>
+<p>This control inherits <code>TemplatedControl</code>, but adds the ability to place any content inside.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can also extend existing controls like <code>Button</code>, <code>TextBox</code> or <code>CheckBox</code>, if you want to use their functionality but adding your own logic on top.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For more information about the types of controls please visit the <a href="https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/choosing-a-custom-control-type">[Documentation]</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_properties">Properties</h3>
+<div class="paragraph">
+<p>Avalonia has a property system which is responsible for storing and receiving the current value. The property system will take care of the styling, binding, validation and many more. There are three types of <code>AvaloniaProperties</code>. When you want to register your own property, you need to decide which property type is the right one for your use-case:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">StyledProperty</dt>
+<dd>
+<p>A <code>StyledProperty</code> is a property, which support styling and animation. use this type of property if you think the user of your control will most likely want to define this property in a <code>Style</code> (e.g.: <code>Foreground</code>, <code>Background</code>, <code>Margin</code>, &#8230;&#8203;).</p>
+</dd>
+<dt class="hdlist1">DirectProperty</dt>
+<dd>
+<p>A <code>DirectProperty</code> is a property which can only be read and set in an actual control instance. Use this property if it&#8217;s likely to be set individually on each instance (e.g.: <code>Text</code>, <code>Value</code>, &#8230;&#8203;) or if you need a read-only property (e.g:: <code>HasFocus</code>)</p>
+</dd>
+<dt class="hdlist1">AttachedProperty</dt>
+<dd>
+<p>An <code>AttachedProperty</code> is a property that can be set on any <code>Control</code>, even it doesn&#8217;t define the property on it&#8217;s own (e.g.: <code>Grid.Row</code>, <code>DockPanel.Dock</code>, &#8230;&#8203;)</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>If you want to learn more about <code>AvaloniaProperties</code> please visit the <a href="https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/defining-properties">[Documentation]</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controltemplates">ControlTemplates</h3>
+<div class="paragraph">
+<p>In Avalonia <code>TemplatedControls</code> are lookless, which means they are not drawn by the <code>Control</code> itself. Instead, the developer needs to provide a <code>ControlTemplate</code> which is similar to a <code>DataTemplate</code>, but for the <code>Control</code>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TemplateParts</dt>
+<dd>
+<p>Some <code>Controls</code> require specific <code>Controls</code> inside the the <code>ControlTemplate</code>, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix <code>"PART_"</code>. For example, you can use this to listen to events of these template parts.</p>
+</dd>
+<dt class="hdlist1">TemplateBinding</dt>
+<dd>
+<p>Inside <code>ControlTemplates</code> you can make use of a special <code>Binding</code> called <code>TemplateBinding</code>. To learn more about them, please visit the <a href="https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-templated-controls#data-binding">[Documentation]</a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_concept_of_the_rating_control">The concept of the Rating-Control</h3>
+<div class="paragraph">
+<p>Before you create any control, you should already have an idea which functions it should provide, how it should look like and how the user should interact with the control. Remember, the user interface is the door to your program.</p>
+</div>
+<div class="paragraph">
+<p>First of all we will write a list of requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The developer should be able to define the number of stars. Ideally this should be reusable via <code>Styles</code></p>
+</li>
+<li>
+<p>The user must be able to select their rating</p>
+</li>
+<li>
+<p>There must be a visual feedback showing the current rating</p>
+</li>
+<li>
+<p>The user should be able to interact with the mouse</p>
+</li>
+<li>
+<p>The user should be able to interact via touch</p>
+</li>
+<li>
+<p>The user should be able to interact via keyboard</p>
+</li>
+<li>
+<p>The developer should be able to validate the input</p>
+</li>
+<li>
+<p>Any validation error should be shown to the user</p>
+</li>
+<li>
+<p>The visual appearance should be easy to adjust</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Items listed above containing the word <em>should</em> mean are nice to have but the control will also work without this requirement fulfilled. On the other hand, requirements with the word <strong>must</strong> cannot be omitted, as the function of the control will not be given.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now that we know the functions we want to serve, we can create a simple sketch of how the control should look like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/Sketch.png" alt="Sketch">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_solution">The Solution</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_step_1_create_a_new_project">Step 1: Create a new Project</h3>
+<div class="paragraph">
+<p>In our sample we will create a new project using the <code>Avalonia MVVM Template</code>. We will place the sample App and the control together in the same project. In your real-world App you may want to create a <a href="https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview">[<code>class library</code>-project]</a> for your custom controls, so they can be reused in several Apps.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_add_the_ratingcontrol_class">Step 2: Add the RatingControl-class</h3>
+<div class="paragraph">
+<p>In our project we create a new folder called <code>Controls</code>. inside this folder we will add a file called <code>RatingControl.cs</code>. Now we need to decide, which base-class we want to use. We want our control to be able to be re-styled by the developer, so we decide to base on <code>TemplatedControl</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">public class RatingControl : TemplatedControl
+{
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_add_the_numberofstars_property">Step 3: Add the NumberOfStars-Property</h3>
+<div class="paragraph">
+<p>If we want to create a flexible control, we should not hardcode the number of stars. Instead, the developer should be able to define it inside a <code>Style</code>. Therefore we add a <code>StyledProperty</code> called <code>NumberOfStars</code>. The type of our property is <code>Integer</code>, the default value is <code>5</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// Defines the &lt;see cref="NumberOfStars"/&gt; property.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// We define this property as a styled property, so you can set this property inside your style of the rating control.
+/// &lt;/remarks&gt;
+public static readonly StyledProperty&lt;int&gt; NumberOfStarsProperty =
+    AvaloniaProperty.Register&lt;RatingControl, int&gt;(
+        nameof(NumberOfStars),          // Sets the name of the property
+        defaultValue: 5,                // The default value of this property
+        coerce: CoerceNumberOfStars);   // Ensures that we always have a valid number of stars
+
+
+/// &lt;summary&gt;
+/// Gets or sets the number of available stars
+/// &lt;/summary&gt;
+public int NumberOfStars
+{
+    get { return GetValue(NumberOfStarsProperty); }
+    set { SetValue(NumberOfStarsProperty, value); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The number of stars must not be smaller than one. A rating control without any star just makes no sense. We can ensure this by coercing the provided value. A coerce function needs to have the current control instance (<code>IAvaloniaObject instance</code>) and the value (<code>int value</code>) as a parameter and must return the coerced value:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// This function will coerce the &lt;see cref="NumberOfStars"/&gt; property. The minimum allowed number is 1
+/// &lt;/summary&gt;
+/// &lt;param name="sender"&gt;the RatingControl-instance calling this method&lt;/param&gt;
+/// &lt;param name="value"&gt;the value to coerce&lt;/param&gt;
+/// &lt;returns&gt;The coerced value&lt;/returns&gt;
+private static int CoerceNumberOfStars(AvaloniaObject instance, int value)
+{
+    // the value should not be lower than 1.
+    // Hint: You can also return Math.Max(1, value)
+    if (value &lt; 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return value;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_add_the_value_property">Step 4: Add the Value-Property</h3>
+<div class="paragraph">
+<p>The next property we add is the <code>Value</code> property, which will hold the current rating. This property will be set by the user and is most likely set on each control instance. Moreover, as this property is meant to receive user input, we also want to add <a href="../../MVVM/ValidationSample">[validation support]</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We use a <code>DirectProperty</code> because it will improve performance and allows us to enable validation. The downside is, that this property cannot be set via <code>Styles</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// Defines the &lt;see cref="Value"/&gt; property.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// This property doesn't need to be styled. Therefore we can use a direct property, which improves performance and
+/// allows us to add validation support.
+/// &lt;/remarks&gt;
+public static readonly DirectProperty&lt;RatingControl, int&gt; ValueProperty =
+    AvaloniaProperty.RegisterDirect&lt;RatingControl, int&gt;(
+        nameof(Value),                            // The name of the property
+        o =&gt; o.Value,                             // The getter of the property
+        (o, v) =&gt; o.Value = v,                    // The setter of the property
+        defaultBindingMode: BindingMode.TwoWay,   // We change the default binding mode to be two-way, so if the user selects a new value, it will automatically update the bound property
+        enableDataValidation: true);              // Enables DataValidation
+
+// For direct properties we need to have a backing field
+private int _value;
+
+/// &lt;summary&gt;
+/// Gets or sets the current value
+/// &lt;/summary&gt;
+public int Value
+{
+    get { return _value; }
+    set { SetAndRaise(ValueProperty, ref _value, value); }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In this sample the value is of type <code>int</code>, so only full stars can be shown. If you want to add support for half stars, consider to use <code>float</code> or <code>double</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We set <code>enableDataValidation</code> to <code>true</code>. But this is not enough for validation support. We also need to override <code>UpdateDataValidation</code>. This function will be called whenever a property asks for validation. Most likely we want to use set an error on the <code>DataValidationErrors</code>-control:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// Called to update the validation state for properties for which data validation is
+/// enabled.
+/// &lt;/summary&gt;
+/// &lt;param name="property"&gt;The property.&lt;/param&gt;
+/// &lt;param name="state"&gt;The current data binding state.&lt;/param&gt;
+/// &lt;param name="error"&gt;The Exception that was passed&lt;/param&gt;
+protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
+{
+    base.UpdateDataValidation(property, state, error);
+
+    if(property == ValueProperty)
+    {
+        DataValidationErrors.SetError(this, error);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_5_add_the_stars_property">Step 5: Add the Stars-Property</h3>
+<div class="paragraph">
+<p>Now that we have the number of stars and the value property, we need a way to dynamically represent the stars. While we technically can add the stars in code, we will use a different approach here. The idea is, that we add a read-only helper property called <code>Stars</code>. This property will just provide a <code>Range</code> of <code>Integers</code>. In our <code>Style</code> we can use this property to draw the stars.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// Defines the &lt;see cref="Stars"/&gt; property.
+/// &lt;/summary&gt;
+/// &lt;remarks&gt;
+/// ´This property holds a read-only array of stars.
+/// &lt;/remarks&gt;
+public static readonly DirectProperty&lt;RatingControl, IEnumerable&lt;int&gt;&gt; StarsProperty =
+    AvaloniaProperty.RegisterDirect &lt; RatingControl, IEnumerable&lt;int&gt;&gt;(
+        nameof(Stars),              // The name of the Property
+        o =&gt; o.Stars);   // The getter. As we don't add a setter, this property is read-only
+
+// For read-only properties we need to have a backing field. The default value is [1..5]
+private IEnumerable&lt;int&gt; _stars = Enumerable.Range(1, 5);
+
+/// &lt;summary&gt;
+/// Gets the current collection of visible stars
+/// &lt;/summary&gt;
+public IEnumerable&lt;int&gt; Stars
+{
+    get { return _stars; }
+    private set { SetAndRaise(StarsProperty, ref _stars, value); } // make sure the setter is private
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_6_update_the_stars_property">Step 6: Update the Stars-Property</h3>
+<div class="paragraph">
+<p>We need a way to update the <code>Stars</code> property whenever the <code>NumberOfStars</code>-Property has changed. So let&#8217;s add a method to do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">// called when the number of stars changed
+private void UpdateStars()
+{
+    // Stars is an array from 1 to NumberOfStars
+    Stars = Enumerable.Range(1, NumberOfStars);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Avalonia each control has a <code>PropertyChanged</code>-event, which will be raised every time a property changed. We can override <code>OnPropertyChanged</code> in our control to handle this event:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">// We override OnPropertyChanged of the base class. That way we can react on property changes
+protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+{
+    base.OnPropertyChanged(change);
+
+    // if the changed property is the NumberOfStarsProperty, we need to update the stars
+    if (change.Property == NumberOfStarsProperty)
+    {
+        UpdateStars();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover we want to update the <code>Stars</code>-Property as soon as a new instance of our control was created. We can do this inside the constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">public RatingControl()
+{
+    // When a new instance of the control is created, we need to update the rating stars visible
+    UpdateStars();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_7_add_user_interaction">Step 7: Add user interaction</h3>
+<div class="paragraph">
+<p>Okay, all properties we need are there. But wait, how should the user interact with our control? At the moment, we do not handle any user interaction. At least when a user clicks on a star, the value should be set to the number that this star has. To achieve this we require the <code>ControlTemplate</code> to provide an <code>ItemsControl</code> called <code>PART_StarsPresenter</code>. Use the <code>TemplatePart-Attribute</code> to indicate this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">// This Attribute specifies that "PART_StarsPresenter" is a control, which must be present in the Control-Template
+[TemplatePart("PART_StarsPresenter", typeof(ItemsControl))]
+public class RatingControl : TemplatedControl
+{
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to hold a reference to the named <code>ItemsControl</code>, we add a private field inside our <code>Control</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">// this field holds a reference to the part in the control template that holds the rating stars
+private ItemsControl? _starsPresenter;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Last but not least we need a way to find this control inside our <code>ControlTemplate</code>. Whenever a new <code>ControlTemplate</code> is applied, the method <code>OnApplyTemplate</code> will be called. We can override it like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">// We override what happens when the control template is being applied.
+// That way we can for example listen to events of controls which are part of the template
+protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+{
+    base.OnApplyTemplate(e);
+
+    // if we had a control template before, we need to unsubscribe any event listeners
+    if(_starsPresenter is not null)
+    {
+        _starsPresenter.PointerReleased-= StarsPresenter_PointerReleased;
+    }
+
+    // try to find the control with the given name
+    _starsPresenter = e.NameScope.Find("PART_StarsPresenter") as ItemsControl;
+
+    // listen to pointer-released events on the stars presenter.
+    if(_starsPresenter != null)
+    {
+        _starsPresenter.PointerReleased += StarsPresenter_PointerReleased;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see we did the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>run the base method to make sure everything is set up correctly</p>
+</li>
+<li>
+<p>unsubscribe from any previous event listeners</p>
+</li>
+<li>
+<p>find the named control in the new template to apply</p>
+</li>
+<li>
+<p>listen to the <code>PointerReleased</code>-event of the found <code>ItemsControl</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>By convention we know that the <code>Items</code> of our <code>ItemsControl</code> will be a <code>Path</code>. We make use of this convention by checking if the <code>Source</code> of the event is a <code>Path</code> and if it was, we know its <code>DataContext</code> will be an <code>Integer</code>. Therefore the new <code>Value</code> of our <code>RatingControl</code> is set to the given <code>Integer</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+{
+    // e.Source is the original source of this event. In our case, if the user clicked on a star, the original source is a Path.
+    if (e.Source is Path star)
+    {
+        // The DataContext of the star is one of the numbers we have in the Stars-Collection.
+        // Let's cast the DataContext to an int. If that cast fails, use "0" as a fallback.
+        Value = star.DataContext as int? ?? 0;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because we use the <code>as</code>-operator, our <code>Value</code> would become <code>null</code> if the <code>DataContext</code> could not be converted to <code>int</code> for any reason and thus crash the App. To prevent such a crash we use <code>0</code> as a fallback.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_8_add_a_controltheme_for_the_ratingcontrol">Step 8: Add a <code>ControlTheme</code> for the RatingControl</h3>
+<div class="paragraph">
+<p>While we can already add a <code>RatingControl</code> to our View, we will see nothing as there is no <code>RatingControl</code> available. To change this we add another folder called <code>Themes</code>. Add a file called <code>RatingStyles.axaml</code> which is of type <code>ResourceDictionary (Avalonia)</code>.</p>
+</div>
+<div class="paragraph">
+<p>First of all we need to add the needed namespaces to our <code>ResourceDictionary</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+&lt;/ResourceDictionary&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you want to have preview of the <code>ResourceDictionary</code>, just add one or more <code>RatingControls</code> to the <code>Design.PreviewWith</code>-section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Design.PreviewWith&gt;
+    &lt;StackPanel Spacing="10"&gt;
+        &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
+        &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
+        &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Design.PreviewWith&gt;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we can add the needed <code>ControlTheme</code> to represent our <code>RatingControl</code>. The important part is the <code>ControlTemplate</code> which has the following hierarchy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">  &lt;!--This is the ControlTheme for our RatingControl--&gt;
+  &lt;ControlTheme x:Key="{x:Type controls:RatingControl}" TargetType="controls:RatingControl"&gt;
+    &lt;ControlTheme.Resources&gt;
+      &lt;!--We need to add our IsSmallerOrEqualConverter here as a Resource--&gt;
+      &lt;converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" /&gt;
+    &lt;/ControlTheme.Resources&gt;
+    &lt;!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.--&gt;
+    &lt;Setter Property="Template"&gt;
+      &lt;ControlTemplate&gt;
+
+        &lt;!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--&gt;
+        &lt;DataValidationErrors&gt;
+          &lt;!--This is our stars-presenter. Make sure to set the name, so the control can be found.--&gt;
+          &lt;ItemsControl x:Name="PART_StarsPresenter"
+                  ItemsSource="{TemplateBinding Stars}"&gt;
+            &lt;!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly--&gt;
+            &lt;ItemsControl.ItemsPanel&gt;
+              &lt;ItemsPanelTemplate&gt;
+                &lt;StackPanel Orientation="Horizontal"
+                      Spacing="5" /&gt;
+              &lt;/ItemsPanelTemplate&gt;
+            &lt;/ItemsControl.ItemsPanel&gt;
+
+            &lt;!--Items is an array if integer. Let's add a Path as the DataTemplate--&gt;
+            &lt;ItemsControl.ItemTemplate&gt;
+              &lt;DataTemplate&gt;
+                &lt;Path Classes="star"&gt;
+                  &lt;!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --&gt;
+                  &lt;Classes.selected&gt;
+                    &lt;MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}"&gt;
+                      &lt;!--This is our dataContext, so the number of this item--&gt;
+                      &lt;Binding /&gt;
+                      &lt;!--This is the binding to the RatingControls current value--&gt;
+                      &lt;Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" /&gt;
+                    &lt;/MultiBinding&gt;
+                  &lt;/Classes.selected&gt;
+                &lt;/Path&gt;
+              &lt;/DataTemplate&gt;
+            &lt;/ItemsControl.ItemTemplate&gt;
+
+          &lt;/ItemsControl&gt;
+        &lt;/DataValidationErrors&gt;
+
+      &lt;/ControlTemplate&gt;
+    &lt;/Setter&gt;
+  &lt;/ControlTheme&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above snippet you can see that the <code>ControlTemplate</code> our <code>RatingControl</code> has the following structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ControlTemplate                 -&gt; This is our root node
+   &gt; DataValidationErrors       -&gt; This control will take care of displaying any validation errors
+      &gt; ItemsControl            -&gt; Used to display the Stars.
+         o ItemsPanelTemplate   -&gt; We change the ItemsPanelTemplate in order to display the Stars horizontally
+         o ItemTemplate         -&gt; We add an ItemTemplate to render the star as a Path</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let us inspect the <code>ItemTemplate</code> a bit further. It is a <code>Path</code> with the class <code>star</code> applied. You can see the <code>Style</code> for the class below. It sets the <code>Data</code> and other <code>Properties</code> to render a single <code>Star</code> in the unselected state.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;!--This Style is for a Path which has the Class "star" applied.--&gt;
+&lt;Style Selector="Path.star" &gt;
+    &lt;Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" /&gt;
+    &lt;Setter Property="Width" Value="32" /&gt;
+    &lt;Setter Property="Height" Value="32" /&gt;
+    &lt;Setter Property="Margin" Value="5" /&gt;
+    &lt;Setter Property="Fill" Value="White" /&gt;
+    &lt;Setter Property="Stroke" Value="Gray" /&gt;
+    &lt;Setter Property="StrokeThickness" Value="2" /&gt;
+    &lt;Setter Property="Stretch" Value="Uniform" /&gt;
+&lt;/Style&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We add another class <code>selected</code>. We make use of the fact that we can <a href="https://docs.avaloniaui.net/docs/styling/styles#style-classes">[add or remove <code>Style-classes</code>]</a> in Avalonia. We use a <a href="https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/MVVM/ValueConversionSample">[<code>MultiConverter</code>]</a> called <code>IsSmallerOrEqualConverter</code> which compare the stars number with the selected value and return <code>true</code> if the number is smaller or equal to the selected value. The code of the converter is shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Style Selector="Path.selected" &gt;
+    &lt;Setter Property="Fill" Value="Gold" /&gt;
+    &lt;Setter Property="Stroke" Value="Goldenrod" /&gt;
+&lt;/Style&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-cs" data-lang="cs">/// &lt;summary&gt;
+/// A converter that compares two integers and returns true if the first number is smaller or equal to the second number
+/// &lt;/summary&gt;
+public class IsSmallerOrEqualConverter : IMultiValueConverter
+{
+    public object? Convert(IList&lt;object?&gt; values, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (values.Count != 2)
+        {
+            throw new ArgumentException("Expected exactly two numbers");
+        }
+        var firstNumber = values[0] as int?;
+        var secondNumber = values[1] as int?;
+
+        return firstNumber &lt;= secondNumber;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Last but not least we want a visual feedback if the user hovers a star with their mouse device. So we add a <code>Style</code> with the class name <code>star</code> and the <a href="https://docs.avaloniaui.net/docs/styling/styles#pseudoclasses">[pseudoclass]</a> <code>:pointerover</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Style Selector="Path.star:pointerover" &gt;
+    &lt;Setter Property="RenderTransform" Value="scale(1.3)" /&gt;
+    &lt;Setter Property="Fill" Value="Goldenrod" /&gt;
+&lt;/Style&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In Avalonia 11.x <code>Styles</code>(see <a href="https://github.com/AvaloniaUI/Avalonia.Samples/blob/be2895d5461fd4748044d5a81c571547965b9f9d/src/Avalonia.Samples/CustomControls/RatingControlSample/README.adoc#step-8-add-a-style-for-the-ratingcontrol">this</a>) is supported, but since 11.0 <code>ControlThemes</code> are preferred.
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Reference</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.avaloniaui.net/docs/basics/user-interface/styling/styles">Styles</a></p>
+</li>
+<li>
+<p><a href="https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes">Control Themes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_9_theme_variant">Step 9: Theme Variant</h3>
+<div class="paragraph">
+<p>if you want to add support to the theme variant, you need to replace the encoded setter value with <code>DynamicResource</code>. In this case we would like a different filling and stroke of the Path based on the theme variant.</p>
+</div>
+<div class="paragraph">
+<p>To do this, modify our style selector like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!--This Style is for a Path which has the Class "star" applied.--&gt;
+    &lt;Style Selector="Path.star" &gt;
+        &lt;Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" /&gt;
+        &lt;Setter Property="Width" Value="32" /&gt;
+        &lt;Setter Property="Height" Value="32" /&gt;
+        &lt;Setter Property="Margin" Value="5" /&gt;
+        &lt;Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" /&gt;
+        &lt;Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokenBrush}" /&gt;
+        &lt;Setter Property="StrokeThickness" Value="2" /&gt;
+        &lt;Setter Property="Stretch" Value="Uniform" /&gt;
+    &lt;/Style&gt;
+
+    &lt;Style Selector="Path.selected" &gt;
+        &lt;Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" /&gt;
+        &lt;Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokenBrush}" /&gt;
+    &lt;/Style&gt;
+
+    &lt;Style Selector="Path.star:pointerover" &gt;
+        &lt;Setter Property="RenderTransform" Value="scale(1.3)" /&gt;
+        &lt;Setter Property="Fill" Value="{DynamicResource RatingControlSelectedStrokenBrush}" /&gt;
+    &lt;/Style&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>now, will be define Resource for each Theme Variant</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">  &lt;!-- Define the Theme Variants --&gt;
+  &lt;ResourceDictionary.ThemeDictionaries&gt;
+    &lt;ResourceDictionary x:Key="Default"&gt;
+      &lt;!-- Selected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Goldenrod"/&gt;
+      &lt;!-- Unselected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/&gt;
+    &lt;/ResourceDictionary&gt;
+    &lt;ResourceDictionary x:Key="Light"&gt;
+      &lt;!-- Selected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Gray"/&gt;
+      &lt;!-- Unselected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/&gt;
+    &lt;/ResourceDictionary&gt;
+    &lt;ResourceDictionary x:Key="Dark"&gt;
+      &lt;!-- Selected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Red"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="White"/&gt;
+      &lt;!-- Unselected Brushes--&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="Transparent"/&gt;
+      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="White"/&gt;
+    &lt;/ResourceDictionary&gt;
+  &lt;/ResourceDictionary.ThemeDictionaries&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you want to have preview of the <code>ResourceDictionary</code> support Theme Variants, just add one or more <code>RatingControls</code> to the <code>Design.PreviewWith</code>-section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">  &lt;!-- Design time preview --&gt;
+  &lt;Design.PreviewWith&gt;
+    &lt;StackPanel Width="400" Spacing="10"&gt;
+      &lt;!-- Force using default Theme Variant --&gt;
+      &lt;ThemeVariantScope RequestedThemeVariant="Default"&gt;
+        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
+          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
+        &lt;/StackPanel&gt;
+      &lt;/ThemeVariantScope&gt;
+      &lt;!-- Force using Light Theme Variant --&gt;
+      &lt;ThemeVariantScope RequestedThemeVariant="Light"&gt;
+        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
+          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
+        &lt;/StackPanel&gt;
+      &lt;/ThemeVariantScope&gt;
+      &lt;!-- Force using Dark Theme Variant --&gt;
+      &lt;ThemeVariantScope RequestedThemeVariant="Dark"&gt;
+        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
+          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
+          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
+        &lt;/StackPanel&gt;
+      &lt;/ThemeVariantScope&gt;
+    &lt;/StackPanel&gt;
+  &lt;/Design.PreviewWith&gt;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_10_create_a_sample_to_try_out_the_custom_control">Step 10: Create a sample to try-out the custom Control</h3>
+<div class="paragraph">
+<p>In Avalonia an external <code>ResourceDictionary</code>-file needs to be added via <code>ResourceInclude</code> into the <code>Resources</code>-node of your choice before it gets applied. We will add it into <code>App.Resources</code> as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">  &lt;Application.Resources&gt;
+    &lt;ResourceDictionary&gt;
+      &lt;ResourceDictionary.MergedDictionaries&gt;
+        &lt;!-- Don't miss this line --&gt;
+        &lt;ResourceInclude Source="/Styles/RatingStyles.axaml"/&gt;
+      &lt;/ResourceDictionary.MergedDictionaries&gt;
+    &lt;/ResourceDictionary&gt;
+  &lt;/Application.Resources&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+You need to do this for every project where you want to use this control. You will not see any custom control if you forgot to add this line.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we can use the control in any view like shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        [...]
+        xmlns:controls="using:RatingControlSample.Controls"
+		[...]
+        Title="RatingControlSample"&gt;
+
+    &lt;Design.DataContext&gt;
+        &lt;vm:MainWindowViewModel/&gt;
+    &lt;/Design.DataContext&gt;
+
+	&lt;StackPanel Spacing="5" Margin="10"&gt;
+        [...]
+		&lt;controls:RatingControl NumberOfStars="{Binding NumberOfStars}"
+								Value="{Binding RatingValue}" /&gt;
+	&lt;/StackPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For the complete sample including the <code>ViewModel</code> please see the source code of this sample.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_11_see_it_in_action">Step 11: See it in action</h3>
+<div class="paragraph">
+<p>We are all done. Hit [Run] or [Debug] in your IDE and you can see the control in action.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/img/result.png" alt="Rating Control in action">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_related">Related</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This sample has shown some basics about custom controls. If you want to use this control in production you may want to improve it further, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add it into a controls library</p>
+</li>
+<li>
+<p>Add keyboard support</p>
+</li>
+<li>
+<p>Add unit tests</p>
+</li>
+<li>
+<p>Add animations</p>
+</li>
+<li>
+<p>Add an event for value changed</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-11-07 14:49:27 UTC
+</div>
+</div>
+</body>
+</html>
