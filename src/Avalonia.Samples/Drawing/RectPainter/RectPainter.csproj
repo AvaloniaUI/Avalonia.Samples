@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
@@ -16,7 +16,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.8" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="11.3.0" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.8" />
     <PackageReference Include="System.Text.Json" Version="9.0.10" />
