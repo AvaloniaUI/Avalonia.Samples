@@ -12,16 +12,26 @@ jobs:
     # Prevent runs triggered by the create-pull-request bot to avoid loops
     if: github.actor != 'github-actions[bot]'
     steps:
-      - uses: actions/checkout@v3
-      
-      - uses: chetan/git-restore-mtime-action@v2
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          # git-restore-mtime-bare uses the ref log to find the correct timestamp
+          # for each file. This requires a full git history. The default value (1)
+          # creates a shallow checkout.
+          fetch-depth: 0
+
+      # Fix timestamps
+      - name: restore timestamps
+        uses: chetan/git-restore-mtime-action@v2
 
       - name: Install system packages for diagrams
         run: |
           sudo apt-get update
           sudo apt-get install -y graphviz plantuml default-jre
 
-      - uses: actions/setup-ruby@v1
+      - name: setup ruby
+        uses: actions/setup-ruby@v1
+        
       - name: Install Asciidoctor gems
         run: |
           gem install asciidoctor
