@@ -19,5 +19,5 @@ foreach ($file in $adocFiles) {
     $pdfPath = [System.IO.Path]::ChangeExtension($file.FullName, ".pdf")
     Write-Host "Compiling $($file.FullName) to $pdfPath"
 
-    asciidoctor-pdf "$($file.FullName)" -r asciidoctor-diagram -a pdf-theme="$themePath" -a allow-uri-read=true -a source-highlighter=rouge -o "$pdfPath" --trace
+    asciidoctor-pdf "$($file.FullName)" -r asciidoctor-diagram -a pdf-theme="$themePath" -a allow-uri-read=true -a source-highlighter=rouge -a compress=screen -o "$pdfPath" --trace
 }
