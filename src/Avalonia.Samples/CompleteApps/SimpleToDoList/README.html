@@ -657,7 +657,7 @@ Depending on the IDE used to create your project, you may see a file structure t
 </table>
 </div>
 <div class="paragraph">
-<p>By default, the Avalonia-MVVM template installs <code>Avalonia.ReactiveUI</code> as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the <code>CommunityToolkit.Mvvm</code> package. We need to edit two files to get the changes applied:</p>
+<p>By default, the Avalonia-MVVM template installs <code>ReactiveUI.Avalonia</code> as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the <code>CommunityToolkit.Mvvm</code> package. We need to edit two files to get the changes applied:</p>
 </div>
 <div class="paragraph">
 <p><strong>Program.cs</strong>:</p>
@@ -665,7 +665,7 @@ Depending on the IDE used to create your project, you may see a file structure t
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-diff" data-lang="diff">    using Avalonia;
--   using Avalonia.ReactiveUI; // remove this using
+-   using ReactiveUI.Avalonia; // remove this using
     using System;
 
 [...]
@@ -1606,7 +1606,7 @@ private async Task InitMainViewModelAsync()
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-07 14:49:27 UTC
+Last updated 2025-11-07 18:43:23 UTC
 </div>
 </div>
 </body>
