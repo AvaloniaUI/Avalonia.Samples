@@ -443,10 +443,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_before_we_start">Before we start</a>
 <ul class="sectlevel2">
 <li><a href="#_mvvm_pattern">MVVM pattern</a></li>
+<li><a href="#_messengers">Messengers</a></li>
 </ul>
 </li>
-<li><a href="#_the_solution">The Solution</a></li>
-<li><a href="#_related">Related</a></li>
+<li><a href="#_the_solution">The Solution</a>
+<ul class="sectlevel2">
+<li><a href="#_1_create_a_new_project">1, Create a New Project</a></li>
+<li><a href="#_window_styling">Window Styling</a></li>
+<li><a href="#_add_and_layout_controls">Add and Layout Controls</a></li>
+<li><a href="#_button_command">Button Command</a></li>
+<li><a href="#_open_a_dialog">Open a Dialog</a></li>
+<li><a href="#_add_a_new_dialog_window">Add a New Dialog Window</a></li>
+<li><a href="#_show_dialog">Show Dialog</a></li>
+<li><a href="#_add_dialog_content">Add Dialog Content</a></li>
+<li><a href="#_mock_search">Mock Search</a></li>
+<li><a href="#_album_view">Album View</a></li>
+<li><a href="#_album_service">Album Service</a></li>
+<li><a href="#_displaying_images">Displaying Images</a></li>
+<li><a href="#_dialog_return">Dialog Return</a></li>
+<li><a href="#_add_items_to_the_users_collection">Add Items to the User&#8217;s Collection</a></li>
+<li><a href="#_add_data_persistence">Add Data Persistence</a></li>
+<li><a href="#_load_data_at_start_up">Load Data at Start-up</a></li>
+<li><a href="#_conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -454,7 +474,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example will show you how to create a simple music store using Avalonia and MVVM community toolkit. You&#8217;ll learn the MVVM pattern with the MVVM community toolkit to manage multiple application windows. Also you will use advanced asynchronous techniques to implement the album search and other features, so that application responsiveness is maintained.</p>
+<p>In this tutorial you will create a desktop app based on the idea of a music store. The app is highly graphical - it presents images of album covers, and uses semi-transparent 'acrylic' blurred window backgrounds to give a very up-to-date look. By the end of the tutorial, you will be able search the iTunes online list of albums, and select albums for your own list.</p>
+</div>
+<div id="final_result" class="imageblock">
+<div class="content">
+<img src="_docs/initial_preview.png" alt="This is how the final App should look like">
+</div>
+<div class="title">Figure 1. This is how the final App should look like</div>
 </div>
 <!-- toc disabled -->
 <h3 id="_difficulty" class="discrete">Difficulty</h3>
@@ -471,7 +497,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_before_we_start">Before we start</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is a more advanced tutorial. The 'To Do List App' is a recommended prerequisite if you have limited experience with the MVVM pattern. Find 'To Do List App' tutorial <a href="../../CompleteApps/SimpleToDoList">here</a>.</p>
+<p>In this tutorial you will learn how to use the MVVM pattern with the <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">[MVVM community toolkit]</a> to manage multiple application windows. Also you will use advanced asynchronous techniques to implement the album search and other features, so that application responsiveness is maintained.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This is a more advanced tutorial. The 'To Do List App' is a recommended prerequisite if you have limited experience with the MVVM pattern. Read about the 'To Do List App' tutorial <a href="../../CompleteApps/SimpleToDoList">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For information and background on the concept of the MVVM pattern, see <a href="https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/">[here]</a>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This sample assumes that you have a basic knowledge about the following topics:</p>
@@ -507,7 +557,13 @@ Some sections are optional. You can skip these if you want to.
 <div class="sect2">
 <h3 id="_mvvm_pattern">MVVM pattern</h3>
 <div class="paragraph">
-<p>For information and background on the concept of the MVVM pattern, refer to the official documentation <a href="https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/">here</a>.</p>
+<p>For information and background on the concept of the MVVM pattern, refer to the official documentation <a href="https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/">[here]</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_messengers">Messengers</h3>
+<div class="paragraph">
+<p>This tutorial uses the messaging features of the CommunityToolkit.Mvvm to manage communication between view models and views. This is one approach to share data between different classes, without "knowing each other". If you are not familiar with it, you can read about it in the official documentation <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/messenger">[here]</a>.</p>
 </div>
 </div>
 </div>
@@ -515,42 +571,3090 @@ Some sections are optional. You can skip these if you want to.
 <div class="sect1">
 <h2 id="_the_solution">The Solution</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_create_a_new_project">1, Create a New Project</h3>
 <div class="paragraph">
-<p>You can follow the complete step-by-step guide for building the Music Store App in the official tutorial <a href="https://docs.avaloniaui.net/docs/tutorials/music-store-app/">here</a>.</p>
+<p>Before you can start programming, you will have to create a new project for the app. Please see the <a href="https://docs.avaloniaui.net/docs/get-started/">[getting started guide]</a> if you need help installing Avalonia and setting up your IDE.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_related">Related</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>This sample has shown some basics about custom controls. If you want to use this control in production you may want to improve it further, for example:</p>
+<p>Most IDEs have templates for creating new Avalonia projects. In this tutorial you will use the 'Avalonia MVVM Application' template, which is available in both <em>Visual Studio</em> and <em>JetBrains Rider</em>. Make sure you have selected the <em>CommunityToolkit.Mvvm</em> option when creating the project.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you have <em>ReactiveUI</em> installed, you can uninstall this and install <em>CommunityToolkit.Mvvm</em> instead. Make sure to also update your usages.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A new project will be created with the following solution folders and files:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/2_rider_proj_structure.png" alt="This is the structure of the creates project">
+</div>
+<div class="title">Figure 2. The basic structure of the created project</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The file names may differ a little. For example "MainViewModel.cs" may be named "MainViewModel.cs" depending on the IDE you are using.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_update_project_dependencies_if_needed">Update Project Dependencies if needed</h4>
+<div class="paragraph">
+<p>Let&#8217;s make sure you use correct version of CommunityToolkit.Mvvm:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Add it into a controls library</p>
+<p>Locate project file Avalonia.MusicStore.csproj</p>
 </li>
 <li>
-<p>Add keyboard support</p>
+<p>Right-click on the project name in the Solution Explorer.</p>
 </li>
 <li>
-<p>Add unit tests</p>
-</li>
-<li>
-<p>Add animations</p>
-</li>
-<li>
-<p>Add an event for value changed</p>
+<p>Select 'Edit' &#8594; 'Edit Avalonia.MusicStore.csproj'</p>
 </li>
 </ul>
+</div>
+<div id="prepare-project-for-partial-properties" class="paragraph">
+<p>In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.0 and
+Avalonia version no older than 11.3.0.</p>
+</div>
+<div class="listingblock">
+<div class="title">Update nuget packages</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;PackageReference Include="Avalonia" Version="11.3.0" /&gt;
+&lt;PackageReference Include="Avalonia.Desktop" Version="11.3.0" /&gt;
+&lt;PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" /&gt;
+&lt;PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the same file enable preview C# language features:</p>
+</div>
+<div class="listingblock">
+<div class="title">Within the <em>PropertyGroup</em> section, add the following line:</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;LangVersion&gt;preview&lt;/LangVersion&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setting enables support for the latest C# features required by this tutorial, including partial properties introduced in C# 13.</p>
+</div>
+<div class="paragraph">
+<p>Now take some time to review the files and folders that the solution template created. You will see that the following the MVVM pattern, these folders were created:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Folder Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Assets</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains any embedded assets that are compiled into the program. <code>Images</code>, <code>Icons</code>, <code>Fonts</code> etc, anything that the UI
+Folder Name	Description
+might need to display,</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Models</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is an empty folder for code that is the 'model' part of the MVVM pattern. This often contains everything else the app needs that is not part of the UI. For example: interaction with a database, Web API, or  interfaces with a hardware device.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">View Models</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is a folder for all the view models in the project, and it already contains an example. View models contain the application logic in the MVVM pattern. For example: a button is enabled only when the user has typed something; or open a dialog when the user clicks here; or show an error if the user enters too high a number type of logic in this input.</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Views</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is a folder for all the views in the project, and it already contains the view for the application main window. Views in the MVVM pattern contain only the presentation for the application; that is layout and form, fonts, colors, icons and images. In MVVM they have only enough code to link them to the view model layer. In <em>Avalonia UI</em> there is only enough code to manage windows and dialogs here.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To explore the concepts behind the MVVM pattern, and when is appropriate to use it, see <a href="https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/">[Avalonia-docs]</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The solution template has created enough files for the application to run. You will meet all of these during the rest of this tutorial.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_the_project">Run the Project</h4>
+<div class="paragraph">
+<p>Press the debug button in your IDE to compile and run the project.</p>
+</div>
+<div class="paragraph">
+<p>This will show a window that looks like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/5_first_run.png" alt="First run">
+</div>
+<div class="title">Figure 3. first run of the created project</div>
+</div>
+<div class="paragraph">
+<p>It is a little plain - but you now have a running application, and a blank canvas to start developing with.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_window_styling">Window Styling</h3>
+<div class="paragraph">
+<p>Now, you will make the main window look modern by applying a dark theme, and an acrylic blur to the window background.</p>
+</div>
+<div class="sect3">
+<h4 id="_dark_mode">Dark Mode</h4>
+<div class="paragraph">
+<p>Follow this procedure to style the main window in 'dark' mode:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the file <strong>App.axaml</strong>.</p>
+</li>
+<li>
+<p>In the XAML, change the <code>RequestedThemeVariant</code> attribute in the <code>&lt;Application&gt;</code> element from "Default" to "Dark"</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Application ...
+    RequestedThemeVariant="Dark"&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now locate and open the <strong>MainWindow.axaml</strong> file in the <strong>/Views</strong> folder.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Notice that the preview pane is still showing the window in 'light' mode. The application will require a rebuild for the new mode to show in the preview pane.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Click <strong>Build Startup Project</strong> on the <strong>Build</strong> menu.</p>
+<div class="paragraph">
+<p>The preview pane now changes to the dark mode.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_docs/6_DarkMode.png" alt="Previewer showing the dark mode"></span></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_acrylic_blur">Acrylic Blur</h4>
+<div class="paragraph">
+<p>Follow this procedure to style the background of the main window with an acrylic blur:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file in the <strong>/Views</strong> folder.</p>
+</li>
+<li>
+<p>Find the end of the opening tag of the <code>&lt;Window&gt;</code> element.</p>
+</li>
+<li>
+<p>After the <code>Title="Avalonia.MusicStore"</code> attribute, add two new attributes as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window ...
+        Title="Avalonia.MusicStore"
+        ...
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>To apply the acrylic effect to the whole window, replace the <code>&lt;TextBlock&gt;</code> element in the content zone of the main window with the following XAML for a panel:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window ... &gt;
+    &lt;Panel&gt;
+        &lt;ExperimentalAcrylicBorder IsHitTestVisible="False"&gt;
+            &lt;ExperimentalAcrylicBorder.Material&gt;
+                &lt;ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" /&gt;
+            &lt;/ExperimentalAcrylicBorder.Material&gt;
+        &lt;/ExperimentalAcrylicBorder&gt;
+    &lt;/Panel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/7_AcrylicBlur.png" alt="Acrylic materia applied">
+</div>
+<div class="title">Figure 4. Acrylic materia applied</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Notice that, as expected, the acrylic window effect covers the content zone of the main window. However the effect does not yet extend to the title bar.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Note that <em>Linux</em> users can not yet take advantage of the following code due to limitations of the X11 version. The tutorial code will run and the window will still work on <em>Linux</em>, but the full effect will not be realized.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to extend the acrylic blur effect onto the title bar:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if is still running.</p>
+</li>
+<li>
+<p>Find the end of the opening tag of the <code>&lt;Window&gt;</code> element again.</p>
+</li>
+<li>
+<p>Add the <code>ExtendClientAreaToDecorationsHint</code> attribute as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">   &lt;Window ...
+           TransparencyLevelHint="AcrylicBlur"
+           Background="Transparent"
+
+           ExtendClientAreaToDecorationsHint="True"&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/8_FullAcrylicWindow.png" alt="Fully acrylic window">
+</div>
+<div class="title">Figure 5. Fully acrylic window</div>
+</div>
+<div class="paragraph">
+<p>Now you have the acrylic blur effect extending into the title bar.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_and_layout_controls">Add and Layout Controls</h3>
+<div class="paragraph">
+<p>The main window of the app will eventually show a list of album covers in the user&#8217;s collection, with a button at its top-right corner to allow the user to add a new album. The button will open a search dialog window to find new albums to add.</p>
+</div>
+<div class="paragraph">
+<p>On this page you will learn how to layout the main window so that the button appears at its top-right corner, as required.</p>
+</div>
+<div class="sect3">
+<h4 id="_button_layout">Button Layout</h4>
+<div class="paragraph">
+<p>To display a button in the content zone of the main window, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Inside the panel element, add the following XAML for a button. The panel XAML should look like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Panel&gt;
+    &lt;ExperimentalAcrylicBorder IsHitTestVisible="False"&gt;
+        &lt;ExperimentalAcrylicBorder.Material&gt;
+            &lt;ExperimentalAcrylicMaterial
+                 BackgroundSource="Digger"
+                 TintColor="Black"
+                 TintOpacity="1"
+                 MaterialOpacity="0.65" /&gt;
+        &lt;/ExperimentalAcrylicBorder.Material&gt;
+     &lt;/ExperimentalAcrylicBorder&gt;
+
+     &lt;Button Content="Buy Music"/&gt;
+&lt;/Panel&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/9_Button_added_but_wrong_location.png" alt="Added the button to buy new music.">
+</div>
+<div class="title">Figure 6. Added button but wrong location</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will see the button, but it is in the default position and not at the top-right of the window as required.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to position the button correctly:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running</p>
+</li>
+<li>
+<p>Wrap the button element in a new panel element.</p>
+</li>
+<li>
+<p>Add a margin attribute to the new panel element, with a value of 40.</p>
+</li>
+<li>
+<p>Add horizontal and vertical alignment attributes to the button element, as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Panel Margin="40"&gt;
+  &lt;Button Content="Buy Music"
+          HorizontalAlignment="Right" VerticalAlignment="Top" /&gt;
+&lt;/Panel&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see all these changes reflected in the preview pane as you add them.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_button_icon">Button Icon</h4>
+<div class="paragraph">
+<p>Have a look back at the image of the <a href="#final_result">finished app</a>. You will see that the button shows an icon, and not text (as it currently does). This is actually the Microsoft Store icon from the Fluent Icons collection, and <em>Avalonia UI</em> has definitions for all these for you to use.</p>
+</div>
+<div class="paragraph">
+<p>To use the Microsoft Store icon, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the <em>Avalonia UI</em> <em>GitHub</em> to find the list of Fluent Icons at <a href="https://avaloniaui.github.io/icons.html" class="bare">https://avaloniaui.github.io/icons.html</a></p>
+</li>
+<li>
+<p>Use your browser&#8217;s text search to locate the name of the icon 'store\_microsoft\_regular'. There should be some code similar to:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;StreamGeometry x:Key="store_microsoft_regular"&gt;M11.5 9.5V13H8V9.5H11.5Z M11.5 17.5V14H8V17.5H11.5Z M16 9.5V13H12.5V9.5H16Z M16 17.5V14H12.5V17.5H16Z M8 6V3.75C8 2.7835 8.7835 2 9.75 2H14.25C15.2165 2 16 2.7835 16 3.75V6H21.25C21.6642 6 22 6.33579 22 6.75V18.25C22 19.7688 20.7688 21 19.25 21H4.75C3.23122 21 2 19.7688 2 18.25V6.75C2 6.33579 2.33579 6 2.75 6H8ZM9.5 3.75V6H14.5V3.75C14.5 3.61193 14.3881 3.5 14.25 3.5H9.75C9.61193 3.5 9.5 3.61193 9.5 3.75ZM3.5 18.25C3.5 18.9404 4.05964 19.5 4.75 19.5H19.25C19.9404 19.5 20.5 18.9404 20.5 18.25V7.5H3.5V18.25Z&lt;/StreamGeometry&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy all of the code for the icon.</p>
+</li>
+<li>
+<p>In the solution explorer, right-click the project.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong>, then click  <strong>Avalonia Resources</strong></p>
+</li>
+<li>
+<p>Enter the <strong>Name</strong> 'Icons', press enter.</p>
+</li>
+<li>
+<p>Locate and open the new <strong>Icons.axaml</strong> file that is created. The XAML will look like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+    &lt;Design.PreviewWith&gt;
+        &lt;!-- Here we can add some controls for the previewer --&gt;
+    &lt;/Design.PreviewWith&gt;
+
+    &lt;!-- Add the resources here. --&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Paste your icon code inside the <code>&lt;ResourceDictionary&gt;</code>.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Remember that each node needs the <code>x:Key</code> provided.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The icons file now looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+    &lt;Design.PreviewWith&gt;
+        &lt;Border Padding="20"&gt;
+            &lt;StackPanel Spacing="5"&gt;
+                &lt;PathIcon Data="{StaticResource store_microsoft_regular}"&gt;&lt;/PathIcon&gt;
+                &lt;PathIcon Data="{StaticResource music_regular}"&gt;&lt;/PathIcon&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Border&gt;
+    &lt;/Design.PreviewWith&gt;
+
+    &lt;StreamGeometry x:Key="store_microsoft_regular"&gt; [ ... Add the path data here ... ] &lt;/StreamGeometry&gt;
+    &lt;StreamGeometry x:Key="music_regular"&gt; [ ... Add the path data here ... ] &lt;/StreamGeometry&gt;
+
+&lt;/ResourceDictionary&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Most of the time the path can be also extracted from any svg-path.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With a new icons file prepared, you must now include it in your app.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to include the icons file:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>App.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add a <code>&lt;ResourceDictionary&gt;</code> element with a <code>&lt;ResourceInclude&gt;</code> as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Application.Resources&gt;
+    &lt;ResourceDictionary&gt;
+        &lt;ResourceDictionary.MergedDictionaries&gt;
+            &lt;ResourceInclude Source="avares://Avalonia.MusicStore/Icons.axaml" /&gt;
+        &lt;/ResourceDictionary.MergedDictionaries&gt;
+    &lt;/ResourceDictionary&gt;
+&lt;/Application.Resources&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You need to build the application so that the icons become available to the preview pane.</p>
+</div>
+<div class="paragraph">
+<p>To change the button from text to icon content, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Alter the XAML for the button, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Button HorizontalAlignment="Right" VerticalAlignment="Top"&gt;
+    &lt;PathIcon Data="{StaticResource store_microsoft_regular}" /&gt;
+&lt;/Button&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/10_Button_with_icon.png" alt="Button with icon">
+</div>
+<div class="title">Figure 7. The button now has an icon</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_button_command">Button Command</h3>
+<div class="paragraph">
+<p>So far in this tutorial, you have altered only files from the view part of the MVVM pattern (for the main window and app). In this section you will learn how to link the button in the view for the main window, to a command in the view model. This will cause user interaction with the view (in this case a button click) to have an effect in the application logic of the view model.</p>
+</div>
+<div class="paragraph">
+<p>When you develop with <em>Avalonia UI</em> and the MVVM pattern, the solution template will give you a choice of MVVM toolkits. This tutorial now uses <em>CommunityToolkit.Mvvm</em>, and the solution template has already added the necessary packages.</p>
+</div>
+<div class="sect3">
+<h4 id="_relaycommand">RelayCommand</h4>
+<div class="paragraph">
+<p>The first step in linking the view and view model is to make the view model able to accept a command. You will achieve this by adding a method to the main window view model and decorating it with the <code>[RelayCommand]</code> attribute, which will generate a bindable <code>ICommand</code> property, which can be referenced from your view.
+Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>MainViewModel.cs</strong> file in the <strong>/ViewModels</strong> folder.</p>
+</li>
+<li>
+<p>Delete the existing content of the class, and add the code shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
+
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MainViewModel : ObservableObject
+    {
+        public MainViewModel()
+        {
+            // ViewModel initialization logic.
+        }
+
+        [RelayCommand]
+        private async Task AddAlbumAsync()
+        {
+            // Code here will be executed when the button is clicked.
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_it_works">How it works</h4>
+<div class="paragraph">
+<p>The <code>[RelayCommand]</code> attribute generates a public property for you at compile time named <code>AddAlbumCommand</code>, which implements <code>ICommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>This means that even though you only wrote a method named <code>AddAlbumAsync</code>, Avalonia&#8217;s data-binding system can bind directly to <code>AddAlbumCommand</code> in your AXAML — without you writing any boilerplate command logic.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to see how this method is executes, you can place a debug breakpoint at the opening curly brace inside the <code>AddAlbumAsync()</code> method.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To complete the link from the view to your new <code>AddAlbumAsync</code> view model property, you will add a data binding to the button.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For more information about the concept of data binding, see <a href="https://docs.avaloniaui.net/docs/basics/data/data-binding">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To add the button data binding, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Find the XAML for the button and add the command attribute and binding, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Button HorizontalAlignment="Right" VerticalAlignment="Top"
+        Command="{Binding AddAlbumCommand}"&gt;
+    &lt;PathIcon Data="{StaticResource store_microsoft_regular}"/&gt;
+&lt;/Button&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_why_it_is_addalbumcommand">Why it is <code>AddAlbumCommand</code>?</h4>
+<div class="paragraph">
+<p>The <code>[RelayCommand]</code> attribute automatically generates command properties based on your method names. If your method name ends with <em>Async</em>, the generator removes the <em>Async</em> suffix and appends <em>Command</em> to form the property name.
+If the method returns a Task, <code>[RelayCommand]</code> automatically generates an <code>IAsyncRelayCommand</code> instead of a regular <code>IRelayCommand</code>, giving you full support for asynchronous execution.
+This means:
+- If your method is named <code>AddAlbumAsync</code>, the generated property will be called <code>AddAlbumCommand</code>.
+- If your method is named <code>AddAlbum</code>, it also becomes <code>AddAlbumCommand</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Learn more about asynchronous <code>RelayCommand</code> generation in <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand#asynchronous-commands">[the official docs]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>Command</code> property of an <em>Avalonia UI</em> button determines what happens when the button is clicked. In this case it binds to the <code>AddAlbumCommand</code> generated in your view model, causing the <code>AddAlbumAsync</code> method to run.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will see the app stop executing at the breakpoint you previously set in the view model.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_open_a_dialog">Open a Dialog</h3>
+<div class="paragraph">
+<p>On this page you will learn how to open dialog window in your app and exchange data between windows using Mvvm.Messaging. The dialog will be used to search for and select an album to add to a list in the main window.</p>
+</div>
+<div class="paragraph">
+<p>Several messages will be used in your app:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">PurchaseAlbumMessage</dt>
+<dd>
+<p>sent by the main view model to request the dialog window be shown and await a result.</p>
+</dd>
+<dt class="hdlist1">MusicStoreClosedMessage</dt>
+<dd>
+<p>sent by the dialog&#8217;s view model when the user selects an album, to return the result and close the dialog.</p>
+</dd>
+<dt class="hdlist1">CheckAlbumAlreadyExistsMessage</dt>
+<dd>
+<p>sent by the dialog&#8217;s view model before sending the <code>MusicStoreClosedMessage</code> to the main view model in order to make sure the album is not yet present. This part is optional</p>
+</dd>
+<dt class="hdlist1">NotificationMessage</dt>
+<dd>
+<p>sent by the main view model to display a notification, for example when an album was bought successfully. This part is optional.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Below is a stripped down diagram showing the message flow between the components that you are going to implement in the next steps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-mermaid" data-lang="mermaid">graph TD;
+    A[MainViewModel] --&gt;|Send PurchaseAlbumMessage| B(MainWindow)
+    B --&gt;|Show MusicStoreWindow&lt;br&gt;await AlbumViewModel| C[MusicStoreWindow]
+    C --&gt;|BuyMusic| D[MusicStoreViewModel]
+    D --&gt;|Send MusicStoreClosedMessage&lt;br&gt;with SelectedAlbum| C
+    C --&gt;|Close dialog&lt;br&gt;return SelectedAlbum| B
+    B --&gt;|Reply with AlbumViewModel| A</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The diagram above is simplified to show the basic message flow. In the actual implementation, there are additional message exchanges for checking if an album already exists and for displaying notifications.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_a_new_dialog_window">Add a New Dialog Window</h3>
+<div class="paragraph">
+<p>There is nothing special about a window view file that makes it into a dialog; that is up to the way in which the window is controlled by the app. You will use Avalonia UI features and <em>CommunityToolkit.Mvvm</em> to manage this. So the first step is to create a new window for the app.</p>
+</div>
+<div class="paragraph">
+<p>To create a new window, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>In the solution explorer, right-click the <strong>/Views</strong> folder and then click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Avalonia Window</strong>.</p>
+</li>
+<li>
+<p>When prompted for the name, type 'MusicStoreWindow'</p>
+</li>
+<li>
+<p>Press enter.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_dialog_window_styling">Dialog Window Styling</h4>
+<div class="paragraph">
+<p>To style the new dialog window so that it matches the main window, follow the same procedure as explain in the section "<a href="#_acrylic_blur">Acrylic Blur</a>" for the main window.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dialog_input_and_output">Dialog Input and Output</h4>
+<div class="paragraph">
+<p>The application logic for the dialog will be controlled by its own view model. This will be created and linked to the dialog window view whenever the dialog is to be shown.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, the result of the users interaction with the dialog will eventually have to be passed back to the application logic for the main window for processing.</p>
+</div>
+<div class="paragraph">
+<p>At this stage you will create two empty view model classes to act as placeholders for the dialog view model, and the dialog return (selected album) object. To create these view models, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the solution explorer, right-click the <strong>/ViewModels</strong> folder and then click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Class</strong>.</p>
+</li>
+<li>
+<p>Name the class 'MusicStoreViewModel' and click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Right-click again the <strong>/ViewModels</strong> folder and then click <strong>Add</strong> a second time.</p>
+</li>
+<li>
+<p>Click <strong>Class</strong>.</p>
+</li>
+<li>
+<p>Name the class 'AlbumViewModel' and click <strong>Add</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_show_dialog">Show Dialog</h3>
+<div class="paragraph">
+<p>Now that you have a new window <code>MusicStoreWindow</code> and the corresponding view models <code>MusicStoreViewModel</code> and <code>AlbumViewModel</code>.
+You are going to complete the logic so that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The main window view model sends a message requesting the dialog to be shown.</p>
+</li>
+<li>
+<p>The main window view receives that message, opens the dialog, and returns the result.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Below is how this works step-by-step using the CommunityToolkit.Mvvm messaging API.</p>
+</div>
+<div class="sect3">
+<h4 id="_define_the_purchasealbummessage">Define the PurchaseAlbumMessage</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>In the project root directory create new folder <strong>/Messages</strong></p>
+</li>
+<li>
+<p>In the newly created <strong>/Messages</strong> folder add a class <strong>PurchaseAlbumMessage</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>First, you are going to define a message class called <code>PurchaseAlbumMessage</code> that carries an <code>AlbumViewModel</code> response.
+This message will be sent by the view model when it needs to show the dialog.</p>
+</div>
+<div class="paragraph">
+<p>Open <strong>PurchaseAlbumMessage.cs</strong> and add the following code there:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using Avalonia.MusicStore.ViewModels;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+
+namespace Avalonia.MusicStore.Messages;
+
+public class PurchaseAlbumMessage : AsyncRequestMessage&lt;AlbumViewModel?&gt;;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>`AsyncRequestMessage&lt;T&gt;`</em> lets you send a request and await a reply of type T (in our case, AlbumViewModel?).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_register_the_message_handler_in_mainwindow">Register the Message Handler in  MainWindow</h4>
+<div class="paragraph">
+<p>In <em>MainWindow.axaml.cs</em> register a handler for <code>PurchaseAlbumMessage</code>. This handler runs whenever the view model sends that message. Its job is to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create the dialog window.</p>
+</li>
+<li>
+<p>Assign <code>MusicStoreViewModel</code> as its DataContext.</p>
+</li>
+<li>
+<p>Call <code>ShowDialog&lt;AlbumViewModel?&gt;</code> and pass the result back via m.Reply(&#8230;&#8203;).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Open <em>MainWindow.axaml.cs</em> and add the following code into MainWindow constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public MainWindow()
+{
+    InitializeComponent();
+
+    if (Design.IsDesignMode)
+        return;
+
+    // Whenever 'Send(new PurchaseAlbumMessage())' is called, invoke this callback on the MainWindow instance:
+    WeakReferenceMessenger.Default.Register&lt;MainWindow, PurchaseAlbumMessage&gt;(this, static (w, m) =&gt;
+    {
+        // Create an instance of MusicStoreWindow and set MusicStoreViewModel as its DataContext.
+        var dialog = new MusicStoreWindow
+        {
+            DataContext = new MusicStoreViewModel()
+        };
+        // Show dialog window and reply with returned AlbumViewModel or null when the dialog is closed.
+        m.Reply(dialog.ShowDialog&lt;AlbumViewModel?&gt;(w));
+    });
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_send_the_message_from_the_viewmodel">Send the Message from the ViewModel</h4>
+<div class="paragraph">
+<p>Now, update the <code>AddAlbumAsync()</code> method inside <code>MainViewModel</code> to send <code>PurchaseAlbumMessage</code> when the user clicks on the store button.
+- Open <strong>MainViewModel.cs</strong>
+- Locate the <code>AddAlbumAsync()</code> method that we added in the previous steps.
+- Edit <code>AddAlbumAsync()</code> as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    // Send the message to the previously registered handler and await the selected album
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now:
+- Click <strong>Debug</strong> to compile and run the project.
+- Click the icon button.</p>
+</div>
+<div class="paragraph">
+<p>It all works - but the dialog window opens at the same size as the main window, and offset from it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dialog_position_and_size">Dialog Position and Size</h4>
+<div class="paragraph">
+<p>For the final tweak, you will make the dialog smaller than the main window, and open centered on it. You will also make the main window open in the center of the user&#8217;s screen.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add an attribute to the <code>&lt;Window&gt;</code> element to set the start-up position:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window ...
+    WindowStartupLocation="CenterScreen"&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add attributes for the width and height of the dialog, set at 1000 and 550 respectively.</p>
+</li>
+<li>
+<p>Add the start-up position attribute set to <code>CenterOwner</code>, as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window ...
+    Width="1000" Height="550"
+    WindowStartupLocation="CenterOwner"&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/12_opened_dialog.png" alt="dialog window open centered">
+</div>
+<div class="title">Figure 8. Dialog opened centered</div>
+</div>
+<div class="paragraph">
+<p>The dialog window is now opened centered inside the main window.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_dialog_content">Add Dialog Content</h3>
+<div class="paragraph">
+<p>Now you will learn how to add some content to the dialog window. This will be some controls for the search and a dialog close button; together with a list of placeholders for the album covers - these will eventually be loaded as the results of the search.</p>
+</div>
+<div class="paragraph">
+<p>To arrange the dialog controls, you will use the dock panel layout control, that is part of the <em>Avalonia UI</em> built-in controls. This will keep the search controls at the top of the dialog, and the button at the bottom, whatever the height. The list will be the 'fill' area of the dock panel, so it will always take up all the remaining content zone.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/13_search_album_dialog_sketch.png" alt="A sketch showing how the dialog window will be laid out">
+</div>
+<div class="title">Figure 9. A sketch of the dialog layout</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For full information on the dock panel control, see the reference <a href="https://docs.avaloniaui.net/docs/reference/controls/dockpanel">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The dock panel itself will be located on an <em>Avalonia UI</em> user control. This is so the code that shows the dialog can be separated from the code that operates the controls within the dialog.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This is a common pattern of UI Composition, to read about this concept, see <a href="https://docs.avaloniaui.net/docs/concepts/ui-composition">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add the user control and constituent controls for the dialog:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>In the solution explorer, right-click the <strong>/Views</strong> folder and then click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Avalonia User Control</strong>.</p>
+</li>
+<li>
+<p>When prompted for the name, type 'MusicStoreView'.</p>
+</li>
+<li>
+<p>Press enter.</p>
+</li>
+<li>
+<p>Alter the XAML for the user control&#8217;s content zone as follows:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;UserControl ... &gt;
+  &lt;DockPanel&gt;
+    &lt;StackPanel DockPanel.Dock="Top"&gt;
+      &lt;TextBox Watermark="Search for Albums...." /&gt;
+      &lt;ProgressBar IsIndeterminate="True"  /&gt;
+    &lt;/StackPanel&gt;
+      &lt;Button Content="Buy Album"
+              DockPanel.Dock="Bottom"
+              HorizontalAlignment="Center" /&gt;
+      &lt;ListBox/&gt;
+  &lt;/DockPanel&gt;
+&lt;/UserControl&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inside the dialog the user will be able to search for albums, but this will use a Web API, and may take some time to return. It is for this reason that you have added a progress bar. The progress bar will be active during the search - to provide visual feedback to the user.</p>
+</div>
+<div class="paragraph">
+<p>Also, to ensure that the app remains responsive during the search, you will implement the operation itself as both asynchronous and cancellable. You will add this functionality later in the tutorial.</p>
+</div>
+<div class="paragraph">
+<p>Now the next step is for you to add the new user control to the content zone of the dialog window.</p>
+</div>
+<div class="paragraph">
+<p>To add the user control, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add the namespace for the views to the <code>&lt;Window&gt;</code> element:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Window ...
+        xmlns:views="using:Avalonia.MusicStore.Views" &gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inside the panel element, add an element for new user control and a <a href="https://api-docs.avaloniaui.net/docs/T_Avalonia_Controls_Notifications_WindowNotificationManager">[NotificationManager]</a> to show notifications to the user:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Panel Margin="40"&gt;
+   &lt;views:MusicStoreView/&gt;
+&lt;/Panel&gt;
+&lt;WindowNotificationManager x:Name="NotificationManager"
+                           Position="TopRight" /&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will use the notification manager later in the tutorial to show messages to the user. To access it from code behind, give it the name <code>NotificationManager</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You will see the controls appear in the preview pane.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mock_search">Mock Search</h3>
+<div class="paragraph">
+<p>In this section you will create the view model for the album search feature, and then bind it to the controls on the new user control. At this stage you will use a mock of the search itself, so that you can concentrate on the view model.</p>
+</div>
+<div class="sect3">
+<h4 id="_mvvm_toolkit_view_model">MVVM Toolkit View Model</h4>
+<div class="paragraph">
+<p>The <em>CommunityToolkit.Mvvm</em> framework provides <em>Avalonia UI</em> with support for its data binding system. You add this support by deriving your view model from the <code>ObservableObject</code> class, via the <code>ViewModelBase</code> class that was added to your project at the start, by the solution template.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to derive from the <code>ObservableObject</code> class:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the code to derive the class from <code>ViewModelBase</code> and make the class <code>partial</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setup allows you to use attributes like <code>[ObservableProperty]</code>, which automatically generate backing fields and property change notifications needed for UI binding.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can learn more about <code>[ObservableProperty]</code> and <code>INotifyPropertyChanged</code> <a href="https://docs.avaloniaui.net/docs/guides/data-binding/inotifypropertychanged">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>At this stage, you will create two properties for the search application logic:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A text string that is the search criteria,</p>
+</li>
+<li>
+<p>A Boolean that indicates whether the search is busy.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Add the following properties using the  <code>[ObservableProperty]</code> attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+       [ObservableProperty] public partial string? SearchText { get; set; }
+
+       [ObservableProperty] public partial bool IsBusy { get; private set; }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note that the partial property syntax was introduced in C# 13 Community Toolkit 8.4, visit <a href="#prepare-project-for-partial-properties">Setup the project</a> for correct setup.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_data_binding">Data Binding</h4>
+<div class="paragraph">
+<p>Next you will add a data binding to link the view to the view model. The text box will be bound to the search text, and whether the progress bar is visible to the user will  be bound to the Boolean.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add data binding to the view:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreView.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add the binding expressions shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;UserControl ...
+    xmlns:vm="clr-namespace:Avalonia.MusicStore.ViewModels"
+    x:DataType="vm:MusicStoreViewModel"&gt;
+    &lt;!-- ... --&gt;
+    &lt;DockPanel&gt;
+      &lt;StackPanel DockPanel.Dock="Top"&gt;
+          &lt;TextBox Watermark="Search for Albums...." Text="{Binding SearchText}" /&gt;
+        &lt;ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" /&gt;
+      &lt;/StackPanel&gt;
+      &lt;Button Content="Buy Album"
+              DockPanel.Dock="Bottom"
+              HorizontalAlignment="Center" /&gt;
+      &lt;ListBox/&gt;
+    &lt;/DockPanel&gt;
+    &lt;!-- ... --&gt;
+&lt;/UserControl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_album_search_and_selection">Album Search and Selection</h4>
+<div class="paragraph">
+<p>Your next step is to create the music store view model properties needed to process albums. These are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a collection of album view models to represent the albums that the search might find,</p>
+</li>
+<li>
+<p>and a property to hold an album if the user selects one.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here you will use the <code>ObservableCollection</code> - this is a collection is capable of notification, and it is provided by the .NET framework.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add the above properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the following code to the class:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[ObservableProperty] public partial AlbumViewModel? SelectedAlbum { get; set; }
+
+public ObservableCollection&lt;AlbumViewModel&gt; SearchResults { get; } = new();</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next to bind these properties to the list box in the view, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreView.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add the binding expressions shown to the <code>&lt;ListBox&gt;</code> element:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedAlbum}" /&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mock_data">Mock Data</h4>
+<div class="paragraph">
+<p>Now, to test the app at this stage, you will add some mock data directly to the view model.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreViewModel.cs</strong> file again.</p>
+</li>
+<li>
+<p>Add a constructor to the class, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public MusicStoreViewModel()
+{
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/14_mock_search_preview.png" alt="Mock search preview">
+</div>
+<div class="title">Figure 10. Preview of the mock-up search results</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This shows that the data binding from the list to the album collection in the view model is working, but the view is not graphical yet.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_album_view">Album View</h3>
+<div class="paragraph">
+<p>In this paragraph you will continue developing the search results list for the app by replacing the text currently shown with graphical album tiles.</p>
+</div>
+<div class="sect3">
+<h4 id="_icon_resource">Icon Resource</h4>
+<div class="paragraph">
+<p>The first step here is to add a resource for the 'music note' icon. You will use this to act as a placeholder icon for the album covers in the app - they will eventually be replaced by the downloaded album cover artwork.</p>
+</div>
+<div class="paragraph">
+<p>To add the music note icon resource, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Navigate to the <em>Avalonia UI</em> <em>GitHub</em> to find the list of Fluent Icons at <a href="https://avaloniaui.github.io/icons.html" class="bare">https://avaloniaui.github.io/icons.html</a></p>
+</li>
+<li>
+<p>Use your browser&#8217;s text search to locate the name of the icon 'music_regular'. There should be some code similar to:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;StreamGeometry x:Key="music_regular"&gt;M11.5,2.75 C11.5,2.22634895 12.0230228,1.86388952 12.5133347,2.04775015 L18.8913911,4.43943933 C20.1598961,4.91511241 21.0002742,6.1277638 21.0002742,7.48252202 L21.0002742,10.7513533 C21.0002742,11.2750044 20.4772513,11.6374638 19.9869395,11.4536032 L13,8.83332147 L13,17.5 C13,17.5545945 12.9941667,17.6078265 12.9830895,17.6591069 C12.9940859,17.7709636 13,17.884807 13,18 C13,20.2596863 10.7242052,22 8,22 C5.27579485,22 3,20.2596863 3,18 C3,15.7403137 5.27579485,14 8,14 C9.3521238,14 10.5937815,14.428727 11.5015337,15.1368931 L11.5,2.75 Z M8,15.5 C6.02978478,15.5 4.5,16.6698354 4.5,18 C4.5,19.3301646 6.02978478,20.5 8,20.5 C9.97021522,20.5 11.5,19.3301646 11.5,18 C11.5,16.6698354 9.97021522,15.5 8,15.5 Z M13,3.83223733 L13,7.23159672 L19.5002742,9.669116 L19.5002742,7.48252202 C19.5002742,6.75303682 19.0477629,6.10007069 18.3647217,5.84393903 L13,3.83223733 Z&lt;/StreamGeometry&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy all of the code for the icon.</p>
+</li>
+<li>
+<p>Locate and open the <strong>Icons.axaml</strong> file that you created earlier (see: <a href="#_button_icon">Button Icon</a>).</p>
+</li>
+<li>
+<p>Paste the copied`&lt;StreamGeometry&gt;` element inside <code>&lt;Resources&gt;</code> element.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_album_view_2">Album View</h4>
+<div class="paragraph">
+<p>The next step is to create a graphical 'tile' view for an album. You will then cause this to be used instead of the text that currently shows for each album in the list.</p>
+</div>
+<div class="paragraph">
+<p>To create the graphical 'tile' view, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the solution explorer, right-click the <strong>/Views</strong> folder and then click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Avalonia User Control</strong>.</p>
+</li>
+<li>
+<p>When prompted for the name, type 'AlbumView'.</p>
+</li>
+<li>
+<p>Press enter.</p>
+</li>
+<li>
+<p>Add the attribute <code>Width="200"</code> to the <code>&lt;UserControl&gt;</code> element.</p>
+</li>
+<li>
+<p>Alter the XAML for the user control&#8217;s content zone as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Avalonia.MusicStore.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.MusicStore.Views.AlbumView"
+             x:DataType="vm:AlbumViewModel"
+             Width="200"&gt;
+  &lt;UserControl.Resources&gt;
+    &lt;DrawingImage x:Key="CoverFallback"&gt;
+      &lt;DrawingImage.Drawing&gt;
+        &lt;DrawingGroup &gt;
+          &lt;GeometryDrawing&gt;
+            &lt;RectangleGeometry  Rect="-2 -2 28 28" /&gt;
+          &lt;/GeometryDrawing&gt;
+          &lt;GeometryDrawing Brush="White"
+                           Geometry="{DynamicResource music_regular}" /&gt;
+        &lt;/DrawingGroup&gt;
+
+      &lt;/DrawingImage.Drawing&gt;
+    &lt;/DrawingImage&gt;
+  &lt;/UserControl.Resources&gt;
+
+  &lt;StackPanel Spacing="5" Width="200"&gt;
+    &lt;Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD"&gt;
+        &lt;Image Width="200" Height="200"
+               Stretch="Uniform"
+               Source="{StaticResource CoverFallback}" /&gt;
+    &lt;/Border&gt;
+  &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As the image source we are using a static resource <code>CoverFallback</code> that displays the music note icon above a rectangle. This will act as a placeholder for the album cover art. It is defined in <code>&lt;UserControl.Resources&gt;</code> section.</p>
+</div>
+<div class="paragraph">
+<p>The preview pane will now show the new tile view with the music note icon placed in the center.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_view_locator">View Locator</h4>
+<div class="paragraph">
+<p>The album view model will eventually contain data for the name of an album, the artist, and its downloaded cover art, but at this stage you will continue to use just the placeholder music note icon.</p>
+</div>
+<div class="paragraph">
+<p>As you saw on the last page, at this point the album list currently just shows the (fully qualified) name of the album view model class.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_docs/15_Album_view_before_template.png" alt="Album view before template"></span></p>
+</div>
+<div class="paragraph">
+<p>In this step you will be using the view locator class (<strong>ViewLocator.cs</strong> file) that was added to the project by the solution template. This class was registered (by the solution template) as a data template at the highest level in the app in the <strong>App.axaml</strong> file. The data template registration looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Application ...
+             xmlns:local="using:Avalonia.MusicStore"
+             ... &gt;
+    &lt;Application.DataTemplates&gt;
+        &lt;local:ViewLocator/&gt;
+    &lt;/Application.DataTemplates&gt;
+    ...
+&lt;/Application&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The view locator can therefore always be found by <em>Avalonia UI,</em> when it searches for a data template.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For more details about the <strong>data template</strong> concept, see <a href="https://docs.avaloniaui.net/docs/concepts/templates/">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The view locator acts as a data template for a view model (in this case the album view model) under the conditions that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the view model inherits from the <code>ViewModelBase</code> class,</p>
+</li>
+<li>
+<p>and there is a view that exists with the same base name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The view <code>AlbumView</code> and the view model <code>AlbumViewModel</code> already have the same base name 'Album' and the view <code>AlbumView</code> exists. So the only remaining condition for the view locator to work is that the view model has to inherit from the <code>ViewModelBase</code> class.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>AlbumViewModel.cs</strong> file you created earlier.</p>
+</li>
+<li>
+<p>Add the code for the class to inherit from <code>ViewModelBase</code> as shown and make the class <code>partial</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public partial class AlbumViewModel : ViewModelBase
+{
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/16_Album_view_stack_layout.png" alt="Album view with stack panel">
+</div>
+<div class="title">Figure 11. The album list now shows the graphical tile view</div>
+</div>
+<div class="paragraph">
+<p>The view locator is finding the view <code>AlbumView</code> to use as a data template for the list items.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_alternative_explicit_data_template">Alternative: Explicit Data Template</h4>
+<div class="paragraph">
+<p>If you prefer not to use the view locator approach, you can instead define an explicit data template for the album view model. This can be done at the list box level, or at a higher level such as the user control, window or globally for the App.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example of how to define the data template at the App-level:</p>
+</div>
+<div class="listingblock">
+<div class="title">App.axaml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Application.DataTemplates&gt;
+    &lt;!-- &lt;local:ViewLocator/&gt; --&gt;
+    &lt;DataTemplate DataType="viewModels:AlbumViewModel"&gt;
+        &lt;views:AlbumView /&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Application.DataTemplates&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The benefit of using this approach is that it doesn&#8217;t require the conventions and that it doesn&#8217;t rely on reflection. On the downside, it requires you to explicitly define a data template for each view model.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_list_items_panel_template">List Items Panel Template</h4>
+<div class="paragraph">
+<p>In this step you will tidy up the list display so that the album covers wrap around to fill all the space available.</p>
+</div>
+<div class="paragraph">
+<p>A list box has a property that contains a template control for laying out the list items. By default this is a stack panel. To make the album covers wrap around to fill all the space, you can change the panel template to be a wrap panel.</p>
+</div>
+<div class="paragraph">
+<p>You will also add some style attributes to the list box.</p>
+</div>
+<div class="paragraph">
+<p>To tidy up the list, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>MusicStoreView.axaml</strong> file.</p>
+</li>
+<li>
+<p>Expand the <code>&lt;ListBox&gt;</code> element so that it has start and end tags.</p>
+</li>
+<li>
+<p>Add the <code>&lt;ListBox.ItemsPanel&gt;</code> XAML shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ListBox ItemsSource="{Binding SearchResults}"
+         SelectedItem="{Binding SelectedAlbum}"
+         Background="Transparent" Margin="0 20"&gt;
+    &lt;ListBox.ItemsPanel&gt;
+        &lt;ItemsPanelTemplate&gt;
+            &lt;WrapPanel /&gt;
+        &lt;/ItemsPanelTemplate&gt;
+    &lt;/ListBox.ItemsPanel&gt;
+&lt;/ListBox&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/17_Album_view_wrap_layout.png" alt="Album view with wrap layout">
+</div>
+<div class="title">Figure 12. The album list now uses a wrap layout</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_album_service">Album Service</h3>
+<div class="paragraph">
+<p>In the below section, you will add some business logic to the app. This will allow you to replace the mock data and get some real album data from the search. This business logic code forms the 'Model' part of the MVVM pattern.</p>
+</div>
+<div class="paragraph">
+<p>To implement a real album search in the app, you will use a <em>NuGet</em> package that can call the <em>Apple iTunes</em> Web API album search.</p>
+</div>
+<div class="paragraph">
+<p>Firstly, let&#8217;s remove the constructor for mock search that we will not need anymore.
+- Go to <strong>MusicStoreViewModel.cs</strong> file.
+- Remove constructor.</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public MusicStoreViewModel()
+{
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+This constructor was only used for testing the UI with mock data and is no longer needed.</p>
+</div>
+<div class="sect3">
+<h4 id="_apple_web_api_package">Apple Web API Package</h4>
+<div class="paragraph">
+<p>Follow this procedure to add the required <em>NuGet</em> package:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Right-click the project.</p>
+</li>
+<li>
+<p>Click <strong>Manage NuGet Packages</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/18_iTunes_search_nuget.png" alt="iTunes-API nuget package">
+</div>
+<div class="title">Figure 13. Find the iTunes-API nuget package</div>
+</div>
+</li>
+<li>
+<p>Type 'itunes' in the search box (top-left).</p>
+</li>
+<li>
+<p>Click <strong>iTunesSearch</strong>, then click <strong>Install</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mvvm_model">MVVM Model</h4>
+<div class="paragraph">
+<p>In this tutorial the application is simple, and you can implement the business services required for the 'Model' part of the MVVM pattern, in one class. This class will contain both the data model for an album, and the method needed for the search.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add the album business logic:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the solution explorer, right-click the <strong>/Models</strong> folder and then click <strong>Add</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Class</strong> &#8594; <strong>Record</strong>.</p>
+</li>
+<li>
+<p>When prompted for the name, type 'Album'.</p>
+</li>
+<li>
+<p>Add the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using iTunesSearch.Library;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Avalonia.MusicStore.Models
+{
+    public record Album
+    {
+        private static iTunesSearchManager s_SearchManager = new();
+        private static HttpClient s_httpClient = new();
+
+        public Album(string artist, string title, string coverUrl)
+        {
+            Artist = artist;
+            Title = title;
+            CoverUrl = coverUrl;
+        }
+
+        public string Artist { get; set; }
+        public string Title { get; set; }
+        public string CoverUrl { get; set; }
+
+        public static async Task&lt;IEnumerable&lt;Album&gt;&gt; SearchAsync(string? searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return Enumerable.Empty&lt;Album&gt;();
+            }
+
+            var query = await s_SearchManager.GetAlbumsAsync(searchTerm)
+                .ConfigureAwait(false);
+
+            return query.Albums.Select(x =&gt;
+                new Album(x.ArtistName, x.CollectionName,
+                    x.ArtworkUrl100.Replace("100x100bb", "600x600bb")));
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We use a record for Album since it helps to encapsulate data.
+See <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record">[micsrosoft docs]</a> for more information about records in C#.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_album_view_model">Album View Model</h4>
+<div class="paragraph">
+<p>In order to display the data from the Web API for each album (data model) in the search results list, you will create an album view model, and this will be bound to the album view (tile) for display.</p>
+</div>
+<div class="paragraph">
+<p>Your album view model is currently empty. It will need to be able to store the album data from the search, and have some properties for the artist name and album title. These will then be bound to the view for display.</p>
+</div>
+<div class="paragraph">
+<p>The cover itself will be loaded asynchronously, so the view model will also need a property for this. It is a Task that returns a <a href="https://api-docs.avaloniaui.net/docs/T_Avalonia_Media_Imaging_Bitmap">[Bitmap]</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this step you will use a common pattern for the dependent relationship between a view model and a (business logic) model. This is where the view model contains an instance of the data model, and then exposes certain of its properties, as required for display.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to prepare the album view model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>AlbumViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the code as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">private readonly Album _album;
+
+public AlbumViewModel(Album album)
+{
+    _album = album;
+}
+
+public string Artist =&gt; _album.Artist;
+
+public string Title =&gt; _album.Title;
+
+public Task&lt;Bitmap?&gt; Cover =&gt; LoadCoverAsync();
+
+// this will be implemented later
+private async Task&lt;Bitmap?&gt; LoadCoverAsync()
+{
+    return null;
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note that as the view model properties will not change in the UI during runtime, they have no setter and a plain getter.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Since we directly reference <code>Avalonia.Media.Imaging.Bitmap</code> in the view model, we are slightly breaking the MVVM pattern by introducing a UI framework dependency in the view model. In a more complex app, you might want to avoid this by introducing a separate service to handle image loading. A possible solution is to create a helper class as shown <a href="https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-image-files">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_start_the_search">Start the Search</h4>
+<div class="paragraph">
+<p>In this step, you’ll add the ability to search for albums in real-time as the user types in the music store dialog. When it finishes, the search places its results in the observable collection <code>SearchResults</code>. This collection is already bound to the list box, so with a small adjustment to the album view, the results of the search will display as the tiles you prepared earlier.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to trigger the search with a short delay when the search text changes:
+- Locate and open the <strong>MusicStoreView.axaml</strong> file.
+- Find the line with SearchText binding and add a Delay property as shown below:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;TextBox Watermark="Search for Albums...." Text="{Binding SearchText, Delay=400}" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+NOTE:`Delay=400` ensures that input is only propagated to the view model after the user pauses for 400ms, preventing unnecessary search calls.</p>
+</div>
+<div class="paragraph">
+<p>Now:
+- Locate and open the <strong>MusicStoreViewModel.cs</strong> file.
+- Add the following method there:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">partial void OnSearchTextChanged(string? value)
+{
+    _ = DoSearch(SearchText);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>+
+This method is automatically called whenever the SearchText property changes.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add <code>DoSearch</code> implementation:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">private async Task DoSearch(string? term)
+{
+    IsBusy = true;
+    SearchResults.Clear();
+
+    var albums = await Album.SearchAsync(term);
+
+    foreach (var album in albums)
+    {
+        var vm = new AlbumViewModel(album);
+        SearchResults.Add(vm);
+    }
+
+    IsBusy = false;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sets a busy flag to show the loading spinner in the UI.</p>
+</li>
+<li>
+<p>Clears existing results.</p>
+</li>
+<li>
+<p>Calls the album model&#8217;s <code>SearchAsync</code> method to fetch data from the iTunes API.</p>
+</li>
+<li>
+<p>Wraps each result in an <code>AlbumViewModel</code> and adds it to <code>SearchResults</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now your <strong>MusicStoreViewModel</strong> file should now look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.MusicStore.Messages;
+using Avalonia.MusicStore.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+        [ObservableProperty]
+        public partial string? SearchText { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsBusy { get; private set; }
+
+        [ObservableProperty]
+        public partial AlbumViewModel? SelectedAlbum { get; set; }
+
+        public ObservableCollection&lt;AlbumViewModel&gt; SearchResults { get; } = new();
+
+        private async Task DoSearch(string? term)
+        {
+            IsBusy = true;
+            SearchResults.Clear();
+
+            var albums = await Album.SearchAsync(term);
+
+            foreach (var album in albums)
+            {
+                var vm = new AlbumViewModel(album);
+                SearchResults.Add(vm);
+            }
+
+            IsBusy = false;
+        }
+
+        partial void OnSearchTextChanged(string value)
+        {
+            _ = DoSearch(SearchText);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bind_the_album_view">Bind the Album View</h4>
+<div class="paragraph">
+<p>Your work on the previous page to format the album 'tile' view did not add any way to display the text results of the search.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add the album name and artist name to the tile:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>AlbumView.axaml</strong> file.</p>
+</li>
+<li>
+<p>Replace the path icon with an image control that will display the album cover.</p>
+</li>
+<li>
+<p>Add the two text block controls with their data bindings, as shown:</p>
+</li>
+<li>
+<p>To have compiled binding working, you need to indicate the datatype used in the view : <code>AlbumViewModel</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;UserControl ...
+  xmlns:vm="using:Avalonia.MusicStore.ViewModels"
+  x:DataType="vm:AlbumViewModel" &gt;
+  [ ... ]
+  &lt;StackPanel Spacing="5" Width="200"&gt;
+    &lt;Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD"&gt;
+        &lt;Image Width="200" Height="200"
+               Stretch="Uniform"
+               Source="{Binding Cover^, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}" /&gt;
+    &lt;/Border&gt;
+    &lt;TextBlock HorizontalAlignment="Center" Text="{Binding Title}" /&gt;
+    &lt;TextBlock HorizontalAlignment="Center" Text="{Binding Artist}" /&gt;
+  &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+<li>
+<p>Type some search text.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_docs/19_Album_search_results.png" alt="Search results example"></span></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_displaying_images">Displaying Images</h3>
+<div class="paragraph">
+<p>You will now learn how to retrieve the cover art bitmap for each album in the search results. You will then be able to display the image on each album tile view instead of the placeholder note icon.</p>
+</div>
+<div class="sect3">
+<h4 id="_album_service_2">Album Service</h4>
+<div class="paragraph">
+<p>Your first step is to modify the business service to retrieve the album cover art from the <em>Apple iTunes</em> Web API.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to get the album cover art from the Web API:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is still running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+</li>
+<li>
+<p>Add the code as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">private static HttpClient s_httpClient = new();
+private string CachePath =&gt; $"./Cache/{SanitizeFileName(Artist)} - {SanitizeFileName(Title)}";
+
+public async Task&lt;Stream&gt; LoadCoverBitmapAsync()
+{
+    if (File.Exists(CachePath + ".bmp"))
+    {
+        return File.Open(CachePath + ".bmp", FileMode.Open,  FileAccess.Read, FileShare.Read);
+    }
+    else
+    {
+        var data = await s_httpClient.GetByteArrayAsync(CoverUrl);
+        return new MemoryStream(data);
+    }
+}
+
+private static string SanitizeFileName(string input)
+{
+    foreach (var c in Path.GetInvalidFileNameChars())
+    {
+        input = input.Replace(c, '_');
+    }
+    return input;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Method <code>LoadCoverBitmapAsync()</code> returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
+Method  <code>SanitizeFileName()</code> sanitizes input to replace characters that cannot be used in the file name with <code>_</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note that the cache is not active at this time, you will implement it later in the tutorial.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>So that you will see as soon as the cache becomes active, place a debug breakpoint at the following line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">return File.OpenRead(CachePath + ".bmp");</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_album_view_model_2">Album View Model</h4>
+<div class="paragraph">
+<p>In this step , you will add a property to the album view model to store the cover art as a bitmap.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Please note that you must reference <code>Avalonia.Media.Imaging</code> in the album view model because you must use the <em>Avalonia UI</em> bitmap here, and <strong>not</strong> the .NET <code>System.Bitmap</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to update the album view model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>AlbumViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the following code into the <code>LoadCoverAsync</code> method, replacing the existing code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using Avalonia.Media.Imaging;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+...
+
+public partial class AlbumViewModel : ViewModelBase
+{
+    ...
+
+    public Task&lt;Bitmap?&gt; Cover =&gt; LoadCoverAsync();
+
+    public async Task LoadCover()
+    {
+        try
+        {
+            // We wait a few ms to demonstrate that the images are loaded in the background.
+            // Remove this line in production.
+            await Task.Delay(200);
+
+            await using (var imageStream = await _album.LoadCoverBitmapAsync())
+            {
+                return await Task.Run(() =&gt; Bitmap.DecodeToWidth(imageStream, 400));
+            }
+        }
+        catch
+        {
+            return null;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Take some time to examine this code because it gives an insight into manipulating images with <em>Avalonia UI.</em> For example, the above uses the <code>DecodeToWidth</code> method to convert the image stream for display in <em>Avalonia UI</em>. This method can convert a stream for a large high resolution image into a smaller bitmap, at a specified width and while maintaining the aspect ratio.</p>
+</div>
+<div class="paragraph">
+<p>This means that you will not waste large amounts of memory to display the album cover art, even though the Web API returns quite large files.</p>
+</div>
+<div class="paragraph">
+<p>Also notice how the <code>LoadCover</code> method is coded to run asynchronously, and on a background thread. This is so that the UI thread does not get blocked and make the UI unresponsive.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Avalonia has a special operator <code>^</code> that you can use in data bindings to indicate that the bound property is a <code>Task&lt;T&gt;</code>. This operator will automatically unwrap the task and return the result when it is available. You used this operator in the album view XAML earlier. See <a href="https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-to-a-task-result">[Avalonia docs]</a> for more information about this operator.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/20_displaying_images.png" alt="Displaying images for the albums">
+</div>
+<div class="title">Figure 14. This is how the album covers now appear in the search results</div>
+</div>
+<div class="paragraph">
+<p>Notice how the album covers load one by one, and the UI remains responsive.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dialog_return">Dialog Return</h3>
+<div class="paragraph">
+<p>Next, you’ll complete the logic for returning a selected album from the search dialog <code>MusicStoreWindow</code> back to the main window. This will be done using the <em>CommunityToolkit.Mvvm</em> messaging system, allowing the dialog to communicate back without tight coupling. Since you don&#8217;t want to add the same album multiple times, you will also implement logic to add the album only if it is not already in the user&#8217;s collection.</p>
+</div>
+<div class="sect3">
+<h4 id="_create_the_musicstoreclosedmessage_class">Create the MusicStoreClosedMessage Class</h4>
+<div class="paragraph">
+<p>Firstly, let&#8217;s create a message class that will carry the selected album from the dialog to the window handler.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the previously created <strong>/Messages</strong> folder add new class <code>MusicStoreClosedMessage</code>.</p>
+</li>
+<li>
+<p>In the newly created file add the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using Avalonia.MusicStore.ViewModels;
+
+namespace Avalonia.MusicStore.Messages;
+
+public class MusicStoreClosedMessage(AlbumViewModel selectedAlbum)
+{
+    public AlbumViewModel SelectedAlbum { get; } = selectedAlbum;
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_create_the_checkalbumalreadyexistsmessage_class">Create the CheckAlbumAlreadyExistsMessage Class</h4>
+<div class="paragraph">
+<p>Next, you will create a message class that will be used to check if an album already exists in the user&#8217;s collection.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <strong>/Messages</strong> folder add new class <code>CheckAlbumAlreadyExistsMessage</code>.</p>
+</li>
+<li>
+<p>In the newly created file add the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class CheckAlbumAlreadyExistsMessage : RequestMessage&lt;bool&gt;
+{
+    public AlbumViewModel Album { get; }
+
+    public CheckAlbumAlreadyExistsMessage(AlbumViewModel album)
+    {
+        Album = album;
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_create_the_notificationmessage_class">Create the NotificationMessage Class</h4>
+<div class="paragraph">
+<p>As the last message to implement, you will create a message class that will be used to show notification messages to the user.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <strong>/Messages</strong> folder add new class <code>NotificationMessage</code>.</p>
+</li>
+<li>
+<p>In the newly created file add the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public class NotificationMessage
+{
+    public NotificationMessage(string message)
+     {
+         Message = message;
+     }
+    public string Message { get; }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_register_the_message_handlers_in_musicstorewindow">Register the Message Handlers in MusicStoreWindow</h4>
+<div class="paragraph">
+<p>To close the dialog and return the selected album to the main window, you’ll register a handler that listens for a <code>MusicStoreClosedMessage</code>. In addition we add a handler that can show notification messages to the user, in case the album already exists in the user&#8217;s collection.
+- Locate and open the <strong>MusicStoreWindow.axaml.cs</strong> file.
+- Add the following code to the constructor:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">using Avalonia.Controls;
+using Avalonia.MusicStore.Messages;
+using CommunityToolkit.Mvvm.Messaging;
+
+namespace Avalonia.MusicStore.Views
+{
+    public partial class MusicStoreWindow : Window
+    {
+        public MusicStoreWindow()
+        {
+            InitializeComponent();
+
+            WeakReferenceMessenger.Default.Register&lt;MusicStoreWindow, MusicStoreClosedMessage&gt;(this,
+                static (w, m) =&gt; w.Close(m.SelectedAlbum));
+
+            WeakReferenceMessenger.Default.Register&lt;MusicStoreWindow, NotificationMessage&gt;(this, static (w, m) =&gt;
+            {
+                w.NotificationManager.CloseAll();
+                w.NotificationManager.Show(m.Message, NotificationType.Warning, TimeSpan.FromSeconds(3));
+            });
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When <code>MusicStoreViewModel</code> sends a <code>MusicStoreClosedMessage</code>, this handler will close the dialog and return the selected album using Avalonia’s dialog result system.</p>
+</div>
+<div class="paragraph">
+<p>When a <code>NotificationMessage</code> is received, this handler will display the message to the user using the notification manager defined in the XAML.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_define_the_command_in_musicstoreviewmodel">Define the Command in MusicStoreViewModel</h4>
+<div class="paragraph">
+<p>Now you will add a relay command to the music store view model. You will bind this command to the <strong>Buy Album</strong> button on the music store view. The command will only be executable when an album is selected in the list. When executed, it first check if the album already exists in the user&#8217;s collection, and if not, it sends a <code>MusicStoreClosedMessage</code> with the selected album. If the album already exists, it sends a <code>NotificationMessage</code> to inform the user.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the following RelayCommand method to the class, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[RelayCommand (CanExecute = nameof(CanBuyMusic))]
+private void BuyMusic()
+{
+    if (SelectedAlbum != null)
+    {
+        var album_exists = WeakReferenceMessenger.Default.Send(new CheckAlbumAlreadyExistsMessage(SelectedAlbum));
+        if (album_exists)
+        {
+            WeakReferenceMessenger.Default.Send(new NotificationMessage("This album was already added"));
+        }
+        else
+        {
+            WeakReferenceMessenger.Default.Send(new MusicStoreClosedMessage(SelectedAlbum));
+        }
+    }
+}
+
+private bool CanBuyMusic() =&gt; SelectedAlbum != null;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The command should be invalidated when the selected album changes. To do this, add the <code>NotifyCanExecuteChangedFor</code>-attribute to the <code>SelectedAlbum</code> property:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[ObservableProperty]
+[NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
+public partial AlbumViewModel? SelectedAlbum { get; set; }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implement_the_album_existence_check_in_mainviewmodel">Implement the Album Existence Check in MainViewModel</h4>
+<div class="paragraph">
+<p>The MainViewModel will handle the <code>CheckAlbumAlreadyExistsMessage</code> to determine if the selected album is already in the user&#8217;s collection. To do this, you will implement a message handler that checks the observable collection of albums for the presence of the selected album.</p>
+</div>
+<div class="paragraph">
+<p>In the <strong>MainViewModel.cs</strong> file, add the following code to the constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public MainViewModel()
+{
+    WeakReferenceMessenger.Default.Register&lt;CheckAlbumAlreadyExistsMessage&gt;(this, (v, m) =&gt;
+    {
+        m.Reply(Albums.Contains(m.Album));
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An album is considered to be equal, if both the artist name and the album title are the same. The default equality comparer for records in C# checks all properties for equality, so no additional implementation is needed in the <code>Album</code> class. However, in the <code>AlbumViewModel</code> class, you need to override the equality members to delegate the comparison to the underlying <code>Album</code> model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public partial class AlbumViewModel : ViewModelBase, IEquatable&lt;AlbumViewModel&gt;
+{
+    ...
+
+    public bool Equals(AlbumViewModel? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return _album.Equals(other._album);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((AlbumViewModel)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return _album.GetHashCode();
+    }</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and overriding equality members in C# from the Microsoft docs <a href="https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bind_the_command_to_the_button">Bind the Command to the Button</h4>
+<div class="paragraph">
+<p>Your next step is bind the <strong>Buy Album</strong> button to the relay command in the music store view model, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MusicStoreView.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add the data binding <code>Command="{Binding BuyMusicCommand}"</code> to the button element.</p>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+<li>
+<p>Type some search text.</p>
+</li>
+<li>
+<p>Click an album to select it.</p>
+</li>
+<li>
+<p>Click <strong>Buy Album</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will see the dialog close, but nothing happens in the main window!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_items_to_the_users_collection">Add Items to the User&#8217;s Collection</h3>
+<div class="paragraph">
+<p>On this page you will implement a collection of albums that the user has selected using the search dialog and the <strong>Buy Album</strong> button, and display them in the main window.</p>
+</div>
+<div class="sect3">
+<h4 id="_observable_collection">Observable Collection</h4>
+<div class="paragraph">
+<p>Your first step here is to add an observable collection to the main window view model. This will hold the albums that the user has selected using the search dialog.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>MainViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add an observable collection, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public ObservableCollection&lt;AlbumViewModel&gt; Albums { get; } = new();</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_process_the_dialog_result">Process the Dialog Result</h4>
+<div class="paragraph">
+<p>Your next step is to alter the <code>AddAlbumAsync</code> command so that it adds the dialog return object (an <code>AlbumViewModel</code>) to the observable collection. Follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the same <strong>MainViewModel.cs</strong> file update the <code>AddAlbumAsync()</code> command method:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+    if (album is not null)
+    {
+        Albums.Add(album);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_main_window_view">Main Window View</h4>
+<div class="paragraph">
+<p>Next you will add XAML to the main window view to display the items in the observable collection. Again you will use a <strong>data template</strong>, this time inside an <code>ItemsControl</code>. The items control is actually  the base class for controls that display multiple items (like the list box), so some of this will already be familiar.</p>
+</div>
+<div class="paragraph">
+<p>To add the items control and its data template, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MainWindow.axaml</strong> file.</p>
+</li>
+<li>
+<p>Add the following namespace declaration to the <code>&lt;Window&gt;</code> element:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">xmlns:views="clr-namespace:Avalonia.MusicStore.Views"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Under the button element, add the XAML as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 40 0 0"&gt;
+  &lt;ItemsControl ItemsSource="{Binding Albums}"&gt;
+    &lt;ItemsControl.ItemsPanel&gt;
+      &lt;ItemsPanelTemplate&gt;
+        &lt;WrapPanel /&gt;
+      &lt;/ItemsPanelTemplate&gt;
+    &lt;/ItemsControl.ItemsPanel&gt;
+
+    &lt;ItemsControl.ItemTemplate&gt;
+      &lt;DataTemplate&gt;
+        &lt;views:AlbumView Margin="0 0 20 20" /&gt;
+      &lt;/DataTemplate&gt;
+    &lt;/ItemsControl.ItemTemplate&gt;
+  &lt;/ItemsControl&gt;
+&lt;/ScrollViewer&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+<li>
+<p>Type some search text.</p>
+</li>
+<li>
+<p>Click an album to select it.</p>
+</li>
+<li>
+<p>Click <strong>Buy Album</strong>.</p>
+</li>
+<li>
+<p>Repeat another time.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/21_user_album_collection.png" alt="User&#8217;s bought albums">
+</div>
+<div class="title">Figure 15. Showing the user&#8217;s album collection in the main window</div>
+</div>
+<div class="paragraph">
+<p>You will see the user&#8217;s album collection building as you search and select. However, if you stop the app running and then start it again, the collection reverts to empty.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_data_persistence">Add Data Persistence</h3>
+<div class="paragraph">
+<p>Finally. you will add some code to the album model (business service) to save the user&#8217;s album collection to disk, so that it can be recovered when the app next runs.</p>
+</div>
+<div class="paragraph">
+<p>As a welcome side-effect, this will also activate the album cover cache - so that album cover images can be retrieved from disk (if they exist), rather than from the Web API.</p>
+</div>
+<div class="sect3">
+<h4 id="_album_model">Album Model</h4>
+<div class="paragraph">
+<p>Follow this procedure to add persistence services (save and load) to the album model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+</li>
+<li>
+<p>Add the code to implement save to disk, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public async Task SaveAsync()
+{
+    if (!Directory.Exists("./Cache"))
+    {
+        Directory.CreateDirectory("./Cache");
+    }
+
+    using (var fs = File.OpenWrite(CachePath))
+    {
+        await SaveToStreamAsync(this, fs);
+    }
+}
+
+public Stream SaveCoverBitmapStream()
+{
+    return File.OpenWrite(CachePath + ".bmp");
+}
+
+private static async Task SaveToStreamAsync(Album data, Stream stream)
+{
+    await JsonSerializer.SerializeAsync(stream, data).ConfigureAwait(false);
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the code to implement load from disk, as shown:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public static async Task&lt;Album&gt; LoadFromStream(Stream stream)
+{
+    return (await JsonSerializer.DeserializeAsync&lt;Album&gt;(stream).ConfigureAwait(false))!;
+}
+
+public static async Task&lt;IEnumerable&lt;Album&gt;&gt; LoadCachedAsync()
+{
+    if (!Directory.Exists("./Cache"))
+    {
+        Directory.CreateDirectory("./Cache");
+    }
+
+    var results = new List&lt;Album&gt;();
+
+    foreach (var file in Directory.EnumerateFiles("./Cache"))
+    {
+        if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension))
+            continue;
+
+        await using var fs = File.OpenRead(file);
+        results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
+    }
+
+    return results;
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_album_view_model_3">Album View Model</h4>
+<div class="paragraph">
+<p>Your next step is to add a method to the album view model that it can call the business service persistence save methods:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SaveAsync</dt>
+<dd>
+<p>persists the album text data as a JSON file,</p>
+</dd>
+<dt class="hdlist1">SaveCoverBitmapStream</dt>
+<dd>
+<p>saves the cover art as a bitmap (.BMP) file.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>To alter the album view model , follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>AlbumViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the method as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public async Task SaveToDiskAsync()
+{
+    await _album.SaveAsync();
+
+    if (await LoadCoverAsync() is Bitmap cover)
+    {
+        var bitmap = Cover;
+
+        await Task.Run(() =&gt;
+        {
+            using (var fs = _album.SaveCoverBitmapStream())
+            {
+                cover.Save(fs);
+            }
+        });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once again, you will notice that the bitmap is saved from a copy in case the <code>Cover</code> property gets changed mid-operation by another thread.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_main_window_view_model">Main Window View Model</h4>
+<div class="paragraph">
+<p>Lastly, you will call the new album view model persistence method <code>SaveToDiskAsync</code> whenever the dialog returns with a non-null result.</p>
+</div>
+<div class="paragraph">
+<p>To alter the main window view model, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate and open the <strong>MainViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the code <code>await result.SaveToDiskAsync();</code> as shown below.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your code to initialize the relay command will now look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+    if (album is not null)
+    {
+        Albums.Add(album);
+        await album.SaveToDiskAsync(); // Add this line
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+<li>
+<p>Type some search text.</p>
+</li>
+<li>
+<p>Click an album to select it.</p>
+</li>
+<li>
+<p>Click <strong>Buy Album</strong>.</p>
+</li>
+<li>
+<p>Repeat another time for a different album.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will not see any difference in the app yet. But you can check to see that the persistence files are being written. To do this open the project location and browse to the <strong>/bin/Debug</strong> folder. Open the folder for your .NET version, and you will find the <strong>/Cache</strong> folder there. You will see two cache files for each of the albums that you just selected.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bitmap_cache_activated">Bitmap Cache Activated</h4>
+<div class="paragraph">
+<p>Notice that because the <code>SaveToDiskAsync</code> method writes both the JSON data and the album cover art bitmap to the cache folder, this step has effectively activated the bitmap loading cache behaviour that you built earlier. This is where: if an album cover has already been retrieved from the Web API and saved to the cache, the next bitmap load will be from the file not the API - saving time and making the app more responsive.</p>
+</div>
+<div class="paragraph">
+<p>To show that the bitmap loading cache is now in operation, follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is running.</p>
+</li>
+<li>
+<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+</li>
+<li>
+<p>Check to see that there is still a debug breakpoint in the <code>LoadCoverBitmapAsync</code> method at this line:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">return File.OpenRead(CachePath + ".bmp");</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+<li>
+<p>Click the icon button.</p>
+</li>
+<li>
+<p>Type the same search text you just used.</p>
+</li>
+<li>
+<p>Select one of the <em>same</em> albums from the previous test run.</p>
+</li>
+<li>
+<p>Click <strong>Buy Album</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The debug breakpoint should stop the app. This demonstrates that the album art is about to be read from disk, rather than retrieved from the Web API.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_load_data_at_start_up">Load Data at Start-up</h3>
+<div class="paragraph">
+<p>But wait, the data is not restored on start-up yet. So you will add code to load the user&#8217;s album collection from disk when the app starts.</p>
+</div>
+<div class="paragraph">
+<p>You have already added code to the business service that can load both the files you will need from disk. All that remains for you to do, is to add some code to the main window view model to handle the start-up.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add a method to load the user&#8217;s album collection from disk:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the app if it is running</p>
+</li>
+<li>
+<p>Locate and open the <strong>MainViewModel.cs</strong> file.</p>
+</li>
+<li>
+<p>Add the code as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">private async void LoadAlbums()
+{
+    var albums = (await Album.LoadCachedAsync()).Select(x =&gt; new AlbumViewModel(x)).ToList();
+    foreach (var album in albums)
+    {
+        Albums.Add(album);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see this method uses the business service to load the list of albums from the disk cache. It then transforms each data model (<code>Album</code> class) into a view model (<code>AlbumViewModel</code> class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.</p>
+</div>
+<div class="paragraph">
+<p>Your next step is to schedule the <code>LoadAlbum</code> method to run when the app starts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Keep the <strong>MainViewModel.cs</strong> file open.</p>
+</li>
+<li>
+<p>Call LoadAlbums() from the MainViewModel constructor:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-csharp" data-lang="csharp">public MainViewModel()
+{
+    LoadAlbums();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this change, now the app will automatically load previously added albums every time it starts.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Debug</strong> to compile and run the project.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_docs/22_final_result.png" alt="Final result">
+</div>
+<div class="title">Figure 16. Well done, this is the final result of the Music Store App tutorial</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conclusion">Conclusion</h3>
+<div class="paragraph">
+<p>In this tutorial you have seen how <em>Avalonia UI</em> can be used to create a highly graphical desktop app.</p>
+</div>
+<div class="sect3">
+<h4 id="_application_solution_architecture">Application Solution Architecture</h4>
+<div class="paragraph">
+<p>This tutorial has used an application solution architecture that uses the MVVM pattern with the help of the <em>CommunityToolkit.Mvvm</em> framework. It manages multiple windows from the code-behind files.</p>
+</div>
+<div class="paragraph">
+<p>Application state is kept in the 'top level' view model, and can be persisted to disk. The main window and search dialog are composed from in <em>Avalonia UI</em> window controls, built-in controls and user controls.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial application targets a windowing platform such as <em>Apple Mac OS</em> or <em>Windows</em>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To learn more about targeting applications for iOS (Apple) platforms, see <a href="https://docs.avaloniaui.net/docs/guides/platforms/ios">[here]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+To learn more about targeting applications for Android mobile devices, see <a href="https://docs.avaloniaui.net/docs/guides/platforms/android">[here]</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-07 14:49:27 UTC
+Last updated 2025-11-07 18:38:01 UTC
 </div>
 </div>
 </body>
