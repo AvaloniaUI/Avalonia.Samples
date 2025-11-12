@@ -14,10 +14,6 @@
             <TextBox Watermark="Search for Albums...."
                      Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=400}" />
             <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
-            <StackPanel Orientation="Horizontal" Spacing="4">
-                <TextBlock Text="You entered: "/>
-                <TextBlock Text="{Binding SearchText}"/>
-            </StackPanel>
         </StackPanel>
         <Button Content="Buy Album"
                 Command="{Binding BuyMusicCommand}"
