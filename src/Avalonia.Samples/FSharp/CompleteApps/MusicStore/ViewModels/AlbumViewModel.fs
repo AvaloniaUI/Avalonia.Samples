@@ -1,7 +1,6 @@
 ﻿namespace MusicStore.ViewModels
 
 open System.Diagnostics
-open Avalonia.Media
 open Avalonia.Media.Imaging
 open Avalonia.Threading
 open System

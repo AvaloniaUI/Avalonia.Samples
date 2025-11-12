@@ -1,6 +1,5 @@
 ﻿namespace MusicStore.Views
 
-open Avalonia
 open Avalonia.Controls
 open Avalonia.Markup.Xaml
 
