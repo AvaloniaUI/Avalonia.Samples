@@ -45,12 +45,6 @@ type MainWindow() as this =
             | _ -> ()
         )
 
-
-    // override this.OnClosed(e) =
-    //     // Unregister when window closes
-    //     WeakReferenceMessenger.Default.Unregister<MainWindow, PurchaseAlbumMessage.Self>(this, a)
-    //     base.OnClosed(e)
-
     member private this.InitializeComponent() =
 #if DEBUG
         this.AttachDevTools()
