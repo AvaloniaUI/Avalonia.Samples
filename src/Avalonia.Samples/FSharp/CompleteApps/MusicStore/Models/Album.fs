@@ -25,10 +25,12 @@ type Album(artist: string, title: string, coverUrl: string) =
         s_httpClient.Timeout <- TimeSpan.FromSeconds(15.0)
 
         try
-            s_httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("MusicStore/1.0 (+https://github.com/jetbrains)")
+            s_httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("MusicStore/1.0 (+https://github.com/AvaloniaUI/Avalonia.Samples)")
             s_httpClient.DefaultRequestHeaders.Accept.ParseAdd("image/webp,image/apng,image/*;q=0.8,*/*;q=0.5")
-        with _ ->
-            ()
+        with exn ->
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine($"Failed to set HttpClient headers: {exn.ToString()}")
+#endif
 
     static let mutable s_httpClientDisposed = false
     

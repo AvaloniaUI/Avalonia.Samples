@@ -15,8 +15,6 @@ type MainWindowViewModel() =
     [<ObservableProperty>]
     member val Albums = ObservableCollection<AlbumViewModel>() with get, set
 
-    member _.Greeting = "Welcome to Avalonia!"
-
     // Called by the View once it's opened
     member this.InitializeAsync() =
         this.LoadAlbumsAsync()
