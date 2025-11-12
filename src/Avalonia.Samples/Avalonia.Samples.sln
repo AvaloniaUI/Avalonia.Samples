@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVVM", "MVVM", "{932FD4A5-FCE7-4428-A0C1-C0392D90A21A}"
 EndProject
@@ -63,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowflakesControlSample", "CustomControls\SnowflakesControlSample\SnowflakesControlSample.csproj", "{B7B246E1-26F7-4225-A8FC-4344C1D7BA17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.MusicStore", "CompleteApps\Avalonia.MusicStore\Avalonia.MusicStore.csproj", "{AA9BFD5E-9F4E-46CB-90FD-A4BAB9878A4A}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MusicStore", "FSharp\CompleteApps\MusicStore\MusicStore.fsproj", "{5EEA1B39-E490-D25F-2948-A3F2375EF864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -314,6 +316,18 @@ Global
 		{AA9BFD5E-9F4E-46CB-90FD-A4BAB9878A4A}.Release|x64.Build.0 = Release|Any CPU
 		{AA9BFD5E-9F4E-46CB-90FD-A4BAB9878A4A}.Release|x86.ActiveCfg = Release|Any CPU
 		{AA9BFD5E-9F4E-46CB-90FD-A4BAB9878A4A}.Release|x86.Build.0 = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|x64.Build.0 = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Debug|x86.Build.0 = Debug|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|x64.ActiveCfg = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|x64.Build.0 = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|x86.ActiveCfg = Release|Any CPU
+		{5EEA1B39-E490-D25F-2948-A3F2375EF864}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
