@@ -1,0 +1,91 @@
+﻿= Enter the Title here
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
+:toc:
+:toc-placement!:
+endif::[]
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to ...
+
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+[discrete]
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐣 Beginner 🐣
+
+🐥 Easy 🐥
+
+🐔 Normal 🐔
+
+🐉 Hard 🐉
+
+
+
+[discrete]
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+Add, some, buzz-words, here
+
+
+
+== Before we start
+
+// Use that section: 
+// - to introduce new things, 
+// - tell the reader what they should read before
+// - tell the reader what they should prepare
+
+
+
+== The Solution // Approach 1 : How can one solve that topic?
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1:
+
+=== Step 2:
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
