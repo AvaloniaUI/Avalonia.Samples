@@ -1,7 +1,6 @@
 ﻿namespace MusicStore.Models
 
 open System
-open System.Diagnostics
 open System.IO
 open System.Net
 open System.Net.Http

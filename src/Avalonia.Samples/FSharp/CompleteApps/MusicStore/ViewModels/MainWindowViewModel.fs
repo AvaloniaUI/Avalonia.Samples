@@ -9,7 +9,7 @@ open CommunityToolkit.Mvvm.Input
 open CommunityToolkit.Mvvm.Messaging
 open MusicStore.Models
 
-type MainWindowViewModel() as this =
+type MainWindowViewModel() =
     inherit ViewModelBase()
 
     [<ObservableProperty>]
