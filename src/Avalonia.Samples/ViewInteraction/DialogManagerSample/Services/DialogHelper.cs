@@ -49,7 +49,16 @@ public static class DialogHelper
         return null;
     }
 
-
+    /// <summary>
+    /// Shows a dialog window for a given context
+    /// </summary>
+    /// <param name="context">the context to use</param>
+    /// <param name="windowTitle">the dialog's window title</param>
+    /// <param name="content">the content to show</param>
+    /// <param name="contentTemplate">optional: An <see cref="IDataTemplate"/> to represnet the <see cref="content"/></param>
+    /// <typeparam name="T">The expected type to return</typeparam>
+    /// <returns>the result or null if dialog was canceled</returns>
+    /// <exception cref="InvalidOperationException">The dialog window can only be shown if the app is a desktop app.</exception>
     public static async Task<T?> ShowDialogWindow<T>(this IDialogParticipant? context, string windowTitle, object content, IDataTemplate? contentTemplate = null)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -72,6 +81,12 @@ public static class DialogHelper
         return await dialog.ShowDialog<T>(ownerWindow);
     }
 
+    /// <summary>
+    /// Closes a dialog window with the given result
+    /// </summary>
+    /// <param name="context">the context to resolve the window</param>
+    /// <param name="result">the result to return</param>
+    /// <exception cref="InvalidOperationException">if the <see cref="TopLevel"/> is not a <see cref="Window"/></exception>
     public static void ReturnResultFromDialogWindow(this IDialogParticipant? context, object? result)
     {
         ArgumentNullException.ThrowIfNull(context);
