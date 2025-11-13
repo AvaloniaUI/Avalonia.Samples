@@ -74,28 +74,38 @@ if (-not $adocFiles -or $adocFiles.Count -eq 0) {
     exit 0
 }
 
-# Build attribute list
-$attrs = @("source-highlighter=rouge")
-
-$themePath = ($themePathObj.Path) -replace '\\', '/'
-$attrs += "stylesheet=$themePath"
-
-$favPath = ($favIconPathObj.Path) -replace '\\', '/'
-$attrs += "favicon=$favPath"
-
-# Build asciidoctor arguments (join safely)
-$attrArgs = ($attrs | ForEach-Object { "-a $_" }) -join " "
-
-Write-Output "Asciidoctor attributes: $attrArgs"
 
 foreach ($file in $adocFiles) {
     try {
+
         $filePath = $file.FullName
+        # Build attribute list as an argument array so each token is passed separately
+        $cmdArgs = @($filePath)
+
+
+        $cmdArgs += "-a"; $cmdArgs += "source-highlighter=rouge"
+
+        $themePath = ($themePathObj.Path) -replace '\\', '/'
+        $cmdArgs += "-a"; $cmdArgs += "stylesheet=$themePath"
+
+        $favPath = ($favIconPathObj.Path) -replace '\\', '/'
+        $cmdArgs += "-a"; $cmdArgs += "favicon=$favPath"
+
+        # Any ReadMe.adoc should create an index.html file. This will help to create a github.io page
+        if ($file.Name -ieq "ReadMe.adoc") {
+            $outFileName = Join-Path -Path $file.Directory -ChildPath 'index.html'
+            $cmdArgs += "-o"; $cmdArgs += $outFileName
+        }
+
+        # enable trace logging
+        $cmdArgs += "--trace"
+
+        Write-Output "Asciidoctor attributes: $($cmdArgs -join ' ')"
         Write-Output "Processing $filePath"
 
-        # Call asciidoctor
-        # Use --trace for verbose debugging if needed
-        & asciidoctor "$filePath" $attrArgs --trace
+        # Call asciidoctor with argument array so arguments are preserved
+        & asciidoctor @cmdArgs
+
     } catch {
         Write-Error "Failed to process $($file.FullName): $_"
     }
