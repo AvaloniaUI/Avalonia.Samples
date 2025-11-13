@@ -1,18 +1,14 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Platform.Storage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Controls.Templates;
 
 namespace DialogManagerSample.Services
 {
     public class DialogManager
     {
-        private static readonly Dictionary<object, Visual> RegistrationMapper =
-            new Dictionary<object, Visual>();
+        private static readonly Dictionary<IDialogParticipant, Visual> RegistrationMapper =
+            new Dictionary<IDialogParticipant, Visual>();
 
         static DialogManager()
         {
@@ -27,29 +23,29 @@ namespace DialogManagerSample.Services
             }
 
             // Unregister any old registered context
-            if (e.OldValue != null)
+            if (e.GetOldValue<IDialogParticipant>() is { } oldValue)
             {
-                RegistrationMapper.Remove(e.OldValue);
+                RegistrationMapper.Remove(oldValue);
             }
 
             // Register any new context
-            if (e.NewValue != null)
+            if (e.GetNewValue<IDialogParticipant>() is { } newValue)
             {
-                RegistrationMapper.Add(e.NewValue, sender);
+                RegistrationMapper.Add(newValue, sender);
             }
         }
 
         /// <summary>
         /// This property handles the registration of Views and ViewModel
         /// </summary>
-        public static readonly AttachedProperty<object?> RegisterProperty =
-            AvaloniaProperty.RegisterAttached<DialogManager, Visual, object?>(
+        public static readonly AttachedProperty<IDialogParticipant> RegisterProperty =
+            AvaloniaProperty.RegisterAttached<DialogManager, Visual, IDialogParticipant>(
                 "Register");
 
         /// <summary>
         /// Accessor for Attached property <see cref="RegisterProperty"/>.
         /// </summary>
-        public static void SetRegister(AvaloniaObject element, object value)
+        public static void SetRegister(AvaloniaObject element, IDialogParticipant value)
         {
             element.SetValue(RegisterProperty, value);
         }
@@ -57,7 +53,7 @@ namespace DialogManagerSample.Services
         /// <summary>
         /// Accessor for Attached property <see cref="RegisterProperty"/>.
         /// </summary>
-        public static object? GetRegister(AvaloniaObject element)
+        public static IDialogParticipant GetRegister(AvaloniaObject element)
         {
             return element.GetValue(RegisterProperty);
         }
@@ -67,7 +63,7 @@ namespace DialogManagerSample.Services
         /// </summary>
         /// <param name="context">The context to lookup</param>
         /// <returns>The registered Visual for the context or null if none was found</returns>
-        public static Visual? GetVisualForContext(object context)
+        public static Visual? GetVisualForContext(IDialogParticipant context)
         {
             return RegistrationMapper.GetValueOrDefault(context);
         }
@@ -77,84 +73,9 @@ namespace DialogManagerSample.Services
         /// </summary>
         /// <param name="context">The context to lookup</param>
         /// <returns>The registered TopLevel for the context or null if none was found</returns>
-        public static TopLevel? GetTopLevelForContext(object context)
+        public static TopLevel? GetTopLevelForContext(IDialogParticipant context)
         {
             return TopLevel.GetTopLevel(GetVisualForContext(context));
-        }
-    }
-
-    /// <summary>
-    /// A helper class to manage dialogs via extension methods. Add more on your own
-    /// </summary>
-    public static class DialogHelper
-    {
-        /// <summary>
-        /// Shows an open file dialog for a registered context, most likely a ViewModel
-        /// </summary>
-        /// <param name="context">The context</param>
-        /// <param name="title">The dialog title or a default is null</param>
-        /// <param name="selectMany">Is selecting many files allowed?</param>
-        /// <returns>An array of file names</returns>
-        /// <exception cref="ArgumentNullException">if context was null</exception>
-        public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this object? context, string? title = null,
-            bool selectMany = true)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            // lookup the TopLevel for the context
-            var topLevel = DialogManager.GetTopLevelForContext(context);
-
-            if (topLevel != null)
-            {
-                // Open the file dialog
-                var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
-                    new FilePickerOpenOptions()
-                    {
-                        AllowMultiple = selectMany,
-                        Title = title ?? "Select any file(s)"
-                    });
-
-                // return the result
-                return storageFiles.Select(s => s.Name);
-            }
-
-            return null;
-        }
-
-
-        public static async Task<T?> ShowDialogWindow<T>(this object? context, string windowTitle, object content, IDataTemplate? contentTemplate = null)
-        {
-            ArgumentNullException.ThrowIfNull(context);
-
-            // Get the owner window. If it is null, throw an exception
-            var ownerWindow = DialogManager.GetTopLevelForContext(context) as Window
-                              ?? throw new InvalidOperationException("The method ShowDialogWindow can only be used on a Window");
-
-            // prepare the dialog window. 
-            var dialog = new Window()
-            {
-                Title = windowTitle,
-                Content = content,
-                ContentTemplate = contentTemplate,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            };
-
-            // Show the dialog and return it's result
-            return await dialog.ShowDialog<T>(ownerWindow);
-        }
-
-        public static void ReturnResultFromDialogWindow(this object? context, object? result)
-        {
-            ArgumentNullException.ThrowIfNull(context);
-
-            var dialogWindow = DialogManager.GetTopLevelForContext(context) as Window
-                              ?? throw new InvalidOperationException("The method ReturnResultFromDialogWindow can only be used on a Window");
-            
-            dialogWindow.Close(result);
         }
     }
 }

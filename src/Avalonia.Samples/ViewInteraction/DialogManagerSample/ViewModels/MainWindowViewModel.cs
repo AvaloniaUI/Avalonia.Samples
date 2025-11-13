@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 namespace DialogManagerSample.ViewModels
 {
     
-    public partial class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase, IDialogParticipant
     {
         /// <summary>
         /// Gets a list of Results 

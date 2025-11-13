@@ -1,13 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DialogManagerSample.Services;
 
 namespace DialogManagerSample.ViewModels;
 
-public partial class InputDialogViewModel : ObservableValidator
+public partial class InputDialogViewModel : ViewModelBase, IDialogParticipant
 {
     /// <summary>
     /// Creates a new input dialog view model 
