@@ -43,5 +43,22 @@ namespace DialogManagerSample.ViewModels
                     ? "Dialog was canceled"
                     : $"The user \"{userName}\" has entered their name.");
         }
+        
+        /// <summary>
+        /// Gets the context that will handle user window notifications for us
+        /// </summary>
+        public NotificationContext NotificationContext { get; } = new NotificationContext();
+
+        [RelayCommand]
+        private void ShowInformation()
+        {
+            NotificationContext.ShowInfo("Information", "This is information.");
+        }
+        
+        [RelayCommand]
+        private void ShowError()
+        {
+            NotificationContext.ShowError("Error", "Something went wrong. :-(");
+        }
     }
 }

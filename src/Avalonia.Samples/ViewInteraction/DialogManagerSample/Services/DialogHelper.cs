@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Templates;
 using Avalonia.Platform.Storage;
 
@@ -95,5 +96,26 @@ public static class DialogHelper
                            ?? throw new InvalidOperationException("The method ReturnResultFromDialogWindow can only be used on a Window");
             
         dialogWindow.Close(result);
+    }
+    
+    public static void ShowNotificationMessage(this IDialogParticipant? context, 
+        string title, string message, 
+        NotificationType notificationType = NotificationType.Information,
+        TimeSpan? expiration = null)
+    {
+        ShowNotificationMessage(context, 
+            new Notification(title, message, notificationType, 
+                expiration ?? TimeSpan.FromSeconds(3)));
+    }
+    
+    public static void ShowNotificationMessage(this IDialogParticipant? context, 
+        Notification notification)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        var notificationManager = DialogManager.GetVisualForContext(context) as WindowNotificationManager
+                                  ?? throw new InvalidOperationException("The method ShowNotificationMessage must be used on a WindowNotificationManager");
+        
+        notificationManager.Show(notification);
     }
 }
