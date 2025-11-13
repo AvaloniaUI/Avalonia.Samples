@@ -16,11 +16,17 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid RowDefinitions="Auto,*,Auto">
-		<TextBlock Text="Selected Files:" />
-		<ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
-		<Button Content="Select Files"
-				Command="{Binding SelectFilesCommand}"
-				Grid.Row="2" />
+	<Grid RowDefinitions="Auto,*,Auto" RowSpacing="5" Margin="10">
+		<TextBlock Text="Results:" />
+		<ListBox ItemsSource="{Binding Results}" Grid.Row="1" />
+		
+		<StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="5">
+			<Button Content="Select Files"
+			        Command="{Binding SelectFilesCommand}"/>
+			<Button Content="Ask for user's name"
+			        Command="{Binding AskForUsernameCommand}" />
+			<Button Content="Clear log"
+			        Command="{Binding Results.Clear}"></Button>
+		</StackPanel>
 	</Grid>
 </Window>
