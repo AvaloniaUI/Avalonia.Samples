@@ -40,10 +40,10 @@ if (-not (Test-Path -Path $favFile)) {
 }
 
 $themePathObj = Resolve-Path -Path $themeFile
-$favIconPathObj = Resolve-Path -Path $favFile
+$favIconPathObj = Resolve-Path -Path $favFile -Relative -RelativeBasePath $repoRoot
 
 Write-Output "Resolved theme path: $($themePathObj.Path)"
-Write-Output "Resolved favicon path: $($favIconPathObj.Path)"
+Write-Output "Resolved favicon path: $($favIconPathObj)"
 
 if ($InputFiles -and $InputFiles.Count -gt 0) {
     $adocFiles = $InputFiles | ForEach-Object {
@@ -82,14 +82,15 @@ foreach ($file in $adocFiles) {
         # Build attribute list as an argument array so each token is passed separately
         $cmdArgs = @($filePath)
 
-
         $cmdArgs += "-a"; $cmdArgs += "source-highlighter=rouge"
+
+        # $cmdArgs += "-a"; $cmdArgs += "imagesdir=`"`" "
 
         $themePath = ($themePathObj.Path) -replace '\\', '/'
         $cmdArgs += "-a"; $cmdArgs += "stylesheet=$themePath"
 
         $favPath = ($favIconPathObj.Path) -replace '\\', '/'
-        $cmdArgs += "-a"; $cmdArgs += "favicon=$favPath"
+        $cmdArgs += "-a"; $cmdArgs += "favicon=$favIconPathObj"
 
         # Any ReadMe.adoc should create an index.html file. This will help to create a github.io page
         if ($file.Name -ieq "ReadMe.adoc") {
