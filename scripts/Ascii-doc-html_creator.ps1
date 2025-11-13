@@ -40,7 +40,7 @@ if (-not (Test-Path -Path $favFile)) {
 }
 
 $themePathObj = Resolve-Path -Path $themeFile
-$favIconPathObj = Resolve-Path -Path $favFile -Relative -RelativeBasePath $repoRoot
+$favIconPathObj = Resolve-Path -Path $favFile
 
 Write-Output "Resolved theme path: $($themePathObj.Path)"
 Write-Output "Resolved favicon path: $($favIconPathObj)"
@@ -89,8 +89,8 @@ foreach ($file in $adocFiles) {
         $themePath = ($themePathObj.Path) -replace '\\', '/'
         $cmdArgs += "-a"; $cmdArgs += "stylesheet=$themePath"
 
-        $favPath = ($favIconPathObj.Path) -replace '\\', '/'
-        $cmdArgs += "-a"; $cmdArgs += "favicon=$favIconPathObj"
+        $favPath = (Resolve-Path -Path $favFile -Relative -RelativeBasePath $file.Directory) -replace '\\', '/'
+        $cmdArgs += "-a"; $cmdArgs += "favicon=$favPath"
 
         # Any ReadMe.adoc should create an index.html file. This will help to create a github.io page
         if ($file.Name -ieq "ReadMe.adoc") {
