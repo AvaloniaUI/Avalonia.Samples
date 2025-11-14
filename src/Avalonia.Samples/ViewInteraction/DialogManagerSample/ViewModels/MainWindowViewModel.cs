@@ -3,6 +3,7 @@ using DialogManagerSample.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using DialogManagerSample.ViewModels.Shared;
 
 namespace DialogManagerSample.ViewModels
 {
@@ -31,6 +32,12 @@ namespace DialogManagerSample.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets a command that asks the user for their username. 
+        /// </summary>
+        /// <remarks>
+        /// The current username is predefined in the input field.
+        /// </remarks>
         [RelayCommand]
         private async Task AskForUsernameAsync()
         {
@@ -45,16 +52,22 @@ namespace DialogManagerSample.ViewModels
         }
         
         /// <summary>
-        /// Gets the context that will handle user window notifications for us
+        /// Gets a context that can send notifications.
         /// </summary>
         public NotificationContext NotificationContext { get; } = new NotificationContext();
 
+        /// <summary>
+        /// Gets a command that shows an information notification.
+        /// </summary>
         [RelayCommand]
         private void ShowInformation()
         {
             NotificationContext.ShowInfo("Information", "This is information.");
         }
         
+        /// <summary>
+        /// Gets a command that shows an error notification.
+        /// </summary>
         [RelayCommand]
         private void ShowError()
         {
