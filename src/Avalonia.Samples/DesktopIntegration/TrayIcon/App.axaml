@@ -11,7 +11,7 @@
 
     <TrayIcon.Icons>
         <TrayIcons>
-            <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample">
+            <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample" Command="{Binding ClickedCommand}">
                 <TrayIcon.Menu>
                     <NativeMenu>
                         <NativeMenuItem Header="_About" Command="{Binding AboutCommand}" />
