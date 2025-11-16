@@ -1,12 +1,25 @@
 = Value conversion sample
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 // ----------------------------------------------------------
 
 
@@ -20,11 +33,13 @@ toc::[]
 // ---------------------------------------------------------
 
 
+[discrete]
 === Difficulty
 
 🐥 Easy 🐥
 
 
+[discrete]
 === Buzz-Words
 
 Converter, Binding, MultiBinding, IValueConverter, IMultiValueConverter, MVVM, FuncValueConverter

@@ -44,4 +44,4 @@ The `MainWindowViewModel` :-
 
 The `PaintControlViewModel` holds a single image that is being edited, and the `PaintControl` renders that image when needed. Editing the image involves creating a new image, painting the old one onto it, and then adding the newly requested rectangle.
 
-More control and editing capabilities could be acheived using a dedicated graphics library such as Skia.
+More control and editing capabilities could be achieved using a dedicated graphics library such as Skia.

@@ -7,15 +7,15 @@ namespace IDataTemplateSample.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
 
-        private ShapeType _SelectedShape;
+        private ShapeType _selectedShape;
 
         /// <summary>
         /// Gets or sets the selected ShapeType
         /// </summary>
         public ShapeType SelectedShape
         {
-            get { return _SelectedShape; }
-            set { this.RaiseAndSetIfChanged(ref _SelectedShape, value); }
+            get { return _selectedShape; }
+            set { this.RaiseAndSetIfChanged(ref _selectedShape, value); }
         }
 
         /// <summary>

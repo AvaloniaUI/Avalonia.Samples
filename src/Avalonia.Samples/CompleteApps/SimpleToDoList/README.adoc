@@ -1,12 +1,27 @@
 = Simple ToDo-List
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+
+
 // ----------------------------------------------------------
 
 
@@ -21,12 +36,14 @@ toc::[]
 // ---------------------------------------------------------
 
 
+[discrete]
 === Difficulty
 // Choose one of the below difficulties. You can just delete the ones you don't need.
 
 🐥 Easy 🐥
 
 
+[discrete]
 === Buzz-Words
 
 // Write some buzzwords here. You can separate them by ", "
@@ -109,13 +126,13 @@ Choose your favorite IDE to create a new Avalonia-MVVM project.
 
 NOTE: Depending on the IDE used to create your project, you may see a file structure that differs from the one seen in this tutorial.
 
-By default, the Avalonia-MVVM template installs `Avalonia.ReactiveUI` as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the `CommunityToolkit.Mvvm` package. We need to edit two files to get the changes applied:
+By default, the Avalonia-MVVM template installs `ReactiveUI.Avalonia` as the MVVM framework. However, we want to use another MVVM framework. Therefor we will uninstall that package and instead install the `CommunityToolkit.Mvvm` package. We need to edit two files to get the changes applied:
 
 **Program.cs**:
 [source,diff]
 ----
     using Avalonia;
--   using Avalonia.ReactiveUI; // remove this using
+-   using ReactiveUI.Avalonia; // remove this using
     using System;
 
 [...]
@@ -334,7 +351,7 @@ Let's recall the App-design we planned:
 image::_docs/Sketch.png[title="Our sketch of the App-design", alt="Our sketch of the App-design"]
 
 
-As shown above we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels[[`Panels`\]] to achieve diffrent layouts. In our case we can use a `DockPanel` or a `Grid`. We will use a `Grid` as this offers the most flexible layout.
+As shown above we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels[[`Panels`\]] to achieve different layouts. In our case we can use a `DockPanel` or a `Grid`. We will use a `Grid` as this offers the most flexible layout.
 
 [TIP]
 ====
@@ -423,7 +440,7 @@ Now, if you run your App again, you will notice that we have a Button which is g
 image::_docs/Second_Run.png[caption="Figure 4: ", title="Second App run", alt="Second App run"]
 
 
-Great, we can add new items to our list. However, they don't display themself as we wanted them to do. Instead of showing the content, we see the name of the `ItemViewModel`. We can fix that by defining the `ItemTemplate` for the `ItemsControl`.
+Great, we can add new items to our list. However, they don't display themselves as we wanted them to. Instead of showing the content, we see the name of the `ItemViewModel`. We can fix that by defining the `ItemTemplate` for the `ItemsControl`.
 
 NOTE: If you want to learn more about `DataTemplates`, see these samples: https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples[[DataTemplate-Samples\]]
 
@@ -564,7 +581,7 @@ We want our icons to become semi-transparent if a `Button` is disabled. We can u
 <Application.Styles>
     <!-- ... -->
 
-    <!-- This style will make the icon semi-transparent, it a button is disabled -->
+    <!-- This style will make the icon semi-transparent, if a button is disabled -->
     <Style Selector="Button:disabled PathIcon">
         <Setter Property="Opacity" Value="0.4" />
     </Style>
@@ -579,7 +596,7 @@ image::_docs/Final_Result.png[caption="Figure 6: ", title="The final result", al
 
 NOTE: We will be storing the data as a https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0[[JSON-File\]]. You can apply the same approach to any other file-format you prefer.
 
-Right now everytime we close the App, all data is lost. For a simple demo that is all fine, but what if we wanted to start using this App for our daily to-do's? Well, we can add basic data persistence as we already made sure our `Model` is able to handle that. For the actual file-operations we will use a helper class which is used as a service. So add a folder called `Services` and inside a new class called `ToDoListFileService.cs`.
+Right now every time we close the App, all data is lost. For a simple demo that is all fine, but what if we wanted to start using this App for our daily to-do's? Well, we can add basic data persistence as we already made sure our `Model` is able to handle that. For the actual file-operations we will use a helper class which is used as a service. So add a folder called `Services` and inside a new class called `ToDoListFileService.cs`.
 
 TIP: We can make this class `static` in our case. In a more complex App this may better be handled using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection[[Dependency Injection\]]
 
@@ -653,7 +670,7 @@ In the event itself we cancel the event as long as `_canClose` is not set to tru
 
 NOTE: It is highly recommended to run I/O-operations https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o[[`async`\]].
 
-[source]
+[source,c#]
 .App.axaml.cs
 ----
 // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed

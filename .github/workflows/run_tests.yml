@@ -1,0 +1,15 @@
+name: Run tests
+
+on: [push, pull_request]
+
+jobs:  
+  test:
+    runs-on: windows-latest
+    name: Build all projects to test the code
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      - name: Run build script
+        run: ./scripts/builder.ps1 './src/'

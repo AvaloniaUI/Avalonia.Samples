@@ -1,20 +1,37 @@
 = Basic MVVM Sample
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 
 This sample will show you how you can use the `MVVM`-pattern to receive and process text input by the user. Our sample App will have one `TextBox` where the users can enter their name and another `TextBox` where we will present some personal greetings.
 
 toc::[]
 
+
+[discrete]
 === Difficulty
 
 🐣 Beginner 🐣
 
+
+[discrete]
 === Buzz-Words
 
 MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
@@ -182,7 +199,7 @@ public string Greeting
 
 === Step 3: Add SimpleViewModel to MainWindowViewModel
 
-Remember that the `View` implements the User Interface. Our view will only consist of one [https://docs.avaloniaui.net/docs/concepts/toplevel[`Window`,window=_blank]] called `MainWindow`. Its [https://docs.avaloniaui.net/docs/basics/data/data-binding/data-context[`DataContext`,window=_blank]], which describes the default location where controls should look values when binding, is the class `MainWindowViewModel` which was already added by the template when we first created our project. We will just add an instance of our `SimpleViewModel` to it. Add the following code to the `MainWindowViewlModel` class in `MainWindowViewModel.cs`.
+Remember that the `View` implements the User Interface. Our view will only consist of one [https://docs.avaloniaui.net/docs/concepts/toplevel[`Window`,window=_blank]] called `MainWindow`. Its [https://docs.avaloniaui.net/docs/basics/data/data-binding/data-context[`DataContext`,window=_blank]], which describes the default location where controls should look values when binding, is the class `MainWindowViewModel` which was already added by the template when we first created our project. We will just add an instance of our `SimpleViewModel` to it. Add the following code to the `MainWindowViewModel` class in `MainWindowViewModel.cs`.
 
 ```cs
 // Add our SimpleViewModel.
@@ -190,9 +207,11 @@ Remember that the `View` implements the User Interface. Our view will only consi
 public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
 ```
 
+NOTE:: Depending on the template and setting used to create your project you may find a class called `MainViewModel` instead of `MainWindowViewModel`. In this case please make sure the correct name.
+
 === Step 4: Setup the View 
 
-Now we can start with the UI layout. Our View will be written in [https://docs.avaloniaui.net/guides/basics/introduction-to-xaml[`XAML`,window=_blank]] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
+Now we can start with the UI layout. Our View will be written in [https://docs.avaloniaui.net/docs/basics/user-interface/introduction-to-xaml[`XAML`,window=_blank]] which is an XML-based markup language that is used by many UI frameworks. The code modifications shown below will be applied to `MainWindow.axaml`.
 
 ==== Setup the Window
 
@@ -239,7 +258,7 @@ The `StackPanel`'s `DataContext` will [https://docs.avaloniaui.net/docs/data-bin
         	<vm:MainWindowViewModel/>
     	</Design.DataContext>
 
-	<!-- Our Simplie ViewModel-->
+	<!-- Our Simple ViewModel-->
 	<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 		<TextBlock>Enter your Name:</TextBlock>
 		<TextBox Text="{Binding Name}" />
@@ -260,7 +279,7 @@ image::_docs/result.png[Result]
 
 == Approach 2 : Using ReactiveUI
 
-We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. [https://www.reactiveui.net[ReactiveUI,window=_blank]] is a popular MVVM framework designed for `.NET`.  If you create a new Avalonia MVVM Project, you will have `ReactiveUI` installed by default. So let's see how we can use `ReactiveUI` to achieve the same results as **Approach 1** above.
+We don't need to implement all the boilerplate code on our own over and over again. Instead, we can use any existing `MVVM` framework out there. [https://www.reactiveui.net[ReactiveUI,window=_blank]] is a popular MVVM framework designed for `.NET`.  If you create a new Avalonia MVVM Project, you will have `ReactiveUI` (or `CommunityToolkit.Mvvm` based on your choice) installed by default. So let's see how we can use `ReactiveUI` to achieve the same results as **Approach 1** above.
 
 === Step 1: Create ReactiveViewModel
 
@@ -323,7 +342,7 @@ public string Greeting
 }
 ```
 
-But wait, how do we notify the `View` that `Greeting` should update? In ReactiveUI we can use [https://www.reactiveui.net/docs/handbook/when-any/#whenanyvalue[`WhenAnyValue`,window=_blank]] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`.  Add the construtor code shown below to the `ReactiveViewModel` class.
+But wait, how do we notify the `View` that `Greeting` should update? In ReactiveUI we can use [https://www.reactiveui.net/docs/handbook/when-any/#whenanyvalue[`WhenAnyValue`,window=_blank]] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`.  Add the constructor code shown below to the `ReactiveViewModel` class.
 
 ```cs
 public ReactiveViewModel()
@@ -341,7 +360,7 @@ To explain the above code in short: `WhenAnyValue` will listen to changes of the
 Similarly to how we added `SimpleViewModel` we can add `ReactiveViewModel` to `MainWindowViewModel`. Add the code below to the `MainWindowViewModel` class in `MainWindowViewModel.cs` 
 
 ```cs
-// Add our RactiveViewModel
+// Add our ReactiveViewModel
 public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
 ```
 
@@ -357,7 +376,7 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:CompileBindings="True"
-		x:DataType="vm:MainWindowViewModel"
+        x:DataType="vm:MainWindowViewModel"
         x:Class="BasicMvvmSample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="BasicMvvmSample">
@@ -414,6 +433,6 @@ Even though Avalonia ships ReactiveUI by default, you are not tied to it. You ca
 
 Are you looking for more advanced tutorials? Find them here: 
 
-- https://docs.avaloniaui.net/docs/tutorials/todo-list-app/[[ToDo List App\],window=_blank]
+- https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/[[ToDo List App\],window=_blank]
 - https://docs.avaloniaui.net/docs/tutorials/music-store-app/[[Music Store App\],window=_blank]
 - https://github.com/AvaloniaCommunity/awesome-avalonia#tutorials[[Awesome-Avalonia\],window=_blank]
