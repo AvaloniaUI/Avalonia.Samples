@@ -18,6 +18,6 @@
       Activated by...
     </Label>
 
-    <Button Name="cmdClose" Click="cmdClose_Click" Grid.Row="2" Margin="30" HorizontalAlignment="Center">_Close</Button>
+    <Button Name="cmdClose" Click="cmdClose_Click" IsCancel="True" Grid.Row="2" Margin="30" HorizontalAlignment="Center">_Close</Button>
   </Grid>
 </Window>
