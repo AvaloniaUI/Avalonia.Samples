@@ -1,10 +1,7 @@
-using System.Windows.Input;
-
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-
-using ReactiveUI;
+using CommunityToolkit.Mvvm.Input;
 
 namespace TrayIcon
 {
@@ -17,9 +14,6 @@ namespace TrayIcon
 
         public App()
         {
-            AboutCommand = ReactiveCommand.Create(ShowAboutWindow);
-            ExitCommand = ReactiveCommand.Create(ExitApplication);
-
             DataContext = this;
         }
 
@@ -27,29 +21,31 @@ namespace TrayIcon
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                _lifetime = desktop;
-
                 desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnExplicitShutdown;
             }
 
             base.OnFrameworkInitializationCompleted();
         }
-
-        IClassicDesktopStyleApplicationLifetime? _lifetime;
-
-        public ICommand AboutCommand { get; }
-        public ICommand ExitCommand { get; }
-
-        void ShowAboutWindow()
+        
+        [RelayCommand]
+        public void ShowAbout()
         {
             var window = new AboutWindow();
 
             window.Show();
         }
 
+        [RelayCommand]
         void ExitApplication()
         {
-            _lifetime?.Shutdown();
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
+            {
+                desktopLifetime.TryShutdown();
+            }
+            else if (ApplicationLifetime is IControlledApplicationLifetime controlledLifetime)
+            {
+                controlledLifetime.Shutdown();
+            }
         }
     }
 }
