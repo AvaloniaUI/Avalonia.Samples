@@ -11,12 +11,12 @@
 
     <TrayIcon.Icons>
         <TrayIcons>
-            <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample" Command="{Binding ClickedCommand}">
+            <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample" Command="{Binding TrayIconClickedCommand}">
                 <TrayIcon.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="_About" Command="{Binding AboutCommand}" />
+                        <NativeMenuItem Header="_About" Command="{Binding ShowAboutWindowCommand}" />
                         <NativeMenuItemSeparator />
-                        <NativeMenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                        <NativeMenuItem Header="E_xit" Command="{Binding ExitApplicationCommand}" />
                     </NativeMenu>
                 </TrayIcon.Menu>
             </TrayIcon>
