@@ -113,7 +113,7 @@ Each sample is tagged with its difficulty. The degree of difficulty describes ho
 |===
 | Sample | Difficulty | Buzz-Words 
 
-| link:src/Avalonia.Samples/Desktop/TrayIcon[Tray Icon Sample]
+| link:src/Avalonia.Samples/DesktopIntegration/TrayIcon[Tray Icon Sample]
 | 🐣 Beginner
 | TrayIcon, ReactiveUI, Binding
 
