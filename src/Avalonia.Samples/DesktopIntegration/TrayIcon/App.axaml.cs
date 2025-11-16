@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-using ReactiveUI;
+using CommunityToolkit.Mvvm.Input;
 
 namespace TrayIcon
 {
@@ -17,10 +17,6 @@ namespace TrayIcon
 
         public App()
         {
-            ClickedCommand = ReactiveCommand.Create(Clicked);
-            AboutCommand = ReactiveCommand.Create(ShowAboutWindow);
-            ExitCommand = ReactiveCommand.Create(ExitApplication);
-
             DataContext = this;
         }
 
@@ -28,21 +24,14 @@ namespace TrayIcon
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                _lifetime = desktop;
-
                 desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnExplicitShutdown;
             }
 
             base.OnFrameworkInitializationCompleted();
         }
 
-        IClassicDesktopStyleApplicationLifetime? _lifetime;
-
-        public ICommand ClickedCommand { get; }
-        public ICommand AboutCommand { get; }
-        public ICommand ExitCommand { get; }
-
-        void Clicked()
+        [RelayCommand]
+        public void TrayIconClicked()
         {
             var window = new AboutWindow();
 
@@ -51,7 +40,8 @@ namespace TrayIcon
             window.Show();
         }
 
-        void ShowAboutWindow()
+        [RelayCommand]
+        public void ShowAboutWindow()
         {
             var window = new AboutWindow();
 
@@ -60,9 +50,18 @@ namespace TrayIcon
             window.Show();
         }
 
-        void ExitApplication()
+        [RelayCommand]
+        public void ExitApplication()
         {
-            _lifetime?.Shutdown();
+            switch (ApplicationLifetime)
+            {
+                case IClassicDesktopStyleApplicationLifetime desktopLifetime:
+                    desktopLifetime.TryShutdown();
+                    break;
+                case IControlledApplicationLifetime controlledLifetime:
+                    controlledLifetime.Shutdown();
+                    break;
+            }
         }
     }
 }
