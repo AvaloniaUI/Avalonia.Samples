@@ -1,6 +1,9 @@
+using System.Windows.Input;
+
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+
 using CommunityToolkit.Mvvm.Input;
 
 namespace TrayIcon
@@ -26,25 +29,38 @@ namespace TrayIcon
 
             base.OnFrameworkInitializationCompleted();
         }
-        
+
         [RelayCommand]
-        public void ShowAbout()
+        public void TrayIconClicked()
         {
             var window = new AboutWindow();
+
+            window.SetActivationMode(ActivationMode.Click);
 
             window.Show();
         }
 
         [RelayCommand]
-        void ExitApplication()
+        public void ShowAboutWindow()
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
+            var window = new AboutWindow();
+
+            window.SetActivationMode(ActivationMode.MenuItem);
+
+            window.Show();
+        }
+
+        [RelayCommand]
+        public void ExitApplication()
+        {
+            switch (ApplicationLifetime)
             {
-                desktopLifetime.TryShutdown();
-            }
-            else if (ApplicationLifetime is IControlledApplicationLifetime controlledLifetime)
-            {
-                controlledLifetime.Shutdown();
+                case IClassicDesktopStyleApplicationLifetime desktopLifetime:
+                    desktopLifetime.TryShutdown();
+                    break;
+                case IControlledApplicationLifetime controlledLifetime:
+                    controlledLifetime.Shutdown();
+                    break;
             }
         }
     }

@@ -6,6 +6,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
@@ -13,6 +14,10 @@
       Avalonia Tray Icon Sample
     </Label>
 
-    <Button Name="cmdClose" Click="cmdClose_Click" Grid.Row="1" Margin="30" HorizontalAlignment="Center">_Close</Button>
+    <Label Name="lblActivationMode" Grid.Row="1" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+      Activated by...
+    </Label>
+
+    <Button Name="cmdClose" Click="cmdClose_Click" IsCancel="True" Grid.Row="2" Margin="30" HorizontalAlignment="Center">_Close</Button>
   </Grid>
 </Window>
