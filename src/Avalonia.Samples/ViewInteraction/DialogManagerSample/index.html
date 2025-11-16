@@ -2039,7 +2039,8 @@ pre.rouge .gs {
 <li><a href="#_the_solution_use_a_dialogservice_to_show_a_dialog">The Solution : Use a DialogService to show a Dialog</a>
 <ul class="sectlevel2">
 <li><a href="#_step_1_add_the_dialogmanager_class">Step 1: Add the DialogManager-class</a></li>
-<li><a href="#_step_2_add_methods_to_lookup_the_view">Step 2: Add methods to lookup the view</a></li>
+<li><a href="#_step_2_add_methods_to_look_up_the_view">Step 2: Add methods to look up the view</a></li>
+<li><a href="#_step_3_create_extension_methods">Step 3: Create extension methods</a></li>
 <li><a href="#_step_4_usage">Step 4: Usage</a></li>
 <li><a href="#_step_5_see_it_in_action">Step 5: See it in action</a></li>
 </ul>
@@ -2052,7 +2053,7 @@ pre.rouge .gs {
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example will show you how to write a service (we will call it dialog manager) that will help you to show dialogs in your MVVM application</p>
+<p>This example will show you how to write a service (we will call it dialog manager) that will help you to show dialogs in your MVVM application.</p>
 </div>
 <!-- toc disabled -->
 <h3 id="_difficulty" class="discrete">Difficulty</h3>
@@ -2083,6 +2084,18 @@ In this sample we will use the <a href="https://learn.microsoft.com/en-us/dotnet
 </tr>
 </table>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+We use partial properties that were introduced in .NET 10. If you haven&#8217;t updated yet, you need to add <code>&lt;LangVersion&gt;preview&lt;/LangVersion&gt;</code> to a property group in your <code>.csproj</code> file.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2100,38 +2113,53 @@ In this sample we will use the <a href="https://learn.microsoft.com/en-us/dotnet
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We do not need to inherit <code>AvaloniaObject</code> even as we want to add <code>Register</code> as an <code>AttachedProperty</code> because Avalonia supports AttachedProperties on any object
+We do not need to inherit <code>AvaloniaObject</code> even as we want to add <code>Register</code> as an <code>AttachedProperty</code> because Avalonia supports AttachedProperties on any object.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s add a static <code>Dictionary</code> where we can store the registered mappings between the context (our <code>ViewModel</code>) and the <code>View</code> or <code>Control</code>, which we want to interact with.</p>
+<p>Additionally, we will add an interface called <code>IDialogParticipant</code> which any class need to implement, that want to use the dialog manager.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Technically we can also map to <code>object</code> or any other base class, but since we later on want to use extension methods these will leak into any object. Having the interface introduce will only show the extension methods where they are useful.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Comming back to the DialogManager-class, let&#8217;s add a static <code>Dictionary</code> where we can store the registered mappings between the context (for example our <code>ViewModel</code>) and the <code>View</code> or <code>Control</code>, which we want to interact with.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">DialogManager</span>
 <span class="p">{</span>
-    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;</span> <span class="n">RegistrationMapper</span> <span class="p">=</span>
-        <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;();</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;</span> <span class="n">RegistrationMapper</span> <span class="p">=</span>
+        <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;();</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In the next step we add an <a href="https://docs.avaloniaui.net/docs/next/concepts/attached-property">[AttachedProperty</a>] to our dialog manager, which we call <code>Register</code>. Later we can bind any object to this property from every available <code>Visual</code> in our <code>Views</code>.</p>
+<p>In the next step we add an <a href="https://docs.avaloniaui.net/docs/next/concepts/attached-property">[AttachedProperty</a>] to our dialog manager, which we call <code>Register</code>. Later we can bind any <code>IDialogParticipant</code> to this property from every available <code>Visual</code> in our <code>Views</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// This property handles the registration of Views and ViewModel</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">AttachedProperty</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">?&gt;</span> <span class="n">RegisterProperty</span> <span class="p">=</span> <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">RegisterAttached</span><span class="p">&lt;</span><span class="n">DialogManager</span><span class="p">,</span> <span class="n">Visual</span><span class="p">,</span> <span class="kt">object</span><span class="p">?&gt;(</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">AttachedProperty</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">?&gt;</span> <span class="n">RegisterProperty</span> <span class="p">=</span> <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">RegisterAttached</span><span class="p">&lt;</span><span class="n">DialogManager</span><span class="p">,</span> <span class="n">Visual</span><span class="p">,</span> <span class="n">IDialogParticipant</span><span class="p">?&gt;(</span>
     <span class="s">"Register"</span><span class="p">);</span>
 
 <span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">SetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">,</span> <span class="kt">object</span> <span class="k">value</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">SetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">,</span> <span class="n">IDialogParticipant</span> <span class="k">value</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">element</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">RegisterProperty</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span>
 <span class="p">}</span>
@@ -2139,7 +2167,7 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 <span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">static</span> <span class="kt">object</span><span class="p">?</span> <span class="nf">GetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">IDialogParticipant</span><span class="p">?</span> <span class="nf">GetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">element</span><span class="p">.</span><span class="nf">GetValue</span><span class="p">(</span><span class="n">RegisterProperty</span><span class="p">);</span>
 <span class="p">}</span></code></pre>
@@ -2163,24 +2191,24 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
     <span class="p">}</span>
 
     <span class="c1">// Unregister any old registered context</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">OldValue</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">GetOldValue</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">&gt;()</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">oldValue</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">OldValue</span><span class="p">);</span>
+        <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">oldValue</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// Register any new context</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">NewValue</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">GetNewValue</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">&gt;()</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">newValue</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">NewValue</span><span class="p">,</span> <span class="n">sender</span><span class="p">);</span>
+        <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">newValue</span><span class="p">,</span> <span class="n">sender</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_add_methods_to_lookup_the_view">Step 2: Add methods to lookup the view</h3>
+<h3 id="_step_2_add_methods_to_look_up_the_view">Step 2: Add methods to look up the view</h3>
 <div class="paragraph">
-<p>To make our life easier, we add can add some static functions to lookup the registered view.</p>
+<p>To make our life easier, we add can add some static functions to look up the registered view.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2189,7 +2217,7 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="c1">/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;</span>
 <span class="c1">/// &lt;returns&gt;The registered Visual for the context or null if none was found&lt;/returns&gt;</span>
-<span class="k">public</span> <span class="k">static</span> <span class="n">Visual</span><span class="p">?</span> <span class="nf">GetVisualForContext</span><span class="p">(</span><span class="kt">object</span> <span class="n">context</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">Visual</span><span class="p">?</span> <span class="nf">GetVisualForContext</span><span class="p">(</span><span class="n">IDialogParticipant</span> <span class="n">context</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">result</span><span class="p">)</span> <span class="p">?</span> <span class="n">result</span> <span class="p">:</span> <span class="k">null</span><span class="p">;</span>
 <span class="p">}</span>
@@ -2199,14 +2227,17 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="c1">/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;</span>
 <span class="c1">/// &lt;returns&gt;The registered TopLevel for the context or null if none was found&lt;/returns&gt;</span>
-<span class="k">public</span> <span class="k">static</span> <span class="n">TopLevel</span><span class="p">?</span> <span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="kt">object</span> <span class="n">context</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">TopLevel</span><span class="p">?</span> <span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="n">IDialogParticipant</span> <span class="n">context</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">TopLevel</span><span class="p">.</span><span class="nf">GetTopLevel</span><span class="p">(</span><span class="nf">GetVisualForContext</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_create_extension_methods">Step 3: Create extension methods</h3>
 <div class="paragraph">
-<p>If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line:</p>
+<p>If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line. To do this we add a new static class <code>DialogHelper</code> into our <code>Services</code>-folder.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2223,40 +2254,55 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
     <span class="c1">/// &lt;param name="selectMany"&gt;Is selecting many files allowed?&lt;/param&gt;</span>
     <span class="c1">/// &lt;returns&gt;An array of file names&lt;/returns&gt;</span>
     <span class="c1">/// &lt;exception cref="ArgumentNullException"&gt;if context was null&lt;/exception&gt;</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;?&gt;</span> <span class="nf">OpenFileDialogAsync</span><span class="p">(</span><span class="k">this</span> <span class="kt">object</span><span class="p">?</span> <span class="n">context</span><span class="p">,</span> <span class="kt">string</span><span class="p">?</span> <span class="n">title</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">selectMany</span> <span class="p">=</span> <span class="k">true</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;?&gt;</span> <span class="nf">OpenFileDialogAsync</span><span class="p">(</span><span class="k">this</span> <span class="n">IDialogParticipant</span><span class="p">?</span> <span class="n">context</span><span class="p">,</span>
+        <span class="kt">string</span><span class="p">?</span> <span class="n">title</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+        <span class="kt">bool</span> <span class="n">selectMany</span> <span class="p">=</span> <span class="k">true</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentNullException</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
-        <span class="p">}</span>
+        <span class="n">ArgumentNullException</span><span class="p">.</span><span class="nf">ThrowIfNull</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
 
-        <span class="c1">// lookup the TopLevel for the context</span>
-        <span class="kt">var</span> <span class="n">topLevel</span> <span class="p">=</span> <span class="n">DialogService</span><span class="p">.</span><span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+        <span class="c1">// lookup the TopLevel for the context. If no TopLevel was found, we throw an exception</span>
+        <span class="kt">var</span> <span class="n">topLevel</span> <span class="p">=</span> <span class="n">DialogManager</span><span class="p">.</span><span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+                       <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"No TopLevel was resolved for the given context."</span><span class="p">);</span>
 
-        <span class="k">if</span><span class="p">(</span><span class="n">topLevel</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// Open the file dialog</span>
-            <span class="kt">var</span> <span class="n">storageFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">topLevel</span><span class="p">.</span><span class="n">StorageProvider</span><span class="p">.</span><span class="nf">OpenFilePickerAsync</span><span class="p">(</span>
-                            <span class="k">new</span> <span class="nf">FilePickerOpenOptions</span><span class="p">()</span>
-                            <span class="p">{</span>
-                                <span class="n">AllowMultiple</span> <span class="p">=</span> <span class="n">selectMany</span><span class="p">,</span>
-                                <span class="n">Title</span> <span class="p">=</span> <span class="n">title</span> <span class="p">??</span> <span class="s">"Select any file(s)"</span>
-                            <span class="p">});</span>
+        <span class="c1">// Open the file dialog</span>
+        <span class="kt">var</span> <span class="n">storageFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">topLevel</span><span class="p">.</span><span class="n">StorageProvider</span><span class="p">.</span><span class="nf">OpenFilePickerAsync</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nf">FilePickerOpenOptions</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">AllowMultiple</span> <span class="p">=</span> <span class="n">selectMany</span><span class="p">,</span>
+                <span class="n">Title</span> <span class="p">=</span> <span class="n">title</span> <span class="p">??</span> <span class="s">"Select any file(s)"</span>
+            <span class="p">});</span>
 
-            <span class="c1">// return the result</span>
-            <span class="k">return</span> <span class="n">storageFiles</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+        <span class="c1">// return the result</span>
+        <span class="k">return</span> <span class="n">storageFiles</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
     <span class="p">}</span>
-
 <span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Please have a look in the samples code for some more possible options. The <code>DialogHelper</code> can be part of a separate controls library or part of your application. A mix is also possible.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_step_4_usage">Step 4: Usage</h3>
 <div class="paragraph">
-<p>Now that we have our <code>DialogManager</code> created, we can start to register the <code>View</code> for our <code>ViewModel</code>. Thanks to our attached property, we can simply do:</p>
+<p>Now that we have our <code>DialogManager</code> created, we can start to register the <code>View</code> for our <code>ViewModel</code>. Only thing left to adjust is to implement the <code>IDialogParticipant</code>-interface on our <code>ViewModel</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainWindowViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IDialogParticipant</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Thanks to our attached property, we can now simply do:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2311,6 +2357,18 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 <div class="sect1">
 <h2 id="_related">Related</h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In the source code of this sample we have some more dialogs applied. Feel free to explore those and play around with them.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>There are more ways to show dialogs from the ViewModel, for example:</p>
 </div>
@@ -2318,6 +2376,9 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 <ul>
 <li>
 <p><a href="../MvvmDialogSample">Interactions</a></p>
+</li>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/messenger">MVVM-Toolkits Messenger</a> (The <a href="../../CompleteApps/Avalonia.MusicStore/">[Music-Store]</a> tutorial uses this approach)</p>
 </li>
 <li>
 <p><a href="https://github.com/AvaloniaCommunity/awesome-avalonia#mvvm&#8212;&#8203;mvp&#8212;&#8203;mvu">third party libs</a></p>
@@ -2329,7 +2390,7 @@ We do not need to inherit <code>AvaloniaObject</code> even as we want to add <co
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-06 19:42:36 UTC
+Last updated 2025-11-16 14:41:23 UTC
 </div>
 </div>
 </body>
