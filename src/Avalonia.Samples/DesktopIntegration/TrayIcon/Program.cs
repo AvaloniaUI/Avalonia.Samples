@@ -9,6 +9,8 @@ namespace TrayIcon
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			Console.WriteLine("Check the system notification area for a new icon");
+
 			var app = BuildAvaloniaApp();
 
 			app.StartWithClassicDesktopLifetime(args);
