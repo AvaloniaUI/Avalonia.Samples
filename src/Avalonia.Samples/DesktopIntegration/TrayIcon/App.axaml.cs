@@ -17,6 +17,7 @@ namespace TrayIcon
 
         public App()
         {
+            ClickedCommand = ReactiveCommand.Create(Clicked);
             AboutCommand = ReactiveCommand.Create(ShowAboutWindow);
             ExitCommand = ReactiveCommand.Create(ExitApplication);
 
@@ -37,12 +38,24 @@ namespace TrayIcon
 
         IClassicDesktopStyleApplicationLifetime? _lifetime;
 
+        public ICommand ClickedCommand { get; }
         public ICommand AboutCommand { get; }
         public ICommand ExitCommand { get; }
+
+        void Clicked()
+        {
+            var window = new AboutWindow();
+
+            window.SetActivationMode(ActivationMode.Click);
+
+            window.Show();
+        }
 
         void ShowAboutWindow()
         {
             var window = new AboutWindow();
+
+            window.SetActivationMode(ActivationMode.MenuItem);
 
             window.Show();
         }
