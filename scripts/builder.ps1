@@ -21,7 +21,7 @@ $SearchPath = $FullPath.ToString()
 Write-Host "Building .NET Core projects under: $SearchPath" -ForegroundColor Cyan
 
 # Find and build all .csproj files
-$projects = Get-ChildItem -Path $SearchPath -Filter *.csproj -Recurse
+$projects = Get-ChildItem -Path $SearchPath -Filter *.*proj -Recurse
 
 if ($projects.Count -eq 0) {
     Write-Warning "No .csproj files found in '$SearchPath'."
