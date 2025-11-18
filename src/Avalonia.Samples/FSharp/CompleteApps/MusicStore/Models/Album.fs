@@ -34,9 +34,16 @@ type Album(artist: string, title: string, coverUrl: string) =
 
     static let mutable s_httpClientDisposed = false
     
+    // The `CacheDir` is constructed from the current directory of the spawning
+    // process. So while this directory will be in the expected location when using
+    // the UI in VS or Rider to launch a debug instance, it may not be in the expected
+    // location if launched directly from the terminal while still in the root solution directory, for example. You will also need to accomodate for this in any
+    // tests you write.
+    // This approach, while naive, is platform-agnostic at least.
     static member private CacheDir = Path.Join(Environment.CurrentDirectory, "Cache")
 
-    /// Disposes the static HttpClient instance. Call this when the application is shutting down.
+    /// Disposes the static HttpClient instance. In a real application, we would define the http client in a more central location
+    /// and call this when the application is shutting down.
     static member DisposeHttpClient() =
         if not s_httpClientDisposed then
             s_httpClient.Dispose()

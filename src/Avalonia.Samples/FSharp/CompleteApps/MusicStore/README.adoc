@@ -112,8 +112,8 @@ The tutorial covers:
 
 == Related
 
-* link:https://asciidoc.org[AsciiDoc Documentation]
-* link:https://powerman.name/doc/asciidoc-compact[AsciiDoc Compact Cheat Sheet]
+// * link:https://asciidoc.org[AsciiDoc Documentation]
+// * link:https://powerman.name/doc/asciidoc-compact[AsciiDoc Compact Cheat Sheet]
 * link:https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/[Avalonia MVVM Pattern Documentation]
 * link:https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[CommunityToolkit.Mvvm Documentation]
 * link:https://fsharp.org/[F# Documentation]
