@@ -7,7 +7,7 @@ if ! dotnet --list-sdks | grep -q "9."; then
 fi
 
 # Set the solution file location
-SOLUTION_FILE="${1:-../src/Avalonia.Samples/Avalonia.Samples.sln}"
+SOLUTION_FILE="${1:-../src/Avalonia.Samples/Avalonia.Samples.slnx}"
 
 # Check if the solution file exists
 if [ ! -f "$SOLUTION_FILE" ]; then
