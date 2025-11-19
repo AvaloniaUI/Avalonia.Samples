@@ -36,7 +36,7 @@ toc::[]
 [discrete]
 === Buzz-Words
 
-F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, iTunes Api, Functional Programming
+F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, iTunes Api, Functional Programming
 
 == About This Sample
 
