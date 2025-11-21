@@ -1,0 +1,119 @@
+﻿= Music Store App (F# Port)
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
+:toc:
+:toc-placement!:
+endif::[]
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+// ----------------------------------------------------------
+
+This is an F# implementation of the Music Store application. It demonstrates how to build the same highly graphical desktop app using F# instead of C#, while maintaining the same functionality and architecture.
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+[discrete]
+=== Difficulty
+
+🐥 Easy 🐥
+
+[discrete]
+=== Buzz-Words
+
+F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, iTunes Api, Functional Programming
+
+== About This Sample
+
+This project is an F# port of the C# Music Store tutorial located at `src/Avalonia.Samples/CompleteApps/Avalonia.MusicStore/`. It provides the same functionality - a desktop music store app that searches the iTunes API and displays album covers with acrylic blur effects - but implemented using F# syntax and idioms.
+
+=== What's the Same
+
+* Application architecture using MVVM pattern with CommunityToolkit.Mvvm
+* All XAML views and layouts (MainWindow, MusicStoreWindow, AlbumView, etc.)
+* iTunes API integration for album search
+* Acrylic blur window styling and graphical album tiles
+* Data persistence with local caching
+* Messaging between view models using WeakReferenceMessenger
+
+=== What's Different
+
+* Implementation language: F# instead of C#
+* F# syntax for view models, models, and business logic
+* F# records for immutable data structures
+* Functional programming patterns where applicable
+
+== Full Tutorial
+
+For a complete step-by-step tutorial explaining the application architecture, MVVM patterns, and implementation details, please refer to the original C# version's README:
+
+link:../../../CompleteApps/Avalonia.MusicStore/README.adoc[Music Store App Tutorial (C#)]
+
+The tutorial covers:
+
+* Setting up the project with MVVM
+* Window styling with acrylic blur effects
+* Creating and managing dialog windows
+* Implementing album search with the iTunes API
+* Data binding and observable collections
+* Loading and displaying images asynchronously
+* Data persistence and caching
+
+== Running This Sample
+
+. Open the solution in your IDE (Visual Studio, JetBrains Rider, or VS Code with Ionide)
+. Ensure you have .NET 9.0 SDK installed
+. Build and run the project
+. Click the store icon to search for albums
+. Type a search term and select albums to add to your collection
+
+== Key F# Files
+
+[cols="30h,~"]
+|===
+| File | Description
+
+| Models/Album.fs
+| Album data model and iTunes API integration
+
+| ViewModels/ViewModelBase.fs
+| Base class for all view models
+
+| ViewModels/AlbumViewModel.fs
+| View model for individual album display
+
+| ViewModels/MainWindowViewModel.fs
+| Main window application logic
+
+| ViewModels/MusicStoreViewModel.fs
+| Music store dialog logic
+
+| Messages/PurchaseAlbumMessage.fs
+| Message for requesting album purchase dialog
+
+| Messages/MusicStoreClosedMessage.fs
+| Message for returning selected album
+|===
+
+== Related
+
+// * link:https://asciidoc.org[AsciiDoc Documentation]
+// * link:https://powerman.name/doc/asciidoc-compact[AsciiDoc Compact Cheat Sheet]
+* link:https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/[Avalonia MVVM Pattern Documentation]
+* link:https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[CommunityToolkit.Mvvm Documentation]
+* link:https://fsharp.org/[F# Documentation]

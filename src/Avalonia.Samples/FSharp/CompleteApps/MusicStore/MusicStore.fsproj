@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="Models\Album.fs" />
+        <Compile Include="ViewModels\ViewModelBase.fs" />
+        <Compile Include="ViewModels\AlbumViewModel.fs" />
+        <Compile Include="Messages\PurchaseAlbumMessage.fs" />
+        <Compile Include="Messages\MusicStoreClosedMessage.fs" />
+        <Compile Include="ViewModels\MainWindowViewModel.fs" />
+        <Compile Include="ViewModels\MusicStoreViewModel.fs" />
+        <None Include="README.adoc" />
+        <Compile Include="Views\MusicStoreWindow.axaml.fs" />
+        <Compile Include="Views\MainWindow.axaml.fs" />
+        <Compile Include="Views\MusicStoreView.axaml.fs" />
+        <Compile Include="Views\AlbumView.axaml.fs" />
+        <Compile Include="ViewLocator.fs" />
+        <Compile Include="App.axaml.fs" />
+        <Compile Include="Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup />
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.3.6" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.6" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.6">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="iTunesSearch" Version="1.0.44" />
+    </ItemGroup>
+</Project>

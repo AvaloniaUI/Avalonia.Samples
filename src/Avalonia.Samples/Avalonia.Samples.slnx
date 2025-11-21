@@ -24,6 +24,9 @@
     <Project Path="Drawing/BattleCity/BattleCity.csproj" />
     <Project Path="Drawing/RectPainter/RectPainter.csproj" />
   </Folder>
+  <Folder Name="/FSharp/">
+    <Project Path="FSharp/CompleteApps/MusicStore/MusicStore.fsproj" />
+  </Folder>
   <Folder Name="/MVVM/">
     <Project Path="MVVM/BasicMvvmSample/BasicMvvmSample.csproj" />
     <Project Path="MVVM/CommandSample/CommandSample.csproj" />
