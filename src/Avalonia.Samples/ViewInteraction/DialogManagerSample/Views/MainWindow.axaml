@@ -4,23 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:services="using:DialogManagerSample.Services"
-		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DialogManagerSample.Views.MainWindow"
-		x:DataType="vm:MainWindowViewModel"
-		x:CompileBindings="True"
+        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True"
         services:DialogManager.Register="{Binding}"
         Icon="/Assets/avalonia-logo.ico"
         Title="DialogManagerSample">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-	<Grid RowDefinitions="Auto,*,Auto">
-		<TextBlock Text="Selected Files:" />
-		<ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" />
-		<Button Content="Select Files"
-				Command="{Binding SelectFilesCommand}"
-				Grid.Row="2" />
-	</Grid>
+    <Grid ColumnDefinitions="Auto,*"
+          RowDefinitions="Auto,*,Auto"
+          RowSpacing="5" ColumnSpacing="5"
+          Margin="10">
+
+        <!-- Buttons -->
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                   FontWeight="Bold"
+                   Text="Input:"/>
+
+        <StackPanel Grid.Column="0" Grid.Row="1"
+                    Orientation="Vertical" Spacing="5">
+
+            <!-- Dialogs -->
+            <TextBlock Text="Dialogs" />
+            <Button Content="Select Files"
+                    Command="{Binding SelectFilesCommand}" />
+            <Button Content="Ask for user's name"
+                    Command="{Binding AskForUsernameCommand}" />
+
+            <!-- Notifications -->
+            <TextBlock Text="Notifications" />
+            <Button Content="Show Info"
+                    Command="{Binding ShowInformationCommand}" />
+            <Button Content="Show Error"
+                    Command="{Binding ShowErrorCommand}" />
+
+            <!-- Clear Logs -->
+            <TextBlock Text="Results" />
+            <Button Content="Clear log"
+                    Command="{Binding Results.Clear}" />
+        </StackPanel>
+        
+        <!-- Results -->
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="Results:" FontWeight="Bold"/>
+        <ListBox Grid.Column="1" Grid.Row="1"
+                 ItemsSource="{Binding Results}" />
+
+
+        <!-- Notification Manager -->
+        <WindowNotificationManager Grid.Row="1" Grid.Column="1"
+                                   services:DialogManager.Register="{Binding NotificationContext}"
+                                   Position="TopRight" />
+    </Grid>
 </Window>

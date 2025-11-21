@@ -1,0 +1,25 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TrayIcon"
+             x:Class="TrayIcon.App"
+             x:CompileBindings="true"
+             x:DataType="local:App"
+             RequestedThemeVariant="Default">
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon Icon="Icon.ico" ToolTipText="TrayIcon Sample" Command="{Binding TrayIconClickedCommand}">
+                <TrayIcon.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="_About" Command="{Binding ShowAboutWindowCommand}" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="E_xit" Command="{Binding ExitApplicationCommand}" />
+                    </NativeMenu>
+                </TrayIcon.Menu>
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
+</Application>

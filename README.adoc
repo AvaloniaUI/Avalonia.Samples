@@ -30,8 +30,8 @@ toc::[]
 If you have feedback, questions or suggestions feel free to contact us via:
 
 image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia]
-image:https://badges.gitter.im/Join%20Chat.svg[link=https://gitter.im/AvaloniaUI/Avalonia?utm_campaign=pr-badge&utm_content=badge&utm_medium=badge&utm_source=badge]
-image:https://img.shields.io/badge/discord-join%20chat-46BC99[link=https://aka.ms/dotnet-discord]
+image:https://img.shields.io/badge/https%3A%2F%2Fimg.shields.io%2Fbadge%2Fgithub-discussions-blue%3Flogo%3Dgithub?style=flat&label=github&color=darkgreen&link=https%3A%2F%2Fgithub.com%2FAvaloniaUI%2FAvalonia.Samples%2Fdiscussions[link=https://github.com/AvaloniaUI/Avalonia.Samples/discussions]
+
 
 Or file a new bug-report or feature request in the https://github.com/AvaloniaUI/Avalonia.Samples/issues[`Issues`]-section.
 
@@ -39,7 +39,9 @@ Or file a new bug-report or feature request in the https://github.com/AvaloniaUI
 [#_organization_of_the_samples]
 == 📂 Organization of the Samples
 
-Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.sln`-file which has all projects in one solution, if you are looking for a complete collection of samples.
+Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.slnx`-file which has all projects in one solution, if you are looking for a complete collection of samples.
+
+NOTE: We migrated to the newer *.slnx-File format, which should be supported from all major IDEs. If it doesn't work for you, please use the project-files inside the sub-directories. 
 
 You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
 
@@ -108,7 +110,17 @@ Each sample is tagged with its difficulty. The degree of difficulty describes ho
 
 |===
 
+=== DesktopIntegration-Samples
 
+[cols="25h,25,50"]
+|===
+| Sample | Difficulty | Buzz-Words 
+
+| link:src/Avalonia.Samples/DesktopIntegration/TrayIcon[Tray Icon Sample]
+| 🐣 Beginner
+| TrayIcon, ReactiveUI, Binding
+
+|===
 
 [#_drawing_samples]
 === ✒️ Drawing-Samples

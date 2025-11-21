@@ -1,0 +1,52 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/CompleteApps/">
+    <Project Path="CompleteApps/Avalonia.MusicStore/Avalonia.MusicStore.csproj" />
+    <Project Path="CompleteApps/SimpleToDoList/SimpleToDoList.csproj" />
+  </Folder>
+  <Folder Name="/CustomControls/">
+    <Project Path="CustomControls/RatingControlSample/RatingControlSample.csproj" />
+    <Project Path="CustomControls/SnowflakesControlSample/SnowflakesControlSample.csproj" />
+  </Folder>
+  <Folder Name="/DataTemplates/">
+    <Project Path="DataTemplates/BasicDataTemplateSample/BasicDataTemplateSample.csproj" />
+    <Project Path="DataTemplates/FuncDataTemplateSample/FuncDataTemplateSample.csproj" />
+    <Project Path="DataTemplates/IDataTemplateSample/IDataTemplateSample.csproj" />
+  </Folder>
+  <Folder Name="/DesktopIntegration/">
+    <Project Path="DesktopIntegration/TrayIcon/TrayIcon.csproj" />
+  </Folder>
+  <Folder Name="/Drawing/">
+    <Project Path="Drawing/BattleCity/BattleCity.csproj" />
+    <Project Path="Drawing/RectPainter/RectPainter.csproj" />
+  </Folder>
+  <Folder Name="/FSharp/">
+    <Project Path="FSharp/CompleteApps/MusicStore/MusicStore.fsproj" />
+  </Folder>
+  <Folder Name="/MVVM/">
+    <Project Path="MVVM/BasicMvvmSample/BasicMvvmSample.csproj" />
+    <Project Path="MVVM/CommandSample/CommandSample.csproj" />
+    <Project Path="MVVM/ValidationSample/ValidationSample.csproj" />
+    <Project Path="MVVM/ValueConversionSample/ValueConversionSample.csproj" />
+  </Folder>
+  <Folder Name="/Routing/">
+    <Project Path="Routing/BasicViewLocatorSample/BasicViewLocatorSample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Folder/">
+    <File Path="../../README.adoc" />
+  </Folder>
+  <Folder Name="/Testing/">
+    <Project Path="Testing/TestableApp.Appium/TestableApp.Appium.csproj" />
+    <Project Path="Testing/TestableApp.Headless.NUnit/TestableApp.Headless.NUnit.csproj" />
+    <Project Path="Testing/TestableApp.Headless.XUnit/TestableApp.Headless.XUnit.csproj" />
+    <Project Path="Testing/TestableApp/TestableApp.csproj" />
+  </Folder>
+  <Folder Name="/ViewInteraction/">
+    <Project Path="ViewInteraction/DialogManagerSample/DialogManagerSample.csproj" />
+    <Project Path="ViewInteraction/MvvmDialogSample/MvvmDialogSample.csproj" />
+  </Folder>
+</Solution>
