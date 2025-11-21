@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<link rel="icon" type="image/svg" href="./_docs/_Assets/Logo.svg">
-<title>Avalonia Samples</title>
+<link rel="icon" type="image/svg" href="../../../../../_docs/_Assets/Logo.svg">
+<title>Music Store App (F# Port)</title>
 <style>
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css);
 
@@ -1913,36 +1913,20 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Avalonia <span class="image"><a class="image" href="https://www.avaloniaui.net"><img src="_docs/_Assets/Logo.svg" alt="Logo"></a></span> Samples</h1>
+<h1>Music Store App (F# Port)</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#get-in-touch">🗯 Get in touch with us</a></li>
-<li><a href="#_organization_of_the_samples">📂 Organization of the Samples</a>
+<li><a href="#_about_this_sample">About This Sample</a>
 <ul class="sectlevel2">
-<li><a href="#_difficulties">🐣 Difficulties</a></li>
+<li><a href="#_whats_the_same">What&#8217;s the Same</a></li>
+<li><a href="#_whats_different">What&#8217;s Different</a></li>
 </ul>
 </li>
-<li><a href="#samples">✍️ Samples</a>
-<ul class="sectlevel2">
-<li><a href="#_mvvm_samples">💡 MVVM-Samples</a></li>
-<li><a href="#_desktopintegration_samples">DesktopIntegration-Samples</a></li>
-<li><a href="#_drawing_samples">✒️ Drawing-Samples</a></li>
-<li><a href="#_datatemplate_samples">🎞️ DataTemplate-Samples</a></li>
-<li><a href="#_routing_navigation_samples">🗺️ Routing / Navigation-Samples</a></li>
-<li><a href="#_custom_controls_samples">🛠️ Custom Controls Samples</a></li>
-<li><a href="#_view_interaction_samples">⚡ View Interaction Samples</a></li>
-<li><a href="#_automated_ui_testing">🧪️ Automated UI Testing</a></li>
-<li><a href="#_complete_apps">🧑‍💻 Complete Apps</a></li>
-</ul>
-</li>
-<li><a href="#_contribution">🪛 Contribution</a>
-<ul class="sectlevel2">
-<li><a href="#_code_of_conduct">Code of Conduct</a></li>
-<li><a href="#_issues_and_feature_requests">Issues and Feature Requests</a></li>
-<li><a href="#_pull_requests">Pull Requests</a></li>
-</ul>
-</li>
+<li><a href="#_full_tutorial">Full Tutorial</a></li>
+<li><a href="#_running_this_sample">Running This Sample</a></li>
+<li><a href="#_key_f_files">Key F# Files</a></li>
+<li><a href="#_related">Related</a></li>
 </ul>
 </div>
 </div>
@@ -1950,463 +1934,196 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Welcome to <strong>Avalonia.Samples</strong>. This is a collection of minimal samples, which should make it easy for everyone to get started with <a href="https://www.avaloniaui.net" target="_blank" rel="noopener">Avalonia</a>. Each sample is focusing on only one aspect of Avalonia.</p>
+<p>This is an F# implementation of the Music Store application. It demonstrates how to build the same highly graphical desktop app using F# instead of C#, while maintaining the same functionality and architecture.</p>
 </div>
 <!-- toc disabled -->
-</div>
-</div>
-<div class="sect1">
-<h2 id="get-in-touch">🗯 Get in touch with us</h2>
-<div class="sectionbody">
+<h3 id="_difficulty" class="discrete">Difficulty</h3>
 <div class="paragraph">
-<p>If you have feedback, questions or suggestions feel free to contact us via:</p>
+<p>🐥 Easy 🐥</p>
 </div>
+<h3 id="_buzz_words" class="discrete">Buzz-Words</h3>
 <div class="paragraph">
-<p><span class="image"><a class="image" href="https://t.me/Avalonia"><img src="https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg" alt="chat"></a></span>
-<span class="image"><a class="image" href="https://github.com/AvaloniaUI/Avalonia.Samples/discussions"><img src="https://img.shields.io/badge/https%3A%2F%2Fimg.shields.io%2Fbadge%2Fgithub-discussions-blue%3Flogo%3Dgithub?style=flat&amp;label=github&amp;color=darkgreen&amp;link=https%3A%2F%2Fgithub.com%2FAvaloniaUI%2FAvalonia.Samples%2Fdiscussions" alt="https%3A%2F%2Fimg.shields.io%2Fbadge%2Fgithub discussions blue%3Flogo%3Dgithub?style=flat&amp;label=github&amp;color=darkgreen&amp;link=https%3A%2F%2Fgithub.com%2FAvaloniaUI%2FAvalonia"></a></span></p>
-</div>
-<div class="paragraph">
-<p>Or file a new bug-report or feature request in the <a href="https://github.com/AvaloniaUI/Avalonia.Samples/issues"><code>Issues</code></a>-section.</p>
+<p>F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, iTunes Api, Functional Programming</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_organization_of_the_samples">📂 Organization of the Samples</h2>
+<h2 id="_about_this_sample">About This Sample</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a <code>*.slnx</code>-file which has all projects in one solution, if you are looking for a complete collection of samples.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-We migrated to the newer *.slnx-File format, which should be supported from all major IDEs. If it doesn&#8217;t work for you, please use the project-files inside the sub-directories.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You can find the list of samples <a href="#samples">below</a>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some <strong>buzz-words</strong>.</p>
-</div>
-<div class="paragraph">
-<p>In every sample folder you will find a <code>README</code>-file, which describes the sample in detail and, if applicable, has links to further information and documentation.</p>
+<p>This project is an F# port of the C# Music Store tutorial located at <code>src/Avalonia.Samples/CompleteApps/Avalonia.MusicStore/</code>. It provides the same functionality - a desktop music store app that searches the iTunes API and displays album covers with acrylic blur effects - but implemented using F# syntax and idioms.</p>
 </div>
 <div class="sect2">
-<h3 id="_difficulties">🐣 Difficulties</h3>
-<div class="paragraph">
-<p>Each sample is tagged with its difficulty. The degree of difficulty describes how much base-knowledge a user should have.</p>
+<h3 id="_whats_the_same">What&#8217;s the Same</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Application architecture using MVVM pattern with CommunityToolkit.Mvvm</p>
+</li>
+<li>
+<p>All XAML views and layouts (MainWindow, MusicStoreWindow, AlbumView, etc.)</p>
+</li>
+<li>
+<p>iTunes API integration for album search</p>
+</li>
+<li>
+<p>Acrylic blur window styling and graphical album tiles</p>
+</li>
+<li>
+<p>Data persistence with local caching</p>
+</li>
+<li>
+<p>Messaging between view models using WeakReferenceMessenger</p>
+</li>
+</ul>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">🔘</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Degree of knowledge</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐣</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Beginner</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of <code>C#</code>, <code>X(A)ML</code> and  your IDE is mandatory.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Some very basic knowledge of Avalonia is needed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The user is somewhat experienced with Avalonia.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐉</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hard</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">These samples are focusing on non-standard tasks, which most users will not need to know.</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div class="sect2">
+<h3 id="_whats_different">What&#8217;s Different</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Implementation language: F# instead of C#</p>
+</li>
+<li>
+<p>F# syntax for view models, models, and business logic</p>
+</li>
+<li>
+<p>F# records for immutable data structures</p>
+</li>
+<li>
+<p>Functional programming patterns where applicable</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="samples">✍️ Samples</h2>
+<h2 id="_full_tutorial">Full Tutorial</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_mvvm_samples">💡 MVVM-Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/MVVM/BasicMvvmSample">Basic MVVM Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐣 Beginner</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/MVVM/CommandSample">Commands Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐣 Beginner</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Command, ICommand, CommandParameter, MVVM, ReactiveCommand, async-await</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/MVVM/ValueConversionSample">ValueConverter Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥 Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Converter, Binding, MultiBinding, IValueConverter, IMultiValueConverter, MVVM, FuncValueConverter</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/MVVM/ValidationSample">Validation Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥 Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MVVM, Data-Validation, Exception, Error, Error-Message, Binding</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>For a complete step-by-step tutorial explaining the application architecture, MVVM patterns, and implementation details, please refer to the original C# version&#8217;s README:</p>
 </div>
-<div class="sect2">
-<h3 id="_desktopintegration_samples">DesktopIntegration-Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/DesktopIntegration/TrayIcon">Tray Icon Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐣 Beginner</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TrayIcon, ReactiveUI, Binding</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p><a href="../../../CompleteApps/Avalonia.MusicStore/README.adoc">Music Store App Tutorial (C#)</a></p>
 </div>
-<div class="sect2">
-<h3 id="_drawing_samples">✒️ Drawing-Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Drawing/BattleCity">BattleCity Game Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Game, Canvas, Game Loop, MVVM</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Drawing/RectPainter">Rect Painter Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Graphics, MVVM</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>The tutorial covers:</p>
 </div>
-<div class="sect2">
-<h3 id="_datatemplate_samples">🎞️ DataTemplate-Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/DataTemplates/BasicDataTemplateSample">Basic DataTemplate Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/DataTemplates/FuncDataTemplateSample">FuncDataTemplate Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FuncDataTemplate, DataTemplate, C#, Binding from code</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/DataTemplates/IDataTemplateSample">Implementing IDataTemplate Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IDataTemplate, DataTemplate, DataTemplateSelector</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_routing_navigation_samples">🗺️ Routing / Navigation-Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Routing/BasicViewLocatorSample">Basic ViewLocator Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ViewLocator, Routing, Wizard, Navigation, Page, MVVM</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_custom_controls_samples">🛠️ Custom Controls Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/CustomControls/RatingControlSample">RatingControl Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Control, TemplatedControl, custom Control, reusable Control, AvaloniaProperty, StyledProperty, DirectProperty, ReadonlyProperty, Style, ControlTheme</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/CustomControls/SnowflakesControlSample">SnowflakesControl Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Custom Control, Render, Hit-Testing, Custom Animations</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_view_interaction_samples">⚡ View Interaction Samples</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/ViewInteraction/MvvmDialogSample">Mvvm Dialog Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MVVM, Dialog, FileDialogs, TopLevel, Clipboard</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/ViewInteraction/DialogManagerSample">Dialog Manager Sample</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.Mvvm</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_automated_ui_testing">🧪️ Automated UI Testing</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Testing/TestableApp.Headless.XUnit">Testing with Headless XUnit</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XUnit, Headless, Automation, UI Testing</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Testing/TestableApp.Headless.NUnit">Testing with Headless NUnit</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐔 Normal</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NUnit, Headless, Automation, UI Testing</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/Testing/TestableApp.Appium">Testing with Appium</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐉 Hard</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XUnit, Appium, WinAppDriver, Automation, UI Testing</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_complete_apps">🧑‍💻 Complete Apps</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">Difficulty</th>
-<th class="tableblock halign-left valign-top">Buzz-Words</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/CompleteApps/SimpleToDoList">Simple ToDo-List</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥 Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ToDo-List, Complete App, MVVM, CommunityToolkit.MVVM, Source Generator, Styles, Commands</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/CompleteApps/Avalonia.MusicStore">Music Store App</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥 Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, Commands, iTunes Api</p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock"><a href="src/Avalonia.Samples/FSharp/CompleteApps/MusicStore">Music Store App (F#)</a></p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">🐥 Easy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, iTunes Api, Functional Programming</p></td>
-</tr>
-</tbody>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p>Setting up the project with MVVM</p>
+</li>
+<li>
+<p>Window styling with acrylic blur effects</p>
+</li>
+<li>
+<p>Creating and managing dialog windows</p>
+</li>
+<li>
+<p>Implementing album search with the iTunes API</p>
+</li>
+<li>
+<p>Data binding and observable collections</p>
+</li>
+<li>
+<p>Loading and displaying images asynchronously</p>
+</li>
+<li>
+<p>Data persistence and caching</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_contribution">🪛 Contribution</h2>
+<h2 id="_running_this_sample">Running This Sample</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Is anything missing? Have you found an error? Have you found an outdated sample? Or do you have a great idea?</p>
-</div>
-<div class="paragraph">
-<p>Fantastic! Your contribution is welcome.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Before you start, make sure you have read the Code of Conduct.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_code_of_conduct">Code of Conduct</h3>
-<div class="paragraph">
-<p>This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information see the <a href="https://dotnetfoundation.org/code-of-conduct">Contributor Covenant Code of Conduct</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_issues_and_feature_requests">Issues and Feature Requests</h3>
-<div class="paragraph">
-<p>If you file a new issue or feature request, please fill in the templates available. If you found an issue in an existing sample, please link the sample and, if possible, point us to what is wrong.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_pull_requests">Pull Requests</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Pull requests may be discussed and probably not every pull request will be merged in the end. If you are not sure, please <a href="#get-in-touch">🗯 Get in touch with us</a> first. Anyway, every contribution is welcome.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_fixing_an_existing_sample">Fixing an existing sample</h4>
-<div class="paragraph">
-<p>If you find that in an existing sample, that something is unclear or missing, you can update the sample and file a pull request. Spelling mistakes or wrong wording can also be changed in a pull request.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-If you change the difficulty or the buzz-words, remember to also update the main page.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_adding_a_new_sample">Adding a new sample</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new Project to the Solution: <code>src ► Avalonia.Samples ► Avalonia.Samples.sln</code></p>
+<p>Open the solution in your IDE (Visual Studio, JetBrains Rider, or VS Code with Ionide)</p>
 </li>
 <li>
-<p>In the root directory of the new sample add a <code>README</code>-file. We highly suggest using a template which you can find here:</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p><a href="/_docs/AsciiDoc-Template/">AsciiDoc-Template</a>: If you want to provide richer content, we suggest using the <a href="https://asciidoc.org">ascii-doc</a>-template.</p>
+<p>Ensure you have .NET 9.0 SDK installed</p>
 </li>
 <li>
-<p><a href="/_docs/Markdown-Template/">Markdown-Template</a>: If you prefer not to use AsciiDoc, you can instead use the Markdown-template.</p>
+<p>Build and run the project</p>
+</li>
+<li>
+<p>Click the store icon to search for albums</p>
+</li>
+<li>
+<p>Type a search term and select albums to add to your collection</p>
 </li>
 </ol>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_key_f_files">Key F# Files</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Models/Album.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Album data model and iTunes API integration</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ViewModels/ViewModelBase.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base class for all view models</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ViewModels/AlbumViewModel.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">View model for individual album display</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ViewModels/MainWindowViewModel.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main window application logic</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">ViewModels/MusicStoreViewModel.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Music store dialog logic</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Messages/PurchaseAlbumMessage.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message for requesting album purchase dialog</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Messages/MusicStoreClosedMessage.fs</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message for returning selected album</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_related">Related</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/">Avalonia MVVM Pattern Documentation</a></p>
 </li>
-</ol>
-</div>
-</div>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">CommunityToolkit.Mvvm Documentation</a></p>
+</li>
+<li>
+<p><a href="https://fsharp.org/">F# Documentation</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
