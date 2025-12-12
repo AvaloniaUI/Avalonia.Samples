@@ -21,14 +21,14 @@
     <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
     <PackageVersion Include="DynamicData" Version="9.4.1" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.1" />
-    <!-- SQLitePCLRaw for WASM/browser: use provider.sqlite3 (2.x line) -->
-    <PackageVersion Include="SQLitePCLRaw.provider.sqlite3" Version="3.0.2" />
+    <!-- SQLitePCLRaw for WASM/browser: use provider.sqlite3 (2.x line) aligned with core 2.1.9 -->
+    <PackageVersion Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
     <!-- Declare native bundle/lib versions to allow Update/ExcludeAssets usage where needed -->
-    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.11" />
     <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.11" />
     <!-- Ensure Android uses a recent e_sqlite3 build with 16KB page size -->
     <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3.android" Version="2.1.11" />
-    <PackageVersion Include="SQLitePCLRaw.provider.e_sqlite3" Version="3.0.2" />
+    <PackageVersion Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.1.11" />
     <PackageVersion Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
     <PackageVersion Include="SQLitePCLRaw.core" Version="2.1.9" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0" />

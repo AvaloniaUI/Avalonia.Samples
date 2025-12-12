@@ -4,20 +4,21 @@
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-
+    
+    <EmccExtraLDFlags>-s WARN_ON_UNDEFINED_SYMBOLS=0</EmccExtraLDFlags>
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
     <!-- Use WASM-safe SQLite provider/lib and exclude native e_sqlite3 -->
-    <PackageReference Include="SQLitePCLRaw.provider.sqlite3" />
-    <!-- Hard-exclude any native e_sqlite3 providers/bundles/libs that may flow transitively -->
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" ExcludeAssets="all" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" ExcludeAssets="all" />
-    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" ExcludeAssets="all" />
-    <!-- sqlite-net-pcl often brings bundle_green; exclude it as well on WASM -->
-    <PackageReference Include="SQLitePCLRaw.bundle_green" ExcludeAssets="all" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+<!--    &lt;!&ndash; Hard-exclude any native e_sqlite3 providers/bundles/libs that may flow transitively &ndash;&gt;-->
+<!--    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" ExcludeAssets="all" />-->
+<!--    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" ExcludeAssets="all" />-->
+<!--    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" ExcludeAssets="all" />-->
+<!--    &lt;!&ndash; sqlite-net-pcl often brings bundle_green; exclude it as well on WASM &ndash;&gt;-->
+<!--    <PackageReference Include="SQLitePCLRaw.bundle_green" ExcludeAssets="all" />-->
   </ItemGroup>
 
   <ItemGroup>

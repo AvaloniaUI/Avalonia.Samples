@@ -28,12 +28,15 @@ public record Category
     
     public async Task<bool> SaveAsync()
     {
-        return true;
         await using var connection = await DataBaseHelper.GetOpenConnection();
-        connection.ExecuteScalarAsync(
+        Id = await connection.ExecuteScalarAsync<int?>(
             """
-            REPLACE INTO Category 
-            """
-            );
+            REPLACE INTO Category (Id, Name, Description, GroupColorHex)
+                    VALUES (@Id, @Name, @Description, @GroupColorHex);
+            SELECT Last_insert_rowid();
+            """, this
+        );
+        
+        return Id != null;
     }
 }
