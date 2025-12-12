@@ -1,0 +1,29 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:themes="clr-namespace:SharedControls.Themes;assembly=SharedControls"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
+             x:Class="AdvancedToDoList.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <DataTemplate DataType="viewModels:CategoryViewModel">
+            <Border CornerRadius="30"
+                    HorizontalAlignment="Left"
+                    ToolTip.Tip="{Binding Description}"
+                    Padding="5,2"
+                    Background="{Binding GroupColor, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
+                <TextBlock Text="{Binding Name}"
+                           Foreground="{Binding GroupColor, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}"></TextBlock>
+            </Border>
+        </DataTemplate>
+        
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+        <themes:SharedControlTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+    </Application.Styles>
+</Application>

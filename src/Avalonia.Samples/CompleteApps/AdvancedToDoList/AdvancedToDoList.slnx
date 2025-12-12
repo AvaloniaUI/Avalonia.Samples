@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="AdvancedToDoList.Android/AdvancedToDoList.Android.csproj" />
+  <Project Path="AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj" />
+  <Project Path="AdvancedToDoList.Desktop/AdvancedToDoList.Desktop.csproj" />
+  <Project Path="AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj" />
+  <Project Path="AdvancedToDoList/AdvancedToDoList.csproj" />
+  <Project Path="SharedControls/SharedControls.csproj" />
+</Solution>

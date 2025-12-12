@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AdvancedToDoList.Views.EditCategoryView"
+             x:DataType="viewModels:CategoryViewModel">
+    <Design.DataContext>
+        <viewModels:CategoryViewModel Name="Test" Description="This is a test category" GroupColor="Aqua" />
+    </Design.DataContext>
+    
+    <ScrollViewer>
+        <StackPanel Spacing="5" Margin="10" Grid.IsSharedSizeScope="True">
+            <!-- ID -->
+            <controls:LabeledControl Header="ID">
+                <TextBox IsReadOnly="True" Text="{Binding Id, Mode=OneWay}"
+                         Watermark="The ID will be set after saving automatically."></TextBox>
+            </controls:LabeledControl>
+            
+            <!-- Name -->
+            <controls:LabeledControl Header="Name">
+                <TextBox Text="{Binding Name}"
+                         Watermark="The display name of the Group"></TextBox>
+            </controls:LabeledControl>
+            
+            <!-- Description -->
+            <controls:LabeledControl Header="Description">
+                <TextBox Text="{Binding Description}" />
+            </controls:LabeledControl>
+            
+            <!-- Group Color -->
+            <controls:LabeledControl Header="Color">
+                <ColorPicker Color="{Binding GroupColor}"
+                             IsAlphaEnabled="False"
+                             HorizontalAlignment="Left"
+                             IsAlphaVisible="False" />
+            </controls:LabeledControl>
+            
+            <Separator />
+
+            <controls:LabeledControl Header="Preview">
+                <ContentControl Content="{Binding}"></ContentControl>
+            </controls:LabeledControl>
+        </StackPanel>
+    </ScrollViewer>
+    
+</UserControl>
