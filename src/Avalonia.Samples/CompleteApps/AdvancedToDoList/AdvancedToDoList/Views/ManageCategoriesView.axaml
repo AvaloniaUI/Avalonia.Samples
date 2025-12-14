@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             services:DialogManager.Register="{Binding}"
+             x:Class="AdvancedToDoList.Views.ManageCategoriesView"
+             x:DataType="viewModels:MainViewModel">
+    <DockPanel VerticalSpacing="5" >
+        <Border DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Button Command="{Binding AddNewCategoryCommand}" Content="New Category" />
+                <Button Command="{Binding EditCategoryCommand}" Content="Edit Category"
+                        CommandParameter="{Binding SelectedCategory}"/>
+                <Button Command="{Binding DeleteCategoryCommand}" Content="Delete Category"
+                        CommandParameter="{Binding SelectedCategory}"/>
+            </StackPanel>
+        </Border>
+        
+        <ListBox ItemsSource="{Binding Categories}"
+                 SelectedItem="{Binding SelectedCategory}" />
+    </DockPanel>
+</UserControl>

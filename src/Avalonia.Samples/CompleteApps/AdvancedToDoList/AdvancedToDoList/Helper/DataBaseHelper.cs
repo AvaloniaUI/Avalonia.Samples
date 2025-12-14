@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AdvancedToDoList.Models;
+using Avalonia.Controls;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -15,6 +16,13 @@ public static class DataBaseHelper
 
     internal static async Task<SqliteConnection> GetOpenConnection()
     {
+        if (Design.IsDesignMode)
+        {
+            var designData = new SqliteConnection("DataSource=:memory:");
+            await designData.OpenAsync();
+            return designData;
+        }
+        
         if (App.DbService == null)
             throw new InvalidOperationException("Database service not registered.");
 

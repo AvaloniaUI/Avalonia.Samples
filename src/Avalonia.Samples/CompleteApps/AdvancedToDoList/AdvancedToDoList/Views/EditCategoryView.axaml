@@ -1,49 +1,67 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="AdvancedToDoList.Views.EditCategoryView"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
-             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AdvancedToDoList.Views.EditCategoryView"
-             x:DataType="viewModels:CategoryViewModel">
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             services:DialogManager.Register="{Binding}"
+             x:DataType="viewModels:EditCategoryViewModel"
+             mc:Ignorable="d">
     <Design.DataContext>
-        <viewModels:CategoryViewModel Name="Test" Description="This is a test category" GroupColor="Aqua" />
+        <viewModels:EditCategoryViewModel Name="Test"
+                                          Description="This is a test category"
+                                          GroupColor="Aqua" />
     </Design.DataContext>
-    
-    <ScrollViewer>
-        <StackPanel Spacing="5" Margin="10" Grid.IsSharedSizeScope="True">
-            <!-- ID -->
-            <controls:LabeledControl Header="ID">
-                <TextBox IsReadOnly="True" Text="{Binding Id, Mode=OneWay}"
-                         Watermark="The ID will be set after saving automatically."></TextBox>
-            </controls:LabeledControl>
-            
-            <!-- Name -->
-            <controls:LabeledControl Header="Name">
-                <TextBox Text="{Binding Name}"
-                         Watermark="The display name of the Group"></TextBox>
-            </controls:LabeledControl>
-            
-            <!-- Description -->
-            <controls:LabeledControl Header="Description">
-                <TextBox Text="{Binding Description}" />
-            </controls:LabeledControl>
-            
-            <!-- Group Color -->
-            <controls:LabeledControl Header="Color">
-                <ColorPicker Color="{Binding GroupColor}"
-                             IsAlphaEnabled="False"
-                             HorizontalAlignment="Left"
-                             IsAlphaVisible="False" />
-            </controls:LabeledControl>
-            
-            <Separator />
 
-            <controls:LabeledControl Header="Preview">
-                <ContentControl Content="{Binding}"></ContentControl>
-            </controls:LabeledControl>
-        </StackPanel>
-    </ScrollViewer>
-    
+    <Grid Margin="10"
+          RowDefinitions="*, Auto"
+          RowSpacing="10">
+        <ScrollViewer>
+            <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
+                <!--  ID  -->
+                <controls:LabeledControl Header="ID">
+                    <TextBox IsReadOnly="True"
+                             Text="{Binding Id, Mode=OneWay}"
+                             Watermark="The ID will be set after saving automatically." />
+                </controls:LabeledControl>
+
+                <!--  Name  -->
+                <controls:LabeledControl Header="Name">
+                    <TextBox Text="{Binding Name}" Watermark="The display name of the Group" />
+                </controls:LabeledControl>
+
+                <!--  Description  -->
+                <controls:LabeledControl Header="Description">
+                    <TextBox Text="{Binding Description}" />
+                </controls:LabeledControl>
+
+                <!--  Group Color  -->
+                <controls:LabeledControl Header="Color">
+                    <ColorPicker HorizontalAlignment="Left"
+                                 IsAlphaEnabled="False"
+                                 IsAlphaVisible="False"
+                                 Color="{Binding GroupColor}" />
+                </controls:LabeledControl>
+
+                <Separator />
+
+                <controls:LabeledControl Header="Preview">
+                    <ContentControl Content="{Binding PreviewCategory}" />
+                </controls:LabeledControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <WrapPanel Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   ItemSpacing="5"
+                   Orientation="Horizontal">
+            <Button Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button Command="{Binding SaveCommand}" Content="Save" />
+        </WrapPanel>
+    </Grid>
+
 </UserControl>

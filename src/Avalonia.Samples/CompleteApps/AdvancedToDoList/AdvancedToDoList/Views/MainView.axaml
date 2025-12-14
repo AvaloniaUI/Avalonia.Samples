@@ -3,19 +3,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AdvancedToDoList.ViewModels"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             xmlns:views="clr-namespace:AdvancedToDoList.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AdvancedToDoList.Views.MainView"
+             x:Name="Root"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
 
-    <DockPanel>
-        <Button Command="{Binding AddNewCategoryCommand}" Content="New Category" />
-        
-        <ListBox ItemsSource="{Binding Categories}"></ListBox>
-    </DockPanel>
-    
+    <views:ManageCategoriesView />
+
 </UserControl>

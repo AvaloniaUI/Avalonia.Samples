@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
+using AdvancedToDoList.Models;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
+using SharedControls.Controls;
+using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase, IDialogParticipant
 {
     [ObservableProperty] private string _greeting = "Welcome to Avalonia!";
     
@@ -24,7 +27,7 @@ public partial class MainViewModel : ViewModelBase
         _categoriesSourceCache.Connect()
             .ObserveOn(syncContext)
             .SortAndBind(out _categories,
-                SortExpressionComparer<CategoryViewModel>
+                SortExpressionComparer<Category>
                     .Ascending(x => x.Name ?? string.Empty)
                     .ThenByAscending(x => x.Id ?? -1))
             .Subscribe();
@@ -43,17 +46,20 @@ public partial class MainViewModel : ViewModelBase
     private async void LoadData()
     {
         var categories = await DataBaseHelper.GetCategoriesAsync();
-        _categoriesSourceCache.AddOrUpdate(categories.Select(x => new CategoryViewModel(x)));
+        _categoriesSourceCache.AddOrUpdate(categories);
     }
     
-    private readonly SourceCache<CategoryViewModel, int> _categoriesSourceCache =
-        new SourceCache<CategoryViewModel, int>(c => c.Id ?? -1);
+    private readonly SourceCache<Category, int> _categoriesSourceCache =
+        new SourceCache<Category, int>(c => c.Id ?? -1);
 
-    private readonly ReadOnlyObservableCollection<CategoryViewModel> _categories;
+    private readonly ReadOnlyObservableCollection<Category> _categories;
 
-    public ReadOnlyObservableCollection<CategoryViewModel> Categories => _categories;
+    public ReadOnlyObservableCollection<Category> Categories => _categories;
 
-    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(DeleteCategoryCommand), nameof(EditCategoryCommand))]
+    public partial Category? SelectedCategory { get; set; }
+
     private readonly SourceCache<ToDoItemViewModel, int> _toDoItemsSourceCache =
         new SourceCache<ToDoItemViewModel, int>(i => i.Id ?? -1);
     
@@ -62,17 +68,52 @@ public partial class MainViewModel : ViewModelBase
     public ReadOnlyObservableCollection<ToDoItemViewModel> ToDoItems => _toDoItems;
 
     [RelayCommand]
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "DynamicData requires reflection")]
     private async Task AddNewCategory()
     {
-        var categoryViewModel = new CategoryViewModel()
+        var category = new Category()
         {
             Name = "New Category",
             Description = "This is a new category",
-            GroupColor = ColorHelper.GetRandomColor()
+            GroupColorHex = ColorHelper.GetRandomColor().ToString()
         };
-
-        await categoryViewModel.SaveAsync();
         
-        _categoriesSourceCache.AddOrUpdate(categoryViewModel);
+        await EditCategoryAsync(category);
+    }
+
+    private bool CanEditOrDeleteCategory(Category? category) => category != null;
+    
+    /// <summary>
+    /// Deletes the selected category.
+    /// </summary>
+    /// <param name="category">the category to remove</param>
+    [RelayCommand(CanExecute = nameof(CanEditOrDeleteCategory))]
+    private async Task DeleteCategoryAsync(Category? category)
+    {
+        var result = await this.ShowOverlayDialogAsync<DialogResult>("Delete category", 
+            $"Are you sure you want to delete the category '{category.Name}'?",
+            DialogCommands.YesNoCancel);
+        
+        if (result == DialogResult.Yes && await category.DeleteAsync())
+        {
+            _categoriesSourceCache.Remove(category);
+        }
+    }
+    
+    [RelayCommand(CanExecute = nameof(CanEditOrDeleteCategory))]
+    private async Task EditCategoryAsync(Category? category)
+    {
+        if (category == null)
+        {
+            return;
+        }
+
+        var categoryViewModel = new EditCategoryViewModel(category);
+        var result = await this.ShowOverlayDialogAsync<Category>("Add a new category", categoryViewModel);
+
+        if (result != null)
+        {
+            _categoriesSourceCache.AddOrUpdate(result);
+        }
     }
 }

@@ -17,7 +17,7 @@ public partial class ToDoItemViewModel : ViewModelBase
     /// Gets or sets the Category of the ToDoItem.
     /// </summary>
     [ObservableProperty]
-    public partial CategoryViewModel? Category { get; set; }
+    public partial EditCategoryViewModel? Category { get; set; }
 
     /// <summary>
     /// Gets or sets the Title of the ToDoItem. This property is required.

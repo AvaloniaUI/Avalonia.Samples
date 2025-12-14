@@ -1,0 +1,83 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:SharedControls.Controls">
+    <Design.PreviewWith>
+        <Border Width="400"
+                Height="400"
+                Background="Aqua">
+            <controls:OverlayDialog DialogCommands="{x:Static controls:DialogCommands.OkCancel}" Header="Test">
+                Hello from OverlayDialog
+            </controls:OverlayDialog>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:DialogHost}" TargetType="controls:DialogHost">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Background="{TemplateBinding Background}"
+                                  Content="{TemplateBinding Content}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:OverlayDialog}" TargetType="controls:OverlayDialog">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" />
+        <Setter Property="Background" Value="{DynamicResource SystemControlPageBackgroundAltHighBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:DialogHost x:Name="OverlayBorder"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     Background="{TemplateBinding OverlayBrush}">
+
+                    <Border Margin="20"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BoxShadow="0 0 50 #CC000000"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
+                            <ContentPresenter Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="{DynamicResource SystemControlBackgroundAccentBrush}" />
+
+                            <ContentPresenter Grid.Row="1"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                            <ItemsControl Grid.Row="2"
+                                          HorizontalAlignment="Center"
+                                          ItemsSource="{TemplateBinding DialogCommands}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" ItemSpacing="5" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="controls:DialogCommand">
+                                        <Button Command="{Binding Command, TargetNullValue={x:Null}}"
+                                                CommandParameter="{Binding DialogResult}"
+                                                Content="{Binding Caption}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </Border>
+                </controls:DialogHost>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>
