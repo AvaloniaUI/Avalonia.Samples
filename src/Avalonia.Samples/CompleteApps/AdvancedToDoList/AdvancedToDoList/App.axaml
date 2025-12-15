@@ -24,6 +24,11 @@
         <DataTemplate DataType="viewModels:EditCategoryViewModel">
             <views:EditCategoryView />
         </DataTemplate>
+        
+        <DataTemplate DataType="viewModels:EditToDoItemViewModel">
+            <views:EditToDoItemView />
+        </DataTemplate>
+        
     </Application.DataTemplates>
 
     <Application.Styles>

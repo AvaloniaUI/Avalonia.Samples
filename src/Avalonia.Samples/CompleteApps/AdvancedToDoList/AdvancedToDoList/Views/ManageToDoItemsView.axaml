@@ -6,20 +6,20 @@
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              services:DialogManager.Register="{Binding}"
-             x:Class="AdvancedToDoList.Views.ManageCategoriesView"
-             x:DataType="viewModels:CategoriesViewModel">
+             x:DataType="viewModels:ToDoItemsViewModel"
+             x:Class="AdvancedToDoList.Views.ManageToDoItemsView">
     <DockPanel VerticalSpacing="5" >
         <Border DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Spacing="5">
-                <Button Command="{Binding AddNewCategoryCommand}" Content="New Category" />
-                <Button Command="{Binding EditCategoryCommand}" Content="Edit Category"
-                        CommandParameter="{Binding SelectedCategory}"/>
-                <Button Command="{Binding DeleteCategoryCommand}" Content="Delete Category"
-                        CommandParameter="{Binding SelectedCategory}"/>
+                <Button Command="{Binding AddNewToDoItemCommand}" Content="New Item" />
+                <Button Command="{Binding EditToDoItemCommand}" Content="Edit Item"
+                        CommandParameter="{Binding SelectedToDoItem}"/>
+                <Button Command="{Binding DeleteToDoItemCommand}" Content="Delete Item"
+                        CommandParameter="{Binding SelectedToDoItem}"/>
             </StackPanel>
         </Border>
         
-        <ListBox ItemsSource="{Binding Categories}"
-                 SelectedItem="{Binding SelectedCategory}" />
+        <ListBox ItemsSource="{Binding ToDoItems}"
+                 SelectedItem="{Binding SelectedToDoItem}" />
     </DockPanel>
 </UserControl>

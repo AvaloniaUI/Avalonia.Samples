@@ -15,6 +15,6 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <views:ManageCategoriesView />
+    <views:ManageToDoItemsView DataContext="{Binding ToDoItemsViewModel}" />
 
 </UserControl>

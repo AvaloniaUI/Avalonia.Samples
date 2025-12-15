@@ -53,12 +53,13 @@ public record Category
 
     public async Task<bool> DeleteAsync()
     {
-        if (Id == null)
-        {
-            return false;
-        }
         try
         {
+            if (Id == null)
+            {
+                return false;
+            }
+            
             await using var connection = await DataBaseHelper.GetOpenConnection();
             await connection.ExecuteAsync(
                 """

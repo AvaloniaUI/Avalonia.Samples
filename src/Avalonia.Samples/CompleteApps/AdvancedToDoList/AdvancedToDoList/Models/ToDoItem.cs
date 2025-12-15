@@ -1,4 +1,7 @@
 using System;
+using System.Threading.Tasks;
+using AdvancedToDoList.Helper;
+using Dapper;
 
 namespace AdvancedToDoList.Models;
 
@@ -7,7 +10,7 @@ public class ToDoItem
     /// <summary>
     /// Gets or sets the Id of the ToDoItem.
     /// </summary>
-    public int Id { get; set; }
+    public int? Id { get; set; }
     
     /// <summary>
     /// Gets or sets the Category of the ToDoItem.
@@ -54,4 +57,47 @@ public class ToDoItem
     /// Gets or sets the CompletedDate of the ToDoItem. As long as this property is null, the ToDoItem is not completed.
     /// </summary>
     public DateTime? CompletedDate { get; set; }
+    
+    public async Task<bool> SaveAsync()
+    {
+        try
+        {
+            await using var connection = await DataBaseHelper.GetOpenConnection();
+            Id = await connection.ExecuteScalarAsync<int?>(
+                """
+                REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate)
+                        VALUES (@Id, @CategoryId, @Title, @Priority, @Description, @DueDate, @Progress, @CreatedDate, @CompletedDate);
+                SELECT Last_insert_rowid();
+                """, this
+            );
+
+            return Id != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> DeleteAsync()
+    {
+        try
+        {
+            if (Id == null)
+                return false;
+            
+            await using var connection = await DataBaseHelper.GetOpenConnection();
+            await connection.ExecuteAsync(
+                """
+                DELETE FROM ToDoItem WHERE Id = @Id;
+                """, this
+            );
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

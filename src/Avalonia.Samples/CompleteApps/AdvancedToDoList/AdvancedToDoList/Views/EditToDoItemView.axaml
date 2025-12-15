@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             services:DialogManager.Register="{Binding}"
+             x:Class="AdvancedToDoList.Views.EditToDoItemView"
+             x:DataType="viewModels:EditToDoItemViewModel">
+    <Design.DataContext>
+        <viewModels:EditToDoItemViewModel Title="Test"
+                                          Description="This is a test category"
+                                          DueDate="{x:Static system:DateTime.Now}" />
+    </Design.DataContext>
+
+    <Grid Margin="10"
+          RowDefinitions="*, Auto"
+          RowSpacing="10">
+        <ScrollViewer>
+            <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
+                <!--  ID  -->
+                <controls:LabeledControl Header="ID">
+                    <TextBox IsReadOnly="True"
+                             Text="{Binding Id, Mode=OneWay}"
+                             Watermark="The ID will be set after saving automatically." />
+                </controls:LabeledControl>
+
+                <!--  Name  -->
+                <controls:LabeledControl Header="Name">
+                    <TextBox Text="{Binding Title}" Watermark="The title of the to-do" />
+                </controls:LabeledControl>
+
+                <!--  Description  -->
+                <controls:LabeledControl Header="Description">
+                    <TextBox Text="{Binding Description}" />
+                </controls:LabeledControl>
+
+                <!--  DueDate  -->
+                <controls:LabeledControl Header="DueDate">
+                    <CalendarDatePicker SelectedDate="{Binding DueDate}" />
+                </controls:LabeledControl>
+                
+            </StackPanel>
+        </ScrollViewer>
+
+        <WrapPanel Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   ItemSpacing="5"
+                   Orientation="Horizontal">
+            <Button Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button Command="{Binding SaveCommand}" Content="Save" />
+        </WrapPanel>
+    </Grid>
+</UserControl>
