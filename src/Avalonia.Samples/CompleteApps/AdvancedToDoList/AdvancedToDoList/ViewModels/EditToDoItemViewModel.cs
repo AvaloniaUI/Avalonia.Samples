@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
+using AdvancedToDoList.Helper;
 using AdvancedToDoList.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,7 +25,12 @@ public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
         CreatedDate = toDoItem.CreatedDate;
         CompletedDate = toDoItem.CompletedDate;
     }
-    
+
+    public EditToDoItemViewModel()
+    {
+        
+    }
+
     [ObservableProperty] 
     public partial int? Id {get; set;}
     
@@ -35,6 +42,10 @@ public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
     
     [ObservableProperty]
     public partial Category? Category {get; set;}
+    
+    // ToDo: Make this async? 
+    public Category[] AvailableCategories { get; } = DataBaseHelper.GetCategoriesAsync().Result
+        .OrderBy(c => c.Name).ToArray();
     
     [ObservableProperty]
     public partial int Progress { get; set; }

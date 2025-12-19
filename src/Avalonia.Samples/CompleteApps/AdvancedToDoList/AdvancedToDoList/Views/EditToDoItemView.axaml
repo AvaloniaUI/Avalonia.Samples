@@ -28,9 +28,16 @@
                              Watermark="The ID will be set after saving automatically." />
                 </controls:LabeledControl>
 
-                <!--  Name  -->
-                <controls:LabeledControl Header="Name">
+                <!--  Title  -->
+                <controls:LabeledControl Header="Title">
                     <TextBox Text="{Binding Title}" Watermark="The title of the to-do" />
+                </controls:LabeledControl>
+                
+                <!--  Category  -->
+                <controls:LabeledControl Header="Category">
+                    <ComboBox SelectedItem="{Binding Category}" 
+                              HorizontalAlignment="Stretch"
+                              ItemsSource="{Binding AvailableCategories}"/>
                 </controls:LabeledControl>
 
                 <!--  Description  -->
@@ -42,6 +49,7 @@
                 <controls:LabeledControl Header="DueDate">
                     <CalendarDatePicker SelectedDate="{Binding DueDate}" />
                 </controls:LabeledControl>
+                
                 
             </StackPanel>
         </ScrollViewer>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using AdvancedToDoList.Models;
@@ -9,10 +10,14 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 
 namespace AdvancedToDoList.Helper;
-
-[DapperAot]
 public static class DataBaseHelper
 {
+    static DataBaseHelper()
+    {
+        // Register a type handler to map between SQLite INTEGER (Int64) and our Priority enum
+        SqlMapper.AddTypeHandler<Priority>(new PriorityTypeHandler());
+    }
+    
     private static bool _initialized;
 
     internal static async Task<SqliteConnection> GetOpenConnection()
@@ -85,5 +90,30 @@ public static class DataBaseHelper
     {
         await using var connection = await GetOpenConnection();
         return (await connection.QueryAsync<ToDoItem>("SELECT * FROM ToDoItem"));
+    }
+}
+
+public class PriorityTypeHandler : SqlMapper.TypeHandler<Priority>
+{
+    public override void SetValue(IDbDataParameter parameter, Priority value)
+    {
+        // Store enum as integer value in SQLite
+        parameter.Value = (int)value;
+    }
+    
+    public override Priority Parse(object value)
+    {
+        // SQLite returns INTEGER as Int64 by default; handle common representations robustly
+        return value switch
+        {
+            null => default,
+            DBNull => default,
+            long l => (Priority)(int)l,
+            int i => (Priority)i,
+            short s => (Priority)s,
+            byte b => (Priority)b,
+            string str when int.TryParse(str, out var parsed) => (Priority)parsed,
+            _ => default
+        };
     }
 }
