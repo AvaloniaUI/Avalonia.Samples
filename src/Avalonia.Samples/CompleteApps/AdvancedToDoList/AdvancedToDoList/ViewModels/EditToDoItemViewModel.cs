@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
@@ -13,6 +12,8 @@ namespace AdvancedToDoList.ViewModels;
 
 public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
 {
+    private readonly bool _isInitialized;
+    
     public EditToDoItemViewModel(ToDoItem toDoItem)
     {
         Id = toDoItem.Id;
@@ -20,15 +21,20 @@ public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
         Description = toDoItem.Description;
         Category = toDoItem.Category;
         Progress = toDoItem.Progress;
-        Priority = (int)toDoItem.Priority;
+        Priority = toDoItem.Priority;
         DueDate = toDoItem.DueDate;
         CreatedDate = toDoItem.CreatedDate;
         CompletedDate = toDoItem.CompletedDate;
+        
+        _isInitialized = true;
     }
 
     public EditToDoItemViewModel()
     {
+        CreatedDate = DateTime.Now;
+        DueDate = DateTime.Now.AddDays(7);
         
+        _isInitialized = true;
     }
 
     [ObservableProperty] 
@@ -49,9 +55,22 @@ public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
     
     [ObservableProperty]
     public partial int Progress { get; set; }
-    
+
+    partial void OnProgressChanged(int value)
+    {
+        // Store the completed date if the progress is 100
+        if(value >= 100 && _isInitialized)
+        {
+            this.CompletedDate = DateTime.Now;
+        }
+        else
+        {
+            this.CompletedDate = null;
+        }
+    }
+
     [ObservableProperty]
-    public partial int Priority { get; set; }
+    public partial Priority Priority { get; set; }
     
     [ObservableProperty]
     public partial DateTime DueDate { get; set; }
@@ -70,7 +89,7 @@ public partial class EditToDoItemViewModel: ViewModelBase, IDialogParticipant
         CategoryId = Category?.Id,
         Category = Category,
         Progress = Progress,
-        Priority = (Priority)Priority,
+        Priority = Priority,
         DueDate = DueDate,
         CreatedDate = CreatedDate,
         CompletedDate = CompletedDate,

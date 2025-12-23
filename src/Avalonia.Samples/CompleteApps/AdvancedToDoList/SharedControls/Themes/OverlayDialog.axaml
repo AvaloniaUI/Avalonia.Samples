@@ -3,8 +3,7 @@
                     xmlns:controls="clr-namespace:SharedControls.Controls">
     <Design.PreviewWith>
         <Border Width="400"
-                Height="400"
-                Background="Aqua">
+                Height="400">
             <controls:OverlayDialog DialogCommands="{x:Static controls:DialogCommands.OkCancel}" Header="Test">
                 Hello from OverlayDialog
             </controls:OverlayDialog>
@@ -44,7 +43,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            BoxShadow="0 0 50 #CC000000"
+                            BoxShadow="0 0 50 DarkGray"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
                             <ContentPresenter Content="{TemplateBinding Header}"

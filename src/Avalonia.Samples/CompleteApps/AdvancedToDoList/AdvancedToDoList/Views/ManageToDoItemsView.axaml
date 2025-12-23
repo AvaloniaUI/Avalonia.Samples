@@ -1,25 +1,65 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl x:Class="AdvancedToDoList.Views.ManageToDoItemsView"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:models="clr-namespace:AdvancedToDoList.Models"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
              services:DialogManager.Register="{Binding}"
              x:DataType="viewModels:ToDoItemsViewModel"
-             x:Class="AdvancedToDoList.Views.ManageToDoItemsView">
-    <DockPanel VerticalSpacing="5" >
+             mc:Ignorable="d">
+    <DockPanel VerticalSpacing="5">
         <Border DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <Button Command="{Binding AddNewToDoItemCommand}" Content="New Item" />
-                <Button Command="{Binding EditToDoItemCommand}" Content="Edit Item"
-                        CommandParameter="{Binding SelectedToDoItem}"/>
-                <Button Command="{Binding DeleteToDoItemCommand}" Content="Delete Item"
-                        CommandParameter="{Binding SelectedToDoItem}"/>
+                <Button Command="{Binding EditToDoItemCommand}"
+                        CommandParameter="{Binding SelectedToDoItem}"
+                        Content="Edit Item" />
+                <Button Command="{Binding DeleteToDoItemCommand}"
+                        CommandParameter="{Binding SelectedToDoItem}"
+                        Content="Delete Item" />
             </StackPanel>
         </Border>
-        
-        <ListBox ItemsSource="{Binding ToDoItems}"
-                 SelectedItem="{Binding SelectedToDoItem}" />
+
+        <ListBox ItemsSource="{Binding ToDoItems}" SelectedItem="{Binding SelectedToDoItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto"
+                          RowSpacing="3" ColumnSpacing="5">
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    Spacing="5">
+                            <ContentControl Content="{Binding Category, TargetNullValue={x:Static models:Category.Empty}}" />
+                            <ContentControl Content="{Binding Priority}" />
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontWeight="Bold"
+                                   Text="{Binding Title}" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   Text="{Binding DueDate, StringFormat='d'}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   FontStyle="Italic"
+                                   IsVisible="{Binding Description, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                   Text="{Binding Description}" />
+                        <ProgressBar Grid.Row="1"
+                                     Grid.Column="1"
+                                     MinWidth="75"
+                                     ShowProgressText="True"
+                                     Value="{Binding Progress}" />
+                        <Separator Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Stretch"
+                                   Margin="0" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </DockPanel>
 </UserControl>

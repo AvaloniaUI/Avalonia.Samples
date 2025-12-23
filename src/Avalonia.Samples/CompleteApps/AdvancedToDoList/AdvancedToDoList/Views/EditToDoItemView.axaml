@@ -6,14 +6,19 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
+             xmlns:model="clr-namespace:AdvancedToDoList.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              services:DialogManager.Register="{Binding}"
+             Width="{Binding $parent[controls:OverlayDialog].Bounds.Width, Converter={x:Static converters:MathConverter.Multiply}, ConverterParameter=0.7}"
+             MaxWidth="700"
              x:Class="AdvancedToDoList.Views.EditToDoItemView"
              x:DataType="viewModels:EditToDoItemViewModel">
     <Design.DataContext>
         <viewModels:EditToDoItemViewModel Title="Test"
-                                          Description="This is a test category"
-                                          DueDate="{x:Static system:DateTime.Now}" />
+                                          Description="This is a test item"
+                                          Priority="Medium"
+                                          DueDate="{x:Static system:DateTime.Today}" />
     </Design.DataContext>
 
     <Grid Margin="10"
@@ -32,25 +37,64 @@
                 <controls:LabeledControl Header="Title">
                     <TextBox Text="{Binding Title}" Watermark="The title of the to-do" />
                 </controls:LabeledControl>
-                
+
                 <!--  Category  -->
                 <controls:LabeledControl Header="Category">
-                    <ComboBox SelectedItem="{Binding Category}" 
+                    <ComboBox SelectedItem="{Binding Category}"
                               HorizontalAlignment="Stretch"
-                              ItemsSource="{Binding AvailableCategories}"/>
+                              ItemsSource="{Binding AvailableCategories}" />
                 </controls:LabeledControl>
 
                 <!--  Description  -->
                 <controls:LabeledControl Header="Description">
-                    <TextBox Text="{Binding Description}" />
+                    <TextBox Text="{Binding Description}"
+                             AcceptsReturn="True"
+                             MaxHeight="200" />
                 </controls:LabeledControl>
 
                 <!--  DueDate  -->
                 <controls:LabeledControl Header="DueDate">
                     <CalendarDatePicker SelectedDate="{Binding DueDate}" />
                 </controls:LabeledControl>
-                
-                
+
+                <!--  Priority  -->
+                <controls:LabeledControl Header="Priority">
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="15">
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.Low}}"
+                            GroupName="PrioritySelection"
+                            Content="Low Priority" />
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.Medium}}"
+                            GroupName="PrioritySelection"
+                            Content="Medium Priority" />
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.High}}"
+                            GroupName="PrioritySelection"
+                            Content="High Priority" />
+                    </WrapPanel>
+                </controls:LabeledControl>
+
+                <!-- Progress -->
+                <controls:LabeledControl Header="Progress">
+                    <Grid ColumnDefinitions="*, Auto, 50">
+                        <Slider Value="{Binding Progress}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Progress, StringFormat='\{0\} %'}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right">
+                        </TextBlock>
+                    </Grid>
+                </controls:LabeledControl>
+
+                <!-- Some Infos -->
+                <TextBlock Text="Information" Classes="h1" />
+
+                <controls:LabeledControl Header="Created Date" Content="{Binding CreatedDate}"
+                                         VerticalContentAlignment="Center" />
+                <controls:LabeledControl Header="Completed Date"
+                                         Content="{Binding CompletedDate, TargetNullValue='Not yet completed'}"
+                                         VerticalContentAlignment="Center" />
+
             </StackPanel>
         </ScrollViewer>
 

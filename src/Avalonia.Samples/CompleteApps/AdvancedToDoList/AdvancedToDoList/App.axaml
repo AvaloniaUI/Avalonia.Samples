@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:AdvancedToDoList.Models"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
              x:Class="AdvancedToDoList.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
@@ -35,5 +35,16 @@
         <FluentTheme />
         <themes:SharedControlTheme />
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+        
+        <Style Selector="CalendarDatePicker, ComboBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        
+        <Style Selector="TextBlock.h1">
+            <Setter Property="Margin" Value="5,15,0,5" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush}" />
+        </Style>
     </Application.Styles>
 </Application>

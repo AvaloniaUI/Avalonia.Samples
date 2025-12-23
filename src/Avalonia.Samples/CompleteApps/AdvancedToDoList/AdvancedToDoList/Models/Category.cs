@@ -8,6 +8,12 @@ namespace AdvancedToDoList.Models;
 
 public record Category
 {
+    public static Category Empty => new()
+    {
+        Name = "Uncategorized",
+        GroupColorHex = "#CC777777"
+    };
+    
     /// <summary>
     /// Gets or sets the Id of the category.
     /// </summary>
