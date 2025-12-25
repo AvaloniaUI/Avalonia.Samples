@@ -28,8 +28,8 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
         Name = category.Name;
         Description = category.Description;
         
-        if (category.GroupColorHex != null) 
-            GroupColor = Color.Parse(category.GroupColorHex);
+        if (category.Color != null) 
+            GroupColor = Color.Parse(category.Color);
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
             Id = Id,
             Name = Name,
             Description = Description,
-            GroupColorHex = GroupColor?.ToString()
+            Color = GroupColor?.ToString()
         };
     }
     

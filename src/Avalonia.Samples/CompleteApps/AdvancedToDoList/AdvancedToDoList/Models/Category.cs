@@ -8,10 +8,13 @@ namespace AdvancedToDoList.Models;
 
 public record Category
 {
+    /// <summary>
+    /// Gets the empty category.
+    /// </summary>
     public static Category Empty => new()
     {
         Name = "Uncategorized",
-        GroupColorHex = "#CC777777"
+        Color = "#CC777777"
     };
     
     /// <summary>
@@ -32,9 +35,7 @@ public record Category
     /// <summary>
     /// Gets or sets the color of the category in hex format.
     /// </summary>
-    public string? GroupColorHex { get; set; }
-
-    public Color? GroupColor => Color.TryParse(GroupColorHex, out var color) ? color : null;
+    public string? Color { get; set; }
 
     public async Task<bool> SaveAsync()
     {
@@ -43,8 +44,8 @@ public record Category
             await using var connection = await DataBaseHelper.GetOpenConnection();
             Id = await connection.ExecuteScalarAsync<int?>(
                 """
-                REPLACE INTO Category (Id, Name, Description, GroupColorHex)
-                        VALUES (@Id, @Name, @Description, @GroupColorHex);
+                REPLACE INTO Category (Id, Name, Description, Color)
+                        VALUES (@Id, @Name, @Description, @Color);
                 SELECT Last_insert_rowid();
                 """, this
             );

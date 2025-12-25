@@ -15,9 +15,9 @@
                     HorizontalAlignment="Left"
                     ToolTip.Tip="{Binding Description}"
                     Padding="5,2"
-                    Background="{Binding GroupColor, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
+                    Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
                 <TextBlock Text="{Binding Name}"
-                           Foreground="{Binding GroupColor, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}"></TextBlock>
+                           Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}"></TextBlock>
             </Border>
         </DataTemplate>
         

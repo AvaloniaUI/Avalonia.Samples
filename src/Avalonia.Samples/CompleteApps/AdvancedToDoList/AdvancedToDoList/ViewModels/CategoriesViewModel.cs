@@ -58,7 +58,7 @@ public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
         {
             Name = "New Category",
             Description = "This is a new category",
-            GroupColorHex = ColorHelper.GetRandomColor().ToString()
+            Color = ColorHelper.GetRandomColor().ToString()
         };
         
         await EditCategoryAsync(category);
