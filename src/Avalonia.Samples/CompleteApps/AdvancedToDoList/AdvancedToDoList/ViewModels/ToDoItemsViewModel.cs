@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +18,6 @@ namespace AdvancedToDoList.ViewModels;
 
 public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
 {
-    [ObservableProperty] private string _greeting = "Welcome to Avalonia!";
-    
     public ToDoItemsViewModel()
     {
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
@@ -26,7 +25,7 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
         _toDoItemsSourceCache.Connect()
             .ObserveOn(syncContext)
             .SortAndBind(out _toDoItems,
-                SortExpressionComparer<ToDoItem>
+                SortExpressionComparer<ToDoItemViewModel>
                     .Ascending(x => x.DueDate)
                     .ThenByAscending(x => x.Title ?? string.Empty)
                     .ThenByAscending(x => x.Id ?? -1))
@@ -38,19 +37,19 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
     private async void LoadData()
     {
         var toDoItems = await DataBaseHelper.GetToDoItemsAsync();
-        _toDoItemsSourceCache.AddOrUpdate(toDoItems);
+        _toDoItemsSourceCache.AddOrUpdate(toDoItems.Select(x => new ToDoItemViewModel(x)));
     }
     
-    private readonly SourceCache<ToDoItem, int> _toDoItemsSourceCache =
-        new SourceCache<ToDoItem, int>(x => x.Id ?? -1);
+    private readonly SourceCache<ToDoItemViewModel, int> _toDoItemsSourceCache =
+        new SourceCache<ToDoItemViewModel, int>(x => x.Id ?? -1);
 
-    private readonly ReadOnlyObservableCollection<ToDoItem> _toDoItems;
+    private readonly ReadOnlyObservableCollection<ToDoItemViewModel> _toDoItems;
 
-    public ReadOnlyObservableCollection<ToDoItem> ToDoItems => _toDoItems;
+    public ReadOnlyObservableCollection<ToDoItemViewModel> ToDoItems => _toDoItems;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteToDoItemCommand), nameof(EditToDoItemCommand))]
-    public partial ToDoItem? SelectedToDoItem { get; set; }
+    public partial ToDoItemViewModel? SelectedToDoItem { get; set; }
   
     [RelayCommand]
     private async Task AddNewToDoItem()
@@ -60,17 +59,17 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
             Title = "To-Do Item"
         };
         
-        await EditToDoItemAsync(toDoItem);
+        await EditToDoItemAsync(new ToDoItemViewModel(toDoItem));
     }
 
-    private bool CanEditOrDeleteToDoItem(ToDoItem? toDoItem) => toDoItem != null;
+    private bool CanEditOrDeleteToDoItem(ToDoItemViewModel? toDoItem) => toDoItem != null;
     
     /// <summary>
     /// Deletes the selected ToDoItem.
     /// </summary>
     /// <param name="toDoItem">the ToDoItem to remove</param>
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteToDoItem))]
-    private async Task DeleteToDoItemAsync(ToDoItem? toDoItem)
+    private async Task DeleteToDoItemAsync(ToDoItemViewModel? toDoItem)
     {
         if (toDoItem == null)
         {
@@ -81,22 +80,25 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
             $"Are you sure you want to delete the todo item '{toDoItem.Title}'?",
             DialogCommands.YesNoCancel);
         
-        if (result == DialogResult.Yes && await toDoItem.DeleteAsync())
+        if (result == DialogResult.Yes && await toDoItem.ToToDoItem().DeleteAsync())
         {
             _toDoItemsSourceCache.Remove(toDoItem);
         }
     }
     
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteToDoItem))]
-    private async Task EditToDoItemAsync(ToDoItem? toDoItem)
+    private async Task EditToDoItemAsync(ToDoItemViewModel? toDoItem)
     {
         if (toDoItem == null)
         {
             return;
         }
 
-        var editToDoItemViewModel = new EditToDoItemViewModel(toDoItem);
-        var result = await this.ShowOverlayDialogAsync<ToDoItem>("Edit ToDo-Item", editToDoItemViewModel);
+        var availableCategories = await DataBaseHelper.GetCategoriesAsync();
+        
+        var editToDoItemViewModel = new EditToDoItemViewModel(toDoItem.CloneToDoItemViewModel(), 
+            availableCategories.Select(x => new CategoryViewModel(x)).ToList());
+        var result = await this.ShowOverlayDialogAsync<ToDoItemViewModel>("Edit ToDo-Item", editToDoItemViewModel);
 
         if (result != null)
         {

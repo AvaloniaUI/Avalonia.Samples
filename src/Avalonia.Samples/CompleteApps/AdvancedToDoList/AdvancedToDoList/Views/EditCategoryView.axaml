@@ -6,21 +6,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             Design.DataContext="{x:Static viewModels:_DesignData.EditCategoryViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800"
              services:DialogManager.Register="{Binding}"
              x:DataType="viewModels:EditCategoryViewModel"
              mc:Ignorable="d">
-    <Design.DataContext>
-        <viewModels:EditCategoryViewModel Name="Test"
-                                          Description="This is a test category"
-                                          GroupColor="Aqua" />
-    </Design.DataContext>
 
     <Grid Margin="10"
           RowDefinitions="*, Auto"
           RowSpacing="10">
-        <ScrollViewer>
+        <ScrollViewer Grid.Row="0" 
+                      DataContext="{Binding Item}">
             <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
                 <!--  ID  -->
                 <controls:LabeledControl Header="ID">
@@ -44,13 +41,13 @@
                     <ColorPicker HorizontalAlignment="Left"
                                  IsAlphaEnabled="False"
                                  IsAlphaVisible="False"
-                                 Color="{Binding GroupColor}" />
+                                 Color="{Binding Color}" />
                 </controls:LabeledControl>
 
                 <Separator />
 
                 <controls:LabeledControl Header="Preview">
-                    <ContentControl Content="{Binding PreviewCategory}" />
+                    <ContentControl Content="{Binding}" />
                 </controls:LabeledControl>
             </StackPanel>
         </ScrollViewer>

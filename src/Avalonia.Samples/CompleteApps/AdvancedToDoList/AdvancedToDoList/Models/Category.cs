@@ -9,19 +9,10 @@ namespace AdvancedToDoList.Models;
 public record Category
 {
     /// <summary>
-    /// Gets the empty category.
-    /// </summary>
-    public static Category Empty => new()
-    {
-        Name = "Uncategorized",
-        Color = "#CC777777"
-    };
-    
-    /// <summary>
     /// Gets or sets the Id of the category.
     /// </summary>
     public int? Id { get; set; }
-
+    
     /// <summary>
     /// Gets or sets the name of the category.
     /// </summary>

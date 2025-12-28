@@ -3,16 +3,16 @@
              xmlns:themes="clr-namespace:SharedControls.Themes;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
-             xmlns:models="clr-namespace:AdvancedToDoList.Models"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
              x:Class="AdvancedToDoList.App"
              RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <DataTemplate DataType="models:Category">
+        <DataTemplate DataType="viewModels:CategoryViewModel">
             <Border CornerRadius="30"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     ToolTip.Tip="{Binding Description}"
                     Padding="5,2"
                     Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
@@ -31,6 +31,14 @@
         
     </Application.DataTemplates>
 
+             <Application.Resources>
+                 <ResourceDictionary>
+                     <ResourceDictionary.MergedDictionaries>
+                         <MergeResourceInclude Source="Assets/Icons.axaml"></MergeResourceInclude>
+                     </ResourceDictionary.MergedDictionaries>
+                 </ResourceDictionary>
+             </Application.Resources>
+             
     <Application.Styles>
         <FluentTheme />
         <themes:SharedControlTheme />
@@ -45,6 +53,11 @@
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush}" />
+        </Style>
+        
+        <Style Selector="ListBoxItem">
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}"></Setter>
         </Style>
     </Application.Styles>
 </Application>

@@ -1,0 +1,230 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:SharedControls.Controls">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <controls:HamburgerMenu Width="399"
+                                    Height="400"
+                                    Content="{Binding $self.SelectedMenuItem}">
+                <controls:HamburgerMenu.MenuItems>
+                    <controls:HamburgerMenuHeaderItem Label="Test Items" />
+                    <controls:HamburgerMenuItem Icon="🪧" Tag="123">abc</controls:HamburgerMenuItem>
+                    <controls:HamburgerMenuSeparatorItem />
+                    <controls:HamburgerMenuItem Icon="🔥">def</controls:HamburgerMenuItem>
+                </controls:HamburgerMenu.MenuItems>
+
+                <controls:HamburgerMenu.OptionsMenuItems>
+                    <controls:HamburgerMenuItem Icon="{DynamicResource PhosphorIcons.ListLight}">Settings</controls:HamburgerMenuItem>
+                </controls:HamburgerMenu.OptionsMenuItems>
+            </controls:HamburgerMenu>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!--  Icons  -->
+    <StreamGeometry x:Key="PhosphorIcons.ListLight">M44 24Q44 24.0627 43.9939 24.1251Q43.9877 24.1875 43.9755 24.2491Q43.9632 24.3106 43.945 24.3706Q43.9268 24.4306 43.9028 24.4885Q43.8788 24.5465 43.8493 24.6018Q43.8197 24.6571 43.7849 24.7092Q43.75 24.7614 43.7102 24.8099Q43.6704 24.8583 43.6261 24.9027Q43.5817 24.947 43.5333 24.9868Q43.4848 25.0266 43.4326 25.0615Q43.3805 25.0963 43.3252 25.1259Q43.2699 25.1554 43.2119 25.1794Q43.154 25.2034 43.094 25.2216Q43.034 25.2398 42.9725 25.2521Q42.9109 25.2643 42.8485 25.2705Q42.7861 25.2766 42.7234 25.2766L5.2766 25.2766Q5.21388 25.2766 5.15147 25.2704Q5.08905 25.2643 5.02754 25.2521Q4.96603 25.2398 4.90602 25.2216Q4.846 25.2034 4.78806 25.1794Q4.73012 25.1554 4.67481 25.1259Q4.6195 25.0963 4.56736 25.0615Q4.51521 25.0266 4.46673 24.9868Q4.41825 24.947 4.37391 24.9027Q4.32956 24.8583 4.28977 24.8099Q4.24999 24.7614 4.21514 24.7092Q4.1803 24.6571 4.15074 24.6018Q4.12117 24.5465 4.09717 24.4885Q4.07317 24.4306 4.05497 24.3706Q4.03676 24.3106 4.02453 24.2491Q4.01229 24.1875 4.00615 24.1251Q4 24.0627 4 24Q4 23.9373 4.00615 23.8749Q4.01229 23.8125 4.02453 23.7509Q4.03676 23.6894 4.05497 23.6294Q4.07317 23.5694 4.09717 23.5115Q4.12117 23.4535 4.15074 23.3982Q4.1803 23.3429 4.21514 23.2908Q4.24999 23.2386 4.28977 23.1901Q4.32956 23.1417 4.37391 23.0973Q4.41825 23.053 4.46673 23.0132Q4.51521 22.9734 4.56736 22.9385Q4.6195 22.9037 4.67481 22.8741Q4.73012 22.8446 4.78806 22.8206Q4.846 22.7966 4.90602 22.7784Q4.96603 22.7602 5.02754 22.7479Q5.08905 22.7357 5.15147 22.7296Q5.21388 22.7234 5.2766 22.7234L42.7234 22.7234Q42.7861 22.7234 42.8485 22.7296Q42.9109 22.7357 42.9725 22.7479Q43.034 22.7602 43.094 22.7784Q43.154 22.7966 43.2119 22.8206Q43.2699 22.8446 43.3252 22.8741Q43.3805 22.9037 43.4326 22.9385Q43.4848 22.9734 43.5333 23.0132Q43.5817 23.053 43.6261 23.0973Q43.6704 23.1417 43.7102 23.1901Q43.75 23.2386 43.7849 23.2908Q43.8197 23.3429 43.8493 23.3982Q43.8788 23.4535 43.9028 23.5115Q43.9268 23.5694 43.945 23.6294Q43.9632 23.6894 43.9755 23.7509Q43.9877 23.8125 43.9939 23.8749Q44 23.9373 44 24ZM5.2766 11.6596L42.7234 11.6596Q42.7861 11.6596 42.8485 11.6534Q42.9109 11.6473 42.9725 11.635Q43.034 11.6228 43.094 11.6046Q43.154 11.5864 43.2119 11.5624Q43.2699 11.5384 43.3252 11.5088Q43.3805 11.4793 43.4326 11.4444Q43.4848 11.4096 43.5333 11.3698Q43.5817 11.33 43.6261 11.2857Q43.6704 11.2413 43.7102 11.1928Q43.75 11.1444 43.7849 11.0922Q43.8197 11.0401 43.8493 10.9848Q43.8788 10.9295 43.9028 10.8715Q43.9268 10.8136 43.945 10.7536Q43.9632 10.6935 43.9755 10.632Q43.9877 10.5705 43.9939 10.5081Q44 10.4457 44 10.383Q44 10.3203 43.9939 10.2579Q43.9877 10.1954 43.9755 10.1339Q43.9632 10.0724 43.945 10.0124Q43.9268 9.95239 43.9028 9.89445Q43.8788 9.83651 43.8493 9.7812Q43.8197 9.72589 43.7849 9.67374Q43.75 9.6216 43.7102 9.57312Q43.6704 9.52464 43.6261 9.48029Q43.5817 9.43594 43.5333 9.39616Q43.4848 9.35637 43.4326 9.32153Q43.3805 9.28668 43.3252 9.25712Q43.2699 9.22756 43.2119 9.20356Q43.154 9.17956 43.094 9.16135Q43.034 9.14315 42.9725 9.13091Q42.9109 9.11868 42.8485 9.11253Q42.7861 9.10638 42.7234 9.10638L5.2766 9.10638Q5.21388 9.10638 5.15147 9.11253Q5.08905 9.11868 5.02754 9.13091Q4.96603 9.14315 4.90602 9.16135Q4.846 9.17956 4.78806 9.20356Q4.73012 9.22756 4.67481 9.25712Q4.6195 9.28668 4.56736 9.32153Q4.51521 9.35637 4.46673 9.39616Q4.41825 9.43594 4.37391 9.48029Q4.32956 9.52464 4.28977 9.57312Q4.24999 9.6216 4.21514 9.67374Q4.1803 9.72589 4.15074 9.7812Q4.12117 9.83651 4.09717 9.89445Q4.07317 9.95239 4.05497 10.0124Q4.03676 10.0724 4.02453 10.1339Q4.01229 10.1954 4.00615 10.2579Q4 10.3203 4 10.383Q4 10.4457 4.00615 10.5081Q4.01229 10.5705 4.02453 10.632Q4.03676 10.6935 4.05497 10.7536Q4.07317 10.8136 4.09717 10.8715Q4.12117 10.9295 4.15074 10.9848Q4.1803 11.0401 4.21514 11.0922Q4.24999 11.1444 4.28977 11.1928Q4.32956 11.2413 4.37391 11.2857Q4.41825 11.33 4.46673 11.3698Q4.51521 11.4096 4.56736 11.4444Q4.6195 11.4793 4.67481 11.5088Q4.73012 11.5384 4.78806 11.5624Q4.846 11.5864 4.90602 11.6046Q4.96603 11.6228 5.02754 11.635Q5.08905 11.6473 5.15147 11.6534Q5.21388 11.6596 5.2766 11.6596ZM42.7234 36.3404L5.2766 36.3404Q5.21388 36.3404 5.15147 36.3466Q5.08905 36.3527 5.02754 36.365Q4.96603 36.3772 4.90602 36.3954Q4.846 36.4136 4.78806 36.4376Q4.73012 36.4616 4.67481 36.4912Q4.6195 36.5207 4.56736 36.5556Q4.51521 36.5904 4.46673 36.6302Q4.41825 36.67 4.37391 36.7143Q4.32956 36.7587 4.28977 36.8072Q4.24999 36.8556 4.21514 36.9078Q4.1803 36.9599 4.15074 37.0152Q4.12117 37.0705 4.09717 37.1285Q4.07317 37.1864 4.05497 37.2464Q4.03676 37.3065 4.02453 37.368Q4.01229 37.4295 4.00615 37.4919Q4 37.5543 4 37.617Q4 37.6797 4.00615 37.7422Q4.01229 37.8046 4.02453 37.8661Q4.03676 37.9276 4.05497 37.9876Q4.07317 38.0476 4.09717 38.1056Q4.12117 38.1635 4.15074 38.2188Q4.1803 38.2741 4.21514 38.3263Q4.24999 38.3784 4.28977 38.4269Q4.32956 38.4754 4.37391 38.5197Q4.41825 38.5641 4.46673 38.6038Q4.51521 38.6436 4.56736 38.6785Q4.6195 38.7133 4.67481 38.7429Q4.73012 38.7724 4.78806 38.7964Q4.846 38.8204 4.90602 38.8386Q4.96603 38.8569 5.02754 38.8691Q5.08905 38.8813 5.15147 38.8875Q5.21388 38.8936 5.2766 38.8936L42.7234 38.8936Q42.7861 38.8936 42.8485 38.8875Q42.9109 38.8813 42.9725 38.8691Q43.034 38.8569 43.094 38.8386Q43.154 38.8204 43.2119 38.7964Q43.2699 38.7724 43.3252 38.7429Q43.3805 38.7133 43.4326 38.6785Q43.4848 38.6436 43.5333 38.6038Q43.5817 38.5641 43.6261 38.5197Q43.6704 38.4754 43.7102 38.4269Q43.75 38.3784 43.7849 38.3263Q43.8197 38.2741 43.8493 38.2188Q43.8788 38.1635 43.9028 38.1056Q43.9268 38.0476 43.945 37.9876Q43.9632 37.9276 43.9755 37.8661Q43.9877 37.8046 43.9939 37.7422Q44 37.6797 44 37.617Q44 37.5543 43.9939 37.4919Q43.9877 37.4295 43.9755 37.368Q43.9632 37.3065 43.945 37.2464Q43.9268 37.1864 43.9028 37.1285Q43.8788 37.0705 43.8493 37.0152Q43.8197 36.9599 43.7849 36.9078Q43.75 36.8556 43.7102 36.8072Q43.6704 36.7587 43.6261 36.7143Q43.5817 36.67 43.5333 36.6302Q43.4848 36.5904 43.4326 36.5556Q43.3805 36.5207 43.3252 36.4912Q43.2699 36.4616 43.2119 36.4376Q43.154 36.4136 43.094 36.3954Q43.034 36.3772 42.9725 36.365Q42.9109 36.3527 42.8485 36.3466Q42.7861 36.3404 42.7234 36.3404Z</StreamGeometry>
+    <StreamGeometry x:Key="PhosphorIcons.XLight">M42.87 40.7628Q42.9248 40.8139 42.9742 40.8702Q43.0236 40.9265 43.0671 40.9874Q43.1106 41.0484 43.1478 41.1134Q43.185 41.1784 43.2155 41.2468Q43.2459 41.3152 43.2694 41.3863Q43.2929 41.4575 43.3091 41.5306Q43.3254 41.6037 43.3342 41.6781Q43.343 41.7524 43.3443 41.8273Q43.3456 41.9022 43.3395 41.9768Q43.3333 42.0515 43.3196 42.1251Q43.306 42.1988 43.285 42.2707Q43.2641 42.3426 43.236 42.412Q43.208 42.4814 43.1731 42.5477Q43.1383 42.614 43.0969 42.6765Q43.0556 42.7389 43.0082 42.7969Q42.9608 42.8549 42.9079 42.9079Q42.8549 42.9608 42.7969 43.0082Q42.7389 43.0556 42.6765 43.0969Q42.614 43.1383 42.5477 43.1731Q42.4814 43.208 42.412 43.236Q42.3426 43.2641 42.2707 43.285Q42.1988 43.306 42.1251 43.3196Q42.0515 43.3333 41.9768 43.3394Q41.9022 43.3456 41.8273 43.3443Q41.7524 43.343 41.6781 43.3342Q41.6037 43.3253 41.5306 43.3091Q41.4575 43.2929 41.3863 43.2694Q41.3152 43.2459 41.2468 43.2155Q41.1784 43.185 41.1134 43.1478Q41.0484 43.1106 40.9874 43.0671Q40.9265 43.0236 40.8702 42.9742Q40.8139 42.9248 40.7629 42.87L23.9256 26.0352L7.08828 42.87Q7.0359 42.9188 6.97909 42.9624Q6.92227 43.0059 6.86154 43.0438Q6.80081 43.0818 6.73673 43.1137Q6.67265 43.1456 6.6058 43.1712Q6.53895 43.1969 6.46996 43.216Q6.40096 43.2351 6.33045 43.2475Q6.25994 43.2599 6.18857 43.2655Q6.11719 43.2711 6.04561 43.2699Q5.97403 43.2686 5.90289 43.2605Q5.83176 43.2524 5.76173 43.2375Q5.69171 43.2226 5.62343 43.201Q5.55515 43.1795 5.48925 43.1515Q5.42335 43.1236 5.36043 43.0894Q5.29752 43.0552 5.23816 43.0152Q5.17881 42.9751 5.12357 42.9296Q5.06833 42.8841 5.0177 42.8334Q4.96708 42.7828 4.92154 42.7276Q4.87599 42.6723 4.83596 42.613Q4.79592 42.5536 4.76175 42.4907Q4.72758 42.4278 4.6996 42.3619Q4.67162 42.296 4.65009 42.2277Q4.62855 42.1594 4.61365 42.0894Q4.59876 42.0194 4.59064 41.9482Q4.58252 41.8771 4.58126 41.8055Q4.57999 41.734 4.58559 41.6626Q4.5912 41.5912 4.60361 41.5207Q4.61602 41.4502 4.63514 41.3812Q4.65425 41.3122 4.67989 41.2453Q4.70552 41.1785 4.73745 41.1144Q4.76937 41.0503 4.80729 40.9896Q4.84521 40.9289 4.88877 40.8721Q4.93233 40.8152 4.98114 40.7629L21.8159 23.9256L4.98114 7.08829Q4.93233 7.03591 4.88876 6.97909Q4.8452 6.92227 4.80728 6.86154Q4.76936 6.80082 4.73743 6.73673Q4.70551 6.67265 4.67987 6.6058Q4.65423 6.53895 4.63512 6.46996Q4.616 6.40096 4.60358 6.33045Q4.59117 6.25994 4.58557 6.18856Q4.57996 6.11719 4.58123 6.0456Q4.58249 5.97402 4.59061 5.90288Q4.59872 5.83175 4.61362 5.76172Q4.62851 5.69169 4.65005 5.62341Q4.67159 5.55513 4.69957 5.48923Q4.72755 5.42333 4.76172 5.36041Q4.79588 5.29749 4.83592 5.23814Q4.87596 5.17879 4.9215 5.12354Q4.96704 5.0683 5.01767 5.01767Q5.0683 4.96705 5.12354 4.92151Q5.17878 4.87596 5.23814 4.83593Q5.29749 4.79589 5.36041 4.76172Q5.42332 4.72755 5.48923 4.69957Q5.55513 4.67159 5.62341 4.65005Q5.69169 4.62852 5.76172 4.61362Q5.83175 4.59873 5.90288 4.59061Q5.97401 4.58249 6.0456 4.58123Q6.11718 4.57997 6.18856 4.58557Q6.25994 4.59117 6.33045 4.60359Q6.40096 4.616 6.46995 4.63512Q6.53895 4.65423 6.6058 4.67987Q6.67265 4.70551 6.73673 4.73744Q6.80081 4.76936 6.86154 4.80728Q6.92227 4.8452 6.97909 4.88877Q7.0359 4.93233 7.08828 4.98114L23.9256 21.8159L40.7629 4.98114Q40.8152 4.93234 40.8721 4.88877Q40.9289 4.84521 40.9896 4.80729Q41.0503 4.76938 41.1144 4.73745Q41.1785 4.70553 41.2453 4.67989Q41.3122 4.65425 41.3812 4.63514Q41.4502 4.61603 41.5207 4.60361Q41.5912 4.5912 41.6626 4.5856Q41.7339 4.58 41.8055 4.58126Q41.8771 4.58252 41.9482 4.59064Q42.0194 4.59876 42.0894 4.61365Q42.1594 4.62855 42.2277 4.65009Q42.296 4.67163 42.3619 4.69961Q42.4278 4.72759 42.4907 4.76175Q42.5536 4.79592 42.613 4.83596Q42.6723 4.876 42.7276 4.92154Q42.7828 4.96708 42.8334 5.0177Q42.8841 5.06833 42.9296 5.12357Q42.9752 5.17882 43.0152 5.23817Q43.0552 5.29752 43.0894 5.36044Q43.1236 5.42335 43.1515 5.48925Q43.1795 5.55515 43.201 5.62343Q43.2226 5.69171 43.2375 5.76174Q43.2524 5.83176 43.2605 5.9029Q43.2686 5.97403 43.2699 6.04561Q43.2711 6.1172 43.2655 6.18857Q43.2599 6.25995 43.2475 6.33046Q43.2351 6.40097 43.216 6.46996Q43.1969 6.53896 43.1712 6.6058Q43.1456 6.67265 43.1137 6.73673Q43.0818 6.80082 43.0438 6.86154Q43.0059 6.92227 42.9624 6.97909Q42.9188 7.03591 42.87 7.08829L26.0352 23.9256L42.87 40.7628Z</StreamGeometry>
+
+    <!--  Brushes  -->
+    <SolidColorBrush x:Key="HamburgerMenuHeaderBrush" Color="{DynamicResource SystemListLowColor}" />
+    <SolidColorBrush x:Key="HamburgerMenuHeaderForegroundBrush" Color="{DynamicResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="HamburgerMenuPaneBrush" Color="{DynamicResource SystemListLowColor}" />
+
+    <!-- Sizes -->
+    <x:Double x:Key="HamburgerMenuHeaderFontSize">24</x:Double>
+    <x:Double x:Key="HamburgerMenuHeaderMinHeight">48</x:Double>
+
+    <!-- MenuItemTemplateSelector -->
+    <controls:HamburgerMenuItemCotentTemplateSelector x:Key="HamburgerMenuItemCotentTemplateSelector">
+        <controls:HamburgerMenuItemCotentTemplateSelector.DefaultTemplate>
+            <DataTemplate DataType="controls:IHamburgerMenuItem">
+                <Grid MinHeight="32" ColumnDefinitions="Auto,*">
+                    <Panel Margin="-10,0,0,0" 
+                           IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Width="{Binding CompactPaneLength, RelativeSource={RelativeSource AncestorType=controls:HamburgerMenu}}"></Panel>
+                    <ContentControl Grid.Column="0"
+                                    Width="{DynamicResource IconElementThemeWidth}"
+                                    Margin="-10,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Height="{DynamicResource IconElementThemeHeight}"
+                                    Content="{Binding Icon}"
+                                    ContentTemplate="{Binding IconTemplate}" />
+                    <ContentControl Grid.Column="1"
+                                    Content="{Binding Label}"
+                                    ContentTemplate="{Binding LabelTemplate}"
+                                    VerticalContentAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+        </controls:HamburgerMenuItemCotentTemplateSelector.DefaultTemplate>
+
+        <DataTemplate x:Key="{x:Type controls:HamburgerMenuSeparatorItem}"
+                      DataType="controls:HamburgerMenuSeparatorItem">
+            <Separator HorizontalAlignment="Stretch" Margin="-6,2,4,2" />
+        </DataTemplate>
+    </controls:HamburgerMenuItemCotentTemplateSelector>
+
+    <ControlTheme x:Key="HamburgerMenuToggleButon" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Content">
+            <Template>
+                <PathIcon Width="{DynamicResource ControlContentThemeFontSize}"
+                          Data="{DynamicResource PhosphorIcons.ListLight}" />
+            </Template>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  HorizontalContentAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  CornerRadius="{DynamicResource ControlCornerRadius}"
+                                  Background="{TemplateBinding Background}"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:checked">
+            <Setter Property="Content">
+                <Template>
+                    <PathIcon Width="{DynamicResource ControlContentThemeFontSize}"
+                              Data="{DynamicResource PhosphorIcons.XLight}" />
+                </Template>
+            </Setter>
+        </Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="HamburgerMenuNavigationListBox"
+                  BasedOn="{StaticResource {x:Type ListBox}}"
+                  TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource HamburgerMenuNavigationListBoxItem}" />
+    </ControlTheme>
+
+    <ControlTheme x:Key="HamburgerMenuNavigationListBoxItem" TargetType="ListBoxItem">
+        <Setter Property="IsEnabled" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Enabled}"></Setter>
+        <Setter Property="ToolTip.Tip" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Label}"></Setter>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ContentTemplate" Value="{StaticResource HamburgerMenuItemCotentTemplateSelector}" />
+        <Setter Property="IsVisible">
+            <MultiBinding Converter="{x:Static BoolConverters.Or}" x:DataType="controls:IHamburgerMenuItem">
+                <Binding Path="IsPaneOpen" RelativeSource="{RelativeSource AncestorType=controls:HamburgerMenu}"></Binding>
+                <Binding Path="Icon" Converter="{x:Static ObjectConverters.IsNotNull}"></Binding>
+                <Binding Path="!AutoHide" />
+            </MultiBinding>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid x:Name="PART_RootGrid"
+                      MinHeight="{TemplateBinding MinHeight}"
+                      Background="{TemplateBinding Background}"
+                      ColumnDefinitions="10, *">
+                    <Rectangle x:Name="PART_Indicator"
+                               Width="2"
+                               Height="{DynamicResource ControlContentThemeFontSize}"
+                               Margin="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               IsVisible="{TemplateBinding IsEnabled}"
+                               RadiusX="2"
+                               RadiusY="2" />
+                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                      Grid.Column="1"
+                                      Margin="{TemplateBinding Margin}"
+                                      Padding="{TemplateBinding Padding}"
+                                      VerticalAlignment="Center"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:selected /template/ Rectangle#PART_Indicator">
+            <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentMediumBrush}" />
+        </Style>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListLowBrush}" />
+            <Style Selector="^ /template/ Rectangle#PART_Indicator">
+                <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentLowBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
+            <Style Selector="^ /template/ Rectangle#PART_Indicator">
+                <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentHighBrush}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type controls:HamburgerMenu}" TargetType="controls:HamburgerMenu">
+        <Setter Property="Header" Value="{Binding $self.SelectedMenuItem.Label}" />
+        <Setter Property="Content" Value="{Binding $self.SelectedMenuItem.Tag}" />
+        <Setter Property="HeaderTemplate" Value="{Binding $self.SelectedMenuItem.LabelTemplate}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource HamburgerMenuPaneBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="OpenPaneLength" Value="200"></Setter>
+        <Setter Property="CornerRadius" Value="5,0,0,0"></Setter>
+        <Setter Property="IsPaneOpen" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="Auto, *">
+                    <Border Background="{DynamicResource HamburgerMenuHeaderBrush}"
+                            Height="{DynamicResource HamburgerMenuHeaderMinHeight}">
+                        <DockPanel>
+                            <ToggleButton Width="{TemplateBinding CompactPaneLength}"
+                                          MinWidth="20"
+                                          VerticalAlignment="Stretch"
+                                          DockPanel.Dock="Left"
+                                          IsChecked="{TemplateBinding IsPaneOpen,Mode=TwoWay}"
+                                          Theme="{DynamicResource HamburgerMenuToggleButon}" />
+                            <TransitioningContentControl Content="{TemplateBinding Header}"
+                                                         MinHeight="{DynamicResource HamburgerMenuHeaderFontSize}"
+                                                         Margin="5"
+                                                         VerticalAlignment="Center"
+                                                         FontSize="{DynamicResource HamburgerMenuHeaderFontSize}"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="{DynamicResource HamburgerMenuHeaderForegroundBrush}"
+                                                         ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        </DockPanel>
+                    </Border>
+                    <SplitView Grid.Row="1"
+                               Background="{TemplateBinding PaneBackground}"
+                               CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                               DisplayMode="CompactInline"
+                               IsPaneOpen="{TemplateBinding IsPaneOpen}"
+                               OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                               PaneBackground="Transparent">
+                        <SplitView.Pane>
+                            <Grid RowDefinitions="*, Auto" RowSpacing="20">
+                                <ListBox ItemsSource="{TemplateBinding MenuItems}"
+                                         SelectedItem="{TemplateBinding SelectedMenuItem,
+                                                                        Mode=TwoWay}"
+                                         Theme="{DynamicResource HamburgerMenuNavigationListBox}" />
+
+                                <ListBox Grid.Row="1"
+                                         MaxHeight="200"
+                                         ItemsSource="{TemplateBinding OptionsMenuItems}"
+                                         SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedMenuItem, Mode=TwoWay}"
+                                         Theme="{DynamicResource HamburgerMenuNavigationListBox}" />
+                            </Grid>
+                        </SplitView.Pane>
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Padding="{TemplateBinding Padding}">
+                            <TransitioningContentControl Content="{TemplateBinding Content}"
+                                                         ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
+                    </SplitView>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

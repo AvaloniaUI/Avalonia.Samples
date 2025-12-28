@@ -12,19 +12,15 @@
              services:DialogManager.Register="{Binding}"
              Width="{Binding $parent[controls:OverlayDialog].Bounds.Width, Converter={x:Static converters:MathConverter.Multiply}, ConverterParameter=0.7}"
              MaxWidth="700"
+             Design.DataContext="{x:Static viewModels:_DesignData.EditToDoItemViewModel}"
+             x:Name="Root"
              x:Class="AdvancedToDoList.Views.EditToDoItemView"
              x:DataType="viewModels:EditToDoItemViewModel">
-    <Design.DataContext>
-        <viewModels:EditToDoItemViewModel Title="Test"
-                                          Description="This is a test item"
-                                          Priority="Medium"
-                                          DueDate="{x:Static system:DateTime.Today}" />
-    </Design.DataContext>
 
     <Grid Margin="10"
           RowDefinitions="*, Auto"
           RowSpacing="10">
-        <ScrollViewer>
+        <ScrollViewer DataContext="{Binding Item}">
             <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
                 <!--  ID  -->
                 <controls:LabeledControl Header="ID">
@@ -40,9 +36,42 @@
 
                 <!--  Category  -->
                 <controls:LabeledControl Header="Category">
-                    <ComboBox SelectedItem="{Binding Category}"
-                              HorizontalAlignment="Stretch"
-                              ItemsSource="{Binding AvailableCategories}" />
+                    <ComboBox ItemsSource="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AvailableCategories}"
+                              SelectedItem="{Binding Category}"
+                              Padding="0">
+                        <ComboBox.SelectionBoxItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*, Auto, Auto">
+                                    <ContentControl Margin="5,0" Content="{Binding}" />
+                                    <Button Grid.Column="1"
+                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AddNewCategoryCommand}">
+                                        Add +
+                                    </Button>
+                                    <Button Grid.Column="2"
+                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).SetCategoryToEmptyCommand}">
+                                        Empty
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.SelectionBoxItemTemplate>
+                    </ComboBox>
+                    <!-- <DropDownButton Content="{Binding Category}" -->
+                    <!--                 HorizontalAlignment="Stretch" -->
+                    <!--                 > -->
+                    <!--     <DropDownButton.Flyout> -->
+                    <!--         <Flyout> -->
+                    <!--             <Grid RowDefinitions="*, Auto"> -->
+                    <!--                 <ListBox  -->
+                    <!--                     ItemsSource="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AvailableCategories}" -->
+                    <!--                     SelectedItem="{Binding Category}" -->
+                    <!--                     SelectionMode="Single" /> -->
+                    <!--                 <UniformGrid Columns="2"> -->
+                    <!--                     <Button Content="New Category"></Button> -->
+                    <!--                 </UniformGrid> -->
+                    <!--             </Grid> -->
+                    <!--         </Flyout> -->
+                    <!--     </DropDownButton.Flyout> -->
+                    <!-- </DropDownButton> -->
                 </controls:LabeledControl>
 
                 <!--  Description  -->

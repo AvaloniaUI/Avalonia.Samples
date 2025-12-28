@@ -12,6 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <MergeResourceInclude Source="LabeledControl.axaml" />
                 <MergeResourceInclude Source="OverlayDialog.axaml" />
+                <MergeResourceInclude Source="HamburgerMenu.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

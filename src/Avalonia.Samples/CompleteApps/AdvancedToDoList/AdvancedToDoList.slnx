@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="DesignData\ToDoItems.db" />
     <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="AdvancedToDoList.Android/AdvancedToDoList.Android.csproj" />

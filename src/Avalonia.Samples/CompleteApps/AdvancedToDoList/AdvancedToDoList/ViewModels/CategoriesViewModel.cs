@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
-using AdvancedToDoList.Models;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -26,7 +26,7 @@ public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
         _categoriesSourceCache.Connect()
             .ObserveOn(syncContext)
             .SortAndBind(out _categories,
-                SortExpressionComparer<Category>
+                SortExpressionComparer<CategoryViewModel>
                     .Ascending(x => x.Name ?? string.Empty)
                     .ThenByAscending(x => x.Id ?? -1))
             .Subscribe();
@@ -37,41 +37,36 @@ public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
     private async void LoadData()
     {
         var categories = await DataBaseHelper.GetCategoriesAsync();
-        _categoriesSourceCache.AddOrUpdate(categories);
+        _categoriesSourceCache.AddOrUpdate(categories.Select(x => new CategoryViewModel(x)));
     }
     
-    private readonly SourceCache<Category, int> _categoriesSourceCache =
-        new SourceCache<Category, int>(c => c.Id ?? -1);
+    private readonly SourceCache<CategoryViewModel, int> _categoriesSourceCache =
+        new SourceCache<CategoryViewModel, int>(c => c.Id ?? -1);
 
-    private readonly ReadOnlyObservableCollection<Category> _categories;
+    private readonly ReadOnlyObservableCollection<CategoryViewModel> _categories;
 
-    public ReadOnlyObservableCollection<Category> Categories => _categories;
+    public ReadOnlyObservableCollection<CategoryViewModel> Categories => _categories;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCategoryCommand), nameof(EditCategoryCommand))]
-    public partial Category? SelectedCategory { get; set; }
+    public partial CategoryViewModel? SelectedCategory { get; set; }
   
     [RelayCommand]
     private async Task AddNewCategory()
     {
-        var category = new Category()
-        {
-            Name = "New Category",
-            Description = "This is a new category",
-            Color = ColorHelper.GetRandomColor().ToString()
-        };
+        var category = new CategoryViewModel();
         
         await EditCategoryAsync(category);
     }
 
-    private bool CanEditOrDeleteCategory(Category? category) => category != null;
+    private bool CanEditOrDeleteCategory(CategoryViewModel? category) => category != null;
     
     /// <summary>
     /// Deletes the selected category.
     /// </summary>
     /// <param name="category">the category to remove</param>
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteCategory))]
-    private async Task DeleteCategoryAsync(Category? category)
+    private async Task DeleteCategoryAsync(CategoryViewModel? category)
     {
         if (category == null)
         {
@@ -82,14 +77,14 @@ public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
             $"Are you sure you want to delete the category '{category.Name}'?",
             DialogCommands.YesNoCancel);
         
-        if (result == DialogResult.Yes && await category.DeleteAsync())
+        if (result == DialogResult.Yes && await category.ToCategory().DeleteAsync())
         {
             _categoriesSourceCache.Remove(category);
         }
     }
     
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteCategory))]
-    private async Task EditCategoryAsync(Category? category)
+    private async Task EditCategoryAsync(CategoryViewModel? category)
     {
         if (category == null)
         {
@@ -97,7 +92,7 @@ public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
         }
 
         var categoryViewModel = new EditCategoryViewModel(category);
-        var result = await this.ShowOverlayDialogAsync<Category>("Add a new category", categoryViewModel);
+        var result = await this.ShowOverlayDialogAsync<CategoryViewModel>("Add a new category", categoryViewModel);
 
         if (result != null)
         {

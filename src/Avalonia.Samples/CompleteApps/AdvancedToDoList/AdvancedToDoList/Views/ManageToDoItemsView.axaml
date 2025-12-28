@@ -5,12 +5,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
-             xmlns:models="clr-namespace:AdvancedToDoList.Models"
              d:DesignHeight="450"
              d:DesignWidth="800"
              services:DialogManager.Register="{Binding}"
              x:DataType="viewModels:ToDoItemsViewModel"
              mc:Ignorable="d">
+    <Design.DataContext>
+        <viewModels:ToDoItemsViewModel />
+    </Design.DataContext>
+    
     <DockPanel VerticalSpacing="5">
         <Border DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" Spacing="5">
@@ -27,13 +30,13 @@
         <ListBox ItemsSource="{Binding ToDoItems}" SelectedItem="{Binding SelectedToDoItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto"
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto"
                           RowSpacing="3" ColumnSpacing="5">
                         <StackPanel Grid.Row="0"
                                     Grid.Column="0"
                                     Orientation="Horizontal"
                                     Spacing="5">
-                            <ContentControl Content="{Binding Category, TargetNullValue={x:Static models:Category.Empty}}" />
+                            <ContentControl Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
                             <ContentControl Content="{Binding Priority}" />
                         </StackPanel>
 
@@ -55,8 +58,6 @@
                                      MinWidth="75"
                                      ShowProgressText="True"
                                      Value="{Binding Progress}" />
-                        <Separator Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Stretch"
-                                   Margin="0" VerticalAlignment="Bottom"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

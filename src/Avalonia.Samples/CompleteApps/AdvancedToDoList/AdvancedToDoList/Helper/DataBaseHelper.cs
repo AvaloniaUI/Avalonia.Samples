@@ -44,6 +44,7 @@ public static class DataBaseHelper
         await connection.OpenAsync();
 
         await EnsureInitializedAsync(connection);
+        Console.WriteLine($"Opened database at {dbPath}");
         return connection;
     }
 
@@ -67,16 +68,30 @@ public static class DataBaseHelper
             );
             """);
 
+        Console.WriteLine("Created ToDoItem table.");
+        
         await connection.ExecuteAsync(
             """
             CREATE TABLE IF NOT EXISTS Category (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Name TEXT NOT NULL,
                 Description TEXT NULL,
-                GroupColorHex TEXT NULL
+                Color TEXT NULL
             )
             """);
 
+        Console.WriteLine("Created Category table.");
+        
+        if (Design.IsDesignMode)
+        {
+            var categoryCount = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Category");
+            if (categoryCount == 0)
+            {
+                await AddSampleDataAsync(connection);
+                Console.WriteLine($"Added sample data to database.");
+            }
+        }
+        
         _initialized = true;
     }
 
@@ -88,8 +103,38 @@ public static class DataBaseHelper
     
     public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync()
     {
+        Console.WriteLine("GetToDoItemsAsync");
         await using var connection = await GetOpenConnection();
-        return (await connection.QueryAsync<ToDoItem>("SELECT * FROM ToDoItem"));
+        var sql = """
+                  SELECT t.*, c.*
+                  FROM ToDoItem t
+                  LEFT JOIN Category c ON t.CategoryId = c.Id
+                  """;
+        
+        return await connection.QueryAsync<ToDoItem, Category, ToDoItem>(
+            sql,
+            (toDoItem, category) =>
+            {
+                toDoItem.Category = category;
+                return toDoItem;
+            },
+            splitOn: "Id"
+        );
+    }
+    
+    private static async Task AddSampleDataAsync(SqliteConnection connection)
+    {
+        await connection.ExecuteAsync(
+            """
+            INSERT INTO Category (Id, Name, Description, Color) VALUES 
+            (null, 'Category 1', 'Description 1', '#FF0000'), 
+            (null, 'Category 2', 'Description 2', '#00FF00');
+
+            INSERT INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate) VALUES 
+            (null, 1, 'Item 1', 1, 'Description 1', '2026-01-01', 0, '2026-01-01', null),
+            (null, 2, 'Item 2', 2, 'Description 2', '2026-01-02', 0, '2026-01-02', null);
+            """
+        );
     }
 }
 

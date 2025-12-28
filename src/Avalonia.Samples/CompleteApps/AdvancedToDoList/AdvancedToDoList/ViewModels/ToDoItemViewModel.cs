@@ -5,8 +5,28 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class ToDoItemViewModel : ViewModelBase
+public partial class ToDoItemViewModel : ViewModelBase, ICloneable
 {
+    public ToDoItemViewModel(ToDoItem toDoItem)
+    {
+        Id = toDoItem.Id;
+        if (toDoItem.Category != null)
+        {
+            Category = new CategoryViewModel(toDoItem.Category);
+        }
+        else
+        {
+            Category = CategoryViewModel.Empty;
+        }
+        Title = toDoItem.Title;
+        Priority = toDoItem.Priority;
+        Description = toDoItem.Description;
+        DueDate = toDoItem.DueDate;
+        Progress = toDoItem.Progress;
+        CreatedDate = toDoItem.CreatedDate;
+        CompletedDate = toDoItem.CompletedDate;
+    }
+    
     /// <summary>
     /// Gets the Id of the ToDoItem. This property is read-only.
     /// </summary>
@@ -17,7 +37,7 @@ public partial class ToDoItemViewModel : ViewModelBase
     /// Gets or sets the Category of the ToDoItem.
     /// </summary>
     [ObservableProperty]
-    public partial EditCategoryViewModel? Category { get; set; }
+    public partial CategoryViewModel Category { get; set; }
 
     /// <summary>
     /// Gets or sets the Title of the ToDoItem. This property is required.
@@ -55,6 +75,19 @@ public partial class ToDoItemViewModel : ViewModelBase
     [NotifyDataErrorInfo]
     [Range(0, 100)]
     public partial int Progress { get; set; } = 0;
+    
+    partial void OnProgressChanged(int value)
+    {
+        // Store the completed date if the progress is 100
+        if (value >= 100)
+        {
+            this.CompletedDate = DateTime.Now;
+        }
+        else
+        {
+            this.CompletedDate = null;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the CreatedDate of the ToDoItem. The default value is now. This property is read-only.
@@ -68,4 +101,28 @@ public partial class ToDoItemViewModel : ViewModelBase
     /// </summary>
     [ObservableProperty]
     public partial DateTime? CompletedDate { get; private set; }
+
+    public ToDoItem ToToDoItem() => new ToDoItem()
+    {
+        Id = Id,
+        Title = Title,
+        Description = Description,
+        CategoryId = Category?.Id,
+        Category = Category.ToCategory(),
+        Progress = Progress,
+        Priority = Priority,
+        DueDate = DueDate,
+        CreatedDate = CreatedDate,
+        CompletedDate = CompletedDate,
+    };
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
+
+    public ToDoItemViewModel CloneToDoItemViewModel()
+    { 
+        return (ToDoItemViewModel)Clone();
+    }
 }
