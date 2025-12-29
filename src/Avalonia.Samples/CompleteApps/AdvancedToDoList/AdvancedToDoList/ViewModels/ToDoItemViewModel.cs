@@ -51,7 +51,7 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     /// Gets or sets the Priority of the ToDoItem. The default value is Medium.
     /// </summary>
     [ObservableProperty]
-    public partial Priority Priority { get; set; } = Priority.Medium;
+    public partial Priority Priority { get; set; }
 
     /// <summary>
     /// Gets or sets the Description of the ToDoItem. This property is optional.
@@ -63,7 +63,8 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     /// Gets or sets the DueDate of the ToDoItem. The default value is 7 days from now.
     /// </summary>
     [ObservableProperty]
-    public partial DateTime DueDate { get; set; } = DateTime.Now.AddDays(7);
+    [NotifyPropertyChangedFor(nameof(CurrentStatus))]
+    public partial DateTime DueDate { get; set; }
 
     /// <summary>
     /// Gets or sets the Progress of the ToDoItem. The default value is 0.
@@ -72,9 +73,10 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     /// The value must be between 0 and 100.
     /// </remarks>
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CurrentStatus))]
     [NotifyDataErrorInfo]
     [Range(0, 100)]
-    public partial int Progress { get; set; } = 0;
+    public partial int Progress { get; set; }
     
     partial void OnProgressChanged(int value)
     {
@@ -89,6 +91,24 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
         }
     }
 
+
+    public ToDoItemStatus CurrentStatus 
+    {
+        get
+        {
+            if (Progress == 100)
+                return ToDoItemStatus.Done;
+            
+            if (DueDate < DateTime.Now)
+                return ToDoItemStatus.Overdue;
+            
+            if (Progress > 0)
+                return ToDoItemStatus.InProgress;
+            
+            return ToDoItemStatus.NotStarted;
+        }
+    }
+    
     /// <summary>
     /// Gets or sets the CreatedDate of the ToDoItem. The default value is now. This property is read-only.
     /// </summary>

@@ -5,6 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:dataTemplates="clr-namespace:AdvancedToDoList.DataTemplates"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              d:DesignHeight="450"
              d:DesignWidth="800"
              services:DialogManager.Register="{Binding}"
@@ -15,23 +18,46 @@
     </Design.DataContext>
     
     <DockPanel VerticalSpacing="5">
-        <Border DockPanel.Dock="Top">
-            <StackPanel Orientation="Horizontal" Spacing="5">
-                <Button Command="{Binding AddNewToDoItemCommand}" Content="New Item" />
-                <Button Command="{Binding EditToDoItemCommand}"
+        <Border DockPanel.Dock="Top"
+                Padding="4"
+                Margin="10,5"
+                Background="{DynamicResource CommandBarBackground}"
+                CornerRadius="20"
+                BoxShadow="2 2 5 1 gray">
+            <WrapPanel ItemSpacing="5">
+                <Button Classes="toolBar" 
+                        Content="{DynamicResource PhosphorIcons.PlusCircleLight}" 
+                        Command="{Binding AddNewToDoItemCommand}" 
+                        ToolTip.Tip="New Item" />
+                <Button Classes="toolBar" 
+                        Content="{DynamicResource PhosphorIcons.NotePencilLight}"
+                        Command="{Binding EditToDoItemCommand}"
                         CommandParameter="{Binding SelectedToDoItem}"
-                        Content="Edit Item" />
-                <Button Command="{Binding DeleteToDoItemCommand}"
+                        ToolTip.Tip="Edit Item" />
+                <Button Classes="toolBar" 
+                        Content="{DynamicResource PhosphorIcons.TrashLight}"
+                        Command="{Binding DeleteToDoItemCommand}"
                         CommandParameter="{Binding SelectedToDoItem}"
-                        Content="Delete Item" />
-            </StackPanel>
+                        ToolTip.Tip="Delete Item" />
+                
+                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
+                           Margin="0,5"></Separator>
+                
+                <controls:LabeledControl Header="Search:" HeaderPosition="Left">
+                    <TextBox CornerRadius="8"
+                        Text="{Binding FilterString}"
+                        Watermark="Find Items..."/>
+                </controls:LabeledControl>
+            </WrapPanel>
         </Border>
 
         <ListBox ItemsSource="{Binding ToDoItems}" SelectedItem="{Binding SelectedToDoItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto"
-                          RowSpacing="3" ColumnSpacing="5">
+                    <Grid ColumnDefinitions="*, Auto, Auto" 
+                          RowDefinitions="Auto, Auto, Auto"
+                          RowSpacing="3" 
+                          ColumnSpacing="5">
                         <StackPanel Grid.Row="0"
                                     Grid.Column="0"
                                     Orientation="Horizontal"
@@ -39,13 +65,13 @@
                             <ContentControl Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
                             <ContentControl Content="{Binding Priority}" />
                         </StackPanel>
-
+                        
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
                                    FontWeight="Bold"
                                    Text="{Binding Title}" />
                         <TextBlock Grid.Row="0"
-                                   Grid.Column="1"
+                                   Grid.Column="2"
                                    HorizontalAlignment="Right"
                                    Text="{Binding DueDate, StringFormat='d'}" />
                         <TextBlock Grid.Row="2"
@@ -53,8 +79,12 @@
                                    FontStyle="Italic"
                                    IsVisible="{Binding Description, Converter={x:Static ObjectConverters.IsNotNull}}"
                                    Text="{Binding Description}" />
+                        
+                        <ContentControl Grid.Row="1" Grid.Column="1"
+                                        Content="{Binding CurrentStatus}"
+                                        ContentTemplate="{x:Static dataTemplates:ToDoItemStatusTemplateSelector.Instance}"/>
                         <ProgressBar Grid.Row="1"
-                                     Grid.Column="1"
+                                     Grid.Column="2"
                                      MinWidth="75"
                                      ShowProgressText="True"
                                      Value="{Binding Progress}" />

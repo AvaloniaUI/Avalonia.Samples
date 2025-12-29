@@ -4,9 +4,10 @@
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              x:Class="AdvancedToDoList.App"
              RequestedThemeVariant="Light">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <DataTemplate DataType="viewModels:CategoryViewModel">
@@ -17,47 +18,97 @@
                     Padding="5,2"
                     Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
                 <TextBlock Text="{Binding Name}"
-                           Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}"></TextBlock>
+                           Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}">
+                </TextBlock>
             </Border>
         </DataTemplate>
-        
+
         <DataTemplate DataType="viewModels:EditCategoryViewModel">
             <views:EditCategoryView />
         </DataTemplate>
-        
+
         <DataTemplate DataType="viewModels:EditToDoItemViewModel">
             <views:EditToDoItemView />
         </DataTemplate>
-        
+
     </Application.DataTemplates>
 
-             <Application.Resources>
-                 <ResourceDictionary>
-                     <ResourceDictionary.MergedDictionaries>
-                         <MergeResourceInclude Source="Assets/Icons.axaml"></MergeResourceInclude>
-                     </ResourceDictionary.MergedDictionaries>
-                 </ResourceDictionary>
-             </Application.Resources>
-             
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Assets/Icons.axaml"></MergeResourceInclude>
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="CommandBarBackground" Color="{DynamicResource SystemListMediumColor}"
+                             Opacity="0.25" />
+        </ResourceDictionary>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
         <themes:SharedControlTheme />
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
-        
+
         <Style Selector="CalendarDatePicker, ComboBox">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
-        
+
+        <Style Selector="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
         <Style Selector="TextBlock.h1">
             <Setter Property="Margin" Value="5,15,0,5" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush}" />
         </Style>
-        
+
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
         <Style Selector="ListBoxItem">
             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
             <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}"></Setter>
+            <Style Selector="^:nth-child(1)">
+                <Setter Property="BorderThickness" Value="0,1"></Setter>
+            </Style>
+        </Style>
+
+        <Style Selector="Button.toolBar">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="CornerRadius"
+                    Value="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}" />
+            <Setter Property="ContentTemplate"
+                    Value="{x:Static controls:HamburgerMenuItemIconTemplateSelector.Instance}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          Margin="{TemplateBinding Padding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover">
+                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+            </Style>            
+            <Style Selector="^:pressed">
+                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
+            </Style>
+            <Style Selector="^:disabled">
+                <Setter Property="Opacity" Value="0.5"></Setter>
+            </Style>
         </Style>
     </Application.Styles>
 </Application>

@@ -4,22 +4,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              services:DialogManager.Register="{Binding}"
              x:Class="AdvancedToDoList.Views.ManageCategoriesView"
              x:DataType="viewModels:CategoriesViewModel">
-    <DockPanel VerticalSpacing="5" >
-        <Border DockPanel.Dock="Top">
+    <Design.DataContext>
+        <viewModels:CategoriesViewModel />
+    </Design.DataContext>
+    <DockPanel VerticalSpacing="5">
+        <Border DockPanel.Dock="Top" Padding="4"
+                Margin="10,5"
+                Background="{DynamicResource CommandBarBackground}"
+                CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
+                BoxShadow="2 2 5 1 gray">
             <StackPanel Orientation="Horizontal" Spacing="5">
-                <Button Command="{Binding AddNewCategoryCommand}" Content="New Category" />
-                <Button Command="{Binding EditCategoryCommand}" Content="Edit Category"
-                        CommandParameter="{Binding SelectedCategory}"/>
-                <Button Command="{Binding DeleteCategoryCommand}" Content="Delete Category"
-                        CommandParameter="{Binding SelectedCategory}"/>
+                <Button Classes="toolBar"
+                        ToolTip.Tip="Add"
+                        Command="{Binding AddNewCategoryCommand}" 
+                        Content="{DynamicResource PhosphorIcons.PlusCircleLight}" />
+                <Button Classes="toolBar"
+                        ToolTip.Tip="Edit"
+                        Command="{Binding EditCategoryCommand}" 
+                        CommandParameter="{Binding SelectedCategory}"
+                        Content="{DynamicResource PhosphorIcons.NotePencilLight}"/>
+                <Button Classes="toolBar"
+                        ToolTip.Tip="Delete"
+                        Content="{DynamicResource PhosphorIcons.TrashLight}"
+                        Command="{Binding DeleteCategoryCommand}" 
+                        CommandParameter="{Binding SelectedCategory}" />
             </StackPanel>
         </Border>
-        
+
         <ListBox ItemsSource="{Binding Categories}"
-                 SelectedItem="{Binding SelectedCategory}" />
+                 Grid.IsSharedSizeScope="True"
+                 SelectedItem="{Binding SelectedCategory}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnSpacing="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="BadgeColumn" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Content="{Binding}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Description}" 
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </DockPanel>
 </UserControl>

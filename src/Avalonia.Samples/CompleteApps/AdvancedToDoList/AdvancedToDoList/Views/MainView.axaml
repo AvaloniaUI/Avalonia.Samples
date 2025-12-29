@@ -18,14 +18,20 @@
 
     <controls:HamburgerMenu Content="{Binding $self.SelectedMenuItem.Tag}">
         <controls:HamburgerMenu.MenuItems>
-            <controls:HamburgerMenuItem Label="To-Do-Items"
+            <controls:HamburgerMenuItem Label="To-Do Items"
                                         Icon="{DynamicResource PhosphorIcons.ListChecksThin}"
                                         Tag="{Binding ToDoItemsViewModel}"/>
+            <controls:HamburgerMenuItem Label="Manage Categories"
+                                        Icon="{DynamicResource PhosphorIcons.CirclesThreePlusThin}"
+                                        Tag="{Binding CategoriesViewModel}"/>
         </controls:HamburgerMenu.MenuItems>
 
         <controls:HamburgerMenu.DataTemplates>
             <DataTemplate DataType="vm:ToDoItemsViewModel">
                 <views:ManageToDoItemsView />
+            </DataTemplate>
+            <DataTemplate DataType="vm:CategoriesViewModel">
+                <views:ManageCategoriesView />
             </DataTemplate>
         </controls:HamburgerMenu.DataTemplates>
     </controls:HamburgerMenu>

@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using SharedControls.Controls;
+using SharedControls.Helper;
 using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
@@ -22,8 +23,14 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
     {
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
 
+        var filterObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
+            .Throttle(TimeSpan.FromMilliseconds(300))
+            .DistinctUntilChanged()
+            .Select(FilterToDoItemsByText);
+        
         _toDoItemsSourceCache.Connect()
             .ObserveOn(syncContext)
+            .Filter(filterObservable)
             .SortAndBind(out _toDoItems,
                 SortExpressionComparer<ToDoItemViewModel>
                     .Ascending(x => x.DueDate)
@@ -47,6 +54,9 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
 
     public ReadOnlyObservableCollection<ToDoItemViewModel> ToDoItems => _toDoItems;
 
+    [ObservableProperty]
+    public partial string? FilterString {get; set;}
+    
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteToDoItemCommand), nameof(EditToDoItemCommand))]
     public partial ToDoItemViewModel? SelectedToDoItem { get; set; }
@@ -105,4 +115,14 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
             _toDoItemsSourceCache.AddOrUpdate(result);
         }
     }
+    
+    private static Func<ToDoItemViewModel, bool> FilterToDoItemsByText(string? filterText) => item =>
+    {
+        // we have no filter text, so this item should be visible
+        if (string.IsNullOrWhiteSpace(filterText))
+            return true;
+        
+        return (item.Title?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false)
+                || (item.Description?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false);
+    };
 }

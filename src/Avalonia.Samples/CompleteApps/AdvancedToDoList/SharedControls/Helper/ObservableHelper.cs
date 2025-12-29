@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 
 namespace SharedControls.Helper;
 
-internal static class ObservableHelper
+public static class ObservableHelper
 {
     /// <summary>
     /// AOT-friendly observable sequence for a single property value of an <see cref="INotifyPropertyChanged"/> source.

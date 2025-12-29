@@ -99,10 +99,7 @@ public class HamburgerMenu : HeaderedContentControl
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
-        if (AutoClosePaneThreshold > 0 && Bounds.Width > AutoClosePaneThreshold)
-        {
-            IsPaneOpen = true;
-        }
+        AutoCollapsePane();
         SelectedMenuItem ??= MenuItems.FirstOrDefault();
         
         base.OnLoaded(e);
@@ -112,11 +109,16 @@ public class HamburgerMenu : HeaderedContentControl
     {
         base.OnPropertyChanged(change);
 
+        if (change.Property == IsPaneOpenProperty && !_isAutoCollapsing)
+        {
+            _wasPaneOpenBeforeAutoCollapse = IsPaneOpen;
+        }
+        
         if (change.Property == AutoClosePaneThresholdProperty 
             || change.Property == SelectedMenuItemProperty 
             || change.Property == BoundsProperty)
         {
-            AutoClosePane();
+            AutoCollapsePane();
         }
 
         if (change.Property == MenuItemsProperty)
@@ -140,11 +142,21 @@ public class HamburgerMenu : HeaderedContentControl
         SelectedMenuItem ??= MenuItems.FirstOrDefault();
     }
 
-    public void AutoClosePane()
+    private bool _wasPaneOpenBeforeAutoCollapse;
+    private bool _isAutoCollapsing;
+    
+    private void AutoCollapsePane()
     {
-        if (IsLoaded && AutoClosePaneThreshold > 0 && this.Bounds.Width < AutoClosePaneThreshold)
+        if (_wasPaneOpenBeforeAutoCollapse && Bounds.Width >= AutoClosePaneThreshold)
         {
+            IsPaneOpen = true;
+        } 
+        
+        if (IsLoaded && IsPaneOpen && AutoClosePaneThreshold > 0 && Bounds.Width < AutoClosePaneThreshold)
+        {
+            _isAutoCollapsing = true;
             IsPaneOpen = false;
+            _isAutoCollapsing = false;
         }
     }
 }

@@ -3,14 +3,15 @@
                     xmlns:controls="clr-namespace:SharedControls.Controls">
     <Design.PreviewWith>
         <ThemeVariantScope RequestedThemeVariant="Light">
-            <controls:HamburgerMenu Width="399"
+            <controls:HamburgerMenu Width="500"
                                     Height="400"
+                                    AutoClosePaneThreshold="600"
                                     Content="{Binding $self.SelectedMenuItem}">
                 <controls:HamburgerMenu.MenuItems>
                     <controls:HamburgerMenuHeaderItem Label="Test Items" />
                     <controls:HamburgerMenuItem Icon="🪧" Tag="123">abc</controls:HamburgerMenuItem>
                     <controls:HamburgerMenuSeparatorItem />
-                    <controls:HamburgerMenuItem Icon="🔥">def</controls:HamburgerMenuItem>
+                    <controls:HamburgerMenuItem Icon="❤️">def</controls:HamburgerMenuItem>
                 </controls:HamburgerMenu.MenuItems>
 
                 <controls:HamburgerMenu.OptionsMenuItems>
@@ -31,13 +32,14 @@
 
     <!-- Sizes -->
     <x:Double x:Key="HamburgerMenuHeaderFontSize">24</x:Double>
+    <x:Double x:Key="HamburgerMenuItemHeight">42</x:Double>
     <x:Double x:Key="HamburgerMenuHeaderMinHeight">48</x:Double>
 
     <!-- MenuItemTemplateSelector -->
-    <controls:HamburgerMenuItemCotentTemplateSelector x:Key="HamburgerMenuItemCotentTemplateSelector">
-        <controls:HamburgerMenuItemCotentTemplateSelector.DefaultTemplate>
+    <controls:HamburgerMenuItemContentTemplateSelector x:Key="HamburgerMenuItemContentTemplateSelector">
+        <controls:HamburgerMenuItemContentTemplateSelector.DefaultTemplate>
             <DataTemplate DataType="controls:IHamburgerMenuItem">
-                <Grid MinHeight="32" ColumnDefinitions="Auto,*">
+                <Grid Height="{DynamicResource HamburgerMenuItemHeight}" ColumnDefinitions="Auto,*">
                     <Panel Margin="-10,0,0,0" 
                            IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
                            Width="{Binding CompactPaneLength, RelativeSource={RelativeSource AncestorType=controls:HamburgerMenu}}"></Panel>
@@ -56,13 +58,13 @@
                                     VerticalContentAlignment="Center" />
                 </Grid>
             </DataTemplate>
-        </controls:HamburgerMenuItemCotentTemplateSelector.DefaultTemplate>
+        </controls:HamburgerMenuItemContentTemplateSelector.DefaultTemplate>
 
         <DataTemplate x:Key="{x:Type controls:HamburgerMenuSeparatorItem}"
                       DataType="controls:HamburgerMenuSeparatorItem">
             <Separator HorizontalAlignment="Stretch" Margin="-6,2,4,2" />
         </DataTemplate>
-    </controls:HamburgerMenuItemCotentTemplateSelector>
+    </controls:HamburgerMenuItemContentTemplateSelector>
 
     <ControlTheme x:Key="HamburgerMenuToggleButon" TargetType="ToggleButton">
         <Setter Property="Background" Value="Transparent" />
@@ -110,7 +112,7 @@
         <Setter Property="IsEnabled" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Enabled}"></Setter>
         <Setter Property="ToolTip.Tip" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Label}"></Setter>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="ContentTemplate" Value="{StaticResource HamburgerMenuItemCotentTemplateSelector}" />
+        <Setter Property="ContentTemplate" Value="{StaticResource HamburgerMenuItemContentTemplateSelector}" />
         <Setter Property="IsVisible">
             <MultiBinding Converter="{x:Static BoolConverters.Or}" x:DataType="controls:IHamburgerMenuItem">
                 <Binding Path="IsPaneOpen" RelativeSource="{RelativeSource AncestorType=controls:HamburgerMenu}"></Binding>
@@ -125,9 +127,9 @@
                       Background="{TemplateBinding Background}"
                       ColumnDefinitions="10, *">
                     <Rectangle x:Name="PART_Indicator"
-                               Width="2"
-                               Height="{DynamicResource ControlContentThemeFontSize}"
-                               Margin="2"
+                               Width="3"
+                               Height="{DynamicResource IconElementThemeHeight}"
+                               Margin="3"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                IsVisible="{TemplateBinding IsEnabled}"
@@ -172,29 +174,44 @@
         <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="OpenPaneLength" Value="200"></Setter>
         <Setter Property="CornerRadius" Value="5,0,0,0"></Setter>
-        <Setter Property="IsPaneOpen" Value="False" />
+        <Setter Property="IsPaneOpen" Value="{OnFormFactor Default={x:True}, Mobile={x:False}}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid RowDefinitions="Auto, *">
-                    <Border Background="{DynamicResource HamburgerMenuHeaderBrush}"
+                    <SplitView Background="{DynamicResource HamburgerMenuHeaderBrush}"
+                               DisplayMode="CompactInline"
+                               CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                               OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                               IsPaneOpen="{TemplateBinding IsPaneOpen}"
+                               PaneBackground="Transparent"
                             Height="{DynamicResource HamburgerMenuHeaderMinHeight}">
-                        <DockPanel>
+                        <SplitView.Pane>
+                            <Grid ColumnDefinitions="Auto, *">
                             <ToggleButton Width="{TemplateBinding CompactPaneLength}"
                                           MinWidth="20"
+                                          HorizontalAlignment="Left"
                                           VerticalAlignment="Stretch"
                                           DockPanel.Dock="Left"
                                           IsChecked="{TemplateBinding IsPaneOpen,Mode=TwoWay}"
                                           Theme="{DynamicResource HamburgerMenuToggleButon}" />
-                            <TransitioningContentControl Content="{TemplateBinding Header}"
-                                                         MinHeight="{DynamicResource HamburgerMenuHeaderFontSize}"
-                                                         Margin="5"
-                                                         VerticalAlignment="Center"
-                                                         FontSize="{DynamicResource HamburgerMenuHeaderFontSize}"
-                                                         FontWeight="SemiBold"
-                                                         Foreground="{DynamicResource HamburgerMenuHeaderForegroundBrush}"
-                                                         ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                        </DockPanel>
-                    </Border>
+                            <TextBlock Grid.Column="1" 
+                                       Margin="5,0"
+                                       TextWrapping="NoWrap"
+                                       Foreground="{DynamicResource ButtonBackgroundPressed}"
+                                       VerticalAlignment="Center" 
+                                       Text="Navigation" 
+                                       FontSize="18"></TextBlock>
+                            </Grid>
+                        </SplitView.Pane>
+                        <TransitioningContentControl Content="{TemplateBinding Header}"
+                                                     MinHeight="{DynamicResource HamburgerMenuHeaderFontSize}"
+                                                     Margin="5"
+                                                     VerticalAlignment="Center"
+                                                     FontSize="{DynamicResource HamburgerMenuHeaderFontSize}"
+                                                     FontWeight="SemiBold"
+                                                     Foreground="{DynamicResource HamburgerMenuHeaderForegroundBrush}"
+                                                     ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                    </SplitView>
                     <SplitView Grid.Row="1"
                                Background="{TemplateBinding PaneBackground}"
                                CompactPaneLength="{TemplateBinding CompactPaneLength}"

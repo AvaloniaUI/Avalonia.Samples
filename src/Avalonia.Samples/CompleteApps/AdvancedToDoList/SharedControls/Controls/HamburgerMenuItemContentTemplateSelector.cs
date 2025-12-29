@@ -9,7 +9,7 @@ using Avalonia.Styling;
 
 namespace SharedControls.Controls;
 
-public class HamburgerMenuItemCotentTemplateSelector : IDataTemplate
+public class HamburgerMenuItemContentTemplateSelector : IDataTemplate
 {
     [Content]
     public Dictionary<Type, IDataTemplate> DataTemplates { get; } = new();
