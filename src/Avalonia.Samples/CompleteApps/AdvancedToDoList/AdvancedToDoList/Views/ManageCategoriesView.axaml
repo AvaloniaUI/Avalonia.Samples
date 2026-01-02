@@ -8,9 +8,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              services:DialogManager.Register="{Binding}"
              x:Class="AdvancedToDoList.Views.ManageCategoriesView"
-             x:DataType="viewModels:CategoriesViewModel">
+             x:DataType="viewModels:ManageCategoriesViewModel">
     <Design.DataContext>
-        <viewModels:CategoriesViewModel />
+        <viewModels:ManageCategoriesViewModel />
     </Design.DataContext>
     <DockPanel VerticalSpacing="5">
         <Border DockPanel.Dock="Top" Padding="4"

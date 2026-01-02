@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using AdvancedToDoList.Helper;
 using AdvancedToDoList.Models;
 using Avalonia.Media;
@@ -6,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AdvancedToDoList.ViewModels;
 
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
 public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewModel>, ICloneable
 {
     public static CategoryViewModel Empty { get; } = new CategoryViewModel()
@@ -31,7 +34,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
     }
     
     /// <summary>
-    /// Gets the Id of the Category
+    /// Gets the ID of the Category
     /// </summary>
     public int? Id { get; }
     
@@ -39,6 +42,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
     /// Gets the Name of the Category
     /// </summary>
     [ObservableProperty]
+    [Required]
     public partial string? Name { get; set; }
     
     /// <summary>

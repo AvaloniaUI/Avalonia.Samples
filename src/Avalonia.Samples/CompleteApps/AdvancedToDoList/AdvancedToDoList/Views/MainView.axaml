@@ -27,10 +27,10 @@
         </controls:HamburgerMenu.MenuItems>
 
         <controls:HamburgerMenu.DataTemplates>
-            <DataTemplate DataType="vm:ToDoItemsViewModel">
+            <DataTemplate DataType="vm:ManageToDoItemsViewModel">
                 <views:ManageToDoItemsView />
             </DataTemplate>
-            <DataTemplate DataType="vm:CategoriesViewModel">
+            <DataTemplate DataType="vm:ManageCategoriesViewModel">
                 <views:ManageCategoriesView />
             </DataTemplate>
         </controls:HamburgerMenu.DataTemplates>

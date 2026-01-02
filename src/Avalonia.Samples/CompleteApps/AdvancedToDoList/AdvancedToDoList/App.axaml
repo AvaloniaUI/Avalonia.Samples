@@ -1,25 +1,23 @@
-<Application xmlns="https://github.com/avaloniaui"
+<Application x:Class="AdvancedToDoList.App"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              xmlns:themes="clr-namespace:SharedControls.Themes;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
-             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
-             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
-             x:Class="AdvancedToDoList.App"
              RequestedThemeVariant="Light">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
     <Application.DataTemplates>
         <DataTemplate DataType="viewModels:CategoryViewModel">
-            <Border CornerRadius="30"
+            <Border Padding="5,2"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    ToolTip.Tip="{Binding Description}"
-                    Padding="5,2"
-                    Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}">
-                <TextBlock Text="{Binding Name}"
-                           Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}">
-                </TextBlock>
+                    Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}"
+                    CornerRadius="30"
+                    ToolTip.Tip="{Binding Description}">
+                <TextBlock Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}" Text="{Binding Name}" />
             </Border>
         </DataTemplate>
 
@@ -36,10 +34,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <MergeResourceInclude Source="Assets/Icons.axaml"></MergeResourceInclude>
+                <MergeResourceInclude Source="Assets/Icons.axaml" />
             </ResourceDictionary.MergedDictionaries>
-            <SolidColorBrush x:Key="CommandBarBackground" Color="{DynamicResource SystemListMediumColor}"
-                             Opacity="0.25" />
+            <SolidColorBrush x:Key="CommandBarBackground"
+                             Opacity="0.25"
+                             Color="{DynamicResource SystemListMediumColor}" />
         </ResourceDictionary>
     </Application.Resources>
 
@@ -68,46 +67,23 @@
         </Style>
 
         <Style Selector="ListBoxItem">
-            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
             <Style Selector="^:nth-child(1)">
-                <Setter Property="BorderThickness" Value="0,1"></Setter>
+                <Setter Property="BorderThickness" Value="0,1" />
             </Style>
         </Style>
 
-        <Style Selector="Button.toolBar">
+        <Style Selector="Button.toolBar, ToggleButton.toolBar">
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="32" />
-            <Setter Property="CornerRadius"
-                    Value="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}" />
-            <Setter Property="ContentTemplate"
-                    Value="{x:Static controls:HamburgerMenuItemIconTemplateSelector.Instance}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="CornerRadius" Value="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}" />
+            <Setter Property="ContentTemplate" Value="{x:Static controls:HamburgerMenuItemIconTemplateSelector.Instance}" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Padding" Value="4" />
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                          Margin="{TemplateBinding Padding}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-            <Style Selector="^:pointerover">
-                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
-            </Style>            
-            <Style Selector="^:pressed">
-                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
-            </Style>
-            <Style Selector="^:disabled">
-                <Setter Property="Opacity" Value="0.5"></Setter>
+            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Opacity" Value="0.5" />
             </Style>
         </Style>
     </Application.Styles>

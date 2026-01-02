@@ -68,7 +68,7 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
 
         if (success)
         {
-            this.ReturnResultFromOverlayDialog(toDoItem);
+            this.ReturnResultFromOverlayDialog(new ToDoItemViewModel(toDoItem));
         }
         else
         {

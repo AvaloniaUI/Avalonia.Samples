@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -15,11 +16,12 @@ using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class CategoriesViewModel : ViewModelBase, IDialogParticipant
+public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipant
 {
-    [ObservableProperty] private string _greeting = "Welcome to Avalonia!";
-    
-    public CategoriesViewModel()
+    [UnconditionalSuppressMessage("Trimming", 
+        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", 
+        Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
+    public ManageCategoriesViewModel()
     {
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
 

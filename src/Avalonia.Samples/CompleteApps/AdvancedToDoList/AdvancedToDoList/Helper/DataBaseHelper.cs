@@ -10,6 +10,7 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 
 namespace AdvancedToDoList.Helper;
+
 public static class DataBaseHelper
 {
     static DataBaseHelper()
@@ -17,7 +18,7 @@ public static class DataBaseHelper
         // Register a type handler to map between SQLite INTEGER (Int64) and our Priority enum
         SqlMapper.AddTypeHandler<Priority>(new PriorityTypeHandler());
     }
-    
+
     private static bool _initialized;
 
     internal static async Task<SqliteConnection> GetOpenConnection()
@@ -26,7 +27,7 @@ public static class DataBaseHelper
         {
             App.RegisterDbService(new DesignDbService());
         }
-        
+
         if (App.DbService == null)
             throw new InvalidOperationException("Database service not registered.");
 
@@ -69,7 +70,7 @@ public static class DataBaseHelper
             """);
 
         Console.WriteLine("Created ToDoItem table.");
-        
+
         await connection.ExecuteAsync(
             """
             CREATE TABLE IF NOT EXISTS Category (
@@ -81,7 +82,7 @@ public static class DataBaseHelper
             """);
 
         Console.WriteLine("Created Category table.");
-        
+
         if (Design.IsDesignMode)
         {
             var categoryCount = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Category");
@@ -91,8 +92,9 @@ public static class DataBaseHelper
                 Console.WriteLine($"Added sample data to database.");
             }
         }
-        
-        _initialized = true;
+
+        // For in memory DataSource, we cannot set the _init flag to true. 
+        _initialized = App.DbService?.GetDatabasePath() != ":memory:";
     }
 
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
@@ -100,17 +102,18 @@ public static class DataBaseHelper
         await using var connection = await GetOpenConnection();
         return (await connection.QueryAsync<Category>("SELECT * FROM Category"));
     }
-    
-    public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync()
+
+    public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
     {
         Console.WriteLine("GetToDoItemsAsync");
         await using var connection = await GetOpenConnection();
-        var sql = """
-                  SELECT t.*, c.*
-                  FROM ToDoItem t
-                  LEFT JOIN Category c ON t.CategoryId = c.Id
-                  """;
-        
+        const string sql = """
+                           SELECT t.*, c.*
+                           FROM ToDoItem t
+                           LEFT JOIN Category c ON t.CategoryId = c.Id
+                           WHERE t.Progress < 100 OR @loadAlsoCompletedItems;
+                           """;
+
         return await connection.QueryAsync<ToDoItem, Category, ToDoItem>(
             sql,
             (toDoItem, category) =>
@@ -118,10 +121,10 @@ public static class DataBaseHelper
                 toDoItem.Category = category;
                 return toDoItem;
             },
-            splitOn: "Id"
-        );
+            splitOn: "Id", 
+            param: new {loadAlsoCompletedItems});
     }
-    
+
     private static async Task AddSampleDataAsync(SqliteConnection connection)
     {
         await connection.ExecuteAsync(
@@ -132,7 +135,8 @@ public static class DataBaseHelper
 
             INSERT INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate) VALUES 
             (null, 1, 'Item 1', 1, 'Description 1', '2026-01-01', 0, '2026-01-01', null),
-            (null, 2, 'Item 2', 2, 'Description 2', '2026-01-02', 0, '2026-01-02', null);
+            (null, 2, 'Item 2', 2, 'Description 2', '2026-01-02', 0, '2026-01-02', null),
+            (null, 5, 'Item 3', 2, 'A completed item', '2026-01-02', 100, '2026-01-02', null);
             """
         );
     }
@@ -145,7 +149,7 @@ public class PriorityTypeHandler : SqlMapper.TypeHandler<Priority>
         // Store enum as integer value in SQLite
         parameter.Value = (int)value;
     }
-    
+
     public override Priority Parse(object value)
     {
         // SQLite returns INTEGER as Int64 by default; handle common representations robustly

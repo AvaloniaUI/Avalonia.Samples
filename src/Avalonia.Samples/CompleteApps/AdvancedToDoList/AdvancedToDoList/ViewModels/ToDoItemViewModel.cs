@@ -1,23 +1,28 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using AdvancedToDoList.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AdvancedToDoList.ViewModels;
 
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+[UnconditionalSuppressMessage("Trimming",
+    "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
+    Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
+[UnconditionalSuppressMessage("Trimming",
+    "IL2112: 'DynamicallyAccessedMembersAttribute' on 'AdvancedToDoList.ViewModels.ToDoItemViewModel' or one of its base types references 'AdvancedToDoList.ViewModels.ToDoItemViewModel.Title.set' which requires unreferenced code. The type of the current instance cannot be statically discovered.",
+    Justification = "Made sure the needed items are not trimmed.")]
 public partial class ToDoItemViewModel : ViewModelBase, ICloneable
 {
     public ToDoItemViewModel(ToDoItem toDoItem)
     {
         Id = toDoItem.Id;
-        if (toDoItem.Category != null)
-        {
-            Category = new CategoryViewModel(toDoItem.Category);
-        }
-        else
-        {
-            Category = CategoryViewModel.Empty;
-        }
+        Category = toDoItem.Category != null 
+            ? new CategoryViewModel(toDoItem.Category) 
+            : CategoryViewModel.Empty;
         Title = toDoItem.Title;
         Priority = toDoItem.Priority;
         Description = toDoItem.Description;
@@ -113,7 +118,7 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     /// Gets or sets the CreatedDate of the ToDoItem. The default value is now. This property is read-only.
     /// </summary>
     [ObservableProperty]
-    public partial DateTime CreatedDate { get; private set; } = DateTime.Now;
+    public partial DateTime CreatedDate { get; private set; }
 
     /// <summary>
     /// Gets or sets the CompletedDate of the ToDoItem. As long as this property is null,
@@ -122,12 +127,19 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     [ObservableProperty]
     public partial DateTime? CompletedDate { get; private set; }
 
+    [RelayCommand]
+    private async Task SetProgressAsync(int value)
+    {
+        Progress = value;
+        await ToToDoItem().SaveAsync();
+    }
+
     public ToDoItem ToToDoItem() => new ToDoItem()
     {
         Id = Id,
         Title = Title,
         Description = Description,
-        CategoryId = Category?.Id,
+        CategoryId = Category.Id,
         Category = Category.ToCategory(),
         Progress = Progress,
         Priority = Priority,

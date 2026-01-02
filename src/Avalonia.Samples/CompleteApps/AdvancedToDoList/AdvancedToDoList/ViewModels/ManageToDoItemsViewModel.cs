@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -17,36 +18,46 @@ using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
+public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipant
 {
-    public ToDoItemsViewModel()
+    [UnconditionalSuppressMessage("Trimming",
+        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
+        Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
+    public ManageToDoItemsViewModel()
     {
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
 
-        var filterObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
+        var filterStringObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
             .Throttle(TimeSpan.FromMilliseconds(300))
             .DistinctUntilChanged()
             .Select(FilterToDoItemsByText);
+
+        var filterIsCompletedObservable = this
+            .ObserveValue(nameof(ShowAlsoCompletedItems), () => ShowAlsoCompletedItems)
+            .DistinctUntilChanged()
+            .Select(FilterToDoItemsByIsCompleted);
         
         _toDoItemsSourceCache.Connect()
+            .AutoRefresh(x => x.Progress, propertyChangeThrottle: TimeSpan.FromMilliseconds(800))
+            .Filter(filterStringObservable)
+            .Filter(filterIsCompletedObservable)
             .ObserveOn(syncContext)
-            .Filter(filterObservable)
             .SortAndBind(out _toDoItems,
                 SortExpressionComparer<ToDoItemViewModel>
                     .Ascending(x => x.DueDate)
                     .ThenByAscending(x => x.Title ?? string.Empty)
                     .ThenByAscending(x => x.Id ?? -1))
             .Subscribe();
-        
-        LoadData();
+
+        _ = LoadDataAsync();
     }
 
-    private async void LoadData()
+    private async Task LoadDataAsync()
     {
-        var toDoItems = await DataBaseHelper.GetToDoItemsAsync();
+        var toDoItems = await DataBaseHelper.GetToDoItemsAsync(ShowAlsoCompletedItems);
         _toDoItemsSourceCache.AddOrUpdate(toDoItems.Select(x => new ToDoItemViewModel(x)));
     }
-    
+
     private readonly SourceCache<ToDoItemViewModel, int> _toDoItemsSourceCache =
         new SourceCache<ToDoItemViewModel, int>(x => x.Id ?? -1);
 
@@ -54,13 +65,14 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
 
     public ReadOnlyObservableCollection<ToDoItemViewModel> ToDoItems => _toDoItems;
 
-    [ObservableProperty]
-    public partial string? FilterString {get; set;}
-    
+    [ObservableProperty] public partial string? FilterString { get; set; }
+
+    [ObservableProperty] public partial bool ShowAlsoCompletedItems { get; set; }
+
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteToDoItemCommand), nameof(EditToDoItemCommand))]
     public partial ToDoItemViewModel? SelectedToDoItem { get; set; }
-  
+
     [RelayCommand]
     private async Task AddNewToDoItem()
     {
@@ -68,12 +80,12 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
         {
             Title = "To-Do Item"
         };
-        
+
         await EditToDoItemAsync(new ToDoItemViewModel(toDoItem));
     }
 
     private bool CanEditOrDeleteToDoItem(ToDoItemViewModel? toDoItem) => toDoItem != null;
-    
+
     /// <summary>
     /// Deletes the selected ToDoItem.
     /// </summary>
@@ -85,17 +97,17 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
         {
             return;
         }
-        
-        var result = await this.ShowOverlayDialogAsync<DialogResult>("Delete To Do Item", 
+
+        var result = await this.ShowOverlayDialogAsync<DialogResult>("Delete To Do Item",
             $"Are you sure you want to delete the todo item '{toDoItem.Title}'?",
             DialogCommands.YesNoCancel);
-        
+
         if (result == DialogResult.Yes && await toDoItem.ToToDoItem().DeleteAsync())
         {
             _toDoItemsSourceCache.Remove(toDoItem);
         }
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteToDoItem))]
     private async Task EditToDoItemAsync(ToDoItemViewModel? toDoItem)
     {
@@ -105,9 +117,10 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
         }
 
         var availableCategories = await DataBaseHelper.GetCategoriesAsync();
-        
-        var editToDoItemViewModel = new EditToDoItemViewModel(toDoItem.CloneToDoItemViewModel(), 
+
+        var editToDoItemViewModel = new EditToDoItemViewModel(toDoItem.CloneToDoItemViewModel(),
             availableCategories.Select(x => new CategoryViewModel(x)).ToList());
+        
         var result = await this.ShowOverlayDialogAsync<ToDoItemViewModel>("Edit ToDo-Item", editToDoItemViewModel);
 
         if (result != null)
@@ -115,14 +128,37 @@ public partial class ToDoItemsViewModel : ViewModelBase, IDialogParticipant
             _toDoItemsSourceCache.AddOrUpdate(result);
         }
     }
-    
+
+    [RelayCommand]
+    private async Task RequeryAsync()
+    {
+        var previousSelectedItemId = SelectedToDoItem?.Id ?? -1;
+
+        _toDoItemsSourceCache.Clear();
+        await LoadDataAsync();
+
+        var lookUpResult = _toDoItemsSourceCache.Lookup(previousSelectedItemId);
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            SelectedToDoItem = lookUpResult.HasValue
+                ? lookUpResult.Value
+                : null;
+        });
+    }
+
     private static Func<ToDoItemViewModel, bool> FilterToDoItemsByText(string? filterText) => item =>
     {
         // we have no filter text, so this item should be visible
         if (string.IsNullOrWhiteSpace(filterText))
             return true;
-        
+
         return (item.Title?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false)
-                || (item.Description?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false);
+               || (item.Description?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false);
+    };
+    
+    private static Func<ToDoItemViewModel, bool> FilterToDoItemsByIsCompleted(bool showAlsoCompletedItems) => item =>
+    {
+        return showAlsoCompletedItems || item.Progress < 100;
     };
 }

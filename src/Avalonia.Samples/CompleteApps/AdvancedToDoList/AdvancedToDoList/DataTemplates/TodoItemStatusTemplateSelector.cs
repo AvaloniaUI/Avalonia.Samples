@@ -1,3 +1,4 @@
+using AdvancedToDoList.Helper;
 using AdvancedToDoList.Models;
 using Avalonia;
 using Avalonia.Controls;
@@ -18,7 +19,7 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
             ToDoItemStatus.NotStarted =>
                 new PathIcon()
                 {
-                    Data = GetAppResource<Geometry>("PhosphorIcons.CircleDashedLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.CircleDashedLight"),
                     Opacity = 0.7,
                     [ToolTip.TipProperty] = "Pending"
                 },
@@ -26,7 +27,7 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
             ToDoItemStatus.InProgress => 
                 new PathIcon()
                 {
-                    Data = GetAppResource<Geometry>("PhosphorIcons.ClockCountdownLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ClockCountdownLight"),
                     Opacity = 0.7,
                     [ToolTip.TipProperty] = "In Progress"
                 },
@@ -34,7 +35,7 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
             ToDoItemStatus.Done =>
                 new PathIcon()
                 {
-                    Data = GetAppResource<Geometry>("PhosphorIcons.CheckCircleLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.CheckCircleLight"),
                     Foreground = new SolidColorBrush(Colors.LimeGreen),
                     [ToolTip.TipProperty] = "Done"
                 },
@@ -42,23 +43,13 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
             ToDoItemStatus.Overdue =>
                 new PathIcon()
                 {
-                    Data = GetAppResource<Geometry>("PhosphorIcons.WarningCircleLight"),
-                    Foreground = GetAppResource<IBrush>("SystemControlErrorTextForegroundBrush"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.WarningCircleLight"),
+                    Foreground = ResourcesHelper.GetAppResource<IBrush>("SystemControlErrorTextForegroundBrush"),
                     [ToolTip.TipProperty] = "Delayed"
                 },
             
             _ => null
         };
-    }
-
-    private static T? GetAppResource<T>(string resourceKey)
-    {
-        var found = Application.Current!.TryFindResource(resourceKey, out var resource);
-        if (found && resource is T value)
-        {
-            return value;
-        }
-        return default;
     }
     
     public bool Match(object? data)

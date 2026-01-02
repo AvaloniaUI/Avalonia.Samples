@@ -6,17 +6,75 @@
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:dataTemplates="clr-namespace:AdvancedToDoList.DataTemplates"
-             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
              d:DesignHeight="450"
              d:DesignWidth="800"
+             x:Name="Root"
              services:DialogManager.Register="{Binding}"
-             x:DataType="viewModels:ToDoItemsViewModel"
+             x:DataType="viewModels:ManageToDoItemsViewModel"
              mc:Ignorable="d">
     <Design.DataContext>
-        <viewModels:ToDoItemsViewModel />
+        <viewModels:ManageToDoItemsViewModel />
     </Design.DataContext>
-    
+
+    <UserControl.Resources>
+        <x:Int32 x:Key="Constants.0">0</x:Int32>
+        <x:Int32 x:Key="Constants.25">25</x:Int32>
+        <x:Int32 x:Key="Constants.50">50</x:Int32>
+        <x:Int32 x:Key="Constants.75">75</x:Int32>
+        <x:Int32 x:Key="Constants.100">100</x:Int32>
+
+        <MenuFlyout x:Key="ToDoItemContextMenu" x:DataType="viewModels:ToDoItemViewModel">
+            <MenuItem Header="Edit Item"
+                      Command="{Binding #Root.((viewModels:ManageToDoItemsViewModel)DataContext).EditToDoItemCommand}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <PathIcon Data="{DynamicResource PhosphorIcons.NotePencilLight}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Delete Item"
+                      Command="{Binding #Root.((viewModels:ManageToDoItemsViewModel)DataContext).DeleteToDoItemCommand}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <PathIcon Data="{DynamicResource PhosphorIcons.TrashLight}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem Header="Mark Item as completed"
+                      Command="{Binding SetProgressCommand}"
+                      CommandParameter="{StaticResource Constants.100}">
+                <MenuItem.Icon>
+                    <PathIcon Data="{DynamicResource PhosphorIcons.CheckCircleLight}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header="Set Progress">
+                <MenuItem.Icon>
+                    <PathIcon Data="{DynamicResource PhosphorIcons.ClockCountdownLight}" />
+                </MenuItem.Icon>
+                <MenuItem Header="0 %"
+                          Command="{Binding SetProgressCommand}"
+                          CommandParameter="{StaticResource Constants.0}" />
+                <MenuItem Header="25 %"
+                          Command="{Binding SetProgressCommand}"
+                          CommandParameter="{StaticResource Constants.25}" />
+                <MenuItem Header="50 %"
+                          Command="{Binding SetProgressCommand}"
+                          CommandParameter="{StaticResource Constants.50}" />
+                <MenuItem Header="75 %"
+                          Command="{Binding SetProgressCommand}"
+                          CommandParameter="{StaticResource Constants.75}" />
+                <MenuItem Header="100 %"
+                          Command="{Binding SetProgressCommand}"
+                          CommandParameter="{StaticResource Constants.100}" />
+            </MenuItem>
+        </MenuFlyout>
+    </UserControl.Resources>
+
     <DockPanel VerticalSpacing="5">
         <Border DockPanel.Dock="Top"
                 Padding="4"
@@ -25,50 +83,86 @@
                 CornerRadius="20"
                 BoxShadow="2 2 5 1 gray">
             <WrapPanel ItemSpacing="5">
-                <Button Classes="toolBar" 
-                        Content="{DynamicResource PhosphorIcons.PlusCircleLight}" 
-                        Command="{Binding AddNewToDoItemCommand}" 
+                <Button Classes="toolBar"
+                        Content="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}"
+                        Command="{Binding RequeryCommand}"
                         ToolTip.Tip="New Item" />
-                <Button Classes="toolBar" 
+
+                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
+                           Margin="0,5" />
+
+                <Button Classes="toolBar"
+                        Content="{DynamicResource PhosphorIcons.PlusCircleLight}"
+                        Command="{Binding AddNewToDoItemCommand}"
+                        ToolTip.Tip="New Item" />
+                <Button Classes="toolBar"
                         Content="{DynamicResource PhosphorIcons.NotePencilLight}"
                         Command="{Binding EditToDoItemCommand}"
                         CommandParameter="{Binding SelectedToDoItem}"
                         ToolTip.Tip="Edit Item" />
-                <Button Classes="toolBar" 
+                <Button Classes="toolBar"
                         Content="{DynamicResource PhosphorIcons.TrashLight}"
                         Command="{Binding DeleteToDoItemCommand}"
                         CommandParameter="{Binding SelectedToDoItem}"
                         ToolTip.Tip="Delete Item" />
-                
+
                 <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
-                           Margin="0,5"></Separator>
-                
+                           Margin="0,5" />
+
+                <ToggleButton Classes="toolBar"
+                              Command="{Binding RequeryCommand}"
+                              IsChecked="{Binding ShowAlsoCompletedItems}"
+                              Content="{DynamicResource PhosphorIcons.ChecksLight}"
+                              ToolTip.Tip="Show also completed Items" />
+
+                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
+                           Margin="0,5" />
+
                 <controls:LabeledControl Header="Search:" HeaderPosition="Left">
                     <TextBox CornerRadius="8"
-                        Text="{Binding FilterString}"
-                        Watermark="Find Items..."/>
+                             Text="{Binding FilterString}"
+                             Watermark="Find Items..." />
                 </controls:LabeledControl>
             </WrapPanel>
         </Border>
 
-        <ListBox ItemsSource="{Binding ToDoItems}" SelectedItem="{Binding SelectedToDoItem}">
+        <ListBox ItemsSource="{Binding ToDoItems}"
+                 SelectedItem="{Binding SelectedToDoItem}">
+            <ListBox.ItemContainerTheme>
+                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="ContextFlyout" Value="{StaticResource ToDoItemContextMenu}" />
+                </ControlTheme>
+            </ListBox.ItemContainerTheme>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*, Auto, Auto" 
+                    <Grid ColumnDefinitions="*, Auto, Auto, Auto"
                           RowDefinitions="Auto, Auto, Auto"
-                          RowSpacing="3" 
+                          RowSpacing="3"
                           ColumnSpacing="5">
                         <StackPanel Grid.Row="0"
                                     Grid.Column="0"
                                     Orientation="Horizontal"
                                     Spacing="5">
-                            <ContentControl Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
-                            <ContentControl Content="{Binding Priority}" />
+                            <ContentControl
+                                Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
+
+                            <Border Padding="2,2,8,2"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
+                                    BorderThickness="1"
+                                    Background="{DynamicResource SystemControlHighlightAltBaseLowBrush}">
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <ContentControl Content="{Binding Priority}"
+                                                    ContentTemplate="{x:Static dataTemplates:ToDoItemPriorityIconTemplateSelector.Instance}"/>
+                                    <ContentControl Content="{Binding Priority, StringFormat='Priority: {0}'}" />
+                            </StackPanel>
+                            </Border>
                         </StackPanel>
-                        
+
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
                                    FontWeight="Bold"
+                                   VerticalAlignment="Center"
                                    Text="{Binding Title}" />
                         <TextBlock Grid.Row="0"
                                    Grid.Column="2"
@@ -79,15 +173,24 @@
                                    FontStyle="Italic"
                                    IsVisible="{Binding Description, Converter={x:Static ObjectConverters.IsNotNull}}"
                                    Text="{Binding Description}" />
-                        
-                        <ContentControl Grid.Row="1" Grid.Column="1"
+
+                        <ContentControl Grid.Row="0" Grid.Column="1"
+                                        Grid.RowSpan="2"
+                                        CornerRadius="20"
+                                        Padding="4"
+                                        VerticalAlignment="Bottom"
+                                        Background="{DynamicResource SystemControlBackgroundAltMediumBrush}"
                                         Content="{Binding CurrentStatus}"
-                                        ContentTemplate="{x:Static dataTemplates:ToDoItemStatusTemplateSelector.Instance}"/>
+                                        ContentTemplate="{x:Static dataTemplates:ToDoItemStatusTemplateSelector.Instance}" />
                         <ProgressBar Grid.Row="1"
                                      Grid.Column="2"
                                      MinWidth="75"
                                      ShowProgressText="True"
                                      Value="{Binding Progress}" />
+                        <Button Grid.Row="0" Grid.Column="3"
+                                Grid.RowSpan="3" Classes="toolBar"
+                                Content="{DynamicResource PhosphorIcons.DotsThreeVertical}"
+                                Flyout="{StaticResource ToDoItemContextMenu}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
