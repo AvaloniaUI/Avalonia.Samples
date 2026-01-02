@@ -273,7 +273,7 @@ Here is the final class: xref:ViewModels/SnowflakeGameViewModel.cs[]
 
 === Step 3: Add the SnowflakesControl
 
-Now it's time to add the needed `Control` to render our game. Therefore, we add a new folder `Controls` and inside we add a new class `SnowflakesControl.cs`. This class must inherit `Control`. In addition, we want to implement the interface `ICustomHitTest` in order to control hit-testing on our own.
+Now it's time to add the needed `Control` to render our game. Therefore, we add a new folder `Controls` and inside we add a new class `SnowflakesControl.cs`. This class must inherit `Control`. 
 
 The control needs some https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-advanced-custom-controls[[AvaloniaProperties\]] to allow us to bind to it.
 
@@ -374,7 +374,7 @@ public override void Render(DrawingContext context)
     // Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.
     if (IsRunning)
     {
-        Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+        Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Render);
         _stopwatch.Restart();
     }
 }
@@ -387,31 +387,56 @@ This is how a single render frame would look like:
 .Result of a single render loop
 image:_docs/single_render_frame.png[]
 
-As we wanted to implement `ICustomHitTest`, we will add the needed interface members, which is just the following method here:
+As we want to check if our pointer is over any `Snowflake`, we will override the `OnPointerEntered` and `OnPointerMoved` methods. From the `PointerEventArgs` we can read the pointer position and forward it to a method that tests for hits,
 
 [source,csharp]
 ----
-public bool HitTest(Point point)
+/// <inheritdoc />
+protected override void OnPointerEntered(PointerEventArgs e)
 {
-    if (!IsRunning) return false;
+    HitTestSnowFlakes(e.GetPosition(this));
+    base.OnPointerEntered(e);
+}
 
-    var snowFlake = Snowflakes.FirstOrDefault(x => x.IsHit(point, Bounds));
-    if (snowFlake != null)
+/// <inheritdoc />
+protected override void OnPointerMoved(PointerEventArgs e)
+{
+    HitTestSnowFlakes(e.GetPosition(this));
+    base.OnPointerMoved(e);
+}
+
+/// <summary>
+/// This method will check if the pointer has hit any snowflake. If so, it will remove the snowflake from the list
+/// and update the score.
+/// </summary>
+/// <param name="point">the pointer point to test.</param>
+private void HitTestSnowFlakes(Point point)
+{
+    // if the game is not running, we don't need to do anything.
+    if (!IsRunning) return;
+
+    // loop through all snowflakes and check if the pointer is inside one of them.
+    // Copy the list to avoid concurrent modification exceptions.
+    foreach (var snowFlake in Snowflakes.ToArray())
     {
-        Snowflakes.Remove(snowFlake);
-        Score += snowFlake.GetHitScore();
-    }
+        if (snowFlake.IsHit(point, Bounds))
+        {
+            Snowflakes.Remove(snowFlake);
+            Score += snowFlake.GetHitScore();
 
-    return snowFlake != null;
+            // Add a text hint about the earned score. We also hand over the containing collection,
+            // so it can auto-remove itself after 1 second.
+            _scoreHintsCollection.Add(new ScoreHint(snowFlake, _scoreHintsCollection));
+        }
+    }
 }
 ----
 
 What this method does is:
 
-* If the game is not running, the control shouldn't receive any hit
-* If the game is running, search for any snowflake hit by the pointer
-** If one is found, remove it from the collection
-** If one is found, add the score to the total score
+* If the game is running, search for all snowflakes hit by the pointer
+** If any is found, remove it from the collection
+** If any is found, add the score to the total score
 
 Here is the final class xref:Controls/SnowflakesControl.cs[]
 

@@ -2452,7 +2452,7 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 <div class="sect2">
 <h3 id="_step_3_add_the_snowflakescontrol">Step 3: Add the SnowflakesControl</h3>
 <div class="paragraph">
-<p>Now it&#8217;s time to add the needed <code>Control</code> to render our game. Therefore, we add a new folder <code>Controls</code> and inside we add a new class <code>SnowflakesControl.cs</code>. This class must inherit <code>Control</code>. In addition, we want to implement the interface <code>ICustomHitTest</code> in order to control hit-testing on our own.</p>
+<p>Now it&#8217;s time to add the needed <code>Control</code> to render our game. Therefore, we add a new folder <code>Controls</code> and inside we add a new class <code>SnowflakesControl.cs</code>. This class must inherit <code>Control</code>.</p>
 </div>
 <div class="paragraph">
 <p>The control needs some <a href="https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-advanced-custom-controls">[AvaloniaProperties]</a> to allow us to bind to it.</p>
@@ -2583,7 +2583,7 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
     <span class="c1">// Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">IsRunning</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">Dispatcher</span><span class="p">.</span><span class="n">UIThread</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="n">InvalidateVisual</span><span class="p">,</span> <span class="n">DispatcherPriority</span><span class="p">.</span><span class="n">Background</span><span class="p">);</span>
+        <span class="n">Dispatcher</span><span class="p">.</span><span class="n">UIThread</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="n">InvalidateVisual</span><span class="p">,</span> <span class="n">DispatcherPriority</span><span class="p">.</span><span class="n">Render</span><span class="p">);</span>
         <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre>
@@ -2609,22 +2609,48 @@ We use <code>Dispatcher.UIThread.Post</code> to request the next frame in order 
 <p><span class="image"><img src="_docs/single_render_frame.png" alt="single render frame"></span></p>
 </div>
 <div class="paragraph">
-<p>As we wanted to implement <code>ICustomHitTest</code>, we will add the needed interface members, which is just the following method here:</p>
+<p>As we want to check if our pointer is over any <code>Snowflake</code>, we will override the <code>OnPointerEntered</code> and <code>OnPointerMoved</code> methods. From the <code>PointerEventArgs</code> we can read the pointer position and forward it to a method that tests for hits,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">HitTest</span><span class="p">(</span><span class="n">Point</span> <span class="n">point</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;inheritdoc /&gt;</span>
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPointerEntered</span><span class="p">(</span><span class="n">PointerEventArgs</span> <span class="n">e</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(!</span><span class="n">IsRunning</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="nf">GetPosition</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnPointerEntered</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="p">}</span>
 
-    <span class="kt">var</span> <span class="n">snowFlake</span> <span class="p">=</span> <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">FirstOrDefault</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="nf">IsHit</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">));</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">snowFlake</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+<span class="c1">/// &lt;inheritdoc /&gt;</span>
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPointerMoved</span><span class="p">(</span><span class="n">PointerEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="nf">GetPosition</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnPointerMoved</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This method will check if the pointer has hit any snowflake. If so, it will remove the snowflake from the list</span>
+<span class="c1">/// and update the score.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name="point"&gt;the pointer point to test.&lt;/param&gt;</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">Point</span> <span class="n">point</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// if the game is not running, we don't need to do anything.</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">IsRunning</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="c1">// loop through all snowflakes and check if the pointer is inside one of them.</span>
+    <span class="c1">// Copy the list to avoid concurrent modification exceptions.</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">snowFlake</span> <span class="k">in</span> <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">ToArray</span><span class="p">())</span>
     <span class="p">{</span>
-        <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">snowFlake</span><span class="p">);</span>
-        <span class="n">Score</span> <span class="p">+=</span> <span class="n">snowFlake</span><span class="p">.</span><span class="nf">GetHitScore</span><span class="p">();</span>
-    <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">snowFlake</span><span class="p">.</span><span class="nf">IsHit</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">snowFlake</span><span class="p">);</span>
+            <span class="n">Score</span> <span class="p">+=</span> <span class="n">snowFlake</span><span class="p">.</span><span class="nf">GetHitScore</span><span class="p">();</span>
 
-    <span class="k">return</span> <span class="n">snowFlake</span> <span class="p">!=</span> <span class="k">null</span><span class="p">;</span>
+            <span class="c1">// Add a text hint about the earned score. We also hand over the containing collection,</span>
+            <span class="c1">// so it can auto-remove itself after 1 second.</span>
+            <span class="n">_scoreHintsCollection</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScoreHint</span><span class="p">(</span><span class="n">snowFlake</span><span class="p">,</span> <span class="n">_scoreHintsCollection</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
@@ -2634,17 +2660,14 @@ We use <code>Dispatcher.UIThread.Post</code> to request the next frame in order 
 <div class="ulist">
 <ul>
 <li>
-<p>If the game is not running, the control shouldn&#8217;t receive any hit</p>
-</li>
-<li>
-<p>If the game is running, search for any snowflake hit by the pointer</p>
+<p>If the game is running, search for all snowflakes hit by the pointer</p>
 <div class="ulist">
 <ul>
 <li>
-<p>If one is found, remove it from the collection</p>
+<p>If any is found, remove it from the collection</p>
 </li>
 <li>
-<p>If one is found, add the score to the total score</p>
+<p>If any is found, add the score to the total score</p>
 </li>
 </ul>
 </div>
@@ -3038,7 +3061,7 @@ This class can be internal as it is only meant to be consumed by the control its
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-06 19:42:36 UTC
+Last updated 2025-12-25 12:47:29 UTC
 </div>
 </div>
 </body>
