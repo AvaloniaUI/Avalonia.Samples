@@ -36,22 +36,28 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
             .ObserveValue(nameof(ShowAlsoCompletedItems), () => ShowAlsoCompletedItems)
             .DistinctUntilChanged()
             .Select(FilterToDoItemsByIsCompleted);
+
+        var sortObservable = this.ObserveValue(nameof(SortExpression1), () => SortExpression1)
+            .CombineLatest(
+                this.ObserveValue(nameof(SortExpression2), () => SortExpression2),
+                this.ObserveValue(nameof(SortExpression3), () => SortExpression3),
+                (s1, s2, s3) => SortExpressionComparer<ToDoItemViewModel>
+                    .Ascending(s1.SortExpression)
+                    .ThenByAscending(s2.SortExpression)
+                    .ThenByAscending(s3.SortExpression)
+            ).Select(x => x);
         
         _toDoItemsSourceCache.Connect()
             .AutoRefresh(x => x.Progress, propertyChangeThrottle: TimeSpan.FromMilliseconds(800))
             .Filter(filterStringObservable)
             .Filter(filterIsCompletedObservable)
             .ObserveOn(syncContext)
-            .SortAndBind(out _toDoItems,
-                SortExpressionComparer<ToDoItemViewModel>
-                    .Ascending(x => x.DueDate)
-                    .ThenByAscending(x => x.Title ?? string.Empty)
-                    .ThenByAscending(x => x.Id ?? -1))
+            .SortAndBind(out _toDoItems, sortObservable)
             .Subscribe();
 
         _ = LoadDataAsync();
     }
-
+    
     private async Task LoadDataAsync()
     {
         var toDoItems = await DataBaseHelper.GetToDoItemsAsync(ShowAlsoCompletedItems);
@@ -65,10 +71,25 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
 
     public ReadOnlyObservableCollection<ToDoItemViewModel> ToDoItems => _toDoItems;
 
-    [ObservableProperty] public partial string? FilterString { get; set; }
+    [ObservableProperty] 
+    public partial string? FilterString { get; set; }
 
-    [ObservableProperty] public partial bool ShowAlsoCompletedItems { get; set; }
+    [ObservableProperty] 
+    public partial bool ShowAlsoCompletedItems { get; set; }
 
+    [ObservableProperty]
+    public partial ToDoItemsSortExpression SortExpression1 { get; set; } =
+        ToDoItemsSortExpression.SortByDueDateExpression;
+    
+    [ObservableProperty]
+    public partial ToDoItemsSortExpression SortExpression2 { get; set; } =
+        ToDoItemsSortExpression.SortByPriorityExpression;
+    
+    [ObservableProperty]
+    public partial ToDoItemsSortExpression SortExpression3 { get; set; } =
+        ToDoItemsSortExpression.SortByTitleExpression;
+    
+    
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteToDoItemCommand), nameof(EditToDoItemCommand))]
     public partial ToDoItemViewModel? SelectedToDoItem { get; set; }

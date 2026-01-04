@@ -123,6 +123,33 @@
                              Text="{Binding FilterString}"
                              Watermark="Find Items..." />
                 </controls:LabeledControl>
+                
+                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
+                           Margin="0,5" />
+                
+                <Button Classes="toolBar" 
+                        Content="{DynamicResource PhosphorIcons.CaretUpDownLight}"
+                        ToolTip.Tip="Sort Items">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Spacing="5" Grid.IsSharedSizeScope="True"
+                                        Width="200">
+                                <controls:LabeledControl Header="Sort by:" HeaderPosition="Left">
+                                    <ComboBox SelectedItem="{Binding SortExpression1}"
+                                              ItemsSource="{x:Static viewModels:ToDoItemsSortExpression.AvailableSortExpressions}" />
+                                </controls:LabeledControl>
+                                <controls:LabeledControl Header="Then by:" HeaderPosition="Left">
+                                    <ComboBox SelectedItem="{Binding SortExpression2}"
+                                              ItemsSource="{x:Static viewModels:ToDoItemsSortExpression.AvailableSortExpressions}" />
+                                </controls:LabeledControl>
+                                <controls:LabeledControl Header="Then by:" HeaderPosition="Left">
+                                    <ComboBox SelectedItem="{Binding SortExpression3}"
+                                              ItemsSource="{x:Static viewModels:ToDoItemsSortExpression.AvailableSortExpressions}" />
+                                </controls:LabeledControl>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
             </WrapPanel>
         </Border>
 

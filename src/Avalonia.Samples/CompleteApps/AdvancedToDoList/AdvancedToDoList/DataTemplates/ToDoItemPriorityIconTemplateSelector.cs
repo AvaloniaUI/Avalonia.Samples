@@ -20,7 +20,7 @@ public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
             Priority.Low =>
                 new PathIcon()
                 {
-                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleDownRightLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleDownRight"),
                     Opacity = 0.5,
                     Width = fontSize, 
                     Height = fontSize
@@ -29,7 +29,7 @@ public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
             Priority.Medium => 
                 new PathIcon()
                 {
-                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleRightLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleRight"),
                     Width = fontSize, 
                     Height = fontSize
                 },
@@ -37,7 +37,7 @@ public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
             Priority.High =>
                 new PathIcon()
                 {
-                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleUpRightLight"),
+                    Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleUpRight"),
                     Foreground = new SolidColorBrush(Colors.Red),
                     Width = fontSize, 
                     Height = fontSize

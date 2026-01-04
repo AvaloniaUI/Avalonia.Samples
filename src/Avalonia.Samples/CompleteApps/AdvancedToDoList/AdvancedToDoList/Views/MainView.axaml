@@ -6,7 +6,7 @@
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="690" d:DesignHeight="450"
              x:Class="AdvancedToDoList.Views.MainView"
              x:Name="Root"
              x:DataType="vm:MainViewModel">
@@ -16,7 +16,8 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <controls:HamburgerMenu Content="{Binding $self.SelectedMenuItem.Tag}">
+    <controls:HamburgerMenu Content="{Binding $self.SelectedMenuItem.Tag}"
+                            AutoClosePaneThreshold="700">
         <controls:HamburgerMenu.MenuItems>
             <controls:HamburgerMenuItem Label="To-Do Items"
                                         Icon="{DynamicResource PhosphorIcons.ListChecksThin}"
