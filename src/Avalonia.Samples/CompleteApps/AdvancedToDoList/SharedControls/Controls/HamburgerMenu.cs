@@ -3,14 +3,18 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 
 namespace SharedControls.Controls;
 
+[TemplatePart (nameof(PART_SplitView), typeof(SplitView), IsRequired = true)]
 public class HamburgerMenu : HeaderedContentControl
 {
+    private SplitView? PART_SplitView;
+    
     public static readonly DirectProperty<HamburgerMenu, IList<IHamburgerMenuItem>> MenuItemsProperty =
         AvaloniaProperty.RegisterDirect<HamburgerMenu, IList<IHamburgerMenuItem>>(
             nameof(MenuItems), 
@@ -105,6 +109,13 @@ public class HamburgerMenu : HeaderedContentControl
         base.OnLoaded(e);
     }
 
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+        
+        PART_SplitView = e.NameScope.Find<SplitView>("PART_SplitView");
+    }
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
@@ -119,6 +130,13 @@ public class HamburgerMenu : HeaderedContentControl
             || change.Property == BoundsProperty)
         {
             AutoCollapsePane();
+        }
+
+        if (change.Property == AutoClosePaneThresholdProperty || change.Property == BoundsProperty)
+        {
+            PART_SplitView?.DisplayMode = (AutoClosePaneThreshold > 0 && Bounds.Width < AutoClosePaneThreshold) 
+                ? SplitViewDisplayMode.CompactOverlay 
+                : SplitViewDisplayMode.CompactInline;
         }
 
         if (change.Property == MenuItemsProperty)

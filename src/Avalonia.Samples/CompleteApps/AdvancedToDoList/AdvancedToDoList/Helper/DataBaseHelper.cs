@@ -46,6 +46,7 @@ public static class DataBaseHelper
 
         await EnsureInitializedAsync(connection);
         Console.WriteLine($"Opened database at {dbPath}");
+        
         return connection;
     }
 
@@ -92,11 +93,21 @@ public static class DataBaseHelper
                 Console.WriteLine($"Added sample data to database.");
             }
         }
-
+        
+        await UpdateIndexedDbAsync();
+        
+        // If we have a connection, the DbService is known to be created. Thus, we can safely surpress the null warning here. 
         // For in memory DataSource, we cannot set the _init flag to true. 
-        _initialized = App.DbService?.GetDatabasePath() != ":memory:";
+        _initialized = App.DbService!.GetDatabasePath() != ":memory:";
     }
 
+    internal static async Task UpdateIndexedDbAsync()
+    {
+        if (App.DbService == null) 
+            return;
+        await App.DbService.SaveAsync();
+    }
+    
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
         await using var connection = await GetOpenConnection();

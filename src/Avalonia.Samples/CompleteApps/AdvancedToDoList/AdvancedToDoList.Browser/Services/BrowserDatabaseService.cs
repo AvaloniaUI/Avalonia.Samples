@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using AdvancedToDoList.Services;
@@ -14,7 +15,15 @@ public partial class BrowserDbService : IDbService
 
     public async Task SaveAsync()
     {
-        await SaveDbJs();
+        try
+        {
+            await SaveDbJs();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
     }
 
     [JSImport("globalThis.saveDatabase")]

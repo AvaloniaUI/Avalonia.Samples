@@ -41,6 +41,8 @@ public record Category
                 """, this
             );
 
+            await DataBaseHelper.UpdateIndexedDbAsync();
+            
             return Id != null;
         }
         catch
@@ -65,6 +67,8 @@ public record Category
                 """, this
             );
 
+            await DataBaseHelper.UpdateIndexedDbAsync();
+            
             return true;
         }
         catch
