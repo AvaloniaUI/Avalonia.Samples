@@ -1,0 +1,47 @@
+name: Deploy AdvancedToDoList to GitHub Pages
+
+env:
+  PROJECT_PATH: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+  OUTPUT_PATH:  src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/bin/Release/net10.0-browser/wwwroot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          submodules: recursive
+        
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.x
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.x
+
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools
+
+      - name: Publish .NET Project
+        run: dotnet publish $PROJECT_PATH -c Release --nologo
+
+      - name: copy index.html to 404.html
+        run: cp $OUTPUT_PATH/index.html $OUTPUT_PATH/404.html
+
+      - name: Add .nojekyll file
+        run: touch $OUTPUT_PATH/.nojekyll
+
+      - name: Commit wwwroot to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: ${{ env.OUTPUT_PATH }}
+          single-commit: true
