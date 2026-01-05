@@ -31,6 +31,7 @@
   - `sqlite3.dir`, if set, treats the given directory name as the
     directory from which `sqlite3.js` will be loaded.
 */
+
 "use strict";
 {
   const urlParams = globalThis.location
@@ -44,3 +45,91 @@
   importScripts(theJs);
 }
 sqlite3InitModule().then(sqlite3 => sqlite3.initWorker1API());
+
+// Patch to add restore/export handlers to sqlite3-worker1.js
+// Place this in the Worker (after sqlite3.initWorker1API() completes).
+// It expects `sqlite3` variable to be available in the worker scope.
+  // make sqlite3 visible to message handler
+  self.sqlite3 = sqlite3;
+
+  // convenience aliases to C API helpers (if present)
+  const capi = sqlite3.capi || {};
+
+  self.onmessage = async (ev) => {
+    const msg = ev.data;
+    try {
+      switch (msg.type) {
+        case 'restore-db': {
+          // args: { path, data: Uint8Array | ArrayBuffer }
+          const { path = '/data/todo.db', data } = msg.args || {};
+          if (!data) {
+            postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'error', error: 'no-data' });
+            break;
+          }
+          // If capi.sqlite3_js_posix_create_file exists, use it (safer)
+          if (capi.sqlite3_js_posix_create_file) {
+            try {
+              // Ensure path string and data as Uint8Array
+              const u8 = (data instanceof Uint8Array) ? data : new Uint8Array(data);
+              capi.sqlite3_js_posix_create_file(path, u8, u8.byteLength);
+              postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'ok' });
+            } catch (e) {
+              postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'error', error: String(e) });
+            }
+          } else if (sqlite3.Module?.FS || sqlite3.FS) {
+            try {
+              const FS = sqlite3.Module?.FS ?? sqlite3.FS;
+              try { FS.mkdir('/data'); } catch (e) { /* ignore */ }
+              FS.writeFile(path, (data instanceof Uint8Array) ? data : new Uint8Array(data), { encoding: 'binary' });
+              postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'ok' });
+            } catch (e) {
+              postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'error', error: String(e) });
+            }
+          } else {
+            postMessage({ messageId: msg.messageId, type: 'restore-db', result: 'error', error: 'no-fs-or-capi' });
+          }
+          break;
+        }
+        case 'export-db': {
+          // args: { path }
+          const path = (msg.args && msg.args.path) || '/data/todo.db';
+          // Try capi.sqlite3_js_db_export(0) first (some builds accept 0 as main db)
+          if (capi.sqlite3_js_db_export) {
+            try {
+              const exported = capi.sqlite3_js_db_export(0); // expected Uint8Array
+              postMessage({ messageId: msg.messageId, type: 'export-db', result: 'ok', data: exported });
+            } catch (e) {
+              // fallback to reading the file from FS
+              try {
+                const FS = sqlite3.Module?.FS ?? sqlite3.FS;
+                const data = FS.readFile(path, { encoding: 'binary' });
+                const u8 = data instanceof Uint8Array ? data : new Uint8Array(data);
+                postMessage({ messageId: msg.messageId, type: 'export-db', result: 'ok', data: u8 });
+              } catch (e2) {
+                postMessage({ messageId: msg.messageId, type: 'export-db', result: 'error', error: String(e2) });
+              }
+            }
+          } else if (sqlite3.Module?.FS || sqlite3.FS) {
+            try {
+              const FS = sqlite3.Module?.FS ?? sqlite3.FS;
+              const data = FS.readFile(path, { encoding: 'binary' });
+              const u8 = data instanceof Uint8Array ? data : new Uint8Array(data);
+              postMessage({ messageId: msg.messageId, type: 'export-db', result: 'ok', data: u8 });
+            } catch (e) {
+              postMessage({ messageId: msg.messageId, type: 'export-db', result: 'error', error: String(e) });
+            }
+          } else {
+            postMessage({ messageId: msg.messageId, type: 'export-db', result: 'error', error: 'no-fs-or-capi' });
+          }
+          break;
+        }
+        default:
+          // Let the existing worker (sqlite3.initWorker1API()) handle other messages
+          // (do nothing here so other handlers can process)
+          break;
+      }
+    } catch (ex) {
+      postMessage({ messageId: msg.messageId, type: msg.type, result: 'error', error: String(ex) });
+    }
+  };
+});
