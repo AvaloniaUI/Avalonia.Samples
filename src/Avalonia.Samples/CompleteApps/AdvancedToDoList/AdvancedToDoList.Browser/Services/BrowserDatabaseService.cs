@@ -9,8 +9,8 @@ public partial class BrowserDbService : IDbService
 {
     public string GetDatabasePath()
     {
-        // This path must match the DATA_DIR in main.js
-        return "/data/todo.db";
+        // This path must match the DB_FILENAME in storage.js
+        return "/todo.db";
     }
 
     public async Task SaveAsync()

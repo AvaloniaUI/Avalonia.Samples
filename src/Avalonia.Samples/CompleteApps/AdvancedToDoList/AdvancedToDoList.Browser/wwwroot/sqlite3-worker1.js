@@ -38,6 +38,32 @@
        globalThis.sqlite3InitModule().then(sqlite3 => {
            if (sqlite3.initWorker1API) {
                sqlite3.initWorker1API();
+
+               // Wrap the default onmessage to handle custom 'upload' type
+               const oldOnMessage = globalThis.onmessage;
+               globalThis.onmessage = async function(ev) {
+                   const data = ev.data;
+                   if (data && data.type === 'upload') {
+                       const args = data.args;
+                       try {
+                           // Use the internal capi to create the file in MEMFS
+                           sqlite3.capi.sqlite3_js_posix_create_file(args.filename, args.deserialize);
+                           globalThis.postMessage({
+                               type: 'upload',
+                               messageId: data.messageId,
+                               result: { filename: args.filename }
+                           });
+                       } catch (e) {
+                           globalThis.postMessage({
+                               type: 'error',
+                               messageId: data.messageId,
+                               error: e.message
+                           });
+                       }
+                   } else {
+                       return oldOnMessage(ev);
+                   }
+               };
            } else {
                console.error("sqlite3.initWorker1API not found");
            }

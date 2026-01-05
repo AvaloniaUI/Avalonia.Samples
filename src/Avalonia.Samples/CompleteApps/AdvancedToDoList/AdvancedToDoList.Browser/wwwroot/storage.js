@@ -112,19 +112,24 @@ export async function loadSQLite() {
     // Restore saved DB (if any) into worker FS
     try {
         const saved = await idbGet(IDB_KEY);
-        const openArgs = { filename: '/data/todo.db' };
+        const DB_FILENAME = '/todo.db';
         
         if (saved && saved.byteLength > 0) {
             console.log('Found saved DB in IndexedDB (' + saved.byteLength + ' bytes) — restoring into worker...');
-            openArgs.deserialize = saved;
+            // We use our custom 'upload' message to populate the worker's MEMFS
+            await callWorker({ 
+                type: 'upload', 
+                args: { filename: DB_FILENAME, deserialize: saved } 
+            });
+            console.log('DB bytes uploaded to worker VFS.');
         } else {
             console.log('No prior DB found in IndexedDB — worker will start with an empty DB.');
         }
 
-        // send 'open' message to worker; worker should load the bytes if provided
-        const resp = await callWorker({ type: 'open', args: openArgs });
+        // send 'open' message to worker
+        const resp = await callWorker({ type: 'open', args: { filename: DB_FILENAME } });
         if (resp && resp.type === 'open') {
-            console.log('DB opened in worker VFS' + (openArgs.deserialize ? ' (restored from bytes).' : '.'));
+            console.log('DB opened in worker VFS.');
         } else {
             console.warn('Worker open response:', resp);
         }
@@ -135,10 +140,10 @@ export async function loadSQLite() {
     // Replace global saveDatabase with one that asks the worker to export the DB and then persists to IndexedDB
     globalThis.saveDatabase = async () => {
         try {
+            const DB_FILENAME = '/todo.db';
             console.log('Saving DB: requesting export from worker...');
             // Ask the worker to export the DB bytes back to us
-            // message: { type: 'export', args: { filename: '/data/todo.db' } }
-            const resp = await callWorker({ type: 'export', args: { filename: '/data/todo.db' } });
+            const resp = await callWorker({ type: 'export', args: { filename: DB_FILENAME } });
             // Expect the worker to respond with an object containing result.byteArray: Uint8Array
             const data = resp?.result?.byteArray;
             if (!data) {
