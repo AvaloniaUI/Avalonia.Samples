@@ -33,4 +33,17 @@
 */
 
    // sqlite3-worker1.js
-   importScripts('./sqlite3.js');   // <-- explicit and safe
+   importScripts('./sqlite3.js');
+   if (globalThis.sqlite3InitModule) {
+       globalThis.sqlite3InitModule().then(sqlite3 => {
+           if (sqlite3.initWorker1API) {
+               sqlite3.initWorker1API();
+           } else {
+               console.error("sqlite3.initWorker1API not found");
+           }
+       }).catch(e => {
+           console.error("Failed to initialize sqlite3 module in worker:", e);
+       });
+   } else {
+       console.error("globalThis.sqlite3InitModule not found after importScripts");
+   }

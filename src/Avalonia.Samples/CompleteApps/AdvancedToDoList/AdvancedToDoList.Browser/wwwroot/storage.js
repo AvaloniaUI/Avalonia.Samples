@@ -10,10 +10,7 @@
 import './sqlite3-worker1-promiser.js';
 
 // After storage.js has loaded
-globalThis.sqlite3Worker1Promiser?.v2()
-  .then(() => console.log('Worker ready'))
-  .catch(err => console.error('Worker failed to start', err));
-
+// initialization is performed via loadSQLite() called from main.js
 
 // Keep a safe no-op immediately so .NET callers won't crash while initialization runs:
 globalThis.saveDatabase = async () => {
@@ -75,8 +72,27 @@ export async function loadSQLite() {
 
     let promiser;
     try {
+        console.log('Requesting sqlite3Worker1Promiser.v2...');
+        
+        // Timeout to prevent infinite hang
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Timeout waiting for sqlite3 worker to initialize')), 15000)
+        );
+
         // This will create a Worker that loads sqlite3-worker1.js (which in turn loads sqlite3.js)
-        promiser = await sqlite3Worker1Promiser.v2();
+        const promiserPromise = globalThis.sqlite3Worker1Promiser.v2({
+            // Ensure we use the correct path to the worker
+            worker: () => {
+                const url = new URL('sqlite3-worker1.js', import.meta.url).href;
+                console.log('Creating worker with URL:', url);
+                const w = new Worker(url);
+                w.onerror = (e) => console.error('Worker error event:', e);
+                return w;
+            }
+        });
+
+        promiser = await Promise.race([promiserPromise, timeoutPromise]);
+        console.log('sqlite3Worker1Promiser.v2 resolved.');
     } catch (err) {
         console.error('Failed to start sqlite3 worker promiser:', err);
         return;

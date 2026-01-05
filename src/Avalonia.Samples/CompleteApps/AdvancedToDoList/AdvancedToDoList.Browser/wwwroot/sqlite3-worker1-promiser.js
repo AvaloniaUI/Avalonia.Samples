@@ -124,7 +124,7 @@ globalThis.sqlite3Worker1Promiser = function callee(config = callee.defaultConfi
   };
 };
 
-globalThis.sqlite3Worker1Promiser.defaultConfig = {
+  globalThis.sqlite3Worker1Promiser.defaultConfig = {
   worker: function(){
     let theJs = "sqlite3-worker1.js";
     if(this.currentScript){
@@ -180,7 +180,7 @@ globalThis.sqlite3Worker1Promiser.v2 = function callee(config = callee.defaultCo
   return p;
 }.bind({
    
-  original: sqlite3Worker1Promiser
+  original: globalThis.sqlite3Worker1Promiser
 });
 
 globalThis.sqlite3Worker1Promiser.v2.defaultConfig =
