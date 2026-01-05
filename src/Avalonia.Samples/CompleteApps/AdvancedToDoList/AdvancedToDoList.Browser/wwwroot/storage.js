@@ -7,6 +7,14 @@
 // - sqlite3-worker1.js
 // - sqlite3-worker1-promiser.js
 
+import './sqlite3-worker1-promiser.js';
+
+// After storage.js has loaded
+globalThis.sqlite3Worker1Promiser?.v2()
+  .then(() => console.log('Worker ready'))
+  .catch(err => console.error('Worker failed to start', err));
+
+
 // Keep a safe no-op immediately so .NET callers won't crash while initialization runs:
 globalThis.saveDatabase = async () => {
     console.warn('saveDatabase called before sqlite persistence was initialized; no-op.');
