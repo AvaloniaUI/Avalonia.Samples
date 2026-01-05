@@ -16,6 +16,7 @@ jobs:
           dotnet workload install wasm-tools 
           dotnet workload install android 
           dotnet workload install ios
+          dotnet workload install maccatalyst
 
       - name: Run build script
         run: ./scripts/builder.ps1 './src/'
