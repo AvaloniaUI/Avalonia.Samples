@@ -18,11 +18,11 @@ globalThis.saveDatabase = async () => {
 };
 
 // IndexedDB helpers
-const IDB_DB = 'avalonia-sqlite3';
-const IDB_STORE = 'dbfiles';
-const IDB_KEY = 'todo.db';
+export const IDB_DB = 'avalonia-sqlite3';
+export const IDB_STORE = 'dbfiles';
+export const IDB_KEY = 'todo.db';
 
-function idbOpen() {
+export function idbOpen() {
     return new Promise((resolve, reject) => {
         const req = indexedDB.open(IDB_DB, 1);
         req.onupgradeneeded = () => req.result.createObjectStore(IDB_STORE);
@@ -31,7 +31,7 @@ function idbOpen() {
     });
 }
 
-async function idbPut(key, uint8) {
+export async function idbPut(key, uint8) {
     const db = await idbOpen();
     return new Promise((resolve, reject) => {
         const tx = db.transaction(IDB_STORE, 'readwrite');
@@ -44,7 +44,7 @@ async function idbPut(key, uint8) {
     });
 }
 
-async function idbGet(key) {
+export async function idbGet(key) {
     const db = await idbOpen();
     return new Promise((resolve, reject) => {
         const tx = db.transaction(IDB_STORE, 'readonly');
@@ -112,36 +112,55 @@ export async function loadSQLite() {
     // Restore saved DB (if any) into worker FS
     try {
         const saved = await idbGet(IDB_KEY);
-        const DB_FILENAME = '/todo.db';
+        const DB_FILENAME = 'todo.db';
         
         if (saved && saved.byteLength > 0) {
             console.log('Found saved DB in IndexedDB (' + saved.byteLength + ' bytes) — restoring into worker...');
             // We use our custom 'upload' message to populate the worker's MEMFS
-            await callWorker({ 
+            const uploadResp = await callWorker({ 
                 type: 'upload', 
                 args: { filename: DB_FILENAME, deserialize: saved } 
             });
-            console.log('DB bytes uploaded to worker VFS.');
+            console.log('DB bytes uploaded to worker VFS:', uploadResp);
         } else {
             console.log('No prior DB found in IndexedDB — worker will start with an empty DB.');
         }
 
         // send 'open' message to worker
+        console.log('Sending open message for:', DB_FILENAME);
         const resp = await callWorker({ type: 'open', args: { filename: DB_FILENAME } });
         if (resp && resp.type === 'open') {
-            console.log('DB opened in worker VFS.');
+            console.log('DB opened in worker VFS:', resp);
         } else {
-            console.warn('Worker open response:', resp);
+            console.warn('Worker open response (unexpected type):', resp);
         }
     } catch (e) {
-        console.error('Error opening/restoring DB in worker:', e);
+        console.error('Error opening/restoring DB in worker. Full error object:', JSON.stringify(e, null, 2));
     }
 
     // Replace global saveDatabase with one that asks the worker to export the DB and then persists to IndexedDB
     globalThis.saveDatabase = async () => {
         try {
-            const DB_FILENAME = '/todo.db';
-            console.log('Saving DB: requesting export from worker...');
+            const DB_FILENAME = 'todo.db';
+            
+            // Priority: Try to save from the main thread's .NET VFS first
+            const runtime = globalThis.window?.dotnetRuntime;
+            const dotnetFS = runtime && ((typeof runtime.getModule === 'function' ? runtime.getModule().FS : runtime.Module?.FS) || runtime.FS);
+            if (dotnetFS) {
+                try {
+                    console.log('Saving DB: reading from .NET main thread VFS...');
+                    const data = dotnetFS.readFile(DB_FILENAME);
+                    if (data && data.byteLength > 0) {
+                        await idbPut(IDB_KEY, data);
+                        console.log('DB persisted from .NET VFS to IndexedDB (' + data.byteLength + ' bytes).');
+                        return;
+                    }
+                } catch (vfsErr) {
+                    console.warn('Failed to read DB from .NET VFS (might not be created yet):', vfsErr);
+                }
+            }
+
+            console.log('Saving DB: fallback to requesting export from worker...');
             // Ask the worker to export the DB bytes back to us
             const resp = await callWorker({ type: 'export', args: { filename: DB_FILENAME } });
             // Expect the worker to respond with an object containing result.byteArray: Uint8Array

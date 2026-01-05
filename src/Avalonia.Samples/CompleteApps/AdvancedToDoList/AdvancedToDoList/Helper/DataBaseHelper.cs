@@ -94,8 +94,6 @@ public static class DataBaseHelper
             }
         }
         
-        await UpdateIndexedDbAsync();
-        
         // If we have a connection, the DbService is known to be created. Thus, we can safely surpress the null warning here. 
         // For in memory DataSource, we cannot set the _init flag to true. 
         _initialized = App.DbService!.GetDatabasePath() != ":memory:";

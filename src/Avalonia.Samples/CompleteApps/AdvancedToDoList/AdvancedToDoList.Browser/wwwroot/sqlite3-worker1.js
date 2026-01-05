@@ -46,21 +46,26 @@
                    if (data && data.type === 'upload') {
                        const args = data.args;
                        try {
+                           console.log('Worker: Handling upload for', args.filename, 'data size:', args.deserialize?.byteLength);
                            // Use the internal capi to create the file in MEMFS
                            sqlite3.capi.sqlite3_js_posix_create_file(args.filename, args.deserialize);
+                           console.log('Worker: Upload successful for', args.filename);
                            globalThis.postMessage({
                                type: 'upload',
                                messageId: data.messageId,
                                result: { filename: args.filename }
                            });
                        } catch (e) {
+                           console.error('Worker: Upload failed for', args.filename, 'Error:', e.message);
                            globalThis.postMessage({
                                type: 'error',
                                messageId: data.messageId,
-                               error: e.message
+                               error: e.message,
+                               stack: e.stack
                            });
                        }
                    } else {
+                       // console.log('Worker: Delegating message to original handler:', data.type);
                        return oldOnMessage(ev);
                    }
                };
