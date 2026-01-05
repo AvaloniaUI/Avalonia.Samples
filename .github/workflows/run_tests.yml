@@ -11,5 +11,10 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '10.0.x'
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools
+      - name: Install workloads
+        working-directory: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/
+        run: dotnet workload restore
       - name: Run build script
         run: ./scripts/builder.ps1 './src/'

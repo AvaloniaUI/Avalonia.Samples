@@ -2,7 +2,7 @@ name: Deploy AdvancedToDoList to GitHub Pages
 
 env:
   PROJECT_PATH: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
-  OUTPUT_PATH:  src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/bin/Release/net10.0-browser/wwwroot
+  OUTPUT_PATH:  src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/bin/Release/net10.0-browser/publish/wwwroot
 
 on:
   workflow_dispatch:
