@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"

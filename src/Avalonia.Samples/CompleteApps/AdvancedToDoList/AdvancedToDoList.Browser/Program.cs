@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AdvancedToDoList.Browser.Services;
 using Avalonia;
 using Avalonia.Browser;
-using AdvancedToDoList;
-using AdvancedToDoList.Browser.Services;
+
+namespace AdvancedToDoList.Browser;
 
 internal sealed partial class Program
 {
     private static Task Main(string[] args)
     {
         
-        System.Console.WriteLine("Begin");
+        Console.WriteLine("Begin");
         
         // Force the managed sqlite3 provider to avoid native e_sqlite3 on WASM
         try
@@ -18,12 +19,12 @@ internal sealed partial class Program
             SQLitePCL.Batteries_V2.Init();
             Console.WriteLine("SQLitePCL.Batteries_V2.Init()");
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-        System.Console.WriteLine("[SQLite] Provider initialized: sqlite3");
+        Console.WriteLine("[SQLite] Provider initialized: sqlite3");
         
         // Register the Browser service
         App.RegisterDbService(new BrowserDbService());

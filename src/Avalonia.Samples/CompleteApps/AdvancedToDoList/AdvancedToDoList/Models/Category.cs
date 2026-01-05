@@ -1,11 +1,10 @@
-using System;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
-using Avalonia.Media;
 using Dapper;
 
 namespace AdvancedToDoList.Models;
 
+[DapperAot]
 public record Category
 {
     /// <summary>
@@ -33,15 +32,13 @@ public record Category
         try
         {
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            Id = await connection.ExecuteScalarAsync<int?>(
+            Id = await connection.ExecuteScalarAndSyncAsync<int?>(
                 """
                 REPLACE INTO Category (Id, Name, Description, Color)
                         VALUES (@Id, @Name, @Description, @Color);
                 SELECT Last_insert_rowid();
                 """, this
             );
-
-            await DataBaseHelper.UpdateIndexedDbAsync();
             
             return Id != null;
         }
@@ -61,13 +58,11 @@ public record Category
             }
             
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            await connection.ExecuteAsync(
+            await connection.ExecuteAndSyncAsync(
                 """
                 DELETE FROM Category WHERE Id = @Id;
                 """, this
             );
-
-            await DataBaseHelper.UpdateIndexedDbAsync();
             
             return true;
         }

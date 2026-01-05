@@ -1,10 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using AdvancedToDoList.Helper;
-using AdvancedToDoList.Models;
-using Avalonia.Media;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SharedControls.Controls;
 using SharedControls.Services;
@@ -52,14 +48,32 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
         }
         else
         {
-            await this.ShowOverlayDialogAsync<bool>("Error", "An error occurred while saving the category.", DialogCommands.Ok);
+            await this.ShowOverlayDialogAsync<DialogResult>("Error", "An error occurred while saving the category.", DialogCommands.Ok);
         }
     }
 
     [RelayCommand]
     private async Task CancelAsync()
     {
-        // TODO ask user for confirmation
-        this.ReturnResultFromOverlayDialog(null);
+        var userResponse = await this.ShowOverlayDialogAsync<DialogResult>(
+            "Save changes?", 
+            "Do you want to save the changes before closing this dialog?", 
+            DialogCommands.YesNoCancel);
+
+        switch (userResponse)
+        {
+            case DialogResult.Yes:
+                // This will also automatically close the dialog.
+                await this.SaveAsync();
+                break;
+            case DialogResult.No:
+                this.ReturnResultFromOverlayDialog(null);
+                break;
+            case DialogResult.Cancel:
+                // Do nothing if the dialog was canceled
+                return;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }

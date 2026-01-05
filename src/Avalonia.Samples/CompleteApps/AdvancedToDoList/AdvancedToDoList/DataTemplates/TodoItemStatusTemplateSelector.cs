@@ -1,6 +1,5 @@
 using AdvancedToDoList.Helper;
 using AdvancedToDoList.Models;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Media;

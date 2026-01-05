@@ -79,10 +79,10 @@ sealed class Program
             Trace.Listeners.Add(new SerilogTraceListener.SerilogTraceListener());
 
             // Listen to unhandled exceptions
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
                 Log.Fatal(e.ExceptionObject as Exception, "[FATAL] Unhandled exception in AppDomain");
 
-            TaskScheduler.UnobservedTaskException += (s, e) =>
+            TaskScheduler.UnobservedTaskException += (_, e) =>
             {
                 Log.Error(e.Exception, "[ERROR] Unobserved task exception");
                 e.SetObserved();

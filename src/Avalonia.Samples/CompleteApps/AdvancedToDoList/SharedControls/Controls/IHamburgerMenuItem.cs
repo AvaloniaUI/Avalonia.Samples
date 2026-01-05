@@ -1,5 +1,4 @@
 using Avalonia.Controls.Templates;
-using Avalonia.Media;
 
 namespace SharedControls.Controls;
 

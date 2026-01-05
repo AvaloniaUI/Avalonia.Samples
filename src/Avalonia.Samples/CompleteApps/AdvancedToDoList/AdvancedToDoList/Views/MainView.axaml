@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AdvancedToDoList.ViewModels"
-             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
              mc:Ignorable="d" d:DesignWidth="690" d:DesignHeight="450"

@@ -2,7 +2,7 @@
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class MainViewModel : ViewModelBase, IDialogParticipant
+public class MainViewModel : ViewModelBase, IDialogParticipant
 {
     public ManageCategoriesViewModel CategoriesViewModel { get; } = new();
     

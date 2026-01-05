@@ -7,10 +7,10 @@ public static class _DesignData
 {
     static _DesignData()
     {
-        var categories = DataBaseHelper.GetCategoriesAsync().Result;
+        var categories = DataBaseHelper.GetCategoriesAsync().Result.ToArray();
         EditCategoryViewModel = new EditCategoryViewModel(new CategoryViewModel(categories.First()));
         
-        var toDoItems = DataBaseHelper.GetToDoItemsAsync().Result;
+        var toDoItems = DataBaseHelper.GetToDoItemsAsync().Result.ToArray();
         EditToDoItemViewModel = new EditToDoItemViewModel(new ToDoItemViewModel(toDoItems.First()), categories.Select(x => new CategoryViewModel(x)).ToList());
     }
     

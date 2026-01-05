@@ -1,5 +1,6 @@
 <linker>
     <assembly fullname="AdvancedToDoList">
+        <type fullname="AdvancedToDoList.ViewModels.ViewModelBase" preserve="all" />
         <type fullname="AdvancedToDoList.ViewModels.CategoryViewModel" preserve="all" />
         <type fullname="AdvancedToDoList.ViewModels.ToDoItemViewModel" preserve="all" />
     </assembly>

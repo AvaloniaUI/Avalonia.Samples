@@ -6,6 +6,7 @@ using AdvancedToDoList.Services;
 using Avalonia.Markup.Xaml;
 using AdvancedToDoList.ViewModels;
 using AdvancedToDoList.Views;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AdvancedToDoList;
 
@@ -47,6 +48,9 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
+    [UnconditionalSuppressMessage("Trimming", 
+        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", 
+        Justification = "This is well tested and known to work as intended.")]
     private void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove

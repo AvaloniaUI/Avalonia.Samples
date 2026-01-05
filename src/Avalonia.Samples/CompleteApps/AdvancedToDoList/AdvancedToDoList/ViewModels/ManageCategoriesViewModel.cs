@@ -18,9 +18,9 @@ namespace AdvancedToDoList.ViewModels;
 
 public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipant
 {
-    [UnconditionalSuppressMessage("Trimming", 
-        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", 
-        Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
+    [UnconditionalSuppressMessage("Trimming",
+        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
+        Justification = "Handled via rd.xml")]
     public ManageCategoriesViewModel()
     {
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
@@ -32,7 +32,7 @@ public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipa
                     .Ascending(x => x.Name ?? string.Empty)
                     .ThenByAscending(x => x.Id ?? -1))
             .Subscribe();
-        
+
         LoadData();
     }
 
@@ -41,7 +41,7 @@ public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipa
         var categories = await DataBaseHelper.GetCategoriesAsync();
         _categoriesSourceCache.AddOrUpdate(categories.Select(x => new CategoryViewModel(x)));
     }
-    
+
     private readonly SourceCache<CategoryViewModel, int> _categoriesSourceCache =
         new SourceCache<CategoryViewModel, int>(c => c.Id ?? -1);
 
@@ -52,17 +52,17 @@ public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipa
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCategoryCommand), nameof(EditCategoryCommand))]
     public partial CategoryViewModel? SelectedCategory { get; set; }
-  
+
     [RelayCommand]
     private async Task AddNewCategory()
     {
         var category = new CategoryViewModel();
-        
+
         await EditCategoryAsync(category);
     }
 
     private bool CanEditOrDeleteCategory(CategoryViewModel? category) => category != null;
-    
+
     /// <summary>
     /// Deletes the selected category.
     /// </summary>
@@ -74,17 +74,17 @@ public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipa
         {
             return;
         }
-        
-        var result = await this.ShowOverlayDialogAsync<DialogResult>("Delete category", 
+
+        var result = await this.ShowOverlayDialogAsync<DialogResult>("Delete category",
             $"Are you sure you want to delete the category '{category.Name}'?",
             DialogCommands.YesNoCancel);
-        
+
         if (result == DialogResult.Yes && await category.ToCategory().DeleteAsync())
         {
             _categoriesSourceCache.Remove(category);
         }
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteCategory))]
     private async Task EditCategoryAsync(CategoryViewModel? category)
     {

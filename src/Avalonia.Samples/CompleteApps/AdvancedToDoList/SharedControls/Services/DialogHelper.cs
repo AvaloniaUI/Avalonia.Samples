@@ -3,7 +3,6 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Platform.Storage;
-using Avalonia.Threading;
 using Avalonia.VisualTree;
 using SharedControls.Controls;
 
@@ -156,7 +155,7 @@ public static class DialogHelper
         {
             Content = content,
             Header = title,
-            DialogCommands = dialogCommands ?? []
+            DialogCommands = dialogCommands
         };
 
         // Get the owner window. If it is null, throw an exception

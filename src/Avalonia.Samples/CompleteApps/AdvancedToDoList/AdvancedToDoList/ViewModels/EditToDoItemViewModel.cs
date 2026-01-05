@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AdvancedToDoList.Helper;
-using AdvancedToDoList.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SharedControls.Controls;
 using SharedControls.Services;
@@ -13,8 +9,6 @@ namespace AdvancedToDoList.ViewModels;
 
 public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
 {
-    private readonly bool _isInitialized;
-
     public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories)
     {
         Item = toDoItem;
@@ -80,7 +74,25 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
     [RelayCommand]
     private async Task CancelAsync()
     {
-        // TODO ask user for confirmation
-        this.ReturnResultFromOverlayDialog(null);
+        var userResponse = await this.ShowOverlayDialogAsync<DialogResult>(
+            "Save changes?", 
+            "Do you want to save the changes before closing this dialog?", 
+            DialogCommands.YesNoCancel);
+
+        switch (userResponse)
+        {
+            case DialogResult.Yes:
+                // This will also automatically close the dialog.
+                await this.SaveAsync();
+                break;
+            case DialogResult.No:
+                this.ReturnResultFromOverlayDialog(null);
+                break;
+            case DialogResult.Cancel:
+                // Do nothing if the dialog was canceled
+                return;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }

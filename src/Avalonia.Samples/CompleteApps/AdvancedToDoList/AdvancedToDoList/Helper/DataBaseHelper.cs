@@ -11,16 +11,17 @@ using Microsoft.Data.Sqlite;
 
 namespace AdvancedToDoList.Helper;
 
+[DapperAot]
 public static class DataBaseHelper
 {
     static DataBaseHelper()
     {
         // Register a type handler to map between SQLite INTEGER (Int64) and our Priority enum
-        SqlMapper.AddTypeHandler<Priority>(new PriorityTypeHandler());
+        SqlMapper.AddTypeHandler(new PriorityTypeHandler());
     }
 
     private static bool _initialized;
-
+    
     internal static async Task<SqliteConnection> GetOpenConnection()
     {
         if (Design.IsDesignMode && App.DbService == null)
@@ -49,7 +50,69 @@ public static class DataBaseHelper
         
         return connection;
     }
+    
+    /// <summary>
+    /// Executes a scalar query and then syncs the DB if needed.
+    /// </summary>
+    /// <remarks>
+    /// Wasm uses IndexedDB to store the data. This needs to be synced.
+    /// This helper will do it for us.
+    /// </remarks>
+    public static async Task<T?> ExecuteScalarAndSyncAsync<T>(
+        this IDbConnection conn,
+        string sql,
+        object? param = null)
+    {
+        var result = await conn.ExecuteScalarAsync<T>(sql, param);
+        await UpdateIndexedDbAsync();
+        return result;
+    }
 
+    /// <summary>
+    /// Executes a non‑scalar query and then syncs the DB if needed.
+    /// </summary>
+    /// <remarks>
+    /// Wasm uses IndexedDB to store the data. This needs to be synced.
+    /// This helper will do it for us.
+    /// </remarks>
+    public static async Task<int> ExecuteAndSyncAsync(
+        this IDbConnection conn,
+        string sql,
+        object? param = null)
+    {
+        var affected = await conn.ExecuteAsync(sql, param);
+        await UpdateIndexedDbAsync();
+        return affected;
+    }
+    
+    public static async Task<IEnumerable<Category>> GetCategoriesAsync()
+    {
+        await using var connection = await GetOpenConnection();
+        return (await connection.QueryAsync<Category>("SELECT * FROM Category"));
+    }
+
+    public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
+    {
+        Console.WriteLine("GetToDoItemsAsync");
+        await using var connection = await GetOpenConnection();
+        const string sql = """
+                           SELECT t.*, c.*
+                           FROM ToDoItem t
+                           LEFT JOIN Category c ON t.CategoryId = c.Id
+                           WHERE t.Progress < 100 OR @loadAlsoCompletedItems;
+                           """;
+
+        return await connection.QueryAsync<ToDoItem, Category, ToDoItem>(
+            sql,
+            (toDoItem, category) =>
+            {
+                toDoItem.Category = category;
+                return toDoItem;
+            },
+            splitOn: "Id", 
+            param: new {loadAlsoCompletedItems});
+    }
+    
     private static async Task EnsureInitializedAsync(SqliteConnection connection)
     {
         if (_initialized) return;
@@ -99,39 +162,11 @@ public static class DataBaseHelper
         _initialized = App.DbService!.GetDatabasePath() != ":memory:";
     }
 
-    internal static async Task UpdateIndexedDbAsync()
+    private static async Task UpdateIndexedDbAsync()
     {
         if (App.DbService == null) 
             return;
         await App.DbService.SaveAsync();
-    }
-    
-    public static async Task<IEnumerable<Category>> GetCategoriesAsync()
-    {
-        await using var connection = await GetOpenConnection();
-        return (await connection.QueryAsync<Category>("SELECT * FROM Category"));
-    }
-
-    public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
-    {
-        Console.WriteLine("GetToDoItemsAsync");
-        await using var connection = await GetOpenConnection();
-        const string sql = """
-                           SELECT t.*, c.*
-                           FROM ToDoItem t
-                           LEFT JOIN Category c ON t.CategoryId = c.Id
-                           WHERE t.Progress < 100 OR @loadAlsoCompletedItems;
-                           """;
-
-        return await connection.QueryAsync<ToDoItem, Category, ToDoItem>(
-            sql,
-            (toDoItem, category) =>
-            {
-                toDoItem.Category = category;
-                return toDoItem;
-            },
-            splitOn: "Id", 
-            param: new {loadAlsoCompletedItems});
     }
 
     private static async Task AddSampleDataAsync(SqliteConnection connection)

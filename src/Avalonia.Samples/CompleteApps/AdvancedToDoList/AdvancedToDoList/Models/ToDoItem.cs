@@ -5,6 +5,7 @@ using Dapper;
 
 namespace AdvancedToDoList.Models;
 
+[DapperAot]
 public class ToDoItem
 {
     /// <summary>
@@ -46,7 +47,7 @@ public class ToDoItem
     /// <summary>
     /// Gets or sets the Progress of the ToDoItem. The default value is 0.
     /// </summary>
-    public int Progress { get; set; } = 0;
+    public int Progress { get; set; }
     
     /// <summary>
     /// Gets or sets the CreatedDate of the ToDoItem. The default value is now.
@@ -63,14 +64,14 @@ public class ToDoItem
         try
         {
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            Id = await connection.ExecuteScalarAsync<int?>(
+            Id = await connection.ExecuteScalarAndSyncAsync<int?>(
                 """
                 REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate)
                         VALUES (@Id, @CategoryId, @Title, @Priority, @Description, @DueDate, @Progress, @CreatedDate, @CompletedDate);
                 SELECT Last_insert_rowid();
                 """, this
             );
-
+            
             return Id != null;
         }
         catch
@@ -87,7 +88,7 @@ public class ToDoItem
                 return false;
             
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            await connection.ExecuteAsync(
+            await connection.ExecuteAndSyncAsync(
                 """
                 DELETE FROM ToDoItem WHERE Id = @Id;
                 """, this

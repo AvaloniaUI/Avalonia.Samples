@@ -111,13 +111,6 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="HamburgerMenuNavigationListBox"
-                  BasedOn="{StaticResource {x:Type ListBox}}"
-                  TargetType="ListBox">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="ItemContainerTheme" Value="{StaticResource HamburgerMenuNavigationListBoxItem}" />
-    </ControlTheme>
-
     <ControlTheme x:Key="HamburgerMenuNavigationListBoxItem" TargetType="ListBoxItem">
         <Setter Property="IsEnabled" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Enabled}"></Setter>
         <Setter Property="ToolTip.Tip" x:DataType="controls:IHamburgerMenuItem" Value="{Binding Label}"></Setter>
@@ -175,6 +168,13 @@
         </Style>
     </ControlTheme>
 
+    <ControlTheme x:Key="HamburgerMenuNavigationListBox"
+                  BasedOn="{StaticResource {x:Type ListBox}}"
+                  TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource HamburgerMenuNavigationListBoxItem}" />
+    </ControlTheme>
+    
     <ControlTheme x:Key="{x:Type controls:HamburgerMenu}" TargetType="controls:HamburgerMenu">
         <Setter Property="Header" Value="{Binding $self.SelectedMenuItem.Label}" />
         <Setter Property="Content" Value="{Binding $self.SelectedMenuItem.Tag}" />

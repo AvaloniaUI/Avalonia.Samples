@@ -42,16 +42,17 @@
                                           FontStyle="{TemplateBinding FontStyle}"
                                           FontWeight="{TemplateBinding FontWeight}"
                                           Target="{Binding #PART_ContentPresenter.Child}" />
-                        <ContentPresenter  Name="PART_ContentPresenter"
-                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Content="{TemplateBinding Content}"
-                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                           FontFamily="{TemplateBinding FontFamily}"
-                                           FontSize="{TemplateBinding FontSize}"
-                                           FontStyle="{TemplateBinding FontStyle}"
-                                           FontWeight="{TemplateBinding FontWeight}"
-                                           RecognizesAccessKey="True" />
+                        <ContentPresenter Grid.Row="1" Grid.Column="0" 
+                                          Name="PART_ContentPresenter"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          RecognizesAccessKey="True" />
                     </Grid>
                 </Border>
             </ControlTemplate>

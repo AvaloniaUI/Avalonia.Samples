@@ -1,11 +1,6 @@
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Avalonia.Data;
-using Avalonia.Data.Converters;
 using Avalonia.Metadata;
-using Avalonia.Styling;
 
 namespace SharedControls.Controls;
 
