@@ -166,10 +166,11 @@
                           RowDefinitions="Auto, Auto, Auto"
                           RowSpacing="3"
                           ColumnSpacing="5">
-                        <StackPanel Grid.Row="0"
+                        <WrapPanel Grid.Row="0"
                                     Grid.Column="0"
                                     Orientation="Horizontal"
-                                    Spacing="5">
+                                    ItemSpacing="5"
+                                    LineSpacing="3">
                             <ContentControl
                                 Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
 
@@ -184,7 +185,7 @@
                                     <ContentControl Content="{Binding Priority, StringFormat='Priority: {0}'}" />
                             </StackPanel>
                             </Border>
-                        </StackPanel>
+                        </WrapPanel>
 
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"

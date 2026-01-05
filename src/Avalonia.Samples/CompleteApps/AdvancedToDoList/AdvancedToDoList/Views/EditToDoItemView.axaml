@@ -54,23 +54,6 @@
                             </DataTemplate>
                         </ComboBox.SelectionBoxItemTemplate>
                     </ComboBox>
-                    <!-- <DropDownButton Content="{Binding Category}" -->
-                    <!--                 HorizontalAlignment="Stretch" -->
-                    <!--                 > -->
-                    <!--     <DropDownButton.Flyout> -->
-                    <!--         <Flyout> -->
-                    <!--             <Grid RowDefinitions="*, Auto"> -->
-                    <!--                 <ListBox  -->
-                    <!--                     ItemsSource="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AvailableCategories}" -->
-                    <!--                     SelectedItem="{Binding Category}" -->
-                    <!--                     SelectionMode="Single" /> -->
-                    <!--                 <UniformGrid Columns="2"> -->
-                    <!--                     <Button Content="New Category"></Button> -->
-                    <!--                 </UniformGrid> -->
-                    <!--             </Grid> -->
-                    <!--         </Flyout> -->
-                    <!--     </DropDownButton.Flyout> -->
-                    <!-- </DropDownButton> -->
                 </controls:LabeledControl>
 
                 <!--  Description  -->

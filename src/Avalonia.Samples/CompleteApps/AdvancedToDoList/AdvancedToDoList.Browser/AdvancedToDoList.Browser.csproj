@@ -12,7 +12,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
     <!-- Use WASM-safe SQLite provider/lib and exclude native e_sqlite3 -->
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
   </ItemGroup>
 
   <ItemGroup>
