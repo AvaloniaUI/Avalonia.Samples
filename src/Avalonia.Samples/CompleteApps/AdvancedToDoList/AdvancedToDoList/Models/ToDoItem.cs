@@ -5,7 +5,6 @@ using Dapper;
 
 namespace AdvancedToDoList.Models;
 
-[DapperAot]
 public class ToDoItem
 {
     /// <summary>
@@ -32,7 +31,7 @@ public class ToDoItem
     /// <summary>
     /// Gets or sets the Priority of the ToDoItem. The default value is Medium.
     /// </summary>
-    public Priority Priority { get; set; } = Priority.Medium;
+    public int Priority { get; set; } = (int)Models.Priority.Medium;
     
     /// <summary>
     /// Gets or sets the Description of the ToDoItem. This property is optional.

@@ -24,7 +24,7 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
             ? new CategoryViewModel(toDoItem.Category) 
             : CategoryViewModel.Empty;
         Title = toDoItem.Title;
-        Priority = toDoItem.Priority;
+        Priority = (Priority)toDoItem.Priority;
         Description = toDoItem.Description;
         DueDate = toDoItem.DueDate;
         Progress = toDoItem.Progress;
@@ -142,7 +142,7 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
         CategoryId = Category.Id,
         Category = Category.ToCategory(),
         Progress = Progress,
-        Priority = Priority,
+        Priority = (int)Priority,
         DueDate = DueDate,
         CreatedDate = CreatedDate,
         CompletedDate = CompletedDate,

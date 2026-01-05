@@ -1,7 +1,10 @@
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AdvancedToDoList.Models;
 using AdvancedToDoList.Services;
@@ -9,17 +12,12 @@ using Avalonia.Controls;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
+[module: DapperAot]
+
 namespace AdvancedToDoList.Helper;
 
-[DapperAot]
 public static class DataBaseHelper
 {
-    static DataBaseHelper()
-    {
-        // Register a type handler to map between SQLite INTEGER (Int64) and our Priority enum
-        SqlMapper.AddTypeHandler(new PriorityTypeHandler());
-    }
-
     private static bool _initialized;
     
     internal static async Task<SqliteConnection> GetOpenConnection()
@@ -96,21 +94,25 @@ public static class DataBaseHelper
         Console.WriteLine("GetToDoItemsAsync");
         await using var connection = await GetOpenConnection();
         const string sql = """
-                           SELECT t.*, c.*
-                           FROM ToDoItem t
-                           LEFT JOIN Category c ON t.CategoryId = c.Id
-                           WHERE t.Progress < 100 OR @loadAlsoCompletedItems;
+                           SELECT *
+                           FROM ToDoItem 
+                           WHERE Progress < 100 OR @loadAlsoCompletedItems;
                            """;
 
-        return await connection.QueryAsync<ToDoItem, Category, ToDoItem>(
+        var toDoItems = await connection.QueryAsync<ToDoItem>(
             sql,
-            (toDoItem, category) =>
-            {
-                toDoItem.Category = category;
-                return toDoItem;
-            },
-            splitOn: "Id", 
-            param: new {loadAlsoCompletedItems});
+            new {loadAlsoCompletedItems});
+        
+        var categories = await connection.QueryAsync<Category>("SELECT * FROM Category");
+        var categoriesDict = new Dictionary<int, Category>(
+            categories.Select(x => new KeyValuePair<int, Category>(x.Id ?? -1, x)));
+        
+        foreach (var item in toDoItems)
+        {
+            item.Category = categoriesDict.GetValueOrDefault(item.CategoryId ?? -1);
+        }
+        
+        return toDoItems;
     }
     
     private static async Task EnsureInitializedAsync(SqliteConnection connection)
@@ -183,30 +185,5 @@ public static class DataBaseHelper
             (null, 5, 'Item 3', 2, 'A completed item', '2026-01-02', 100, '2026-01-02', null);
             """
         );
-    }
-}
-
-public class PriorityTypeHandler : SqlMapper.TypeHandler<Priority>
-{
-    public override void SetValue(IDbDataParameter parameter, Priority value)
-    {
-        // Store enum as integer value in SQLite
-        parameter.Value = (int)value;
-    }
-
-    public override Priority Parse(object value)
-    {
-        // SQLite returns INTEGER as Int64 by default; handle common representations robustly
-        return value switch
-        {
-            null => default,
-            DBNull => default,
-            long l => (Priority)(int)l,
-            int i => (Priority)i,
-            short s => (Priority)s,
-            byte b => (Priority)b,
-            string str when int.TryParse(str, out var parsed) => (Priority)parsed,
-            _ => default
-        };
     }
 }

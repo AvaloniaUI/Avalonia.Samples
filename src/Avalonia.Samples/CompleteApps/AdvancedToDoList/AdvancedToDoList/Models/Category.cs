@@ -4,7 +4,6 @@ using Dapper;
 
 namespace AdvancedToDoList.Models;
 
-[DapperAot]
 public record Category
 {
     /// <summary>

@@ -61,6 +61,7 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
     private async Task LoadDataAsync()
     {
         var toDoItems = await DataBaseHelper.GetToDoItemsAsync(ShowAlsoCompletedItems);
+        
         _toDoItemsSourceCache.AddOrUpdate(toDoItems.Select(x => new ToDoItemViewModel(x)));
     }
 
