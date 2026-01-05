@@ -13,8 +13,8 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Install workloads
         run: |
-          dotnet workload install wasm-tools |
-          dotnet workload install android |
+          dotnet workload install wasm-tools 
+          dotnet workload install android 
           dotnet workload install ios
 
       - name: Run build script
