@@ -112,22 +112,24 @@ export async function loadSQLite() {
     // Restore saved DB (if any) into worker FS
     try {
         const saved = await idbGet(IDB_KEY);
+        const openArgs = { filename: '/data/todo.db' };
+        
         if (saved && saved.byteLength > 0) {
             console.log('Found saved DB in IndexedDB (' + saved.byteLength + ' bytes) — restoring into worker...');
-            // send 'restore-db' message to worker; worker should write the bytes into its VFS
-            // message shape: { type: 'restore-db', args: { path: '/data/todo.db', data: Uint8Array } }
-            // note: promiser posts as structured clone (no transfer list); it's fine.
-            const resp = await callWorker({ type: 'restore-db', args: { path: '/data/todo.db', data: saved } });
-            if (resp && (resp.result === 'ok' || resp.ok)) {
-                console.log('DB restored into worker VFS.');
-            } else {
-                console.warn('Worker restore-db response:', resp);
-            }
+            openArgs.deserialize = saved;
         } else {
             console.log('No prior DB found in IndexedDB — worker will start with an empty DB.');
         }
+
+        // send 'open' message to worker; worker should load the bytes if provided
+        const resp = await callWorker({ type: 'open', args: openArgs });
+        if (resp && resp.type === 'open') {
+            console.log('DB opened in worker VFS' + (openArgs.deserialize ? ' (restored from bytes).' : '.'));
+        } else {
+            console.warn('Worker open response:', resp);
+        }
     } catch (e) {
-        console.error('Error restoring DB into worker:', e);
+        console.error('Error opening/restoring DB in worker:', e);
     }
 
     // Replace global saveDatabase with one that asks the worker to export the DB and then persists to IndexedDB
@@ -135,10 +137,10 @@ export async function loadSQLite() {
         try {
             console.log('Saving DB: requesting export from worker...');
             // Ask the worker to export the DB bytes back to us
-            // message: { type: 'export-db', args: { path: '/data/todo.db' } }
-            const resp = await callWorker({ type: 'export-db', args: { path: '/data/todo.db' } });
-            // Expect the worker to respond with an object containing data: Uint8Array (or ArrayBuffer)
-            const data = resp?.data ?? resp?.args?.data ?? resp?.resultData;
+            // message: { type: 'export', args: { filename: '/data/todo.db' } }
+            const resp = await callWorker({ type: 'export', args: { filename: '/data/todo.db' } });
+            // Expect the worker to respond with an object containing result.byteArray: Uint8Array
+            const data = resp?.result?.byteArray;
             if (!data) {
                 throw new Error('Worker did not return exported DB bytes (response: ' + JSON.stringify(resp) + ')');
             }
