@@ -26,12 +26,21 @@
                                         Tag="{Binding CategoriesViewModel}"/>
         </controls:HamburgerMenu.MenuItems>
 
+        <controls:HamburgerMenu.OptionsMenuItems>
+            <controls:HamburgerMenuItem Label="Settings"
+                                        Icon="{DynamicResource PhosphorIcons.GearLight}"
+                                        Tag="{Binding SettingsViewModel}" />
+        </controls:HamburgerMenu.OptionsMenuItems>
+        
         <controls:HamburgerMenu.DataTemplates>
             <DataTemplate DataType="vm:ManageToDoItemsViewModel">
                 <views:ManageToDoItemsView />
             </DataTemplate>
             <DataTemplate DataType="vm:ManageCategoriesViewModel">
                 <views:ManageCategoriesView />
+            </DataTemplate>
+            <DataTemplate DataType="vm:SettingsViewModel">
+                <views:SettingsView />
             </DataTemplate>
         </controls:HamburgerMenu.DataTemplates>
     </controls:HamburgerMenu>

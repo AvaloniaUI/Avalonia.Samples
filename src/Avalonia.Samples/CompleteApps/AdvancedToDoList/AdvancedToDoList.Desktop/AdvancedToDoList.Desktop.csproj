@@ -23,6 +23,11 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+    
+    <!-- Logging -->
+    <PackageReference Include="Serilog"/>
+    <PackageReference Include="Serilog.Sinks.File"/>
+    <PackageReference Include="SerilogTraceListener"/>
   </ItemGroup>
 
   <ItemGroup>

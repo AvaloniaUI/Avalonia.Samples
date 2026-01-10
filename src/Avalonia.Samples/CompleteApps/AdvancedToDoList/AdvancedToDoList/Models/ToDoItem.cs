@@ -1,26 +1,29 @@
 using System;
+using System.Diagnostics;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
 using Dapper;
 
 namespace AdvancedToDoList.Models;
 
-public class ToDoItem
+public record ToDoItem
 {
     /// <summary>
     /// Gets or sets the Id of the ToDoItem.
     /// </summary>
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     
     /// <summary>
     /// Gets or sets the Category of the ToDoItem.
     /// </summary>
+    [JsonIgnore]
     public Category? Category { get; set; }
 
     /// <summary>
     /// Foreign key to the related Category (nullable).
     /// </summary>
-    public int? CategoryId { get; set; }
+    public long? CategoryId { get; set; }
     
     /// <summary>
     /// Gets or sets the Title of the ToDoItem.
@@ -63,18 +66,21 @@ public class ToDoItem
         try
         {
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            Id = await connection.ExecuteScalarAndSyncAsync<int?>(
+            Id = await connection.ExecuteScalarAsync<long?>(
                 """
                 REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate)
                         VALUES (@Id, @CategoryId, @Title, @Priority, @Description, @DueDate, @Progress, @CreatedDate, @CompletedDate);
                 SELECT Last_insert_rowid();
-                """, this
+                """, this //{ Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate }
             );
+            
+            await DataBaseHelper.SyncUnderlyingDatabaseAsync();
             
             return Id != null;
         }
-        catch
+        catch (Exception e)
         {
+            Trace.TraceError(e.Message);
             return false;
         }
     }
@@ -87,12 +93,14 @@ public class ToDoItem
                 return false;
             
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            await connection.ExecuteAndSyncAsync(
+            await connection.ExecuteAsync(
                 """
                 DELETE FROM ToDoItem WHERE Id = @Id;
                 """, this
             );
 
+            await DataBaseHelper.SyncUnderlyingDatabaseAsync();
+            
             return true;
         }
         catch

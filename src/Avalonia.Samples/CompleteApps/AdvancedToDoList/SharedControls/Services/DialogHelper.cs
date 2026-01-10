@@ -18,12 +18,14 @@ public static class DialogHelper
     /// </summary>
     /// <param name="context">The context</param>
     /// <param name="title">The dialog title or a default is null</param>
+    /// <param name="fileTypes">A list of <see cref="FilePickerFileType"/> to choose</param>
     /// <param name="selectMany">Is selecting many files allowed?</param>
     /// <returns>An array of file names</returns>
     /// <exception cref="ArgumentNullException">if context was null</exception>
-    public static async Task<IEnumerable<string>?> OpenFileDialogAsync(this IDialogParticipant? context,
+    public static async Task<IEnumerable<IStorageFile>?> OpenFileDialogAsync(this IDialogParticipant? context,
         string? title = null,
-        bool selectMany = true)
+        FilePickerFileType[]? fileTypes = null,
+        bool selectMany = false)
     {
         ArgumentNullException.ThrowIfNull(context);
 
@@ -36,11 +38,50 @@ public static class DialogHelper
             new FilePickerOpenOptions()
             {
                 AllowMultiple = selectMany,
+                FileTypeFilter =  fileTypes,
                 Title = title ?? "Select any file(s)"
             });
 
         // return the result
-        return storageFiles.Select(s => s.Name);
+        return storageFiles;
+    }
+
+    /// <summary>
+    /// Shows an open file dialog for a registered context, most likely a ViewModel
+    /// </summary>
+    /// <param name="context">The context</param>
+    /// <param name="title">The dialog title or a default is null</param>
+    /// <param name="fileTypes">A list of <see cref="FilePickerFileType"/> to choose</param>
+    /// /// <param name="defaultExtension">The default extension to use</param>
+    /// <param name="suggestedFileName">The suggested file name</param>
+    
+    /// <returns>An array of file names</returns>
+    /// <exception cref="ArgumentNullException">if context was null</exception>
+    public static async Task<SaveFilePickerResult?> SafeFileDialogAsync(this IDialogParticipant? context,
+        string? title = null,
+        FilePickerFileType[]? fileTypes = null,
+        string? defaultExtension = null,
+        string? suggestedFileName = null)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        // lookup the TopLevel for the context. If no TopLevel was found, we throw an exception
+        var topLevel = DialogManager.GetTopLevelForContext(context)
+                       ?? throw new InvalidOperationException("No TopLevel was resolved for the given context.");
+
+        // Open the file dialog
+        var storageFile = await topLevel.StorageProvider.SaveFilePickerWithResultAsync(
+            new FilePickerSaveOptions()
+            {
+                Title = title ?? "Save file as",
+                DefaultExtension = defaultExtension,
+                FileTypeChoices = fileTypes,
+                ShowOverwritePrompt = true,
+                SuggestedFileName = suggestedFileName
+            });
+
+        // return the result
+        return storageFile;
     }
 
     /// <summary>
@@ -171,7 +212,7 @@ public static class DialogHelper
         
         overlayLayer.Children.Remove(overlayDialog);
         
-        return (T?)result;
+        return result is T ? (T)result : default;
     }
     
     /// <summary>

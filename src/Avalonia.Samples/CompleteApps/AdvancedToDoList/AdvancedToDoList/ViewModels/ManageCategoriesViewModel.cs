@@ -42,8 +42,8 @@ public partial class ManageCategoriesViewModel : ViewModelBase, IDialogParticipa
         _categoriesSourceCache.AddOrUpdate(categories.Select(x => new CategoryViewModel(x)));
     }
 
-    private readonly SourceCache<CategoryViewModel, int> _categoriesSourceCache =
-        new SourceCache<CategoryViewModel, int>(c => c.Id ?? -1);
+    private readonly SourceCache<CategoryViewModel, long> _categoriesSourceCache =
+        new SourceCache<CategoryViewModel, long>(c => c.Id ?? -1);
 
     private readonly ReadOnlyObservableCollection<CategoryViewModel> _categories;
 

@@ -185,3 +185,12 @@ export async function loadSQLite() {
 
     console.log('SQLite worker initialized; manual persistence enabled (IndexedDB fallback).');
 }
+
+// Save Settings helper
+export function setItem(key, value) {
+    localStorage.setItem(key, value);
+}
+
+export function getItem(key) {
+    return localStorage.getItem(key);
+}

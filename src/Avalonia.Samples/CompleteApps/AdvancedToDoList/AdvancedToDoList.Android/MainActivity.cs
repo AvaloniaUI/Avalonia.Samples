@@ -3,6 +3,8 @@ using Android.Content.PM;
 using Avalonia;
 using Avalonia.Android;
 using AdvancedToDoList.Android.Services;
+using AdvancedToDoList.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdvancedToDoList.Android;
 
@@ -17,7 +19,11 @@ public class MainActivity : AvaloniaMainActivity<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         // Register the Android service
-        App.RegisterDbService(new AndroidDbService());
+        var services = new ServiceCollection();
+        services.AddSingleton<IDbService>(new AndroidDbService());
+        services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
+        
+        App.RegisterAppServices(services);
 
         return base.CustomizeAppBuilder(builder)
             .WithInterFont();

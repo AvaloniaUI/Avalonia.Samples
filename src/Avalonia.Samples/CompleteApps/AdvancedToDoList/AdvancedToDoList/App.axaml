@@ -6,7 +6,9 @@
              xmlns:themes="clr-namespace:SharedControls.Themes;assembly=SharedControls"
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
-             RequestedThemeVariant="Light">
+             xmlns:properties="clr-namespace:AdvancedToDoList.Properties"
+             x:DataType="viewModels:SettingsViewModel"
+             RequestedThemeVariant="{Binding AppTheme, Source={x:Static properties:Settings.Default}}">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
     <Application.DataTemplates>
@@ -43,7 +45,14 @@
     </Application.Resources>
 
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark"
+                                       Accent="DarkRed"/>
+                <ColorPaletteResources x:Key="Light"
+                                       Accent="DarkRed"/>
+            </FluentTheme.Palettes>
+        </FluentTheme>
         <themes:SharedControlTheme />
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
 

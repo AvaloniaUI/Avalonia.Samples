@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -65,8 +65,8 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
         _toDoItemsSourceCache.AddOrUpdate(toDoItems.Select(x => new ToDoItemViewModel(x)));
     }
 
-    private readonly SourceCache<ToDoItemViewModel, int> _toDoItemsSourceCache =
-        new SourceCache<ToDoItemViewModel, int>(x => x.Id ?? -1);
+    private readonly SourceCache<ToDoItemViewModel, long> _toDoItemsSourceCache =
+        new SourceCache<ToDoItemViewModel, long>(x => x.Id ?? -1);
 
     private readonly ReadOnlyObservableCollection<ToDoItemViewModel> _toDoItems;
 

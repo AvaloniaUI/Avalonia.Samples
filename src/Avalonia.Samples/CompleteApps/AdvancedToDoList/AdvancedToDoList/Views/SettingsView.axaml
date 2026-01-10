@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             services:DialogManager.Register="{Binding}"
+             x:DataType="viewModels:SettingsViewModel"
+             x:Class="AdvancedToDoList.Views.SettingsView">
+    <Design.DataContext>
+        <viewModels:SettingsViewModel />
+    </Design.DataContext>
+    <ScrollViewer MaxWidth="400">
+        <StackPanel Spacing="10" 
+                    Grid.IsSharedSizeScope="True"
+                    Margin="10">
+            
+            <TextBlock Classes="h1" Text="Appearance"></TextBlock>
+            
+            <controls:LabeledControl Header="Theme">
+                <ComboBox SelectedItem="{Binding Settings.AppTheme}"
+                          ItemsSource="{Binding AvailableThemeVariants}"/>
+            </controls:LabeledControl>
+            
+            <controls:LabeledControl Header="Accent">
+                <ColorPicker Color="{Binding Settings.AccentColor}"
+                             HorizontalAlignment="Left"
+                             IsAlphaEnabled="False"
+                             IsAlphaVisible="False" />
+            </controls:LabeledControl>
+            
+            <TextBlock Classes="h1" Text="Import / Export" />
+            <Button HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding ExportDataCommand}"
+                    Content="Export the current To-Do list"></Button>
+            <Button HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding ImportDataCommand}"
+                    Content="Import an existing To-Do list"></Button>
+            
+            <TextBlock Classes="h1" Text="DANGER Zone" />
+            <Button HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Content="Clear the current To-Do list" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

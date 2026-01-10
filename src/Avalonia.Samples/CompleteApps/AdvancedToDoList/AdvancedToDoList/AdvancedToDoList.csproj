@@ -9,6 +9,7 @@
     <PropertyGroup>
         <!--    Enable Dapper.AOT-->
         <InterceptorsPreviewNamespaces>$(InterceptorsPreviewNamespaces);Dapper.AOT</InterceptorsPreviewNamespaces>
+        <InterceptorsNamespaces>$(InterceptorsNamespaces);Dapper.AOT</InterceptorsNamespaces>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,11 +35,7 @@
         <PackageReference Include="DynamicData"/>
         <PackageReference Include="Microsoft.Data.Sqlite"/>
         <PackageReference Include="Dapper"/>
-
-        <!-- Logging -->
-        <PackageReference Include="Serilog"/>
-        <PackageReference Include="Serilog.Sinks.File"/>
-        <PackageReference Include="SerilogTraceListener"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     </ItemGroup>
 
     <ItemGroup>

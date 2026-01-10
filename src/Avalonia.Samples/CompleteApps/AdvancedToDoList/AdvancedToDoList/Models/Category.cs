@@ -9,7 +9,7 @@ public record Category
     /// <summary>
     /// Gets or sets the Id of the category.
     /// </summary>
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     
     /// <summary>
     /// Gets or sets the name of the category.
@@ -31,13 +31,15 @@ public record Category
         try
         {
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            Id = await connection.ExecuteScalarAndSyncAsync<int?>(
+            Id = await connection.ExecuteScalarAsync<long?>(
                 """
                 REPLACE INTO Category (Id, Name, Description, Color)
                         VALUES (@Id, @Name, @Description, @Color);
                 SELECT Last_insert_rowid();
                 """, this
             );
+            
+            await DataBaseHelper.SyncUnderlyingDatabaseAsync();
             
             return Id != null;
         }
@@ -57,11 +59,13 @@ public record Category
             }
             
             await using var connection = await DataBaseHelper.GetOpenConnection();
-            await connection.ExecuteAndSyncAsync(
+            await connection.ExecuteAsync(
                 """
                 DELETE FROM Category WHERE Id = @Id;
                 """, this
             );
+            
+            await DataBaseHelper.SyncUnderlyingDatabaseAsync();
             
             return true;
         }

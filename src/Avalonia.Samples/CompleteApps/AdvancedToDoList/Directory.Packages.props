@@ -32,10 +32,13 @@
     <PackageVersion Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
     <PackageVersion Include="SQLitePCLRaw.core" Version="2.1.9" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0" />
-    <PackageVersion Include="System.Reactive" Version="6.1.0" />
+
     <!-- Logging packages -->
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="SerilogTraceListener" Version="3.2.0" />
+
+    <PackageVersion Include="System.Reactive" Version="6.1.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 </Project>

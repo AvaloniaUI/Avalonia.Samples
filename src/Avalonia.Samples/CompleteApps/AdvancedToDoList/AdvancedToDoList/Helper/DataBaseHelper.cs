@@ -1,16 +1,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AdvancedToDoList.Models;
 using AdvancedToDoList.Services;
 using Avalonia.Controls;
 using Dapper;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 
 [module: DapperAot]
 
@@ -22,15 +22,14 @@ public static class DataBaseHelper
     
     internal static async Task<SqliteConnection> GetOpenConnection()
     {
-        if (Design.IsDesignMode && App.DbService == null)
+        if (Design.IsDesignMode)
         {
-            App.RegisterDbService(new DesignDbService());
+            Console.WriteLine(App.Services.GetService<IDbService>() is not null ? "Service found" : "Service not found");
         }
 
-        if (App.DbService == null)
-            throw new InvalidOperationException("Database service not registered.");
+        var dbService = App.Services.GetRequiredService<IDbService>();
 
-        var dbPath = App.DbService.GetDatabasePath();
+        var dbPath = dbService.GetDatabasePath();
         var dbSource = $"Data Source='{dbPath}'";
 
         // Ensure the directory exists for the database file
@@ -48,40 +47,7 @@ public static class DataBaseHelper
         
         return connection;
     }
-    
-    /// <summary>
-    /// Executes a scalar query and then syncs the DB if needed.
-    /// </summary>
-    /// <remarks>
-    /// Wasm uses IndexedDB to store the data. This needs to be synced.
-    /// This helper will do it for us.
-    /// </remarks>
-    public static async Task<T?> ExecuteScalarAndSyncAsync<T>(
-        this IDbConnection conn,
-        string sql,
-        object? param = null)
-    {
-        var result = await conn.ExecuteScalarAsync<T>(sql, param);
-        await UpdateIndexedDbAsync();
-        return result;
-    }
 
-    /// <summary>
-    /// Executes a non‑scalar query and then syncs the DB if needed.
-    /// </summary>
-    /// <remarks>
-    /// Wasm uses IndexedDB to store the data. This needs to be synced.
-    /// This helper will do it for us.
-    /// </remarks>
-    public static async Task<int> ExecuteAndSyncAsync(
-        this IDbConnection conn,
-        string sql,
-        object? param = null)
-    {
-        var affected = await conn.ExecuteAsync(sql, param);
-        await UpdateIndexedDbAsync();
-        return affected;
-    }
     
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
@@ -99,13 +65,14 @@ public static class DataBaseHelper
                            WHERE Progress < 100 OR @loadAlsoCompletedItems;
                            """;
 
-        var toDoItems = await connection.QueryAsync<ToDoItem>(
-            sql,
-            new {loadAlsoCompletedItems});
+        var toDoItems = 
+            (await connection.QueryAsync<ToDoItem>(sql,
+            new {loadAlsoCompletedItems}))
+            .ToArray();
         
         var categories = await connection.QueryAsync<Category>("SELECT * FROM Category");
-        var categoriesDict = new Dictionary<int, Category>(
-            categories.Select(x => new KeyValuePair<int, Category>(x.Id ?? -1, x)));
+        var categoriesDict = new Dictionary<long, Category>(
+            categories.Select(x => new KeyValuePair<long, Category>(x.Id ?? -1, x)));
         
         foreach (var item in toDoItems)
         {
@@ -161,14 +128,20 @@ public static class DataBaseHelper
         
         // If we have a connection, the DbService is known to be created. Thus, we can safely surpress the null warning here. 
         // For in memory DataSource, we cannot set the _init flag to true. 
-        _initialized = App.DbService!.GetDatabasePath() != ":memory:";
+        _initialized = App.Services.GetRequiredService<IDbService>().GetDatabasePath() != ":memory:";
     }
 
-    private static async Task UpdateIndexedDbAsync()
+        
+    /// <summary>
+    /// Syncs the database with the underlying data store if needed.
+    /// </summary>
+    /// <remarks>
+    /// Wasm uses IndexedDB to store the data. This needs to be synced.
+    /// This helper will do it for us.
+    /// </remarks>
+    public static async Task SyncUnderlyingDatabaseAsync()
     {
-        if (App.DbService == null) 
-            return;
-        await App.DbService.SaveAsync();
+        await App.Services.GetRequiredService<IDbService>().SaveAsync();
     }
 
     private static async Task AddSampleDataAsync(SqliteConnection connection)
@@ -185,5 +158,21 @@ public static class DataBaseHelper
             (null, 5, 'Item 3', 2, 'A completed item', '2026-01-02', 100, '2026-01-02', null);
             """
         );
+    }
+    
+    
+    /// <summary>
+    /// Returns a JSON representation of the entire database.
+    /// </summary>
+    /// <param name="targetStream">The target Stream to save to</param>
+    public static async Task ExportToJsonAsync(Stream targetStream)
+    {
+        var dto = new DataBaseDto()
+        {
+            Categories = (await DataBaseHelper.GetCategoriesAsync()).ToArray(),
+            ToDoItems = (await DataBaseHelper.GetToDoItemsAsync(true)).ToArray()
+        };
+        
+        await JsonSerializer.SerializeAsync(targetStream, dto, JsonContextHelper.Default.DataBaseDto);
     }
 }

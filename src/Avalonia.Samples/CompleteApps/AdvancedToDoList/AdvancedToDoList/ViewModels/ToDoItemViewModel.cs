@@ -36,7 +36,7 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     /// Gets the Id of the ToDoItem. This property is read-only.
     /// </summary>
     [ObservableProperty]
-    public partial int? Id { get; private set; }
+    public partial long? Id { get; private set; }
 
     /// <summary>
     /// Gets or sets the Category of the ToDoItem.

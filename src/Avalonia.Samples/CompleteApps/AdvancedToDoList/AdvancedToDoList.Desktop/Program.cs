@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using AdvancedToDoList.Desktop.Services;
+using AdvancedToDoList.Services;
 using Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace AdvancedToDoList.Desktop;
@@ -20,14 +22,17 @@ sealed class Program
         ConfigureLogging();
         
         // Register the Desktop service
-        App.RegisterDbService(new DesktopDbService());
+        var services = new ServiceCollection();
+        services.AddSingleton<IDbService>(new DesktopDbService());
+        services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
+        
+        App.RegisterAppServices(services);
         
         try
         {
             // Just a hint for us to see if the App is AOT compiled
             Log.Information("Starting Avalonia app (AOT={AOT})",
                 System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeCompiled == false);
-
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
         catch (Exception ex)

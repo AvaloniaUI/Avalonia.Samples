@@ -36,7 +36,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
     /// <summary>
     /// Gets the ID of the Category
     /// </summary>
-    public int? Id { get; }
+    public long? Id { get; }
     
     /// <summary>
     /// Gets the Name of the Category
