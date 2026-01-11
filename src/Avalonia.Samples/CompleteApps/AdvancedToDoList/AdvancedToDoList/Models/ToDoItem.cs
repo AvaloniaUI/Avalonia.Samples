@@ -65,7 +65,7 @@ public record ToDoItem
     {
         try
         {
-            await using var connection = await DataBaseHelper.GetOpenConnection();
+            await using var connection = await DataBaseHelper.GetOpenConnectionAsync();
             Id = await connection.ExecuteScalarAsync<long?>(
                 """
                 REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate)
@@ -92,7 +92,7 @@ public record ToDoItem
             if (Id == null)
                 return false;
             
-            await using var connection = await DataBaseHelper.GetOpenConnection();
+            await using var connection = await DataBaseHelper.GetOpenConnectionAsync();
             await connection.ExecuteAsync(
                 """
                 DELETE FROM ToDoItem WHERE Id = @Id;

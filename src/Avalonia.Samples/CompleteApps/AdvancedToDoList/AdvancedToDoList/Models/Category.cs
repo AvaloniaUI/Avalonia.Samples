@@ -30,7 +30,7 @@ public record Category
     {
         try
         {
-            await using var connection = await DataBaseHelper.GetOpenConnection();
+            await using var connection = await DataBaseHelper.GetOpenConnectionAsync();
             Id = await connection.ExecuteScalarAsync<long?>(
                 """
                 REPLACE INTO Category (Id, Name, Description, Color)
@@ -58,7 +58,7 @@ public record Category
                 return false;
             }
             
-            await using var connection = await DataBaseHelper.GetOpenConnection();
+            await using var connection = await DataBaseHelper.GetOpenConnectionAsync();
             await connection.ExecuteAsync(
                 """
                 DELETE FROM Category WHERE Id = @Id;

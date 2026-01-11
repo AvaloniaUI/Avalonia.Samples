@@ -6,10 +6,12 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdvancedToDoList.Helper;
+using AdvancedToDoList.Messages;
 using AdvancedToDoList.Models;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using DynamicData.Binding;
 using SharedControls.Controls;
@@ -18,13 +20,16 @@ using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
 
-public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipant
+public partial class ManageToDoItemsViewModel 
+    : ViewModelBase, IDialogParticipant, IRecipient<UpdateDataRequest<ToDoItem>>
 {
     [UnconditionalSuppressMessage("Trimming",
         "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
         Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
     public ManageToDoItemsViewModel()
     {
+        WeakReferenceMessenger.Default.Register(this);
+        
         var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
 
         var filterStringObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
@@ -152,7 +157,7 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
     }
 
     [RelayCommand]
-    private async Task RequeryAsync()
+    private async Task RefreshAsync()
     {
         var previousSelectedItemId = SelectedToDoItem?.Id ?? -1;
 
@@ -183,4 +188,10 @@ public partial class ManageToDoItemsViewModel : ViewModelBase, IDialogParticipan
     {
         return showAlsoCompletedItems || item.Progress < 100;
     };
+
+    // IRecipient-Impl
+    public void Receive(UpdateDataRequest<ToDoItem> message)
+    {
+        _ = RefreshAsync();
+    }
 }

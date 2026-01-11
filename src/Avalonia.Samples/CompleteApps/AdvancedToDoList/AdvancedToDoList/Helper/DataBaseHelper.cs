@@ -20,7 +20,7 @@ public static class DataBaseHelper
 {
     private static bool _initialized;
     
-    internal static async Task<SqliteConnection> GetOpenConnection()
+    internal static async Task<SqliteConnection> GetOpenConnectionAsync()
     {
         if (Design.IsDesignMode)
         {
@@ -51,14 +51,14 @@ public static class DataBaseHelper
     
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
-        await using var connection = await GetOpenConnection();
+        await using var connection = await GetOpenConnectionAsync();
         return (await connection.QueryAsync<Category>("SELECT * FROM Category"));
     }
 
     public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
     {
         Console.WriteLine("GetToDoItemsAsync");
-        await using var connection = await GetOpenConnection();
+        await using var connection = await GetOpenConnectionAsync();
         const string sql = """
                            SELECT *
                            FROM ToDoItem 
@@ -82,9 +82,14 @@ public static class DataBaseHelper
         return toDoItems;
     }
     
-    private static async Task EnsureInitializedAsync(SqliteConnection connection)
+    /// <summary>
+    /// Ensures that all tables are created and the database is ready to be used.
+    /// </summary>
+    /// <param name="connection">the connection to use</param>
+    /// <param name="force">the creating will be skipped by default, unless you set this parameter to true</param>
+    internal static async Task EnsureInitializedAsync(SqliteConnection connection, bool force = false)
     {
-        if (_initialized) return;
+        if (_initialized && !force) return;
 
         // Create tables if they do not exist
         await connection.ExecuteAsync(
@@ -146,18 +151,75 @@ public static class DataBaseHelper
 
     private static async Task AddSampleDataAsync(SqliteConnection connection)
     {
+
+        Category[] testCategories =
+        [
+            new Category()
+            {
+                Name = "Category 1",
+                Color = "Red", // Color by name
+                Description = "This is Category 1"
+            },
+            new Category()
+            {
+                Name = "Category 2",
+                Color = "#FFABCDEF", // Color by Hex
+                Description = "This is Category 2"
+            },
+            new Category()
+            {
+                Name = "Category 3",
+                Color = "#ThisIsNoColor", // testing ivnalid color name
+                Description = "This is Category 3"
+            }
+        ];
+
+        ToDoItem[] TestToDoItems =
+        [
+            new ToDoItem()
+            {
+                CategoryId = 1,
+                Title = "Test Item 1",
+                Priority = 1,
+                Description = "This is Test Item 1",
+                DueDate = DateTime.Today.AddDays(3),
+                CompletedDate = DateTime.Today,
+                Progress = 50
+            },
+            new ToDoItem()
+            {
+                CategoryId = 2,
+                Title = "Test Item 2",
+                Priority = 2,
+                Description = "This is Test Item 2",
+                DueDate = DateTime.Today.AddDays(-1),
+                CreatedDate =  DateTime.Today,
+                Progress = -1
+            },
+            new ToDoItem()
+            {
+                CategoryId = 0,
+                Title = "Test Item 3",
+                Priority = 3,
+                Description = "This is Test Item 3",
+                DueDate = DateTime.Today.AddDays(-1),
+                CompletedDate = DateTime.Today,
+                Progress = 100,
+                CreatedDate =  DateTime.Today.AddDays(-2),
+            }
+        ];
+        
         await connection.ExecuteAsync(
             """
-            INSERT INTO Category (Id, Name, Description, Color) VALUES 
-            (null, 'Category 1', 'Description 1', '#FF0000'), 
-            (null, 'Category 2', 'Description 2', '#00FF00');
-
-            INSERT INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate) VALUES 
-            (null, 1, 'Item 1', 1, 'Description 1', '2026-01-01', 0, '2026-01-01', null),
-            (null, 2, 'Item 2', 2, 'Description 2', '2026-01-02', 0, '2026-01-02', null),
-            (null, 5, 'Item 3', 2, 'A completed item', '2026-01-02', 100, '2026-01-02', null);
+            REPLACE INTO Category (Id, Name, Description, Color) VALUES 
+            (@Id, @Name, @Description, @Color);
+            """, testCategories);
+        
+        await connection.ExecuteAsync(
             """
-        );
+            REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate) VALUES 
+            (@Id, @CategoryId, @Title, @Priority, @Description, @DueDate, @Progress, @CreatedDate, @CompletedDate);
+            """, TestToDoItems);
     }
     
     

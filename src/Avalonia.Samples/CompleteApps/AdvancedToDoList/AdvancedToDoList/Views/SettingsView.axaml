@@ -44,6 +44,7 @@
             <TextBlock Classes="h1" Text="DANGER Zone" />
             <Button HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
+                    Command="{Binding ClearDatabaseCommand}"
                     Content="Clear the current To-Do list" />
         </StackPanel>
     </ScrollViewer>

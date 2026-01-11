@@ -16,8 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AdvancedToDoList\AdvancedToDoList.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
 </Project>

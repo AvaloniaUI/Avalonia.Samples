@@ -43,12 +43,15 @@
                                 <Grid ColumnDefinitions="*, Auto, Auto">
                                     <ContentControl Margin="5,0" Content="{Binding}" />
                                     <Button Grid.Column="1"
-                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AddNewCategoryCommand}">
-                                        Add +
-                                    </Button>
+                                            Classes="toolBar"
+                                            ToolTip.Tip="Add a new category"
+                                            Content="{DynamicResource PhosphorIcons.CirclesThreePlusThin}"
+                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AddNewCategoryCommand}" />
                                     <Button Grid.Column="2"
+                                            Classes="toolBar"
+                                            ToolTip.Tip="No category"
+                                            Content="{DynamicResource PhosphorIcons.XCircleLight}"
                                             Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).SetCategoryToEmptyCommand}">
-                                        Empty
                                     </Button>
                                 </Grid>
                             </DataTemplate>

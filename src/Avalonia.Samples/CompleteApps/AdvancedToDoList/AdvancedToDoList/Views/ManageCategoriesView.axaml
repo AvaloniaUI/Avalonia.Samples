@@ -18,7 +18,15 @@
                 Background="{DynamicResource CommandBarBackground}"
                 CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
                 BoxShadow="2 2 5 1 gray">
-            <StackPanel Orientation="Horizontal" Spacing="5">
+            <WrapPanel Orientation="Horizontal" ItemSpacing="5">
+                <Button Classes="toolBar"
+                        Content="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}"
+                        Command="{Binding RefreshCommand}"
+                        ToolTip.Tip="Refresh the List" />
+
+                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
+                           Margin="0,5" />
+
                 <Button Classes="toolBar"
                         ToolTip.Tip="Add"
                         Command="{Binding AddNewCategoryCommand}" 
@@ -33,7 +41,7 @@
                         Content="{DynamicResource PhosphorIcons.TrashLight}"
                         Command="{Binding DeleteCategoryCommand}" 
                         CommandParameter="{Binding SelectedCategory}" />
-            </StackPanel>
+            </WrapPanel>
         </Border>
 
         <ListBox ItemsSource="{Binding Categories}"

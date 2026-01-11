@@ -5,21 +5,21 @@
         <Border Width="400"
                 Height="400">
             <controls:OverlayDialog DialogCommands="{x:Static controls:DialogCommands.OkCancel}" Header="Test">
-                Hello from OverlayDialog
+                <ComboBox ItemsSource="Hello World" /> 
             </controls:OverlayDialog>
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type controls:DialogHost}" TargetType="controls:DialogHost">
-        <Setter Property="Template">
-            <ControlTemplate>
-                <ContentPresenter HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  Background="{TemplateBinding Background}"
-                                  Content="{TemplateBinding Content}" />
-            </ControlTemplate>
-        </Setter>
-    </ControlTheme>
+    <!-- <ControlTheme x:Key="{x:Type controls:DialogHost}" TargetType="controls:DialogHost"> -->
+    <!--     <Setter Property="Template"> -->
+    <!--         <ControlTemplate> -->
+    <!--             <ContentPresenter HorizontalAlignment="Stretch" -->
+    <!--                               VerticalAlignment="Stretch" -->
+    <!--                               Background="{TemplateBinding Background}" -->
+    <!--                               Content="{TemplateBinding Content}" /> -->
+    <!--         </ControlTemplate> -->
+    <!--     </Setter> -->
+    <!-- </ControlTheme> -->
 
     <ControlTheme x:Key="{x:Type controls:OverlayDialog}" TargetType="controls:OverlayDialog">
         <Setter Property="HorizontalContentAlignment" Value="Center" />

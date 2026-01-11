@@ -110,5 +110,10 @@ public static class DialogCommands
     /// <summary>
     /// Gets the default Yes, No, and Cancel buttons.
     /// </summary>
-    public static DialogCommand[] YesNoCancel = [Cancel, No, Yes];
+    public static DialogCommand[] YesNoCancel = [Cancel, No, Yes]; 
+    
+    /// <summary>
+    /// Gets the default Yes and No buttons.
+    /// </summary>
+    public static DialogCommand[] YesNo = [No, Yes];
 }

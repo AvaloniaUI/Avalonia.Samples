@@ -1,11 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 
 namespace SharedControls.Controls;
 
 public class DialogHost : ContentControl
 {
     private IDisposable? _rootBoundsWatcher;
+
+    protected override Type StyleKeyOverride => typeof(OverlayPopupHost);
 
     public DialogHost()
     {

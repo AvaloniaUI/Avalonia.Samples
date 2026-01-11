@@ -23,10 +23,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Android" />
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" />
-    <!-- Ensure Android uses the 16KB page-size SQLite build -->
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android" />
-    <!-- Avoid pulling the generic lib which might not meet Android 16KB requirement -->
-    <PackageReference Update="SQLitePCLRaw.lib.e_sqlite3" ExcludeAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
              Design.DataContext="{x:Static viewModels:_DesignData.EditCategoryViewModel}"
              d:DesignHeight="450"
-             d:DesignWidth="800"
+             MinWidth="350"
              services:DialogManager.Register="{Binding}"
              x:DataType="viewModels:EditCategoryViewModel"
              mc:Ignorable="d">

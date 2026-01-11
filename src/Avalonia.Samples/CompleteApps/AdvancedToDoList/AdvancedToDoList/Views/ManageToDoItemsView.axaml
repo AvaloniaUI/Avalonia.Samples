@@ -85,8 +85,8 @@
             <WrapPanel ItemSpacing="5">
                 <Button Classes="toolBar"
                         Content="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}"
-                        Command="{Binding RequeryCommand}"
-                        ToolTip.Tip="New Item" />
+                        Command="{Binding RefreshCommand}"
+                        ToolTip.Tip="Refresh the List" />
 
                 <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
                            Margin="0,5" />
@@ -110,7 +110,7 @@
                            Margin="0,5" />
 
                 <ToggleButton Classes="toolBar"
-                              Command="{Binding RequeryCommand}"
+                              Command="{Binding RefreshCommand}"
                               IsChecked="{Binding ShowAlsoCompletedItems}"
                               Content="{DynamicResource PhosphorIcons.ChecksLight}"
                               ToolTip.Tip="Show also completed Items" />

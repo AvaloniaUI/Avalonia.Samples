@@ -5,6 +5,8 @@ using Avalonia.Controls;
 using Avalonia.iOS;
 using Avalonia.Media;
 using AdvancedToDoList.iOS.Services;
+using AdvancedToDoList.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdvancedToDoList.iOS;
 
@@ -19,7 +21,11 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         // Register the iOS service
-        App.RegisterDbService(new IosDbService());
+        var services = new ServiceCollection();
+        services.AddSingleton<IDbService>(new IosDbService());
+        services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
+        
+        App.RegisterAppServices(services);
         
         return base.CustomizeAppBuilder(builder)
             .WithInterFont();
