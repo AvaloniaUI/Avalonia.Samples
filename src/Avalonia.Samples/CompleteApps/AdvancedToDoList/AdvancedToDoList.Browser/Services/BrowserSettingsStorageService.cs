@@ -8,10 +8,10 @@ namespace AdvancedToDoList.Browser.Services;
 
 public partial class BrowserSettingsStorageService : ISettingsStorageService
 {
-    [JSImport("setItem", "storage")]
+    [JSImport("setItem", "sqlite-storage")]
     private static partial void SetItem(string key, string value);
 
-    [JSImport("getItem", "storage")]
+    [JSImport("getItem", "sqlite-storage")]
     private static partial string? GetItem(string key);
 
     private static string Identifier { get; } = "Avalonia.Samples.AdvancedToDoList";
@@ -45,7 +45,7 @@ public partial class BrowserSettingsStorageService : ISettingsStorageService
 
     private async Task InitializeAsync()
     {
-        const string storageJsLocation = "../storage.js";
-        await JSHost.ImportAsync("storage", storageJsLocation);
+        const string storageJsLocation = "../sqlite-storage.js";
+        await JSHost.ImportAsync("sqlite-storage", storageJsLocation);
     }
 }

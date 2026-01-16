@@ -1,5 +1,5 @@
 import { dotnet } from './_framework/dotnet.js'
-import {loadSQLite, idbGet, IDB_KEY} from "./storage.js";
+import {loadSQLite, idbGet, IDB_KEY} from "./sqlite-storage.js";
 
 const is_browser = typeof window != "undefined";
 if (!is_browser) throw new Error(`Expected to be running in a browser`);

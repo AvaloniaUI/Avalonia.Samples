@@ -9,7 +9,7 @@
 
 import './sqlite3-worker1-promiser.js';
 
-// After storage.js has loaded
+// After sqlite-storage.js has loaded
 // initialization is performed via loadSQLite() called from main.js
 
 // Keep a safe no-op immediately so .NET callers won't crash while initialization runs:

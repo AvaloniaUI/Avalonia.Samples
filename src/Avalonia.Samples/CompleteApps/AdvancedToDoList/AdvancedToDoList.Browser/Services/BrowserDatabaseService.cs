@@ -9,7 +9,7 @@ public partial class BrowserDbService : IDbService
 {
     public string GetDatabasePath()
     {
-        // This path must match the DB_FILENAME in storage.js
+        // This path must match the DB_FILENAME in sqlite-storage.js
         return "todo.db";
     }
 
