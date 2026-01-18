@@ -12,6 +12,12 @@ namespace SharedControls.Controls;
 [TemplatePart (nameof(PART_SplitView), typeof(SplitView), IsRequired = true)]
 public class HamburgerMenu : HeaderedContentControl
 {
+    public HamburgerMenu()
+    {
+        MenuItems = new ObservableCollection<IHamburgerMenuItem>();
+        OptionsMenuItems = new ObservableCollection<IHamburgerMenuItem>();
+    }
+    
     private SplitView? PART_SplitView;
     
     public static readonly DirectProperty<HamburgerMenu, IList<IHamburgerMenuItem>> MenuItemsProperty =
@@ -24,7 +30,7 @@ public class HamburgerMenu : HeaderedContentControl
     {
         get;
         set => SetAndRaise(MenuItemsProperty, ref field, value);
-    } = new ObservableCollection<IHamburgerMenuItem>();
+    }
 
     public static readonly DirectProperty<HamburgerMenu, IList<IHamburgerMenuItem>> OptionsMenuItemsProperty = 
         AvaloniaProperty.RegisterDirect<HamburgerMenu, IList<IHamburgerMenuItem>>(
@@ -56,7 +62,7 @@ public class HamburgerMenu : HeaderedContentControl
     }
 
     public static readonly StyledProperty<bool> IsPaneOpenProperty = 
-        SplitView.IsPaneOpenProperty.AddOwner<HamburgerMenu>();
+        SplitView.IsPaneOpenProperty.AddOwner<HamburgerMenu>(new StyledPropertyMetadata<bool>(true));
 
     public bool IsPaneOpen
     {
@@ -103,15 +109,12 @@ public class HamburgerMenu : HeaderedContentControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         AutoCollapsePane();
-        SelectedMenuItem ??= MenuItems.FirstOrDefault();
-        
         base.OnLoaded(e);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        
         PART_SplitView = e.NameScope.Find<SplitView>("PART_SplitView");
     }
 
@@ -156,10 +159,22 @@ public class HamburgerMenu : HeaderedContentControl
 
     private void MenuItemsCollectionOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        SelectedMenuItem ??= MenuItems.FirstOrDefault();
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Remove:
+                foreach (var menuItem in e.OldItems?.OfType<IHamburgerMenuItem>() ?? [])
+                {
+                    if (SelectedMenuItem == menuItem)
+                    {
+                        SelectedMenuItem = null;
+                    }
+                }
+                break;
+        }
+        SelectedMenuItem ??= MenuItems.FirstOrDefault(x => x.Enabled);
     }
 
-    private bool _wasPaneOpenBeforeAutoCollapse;
+    private bool _wasPaneOpenBeforeAutoCollapse = true;
     private bool _isAutoCollapsing;
     
     private void AutoCollapsePane()
