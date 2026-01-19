@@ -21,12 +21,23 @@ namespace AdvancedToDoList;
 public partial class App : Application
 {
     // Static property to hold the platform-specific implementation
-    internal static IServiceProvider Services { get; set; } = null!;
+    public static IServiceProvider Services { get; set; } = null!;
 
     public static async void RegisterAppServices(IServiceCollection services)
     {
         try
         {
+            // Register common services if not already registered
+            if (services.All(x => x.ServiceType != typeof(ICategoryService)))
+            {
+                services.AddSingleton<ICategoryService, CategoryService>();
+            }
+
+            if (services.All(x => x.ServiceType != typeof(IToDoService)))
+            {
+                services.AddSingleton<IToDoService, ToDoService>();
+            }
+
             Services = services.BuildServiceProvider();
 
             // we now have registered our services, so we can also load the settings. 
@@ -46,6 +57,7 @@ public partial class App : Application
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IDbService>(new DesignDbService());
             serviceCollection.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
+            serviceCollection.AddSingleton<ICategoryService, CategoryService>();
             RegisterAppServices(serviceCollection);
         }
 

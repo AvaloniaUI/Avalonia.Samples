@@ -34,6 +34,7 @@
     <PackageVersion Include="SerilogTraceListener" Version="3.2.0" />
     <!-- UnitTests-->
     <PackageVersion Include="XUnit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.1" />
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.3.10" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
   </ItemGroup>

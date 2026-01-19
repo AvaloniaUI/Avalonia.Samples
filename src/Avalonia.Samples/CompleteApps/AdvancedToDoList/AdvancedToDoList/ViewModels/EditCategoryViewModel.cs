@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using AdvancedToDoList.Services;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using SharedControls.Controls;
 using SharedControls.Services;
 
@@ -14,14 +16,25 @@ namespace AdvancedToDoList.ViewModels;
     Justification = "DynamicallyAccessedMembers is used to suppress a warning about a property that is set by reflection.")]
 public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
 {
-    public EditCategoryViewModel()
+    private readonly IDialogService _dialogService;
+    private readonly ICategoryService _categoryService;
+
+    public EditCategoryViewModel() : this(new CategoryViewModel())
     {
-        Item = new CategoryViewModel();
     }
     
-    public EditCategoryViewModel(CategoryViewModel category)
+    public EditCategoryViewModel(CategoryViewModel category) 
+        : this(category, 
+            App.Services?.GetService<ICategoryService>() ?? new CategoryService(),
+            null) // DialogService needs the participant (this), so we initialize it in the constructor body if null
+    {
+    }
+
+    public EditCategoryViewModel(CategoryViewModel category, ICategoryService categoryService, IDialogService? dialogService)
     {
         Item = category;
+        _categoryService = categoryService;
+        _dialogService = dialogService ?? new DialogService(this);
     }
 
     public CategoryViewModel Item { get; }
@@ -32,30 +45,31 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
     [RelayCommand]
     private async Task SaveAsync()
     {
-        // Check if the category is valid
-        if (HasErrors)
+        // Check if the item is valid
+        Item.Validate();
+        if (Item.HasErrors)
         {
-            await this.ShowOverlayDialogAsync<DialogResult>("Error", "Please correct the errors in the form.", DialogCommands.Ok);
+            await _dialogService.ShowOverlayDialogAsync<DialogResult>("Error", "Please correct the errors in the form.", DialogCommands.Ok);
             return;
         }
         
         var category = Item.ToCategory();
-        var success = await category.SaveAsync();
+        var success = await _categoryService.SaveCategoryAsync(category);
 
         if (success)
         {
-            this.ReturnResultFromOverlayDialog(new CategoryViewModel(category));
+            _dialogService.ReturnResultFromOverlayDialog(new CategoryViewModel(category));
         }
         else
         {
-            await this.ShowOverlayDialogAsync<DialogResult>("Error", "An error occurred while saving the category.", DialogCommands.Ok);
+            await _dialogService.ShowOverlayDialogAsync<DialogResult>("Error", "An error occurred while saving the category.", DialogCommands.Ok);
         }
     }
 
     [RelayCommand]
     private async Task CancelAsync()
     {
-        var userResponse = await this.ShowOverlayDialogAsync<DialogResult>(
+        var userResponse = await _dialogService.ShowOverlayDialogAsync<DialogResult>(
             "Save changes?", 
             "Do you want to save the changes before closing this dialog?", 
             DialogCommands.YesNoCancel);
@@ -67,7 +81,7 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
                 await this.SaveAsync();
                 break;
             case DialogResult.No:
-                this.ReturnResultFromOverlayDialog(null);
+                _dialogService.ReturnResultFromOverlayDialog(null);
                 break;
             case DialogResult.Cancel:
                 // Do nothing if the dialog was canceled

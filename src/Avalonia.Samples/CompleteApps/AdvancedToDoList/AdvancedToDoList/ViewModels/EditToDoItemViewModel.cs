@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AdvancedToDoList.Services;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using SharedControls.Controls;
 using SharedControls.Services;
 
@@ -9,9 +11,22 @@ namespace AdvancedToDoList.ViewModels;
 
 public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
 {
+    private readonly IDialogService _dialogService;
+    private readonly IToDoService _toDoService;
+
     public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories)
+        : this(toDoItem, availableCategories, 
+            App.Services?.GetService<IToDoService>() ?? new ToDoService(),
+            null)
+    {
+    }
+
+    public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories, 
+        IToDoService toDoService, IDialogService? dialogService)
     {
         Item = toDoItem;
+        _toDoService = toDoService;
+        _dialogService = dialogService ?? new DialogService(this);
         
         //Add the empty category to the list. This will be the first item in the list.
         availableCategories.Insert(0, CategoryViewModel.Empty);
@@ -28,7 +43,7 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
     private async Task AddNewCategoryAsync()
     {
         var category = new EditCategoryViewModel(new CategoryViewModel());
-        var result = await this.ShowOverlayDialogAsync<CategoryViewModel>("Add a new category", category);
+        var result = await _dialogService.ShowOverlayDialogAsync<CategoryViewModel>("Add a new category", category);
         
         if (result != null)
         {
@@ -49,24 +64,25 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
     [RelayCommand]
     private async Task SaveAsync()
     {
-        // Check if the category is valid
-        if (HasErrors)
+        // Check if the item is valid
+        Item.Validate();
+        if (Item.HasErrors)
         {
-            await this.ShowOverlayDialogAsync<DialogResult>("Error", "Please correct the errors in the form.",
+            await _dialogService.ShowOverlayDialogAsync<DialogResult>("Error", "Please correct the errors in the form.",
                 DialogCommands.Ok);
             return;
         }
 
         var toDoItem = Item.ToToDoItem();
-        var success = await toDoItem.SaveAsync();
+        var success = await _toDoService.SaveToDoItemAsync(toDoItem);
 
         if (success)
         {
-            this.ReturnResultFromOverlayDialog(new ToDoItemViewModel(toDoItem));
+            _dialogService.ReturnResultFromOverlayDialog(new ToDoItemViewModel(toDoItem));
         }
         else
         {
-            await this.ShowOverlayDialogAsync<bool>("Error", "An error occurred while saving the to-do item.",
+            await _dialogService.ShowOverlayDialogAsync<bool>("Error", "An error occurred while saving the to-do item.",
                 DialogCommands.Ok);
         }
     }
@@ -74,7 +90,7 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
     [RelayCommand]
     private async Task CancelAsync()
     {
-        var userResponse = await this.ShowOverlayDialogAsync<DialogResult>(
+        var userResponse = await _dialogService.ShowOverlayDialogAsync<DialogResult>(
             "Save changes?", 
             "Do you want to save the changes before closing this dialog?", 
             DialogCommands.YesNoCancel);
@@ -86,7 +102,7 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
                 await this.SaveAsync();
                 break;
             case DialogResult.No:
-                this.ReturnResultFromOverlayDialog(null);
+                _dialogService.ReturnResultFromOverlayDialog(null);
                 break;
             case DialogResult.Cancel:
                 // Do nothing if the dialog was canceled

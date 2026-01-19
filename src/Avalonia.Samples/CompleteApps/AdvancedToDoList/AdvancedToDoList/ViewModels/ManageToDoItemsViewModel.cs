@@ -30,7 +30,7 @@ public partial class ManageToDoItemsViewModel
     {
         WeakReferenceMessenger.Default.Register(this);
         
-        var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
+        var syncContext = SynchronizationContext.Current;
 
         var filterStringObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
             .Throttle(TimeSpan.FromMilliseconds(300))

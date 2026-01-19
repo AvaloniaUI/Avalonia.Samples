@@ -29,7 +29,7 @@ public partial class ManageCategoriesViewModel
     {
         WeakReferenceMessenger.Default.Register(this);
         
-        var syncContext = SynchronizationContext.Current ?? new AvaloniaSynchronizationContext();
+        var syncContext = SynchronizationContext.Current;
 
         _categoriesSourceCache.Connect()
             .ObserveOn(syncContext)

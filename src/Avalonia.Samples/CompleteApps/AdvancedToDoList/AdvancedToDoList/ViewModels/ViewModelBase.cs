@@ -7,4 +7,5 @@ namespace AdvancedToDoList.ViewModels;
     Justification = "Handled via rd.xml")]
 public abstract class ViewModelBase : ObservableValidator
 {
+    public void Validate() => ValidateAllProperties();
 }
