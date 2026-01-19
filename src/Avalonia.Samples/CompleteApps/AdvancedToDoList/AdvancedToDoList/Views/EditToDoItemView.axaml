@@ -30,7 +30,7 @@
 
                 <!--  Title  -->
                 <controls:LabeledControl Header="Title">
-                    <TextBox Text="{Binding Title}" Watermark="The title of the to-do" />
+                    <TextBox x:Name="TitleTextBox" Text="{Binding Title}" Watermark="The title of the to-do" />
                 </controls:LabeledControl>
 
                 <!--  Category  -->
@@ -116,8 +116,8 @@
                    HorizontalAlignment="Right"
                    ItemSpacing="5"
                    Orientation="Horizontal">
-            <Button Command="{Binding CancelCommand}" Content="Cancel" />
-            <Button Command="{Binding SaveCommand}" Content="Save" />
+            <Button x:Name="CancelButton" Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button x:Name="SaveButton" Command="{Binding SaveCommand}" Content="Save" />
         </WrapPanel>
     </Grid>
 </UserControl>

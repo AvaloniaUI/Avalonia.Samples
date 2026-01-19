@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using AdvancedToDoList;
 using AdvancedToDoList.Services;
+using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -11,6 +12,12 @@ public class TestBase : IDisposable
 {
     public TestBase()
     {
+        // Ensure we have a SynchronizationContext for tests that use ObserveOn(syncContext)
+        if (SynchronizationContext.Current == null)
+        {
+            SynchronizationContext.SetSynchronizationContext(new AvaloniaSynchronizationContext());
+        }
+
         // Set up a mock service provider
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddSingleton<IDbService>(new DesignDbService());

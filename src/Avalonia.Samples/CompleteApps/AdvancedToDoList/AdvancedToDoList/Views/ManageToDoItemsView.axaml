@@ -153,7 +153,8 @@
             </WrapPanel>
         </Border>
 
-        <ListBox ItemsSource="{Binding ToDoItems}"
+        <ListBox x:Name="ToDoItemsListBox" 
+                 ItemsSource="{Binding ToDoItems}"
                  SelectedItem="{Binding SelectedToDoItem}">
             <ListBox.ItemContainerTheme>
                 <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">

@@ -44,7 +44,8 @@
             </WrapPanel>
         </Border>
 
-        <ListBox ItemsSource="{Binding Categories}"
+        <ListBox x:Name="CategoriesListBox" 
+                 ItemsSource="{Binding Categories}"
                  Grid.IsSharedSizeScope="True"
                  SelectedItem="{Binding SelectedCategory}">
             <ListBox.ItemTemplate>

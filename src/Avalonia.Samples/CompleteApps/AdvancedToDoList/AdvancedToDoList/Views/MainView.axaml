@@ -15,7 +15,8 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <controls:HamburgerMenu Content="{Binding $self.SelectedMenuItem.Tag}"
+    <controls:HamburgerMenu x:Name="MainMenu" 
+                            Content="{Binding $self.SelectedMenuItem.Tag}"
                             AutoClosePaneThreshold="700">
         <controls:HamburgerMenu.MenuItems>
             <controls:HamburgerMenuItem Label="To-Do Items"

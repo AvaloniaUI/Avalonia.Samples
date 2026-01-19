@@ -41,4 +41,7 @@
     <ItemGroup>
         <ProjectReference Include="..\SharedControls\SharedControls.csproj"/>
     </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="AdvancedToDoListTests" />
+    </ItemGroup>
 </Project>

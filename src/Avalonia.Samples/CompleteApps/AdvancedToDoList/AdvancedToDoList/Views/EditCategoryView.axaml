@@ -28,12 +28,12 @@
 
                 <!--  Name  -->
                 <controls:LabeledControl Header="Name">
-                    <TextBox Text="{Binding Name}" Watermark="The display name of the Group" />
+                    <TextBox x:Name="NameTextBox" Text="{Binding Name}" Watermark="The display name of the Group" />
                 </controls:LabeledControl>
 
                 <!--  Description  -->
                 <controls:LabeledControl Header="Description">
-                    <TextBox Text="{Binding Description}" />
+                    <TextBox x:Name="DescriptionTextBox" Text="{Binding Description}" />
                 </controls:LabeledControl>
 
                 <!--  Group Color  -->
@@ -56,8 +56,8 @@
                    HorizontalAlignment="Right"
                    ItemSpacing="5"
                    Orientation="Horizontal">
-            <Button Command="{Binding CancelCommand}" Content="Cancel" />
-            <Button Command="{Binding SaveCommand}" Content="Save" />
+            <Button x:Name="CancelButton" Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button x:Name="SaveButton" Command="{Binding SaveCommand}" Content="Save" />
         </WrapPanel>
     </Grid>
 
