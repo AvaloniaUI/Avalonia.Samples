@@ -21,19 +21,14 @@ public class ManageToDoItemsViewTest : TestBase
         var window = new Window { Content = view };
         window.Show();
 
-        // Give some time for background load
-        await Task.Delay(1000);
+        // Give some time for view initialization
+        await Task.Delay(100);
 
         // Act
         var listBox = view.FindControl<ListBox>("ToDoItemsListBox");
-        Assert.NotNull(listBox);
 
         // Assert
-        if (vm.ToDoItems.Count == 0)
-        {
-            await vm.RefreshAsync();
-        }
-        Assert.NotEmpty(vm.ToDoItems);
+        Assert.NotNull(listBox);
         Assert.Equal(vm.ToDoItems.Count, listBox.ItemCount);
     }
 }

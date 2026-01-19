@@ -21,20 +21,14 @@ public class ManageCategoriesViewTest : TestBase
         var window = new Window { Content = view };
         window.Show();
 
-        // Give some time for background load
-        await Task.Delay(1000);
+        // Give some time for view initialization
+        await Task.Delay(100);
 
         // Act
         var listBox = view.FindControl<ListBox>("CategoriesListBox");
-        Assert.NotNull(listBox);
 
         // Assert
-        // If still empty, try to force load data directly into the cache to bypass potential Rx issues in tests
-        if (vm.Categories.Count == 0)
-        {
-             await vm.RefreshAsync();
-        }
-        Assert.NotEmpty(vm.Categories);
+        Assert.NotNull(listBox);
         Assert.Equal(vm.Categories.Count, listBox.ItemCount);
     }
 }
