@@ -1,19 +1,22 @@
 using System.Threading.Tasks;
 using AdvancedToDoList.ViewModels;
+using Avalonia.Headless.XUnit;
+using Avalonia.Threading;
 using Xunit;
 
 namespace AdvancedToDoListTests.ViewModelTests;
 
 public class MainViewModelTest : TestBase
 {
-    [Fact]
+    [AvaloniaFact]
     public async Task MainViewModel_Constructor_InitializesChildViewModels()
     {
         // Act
         var vm = new MainViewModel();
 
-        // Give some time for background LoadDataAsync to start/run
-        await Task.Delay(100);
+        // Make sure Dispatcher related tasks have been processed
+        Dispatcher.UIThread.RunJobs();
+        await Task.Delay(500);
 
         // Assert
         Assert.NotNull(vm.CategoriesViewModel);

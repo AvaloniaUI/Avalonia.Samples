@@ -1,16 +1,30 @@
 using AdvancedToDoList.ViewModels;
+using Avalonia.Headless.XUnit;
+using Avalonia.Threading;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AdvancedToDoListTests.ViewModelTests;
 
 public class ManageToDoItemsViewModelTest : TestBase
 {
-    [Fact]
-    public void ManageToDoItemsViewModel_Constructor_InitializesCorrectly()
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public ManageToDoItemsViewModelTest(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
+
+    [AvaloniaFact]
+    public async Task ManageToDoItemsViewModel_Constructor_InitializesCorrectly()
     {
         // Act
         var vm = new ManageToDoItemsViewModel();
 
+        // Make sure Dispatcher related tasks have been processed
+        Dispatcher.UIThread.RunJobs();
+        await Task.Delay(500);
+        
         // Assert
         Assert.NotNull(vm.ToDoItems);
         Assert.Null(vm.FilterString);
@@ -20,12 +34,16 @@ public class ManageToDoItemsViewModelTest : TestBase
         Assert.Equal(ToDoItemsSortExpression.SortByTitleExpression, vm.SortExpression3);
     }
 
-    [Fact]
-    public void ManageToDoItemsViewModel_Properties_CanBeSet()
+    [AvaloniaFact]
+    public async Task ManageToDoItemsViewModel_Properties_CanBeSet()
     {
         // Arrange
         var vm = new ManageToDoItemsViewModel();
-
+        
+        // Make sure Dispatcher related tasks have been processed
+        Dispatcher.UIThread.RunJobs();
+        await Task.Delay(500);
+        
         // Act
         vm.FilterString = "Test";
         vm.ShowAlsoCompletedItems = true;
