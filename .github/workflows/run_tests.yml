@@ -11,6 +11,12 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '10.0.x'
+      - name: Setup Android SDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - uses: android-actions/setup-android@v2
       - name: Install workloads
         run: |
           dotnet workload install wasm-tools 
