@@ -6,10 +6,17 @@ using Avalonia.Media;
 
 namespace AdvancedToDoList.DataTemplates;
 
+/// <summary>
+/// This class is a helper to resolve the symbol for the <see cref="ToDoItemStatus"/>.
+/// </summary>
 public class ToDoItemStatusTemplateSelector : IDataTemplate
 {
+    /// <summary>
+    /// Gets the default instance of this class
+    /// </summary>
     public static ToDoItemStatusTemplateSelector Instance { get; } = new ToDoItemStatusTemplateSelector();
-    
+
+    /// <inheritdoc />
     public Control? Build(object? param)
     {
         var status = param as ToDoItemStatus?;
@@ -20,7 +27,9 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
                 {
                     Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.CircleDashedLight"),
                     Opacity = 0.7,
-                    [ToolTip.TipProperty] = "Pending"
+                    // TIP: If you want your App to be localized, you could also provide this text via App.Resources
+                    // or any other localization provider.
+                    [ToolTip.TipProperty] = "Pending" 
                 },
 
             ToDoItemStatus.InProgress => 
@@ -50,7 +59,8 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
             _ => null
         };
     }
-    
+
+    /// <inheritdoc />
     public bool Match(object? data)
     {
         return data is ToDoItemStatus;

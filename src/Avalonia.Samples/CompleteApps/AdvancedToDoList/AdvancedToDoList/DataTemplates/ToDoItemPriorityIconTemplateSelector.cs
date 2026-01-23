@@ -6,10 +6,17 @@ using Avalonia.Media;
 
 namespace AdvancedToDoList.DataTemplates;
 
+/// <summary>
+/// This class is a helper to resolve the symbol-representation of our <see cref="Priority"/>-enum
+/// </summary>
 public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
 {
+    /// <summary>
+    /// Gets the default instance of this class
+    /// </summary>
     public static ToDoItemPriorityIconTemplateSelector Instance { get; } = new ToDoItemPriorityIconTemplateSelector();
     
+    /// <inheritdoc />
     public Control? Build(object? param)
     {
         var priority = param as Priority?;
@@ -38,15 +45,16 @@ public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
                 new PathIcon()
                 {
                     Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.ArrowCircleUpRight"),
-                    Foreground = new SolidColorBrush(Colors.Red),
+                    Foreground = Brushes.Red,
                     Width = fontSize, 
                     Height = fontSize
                 },
             
             _ => null
         };
-    }    
-    
+    }
+
+    /// <inheritdoc />
     public bool Match(object? data)
     {
         return data is Priority;

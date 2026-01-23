@@ -12,28 +12,37 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
+// Needed to make Dapper AOT-friendly.
+// See: https://aot.dapperlib.dev for usage details
 [module: DapperAot]
 
 namespace AdvancedToDoList.Helper;
 
+/// <summary>
+/// This is a helper class for working with our DataBase.
+/// </summary>
 public static class DataBaseHelper
 {
+    // A flag that indicates if the DB is yet initialized.
     private static bool _initialized;
     
+    /// <summary>
+    /// Opens a new <see cref="SqliteConnection"/> and opens it for usage. 
+    /// </summary>
+    /// <remarks>
+    /// Ensure the connection is disposed of after use.
+    /// </remarks>
+    /// <returns>The open connection.</returns>
     internal static async Task<SqliteConnection> GetOpenConnectionAsync()
     {
-        if (Design.IsDesignMode)
-        {
-            Console.WriteLine(App.Services.GetService<IDbService>() is not null ? "Service found" : "Service not found");
-        }
-
+        // Get the DB-service to resolve the DB per platfrom correctly.
         var dbService = App.Services.GetRequiredService<IDbService>();
-
+        
         var dbPath = dbService.GetDatabasePath();
         var dbSource = $"Data Source='{dbPath}'";
 
         // Ensure the directory exists for the database file
-        string? dir = Path.GetDirectoryName(dbPath);
+        var dir = Path.GetDirectoryName(dbPath);
         if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
@@ -42,33 +51,49 @@ public static class DataBaseHelper
         var connection = new SqliteConnection(dbSource);
         await connection.OpenAsync();
 
+        // make sure the necessary DB-schema is created.
         await EnsureInitializedAsync(connection);
-        Console.WriteLine($"Opened database at {dbPath}");
         
         return connection;
     }
 
-    
+    /// <summary>
+    /// Gets all available Categories from the DB.
+    /// </summary>
+    /// <returns>the loaded Categories</returns>
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
         await using var connection = await GetOpenConnectionAsync();
         return (await connection.QueryAsync<Category>("SELECT * FROM Category"));
     }
 
+    /// <summary>
+    /// Gets all available ToDoItems from the DB, filtered by its status.
+    /// </summary>
+    /// <param name="loadAlsoCompletedItems">If true, also loads items that are marked as compleded (Progess = 100 %). The default is false.</param>
+    /// <returns>the loaded ToDoItems</returns>
     public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
     {
-        Console.WriteLine("GetToDoItemsAsync");
         await using var connection = await GetOpenConnectionAsync();
+        // The trick here is to pass @loadAlsoCompletedItems as a parameter.
+        // If it is true, the condition will always be true. 
+        // The alternative would be to write different SQL queries.
         const string sql = """
                            SELECT *
                            FROM ToDoItem 
-                           WHERE Progress < 100 OR @loadAlsoCompletedItems;
+                           WHERE @loadAlsoCompletedItems OR Progress < 100;
                            """;
 
+        // store the items into an array
         var toDoItems = 
             (await connection.QueryAsync<ToDoItem>(sql,
             new {loadAlsoCompletedItems}))
             .ToArray();
+        
+        // map the categories.
+        // Dapper could also to it directly in the query.
+        // However, this would need reflection and NativeAOT would not work properly. 
+        // Thus, we will map the categories to CategoryId on our own. 
         
         var categories = await connection.QueryAsync<Category>("SELECT * FROM Category");
         var categoriesDict = new Dictionary<long, Category>(
@@ -86,7 +111,7 @@ public static class DataBaseHelper
     /// Ensures that all tables are created and the database is ready to be used.
     /// </summary>
     /// <param name="connection">the connection to use</param>
-    /// <param name="force">the creating will be skipped by default, unless you set this parameter to true</param>
+    /// <param name="force">the creating will be skipped by default, unless you set this parameter to true.</param>
     internal static async Task EnsureInitializedAsync(SqliteConnection connection, bool force = false)
     {
         if (_initialized && !force) return;
@@ -121,6 +146,7 @@ public static class DataBaseHelper
 
         Console.WriteLine("Created Category table.");
 
+        // Populate some data for the designer if it has none yet. 
         if (Design.IsDesignMode)
         {
             var categoryCount = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Category");
@@ -142,13 +168,17 @@ public static class DataBaseHelper
     /// </summary>
     /// <remarks>
     /// Wasm uses IndexedDB to store the data. This needs to be synced.
-    /// This helper will do it for us.
+    /// This helper will do it for us. If you don't need the WASM-target, this can be omitted. 
     /// </remarks>
     public static async Task SyncUnderlyingDatabaseAsync()
     {
         await App.Services.GetRequiredService<IDbService>().SaveAsync();
     }
 
+    /// <summary>
+    /// Adds some sample data for the designer.
+    /// </summary>
+    /// <param name="connection">The connection to use.</param>
     private static async Task AddSampleDataAsync(SqliteConnection connection)
     {
 

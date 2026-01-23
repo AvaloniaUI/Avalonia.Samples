@@ -7,6 +7,11 @@ using Avalonia.Media;
 
 namespace AdvancedToDoList.Helper;
 
+/// <summary>
+/// This class is the <see cref="JsonSerializerContext"/> which is needed to make the serialization
+/// AOT and trimming friendly.
+/// </summary>
+/// <see href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation"/>
 [JsonSerializable(typeof(DataBaseDto))]
 [JsonSerializable(typeof(Settings))]
 [JsonSerializable(typeof(Category[]))]
@@ -21,6 +26,9 @@ public partial class JsonContextHelper : JsonSerializerContext
 {
 }
 
+/// <summary>
+/// This class converts a <see cref="Color"/> from and to JSON.
+/// </summary>
 public class JsonColorConverter : JsonConverter<Color>
 {
     public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
