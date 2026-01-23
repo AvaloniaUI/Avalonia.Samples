@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0-android</TargetFramework>
-    <AndroidMinSdkVersion>21</AndroidMinSdkVersion>
-    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <AndroidMinSdkVersion>23</AndroidMinSdkVersion>
+    <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ApplicationId>com.CompanyName.AdvancedToDoList</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
