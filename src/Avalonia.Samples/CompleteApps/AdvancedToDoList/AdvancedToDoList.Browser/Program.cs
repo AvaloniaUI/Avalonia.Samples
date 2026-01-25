@@ -1,0 +1,45 @@
+﻿using System;
+using System.Threading.Tasks;
+using AdvancedToDoList.Browser.Services;
+using AdvancedToDoList.Services;
+using Avalonia;
+using Avalonia.Browser;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace AdvancedToDoList.Browser;
+
+internal sealed partial class Program
+{
+    private static Task Main(string[] args)
+    {
+        
+        Console.WriteLine("Begin");
+        
+        // Force the managed sqlite3 provider to avoid native e_sqlite3 on WASM
+        try
+        {
+            // SQLitePCL.Batteries_V2.Init();
+            Console.WriteLine("SQLitePCL.Batteries_V2.Init()");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
+        Console.WriteLine("[SQLite] Provider initialized: sqlite3");
+        
+        // Register the Browser services
+        var services = new ServiceCollection();
+        services.AddSingleton<IDatabaseService>(new BrowserDbService());
+        services.AddSingleton<ISettingsStorageService>(new BrowserSettingsStorageService());
+        
+        App.RegisterAppServices(services);
+
+        return BuildAvaloniaApp()
+            .WithInterFont()
+            .StartBrowserAppAsync("out");
+    }
+
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>();
+}

@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="XUnit" />
+        <PackageReference Include="Avalonia.Headless.XUnit" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharedControls\SharedControls.csproj" />
+    </ItemGroup>
+</Project>

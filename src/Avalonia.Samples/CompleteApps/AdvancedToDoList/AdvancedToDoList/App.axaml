@@ -1,0 +1,99 @@
+<Application x:Class="AdvancedToDoList.App"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
+             xmlns:themes="clr-namespace:SharedControls.Themes;assembly=SharedControls"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:views="clr-namespace:AdvancedToDoList.Views"
+             xmlns:properties="clr-namespace:AdvancedToDoList.Properties"
+             x:DataType="viewModels:SettingsViewModel"
+             RequestedThemeVariant="{Binding AppTheme, Source={x:Static properties:Settings.Default}}">
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
+
+    <Application.DataTemplates>
+        <DataTemplate DataType="viewModels:CategoryViewModel">
+            <Border Padding="5,2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToBrushConverter}}"
+                    CornerRadius="30"
+                    ToolTip.Tip="{Binding Description}">
+                <TextBlock Foreground="{Binding Color, Converter={x:Static converters:BrushConverters.ColorToForegroundBrushConverter}}" Text="{Binding Name}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:EditCategoryViewModel">
+            <views:EditCategoryView />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:EditToDoItemViewModel">
+            <views:EditToDoItemView />
+        </DataTemplate>
+
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Assets/Icons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="CommandBarBackground"
+                             Opacity="0.25"
+                             Color="{DynamicResource SystemListMediumColor}" />
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark"
+                                       Accent="DarkRed"/>
+                <ColorPaletteResources x:Key="Light"
+                                       Accent="DarkRed"/>
+            </FluentTheme.Palettes>
+        </FluentTheme>
+        <themes:SharedControlTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+
+        <Style Selector="CalendarDatePicker, ComboBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
+        <Style Selector="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style Selector="TextBlock.h1">
+            <Setter Property="Margin" Value="5,15,0,5" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush}" />
+        </Style>
+
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="ListBoxItem">
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
+            <Style Selector="^:nth-child(1)">
+                <Setter Property="BorderThickness" Value="0,1" />
+            </Style>
+        </Style>
+
+        <Style Selector="Button.toolBar, ToggleButton.toolBar">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="CornerRadius" Value="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}" />
+            <Setter Property="ContentTemplate" Value="{x:Static controls:HamburgerMenuItemIconTemplateSelector.Instance}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="4" />
+            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Opacity" Value="0.5" />
+            </Style>
+        </Style>
+    </Application.Styles>
+</Application>

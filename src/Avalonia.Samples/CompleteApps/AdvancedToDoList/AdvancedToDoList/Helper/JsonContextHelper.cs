@@ -1,0 +1,43 @@
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using AdvancedToDoList.Models;
+using AdvancedToDoList.Properties;
+using Avalonia.Media;
+
+namespace AdvancedToDoList.Helper;
+
+/// <summary>
+/// This class is the <see cref="JsonSerializerContext"/> which is needed to make the serialization
+/// AOT and trimming friendly.
+/// </summary>
+/// <see href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation"/>
+[JsonSerializable(typeof(DatabaseDto))]
+[JsonSerializable(typeof(Settings))]
+[JsonSerializable(typeof(Category[]))]
+[JsonSerializable(typeof(ToDoItem[]))]
+[JsonSerializable(typeof(DateTime))]
+[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(string))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(Color))]
+[JsonSourceGenerationOptions(WriteIndented = true)]
+public partial class JsonContextHelper : JsonSerializerContext
+{
+}
+
+/// <summary>
+/// This class converts a <see cref="Color"/> from and to JSON.
+/// </summary>
+public class JsonColorConverter : JsonConverter<Color>
+{
+    public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return Color.TryParse(reader.GetString(), out Color value) ? value : default;
+    }
+
+    public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString());
+    }
+}

@@ -30,8 +30,8 @@ if ($projects.Count -eq 0) {
 }
 
 foreach ($proj in $projects) {
-    Write-Host "`nBuilding project: $($proj.FullName)" -ForegroundColor Yellow
-    $result = & dotnet build $proj.FullName
+    Write-Host "`nBuilding project: $($proj.FullName)" -ForegroundColor Blue
+    dotnet build $proj.FullName
 
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Build failed for: $($proj.FullName)"

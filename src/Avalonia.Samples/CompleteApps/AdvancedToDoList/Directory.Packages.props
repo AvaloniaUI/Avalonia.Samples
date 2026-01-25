@@ -1,0 +1,43 @@
+<Project>
+  <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- We use this property to sync Avalonia versions -->
+    <AvaloniaVersion>11.3.11</AvaloniaVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Avalonia packages -->
+    <!-- Important: keep version in sync! -->
+    <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Browser" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Android" Version="$(AvaloniaVersion)" />
+    <!-- Android packages -->
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.1" />
+    <!-- ViewModel-related packages-->
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageVersion Include="DynamicData" Version="9.4.1" />
+    <PackageVersion Include="System.Reactive" Version="6.1.0" />
+    <!-- SQL related packages -->
+    <PackageVersion Include="Dapper" Version="2.1.66" />
+    <PackageVersion Include="Dapper.AOT" Version="1.0.48" />
+    <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.1" />
+    <!-- Dependency injection -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <!-- Logging packages -->
+    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="SerilogTraceListener" Version="3.2.0" />
+    <!-- UnitTests-->
+    <PackageVersion Include="XUnit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.1" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+  </ItemGroup>
+</Project>

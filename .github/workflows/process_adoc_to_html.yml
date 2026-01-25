@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build HTML from AsciiDoc
     # Prevent runs triggered by the create-pull-request bot to avoid loops
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && github.repository == 'AvaloniaUI/Avalonia.Samples'
     steps:
       - name: checkout
         uses: actions/checkout@v3
