@@ -46,7 +46,7 @@ public partial class SettingsViewModel : ViewModelBase, IDialogParticipant
 
                 try
                 {
-                    await DataBaseHelper.ExportToJsonAsync(fs);
+                    await DatabaseHelper.ExportToJsonAsync(fs);
                 }
                 catch (Exception e)
                 {
@@ -89,8 +89,8 @@ public partial class SettingsViewModel : ViewModelBase, IDialogParticipant
             {
                 await using var fs = await storageFile.OpenReadAsync();
             
-                var dto = await JsonSerializer.DeserializeAsync<DataBaseDto>(fs, 
-                    JsonContextHelper.Default.DataBaseDto);
+                var dto = await JsonSerializer.DeserializeAsync<DatabaseDto>(fs, 
+                    JsonContextHelper.Default.DatabaseDto);
 
                 if (dto is null)
                 {
@@ -134,7 +134,7 @@ public partial class SettingsViewModel : ViewModelBase, IDialogParticipant
 
         if (choice == DialogResult.Yes)
         {
-            await using var connection = await DataBaseHelper.GetOpenConnectionAsync();
+            await using var connection = await DatabaseHelper.GetOpenConnectionAsync();
 
             await connection.ExecuteAsync(
                 """
@@ -144,7 +144,7 @@ public partial class SettingsViewModel : ViewModelBase, IDialogParticipant
                 VACUUM;
                 """);
             
-            await DataBaseHelper.EnsureInitializedAsync(connection, true);
+            await DatabaseHelper.EnsureInitializedAsync(connection, true);
             
             // Notify other ViewModels about updated DB. 
             WeakReferenceMessenger.Default.Send(new UpdateDataRequest<ToDoItem>());

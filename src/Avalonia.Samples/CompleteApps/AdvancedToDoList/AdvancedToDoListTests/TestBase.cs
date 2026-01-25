@@ -20,7 +20,7 @@ public class TestBase : IDisposable
 
         // Set up a mock service provider
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddSingleton<IDbService>(new DesignDbService());
+        serviceCollection.AddSingleton<IDatabaseService>(new DesignDbService());
         serviceCollection.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
         
         App.Services = serviceCollection.BuildServiceProvider();

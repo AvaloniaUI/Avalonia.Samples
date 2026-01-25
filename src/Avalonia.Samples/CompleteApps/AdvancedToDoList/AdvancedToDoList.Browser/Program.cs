@@ -30,7 +30,7 @@ internal sealed partial class Program
         
         // Register the Browser services
         var services = new ServiceCollection();
-        services.AddSingleton<IDbService>(new BrowserDbService());
+        services.AddSingleton<IDatabaseService>(new BrowserDbService());
         services.AddSingleton<ISettingsStorageService>(new BrowserSettingsStorageService());
         
         App.RegisterAppServices(services);

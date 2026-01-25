@@ -19,9 +19,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace AdvancedToDoList.Helper;
 
 /// <summary>
-/// This is a helper class for working with our DataBase.
+/// This is a helper class for working with our Database.
 /// </summary>
-public static class DataBaseHelper
+public static class DatabaseHelper
 {
     // A flag that indicates if the DB is yet initialized.
     private static bool _initialized;
@@ -36,7 +36,7 @@ public static class DataBaseHelper
     internal static async Task<SqliteConnection> GetOpenConnectionAsync()
     {
         // Get the DB-service to resolve the DB per platfrom correctly.
-        var dbService = App.Services.GetRequiredService<IDbService>();
+        var dbService = App.Services.GetRequiredService<IDatabaseService>();
         
         var dbPath = dbService.GetDatabasePath();
         var dbSource = $"Data Source='{dbPath}'";
@@ -159,7 +159,7 @@ public static class DataBaseHelper
         
         // If we have a connection, the DbService is known to be created. Thus, we can safely surpress the null warning here. 
         // For in memory DataSource, we cannot set the _init flag to true. 
-        _initialized = App.Services.GetRequiredService<IDbService>().GetDatabasePath() != ":memory:";
+        _initialized = App.Services.GetRequiredService<IDatabaseService>().GetDatabasePath() != ":memory:";
     }
 
         
@@ -172,7 +172,7 @@ public static class DataBaseHelper
     /// </remarks>
     public static async Task SyncUnderlyingDatabaseAsync()
     {
-        await App.Services.GetRequiredService<IDbService>().SaveAsync();
+        await App.Services.GetRequiredService<IDatabaseService>().SaveAsync();
     }
 
     /// <summary>
@@ -259,12 +259,12 @@ public static class DataBaseHelper
     /// <param name="targetStream">The target Stream to save to</param>
     public static async Task ExportToJsonAsync(Stream targetStream)
     {
-        var dto = new DataBaseDto()
+        var dto = new DatabaseDto()
         {
-            Categories = (await DataBaseHelper.GetCategoriesAsync()).ToArray(),
-            ToDoItems = (await DataBaseHelper.GetToDoItemsAsync(true)).ToArray()
+            Categories = (await DatabaseHelper.GetCategoriesAsync()).ToArray(),
+            ToDoItems = (await DatabaseHelper.GetToDoItemsAsync(true)).ToArray()
         };
         
-        await JsonSerializer.SerializeAsync(targetStream, dto, JsonContextHelper.Default.DataBaseDto);
+        await JsonSerializer.SerializeAsync(targetStream, dto, JsonContextHelper.Default.DatabaseDto);
     }
 }

@@ -55,7 +55,7 @@ public partial class App : Application
         if (Design.IsDesignMode)
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<IDbService>(new DesignDbService());
+            serviceCollection.AddSingleton<IDatabaseService>(new DesignDbService());
             serviceCollection.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
             serviceCollection.AddSingleton<ICategoryService, CategoryService>();
             RegisterAppServices(serviceCollection);

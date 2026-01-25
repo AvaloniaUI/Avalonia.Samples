@@ -11,7 +11,7 @@ public class ManageCategoriesViewModelTest : TestBase
     public async Task ManageCategoriesViewModel_Constructor_InitializesCorrectly()
     {
         // Act
-        // Note: This might trigger LoadDataAsync which depends on DataBaseHelper
+        // Note: This might trigger LoadDataAsync which depends on DatabaseHelper
         var vm = new ManageCategoriesViewModel();
 
         // Make sure Dispatcher related tasks have been processed

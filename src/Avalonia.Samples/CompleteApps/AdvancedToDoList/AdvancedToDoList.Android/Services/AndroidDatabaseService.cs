@@ -5,7 +5,7 @@ using AdvancedToDoList.Services;
 
 namespace AdvancedToDoList.Android.Services;
 
-public class AndroidDbService : IDbService
+public class AndroidDbService : IDatabaseService
 {
     public string GetDatabasePath()
     {

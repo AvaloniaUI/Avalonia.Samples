@@ -12,7 +12,7 @@ namespace AdvancedToDoList.Helper;
 /// AOT and trimming friendly.
 /// </summary>
 /// <see href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation"/>
-[JsonSerializable(typeof(DataBaseDto))]
+[JsonSerializable(typeof(DatabaseDto))]
 [JsonSerializable(typeof(Settings))]
 [JsonSerializable(typeof(Category[]))]
 [JsonSerializable(typeof(ToDoItem[]))]

@@ -5,7 +5,7 @@ using AdvancedToDoList.Services;
 
 namespace AdvancedToDoList.Browser.Services;
 
-public partial class BrowserDbService : IDbService
+public partial class BrowserDbService : IDatabaseService
 {
     public string GetDatabasePath()
     {

@@ -5,7 +5,7 @@ using AdvancedToDoList.Services;
 
 namespace AdvancedToDoList.iOS.Services;
 
-public class IosDbService : IDbService
+public class IosDatabaseService : IDatabaseService
 {
     public string GetDatabasePath()
     {

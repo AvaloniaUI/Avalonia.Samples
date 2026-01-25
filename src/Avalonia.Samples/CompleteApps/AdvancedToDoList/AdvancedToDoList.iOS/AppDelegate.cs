@@ -22,7 +22,7 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
     {
         // Register the iOS service
         var services = new ServiceCollection();
-        services.AddSingleton<IDbService>(new IosDbService());
+        services.AddSingleton<IDatabaseService>(new IosDatabaseService());
         services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
         
         App.RegisterAppServices(services);

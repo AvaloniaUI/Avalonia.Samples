@@ -2,7 +2,10 @@ using System.Threading.Tasks;
 
 namespace AdvancedToDoList.Services;
 
-public interface IDbService
+/// <summary>
+/// This is a service to work with the Database.
+/// </summary>
+public interface IDatabaseService
 {
     /// <summary>
     /// Returns the full path to the database file.

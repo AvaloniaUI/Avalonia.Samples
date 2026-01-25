@@ -23,7 +23,7 @@ sealed class Program
         
         // Register the Desktop service
         var services = new ServiceCollection();
-        services.AddSingleton<IDbService>(new DesktopDbService());
+        services.AddSingleton<IDatabaseService>(new DesktopDbService());
         services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
         
         App.RegisterAppServices(services);

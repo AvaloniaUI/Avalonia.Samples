@@ -44,7 +44,7 @@ public partial class ManageCategoriesViewModel
 
     private async Task LoadDataAsync()
     {
-        var categories = await DataBaseHelper.GetCategoriesAsync();
+        var categories = await DatabaseHelper.GetCategoriesAsync();
         _categoriesSourceCache.AddOrUpdate(categories.Select(x => new CategoryViewModel(x)));
     }
 

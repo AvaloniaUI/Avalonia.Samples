@@ -65,7 +65,7 @@ public partial class ManageToDoItemsViewModel
     
     private async Task LoadDataAsync()
     {
-        var toDoItems = await DataBaseHelper.GetToDoItemsAsync(ShowAlsoCompletedItems);
+        var toDoItems = await DatabaseHelper.GetToDoItemsAsync(ShowAlsoCompletedItems);
         
         _toDoItemsSourceCache.AddOrUpdate(toDoItems.Select(x => new ToDoItemViewModel(x)));
     }
@@ -143,7 +143,7 @@ public partial class ManageToDoItemsViewModel
             return;
         }
 
-        var availableCategories = await DataBaseHelper.GetCategoriesAsync();
+        var availableCategories = await DatabaseHelper.GetCategoriesAsync();
 
         var editToDoItemViewModel = new EditToDoItemViewModel(toDoItem.CloneToDoItemViewModel(),
             availableCategories.Select(x => new CategoryViewModel(x)).ToList());

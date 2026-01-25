@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedToDoList.Services;
 
+/// <summary>
+/// This is a service that handles Settings related I/O operations.
+/// </summary>
 public interface ISettingsStorageService
 {
     /// <summary>

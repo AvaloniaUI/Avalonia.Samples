@@ -20,7 +20,7 @@ public class MainActivity : AvaloniaMainActivity<App>
     {
         // Register the Android service
         var services = new ServiceCollection();
-        services.AddSingleton<IDbService>(new AndroidDbService());
+        services.AddSingleton<IDatabaseService>(new AndroidDbService());
         services.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
         
         App.RegisterAppServices(services);

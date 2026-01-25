@@ -4,7 +4,7 @@ using AdvancedToDoList.Services;
 
 namespace AdvancedToDoList.Desktop.Services;
 
-public class DesktopDbService : IDbService
+public class DesktopDbService : IDatabaseService
 {
     public string GetDatabasePath()
     {
