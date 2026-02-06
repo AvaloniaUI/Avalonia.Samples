@@ -27,15 +27,15 @@ public static class DatabaseHelper
     private static bool _initialized;
     
     /// <summary>
-    /// Opens a new <see cref="SqliteConnection"/> and opens it for usage. 
+    /// Creates a new <see cref="SqliteConnection"/> and opens it for usage. 
     /// </summary>
     /// <remarks>
-    /// Ensure the connection is disposed of after use.
+    /// Ensure that the connection is disposed of after use.
     /// </remarks>
-    /// <returns>The open connection.</returns>
+    /// <returns>The opened connection.</returns>
     internal static async Task<SqliteConnection> GetOpenConnectionAsync()
     {
-        // Get the DB-service to resolve the DB per platfrom correctly.
+        // Get the DB-service to resolve the DB per platform correctly.
         var dbService = App.Services.GetRequiredService<IDatabaseService>();
         
         var dbPath = dbService.GetDatabasePath();
@@ -60,7 +60,7 @@ public static class DatabaseHelper
     /// <summary>
     /// Gets all available Categories from the DB.
     /// </summary>
-    /// <returns>the loaded Categories</returns>
+    /// <returns>The loaded Categories</returns>
     public static async Task<IEnumerable<Category>> GetCategoriesAsync()
     {
         await using var connection = await GetOpenConnectionAsync();
@@ -70,11 +70,12 @@ public static class DatabaseHelper
     /// <summary>
     /// Gets all available ToDoItems from the DB, filtered by its status.
     /// </summary>
-    /// <param name="loadAlsoCompletedItems">If true, also loads items that are marked as compleded (Progess = 100 %). The default is false.</param>
-    /// <returns>the loaded ToDoItems</returns>
+    /// <param name="loadAlsoCompletedItems">If true, also loads items that are marked as completed (Progress = 100 %). The default is false.</param>
+    /// <returns>The loaded ToDoItems</returns>
     public static async Task<IEnumerable<ToDoItem>> GetToDoItemsAsync(bool loadAlsoCompletedItems = false)
     {
         await using var connection = await GetOpenConnectionAsync();
+        
         // The trick here is to pass @loadAlsoCompletedItems as a parameter.
         // If it is true, the condition will always be true. 
         // The alternative would be to write different SQL queries.
@@ -157,7 +158,6 @@ public static class DatabaseHelper
             }
         }
         
-        // If we have a connection, the DbService is known to be created. Thus, we can safely surpress the null warning here. 
         // For in memory DataSource, we cannot set the _init flag to true. 
         _initialized = App.Services.GetRequiredService<IDatabaseService>().GetDatabasePath() != ":memory:";
     }
@@ -199,12 +199,12 @@ public static class DatabaseHelper
             new Category()
             {
                 Name = "Category 3",
-                Color = "#ThisIsNoColor", // testing ivnalid color name
+                Color = "#ThisIsNoColor", // testing invalid color name
                 Description = "This is Category 3"
             }
         ];
 
-        ToDoItem[] TestToDoItems =
+        ToDoItem[] testToDoItems =
         [
             new ToDoItem()
             {
@@ -249,12 +249,12 @@ public static class DatabaseHelper
             """
             REPLACE INTO ToDoItem (Id, CategoryId, Title, Priority, Description, DueDate, Progress, CreatedDate, CompletedDate) VALUES 
             (@Id, @CategoryId, @Title, @Priority, @Description, @DueDate, @Progress, @CreatedDate, @CompletedDate);
-            """, TestToDoItems);
+            """, testToDoItems);
     }
     
     
     /// <summary>
-    /// Returns a JSON representation of the entire database.
+    /// Saves a JSON representation of the entire database into the provided Stream.
     /// </summary>
     /// <param name="targetStream">The target Stream to save to</param>
     public static async Task ExportToJsonAsync(Stream targetStream)

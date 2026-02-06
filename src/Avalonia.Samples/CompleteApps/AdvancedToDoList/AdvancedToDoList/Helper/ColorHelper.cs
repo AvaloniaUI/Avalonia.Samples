@@ -4,20 +4,23 @@ using Avalonia.Media;
 namespace AdvancedToDoList.Helper;
 
 /// <summary>
-/// An internal helper class for the <see cref="Avalonia.Media.Color"/>-struct
+/// Internal helper class for generating and working with Avalonia Color objects.
+/// Provides utility functions for color manipulation and random color generation.
+/// Used primarily for creating default colors for new categories.
 /// </summary>
 internal static class ColorHelper
 {
     /// <summary>
-    /// Creates a Random Color using RGB
+    /// Generates a fully opaque color (alpha = 255) with random RGB values.
+    /// Used to provide visual distinction for newly created categories.
     /// </summary>
-    /// <returns>The random Color</returns>
+    /// <returns>A new random Color with full opacity</returns>
     internal static Color GetRandomColor()
     {
         return new Color(
-            255,
-            (byte)Random.Shared.Next(255),
-            (byte)Random.Shared.Next(255),
-            (byte)Random.Shared.Next(255));
+            255, // Alpha channel (fully opaque)
+            (byte)Random.Shared.Next(255), // Red channel (0-255)
+            (byte)Random.Shared.Next(255), // Green channel (0-255)
+            (byte)Random.Shared.Next(255)); // Blue channel (0-255)
     }
 }
