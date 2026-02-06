@@ -7,12 +7,15 @@ using Avalonia.Media;
 namespace AdvancedToDoList.DataTemplates;
 
 /// <summary>
-/// This class is a helper to resolve the symbol for the <see cref="ToDoItemStatus"/>.
+/// DataTemplate-selector for displaying appropriate icons based on ToDoItem-status.
+/// Provides visual differentiation between NotStarted, InProgress, Done, and Overdue states.
+/// Uses PathIcon controls with different icons and colors for each status.
 /// </summary>
 public class ToDoItemStatusTemplateSelector : IDataTemplate
 {
     /// <summary>
-    /// Gets the default instance of this class
+    /// Gets the singleton instance of this template selector.
+    /// Used throughout the application to ensure consistent status icon rendering.
     /// </summary>
     public static ToDoItemStatusTemplateSelector Instance { get; } = new ToDoItemStatusTemplateSelector();
 
@@ -27,8 +30,6 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
                 {
                     Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.CircleDashedLight"),
                     Opacity = 0.7,
-                    // TIP: If you want your App to be localized, you could also provide this text via App.Resources
-                    // or any other localization provider.
                     [ToolTip.TipProperty] = "Pending" 
                 },
 

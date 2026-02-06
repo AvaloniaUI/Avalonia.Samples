@@ -7,12 +7,15 @@ using Avalonia.Media;
 namespace AdvancedToDoList.DataTemplates;
 
 /// <summary>
-/// This class is a helper to resolve the symbol-representation of our <see cref="Priority"/>-enum
+/// DataTemplate-selector for displaying appropriate priority icons.
+/// Provides visual differentiation between Low, Medium, and High priority levels.
+/// Uses directional arrow icons with different colors to indicate priority hierarchy.
 /// </summary>
 public class ToDoItemPriorityIconTemplateSelector : IDataTemplate
 {
     /// <summary>
-    /// Gets the default instance of this class
+    /// Gets the singleton instance of this template selector.
+    /// Used throughout the application to ensure consistent priority icon rendering.
     /// </summary>
     public static ToDoItemPriorityIconTemplateSelector Instance { get; } = new ToDoItemPriorityIconTemplateSelector();
     
