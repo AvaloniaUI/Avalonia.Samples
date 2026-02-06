@@ -1,8 +1,9 @@
-<!-- The following line makes Rider more responsive. If you use another IDE, 
+<!-- The below comment line makes Rider more responsive. If you use another IDE, 
      check the options there to turn off analysis there if you see performance 
      issues during editing this file. -->
 
 <!-- ReSharper disable All -->
+
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Icon-data was taken from https://phosphoricons.com -->
