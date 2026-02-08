@@ -35,17 +35,29 @@ internal class MockDialogService : IDialogService
     public bool ReturnResultCalled { get; private set; }
 
     /// <summary>
+    /// The result to return from the next dialog (defaults to default(T))
+    /// Used to simulate different user responses in tests.
+    /// </summary>
+    public object? NextDialogResult { get; set; }
+
+    /// <summary>
     /// Shows an overlay dialog and records the parameters.
     /// </summary>
     /// <param name="title">The dialog title</param>
     /// <param name="content">The dialog content/message</param>
     /// <param name="dialogCommands">The dialog commands available to the user</param>
-    /// <returns>A completed task with default result</returns>
+    /// <returns>A task with the dialog result</returns>
     public Task<T?> ShowOverlayDialogAsync<T>(string title, object? content, params DialogCommand[] dialogCommands)
     {
         LastTitle = title;
         LastContent = content;
-        return Task.FromResult(default(T));
+        var result = NextDialogResult switch
+        {
+            null => default,
+            T typedResult => typedResult,
+            _ => (T)NextDialogResult
+        };
+        return Task.FromResult(result);
     }
 
     /// <summary>

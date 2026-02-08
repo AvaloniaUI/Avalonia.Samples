@@ -2,9 +2,6 @@ using Avalonia;
 using Avalonia.Headless;
 using AdvancedToDoList;
 
-using Microsoft.Extensions.DependencyInjection;
-using AdvancedToDoList.Services;
-
 //  Assembly-level attribute that tells Xunit how to initialize Avalonia for tests.
 //  Specifies that TestAppBuilder.BuildAvaloniaApp() should be called
 //  once before any tests run to set up the Avalonia application.

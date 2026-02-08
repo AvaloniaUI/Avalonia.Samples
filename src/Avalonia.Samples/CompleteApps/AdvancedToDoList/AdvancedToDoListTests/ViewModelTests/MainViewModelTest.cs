@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using AdvancedToDoList.ViewModels;
 using Avalonia.Headless.XUnit;
 using Avalonia.Threading;

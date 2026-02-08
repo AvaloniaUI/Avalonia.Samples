@@ -1,9 +1,5 @@
-
-using AdvancedToDoList.Models;
-using AdvancedToDoList.Services;
 using AdvancedToDoList.ViewModels;
 using AdvancedToDoListTests.Services;
-using SharedControls.Controls;
 using Xunit;
 
 namespace AdvancedToDoListTests.ViewModelTests;
