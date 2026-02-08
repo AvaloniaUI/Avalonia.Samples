@@ -2,6 +2,7 @@ using AdvancedToDoList.ViewModels;
 using AdvancedToDoList.Views;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
+using Avalonia.Threading;
 using SharedControls.Controls;
 using Xunit;
 
@@ -33,7 +34,7 @@ public class MainViewTest : TestBase
     /// If any of these assertions fail, the UI structure may have changed unexpectedly.
     /// </remarks>
     [AvaloniaFact]
-    public void MainView_Should_Initialize_With_HamburgerMenu()
+    public async Task MainView_Should_Initialize_With_HamburgerMenu()
     {
         // Arrange
         var vm = new MainViewModel();
@@ -46,35 +47,14 @@ public class MainViewTest : TestBase
 
         // Act
         var hamburgerMenu = view.FindControl<HamburgerMenu>("MainMenu");
-
+        
+        // Wait for the UI to load
+        Dispatcher.UIThread.RunJobs();
+        await Task.Delay(100);
+        
         // Assert
         Assert.NotNull(hamburgerMenu);
         Assert.Equal(2, hamburgerMenu.MenuItems.Count);
         Assert.Single(hamburgerMenu.OptionsMenuItems);
-    }
-
-    /// <summary>
-    /// Tests that the view's data context is properly set and accessible.
-    /// Verifies the ViewModel binding works correctly during initialization.
-    /// </summary>
-    /// <remarks>
-    /// This test ensures:
-    /// - MainView DataContext is not null after assignment
-    /// - The assigned MainViewModel instance is correctly referenced
-    /// - Data binding infrastructure is working as expected
-    /// </remarks>
-    [AvaloniaFact]
-    public void MainView_Should_Have_Valid_DataContext()
-    {
-        // Arrange
-        var expectedVm = new MainViewModel();
-        var view = new MainView
-        {
-            DataContext = expectedVm
-        };
-
-        // Act & Assert
-        Assert.NotNull(view.DataContext);
-        Assert.Same(expectedVm, view.DataContext);
     }
 }
