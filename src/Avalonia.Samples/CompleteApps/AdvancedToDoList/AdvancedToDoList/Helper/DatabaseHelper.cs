@@ -147,8 +147,8 @@ public static class DatabaseHelper
 
         Console.WriteLine("Created Category table.");
 
-        // Populate some data for the designer if it has none yet. 
-        if (Design.IsDesignMode)
+        // Populate some data for the designer and our unit tests if it has none yet. 
+        if (Design.IsDesignMode || connection.ConnectionString.Contains(":memory:"))
         {
             var categoryCount = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Category");
             if (categoryCount == 0)

@@ -1,3 +1,4 @@
+
 <Application x:Class="AdvancedToDoList.App"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,9 +10,23 @@
              xmlns:properties="clr-namespace:AdvancedToDoList.Properties"
              x:DataType="viewModels:SettingsViewModel"
              RequestedThemeVariant="{Binding AppTheme, Source={x:Static properties:Settings.Default}}">
-    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
+    <!--
+        This is the main application definition file.
+        
+        Key responsibilities:
+        - Defines global data templates for ViewModels to Views
+        - Sets up application-level styles and themes
+        - Binds theme variant to user settings (light/dark/system)
+        - Provides shared resources (brushes, converters, controls)
+        
+        ThemeVariant options:
+        - "Default": Follows system theme
+        - "Light": Always light mode
+        - "Dark": Always dark mode
+    -->
 
     <Application.DataTemplates>
+        <!-- CategoryViewModel display template: Shows a colored badge with the category name and description tooltip -->
         <DataTemplate DataType="viewModels:CategoryViewModel">
             <Border Padding="5,2"
                     HorizontalAlignment="Left"
@@ -23,10 +38,12 @@
             </Border>
         </DataTemplate>
 
+        <!-- EditCategoryViewModel: Maps to the edit category view -->
         <DataTemplate DataType="viewModels:EditCategoryViewModel">
             <views:EditCategoryView />
         </DataTemplate>
 
+        <!-- EditToDoItemViewModel: Maps to the edit to-do item view -->
         <DataTemplate DataType="viewModels:EditToDoItemViewModel">
             <views:EditToDoItemView />
         </DataTemplate>
@@ -36,8 +53,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- Shared icon resources -->
                 <MergeResourceInclude Source="Assets/Icons.axaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Custom command bar background brush with 25% opacity -->
             <SolidColorBrush x:Key="CommandBarBackground"
                              Opacity="0.25"
                              Color="{DynamicResource SystemListMediumColor}" />
@@ -45,25 +65,33 @@
     </Application.Resources>
 
     <Application.Styles>
+        <!-- Fluent theme with custom accent color (Avalonia-Blue) for both light and dark palettes -->
         <FluentTheme>
             <FluentTheme.Palettes>
                 <ColorPaletteResources x:Key="Dark"
-                                       Accent="DarkRed"/>
+                                       Accent="#FF3578E5"/>
                 <ColorPaletteResources x:Key="Light"
-                                       Accent="DarkRed"/>
+                                       Accent="#FF3578E5"/>
             </FluentTheme.Palettes>
         </FluentTheme>
+        
+        <!-- Custom shared controls theme -->
         <themes:SharedControlTheme />
+        
+        <!-- ColorPicker theme -->
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
 
+        <!-- Base styles for common controls -->
         <Style Selector="CalendarDatePicker, ComboBox">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
 
+        <!-- Text should wrap always (better for small mobile devices) -->
         <Style Selector="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
 
+        <!-- Headline style -->
         <Style Selector="TextBlock.h1">
             <Setter Property="Margin" Value="5,15,0,5" />
             <Setter Property="FontSize" Value="18" />
@@ -75,6 +103,7 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
 
+        <!-- List box item styling with bottom border separator -->
         <Style Selector="ListBoxItem">
             <Setter Property="BorderThickness" Value="0,0,0,1" />
             <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
@@ -83,6 +112,7 @@
             </Style>
         </Style>
 
+        <!-- ToolBar button styling -->
         <Style Selector="Button.toolBar, ToggleButton.toolBar">
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="32" />

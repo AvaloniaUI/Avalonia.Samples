@@ -14,24 +14,24 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AdvancedToDoList.Properties;
 
-
 /// <summary>
-/// This class defines the App settings. It implements INotifyPropertyChanged, so that the App can
+/// This class defines the App settings. It implements INotifyPropertyChanged so that the App can
 /// subscribe to settings changes.
 /// </summary>
 public class Settings : INotifyPropertyChanged
 {
     /// <summary>
-    /// The default settings instance
+    /// Gets the default settings instance.
     /// </summary>
     public static Settings Default { get; } = new Settings();
-    
+
     /// <summary>
     /// Gets or sets the AppTheme where allowed values are: <br/>
-    /// <see cref="ThemeVariant.Light" />, <see cref="ThemeVariant.Dark"/> and <see cref="ThemeVariant.Default"/>
+    /// <see cref="ThemeVariant.Light" />, <see cref="ThemeVariant.Dark"/> and <see cref="ThemeVariant.Default"/> <br/>
+    /// We use the Light-theme as the default value.
     /// </summary>
     /// <remarks>
-    /// Default will try to inherit the systems theme.
+    /// ThemeVariant.Default will try to inherit the systems theme. <seealso href="https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants"/>
     /// </remarks>
     public string AppTheme
     {
@@ -40,7 +40,7 @@ public class Settings : INotifyPropertyChanged
     } = ThemeVariant.Light.ToString();
 
     /// <summary>
-    /// Gets or sets the accent color to use. The default is Avalonia-blue
+    /// Gets or sets the accent color to use. The default is Avalonia-blue.
     /// </summary>
     /// <remarks>
     /// Since we want to reduce reflection usage as much as possible, we use a <see cref="JsonConverter"/>
@@ -51,7 +51,7 @@ public class Settings : INotifyPropertyChanged
     {
         get;
         set => SetField(ref field, value);
-    } = new Color(0xFF, 0x35, 0x78, 0xE5); // "#FF3578E5", Avalonia Blue
+    } = new Color(0xFF, 0x35, 0x78, 0xE5); // "#FF3578E5", Avalonia-Blue
 
     /// <inheritdoc/>
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -60,6 +60,8 @@ public class Settings : INotifyPropertyChanged
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        // We save the settings automatically with each change. The alternative would be to provide a "save"-Button 
+        // in the Settings-UI. 
         SaveSettingsAsync();
     }
 
@@ -80,11 +82,11 @@ public class Settings : INotifyPropertyChanged
     /// </summary>
     private async void SaveSettingsAsync()
     {
-        if (!_canSave)
-            return;
-
         try
         {
+            if (!_canSave)
+                return;
+            
             _canSave = false;
             var settingsStorageService = App.Services.GetRequiredService<ISettingsStorageService>();
             var json = JsonSerializer.Serialize(this, JsonContextHelper.Default.Settings);
@@ -109,7 +111,9 @@ public class Settings : INotifyPropertyChanged
     {
         try
         {
+            // Remember to disable _canSave before reading the settings.
             _canSave = false;
+            
             var settingsStorageService = App.Services.GetRequiredService<ISettingsStorageService>();
             var json = await settingsStorageService.ReadAsync();
 
@@ -124,6 +128,7 @@ public class Settings : INotifyPropertyChanged
         }
         catch (Exception exception)
         {
+            // Log any exception to trace or any logger you prefer.
             Trace.TraceError(exception.Message);
             // We can safely ignore failed settings changes
         }

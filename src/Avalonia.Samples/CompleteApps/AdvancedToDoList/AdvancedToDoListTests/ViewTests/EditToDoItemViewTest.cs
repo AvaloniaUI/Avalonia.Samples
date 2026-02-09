@@ -130,7 +130,7 @@ public class EditToDoItemViewTest : TestBase
     /// - Validates data annotation attributes ([Required]) work in UI
     /// </remarks>
     [AvaloniaFact]
-    public async Task ValidationErrors_Should_Display_When_Name_Is_Empty()
+    public void ValidationErrors_Should_Display_When_Name_Is_Empty()
     {
         // Arrange - Start with invalid data (empty required field)
         var item = new ToDoItemViewModel(new ToDoItem { Title = "Test Task" });

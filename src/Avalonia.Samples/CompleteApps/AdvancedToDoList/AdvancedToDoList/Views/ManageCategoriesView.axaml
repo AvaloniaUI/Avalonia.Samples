@@ -12,12 +12,15 @@
     <Design.DataContext>
         <viewModels:ManageCategoriesViewModel />
     </Design.DataContext>
+    
     <DockPanel VerticalSpacing="5">
         <Border DockPanel.Dock="Top" Padding="4"
                 Margin="10,5"
                 Background="{DynamicResource CommandBarBackground}"
                 CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
                 BoxShadow="2 2 5 1 gray">
+            
+            <!-- ToolBar -->
             <WrapPanel Orientation="Horizontal" ItemSpacing="5">
                 <Button Classes="toolBar"
                         Content="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}"
@@ -44,6 +47,7 @@
             </WrapPanel>
         </Border>
 
+        <!-- The Categories -->
         <ListBox x:Name="CategoriesListBox" 
                  ItemsSource="{Binding Categories}"
                  Grid.IsSharedSizeScope="True"

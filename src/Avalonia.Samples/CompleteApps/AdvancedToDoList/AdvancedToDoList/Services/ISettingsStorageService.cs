@@ -3,18 +3,24 @@ using System.Threading.Tasks;
 namespace AdvancedToDoList.Services;
 
 /// <summary>
-/// This is a service that handles Settings related I/O operations.
+/// Service interface for persisting application settings.
+/// Provides platform-agnostic abstraction for settings storage operations.
+/// Enables different implementations for desktop, mobile, and browser platforms.
 /// </summary>
 public interface ISettingsStorageService
 {
     /// <summary>
-    /// Reads the settings JSON string or returns null if unavailable.
+    /// Asynchronously reads application settings from persistent storage.
+    /// Returns the JSON string containing settings data, or null if no settings exist.
     /// </summary>
+    /// <returns>Settings JSON string or null if unavailable/unreadable</returns>
     Task<string?> ReadAsync();
 
     /// <summary>
-    /// Writes the provided settings JSON string.
-    /// No-op if writing is not supported on the current platform.
+    /// Asynchronously writes application settings to persistent storage.
+    /// Persists the provided JSON string to the appropriate storage location.
+    /// May be a no-op on platforms with restricted write access (e.g., browser sandbox).
     /// </summary>
+    /// <param name="json">The JSON string containing application settings to persist</param>
     Task WriteAsync(string json);
 }

@@ -1,15 +1,21 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AdvancedToDoList.ViewModels;
 
 /// <summary>
-/// This is the base class for all of our ViewModels. It inherits <see cref="ObservableValidator"/> which helps us to
-/// ensure only valid data is saved. 
+/// Base class for all ViewModels in the application.
+/// Inherits from ObservableValidator to provide data validation capabilities
+/// and ensure only valid data is saved to the database.
 /// </summary>
-[UnconditionalSuppressMessage("Trimming", "IL2026: Using member 'CommunityToolkit.Mvvm.ComponentModel.ObservableValidator.ObservableValidator()' which has 'RequiresUnreferencedCodeAttribute' can break functionality when trimming application code. The type of the current instance cannot be statically discovered.",
-    Justification = "Handled via rd.xml")]
+[UnconditionalSuppressMessage("Trimming", "IL2112", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
+[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
 public abstract class ViewModelBase : ObservableValidator
 {
+    /// <summary>
+    /// Validates all properties of the ViewModel using data annotations.
+    /// This method should be called before saving data to ensure validity.
+    /// Populates the validation errors that can be accessed through HasErrors property.
+    /// </summary>
     public void Validate() => ValidateAllProperties();
 }

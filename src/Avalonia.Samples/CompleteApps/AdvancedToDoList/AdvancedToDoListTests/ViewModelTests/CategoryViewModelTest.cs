@@ -376,7 +376,7 @@ public class CategoryViewModelTest
         var colorChanged = false;
  
         // Subscribe to PropertyChanged event
-        viewModel.PropertyChanged += (sender, e) =>
+        viewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(CategoryViewModel.Name))
                 nameChanged = true;

@@ -19,11 +19,13 @@
             
             <TextBlock Classes="h1" Text="Appearance"></TextBlock>
             
+            <!-- Selects the AppTheme -->
             <controls:LabeledControl Header="Theme">
                 <ComboBox SelectedItem="{Binding Settings.AppTheme}"
                           ItemsSource="{Binding AvailableThemeVariants}"/>
             </controls:LabeledControl>
             
+            <!-- Selects the AccentColor -->
             <controls:LabeledControl Header="Accent">
                 <ColorPicker Color="{Binding Settings.AccentColor}"
                              HorizontalAlignment="Left"
@@ -31,6 +33,7 @@
                              IsAlphaVisible="False" />
             </controls:LabeledControl>
             
+            <!-- Options to Import or Export the TodoList -->
             <TextBlock Classes="h1" Text="Import / Export" />
             <Button HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"

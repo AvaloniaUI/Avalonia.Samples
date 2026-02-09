@@ -19,12 +19,14 @@
     </Design.DataContext>
 
     <UserControl.Resources>
+        <!-- Some constants for later usage -->
         <x:Int32 x:Key="Constants.0">0</x:Int32>
         <x:Int32 x:Key="Constants.25">25</x:Int32>
         <x:Int32 x:Key="Constants.50">50</x:Int32>
         <x:Int32 x:Key="Constants.75">75</x:Int32>
         <x:Int32 x:Key="Constants.100">100</x:Int32>
 
+        <!-- Defining a MenuFlyout for shared usage -->
         <MenuFlyout x:Key="ToDoItemContextMenu" x:DataType="viewModels:ToDoItemViewModel">
             <MenuItem Header="Edit Item"
                       Command="{Binding #Root.((viewModels:ManageToDoItemsViewModel)DataContext).EditToDoItemCommand}"
@@ -76,6 +78,7 @@
     </UserControl.Resources>
 
     <DockPanel VerticalSpacing="5">
+        <!-- The ToolBar  -->
         <Border DockPanel.Dock="Top"
                 Padding="4"
                 Margin="10,5"
@@ -153,6 +156,7 @@
             </WrapPanel>
         </Border>
 
+        <!-- The Items list -->
         <ListBox x:Name="ToDoItemsListBox" 
                  ItemsSource="{Binding ToDoItems}"
                  SelectedItem="{Binding SelectedToDoItem}">
@@ -172,9 +176,11 @@
                                     Orientation="Horizontal"
                                     ItemSpacing="5"
                                     LineSpacing="3">
+                            <!-- Displays the Item's Category -->
                             <ContentControl
                                 Content="{Binding Category, TargetNullValue={x:Static viewModels:CategoryViewModel.Empty}}" />
 
+                            <!-- Displays the Item's Priority -->
                             <Border Padding="2,2,8,2"
                                     VerticalAlignment="Center"
                                     CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
@@ -188,21 +194,27 @@
                             </Border>
                         </WrapPanel>
 
+                        <!-- Title -->
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
                                    FontWeight="Bold"
                                    VerticalAlignment="Center"
                                    Text="{Binding Title}" />
+                        
+                        <!-- DueDate -->
                         <TextBlock Grid.Row="0"
                                    Grid.Column="2"
                                    HorizontalAlignment="Right"
                                    Text="{Binding DueDate, StringFormat='d'}" />
+                        
+                        <!-- Description (hidden if not provided) -->
                         <TextBlock Grid.Row="2"
                                    Grid.Column="0"
                                    FontStyle="Italic"
                                    IsVisible="{Binding Description, Converter={x:Static ObjectConverters.IsNotNull}}"
                                    Text="{Binding Description}" />
 
+                        <!-- Displays the Item's current status as a symbol -->
                         <ContentControl Grid.Row="0" Grid.Column="1"
                                         Grid.RowSpan="2"
                                         CornerRadius="20"
@@ -211,11 +223,15 @@
                                         Background="{DynamicResource SystemControlBackgroundAltMediumBrush}"
                                         Content="{Binding CurrentStatus}"
                                         ContentTemplate="{x:Static dataTemplates:ToDoItemStatusTemplateSelector.Instance}" />
+                        
+                        <!-- Displays the Item's progress -->
                         <ProgressBar Grid.Row="1"
                                      Grid.Column="2"
                                      MinWidth="75"
                                      ShowProgressText="True"
                                      Value="{Binding Progress}" />
+                        
+                        <!-- A Button that shows the ContextMenu (Useful esp. on mobile devices) -->
                         <Button Grid.Row="0" Grid.Column="3"
                                 Grid.RowSpan="3" Classes="toolBar"
                                 Content="{DynamicResource PhosphorIcons.DotsThreeVertical}"

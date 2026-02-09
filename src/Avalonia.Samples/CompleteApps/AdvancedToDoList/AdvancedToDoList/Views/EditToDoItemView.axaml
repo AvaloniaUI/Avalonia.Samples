@@ -21,6 +21,7 @@
           RowSpacing="10">
         <ScrollViewer DataContext="{Binding Item}">
             <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
+                
                 <!--  ID  -->
                 <controls:LabeledControl Header="ID">
                     <TextBox IsReadOnly="True"
@@ -45,7 +46,7 @@
                                     <Button Grid.Column="1"
                                             Classes="toolBar"
                                             ToolTip.Tip="Add a new category"
-                                            Content="{DynamicResource PhosphorIcons.CirclesThreePlusThin}"
+                                            Content="{DynamicResource PhosphorIcons.PlusCircleLight}"
                                             Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AddNewCategoryCommand}" />
                                     <Button Grid.Column="2"
                                             Classes="toolBar"

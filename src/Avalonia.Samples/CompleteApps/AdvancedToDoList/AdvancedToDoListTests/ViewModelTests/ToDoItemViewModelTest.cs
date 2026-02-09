@@ -296,7 +296,7 @@ public class ToDoItemViewModelTest
         var titleChanged = false;
         var progressChanged = false;
 
-        viewModel.PropertyChanged += (sender, e) =>
+        viewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ToDoItemViewModel.Title))
                 titleChanged = true;
@@ -336,7 +336,7 @@ public class ToDoItemViewModelTest
         var viewModel = new ToDoItemViewModel(model);
         var statusChanged = false;
 
-        viewModel.PropertyChanged += (sender, e) =>
+        viewModel.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ToDoItemViewModel.CurrentStatus))
                 statusChanged = true;

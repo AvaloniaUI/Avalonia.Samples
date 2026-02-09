@@ -15,9 +15,12 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
+    <!-- Note: Content refers to the selected item's tag -->
     <controls:HamburgerMenu x:Name="MainMenu" 
                             Content="{Binding $self.SelectedMenuItem.Tag}"
                             AutoClosePaneThreshold="700">
+        
+        <!-- The available Items -->
         <controls:HamburgerMenu.MenuItems>
             <controls:HamburgerMenuItem Label="To-Do Items"
                                         Icon="{DynamicResource PhosphorIcons.ListChecksThin}"
@@ -27,12 +30,14 @@
                                         Tag="{Binding CategoriesViewModel}"/>
         </controls:HamburgerMenu.MenuItems>
 
+        <!-- The Option Items (in Production, we should also add an About page) -->
         <controls:HamburgerMenu.OptionsMenuItems>
             <controls:HamburgerMenuItem Label="Settings"
                                         Icon="{DynamicResource PhosphorIcons.GearLight}"
                                         Tag="{Binding SettingsViewModel}" />
         </controls:HamburgerMenu.OptionsMenuItems>
         
+        <!-- Specify DataTemplates for the Content -->
         <controls:HamburgerMenu.DataTemplates>
             <DataTemplate DataType="vm:ManageToDoItemsViewModel">
                 <views:ManageToDoItemsView />

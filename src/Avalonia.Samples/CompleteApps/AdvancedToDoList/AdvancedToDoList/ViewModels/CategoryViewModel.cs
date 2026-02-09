@@ -16,6 +16,8 @@ namespace AdvancedToDoList.ViewModels;
 /// so that the trimmer knows which items to preserve.
 /// </remarks>
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+[UnconditionalSuppressMessage("Trimming", "IL2112", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
+[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
 public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewModel>, ICloneable
 {
     /// <summary>
@@ -26,7 +28,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
         Name = "Uncategorized",
         Color = Color.FromArgb(255, 150, 150, 150),
     };
-    
+
     /// <summary>
     /// Creates a new instance with a random color.
     /// </summary>
@@ -40,7 +42,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
     /// Creates a new instance for the provided <see cref="Category"/>
     /// </summary>
     /// <param name="category">The category to represent.</param>
-    public CategoryViewModel(Category category)
+    public CategoryViewModel(Category category) : this()
     {
         Id = category.Id;
         Name = category.Name;
@@ -58,8 +60,12 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
     /// <summary>
     /// Gets the Name of the Category. 
     /// </summary>
-    /// <remarks>This property is required.</remarks>
+    /// <remarks>
+    /// This property is required.
+    /// Remember to add "NotifyDataErrorInfo" to ensure the property will be validated.
+    /// </remarks>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     public partial string? Name { get; set; }
     
@@ -128,7 +134,7 @@ public partial class CategoryViewModel : ViewModelBase, IEquatable<CategoryViewM
         return !Equals(left, right);
     }
     
-    
+    /// <inheritdoc />
     public object Clone()
     {
         return MemberwiseClone();

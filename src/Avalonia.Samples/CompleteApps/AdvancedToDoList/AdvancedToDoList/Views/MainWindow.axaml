@@ -7,5 +7,7 @@
         x:Class="AdvancedToDoList.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AdvancedToDoList">
+        
+        <!-- This is only used on Desktop and can add more items if you want a different UI for the Desktop version of your App -->
         <views:MainView />
 </Window>

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AdvancedToDoList.Messages;
+using AdvancedToDoList.Models;
 using AdvancedToDoList.Services;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,47 +12,53 @@ using SharedControls.Services;
 namespace AdvancedToDoList.ViewModels;
 
 /// <summary>
-/// This ViewModel provides the necessary interactions to edit a to-do-item. 
+/// ViewModel for editing ToDoItems in a dialog context.
+/// Provides UI interactions for modifying ToDoItem properties, managing categories,
+/// and validating input before saving changes to the database.
 /// </summary>
 public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
 {    
     /// <summary>
-    /// The <see cref="IDialogService"/> to use (needed for Unit-tests).
+    /// Dialog service for showing dialogs and managing user interactions.
+    /// Used for confirmation dialogs, error messages, and category creation.
     /// </summary>
     private readonly IDialogService _dialogService;
     
     /// <summary>
-    /// The <see cref="IToDoService"/> to use (needed for Unit-tests).
+    /// Service for saving and managing ToDoItem data.
+    /// Handles persistence of ToDoItems to the database.
     /// </summary>
-    private readonly IToDoService _toDoService;
+    private readonly IToDoItemService _toDoService;
     
     /// <summary>
-    /// Creates a new instance of this ViewModel to edit the given to-do-item.
+    /// Creates a new instance of this ViewModel to edit the given ToDoItem.
+    /// Resolves services from the dependency injection container or creates default instances.
     /// </summary>
-    /// <param name="toDoItem">The item to edit.</param>
-    /// <param name="availableCategories">A list of available catorgires to select from.</param>
+    /// <param name="toDoItem">The ToDoItem to edit.</param>
+    /// <param name="availableCategories">A list of available categories to select from.</param>
     public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories)
         : this(toDoItem, availableCategories, 
-            App.Services.GetService<IToDoService>() ?? new ToDoService(),
+            App.Services.GetService<IToDoItemService>() ?? new ToDoItemService(),
             null)
     {
     }
 
     /// <summary>
     /// Creates a new instance of this ViewModel to edit the given to-do-item with the provided services.
+    /// This constructor is primarily used for unit testing with mocked services.
     /// </summary>
-    /// <param name="toDoItem">The item to edit.</param>
-    /// <param name="availableCategories">A list of available catorgires to select from.</param>
-    /// <param name="toDoService">The <see cref="IDialogService"/> to use.</param>
-    /// <param name="dialogService">The <see cref="IToDoService"/> to use.</param>
+    /// <param name="toDoItem">The ToDoItem to edit.</param>
+    /// <param name="availableCategories">A list of available categories to select from.</param>
+    /// <param name="toDoService">The service for managing ToDoItem persistence.</param>
+    /// <param name="dialogService">The service for managing dialog interactions.</param>
     public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories, 
-        IToDoService toDoService, IDialogService? dialogService)
+        IToDoItemService toDoService, IDialogService? dialogService)
     {
         Item = toDoItem;
         _toDoService = toDoService;
         _dialogService = dialogService ?? new DialogService(this);
         
-        //Add the empty category to the list. This will be the first item in the list.
+        //Add the empty category to the list as the first option (represents "uncategorized")
         availableCategories.Insert(0, CategoryViewModel.Empty);
         
         AvailableCategories = availableCategories;
@@ -67,25 +75,29 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
     public IList<CategoryViewModel> AvailableCategories { get; }
 
     /// <summary>
-    /// Gets a command that can be used to add a new category.
+    /// Command that opens a dialog to create a new category.
+    /// The newly created category is added to the available categories list
+    /// and automatically selected for the current ToDoItem.
     /// </summary>
     [RelayCommand]
     private async Task AddNewCategoryAsync()
     {
-        // Show an edit dialog to create a new category.
+        // Show an edit dialog to create a new category
         var category = new EditCategoryViewModel(new CategoryViewModel());
         var result = await _dialogService.ShowOverlayDialogAsync<CategoryViewModel>("Add a new category", category);
         
-        // if we got a new category, add it to the list and set it as the selected category.
+        // If the user successfully created a new category, add it to the list and select it
         if (result != null)
         {
+            UpdateDataMessage<Category>.CreateAndSend(UpdateAction.Added, result.ToCategory());
             AvailableCategories.Add(result);
             Item.Category = result;
         }
     }
 
     /// <summary>
-    /// Gets a command that resets the category to the default (<see cref="CategoryViewModel.Empty"/>) category.
+    /// Command that resets the ToDoItem's category to the default "uncategorized" option.
+    /// Uses the static Empty category to represent items without a specific category.
     /// </summary>
     [RelayCommand]
     private void SetCategoryToEmpty()
@@ -103,7 +115,9 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
         Item.Validate();
         if (Item.HasErrors)
         {
-            await _dialogService.ShowOverlayDialogAsync<DialogResult>("Error", "Please correct the errors in the form.",
+            await _dialogService.ShowOverlayDialogAsync<DialogResult>(
+                "Error", 
+                "Please correct the errors in the form.",
                 DialogCommands.Ok);
             return;
         }
@@ -116,13 +130,15 @@ public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
         if (success)
         {
             // NOTE: We have to create a new CategoryViewModel here, since the save method may have changed some properties
-            // (for example: the ID)
+            // (for example, the ID)
             _dialogService.ReturnResultFromOverlayDialog(new ToDoItemViewModel(toDoItem));
         }
         else
         {
             // Show an error message if something went wrong.
-            await _dialogService.ShowOverlayDialogAsync<bool>("Error", "An error occurred while saving the to-do item.",
+            await _dialogService.ShowOverlayDialogAsync<bool>(
+                "Error", 
+                "An error occurred while saving the to-do item.",
                 DialogCommands.Ok);
         }
     }

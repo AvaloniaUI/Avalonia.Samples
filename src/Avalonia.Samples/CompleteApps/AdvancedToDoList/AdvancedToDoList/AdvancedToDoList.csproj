@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <TrimmerRootDescriptor Include="rd.xml" />
+        <TrimmerRootDescriptor Include="LinkerConfig.xml" />
     </ItemGroup>
     
     <ItemGroup>

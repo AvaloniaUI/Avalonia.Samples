@@ -8,15 +8,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AdvancedToDoList.ViewModels;
 
+/// <summary>
+/// ViewModel representing a single ToDoItem with comprehensive property management and validation.
+/// Provides observable properties for UI binding, calculated status properties, and
+/// persistence operations for ToDoItems in the application.
+/// </summary>
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
-[UnconditionalSuppressMessage("Trimming",
-    "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
-    Justification = "All properties accessed by reflection are also otherwise used, so they will not be trimmed.")]
-[UnconditionalSuppressMessage("Trimming",
-    "IL2112: 'DynamicallyAccessedMembersAttribute' on 'AdvancedToDoList.ViewModels.ToDoItemViewModel' or one of its base types references 'AdvancedToDoList.ViewModels.ToDoItemViewModel.Title.set' which requires unreferenced code. The type of the current instance cannot be statically discovered.",
-    Justification = "Made sure the needed items are not trimmed.")]
+[UnconditionalSuppressMessage("Trimming", "IL2112", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
+[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "We have all needed members added via DynamicallyAccessedMembers-Attribute")]
 public partial class ToDoItemViewModel : ViewModelBase, ICloneable
 {
+    /// <summary>
+    /// Initializes a new ToDoItemViewModel from an existing ToDoItem model.
+    /// Creates a ViewModel wrapper around the database model for UI binding.
+    /// Handles category conversion and property initialization.
+    /// </summary>
+    /// <param name="toDoItem">The ToDoItem model to wrap in this ViewModel</param>
     public ToDoItemViewModel(ToDoItem toDoItem)
     {
         Id = toDoItem.Id;
@@ -83,33 +90,49 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     [Range(0, 100)]
     public partial int Progress { get; set; }
     
+    /// <summary>
+    /// Handles automatic completion date management when progress changes.
+    /// Sets CompletedDate to the current time when progress reaches 100%
+    /// and clears it when progress is reduced below 100%.
+    /// </summary>
+    /// <param name="value">The new progress value being set</param>
     partial void OnProgressChanged(int value)
     {
-        // Store the completed date if the progress is 100
+        // Automatically set the completion timestamp when an item is marked as done
         if (value >= 100)
         {
             this.CompletedDate = DateTime.Now;
         }
         else
         {
+            // Clear the completion date when the item is no longer complete
             this.CompletedDate = null;
         }
     }
 
 
+    /// <summary>
+    /// Gets the calculated status of the ToDoItem based on progress and due date.
+    /// Computed property that determines NotStarted, InProgress, Done, or Overdue status.
+    /// Used by UI to display appropriate visual indicators and status information.
+    /// </summary>
     public ToDoItemStatus CurrentStatus 
     {
         get
         {
+            // Check for completion first as it has the highest priority
             if (Progress == 100)
                 return ToDoItemStatus.Done;
             
+            // Check for overdue status next
             if (DueDate < DateTime.Now)
                 return ToDoItemStatus.Overdue;
             
+            // Check if work has been started on the item
             if (Progress > 0)
                 return ToDoItemStatus.InProgress;
             
+            // Default to not started if none of the above conditions apply
             return ToDoItemStatus.NotStarted;
         }
     }
@@ -127,6 +150,12 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
     [ObservableProperty]
     public partial DateTime? CompletedDate { get; private set; }
 
+    /// <summary>
+    /// Command that updates progress and immediately saves to database.
+    /// Used for quick progress updates from UI controls like sliders or buttons.
+    /// Ensures data persistence for progress changes.
+    /// </summary>
+    /// <param name="value">The new progress value (0-100)</param>
     [RelayCommand]
     private async Task SetProgressAsync(int value)
     {
@@ -134,6 +163,12 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
         await ToToDoItem().SaveAsync();
     }
 
+    /// <summary>
+    /// Converts this ViewModel back to the underlying ToDoItem model.
+    /// Used for database persistence operations and data transfer.
+    /// Includes conversion of the Category-ViewModel to the Category-Model.
+    /// </summary>
+    /// <returns>A new ToDoItem model populated with ViewModel data</returns>
     public ToDoItem ToToDoItem() => new ToDoItem()
     {
         Id = Id,
@@ -148,11 +183,23 @@ public partial class ToDoItemViewModel : ViewModelBase, ICloneable
         CompletedDate = CompletedDate,
     };
 
+    /// <summary>
+    /// Creates a shallow copy of this ToDoItemViewModel.
+    /// Used for creating edit copies without modifying the original.
+    /// Implements ICloneable interface for standard cloning support.
+    /// </summary>
+    /// <returns>A shallow copy of this ViewModel instance</returns>
     public object Clone()
     {
         return MemberwiseClone();
     }
 
+    /// <summary>
+    /// Creates a typed shallow copy of this ToDoItemViewModel.
+    /// Provides a convenience method for creating ToDoItemViewModel copies.
+    /// Used when creating edit dialogs to preserve original data.
+    /// </summary>
+    /// <returns>A strongly typed shallow copy of this ViewModel</returns>
     public ToDoItemViewModel CloneToDoItemViewModel()
     { 
         return (ToDoItemViewModel)Clone();

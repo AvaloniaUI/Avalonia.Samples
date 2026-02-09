@@ -1,28 +1,32 @@
 using System.Threading.Tasks;
 using SharedControls.Controls;
-using SharedControls.Services;
 
 namespace AdvancedToDoList.Services;
 
 /// <summary>
-/// This is a service that interacts with the <see cref="DialogManager"/>. 
+/// Service interface for managing modal overlay dialogs.
+/// Provides abstraction for dialog interactions to improve testability and platform independence.
+/// Enables ViewModels to show dialogs without direct UI framework dependencies.
 /// </summary>
-/// <remarks>Using this a service improves the testability of our App.</remarks>
+/// <remarks>Using a service pattern improves the testability of ViewModels by allowing mock implementations.</remarks>
 public interface IDialogService
 {
     /// <summary>
-    /// This method shows an overlay dialog and returns its result.
+    /// Shows a modal overlay dialog with specified content and returns user response.
+    /// Typically used for confirmation dialogs, form editing, and user input scenarios.
     /// </summary>
-    /// <param name="title">The dialog title</param>
-    /// <param name="content">The content to show</param>
-    /// <param name="dialogCommands">The <see cref="DialogCommands"/> to show</param>
-    /// <typeparam name="T">The expected return type</typeparam>
-    /// <returns></returns>
+    /// <param name="title">The dialog title displayed in the header</param>
+    /// <param name="content">The dialog content (usually a ViewModel or control)</param>
+    /// <param name="dialogCommands">The command buttons to display in the dialog footer</param>
+    /// <typeparam name="T">The type of result expected from the dialog</typeparam>
+    /// <returns>The dialog result of type T, or null if user cancels</returns>
     Task<T?> ShowOverlayDialogAsync<T>(string title, object? content, params DialogCommand[] dialogCommands);
     
     /// <summary>
-    /// This returns the result from an overlay dialog.
+    /// Returns a result from the currently active overlay dialog.
+    /// Closes the dialog and returns the specified result to the calling code.
+    /// Typically called from within the dialog's ViewModel to complete user interaction.
     /// </summary>
-    /// <param name="result">The result to return</param>
+    /// <param name="result">The result to return from the dialog</param>
     void ReturnResultFromOverlayDialog(object? result);
 }
