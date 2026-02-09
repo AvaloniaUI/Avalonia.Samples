@@ -1,7 +1,7 @@
 namespace AdvancedToDoList.Models;
 
 /// <summary>
-/// Defines the priority levels for ToDo items.
+/// Defines the priority levels for ToDoItems.
 /// Higher numeric values indicate higher priority for sorting purposes.
 /// These priorities help users organize and focus on the most important tasks.
 /// </summary>
@@ -15,7 +15,7 @@ public enum Priority
     
     /// <summary>
     /// Medium (or normal) priority for standard tasks.
-    /// This is the default priority level for newly created ToDo items.
+    /// This is the default priority level for newly created ToDoItems.
     /// Represents the baseline importance for regular tasks.
     /// </summary>
     Medium = 2,

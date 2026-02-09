@@ -250,13 +250,9 @@ public partial class EditCategoryViewModel : ViewModelBase, IDialogParticipant
         // Returns true if saved successfully, false on error
         var success = await _categoryService.SaveCategoryAsync(category);
 
-        // Step 3: Handle result
+        // Step 3: Handle the result
         if (success)
         {
-            // Notify other ViewModels about the change
-            // They can refresh their data if needed
-            // TODO UpdateDataMessage<Category>.CreateAndSend(category);
-            
             // Create a new ViewModel from the saved category
             // Note: Database may have assigned an ID to new categories
             _dialogService.ReturnResultFromOverlayDialog(new CategoryViewModel(category));

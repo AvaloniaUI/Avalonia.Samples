@@ -3,10 +3,10 @@ using Avalonia.Controls;
 namespace AdvancedToDoList.Views;
 
 /// <summary>
-/// Dialog view for editing individual ToDo items.
+/// Dialog view for editing individual ToDoItems.
 /// Provides form interface for modifying title, description, priority, due date, and category.
-/// Supports validation and real-time preview of ToDo item changes.
-/// Used in overlay dialogs for both creating new and editing existing ToDo items.
+/// Supports validation and real-time preview of ToDoItem changes.
+/// Used in overlay dialogs for both creating new and editing existing ToDoItems.
 /// </summary>
 public partial class EditToDoItemView : UserControl
 {

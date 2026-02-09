@@ -4,7 +4,7 @@ namespace AdvancedToDoList.Views;
 
 /// <summary>
 /// Main application view that displays the primary user interface.
-/// Contains navigation between categories, ToDo items, and settings sections.
+/// Contains navigation between categories, ToDoItems, and settings sections.
 /// Serves as the root container for the entire application UI.
 /// </summary>
 public partial class MainView : UserControl

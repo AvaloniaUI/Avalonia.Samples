@@ -5,7 +5,7 @@ namespace AdvancedToDoList.Views;
 /// <summary>
 /// View for managing categories in the application.
 /// Provides user interface for creating, editing, and deleting categories.
-/// Supports color coding and organization of ToDo items into logical groups.
+/// Supports color coding and organization of ToDoItems into logical groups.
 /// </summary>
 public partial class ManageCategoriesView : UserControl
 {

@@ -34,7 +34,7 @@ public static class _DesignData
     
     /// <summary>
     /// Gets the design-time data instance for the EditToDoItemView.
-    /// Used by the visual designer to display a realistic ToDo item editing interface
+    /// Used by the visual designer to display a realistic ToDoItem editing interface
     /// with sample categories available for selection.
     /// </summary>
     public static EditToDoItemViewModel EditToDoItemViewModel { get; }

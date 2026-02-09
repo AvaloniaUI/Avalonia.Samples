@@ -5,9 +5,9 @@ using Dapper;
 namespace AdvancedToDoList.Models;
 
 /// <summary>
-/// Represents a category for organizing ToDo items.
+/// Represents a category for organizing ToDoItems.
 /// Uses record type for value-based equality and immutable design principles.
-/// Categories provide color coding and organizational structure to ToDo items.
+/// Categories provide color coding and organizational structure to ToDoItems.
 /// </summary>
 public record Category
 {
@@ -77,7 +77,7 @@ public record Category
     /// <summary>
     /// Asynchronously deletes this category from the database.
     /// Only works if the category has been previously saved (has a valid Id).
-    /// Note: Deleting a category that's in use by ToDo items may cause orphaned references.
+    /// Note: Deleting a category that's in use by ToDoItems may cause orphaned references.
     /// </summary>
     /// <returns>true if deletion was successful, otherwise false</returns>
     public async Task<bool> DeleteAsync()

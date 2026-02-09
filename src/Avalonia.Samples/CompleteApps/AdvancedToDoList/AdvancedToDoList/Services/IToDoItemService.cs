@@ -11,18 +11,18 @@ namespace AdvancedToDoList.Services;
 public interface IToDoItemService
 {   
     /// <summary>
-    /// Asynchronously saves a ToDo item to persistent storage.
+    /// Asynchronously saves a ToDoItem to persistent storage.
     /// Handles both creating new items and updating existing items.
     /// </summary>
-    /// <param name="item">The ToDo item to save</param>
+    /// <param name="item">The ToDoItem to save</param>
     /// <returns>True if the operation was successful, otherwise false</returns>
     Task<bool> SaveToDoItemAsync(ToDoItem item);
     
     /// <summary>
-    /// Asynchronously deletes a ToDo item from persistent storage.
+    /// Asynchronously deletes a ToDoItem from persistent storage.
     /// Permanently removes the item from the data store.
     /// </summary>
-    /// <param name="item">The ToDo item to delete</param>
+    /// <param name="item">The ToDoItem to delete</param>
     /// <returns>True if the operation was successful, otherwise false</returns>
     Task<bool> DeleteToDoItemAsync(ToDoItem item);
 }

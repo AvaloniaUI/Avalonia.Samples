@@ -21,7 +21,7 @@ public interface ICategoryService
     /// <summary>
     /// Asynchronously deletes a category from persistent storage.
     /// Permanently removes the category from the data store.
-    /// Note: Deleting a category may affect ToDo items that reference it.
+    /// Note: Deleting a category may affect ToDoItems that reference it.
     /// </summary>
     /// <param name="category">The category to delete</param>
     /// <returns>True if the operation was successful, otherwise false</returns>

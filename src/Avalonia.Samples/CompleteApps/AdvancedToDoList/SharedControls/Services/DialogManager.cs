@@ -103,7 +103,6 @@ public class DialogManager
             
             // Clean up mapping when View is removed from visual tree
             // Prevents memory leaks from dangling registrations
-            // TODO: Known issue - DetachedFromVisualTree may not fire in all scenarios
             // Consider adding explicit cleanup in View's Unloaded event
             sender.DetachedFromVisualTree += (_, _) => RegistrationMapper.Remove(newValue);
         }

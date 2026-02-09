@@ -3,8 +3,8 @@ using Avalonia.Controls;
 namespace AdvancedToDoList.Views;
 
 /// <summary>
-/// View for managing ToDo items with filtering, sorting, and CRUD operations.
-/// Provides user interface for creating, editing, deleting, and organizing ToDo items.
+/// View for managing ToDoItems with filtering, sorting, and CRUD operations.
+/// Provides user interface for creating, editing, deleting, and organizing ToDoItems.
 /// Includes search functionality, progress tracking, and category management.
 /// </summary>
 public partial class ManageToDoItemsView : UserControl
