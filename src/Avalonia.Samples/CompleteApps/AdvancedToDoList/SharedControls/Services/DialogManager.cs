@@ -5,50 +5,54 @@ namespace SharedControls.Services;
 
 /// <summary>
 /// Manages registration and lookup of dialog participants (typically ViewModels).
-/// Provides the infrastructure for connecting ViewModels to their corresponding UI elements.
-/// Uses attached properties to establish the ViewModel-to-View relationship.
+/// Provides the infrastructure for connecting ViewModels to their corresponding UI elements
+/// using attached properties to establish the ViewModel-to-View relationship.
 /// </summary>
 /// <remarks>
 /// How DialogManager works:
 /// 
 /// 1. Registration:
-///    - ViewModels implement IDialogParticipant interface
-///    - XAML Views use DialogManager.RegisterProperty to bind to ViewModel
+///    - ViewModels implement <see cref="IDialogParticipant"/> interface
+///    - XAML Views use <see cref="DialogManager.RegisterProperty"/> to bind to ViewModel
 ///    - This creates a mapping between ViewModel and View
 /// 
 /// 2. Lookup:
-///    - When dialogs need to be shown, DialogHelper queries DialogManager
-///    - DialogManager provides the associated Visual/Window for the ViewModel
+///    - When dialogs need to be shown, <see cref="DialogHelper"/> queries <see cref="DialogManager"/>
+///    - DialogManager provides the associated <see cref="Visual"/>/<see cref="Window"/> for the ViewModel
 ///    - The dialog is then shown using that Visual as the parent
 /// 
 /// 3. Cleanup:
-///    - Automatically removes registrations when Views detach from visual tree
+///    - Automatically removes registrations when Views detach from the visual tree
 ///    - Prevents memory leaks from stale ViewModel-View associations
 /// 
 /// Benefits:
-/// - ViewModels don't need references to UI controls
+/// - ViewModels don't need references to UI controls (no code-behind dependencies)
 /// - Supports any type of dialog (overlay, modal window, etc.)
 /// - Clean separation of concerns between MVVM layers
-/// - Automatic resource management
+/// - Automatic resource management with no manual cleanup needed
 /// </remarks>
 /// <example>
 /// Example ViewModel:
-/// <code>
+/// <code language="csharp">
+/// <![CDATA[
 /// public class MyViewModel : ViewModelBase, IDialogParticipant
 /// {
 ///     private async Task ShowDialogAsync()
 ///     {
-///         await this.ShowOverlayDialogAsync&lt;string&gt;("Title", "Content");
+///         await this.ShowOverlayDialogAsync<string>("Title", "Content");
 ///     }
 /// }
+/// ]]>
 /// </code>
 /// 
 /// Example XAML View:
-/// <code>
-/// &lt;UserControl x:Class="MyApp.Views.MyView"
-///               local:DialogManager.Register="{Binding}"&gt;
-///     &lt;!-- View content goes here --&gt;
-/// &lt;/UserControl&gt;
+/// <code language="xaml">
+/// <![CDATA[
+/// <UserControl x:Class="MyApp.Views.MyView"
+///              local:DialogManager.Register="{Binding}">
+///     <!-- View content goes here -->
+/// </UserControl>
+/// ]]>
 /// </code>
 /// </example>
 public class DialogManager
@@ -100,7 +104,7 @@ public class DialogManager
         if (e.GetNewValue<IDialogParticipant>() is { } newValue)
         {
             RegistrationMapper.Add(newValue, sender);
-            
+
             // Clean up mapping when View is removed from visual tree
             // Prevents memory leaks from dangling registrations
             // Consider adding explicit cleanup in View's Unloaded event

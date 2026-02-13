@@ -18,22 +18,26 @@ namespace SharedControls.Services;
 /// </summary>
 /// <example>
 /// In ViewModel:
-/// <code>
+/// <code language="csharp">
+/// <![CDATA[
 /// public class MyViewModel : ViewModelBase, IDialogParticipant
 /// {
 ///     public async Task ShowMyDialog()
 ///     {
-///         var result = await this.ShowOverlayDialogAsync&lt;string&gt;(
+///         var result = await this.ShowOverlayDialogAsync<string>(
 ///             "My Dialog",
 ///             "Dialog content",
 ///             DialogCommands.OkCancel);
 ///     }
 /// }
+/// ]]>
 /// </code>
 /// 
 /// In XAML View:
-/// <code>
-/// &lt;UserControl local:DialogManager.Register="{Binding}"&gt;
+/// <code language="xaml">
+/// <![CDATA[
+/// <UserControl local:DialogManager.Register="{Binding}" />
+/// ]]>
 /// </code>
 /// </example>
 public interface IDialogParticipant

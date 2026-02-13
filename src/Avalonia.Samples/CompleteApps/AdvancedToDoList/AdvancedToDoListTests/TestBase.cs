@@ -25,17 +25,19 @@ namespace AdvancedToDoListTests;
 /// 
 /// How to use it:
 /// Inherit from TestBase in your test class:
-/// <code>
+/// <code language="csharp">
+/// <![CDATA[
 /// public class MyViewModelTests : TestBase
 /// {
 ///     [Fact]
 ///     public void TestSomething()
 ///     {
 ///         // Services are already configured
-///         var dbService = App.Services.GetService&lt;IDatabaseService&gt;();
+///         var dbService = App.Services.GetService<IDatabaseService>();
 ///         // Your test code here
 ///     }
 /// }
+/// ]]>
 /// </code>
 /// </remarks>
 public class TestBase : IDisposable
@@ -56,13 +58,13 @@ public class TestBase : IDisposable
         // Set up a mock service provider with test-specific implementations
         // This allows ViewModels to work without needing real database connections
         var serviceCollection = new ServiceCollection();
-        
+
         // Use DesignDbService for in-memory testing without file system dependencies
         serviceCollection.AddSingleton<IDatabaseService>(new DesignDbService());
-        
+
         // Use DefaultSettingsStorageService (in-memory for tests, no file system)
         serviceCollection.AddSingleton<ISettingsStorageService>(new DefaultSettingsStorageService());
-        
+
         // Build the service provider and make it available globally via App.Services
         // ViewModels can now resolve services through dependency injection
         App.Services = serviceCollection.BuildServiceProvider();

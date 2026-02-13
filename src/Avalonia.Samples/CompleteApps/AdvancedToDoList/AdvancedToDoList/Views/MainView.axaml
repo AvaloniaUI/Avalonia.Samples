@@ -5,6 +5,7 @@
              xmlns:vm="using:AdvancedToDoList.ViewModels"
              xmlns:views="clr-namespace:AdvancedToDoList.Views"
              xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="690" d:DesignHeight="450"
              x:Class="AdvancedToDoList.Views.MainView"
              x:Name="Root"

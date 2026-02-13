@@ -120,7 +120,7 @@
             <MultiBinding Converter="{x:Static BoolConverters.Or}" x:DataType="controls:IHamburgerMenuItem">
                 <Binding Path="IsPaneOpen" RelativeSource="{RelativeSource AncestorType=controls:HamburgerMenu}"></Binding>
                 <Binding Path="Icon" Converter="{x:Static ObjectConverters.IsNotNull}"></Binding>
-                <Binding Path="!AutoHide" />
+                <Binding Path="AutoHide" />
             </MultiBinding>
         </Setter>
         <Setter Property="Template">

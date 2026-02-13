@@ -49,7 +49,7 @@ public static class BrushConverters
     /// Calculates luminance using the WCAG 2.0 formula and returns the most readable contrast.
     /// </summary>
     /// <param name="backgroundColor">
-    /// The background color to calculate appropriate foreground color for.
+    /// The background color to calculate the appropriate foreground color for.
     /// Can be any Color value.
     /// </param>
     /// <returns>
@@ -65,7 +65,7 @@ public static class BrushConverters
     /// - This formula accounts for that perceptual difference
     /// - Ensures proper contrast ratios for accessibility (WCAG standards)
     /// 
-    /// Threshold of 128 was chosen empirically as good balance point
+    /// Threshold of 128 was chosen empirically as a good balance point
     /// </remarks>
     public static Color GetIdeaForegroundColor(Color backgroundColor)
     {

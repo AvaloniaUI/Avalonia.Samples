@@ -1,3 +1,4 @@
+
 // Worker-based persistence for GitHub Pages (no COOP/COEP/OPFS required)
 // - Uses sqlite3-worker1-promiser to drive sqlite3 inside a Worker
 // - Restores DB from IndexedDB on init
@@ -9,7 +10,7 @@
 
 import './sqlite3-worker1-promiser.js';
 
-// After sqlite-storage.js has loaded
+// After sqlite-storage.js has loaded,
 // initialization is performed via loadSQLite() called from main.js
 
 // Keep a safe no-op immediately so .NET callers won't crash while initialization runs:
@@ -22,6 +23,8 @@ export const IDB_DB = 'avalonia-sqlite3';
 export const IDB_STORE = 'dbfiles';
 export const IDB_KEY = 'todo.db';
 
+// Opens or creates the IndexedDB database for persisting the SQLite DB file.
+// Uses version 1 for schema definition (just one object store).
 export function idbOpen() {
     return new Promise((resolve, reject) => {
         const req = indexedDB.open(IDB_DB, 1);
@@ -31,6 +34,8 @@ export function idbOpen() {
     });
 }
 
+// Stores a database file (Uint8Array or ArrayBuffer) in IndexedDB.
+// Keys the data under a fixed identifier (e.g., "todo.db").
 export async function idbPut(key, uint8) {
     const db = await idbOpen();
     return new Promise((resolve, reject) => {
@@ -44,6 +49,8 @@ export async function idbPut(key, uint8) {
     });
 }
 
+// Retrieves a previously stored database file from IndexedDB.
+// Normalizes results to a Uint8Array regardless of how IndexedDB returns the data.
 export async function idbGet(key) {
     const db = await idbOpen();
     return new Promise((resolve, reject) => {
@@ -64,7 +71,7 @@ export async function idbGet(key) {
 export async function loadSQLite() {
     console.log('Initializing SQLite Worker + persistence (GitHub Pages fallback)...');
 
-    // Wait for the promiser factory (v2 returns a Promise that resolves with the promiser)
+    // Verify that sqlite3Worker1Promiser.v2 is available
     if (typeof globalThis.sqlite3Worker1Promiser?.v2 !== 'function') {
         console.warn('sqlite3Worker1Promiser.v2() not found. Falling back to in-thread initialization is required.');
         return;
@@ -73,9 +80,9 @@ export async function loadSQLite() {
     let promiser;
     try {
         console.log('Requesting sqlite3Worker1Promiser.v2...');
-        
-        // Timeout to prevent infinite hang
-        const timeoutPromise = new Promise((_, reject) => 
+
+        // Timeout to prevent infinite hang (e.g., network issues blocking worker load)
+        const timeoutPromise = new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Timeout waiting for sqlite3 worker to initialize')), 15000)
         );
 
@@ -113,13 +120,13 @@ export async function loadSQLite() {
     try {
         const saved = await idbGet(IDB_KEY);
         const DB_FILENAME = 'todo.db';
-        
+
         if (saved && saved.byteLength > 0) {
             console.log('Found saved DB in IndexedDB (' + saved.byteLength + ' bytes) — restoring into worker...');
             // We use our custom 'upload' message to populate the worker's MEMFS
-            const uploadResp = await callWorker({ 
-                type: 'upload', 
-                args: { filename: DB_FILENAME, deserialize: saved } 
+            const uploadResp = await callWorker({
+                type: 'upload',
+                args: { filename: DB_FILENAME, deserialize: saved }
             });
             console.log('DB bytes uploaded to worker VFS:', uploadResp);
         } else {
@@ -142,7 +149,7 @@ export async function loadSQLite() {
     globalThis.saveDatabase = async () => {
         try {
             const DB_FILENAME = 'todo.db';
-            
+
             // Priority: Try to save from the main thread's .NET VFS first
             const runtime = globalThis.window?.dotnetRuntime;
             const dotnetFS = runtime && ((typeof runtime.getModule === 'function' ? runtime.getModule().FS : runtime.Module?.FS) || runtime.FS);
@@ -186,7 +193,7 @@ export async function loadSQLite() {
     console.log('SQLite worker initialized; manual persistence enabled (IndexedDB fallback).');
 }
 
-// Save Settings helper
+// Save Settings helper (for ISettingsStorageService)
 export function setItem(key, value) {
     localStorage.setItem(key, value);
 }
