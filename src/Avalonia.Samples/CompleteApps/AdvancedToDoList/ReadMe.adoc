@@ -1,0 +1,159 @@
+= Advanced Todo-List Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
+:toc:
+:toc-placement!:
+endif::[]
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+// ----------------------------------------------------------
+
+
+This sample shows how to create a cross-platform todo-list application built with Avalonia, featuring:
+
+* Persistent storage using SQLite database
+* Worker-based persistence fallback for Browser deployment (like GitHub Pages)
+* The App will run on several Platforms
+** Desktop (Windows, Linux, macOS)
+** Mobile (Android, iOS) and
+** Browser via WebAssembly (WASM)
+* Service layer pattern for clean separation of concerns
+* Using a shared Controls-Library which can be reused for other projects
+* Full unit test coverage support
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+[discrete]
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐉 Hard 🐉
+
+_This sample is considered "Hard" since the ReadMe will not cover every step. Instead, you will have to explore the source code._
+
+[discrete]
+=== Buzz-Words
+
+Todo-List, Cross-Platform, WebAssembly (WASM), SQLite, Service Pattern, Dependency Injection, MVVM Pattern, IndexedDB, Unit Testing, Headless Testing, Persistent Storage, Controls-Library
+
+== Before we start
+
+This sample is considered a bit more advanced than the other samples. If you are new to Avalonia, you should read through the beginner tutorials first, especially: 
+
+* link:../../../../README.adoc#_mvvm_samples[MVVM-Pattern] 
+* link:../../CompleteApps/SimpleToDoList/README.adoc[Simple Todo-List]
+* link:../../../../README.adoc#_custom_controls_samples[Custom Controls]
+* link:../../../../README.adoc#_automated_ui_testing[UI-Testing]
+
+
+== The Solution
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1: Create a new Solution
+
+[NOTE]
+====
+Make sure you have the latest templates installed. 
+
+[source,bash]
+----
+dotnet new install Avalonia.Templates
+----
+====
+
+You can now create a new `Avalonia Cross-Platform Application` from your IDE or by calling the following command: 
+
+[source,bash]
+----
+dotnet new avalonia.xplat -o AdvancedTodoList
+----
+
+You will get a new Solution with five different projects:
+
+[source,powershell,options="nowrap"]
+----
+AdvancedTodoList.sln
+├── AdvancedTodoList.csproj            # Main application project
+├── AdvancedTodoList.Android.csproj    # Android platform project
+├── AdvancedTodoList.Browser.csproj    # Browser (WebAssembly) platform project
+├── AdvancedTodoList.Desktop.csproj    # Desktop platform (Windows/Linux/macOS) project
+└── AdvancedTodoList.iOS.csproj        # iOS platform project
+----
+
+TIP: Technically, you can remove or unload any platform that you don't want to target. For easier debugging and for the previewer to work, we highly suggest keeping the Desktop-project. 
+
+TIP: If you later want to add another platform, it is often easier to create a new xplat project and copy the necessary files instead of creating those by hand.
+
+=== Step 2: Create a Shared-Controls library
+
+In Avalonia, you can create a standalone controls library by creating a simple class-library. For this sample we simply add it to our solution. In a real-world project consider making this a standalone project/solution.
+
+TIP: To make the previewer work as expected, you have to reverence the class library from a valid Desktop-project. In our case we use the final App for it. If you create it as a separate solution, you can add a sample App for the same purpose. 
+
+The `SharedControls` library needs these controls: 
+
+HamburgerMenu:: Navigation host with an expandable menu, common in mobile/desktop apps
+LabeledControl:: Composite control wrapping a label and content (e.g., TextBox) for consistent input forms
+Dialogs:: Wrapper around dialog service abstraction to show modal/custom dialogs across platforms
+
+In addition, we will create some commonly used `Converter` and `Helper` classes.
+
+Please see the link:SharedControls/[[source-code\]] for details and further explanations.
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
+
+
+// Topics that should be covered.
+// 
+// == SQLite
+// * REPLACE INTO
+// * Last_insert_rowid()
+// * WASM integration
+// * https://www.sqlite.org/inmemorydb.html for designer
+// 
+// == Dialogmananger
+// 
+// == Services
+// 
+// == UnitTests
+// * TestBase
+// * Why using Services? 
+// * Talk about integration tests
+// * Avalonia Headless testing linked
+// 
+// == Further reads
+// * Localization support / ideas

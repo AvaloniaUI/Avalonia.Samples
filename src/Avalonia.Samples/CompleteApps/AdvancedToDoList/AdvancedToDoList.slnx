@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path="DesignData\ToDoItems.db" />
     <File Path="Directory.Packages.props" />
+    <File Path="ReadMe.adoc" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="AdvancedToDoListTests\AdvancedToDoListTests.csproj" />
