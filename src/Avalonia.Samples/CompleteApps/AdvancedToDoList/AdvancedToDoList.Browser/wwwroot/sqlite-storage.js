@@ -35,7 +35,7 @@ export function idbOpen() {
 }
 
 // Stores a database file (Uint8Array or ArrayBuffer) in IndexedDB.
-// Keys the data under a fixed identifier (e.g., "todo.db").
+// Keys the data under a fixed identifier (e.g., "myFile.db").
 export async function idbPut(key, uint8) {
     const db = await idbOpen();
     return new Promise((resolve, reject) => {
