@@ -247,6 +247,10 @@ Each sample is tagged with its difficulty. The degree of difficulty describes ho
 | link:src/Avalonia.Samples/FSharp/CompleteApps/MusicStore[Music Store App (F#)]
 | 🐥 Easy
 | F#, Music Store, Complete App, CommunityToolkit.MVVM, Mvvm.Messaging, Styles, ObservableProperty, iTunes Api, Functional Programming
+
+| link:src/Avalonia.Samples/CompleteApps/AdvancedToDoList[Advanced ToDo-List]
+| 🐉 Hard
+| Todo-List, Cross-Platform, WebAssembly (WASM), SQLite, Service Pattern, Dependency Injection, MVVM Pattern, IndexedDB, Unit Testing, Headless Testing, Persistent Storage, Controls-Library
 |===
 
 
