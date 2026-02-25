@@ -35,6 +35,7 @@ This sample shows how to create a cross-platform todo-list application built wit
 * Using a shared Controls-Library which can be reused for other projects
 * Full unit test coverage support
 
+https://timunie.github.io/AdvancedTodoList/[[Test the App here\]]
 
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
 toc::[]
@@ -584,6 +585,7 @@ Here are topics to explore after mastering this sample:
 
 video::_docs/final_result-2026-02-16_20.12.27.mp4[Final result]
 
+https://timunie.github.io/AdvancedTodoList/[Test the result on your own]
 
 // --------------- Ascii-Doc Cheat-Sheet ------------------
 
