@@ -18,6 +18,6 @@ namespace BasicMvvmSample
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseReactiveUI();
+                .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
     }
 }
