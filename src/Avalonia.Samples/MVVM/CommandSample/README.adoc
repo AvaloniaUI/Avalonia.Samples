@@ -91,7 +91,7 @@ In case you don't have ReactiveUI installed, add it to your nuget-packages and m
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace()
-+           .UseReactiveUI();
++           .UseReactiveUI(builder => { /* configure this if needed */ });
 ----
 ====
 
