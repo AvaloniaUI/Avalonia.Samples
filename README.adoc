@@ -5,7 +5,7 @@ endif::[]
 
 ifdef::env-github[]
 :toc:
-:toc-placement!:
+// :toc-placement!:
 endif::[]
 
 ifdef::env-github[]
