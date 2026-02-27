@@ -1,28 +1,44 @@
+
 name: Run tests
 
 on: [push, pull_request]
 
-jobs:  
+jobs:
   test:
     runs-on: windows-latest
     name: Build all projects to test the code
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '10.0.x'
+
       - name: Setup Android SDK
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
-      - uses: android-actions/setup-android@v2
-      - name: Install workloads
-        run: |
-          dotnet workload install wasm-tools 
-          dotnet workload install android 
-          dotnet workload install ios
-          dotnet workload install maccatalyst
 
-      - name: Run build script
-        run: ./scripts/builder.ps1 './src/'
+      - uses: android-actions/setup-android@v2
+
+      - name: Restore workloads with verbose logging
+        run: dotnet workload restore --verbosity:detailed --ignore-failed-sources
+        env:
+          DOTNET_CLI_TELEMETRY_PROFILE: "True"
+        working-directory: ./src/Avalonia.Samples/
+
+      - name: Build all solutions with diagnostics
+        run: |
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          foreach ($solution in $solutions) {
+            Write-Host "=== Restoring: $solution ==="
+            dotnet restore $solution --verbosity:detailed --ignore-failed-sources
+            Write-Host "=== Building: $solution ==="
+            dotnet build $solution --no-restore --verbosity:detailed
+          }
+        shell: pwsh
+        env:
+          MSBUILDSINGLEPROCESSBUILD: "1"
+          DOTNET_CLI_TELEMETRY_PROFILE: "True"
+          NUGET_VERBOSITY: "detailed"
