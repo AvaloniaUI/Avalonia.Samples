@@ -70,6 +70,12 @@ This sample is considered a bit more advanced than the other samples. If you are
 // This is where you explain the possible solution you provide in this sample. 
 // If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
 
+[TIP]
+====
+We recommend to open the source code in parallel while going through this tutorial. 
+
+link:https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/CompleteApps/AdvancedToDoList[[Bring me to the source code\],window=_blank]
+====
 === Step 1: Create a new Solution
 
 [NOTE]
@@ -120,8 +126,6 @@ LabeledControl:: Composite control wrapping a label and content (e.g., TextBox) 
 OverlayDialog:: A control that renders above any other content, which can host notifications and input dialogs.
 
 In addition, we will create some commonly used `Converter` and `Helper` classes.
-
-Please see the link:SharedControls/[[source-code\]] for details and further explanations.
 
 === Step 3: Implement the Data Layer
 
