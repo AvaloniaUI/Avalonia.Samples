@@ -22,11 +22,12 @@ jobs:
 
       - uses: android-actions/setup-android@v2
       
-      - name: Install specific workloads
+      - name: Install workloads for Mobile and Wasm projects
         run: |
-          dotnet workload install android --skip-update
-          dotnet workload install wasm-tools --skip-update
-        working-directory: ./src/Avalonia.Samples/
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+        working-directory: ./
 
       - name: Build all solutions with diagnostics
         run: |
