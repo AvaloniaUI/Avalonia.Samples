@@ -22,7 +22,7 @@ endif::[]
 
 Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia.
 
-toc::[]
+// toc::[]
 
 [#get-in-touch]
 == 🗯 Get in touch with us
