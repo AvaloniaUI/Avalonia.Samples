@@ -21,11 +21,11 @@ jobs:
           java-version: '17'
 
       - uses: android-actions/setup-android@v2
-
-      - name: Restore workloads with verbose logging
-        run: dotnet workload restore --verbosity:detailed --ignore-failed-sources
-        env:
-          DOTNET_CLI_TELEMETRY_PROFILE: "True"
+      
+      - name: Install specific workloads
+        run: |
+          dotnet workload install android --skip-update
+          dotnet workload install wasm-tools --skip-update
         working-directory: ./src/Avalonia.Samples/
 
       - name: Build all solutions with diagnostics
@@ -33,7 +33,7 @@ jobs:
           $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
           foreach ($solution in $solutions) {
             Write-Host "=== Restoring: $solution ==="
-            dotnet restore $solution --verbosity:detailed --ignore-failed-sources
+            dotnet restore $solution --ignore-failed-sources --verbosity:detailed
             Write-Host "=== Building: $solution ==="
             dotnet build $solution --no-restore --verbosity:detailed
           }
