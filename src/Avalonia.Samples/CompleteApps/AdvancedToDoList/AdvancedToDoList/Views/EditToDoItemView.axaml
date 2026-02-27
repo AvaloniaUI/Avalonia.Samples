@@ -1,0 +1,124 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AdvancedToDoList.ViewModels"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:services="clr-namespace:SharedControls.Services;assembly=SharedControls"
+             xmlns:converters="clr-namespace:SharedControls.Converters;assembly=SharedControls"
+             xmlns:model="clr-namespace:AdvancedToDoList.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             services:DialogManager.Register="{Binding}"
+             Width="{Binding $parent[controls:OverlayDialog].Bounds.Width, Converter={x:Static converters:MathConverter.Multiply}, ConverterParameter=0.7}"
+             MaxWidth="700"
+             Design.DataContext="{x:Static viewModels:_DesignData.EditToDoItemViewModel}"
+             x:Name="Root"
+             x:Class="AdvancedToDoList.Views.EditToDoItemView"
+             x:DataType="viewModels:EditToDoItemViewModel">
+
+    <Grid Margin="10"
+          RowDefinitions="*, Auto"
+          RowSpacing="10">
+        <ScrollViewer DataContext="{Binding Item}">
+            <StackPanel Grid.IsSharedSizeScope="True" Spacing="5">
+                
+                <!--  ID  -->
+                <controls:LabeledControl Header="ID">
+                    <TextBox IsReadOnly="True"
+                             Text="{Binding Id, Mode=OneWay}"
+                             Watermark="The ID will be set after saving automatically." />
+                </controls:LabeledControl>
+
+                <!--  Title  -->
+                <controls:LabeledControl Header="Title">
+                    <TextBox x:Name="TitleTextBox" Text="{Binding Title}" Watermark="The title of the to-do" />
+                </controls:LabeledControl>
+
+                <!--  Category  -->
+                <controls:LabeledControl Header="Category">
+                    <ComboBox ItemsSource="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AvailableCategories}"
+                              SelectedItem="{Binding Category}"
+                              Padding="0">
+                        <ComboBox.SelectionBoxItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*, Auto, Auto">
+                                    <ContentControl Margin="5,0" Content="{Binding}" />
+                                    <Button Grid.Column="1"
+                                            Classes="toolBar"
+                                            ToolTip.Tip="Add a new category"
+                                            Content="{DynamicResource PhosphorIcons.PlusCircleLight}"
+                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).AddNewCategoryCommand}" />
+                                    <Button Grid.Column="2"
+                                            Classes="toolBar"
+                                            ToolTip.Tip="No category"
+                                            Content="{DynamicResource PhosphorIcons.XCircleLight}"
+                                            Command="{Binding #Root.((viewModels:EditToDoItemViewModel)DataContext).SetCategoryToEmptyCommand}">
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.SelectionBoxItemTemplate>
+                    </ComboBox>
+                </controls:LabeledControl>
+
+                <!--  Description  -->
+                <controls:LabeledControl Header="Description">
+                    <TextBox Text="{Binding Description}"
+                             AcceptsReturn="True"
+                             MaxHeight="200" />
+                </controls:LabeledControl>
+
+                <!--  DueDate  -->
+                <controls:LabeledControl Header="DueDate">
+                    <CalendarDatePicker SelectedDate="{Binding DueDate}" />
+                </controls:LabeledControl>
+
+                <!--  Priority  -->
+                <controls:LabeledControl Header="Priority">
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="15">
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.Low}}"
+                            GroupName="PrioritySelection"
+                            Content="Low Priority" />
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.Medium}}"
+                            GroupName="PrioritySelection"
+                            Content="Medium Priority" />
+                        <RadioButton
+                            IsChecked="{Binding Priority, Converter={x:Static converters:EnumEqualsToIsCheckedConverter.Instance}, ConverterParameter={x:Static model:Priority.High}}"
+                            GroupName="PrioritySelection"
+                            Content="High Priority" />
+                    </WrapPanel>
+                </controls:LabeledControl>
+
+                <!-- Progress -->
+                <controls:LabeledControl Header="Progress">
+                    <Grid ColumnDefinitions="*, Auto, 50">
+                        <Slider Value="{Binding Progress}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Progress, StringFormat='\{0\} %'}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right">
+                        </TextBlock>
+                    </Grid>
+                </controls:LabeledControl>
+
+                <!-- Some Infos -->
+                <TextBlock Text="Information" Classes="h1" />
+
+                <controls:LabeledControl Header="Created Date" Content="{Binding CreatedDate}"
+                                         VerticalContentAlignment="Center" />
+                <controls:LabeledControl Header="Completed Date"
+                                         Content="{Binding CompletedDate, TargetNullValue='Not yet completed'}"
+                                         VerticalContentAlignment="Center" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <WrapPanel Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   ItemSpacing="5"
+                   Orientation="Horizontal">
+            <Button x:Name="CancelButton" Command="{Binding CancelCommand}" Content="Cancel" />
+            <Button x:Name="SaveButton" Command="{Binding SaveCommand}" Content="Save" />
+        </WrapPanel>
+    </Grid>
+</UserControl>

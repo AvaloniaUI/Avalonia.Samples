@@ -1,0 +1,595 @@
+= Advanced Todo-List Sample
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
+:toc:
+:toc-placement!:
+endif::[]
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+// ----------------------------------------------------------
+
+
+This sample shows how to create a cross-platform todo-list application built with Avalonia, featuring:
+
+* Persistent storage using SQLite database
+* Worker-based persistence fallback for Browser deployment (like GitHub Pages)
+* The App will run on several Platforms
+** Desktop (Windows, Linux, macOS)
+** Mobile (Android, iOS) and
+** Browser via WebAssembly (WASM)
+* Service layer pattern for clean separation of concerns
+* Using a shared Controls-Library which can be reused for other projects
+* Full unit test coverage support
+
+https://timunie.github.io/AdvancedTodoList/[[Test the App here\]]
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+[discrete]
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+
+🐉 Hard 🐉
+
+_This sample is considered "Hard" since the ReadMe will not cover every step. Instead, you will have to explore the source code._
+
+[discrete]
+=== Buzz-Words
+
+Todo-List, Cross-Platform, WebAssembly (WASM), SQLite, Service Pattern, Dependency Injection, MVVM Pattern, IndexedDB, Unit Testing, Headless Testing, Persistent Storage, Controls-Library
+
+== Before we start
+
+This sample is considered a bit more advanced than the other samples. If you are new to Avalonia, you should read through the beginner tutorials first, especially: 
+
+* link:../../../../README.adoc#_mvvm_samples[MVVM-Pattern] 
+* link:../../CompleteApps/SimpleToDoList/README.adoc[Simple Todo-List]
+* link:../../../../README.adoc#_custom_controls_samples[Custom Controls]
+* link:../../../../README.adoc#_automated_ui_testing[UI-Testing]
+
+
+== The Solution
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1: Create a new Solution
+
+[NOTE]
+====
+Make sure you have the latest templates installed. 
+
+[source,bash]
+----
+dotnet new install Avalonia.Templates
+----
+====
+
+You can now create a new `Avalonia Cross-Platform Application` from your IDE or by calling the following command: 
+
+[source,bash]
+----
+dotnet new avalonia.xplat -o AdvancedTodoList
+----
+
+You will get a new Solution with five different projects:
+
+[source,powershell,options="nowrap"]
+----
+AdvancedTodoList.sln
+├── AdvancedTodoList.csproj            # Main application project
+├── AdvancedTodoList.Android.csproj    # Android platform project
+├── AdvancedTodoList.Browser.csproj    # Browser (WebAssembly) platform project
+├── AdvancedTodoList.Desktop.csproj    # Desktop platform (Windows/Linux/macOS) project
+└── AdvancedTodoList.iOS.csproj        # iOS platform project
+----
+
+TIP: Technically, you can remove or unload any platform that you don't want to target. For easier debugging and for the previewer to work as expected, we highly suggest keeping the Desktop-project. 
+
+TIP: If you later want to add another platform, it is often easier to create a new xplat project and copy the necessary files instead of creating those by hand. 
+
+NOTE: We use central package management in this project. Please refer to https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management[[official docs\]] for more info about it.
+
+=== Step 2: Create a Shared-Controls library
+
+In Avalonia, you can create a standalone controls library by creating a simple class-library. For this sample we simply add it to our solution. In a real-world project consider making this a standalone project/solution.
+
+TIP: To make the previewer work as expected, you have to reverence the class library from a valid Desktop-project. In our case we use the final App for it. If you create it as a separate solution, you can add a sample App for the same purpose. 
+
+Inside the `SharedControls` library we need those controls: 
+
+HamburgerMenu:: Navigation host with an expandable menu, common in mobile/desktop apps
+LabeledControl:: Composite control wrapping a label and content (e.g., TextBox) for consistent input forms
+OverlayDialog:: A control that renders above any other content, which can host notifications and input dialogs.
+
+In addition, we will create some commonly used `Converter` and `Helper` classes.
+
+Please see the link:SharedControls/[[source-code\]] for details and further explanations.
+
+=== Step 3: Implement the Data Layer
+
+Now it's time to implement the data layer. This sample uses SQLite for persistent storage, with special handling for browser deployments using IndexedDB.
+
+==== SQLite Database Setup
+
+SQLite is a lightweight, file-based database that works great for desktop and mobile applications. For browser deployments, we use a worker-based approach that syncs with IndexedDB.
+
+[NOTE]
+====
+The key insight is that SQLite operations are similar across platforms, but the persistence mechanism differs:
+
+* **Desktop/Mobile**: Direct file system access
+* **Browser**: Must use IndexedDB via Web Worker
+====
+
+For full documentation of SQLite, please visit the https://www.sqlite.org/docs.html[[official documentation\]]
+
+==== Understanding REPLACE INTO
+
+The most useful SQLite feature in this sample is the `REPLACE INTO` statement:
+
+[source,sql]
+----
+REPLACE INTO Category (Id, Name, Description, Color)
+VALUES (@Id, @Name, @Description, @Color);
+SELECT Last_insert_rowid();
+----
+
+This SQL statement has magical properties:
+
+. *Inserts* a new record if the Id doesn't exist (null or non-matching)
+. *Updates* the existing record if the Id already exists
+. Returns the Id of the affected row (useful for getting auto-generated IDs)
+
+This single statement handles both creating new categories AND updating existing ones!
+
+==== Last_insert_rowid() 
+
+After a REPLACE INTO, we use `SELECT Last_insert_rowid()` to get the ID that was used:
+
+. For new records: Returns the new auto-generated ID
+. For updates: Returns the existing ID
+
+This allows the application to know the final ID after saving.
+
+=== Step 4: Service Layer Pattern
+
+The application uses the service layer pattern to separate data access from business logic.
+
+==== Why Services?
+
+Services provide several critical benefits:
+
+Testability:: Mock services in unit tests without real databases
+Flexibility:: Swap implementations (e.g., SQLite to PostgreSQL)
+Maintainability:: Clear separation of concerns
+Reusability:: Use services across different Views
+
+==== Service Interface Example
+
+[source,csharp]
+----
+// IToDoService.cs - The contract
+public interface IToDoService
+{   
+    Task<bool> SaveToDoItemAsync(ToDoItem item);
+    Task<bool> DeleteToDoItemAsync(ToDoItem item);
+}
+----
+
+[source,csharp]
+----
+// ToDoService.cs - The implementation
+public class ToDoService : IToDoService
+{    
+    public async Task<bool> SaveToDoItemAsync(ToDoItem item)
+    {
+        return await item.SaveAsync();
+    }
+    
+    public async Task<bool> DeleteToDoItemAsync(ToDoItem item)
+    {
+        return await item.DeleteAsync();
+    }
+}
+----
+
+==== Register the Services
+
+In the main application project (typically `App.xaml.cs` or `Program.cs`) we provide a helper method to regiter all services by providing the `ServiceCollection`. Missing services will be added via the default implementation. That way we only have to provide platform-specific services where absolutely needed.
+
+[source,csharp]
+----
+// App.xaml.cs or Program.cs
+
+public partial class App : Application
+{
+    public static IServiceProvider Services { get; set; } = null!;
+    
+    public static void RegisterAppServices(IServiceCollection services)
+    {
+        // Register common services if not already registered
+        if (services.All(x => x.ServiceType != typeof(ICategoryService)))
+        {
+            services.AddSingleton<ICategoryService, CategoryService>();
+        }
+
+        if (services.All(x => x.ServiceType != typeof(IToDoItemService)))
+        {
+            services.AddSingleton<IToDoItemService, ToDoItemService>();
+        }
+        
+        if (services.All(x => x.ServiceType != typeof(IDatabaseService)))
+        {
+            services.AddSingleton<IDatabaseService, DesignDbService>();
+        }
+
+        Services = services.BuildServiceProvider();
+    }
+    
+    // ...  other code ...
+}
+----
+
+
+[NOTE, title=Important Notes:]
+====
+* The `Services` property acts as the global DI container accessor
+* Register services *before* the app starts—typically in the static constructor or `Main` method
+* For platform-specific implementations (like Browser vs Desktop), use the platform project to register those services.
+* For the perviewer, you may need to register a special implementation depending on the use-case.
+====
+
+==== Using Services in ViewModels
+
+[source,csharp]
+----
+public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
+{    
+    private readonly IToDoService _toDoService;
+    
+    public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList<CategoryViewModel> availableCategories)
+        : this(toDoItem, availableCategories, 
+            App.Services.GetService<IToDoService>() ?? new ToDoService(),
+            null)
+    {
+    }
+}
+----
+
+=== Step 5: Dialog Management
+
+The SharedControls library provides a clean way to show dialogs from ViewModels without tight coupling to the UI.
+
+==== How It Works
+
+. Implement `IDialogParticipant` on your ViewModel
+. Register the ViewModel with the View using `DialogManager.Register`
+. Use extension methods to show dialogs
+
+[source,csharp]
+----
+// ViewModel implements IDialogParticipant
+public class MyViewModel : ViewModelBase, IDialogParticipant
+{
+    public async Task ShowDialog()
+    {
+        var result = await this.ShowOverlayDialogAsync<string>(
+            "Title",
+            "Content",
+            DialogCommands.OkCancel);
+    }
+}
+----
+
+[source,xml]
+----
+<!-- View registers the ViewModel -->
+<UserControl local:DialogManager.Register="{Binding}">
+    <!-- UI Content -->
+</UserControl>
+----
+
+=== Step 6: Cross-ViewModel Communication
+
+When data changes in one part of the app, other parts need to know that. We use `WeakReferenceMessenger` from link:https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/messenger[[CommunityToolkit.Mvvm package\]]. Below is a very minimal example usage.
+
+*Sending a Message*
+[source,csharp]
+----
+// After saving, notify other ViewModels
+WeakReferenceMessenger.Default.Send(new UpdateDataRequest<ToDoItem>());
+----
+
+*Receiving a Message*
+
+[source,csharp]
+----
+public partial class ManageToDoItemsViewModel 
+    : ViewModelBase, IRecipient<UpdateDataRequest<ToDoItem>>
+{
+    public void Receive(UpdateDataRequest<ToDoItem> message)
+    {
+        // Refresh the data when notified
+        _ = RefreshAsync();
+    }
+}
+----
+
+[NOTE]
+====
+Why WeakReferenceMessenger?
+
+. No strong references - prevents memory leaks
+. Decoupled communication - senders don't know receivers
+. Simple pattern - easy to implement
+====
+
+TIP: You can find out more link:../Avalonia.MusicStore/README.adoc#_messengers[[here\]]
+
+=== Step 7: Unit Testing
+
+This sample includes comprehensive unit tests demonstrating headless testing with Avalonia.
+
+==== Test Infrastructure
+
+===== TestBase Class
+
+All tests inherit from TestBase which sets up the environment:
+
+[source,csharp]
+----
+public class TestBase : IDisposable
+{
+    public TestBase()
+    {
+        // 1. Set up SynchronizationContext for reactive operations
+        if (SynchronizationContext.Current == null)
+        {
+            SynchronizationContext.SetSynchronizationContext(
+                new AvaloniaSynchronizationContext());
+        }
+
+        // 2. Configure mock services
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddSingleton<IDatabaseService>(new DesignDbService());
+        serviceCollection.AddSingleton<ISettingsStorageService>(
+            new DefaultSettingsStorageService());
+        
+        // 3. Build service provider
+        App.Services = serviceCollection.BuildServiceProvider();
+    }
+}
+----
+
+What TestBase provides:
+
+. *SynchronizationContext*: Required for async UI operations
+. *DesignDbService*: In-memory database for tests (no file I/O)
+. *ServiceProvider*: Dependency injection container
+
+===== TestAppBuilder
+
+The headless test environment is configured via TestAppBuilder:
+
+[source,csharp]
+----
+[assembly: AvaloniaTestApplication(typeof(AdvancedToDoListTests.TestAppBuilder))]
+
+public class TestAppBuilder
+{
+    public static AppBuilder BuildAvaloniaApp() => 
+        AppBuilder.Configure<App>()
+            .UseHeadless(new AvaloniaHeadlessPlatformOptions());
+}
+----
+
+[NOTE]
+====
+What does "headless" mean?
+
+. No visible windows - tests run in console
+. Fast execution - no GUI rendering
+. Perfect for CI/CD - no display required
+. Tests logic, not pixel-perfect rendering
+====
+
+==== Writing Tests
+
+===== Model Tests
+
+Test data models for expected behavior:
+
+[source,csharp]
+----
+[Fact]
+public void Category_Constructor_SetsDefaultValues()
+{
+    var category = new Category();
+    
+    Assert.Null(category.Id);
+    Assert.Null(category.Name);
+    Assert.Null(category.Description);
+    Assert.Null(category.Color);
+}
+----
+
+===== ViewModel Tests
+
+Test ViewModel logic independently of the UI:
+
+[source,csharp]
+----
+[Fact]
+public void CategoryViewModel_PropertyChanges_NotifyCorrectly()
+{
+    var viewModel = new CategoryViewModel();
+    var nameChanged = false;
+
+    viewModel.PropertyChanged += (sender, e) =>
+    {
+        if (e.PropertyName == nameof(CategoryViewModel.Name))
+            nameChanged = true;
+    };
+
+    viewModel.Name = "Updated";
+
+    Assert.True(nameChanged);
+}
+----
+
+===== View Tests
+
+Also, the views can and should be tested. To do so, give each control a unique `Name`. Then you can access it from the tests. 
+
+[source,csharp]
+----
+[AvaloniaFact]
+public async Task ManageCategoriesView_Should_Display_Categories()
+{
+    var vm = new ManageCategoriesViewModel();
+    var view = new ManageCategoriesView
+    {
+        DataContext = vm
+    };
+    var window = new Window { Content = view };
+    window.Show();
+
+    // Give some time for view initialization
+    await Task.Delay(100);
+
+    var listBox = view.FindControl<ListBox>("CategoriesListBox");
+
+    Assert.NotNull(listBox);
+    Assert.Equal(vm.Categories.Count, listBox.ItemCount);
+}
+----
+
+===== SharedControls Tests
+
+In production, all Controls, Converters and Helper-classes should be tested. 
+
+
+==== Why Test with Services?
+
+[IMPORTANT]
+====
+Benefits of testing with mocked services:
+
+. *Isolation*: Tests don't need actual database connections
+. *Speed*: Mock services are instant (milliseconds vs seconds)
+. *Reliability*: No external dependencies = consistent results
+. *CI/CD*: Can run anywhere without file system access
+====
+
+== Platform-Specific Considerations
+
+=== Desktop (Windows, Linux, macOS)
+
+* Direct file system access for SQLite databases
+* Standard window management
+* Full UI capabilities
+* Best for development and debugging
+
+=== Mobile (Android, iOS)
+
+* SQLite stored in app's documents directory
+* Touch-optimized UI considerations
+* Platform-specific service implementations
+* Similar to desktop in code structure
+
+=== Browser (WebAssembly)
+
+* IndexedDB for persistent storage (via worker)
+* No direct file system access
+* Asynchronous operations required
+* Smaller feature set in some areas
+* Great for sharing on the Web, for example via GitHub Pages!
+
+[IMPORTANT]
+====
+Browser Limitation: SQLite cannot directly access files
+
+Solution: Use BrowserDatabaseService that:
+
+. Loads the database into memory on startup
+. Periodically saves to IndexedDB
+. Uses Web Worker for non-blocking operations
+====
+
+== Troubleshooting
+
+=== Common Issues
+
+==== "No TopLevel resolved" Error
+
+If you see "No TopLevel was resolved for the given context", make sure your View has the DialogManager.Register property set:
+
+[source,xml]
+----
+<UserControl local:DialogManager.Register="{Binding}">
+    <!-- UI Content -->
+</UserControl>
+----
+
+==== Database Locked Errors
+
+For SQLite, ensure you're using proper async operations and closing connections:
+
+[source,csharp]
+----
+await using var connection = await DatabaseHelper.GetOpenConnectionAsync();
+// Use connection...
+// Connection automatically disposed at end of using block
+----
+
+==== Tests Hang
+
+If tests hang, ensure SynchronizationContext is properly set in TestBase:
+
+[source,csharp]
+----
+SynchronizationContext.SetSynchronizationContext(
+    new AvaloniaSynchronizationContext());
+----
+
+== Future Enhancements
+
+Here are topics to explore after mastering this sample:
+
+. *Localization*: Add multi-language support 
+. *Advanced Themes*: Implement more sophisticated light/dark theme switching
+. *Validation Rules*: Add more and cleaner validation rules
+. *Logging*: Add structured logging for debugging production issues
+. *Caching*: Implement intelligent caching for better performance
+. *Offline-First*: Enhance browser persistence strategies
+
+== See it in Action
+
+video::_docs/final_result-2026-02-16_20.12.27.mp4[Final result]
+
+https://timunie.github.io/AdvancedTodoList/[Test the result on your own]
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
