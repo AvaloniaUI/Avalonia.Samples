@@ -4,7 +4,7 @@ ifndef::env-github[]
 endif::[]
 
 ifdef::env-github[]
-:toc:
+:toc: auto
 // :toc-placement!:
 endif::[]
 
@@ -20,7 +20,7 @@ ifndef::env-github[]
 :icons: font
 endif::[]
 
-toc::[]
+// toc::[]
 
 Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which should make it easy for everyone to get started with https://www.avaloniaui.net[Avalonia^]. Each sample is focusing on only one aspect of Avalonia.
 
