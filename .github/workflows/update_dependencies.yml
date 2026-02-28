@@ -1,0 +1,65 @@
+
+name: Update dependencies
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run at 02:00 every day
+  workflow_dispatch:     # Allow manual triggering
+
+jobs:
+  update-nuget:
+    runs-on: windows-latest
+    name: Update latest NuGets
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Android SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+      
+      - name: Install workloads for Mobile and Wasm projects
+        run: |
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+        working-directory: ./
+
+      - name: Install nuget update tool
+        run: dotnet tool install --global dotnet-outdated-tool
+
+      - name: Run dotnet-outdated-tool
+        run: |
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          foreach ($solution in $solutions) {
+            dotnet outdated $solution --upgrade
+          }
+        shell: pwsh
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update NuGet packages" || echo "No changes to commit"
+          git push
+
+      - name: Create Pull Request
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update NuGet packages"
+          title: "chore: Update NuGet packages"
+          body: "This PR updates NuGet packages to their latest versions."
+          branch: "update-nuget-packages"
+          base: "main"
