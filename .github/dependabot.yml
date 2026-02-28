@@ -4,19 +4,22 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
-# Dependabot doesn't handle CPM yet. So we disable it for now. Instead we have a workflow file for it. 
 
-#updates:
-#  - package-ecosystem: nuget
-#    directory: "/"
-#    schedule:
-#      interval: "daily"
-#    groups:
-#      # Specify a name for the group, which will be used in pull request titles
-#      # and branch names
-#      Avalonia:
-#        # Define patterns to include dependencies in the group (based on
-#        # dependency name)
-#        applies-to: version-updates # Applies the group rule to version updates
-#        patterns:
-#          - "Avalonia*"  # A wildcard string that matches multiple dependency names
+updates:
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      # Dependabot doesn't handle CPM yet. So we disable it for now. 
+      # Instead we have a workflow file for it. 
+      - dependency-name: "*"
+    groups:
+      # Specify a name for the group, which will be used in pull request titles
+      # and branch names
+      Avalonia:
+        # Define patterns to include dependencies in the group (based on
+        # dependency name)
+        applies-to: version-updates # Applies the group rule to version updates
+        patterns:
+          - "Avalonia*"  # A wildcard string that matches multiple dependency names
