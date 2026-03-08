@@ -18,13 +18,13 @@
     <PackageVersion Include="Avalonia.Browser" Version="11.3.12" />
     <PackageVersion Include="Avalonia.Android" Version="11.3.12" />
     <!-- Android packages -->
-    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.1" />
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageVersion Include="DynamicData" Version="9.4.1" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <!-- SQL related packages -->
-    <PackageVersion Include="Dapper" Version="2.1.66" />
+    <PackageVersion Include="Dapper" Version="2.1.72" />
     <PackageVersion Include="Dapper.AOT" Version="1.0.48" />
     <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.3" />
