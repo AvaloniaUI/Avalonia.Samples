@@ -45,8 +45,14 @@ jobs:
           }
         shell: pwsh
 
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "CHANGES=false" >> $GITHUB_OUTPUT || echo "CHANGES=true" >> $GITHUB_OUTPUT
+        shell: pwsh
+
       - name: Create Pull Request
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && steps.changes.outputs.CHANGES == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
