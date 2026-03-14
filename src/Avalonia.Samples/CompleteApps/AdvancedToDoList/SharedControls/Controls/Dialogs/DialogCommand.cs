@@ -78,6 +78,7 @@ public class DialogCommand : ICommand
     /// <returns>true if the command can execute, false otherwise</returns>
     public bool CanExecute(object? parameter)
     {
+        if (Command == this) return true;
         return Command?.CanExecute(parameter) ?? true;
     }
 
@@ -140,7 +141,7 @@ public static class DialogCommands
     {
         Caption = "OK", 
         IsDefault = true, 
-        DialogResult = DialogResult.Cancel  // ⚠️ Likely should be DialogResult.OK
+        DialogResult = DialogResult.Ok
     };
     
     /// <summary>
