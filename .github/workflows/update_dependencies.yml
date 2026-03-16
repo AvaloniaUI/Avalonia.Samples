@@ -114,10 +114,9 @@ jobs:
             Write-Host "🔄 Changes detected."
             "CHANGES=true" >> $env:GITHUB_OUTPUT
           }
-
-    # Explicitly end with a success code (optional – PowerShell will return 0
-    # if the script reaches the end without throwing a terminating error)
-    exit 0
+          # Explicitly end with a success code (optional – PowerShell will return 0
+          # if the script reaches the end without throwing a terminating error)
+          exit 0
 
       # --------------------------------------------------------------
       #  **If** something changed → push a PR
