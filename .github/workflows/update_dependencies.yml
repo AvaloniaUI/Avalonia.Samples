@@ -57,32 +57,40 @@ jobs:
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
-
+      
       # --------------------------------------------------------------
-      #  Install the dotnet‑outdated tool globally
+      #  Install dotnet‑outdated **and put it on PATH**
       # --------------------------------------------------------------
       - name: Install dotnet-outdated tool
-        run: dotnet tool install --global dotnet-outdated-tool
-        # On Windows the tool is added to %USERPROFILE%\.dotnet\tools which is already on PATH after a
-        # `dotnet tool install --global`. No extra PATH fiddling needed.
+        run: |
+          dotnet tool install --global dotnet-outdated-tool
+          # Add the global‑tool folder to PATH for the remainder of the job
+          $toolPath = "$HOME\.dotnet\tools"
+          if (Test-Path $toolPath) {
+            Add-Content -Path $env:GITHUB_PATH -Value $toolPath
+          }
+        shell: pwsh
 
       # --------------------------------------------------------------
-      #  Run dotnet‑outdated on every solution and upgrade when possible
+      # Run dotnet‑outdated (only real .sln / .slnf / .csproj files)
       # --------------------------------------------------------------
       - name: Run dotnet-outdated (upgrade)
         shell: pwsh
-        env:
-          # Push the PATH entry that `dotnet tool install` added (just in case)
-          PATH: ${{ env.PATH }}:${HOME}/.dotnet/tools
         run: |
-          # Find every *.sln* under src/Avalonia.Samples (covers .sln and .slnf)
-          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse |
-                      Select-Object -ExpandProperty FullName
+          # Find *only* .sln, .slnf or .csproj files – ignore *.slnx, *.sln.backup, …
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.sln,*.slnf,*.csproj -File |
+                    Select-Object -ExpandProperty FullName
 
-          foreach ($solution in $solutions) {
-            Write-Host "🔎 Checking $solution"
-            # `--upgrade` performs the actual package version bump.
-            dotnet outdated $solution --upgrade --no-restore
+          if (-not $files) {
+            Write-Host "⚠️ No solution or project files were found – nothing to do."
+            exit 0
+          }
+
+          foreach ($proj in $files) {
+            Write-Host "🔎 Checking $proj"
+            # `--no-restore` speeds things up – we already restored workloads above.
+            dotnet outdated $proj --upgrade --no-restore
           }
 
       # --------------------------------------------------------------
