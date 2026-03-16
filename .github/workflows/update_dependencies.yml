@@ -1,63 +1,121 @@
 
 name: Update dependencies
 
+# ----------------------------------------------------------------------
+#  Triggers
+# ----------------------------------------------------------------------
 on:
   schedule:
-    - cron: '0 2 * * *'  # Run at 02:00 every day
-  workflow_dispatch:     # Allow manual triggering
+    - cron: '0 2 * * *' # Every day at 02:00 UTC
+  workflow_dispatch:   # Allows manual runs from the UI
 
+# ----------------------------------------------------------------------
+#  Jobs
+# ----------------------------------------------------------------------
 jobs:
   update-nuget:
     runs-on: windows-latest
     name: Update latest NuGets
+
+    # ------------------------------------------------------------------
+    #  Steps
+    # ------------------------------------------------------------------
     steps:
-      - uses: actions/checkout@v4
+      # --------------------------------------------------------------
+      #  Checkout the repo (using the default GITHUB_TOKEN)
+      # --------------------------------------------------------------
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-dotnet@v4
+      # --------------------------------------------------------------
+      #  Install .NET SDK 10.x (the latest 10.x version at run time)
+      # --------------------------------------------------------------
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
-      - name: Setup Android SDK
+      # --------------------------------------------------------------
+      #  Java (required by Android tooling) + Android SDK
+      # --------------------------------------------------------------
+      - name: Set up Java (Zulu 17)
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-      
-      - name: Install workloads for Mobile and Wasm projects
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # --------------------------------------------------------------
+      #  Restore mobile‑specific workloads (iOS / Android / Wasm)
+      # --------------------------------------------------------------
+      - name: Restore mobile / wasm workloads
         run: |
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
-        working-directory: ./
 
-      - name: Install nuget update tool
+      # --------------------------------------------------------------
+      #  Install the dotnet‑outdated tool globally
+      # --------------------------------------------------------------
+      - name: Install dotnet-outdated tool
         run: dotnet tool install --global dotnet-outdated-tool
+        # On Windows the tool is added to %USERPROFILE%\.dotnet\tools which is already on PATH after a
+        # `dotnet tool install --global`. No extra PATH fiddling needed.
 
-      - name: Run dotnet-outdated-tool
+      # --------------------------------------------------------------
+      #  Run dotnet‑outdated on every solution and upgrade when possible
+      # --------------------------------------------------------------
+      - name: Run dotnet-outdated (upgrade)
+        shell: pwsh
+        env:
+          # Push the PATH entry that `dotnet tool install` added (just in case)
+          PATH: ${{ env.PATH }}:${HOME}/.dotnet/tools
         run: |
-          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          # Find every *.sln* under src/Avalonia.Samples (covers .sln and .slnf)
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse |
+                      Select-Object -ExpandProperty FullName
+
           foreach ($solution in $solutions) {
-            dotnet outdated $solution --upgrade
+            Write-Host "🔎 Checking $solution"
+            # `--upgrade` performs the actual package version bump.
+            dotnet outdated $solution --upgrade --no-restore
           }
-        shell: pwsh
 
-      - name: Check for changes
+      # --------------------------------------------------------------
+      #  Detect whether any file changed after the upgrade step
+      # --------------------------------------------------------------
+      - name: Detect changes
         id: changes
-        run: |
-          git diff --quiet && echo "CHANGES=false" >> $GITHUB_OUTPUT || echo "CHANGES=true" >> $GITHUB_OUTPUT
         shell: pwsh
+        run: |
+          # `git diff --quiet` exits with 0 when there are **no** changes.
+          if (git diff --quiet) {
+            Write-Output "CHANGES=false"
+            "CHANGES=false" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Output "CHANGES=true"
+            "CHANGES=true" >> $env:GITHUB_OUTPUT
+          }
 
-      - name: Create Pull Request
-        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && steps.changes.outputs.CHANGES == 'true'
+      # --------------------------------------------------------------
+      #  **If** something changed → push a PR
+      # --------------------------------------------------------------
+      - name: Create Pull Request (only when updates exist)
+        if: steps.changes.outputs.CHANGES == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Update NuGet packages"
+          commit-message: "chore: Update NuGet packages"
           title: "chore: Update NuGet packages"
-          body: "This PR updates NuGet packages to their latest versions."
+          body: |
+            This PR was generated automatically by the **Update dependencies** workflow.
+            It contains the latest NuGet package upgrades.
           branch: update-nuget-packages
           base: main
+          # Optional – keep the PR tidy
+          delete-branch: true
+          signoff: true
