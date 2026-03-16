@@ -100,14 +100,24 @@ jobs:
         id: changes
         shell: pwsh
         run: |
-          # `git diff --quiet` exits with 0 when there are **no** changes.
-          if (git diff --quiet) {
-            Write-Output "CHANGES=false"
+          # Run the diff – we only care about the exit code, not the output
+          git diff --quiet
+      
+          # $LASTEXITCODE holds the numeric exit code from the last native command
+          if ($LASTEXITCODE -eq 0) {
+            # No changes
+            Write-Host "✅ No repository changes detected."
             "CHANGES=false" >> $env:GITHUB_OUTPUT
-          } else {
-            Write-Output "CHANGES=true"
+          }
+          else {
+            # At least one change
+            Write-Host "🔄 Changes detected."
             "CHANGES=true" >> $env:GITHUB_OUTPUT
           }
+
+    # Explicitly end with a success code (optional – PowerShell will return 0
+    # if the script reaches the end without throwing a terminating error)
+    exit 0
 
       # --------------------------------------------------------------
       #  **If** something changed → push a PR
