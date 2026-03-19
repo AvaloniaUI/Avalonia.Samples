@@ -79,7 +79,7 @@ jobs:
         run: |
           # Find *only* .sln, .slnf or .csproj files – ignore *.slnx, *.sln.backup, …
           $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
-                    -Include *.sln,*.slnf,*.csproj -File |
+                    -Include *.sln,*.slnf,*.csproj,*.fsproj -File |
                     Select-Object -ExpandProperty FullName
 
           if (-not $files) {
