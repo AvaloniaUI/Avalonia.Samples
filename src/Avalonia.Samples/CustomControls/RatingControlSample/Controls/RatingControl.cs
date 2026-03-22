@@ -171,11 +171,11 @@ namespace RatingControlSample.Controls
         protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
         {
             base.UpdateDataValidation(property, state, error);
-            
-            if(property == ValueProperty)
-            {
-                DataValidationErrors.SetError(this, error);
-            }
+            //
+            // if(property == ValueProperty)
+            // {
+            //     DataValidationErrors.SetError(this, error);
+            // }
         }
 
         private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)

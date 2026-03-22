@@ -1,4 +1,3 @@
-using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
 
 namespace RatingControlSample.ViewModels
@@ -17,7 +16,7 @@ namespace RatingControlSample.ViewModels
         public int NumberOfStars
         {
             get { return _NumberOfStars; }
-            set { this.RaiseAndSetIfChanged(ref _NumberOfStars, value); }
+            set { SetProperty(ref _NumberOfStars, value); }
         }
 
 
@@ -32,7 +31,7 @@ namespace RatingControlSample.ViewModels
         public int RatingValue
         {
             get { return _RatingValue; }
-            set { this.RaiseAndSetIfChanged(ref _RatingValue, value); }
+            set { SetProperty(ref _RatingValue, value, true); }
         }
     }
 }

@@ -1,6 +1,5 @@
 using Avalonia;
 using System;
-using ReactiveUI.Avalonia;
 
 namespace RatingControlSample
 {
@@ -17,7 +16,6 @@ namespace RatingControlSample
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace()
-                .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
+                .LogToTrace();
     }
 }
