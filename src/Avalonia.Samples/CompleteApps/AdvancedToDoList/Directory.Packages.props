@@ -20,7 +20,7 @@
     <!-- Android packages -->
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
-    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="DynamicData" Version="9.4.31" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <!-- SQL related packages -->
