@@ -18,6 +18,7 @@ namespace ValidationSample
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
+                .WithDataAnnotationsValidation() // We need to add this line in Avalonia v12 if we want to use DataAnnotations. 
+                .UseReactiveUI(_ => { /* We don't need to configure anything for the samples */ });
     }
 }

@@ -4,10 +4,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="using:RectPainter.Controls"
         xmlns:vm="using:RectPainter.ViewModels"
+        xmlns:viewModels="clr-namespace:RectPainter.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RectPainter.MainWindow"
         Title="Rect Painter Sample - Drag out rectangles with the mouse. Use Shift/Ctrl/Alt to change color"
-        Icon="/Assets/avalonia-logo.ico">
+        Icon="/Assets/avalonia-logo.ico"
+        x:DataType="viewModels:MainWindowViewModel">
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
