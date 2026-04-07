@@ -59,9 +59,9 @@ NOTE: If you are not familiar with lambda expressions, please visit the https://
 
 == The Solution
 
-=== Step 1: Setup the model
+=== Step 1: Set up the model
 
-The model is build up similar to the Basic DataTemplate Sample. We have one class called `Person` and one `enum` called `Sex`:
+The model is built up similar to the Basic DataTemplate Sample. We have one class called `Person` and one `enum` called `Sex`:
 
 Person.cs::
 [source,cs]
@@ -103,7 +103,7 @@ public enum Sex
 }
 ----
 
-=== Step 2: Setup the ViewModel
+=== Step 2: Set up the ViewModel
 
 In the file `ViewModels ► MainWindowViewModel` we add a list of Persons:
 
@@ -136,7 +136,7 @@ public List<Person> People { get; } = new List<Person>()
 
 In your project create a new directory called `DataTemplates`. Inside this directory you can add a `static` `class` called `DataTemplateProvider.cs`. This file can hold several `FuncDataTemplates`. In this sample we will only add one. 
 
-NOTE: We make this class static as nothing is depending on instance members. If you need to access instance members, don't make it static. 
+NOTE: We make this class static as nothing depends on instance members. If you need to access instance members, don't make it static. 
 
 To make it easier for maintaining, we will first write a function which takes a `Person` and returns the `Control`, which represents the data the way we want. 
 
@@ -199,11 +199,11 @@ private static Control BuildGenderPresenter(Person person)
 }
 ----
 
-NOTE: The `Path.Data` is not shown in the above sample code. Please refer to the source code for the needed path data. 
+NOTE: The `Path.Data` is not shown in the above sample code. Please refer to the source code for the necessary path data. 
 
 [TIP] 
 ===============================
-For the `ToolTip` we create a binding in the controls constructor. In that case we can use the following notation: 
+For the `ToolTip` we create a binding in the controls' constructor. In that case we can use the following notation: 
 [source,cs]
 ----
 [!MyProperty] = new Binding("The Binding Path");
