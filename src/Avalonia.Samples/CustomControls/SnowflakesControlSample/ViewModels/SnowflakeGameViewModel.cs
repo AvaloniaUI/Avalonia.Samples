@@ -40,16 +40,18 @@ public partial class SnowflakeGameViewModel : ViewModelBase
     /// Gets a collection of initial Snowflakes available. 
     /// </summary>
     public ObservableCollection<Snowflake> Snowflakes { get; } = new();
-    
+
     /// <summary>
     /// Gets or sets if the game is running or stopped. 
     /// </summary>
-    [ObservableProperty] private bool _isGameRunning;
-    
+    [ObservableProperty]
+    public partial bool IsGameRunning { get; set; }
+
     /// <summary>
     /// Gets or sets the users hit-score. 
     /// </summary>
-    [ObservableProperty] private int _score;
+    [ObservableProperty]
+    public partial int Score { get; set; }
 
     /// <summary>
     /// Gets or sets the TimeSpan that the game is running. 
