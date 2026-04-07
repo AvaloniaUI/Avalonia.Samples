@@ -47,13 +47,13 @@ public partial class ToDoItemViewModel : ViewModelBase
         get { return _isChecked; }
         set { SetProperty(ref _isChecked, value); }
     }
-    
+
     /// <summary>
     /// Gets or sets the content of the to-do item
     /// </summary>
-    [ObservableProperty] 
-    private string? _content;
-    
+    [ObservableProperty]
+    public partial string? Content { get; set; }
+
     /// <summary>
     /// Gets a ToDoItem of this ViewModel
     /// </summary>
