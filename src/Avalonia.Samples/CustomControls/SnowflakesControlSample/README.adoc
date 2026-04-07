@@ -25,7 +25,7 @@ endif::[]
 
 
 // Write a short summary here what this example does
-This example will show you how to create a custom control that overrides `OnRender` in order to have advanced render capabilities. It also shows how custom hit-testing can help to solve special tasks. We will create a simple game where the user should collect some snowflakes with their mouse pointer.
+This example will show you how to create a custom control that overrides `OnRender` in order to have advanced render capabilities. We will create a simple game where the user should collect some snowflakes with their mouse pointer.
 
 
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
@@ -66,13 +66,13 @@ There may be some special cases where a `TemplatedControl`, `ContentControl` or 
 
 === Defining the game concept
 
-Before we finally start to implement the game, we should make some considerations how our control should look like and how it should work. To shorten it, we use a plain list of notes:
+Before we finally start to implement the game, we should make some considerations what our control should look like and how it should work. To shorten it, we use a plain list of notes:
 
 * The game will have just one level
 * The game must not run infinite -> We need a way to start and stop the game
 * The game must render several snowflakes (represented as circles)
     ** Each snowflake should have a random start position
-    ** Each snowflake should be able to move with different speed
+    ** Each snowflake should be able to move with a different speed
     ** Snowflakes should be of different sizes
 * The user should be able to collect some score
     ** The user must be able to collect snowflakes with their mouse device
@@ -87,7 +87,7 @@ Before we finally start to implement the game, we should make some consideration
 
 We will create a custom control that will draw itself based on the data provided.
 
-NOTE: To show you how this control can be bound to a `ViewModel` we will use the `MVVM`-pattern for demonstration here, even if it is not really needed in our case.
+NOTE: To show you how this control can be bound to a `ViewModel` we will use the `MVVM`-pattern for demonstration here, even if it is not really necessary in our case.
 
 === Step 1: Prepare the Snowflake-Model
 
@@ -99,9 +99,9 @@ In the folder `Models` we create a new file `Snowflake.cs` which will have the f
 
 |X          | double | Gets the horizontal position in relative unit (0 ... 1)
 |Y          | double | Gets the vertical position in relative unit (0 ... 1)
-|Diameter   | double | Gets the diameter in pixel
-|Radius     | double | Gets the radius in pixel
-|Speed      | double | Gets the peed of the snowflake in 1/second (relative unit)
+|Diameter   | double | Gets the diameter in pixel-unit
+|Radius     | double | Gets the radius in pixel-unit
+|Speed      | double | Gets the speed of the snowflake in 1/second (relative unit)
 
 |===
 
@@ -109,7 +109,7 @@ As we want the control to be of any size and resizable, we store the position in
 
 TIP: In Avalonia you can use `Bounds` to get the Controls bounds, which we here call "viewport"
 
-To achieve this conversion we add method that takes a `Rect` as parameter and returns a `Point` positioned inside this rectangle.
+To achieve this conversion, we add method that takes a `Rect` as parameter and returns a `Point` positioned inside this rectangle.
 
 [source,csharp]
 ----
@@ -150,7 +150,7 @@ public bool IsHit(Point point, Rect viewport)
 }
 ----
 
-Last but not least the hit-score can be calculated in the following way:
+Last but not least, the hit-score can be calculated in the following way:
 
 [source,csharp]
 ----
@@ -165,7 +165,7 @@ Here is the final class xref:Models/Snowflake.cs[]
 
 === Step 2: Set up the GameViewModel
 
-The `ViewModel` will be responsible for creating and managing the snowflakes, tracking the game status and storing the users current score.
+The `ViewModel` will be responsible for creating and managing the snowflakes, tracking the game status and storing the user’s current score.
 
 It has the following public properties:
 
@@ -183,7 +183,7 @@ It has the following public properties:
 
 |GameDurationMilliseconds
 |double
-|Gets duration of the game in milliseconds.
+|Gets the duration of the game in milliseconds.
 
 |MillisecondsRemaining
 |double
@@ -215,7 +215,7 @@ In addition, we need these two private fields:
 
 |===
 
-To start a new game we add a xref:../../MVVM/CommandSample/README.adoc[[Command\]] which will clear any previous snowflakes, add some new snowflakes with random parameters and start the game:
+To start a new game, we add a xref:../../MVVM/CommandSample/README.adoc[[Command\]] which will clear any previous snowflakes, add some new snowflakes with random parameters and start the game:
 
 [source,csharp]
 ----
@@ -292,7 +292,7 @@ The control needs some https://docs.avaloniaui.net/docs/guides/custom-controls/h
 
 |Score
 |double
-|Gets or sets the users score. This is a direct property.
+|Gets or sets the user’s score. This is a direct property.
 
 |===
 
@@ -380,14 +380,14 @@ public override void Render(DrawingContext context)
 }
 ----
 
-NOTE: We use `Dispatcher.UIThread.Post` to request the next frame in order to give the UI-thread enough time to handle input etc. If we didn't use the dispatcher, the app would freeze.
+NOTE: We use `Dispatcher.UIThread.Post` to request the next frame to give the UI-thread enough time to handle input etc. If we didn't use the dispatcher, the app would freeze.
 
-This is how a single render frame would look like:
+This is what a single render frame would look like:
 
 .Result of a single render loop
 image:_docs/single_render_frame.png[]
 
-As we want to check if our pointer is over any `Snowflake`, we will override the `OnPointerEntered` and `OnPointerMoved` methods. From the `PointerEventArgs` we can read the pointer position and forward it to a method that tests for hits,
+As we want to check if our pointer is over any `Snowflake`, we will override the `OnPointerEntered` and `OnPointerMoved` methods. From the `PointerEventArgs` we can read the pointer position and forward it to a method that tests for hits.
 
 [source,csharp]
 ----
@@ -444,7 +444,7 @@ Here is the final class xref:Controls/SnowflakesControl.cs[]
 
 To use the control, just add it to any sample view.
 
-NOTE: Remember to add the needed xml-namespaces
+NOTE: Remember to add the necessary xml-namespaces
 
 [source,xml]
 ----
@@ -490,7 +490,7 @@ NOTE: Remember to add the needed xml-namespaces
 
 TIP: In `App.axaml` set `RequestedThemeVariant` to `"Dark"` for a better visibility of the white snowflakes.
 
-This is how the control will look like now (notice how the snowflakes disappear):
+This is what the control will look like now (notice how the snowflakes disappear):
 
 .First run output
 image:_docs/First_run.png[]
@@ -500,7 +500,7 @@ Here is the final class xref:Views/MainView.axaml[]
 
 === Bonus 1: Implement a custom draw operation
 
-If the provided render operations are not enough, you can create a new class which implements `ICustomDrawOperation`. In this sample we want to display the user score with a nice glow effect using the https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88[[`SkiaSharp-API`\]].
+If the provided render operations are not enough, you can create a new class which implements `ICustomDrawOperation`. In this sample we want to display the user score with a nice glow effect using the https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-3.119[[`SkiaSharp-API`\]].
 
 The interface requires the following members to be implemented:
 
@@ -530,7 +530,7 @@ The interface requires the following members to be implemented:
 
 |===
 
-In addition to the interface members we will add one more property:
+In addition to the interface members, we will add one more property:
 
 .Properties of ScoreRenderer
 |===
@@ -551,22 +551,24 @@ public void Render(ImmediateDrawingContext context)
 {
     // Try to get the skia-feature.
     var leaseFeature = context.TryGetFeature<ISkiaSharpApiLeaseFeature>();
-
+        
     // In case we didn't find it, render the text with a fallback.
     if (leaseFeature == null)
     {
-        var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
-
-        var glyphRun = new GlyphRun(Typeface.Default.GlyphTypeface,
+        var glyphRun = new GlyphRun(
+            Typeface.Default.GlyphTypeface,
             20,
             Text.AsMemory(),
-            glyphs,
-            Bounds.TopRight - new Point(50, 50));
+            TextShaper.Current.ShapeText(Text.AsMemory(), new TextShaperOptions(Typeface.Default.GlyphTypeface, 20)));
 
-        context.DrawGlyphRun(Brushes.Goldenrod, glyphRun.TryCreateImmutableGlyphRunReference()!);
+        if (glyphRun.TryCreateImmutableGlyphRunReference() is { } glyphRunReference)
+        {
+            context.DrawGlyphRun(Brushes.Goldenrod, glyphRunReference);
+        }
     }
+    
     // Otherwise use SkiaSharp to render the text and apply some glow-effect.
-    // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88
+    // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-3.119
     else
     {
         using var lease = leaseFeature.Lease();
@@ -575,15 +577,16 @@ public void Render(ImmediateDrawingContext context)
 
         using (var paint = new SKPaint())
         {
+            var font = new SKFont { Size = 30 };
             paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
-            paint.TextSize = 30;
-            paint.TextAlign = SKTextAlign.Right;
+            paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
 
             var origin = Bounds.TopRight.ToSKPoint();
             origin.Offset(-25, +50);
 
-            paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
-            canvas.DrawText(Text, origin, paint);
+            // Use new DrawText overload with SKTextAlign
+            canvas.DrawText(Text, origin, SKTextAlign.Right, font, paint);
+            font.Dispose();
         }
         canvas.Restore();
     }
@@ -591,8 +594,6 @@ public void Render(ImmediateDrawingContext context)
 ----
 
 TIP: SkiaSharp may be not always available. In this case it is highly recommended to provide a fallback.
-
-NOTE: You may see a warning about using an unstable API. This is okay to ignore, however you may need to adjust your code when you update to a newer Avalonia version.
 
 To consume the custom draw operation, add the following line into `SnowflakesControl.OnRender`:
 
