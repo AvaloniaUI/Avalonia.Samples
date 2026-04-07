@@ -54,9 +54,9 @@ This sample assumes that you know the basics of Avalonia and the MVVM pattern.
 
 === Some basics about Controls in Avalonia
 
-Whenever we want to create a new control, we need to derive from a valid base class, which implements the needed interfaces and functions like styling, layout and user interaction. Below you can find a list of possible base-classes:
+Whenever we want to create a new control, we need to derive from a valid base class, which implements the necessary interfaces and functions like styling, layout and user interaction. Below you can find a list of possible base-classes:
 
-Control:: Use this as a base class if you want to render the control on your own and you want the control to look the same in every App (for example: `TextBlock`, `Image`).
+Control:: Use this as a base class if you want to render the control on your own, and you want the control to look the same in every App (for example: `TextBlock`, `Image`).
 
 TemplatedControl:: Use this control as your base class if you want to have a "lookless" control, which can be re-styled in any App. 
 
@@ -64,7 +64,7 @@ ContentControl:: This control inherits `TemplatedControl`, but adds the ability 
 
 TIP: You can also extend existing controls like `Button`, `TextBox` or `CheckBox`, if you want to use their functionality but adding your own logic on top. 
 
-For more information about the types of controls please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/choosing-a-custom-control-type[[Documentation\]].
+For more information about the types of controls, please visit the https://docs.avaloniaui.net/docs/custom-controls/[[Documentation\]].
 
 
 
@@ -72,11 +72,11 @@ For more information about the types of controls please visit the https://docs.a
 
 Avalonia has a property system which is responsible for storing and receiving the current value. The property system will take care of the styling, binding, validation and many more. There are three types of `AvaloniaProperties`. When you want to register your own property, you need to decide which property type is the right one for your use-case:
 
-StyledProperty:: A `StyledProperty` is a property, which support styling and animation. use this type of property if you think the user of your control will most likely want to define this property in a `Style` (e.g.: `Foreground`, `Background`, `Margin`, ...). 
+StyledProperty:: A `StyledProperty` is a property, which support styling and animation. Use this type of property if you think the user of your control will most likely want to define this property in a `Style` (e.g.: `Foreground`, `Background`, `Margin`, …) 
 
-DirectProperty:: A `DirectProperty` is a property which can only be read and set in an actual control instance. Use this property if it's likely to be set individually on each instance (e.g.: `Text`, `Value`, ...) or if you need a read-only property (e.g:: `HasFocus`)
+DirectProperty:: A `DirectProperty` is a property which can only be read and set in an actual control instance. Use this property if it's likely to be set individually on each instance (e.g.: `Text`, `Value`, …) or if you need a read-only property (e.g:: `HasFocus`)
 
-AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on it's own (e.g.: `Grid.Row`, `DockPanel.Dock`, ...)
+AttachedProperty:: An `AttachedProperty` is a property that can be set on any `Control`, even it doesn't define the property on its own (e.g.: `Grid.Row`, `DockPanel.Dock`, …)
 
 If you want to learn more about `AvaloniaProperties` please visit the https://docs.avaloniaui.net/docs/basics/user-interface/controls/creating-controls/defining-properties[[Documentation\]]
 
@@ -86,7 +86,7 @@ If you want to learn more about `AvaloniaProperties` please visit the https://do
 In Avalonia `TemplatedControls` are lookless, which means they are not drawn by the `Control` itself. Instead, the developer needs to provide a `ControlTemplate` which is similar to a `DataTemplate`, but for the `Control`. 
 
 TemplateParts::
-Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name in order to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
+Some `Controls` require specific `Controls` inside the the `ControlTemplate`, which also needs to have a defined name to reference them inside the code behind. By convention these controls have a name with the prefix `"PART_"`. For example, you can use this to listen to events of these template parts.
 
 TemplateBinding:: 
 Inside `ControlTemplates` you can make use of a special `Binding` called `TemplateBinding`. To learn more about them, please visit the https://docs.avaloniaui.net/docs/guides/custom-controls/how-to-create-templated-controls#data-binding[[Documentation\]].
@@ -96,11 +96,11 @@ Inside `ControlTemplates` you can make use of a special `Binding` called `Templa
 
 Before you create any control, you should already have an idea which functions it should provide, how it should look like and how the user should interact with the control. Remember, the user interface is the door to your program. 
 
-First of all we will write a list of requirements: 
+First, we will write a list of requirements: 
 
 - The developer should be able to define the number of stars. Ideally this should be reusable via `Styles`
 - The user must be able to select their rating
-- There must be a visual feedback showing the current rating
+- There must be visual feedback showing the current rating
 - The user should be able to interact with the mouse 
 - The user should be able to interact via touch
 - The user should be able to interact via keyboard
@@ -108,9 +108,9 @@ First of all we will write a list of requirements:
 - Any validation error should be shown to the user
 - The visual appearance should be easy to adjust
 
-NOTE: Items listed above containing the word _should_ mean are nice to have but the control will also work without this requirement fulfilled. On the other hand, requirements with the word *must* cannot be omitted, as the function of the control will not be given.
+NOTE: Items listed above containing the word _should_ mean they are nice to have, but the control will also work without this requirement fulfilled. On the other hand, requirements with the word *must* cannot be omitted, as the function of the control will not be given.
 
-Now that we know the functions we want to serve, we can create a simple sketch of how the control should look like: 
+Now that we know the functions we want to serve, we can create a simple sketch of what the control should look like: 
 
 image::_docs/Sketch.png[Sketch]
 
@@ -123,7 +123,7 @@ In our sample we will create a new project using the `Avalonia MVVM Template`. W
 
 === Step 2: Add the RatingControl-class
 
-In our project we create a new folder called `Controls`. inside this folder we will add a file called `RatingControl.cs`. Now we need to decide, which base-class we want to use. We want our control to be able to be re-styled by the developer, so we decide to base on `TemplatedControl`. 
+In our project we create a new folder called `Controls`. Inside this folder we will add a file called `RatingControl.cs`. Now we need to decide which base-class we want to use. We want our control to be able to be re-styled by the developer, so we decide to base on `TemplatedControl`. 
 
 [source,cs]
 ----
@@ -134,7 +134,7 @@ public class RatingControl : TemplatedControl
 
 === Step 3: Add the NumberOfStars-Property
 
-If we want to create a flexible control, we should not hardcode the number of stars. Instead, the developer should be able to define it inside a `Style`. Therefore we add a `StyledProperty` called `NumberOfStars`. The type of our property is `Integer`, the default value is `5`: 
+If we want to create a flexible control, we should not be hardcoding the number of stars. Instead, the developer should be able to define it inside a `Style`. Therefore, we add a `StyledProperty` called `NumberOfStars`. The type of our property is `Integer`, the default value is `5`: 
 
 [source,cs]
 ----
@@ -223,7 +223,7 @@ public int Value
 }
 ----
 
-TIP: In this sample the value is of type `int`, so only full stars can be shown. If you want to add support for half stars, consider to use `float` or `double`.
+TIP: In this sample the value is of type `int`, so only full stars can be shown. If you want to add support for partial stars, consider to use `float` or `double`.
 
 We set `enableDataValidation` to `true`. But this is not enough for validation support. We also need to override `UpdateDataValidation`. This function will be called whenever a property asks for validation. Most likely we want to use set an error on the `DataValidationErrors`-control: 
 
@@ -310,7 +310,7 @@ protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs chang
 }
 ----
 
-Moreover we want to update the `Stars`-Property as soon as a new instance of our control was created. We can do this inside the constructor:
+Moreover, we want to update the `Stars`-Property as soon as a new instance of our control was created. We can do this inside the constructor:
 
 [source,cs]
 ----
@@ -324,7 +324,7 @@ public RatingControl()
 
 === Step 7: Add user interaction
 
-Okay, all properties we need are there. But wait, how should the user interact with our control? At the moment, we do not handle any user interaction. At least when a user clicks on a star, the value should be set to the number that this star has. To achieve this we require the `ControlTemplate` to provide an `ItemsControl` called `PART_StarsPresenter`. Use the `TemplatePart-Attribute` to indicate this. 
+Okay, all properties we need are there. But wait, how should the user interact with our control? At the moment, we do not handle any user interaction. At least when a user clicks on a star, the value should be set to the number that this star has. To achieve this, we require the `ControlTemplate` to provide an `ItemsControl` called `PART_StarsPresenter`. Use the `TemplatePart-Attribute` to indicate this. 
 
 [source,cs]
 ----
@@ -371,14 +371,14 @@ protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 }
 ----
 
-As you can see we did the following:
+As you can see, we did the following:
 
 . run the base method to make sure everything is set up correctly
 . unsubscribe from any previous event listeners
 . find the named control in the new template to apply
 . listen to the `PointerReleased`-event of the found `ItemsControl`
 
-By convention we know that the `Items` of our `ItemsControl` will be a `Path`. We make use of this convention by checking if the `Source` of the event is a `Path` and if it was, we know its `DataContext` will be an `Integer`. Therefore the new `Value` of our `RatingControl` is set to the given `Integer`:
+By convention, we know that the `Items` of our `ItemsControl` will be a `Path`. We make use of this convention by checking if the `Source` of the event is a `Path` and if it was, we know its `DataContext` will be an `Integer`. Therefore, the new `Value` of our `RatingControl` is set to the given `Integer`:
 
 [source,cs]
 ----
@@ -397,12 +397,11 @@ private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.Point
 NOTE: Because we use the `as`-operator, our `Value` would become `null` if the `DataContext` could not be converted to `int` for any reason and thus crash the App. To prevent such a crash we use `0` as a fallback. 
 
 
-
 === Step 8: Add a `ControlTheme` for the RatingControl
 
-While we can already add a `RatingControl` to our View, we will see nothing as there is no `RatingControl` available. To change this we add another folder called `Themes`. Add a file called `RatingStyles.axaml` which is of type `ResourceDictionary (Avalonia)`. 
+While we can already add a `RatingControl` to our View, we will see nothing as there is no `RatingControl` available. To change this, we add another folder called `Themes`. Add a file called `RatingControlTheme.axaml` which is of type `ResourceDictionary (Avalonia)`. 
 
-First of all we need to add the needed namespaces to our `ResourceDictionary`: 
+First we need to add the necessary namespaces to our `ResourceDictionary`: 
 
 [source,xml]
 ----
@@ -415,7 +414,7 @@ First of all we need to add the needed namespaces to our `ResourceDictionary`:
 
 [TIP]
 ====
-If you want to have preview of the `ResourceDictionary`, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+If you want to have preview of the `ResourceDictionary`, add one or more `RatingControls` to the `Design.PreviewWith`-section: 
 [source,xml]
 ----
 <Design.PreviewWith>
@@ -507,7 +506,7 @@ Let us inspect the `ItemTemplate` a bit further. It is a `Path` with the class `
 </Style>
 ----
 
-We add another class `selected`. We make use of the fact that we can https://docs.avaloniaui.net/docs/styling/styles#style-classes[[add or remove `Style-classes`\]] in Avalonia. We use a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/MVVM/ValueConversionSample[[`MultiConverter`\]] called `IsSmallerOrEqualConverter` which compare the stars number with the selected value and return `true` if the number is smaller or equal to the selected value. The code of the converter is shown below. 
+We add another class `selected`. We make use of the fact that we can https://docs.avaloniaui.net/docs/styling/styles#style-classes[[add or remove `Style-classes`\]] in Avalonia. We use a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/MVVM/ValueConversionSample[[`MultiConverter`\]] called `IsSmallerOrEqualConverter` which compare the number of stars with the selected value and return `true` if the number is smaller or equal to the selected value. The code of the converter is shown below. 
 
 [source,xml]
 ----
@@ -538,7 +537,7 @@ public class IsSmallerOrEqualConverter : IMultiValueConverter
 }
 ----
 
-Last but not least we want a visual feedback if the user hovers a star with their mouse device. So we add a `Style` with the class name `star` and the https://docs.avaloniaui.net/docs/styling/styles#pseudoclasses[[pseudoclass\]] `:pointerover`.
+Last but not least, we want visual feedback if the user hovers a star with their mouse device. So we add a `Style` with the class name `star` and the https://docs.avaloniaui.net/docs/styling/styles#pseudoclasses[[pseudoclass\]] `:pointerover`.
 
 [source,xml]
 ----
@@ -548,12 +547,12 @@ Last but not least we want a visual feedback if the user hovers a star with thei
 </Style>
 ----
 
-NOTE: In Avalonia 11.x `Styles`(see https://github.com/AvaloniaUI/Avalonia.Samples/blob/be2895d5461fd4748044d5a81c571547965b9f9d/src/Avalonia.Samples/CustomControls/RatingControlSample/README.adoc#step-8-add-a-style-for-the-ratingcontrol[this]) is supported, but since 11.0 `ControlThemes` are preferred. 
+NOTE: If you don't want to use `ControlThemes`, you can also use `Styles` to define the look of your control. However, `ControlThemes` have some advantages over `Styles`. Visit the https://docs.avaloniaui.net/docs/styling/control-themes[[Documentation\]] for more information about the differences and advantages of `ControlThemes` over `Styles`.
 
 .Reference
 ****
-* https://docs.avaloniaui.net/docs/basics/user-interface/styling/styles[Styles]
-* https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes[Control Themes]
+* https://docs.avaloniaui.net/docs/styling/styles[Styles]
+* https://docs.avaloniaui.net/docs/styling/control-themes[Control Themes]
 ****
 
 === Step 9: Theme Variant
@@ -571,23 +570,23 @@ To do this, modify our style selector like this:
         <Setter Property="Height" Value="32" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" />
-        <Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokenBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokeBrush}" />
         <Setter Property="StrokeThickness" Value="2" />
         <Setter Property="Stretch" Value="Uniform" />
     </Style>
 
     <Style Selector="Path.selected" >
         <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" />
-        <Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokeBrush}" />
     </Style>
 
     <Style Selector="Path.star:pointerover" >
         <Setter Property="RenderTransform" Value="scale(1.3)" />
-        <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedStrokenBrush}" />
+        <Setter Property="Stroke" Value="{DynamicResource RatingControlPointerOverStrokeBrush}" />
     </Style>
 ----
 
-now, will be define Resource for each Theme Variant
+now, we will define Resources for each Theme Variant
 
 [source, xml]
 ----
@@ -596,33 +595,39 @@ now, will be define Resource for each Theme Variant
     <ResourceDictionary x:Key="Default">
       <!-- Selected Brushes-->
       <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
-      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Goldenrod"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="Goldenrod"/>
       <!-- Unselected Brushes-->
       <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
-      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/>
+      <!-- PointerOverBrush -->
+      <SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="Black" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="Light">
       <!-- Selected Brushes-->
       <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/>
-      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="Gray"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="Gray"/>
       <!-- Unselected Brushes-->
       <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/>
-      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="Gray"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/>
+      <!-- PointerOverBrush -->
+      <SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="Black" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
       <!-- Selected Brushes-->
       <SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Red"/>
-      <SolidColorBrush x:Key="RatingControlSelectedStrokenBrush" Color="White"/>
+      <SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="White"/>
       <!-- Unselected Brushes-->
       <SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="Transparent"/>
-      <SolidColorBrush x:Key="RatingControlUnselectedStrokenBrush" Color="White"/>
+      <SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/>
+      <!-- PointerOverBrush -->
+      <SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="White" />
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 ----
 
 [TIP]
 ====
-If you want to have preview of the `ResourceDictionary` support Theme Variants, just add one or more `RatingControls` to the `Design.PreviewWith`-section: 
+If you want to have preview of the `ResourceDictionary` support Theme Variants, add one or more `RatingControls` to the `Design.PreviewWith`-section: 
 [source,xml]
 ----
   <!-- Design time preview -->
@@ -657,7 +662,7 @@ If you want to have preview of the `ResourceDictionary` support Theme Variants, 
 ----
 ====
 
-=== Step 10: Create a sample to try-out the custom Control
+=== Step 10: Create a sample to try out the custom Control
 
 In Avalonia an external `ResourceDictionary`-file needs to be added via `ResourceInclude` into the `Resources`-node of your choice before it gets applied. We will add it into `App.Resources` as shown below: 
 
@@ -667,7 +672,7 @@ In Avalonia an external `ResourceDictionary`-file needs to be added via `Resourc
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <!-- Don't miss this line -->
-        <ResourceInclude Source="/Styles/RatingStyles.axaml"/>
+        <ResourceInclude Source="/Styles/RatingControlTheme.axaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
@@ -708,9 +713,9 @@ image::_docs/img/result.png[Rating Control in action]
 
 == Related 
 
-This sample has shown some basics about custom controls. If you want to use this control in production you may want to improve it further, for example: 
+This sample has shown some basics about custom controls. If you want to use this control in production, you may want to improve it further, for example: 
 
-- Add it into a controls library
+- Add it into a control library
 - Add keyboard support
 - Add unit tests 
 - Add animations
