@@ -1,0 +1,41 @@
+= Rect Painter Sample
+
+This example shows how to create a custom rendered control that interacts with the mouse to form a simple paint application.
+
+[discrete]
+=== Difficulty
+
+🐔 Normal 🐔
+
+[discrete]
+=== Buzz-Words
+
+Graphics Editor, Paint, MVVM
+
+== The Solution
+
+There is a custom control `PaintControl` and a corresponding view model `PaintControlViewModel`.
+
+The view model holds data for the control as properties, and also holds the off-screen image being edited.
+
+The `PaintControl`:
+
+- Responds to mouse movement, mouse button presses, and global keyboard events
+- Maintains editing state (the rectangle being dragged and its color) in the view model
+- Requests the view model to modify the image when creating a rectangle, or when image size changes in response to window resizing
+
+The `PaintControlViewModel`:
+
+- Publishes properties via the `INotifyPropertyChanged` interface
+- Handles the actual editing of the image
+
+The `MainWindowViewModel`:
+
+- Subscribes to properties in `PaintControlViewModel` so it can provide bindable properties to the UI
+
+== Notes
+
+The `PaintControlViewModel` holds a single image that is edited, and `PaintControl` renders that image when needed. Editing the image involves creating a new image, painting the old one onto it, and then adding the newly requested rectangle.
+
+More control and editing capabilities could be achieved using a dedicated graphics library such as Skia.
+
