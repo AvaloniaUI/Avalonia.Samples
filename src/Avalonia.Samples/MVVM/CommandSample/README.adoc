@@ -42,13 +42,13 @@ Command, ICommand, CommandParameter, MVVM, ReactiveCommand, RelayCommand, async-
 
 == Before we start
 
-In this sample we assume that you know what a `Binding` is and that you have a basic knowledge of the `MVVM` concepts. Moreover you should already know how to create a new Avalonia project. 
+In this sample we assume that you know what a `Binding` is and that you have a basic knowledge of the `MVVM` concepts. Moreover, you should already know how to create a new Avalonia project. 
 
 In case you want to refresh your knowledge, visit the link:../BasicMvvmSample[[Basic MVVM Sample\]]. 
 
 === ICommand
 
-If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface it can be used to execute a `Method` in your `Model` or `ViewModel`.  Moreover, the interface allows you to easily enable or disable the `Control` (most often a `Button`), that your `Command` is bound to. 
+If a class implements the https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand?view=net-6.0[[`ICommand`\]] interface, it can be used to execute a `Method` in your `Model` or `ViewModel`.  Moreover, the interface allows you to easily enable or disable the `Control` (most often a `Button`), that your `Command` is bound to. 
 
 The interface has three members:
 
@@ -68,9 +68,9 @@ ReactiveUI:: This library ships https://www.reactiveui.net/docs/handbook/command
 
 CommunityToolkit-MVVM:: This library ships https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand[[`RelayCommand`\]] and https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/asyncrelaycommand[[`AsyncRelayCommand`\]]. In addition it provides a https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`source generator`\]] to reduce the boilerplate code needed.  
 
-==== Commands and long running Tasks
+==== Commands and long-running Tasks
 
-Some `MVVM`-libs, provide an async implementations of the `ICommand` interface. That way we can execute long running tasks from our UI without blocking the UI.
+Some `MVVM`-libs, provide an async implementation of the `ICommand` interface. That way we can execute long-running tasks from our UI without blocking the UI.
 
 == Solution 1: Use ReactiveUI
 
@@ -149,7 +149,7 @@ public string? RobotName
 
 === Step 3: Create the "Open the POD bay doors" - Command
 
-In the `ViewModel`` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class, because it is more flexible. For example You can easily replace it with an async implementation if you need to.
+In the `ViewModel`` add a new read-only property of type `ICommand`. We use the interface instead of the specialized class because it is more flexible. For example, You can easily replace it with an async implementation if you need to.
 
 .ReactiveUiCommandsViewModel.cs
 [source,csharp]
@@ -176,7 +176,7 @@ private void OpenThePodBayDoors()
 }
 ----
 
-Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create())\]`] method which will take a method or a lambda as parameter.
+Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create()\]`] method which will take a method or a lambda as a parameter.
 
 .ReactiveUiCommandsViewModel.cs
 [source,csharp]
@@ -240,8 +240,8 @@ NOTE: This time we used `ReactiveCommand.Create<string?>`. the part between `<>`
 
 === Step 5: Create "Open the Pod Bay sequence" - Async Command
 
-Many operations have multiple steps and we want to keep the user interface responsive while
-we wait for sequence of operations to complete. One way to do this in `C#` is to use https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/[[`async / await`\]] in combination with https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0[[`Tasks`\]] to run things in the background while not blocking the UI. 
+Many operations have multiple steps, and we want to keep the user interface responsive while
+we wait for the sequence of operations to complete. One way to do this in `C#` is to use https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/[[`async / await`\]] in combination with https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0[[`Tasks`\]] to run things in the background while not blocking the UI. 
 
 Let's add the `Command` and the `Task` to our `ViewModel`:
 
@@ -281,7 +281,7 @@ public ReactiveUiCommandsViewModel()
 }
 ----
 
-TIP: When you execute this command, notice that the `Button` is disabled until the `Task` is finished, so you can't ask for the pod bay doors to open again while the opening sequence is running. A more complete program could keep track of the state of the Pod Bay and change the button to "close".
+TIP: When you execute this command, notice that the `Button` is disabled until the `Task` is finished, so you can't ask for the pod bay doors to open again while the opening sequence is running. A more complete program could keep track of the Pod Bay's status and change the button to "close".
 
 [[Solution1-Step6]]
 === Step 6: Setting up the User Interface
@@ -436,6 +436,7 @@ The `UserControl` itself will be added into the file `Views ► MainWindow` or `
 ----
 
 
+[#_step_7_see_it_in_action]
 === Step 7: See it in action
 
 In your IDE press `Run` or `Debug` and try the sample out. Notice how the `Buttons` will be enabled and disabled automatically.

@@ -47,7 +47,7 @@ Converter, Binding, MultiBinding, IValueConverter, IMultiValueConverter, MVVM, F
 
 == Before we start
 
-In this sample we assume that you know what a `Binding` is and that you have a basic knowledge of the `MVVM` concepts. Moreover you should already know how to create a new Avalonia project.
+In this sample we assume that you know what a `Binding` is and that you have a basic knowledge of the `MVVM` concepts. Moreover, you should already know how to create a new Avalonia project.
 
 In case you want to refresh your knowledge, visit the link:../BasicMvvmSample[[Basic MVVM Sample\]].
 
@@ -135,11 +135,11 @@ namespace ValueConversionSample.Converter
 
 To clarify things further:
 
-value:: This is the value which is provided by the `Binding`. 
+value:: This is the value that is provided by the `Binding`. 
 parameter:: This is an optional converter parameter. We will see later how we can provide this parameter.
 
 
-=== Step 3: Setup the View
+=== Step 3: Set up the View
 
 First we need to create a new instance of our `MathAddConverter` and the `ConverterParameter` as a https://docs.avaloniaui.net/docs/styling/resources[[`Resource`\]] which can be used later. We do this inside `Window.Resources`, but it can be done also in `App.axaml` or in any other `Resources`-section.
 
