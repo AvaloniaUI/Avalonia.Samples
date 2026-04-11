@@ -23,7 +23,4 @@ type MusicStoreWindow() as this =
         WeakReferenceMessenger.Default.Register(this, onMusicStoreClosed)
 
     member private this.InitializeComponent() =
-#if DEBUG
-        this.AttachDevTools()
-#endif
         AvaloniaXamlLoader.Load(this)
