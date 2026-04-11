@@ -397,14 +397,14 @@ TIP: If you set any `PasswordChar` to any `TextBox` you will get a password inpu
         <TextBox VerticalAlignment="Center"
                  FontSize="16"
                  Text="{Binding MailAddress}"
-                 Watermark="E-Mail Address"
-				 UseFloatingWatermark="True"/>
+                 PlaceholderText="E-Mail Address"
+				 UseFloatingPlaceholder="True"/>
 		<TextBox VerticalAlignment="Center"
                  FontSize="16"
 				 PasswordChar="$"
                  Text="{Binding Password}"
-                 Watermark="Password"
-				 UseFloatingWatermark="True"/>
+                 PlaceholderText="Password"
+				 UseFloatingPlaceholder="True"/>
     </StackPanel>
 </UserControl>
 

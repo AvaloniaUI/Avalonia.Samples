@@ -670,7 +670,7 @@ Follow this procedure to add the user control and constituent controls for the d
 <UserControl ... >
   <DockPanel>
     <StackPanel DockPanel.Dock="Top">
-      <TextBox Watermark="Search for Albums...." />
+    <TextBox PlaceholderText="Search for Albums...." />
       <ProgressBar IsIndeterminate="True"  />
     </StackPanel>
       <Button Content="Buy Album" 
@@ -775,7 +775,7 @@ Follow this procedure to add data binding to the view:
     <!-- ... -->
     <DockPanel>
       <StackPanel DockPanel.Dock="Top">
-          <TextBox Watermark="Search for Albums...." Text="{Binding SearchText}" />
+          <TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText}" />
         <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
       </StackPanel>
       <Button Content="Buy Album"
@@ -1161,7 +1161,7 @@ Follow this procedure to trigger the search with a short delay when the search t
 - Find the line with SearchText binding and add a Delay property as shown below:
 +
 ```xml
-<TextBox Watermark="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
+<TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
 ```
 +
 NOTE:`Delay=400` ensures that input is only propagated to the view model after the user pauses for 400ms, preventing unnecessary search calls.

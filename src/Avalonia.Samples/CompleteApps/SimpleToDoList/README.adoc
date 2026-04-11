@@ -397,8 +397,8 @@ Here is our basic layout:
 
         <!-- This TextBox can be used to add new ToDoItems -->
         <TextBox Grid.Row="2"
-                 Text="{Binding NewItemContent}"
-                 Watermark="Add a new Item">
+             Text="{Binding NewItemContent}"
+             PlaceholderText="Add a new Item">
         </TextBox>
     </Grid>
 </Window>
@@ -421,7 +421,7 @@ Here is how our modified input box looks like:
 ----
 <TextBox Grid.Row="2"
          Text="{Binding NewItemContent}"
-         Watermark="Add a new Item">
+         PlaceholderText="Add a new Item">
     <TextBox.InnerRightContent>
         <Button Command="{Binding AddItemCommand}" >
             Add
