@@ -9,7 +9,6 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="XUnit" />
         <PackageReference Include="Avalonia.Headless.XUnit" />
     </ItemGroup>
 
