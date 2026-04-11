@@ -24,12 +24,12 @@
                  FontSize="16"
                  Text="{Binding MailAddress}"
                  PlaceholderText="E-Mail Address"
-				 UseFloatingWatermark="True"/>
+				 UseFloatingPlaceholder="True"/>
 		<TextBox VerticalAlignment="Center"
                  FontSize="16"
 				 PasswordChar="$"
                  Text="{Binding Password}"
                  PlaceholderText="Password"
-				 UseFloatingWatermark="True"/>
+				 UseFloatingPlaceholder="True"/>
     </StackPanel>
 </UserControl>
