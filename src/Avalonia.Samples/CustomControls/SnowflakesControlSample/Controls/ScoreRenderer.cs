@@ -50,7 +50,7 @@ internal class ScoreRenderer : ICustomDrawOperation
         // In case we didn't find it, render the text with a fallback.
         if (leaseFeature == null)
         {
-            var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
+            var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.CharacterToGlyphMap.GetGlyph(c)).ToArray();
 
             var glyphRun = new GlyphRun(Typeface.Default.GlyphTypeface,
                 20,
