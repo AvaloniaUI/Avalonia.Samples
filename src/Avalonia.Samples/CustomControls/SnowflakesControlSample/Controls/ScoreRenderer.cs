@@ -71,14 +71,17 @@ internal class ScoreRenderer : ICustomDrawOperation
             using (var paint = new SKPaint())
             {
                 paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
-                paint.TextSize = 30;
                 paint.TextAlign = SKTextAlign.Right;
+                using var font = new SKFont
+                {
+                    Size = 30
+                };
                     
                 var origin = Bounds.TopRight.ToSKPoint();
                 origin.Offset(-25, +50);
 
                 paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
-                canvas.DrawText(Text, origin, paint);
+                canvas.DrawText(Text, origin, paint.TextAlign, font, paint);
             }
             canvas.Restore();
         }
