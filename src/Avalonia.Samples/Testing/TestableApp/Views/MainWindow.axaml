@@ -11,8 +11,8 @@
         SizeToContent="WidthAndHeight"
         CanResize="False">
   <StackPanel Spacing="10" Margin="10" HorizontalAlignment="Left">
-    <TextBox Name="FirstOperandInput" Text="{Binding FirstOperand, Mode=TwoWay}" Watermark="Operand 1" />
-    <TextBox Name="SecondOperandInput" Text="{Binding SecondOperand, Mode=TwoWay}" Watermark="Operand 2" />
+    <TextBox Name="FirstOperandInput" Text="{Binding FirstOperand, Mode=TwoWay}" PlaceholderText="Operand 1" />
+    <TextBox Name="SecondOperandInput" Text="{Binding SecondOperand, Mode=TwoWay}" PlaceholderText="Operand 2" />
 
     <UniformGrid Columns="4">
       <UniformGrid.Styles>

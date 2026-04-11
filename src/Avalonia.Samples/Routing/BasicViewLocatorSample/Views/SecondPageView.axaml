@@ -23,13 +23,13 @@
         <TextBox VerticalAlignment="Center"
                  FontSize="16"
                  Text="{Binding MailAddress}"
-                 Watermark="E-Mail Address"
+                 PlaceholderText="E-Mail Address"
 				 UseFloatingWatermark="True"/>
 		<TextBox VerticalAlignment="Center"
                  FontSize="16"
 				 PasswordChar="$"
                  Text="{Binding Password}"
-                 Watermark="Password"
+                 PlaceholderText="Password"
 				 UseFloatingWatermark="True"/>
     </StackPanel>
 </UserControl>

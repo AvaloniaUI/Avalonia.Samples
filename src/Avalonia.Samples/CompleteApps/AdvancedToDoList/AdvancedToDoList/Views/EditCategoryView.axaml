@@ -23,12 +23,12 @@
                 <controls:LabeledControl Header="ID">
                     <TextBox IsReadOnly="True"
                              Text="{Binding Id, Mode=OneWay}"
-                             Watermark="The ID will be set after saving automatically." />
+                             PlaceholderText="The ID will be set after saving automatically." />
                 </controls:LabeledControl>
 
                 <!--  Name  -->
                 <controls:LabeledControl Header="Name">
-                    <TextBox x:Name="NameTextBox" Text="{Binding Name}" Watermark="The display name of the Group" />
+                    <TextBox x:Name="NameTextBox" Text="{Binding Name}" PlaceholderText="The display name of the Group" />
                 </controls:LabeledControl>
 
                 <!--  Description  -->
