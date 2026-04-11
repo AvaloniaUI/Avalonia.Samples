@@ -2719,7 +2719,7 @@ We can use a static class with static properties here as the converters will not
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Type the color to parse (e.g.: red, green, blue, #FF112233)"</span> <span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">PlaceholderText=</span><span class="s">"Type the color to parse (e.g.: red, green, blue, #FF112233)"</span> <span class="nt">&gt;</span>
     <span class="nt">&lt;TextBox.InnerLeftContent&gt;</span>
         <span class="nt">&lt;Ellipse</span> <span class="na">Fill=</span><span class="s">"{Binding $parent[TextBox].Text, Converter={x:Static conv:FuncValueConverters.StringToBrushConverter}}"</span>
                  <span class="na">Width=</span><span class="s">"20"</span>

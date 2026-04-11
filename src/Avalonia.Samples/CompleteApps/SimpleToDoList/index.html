@@ -2653,7 +2653,7 @@ You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properti
         <span class="c">&lt;!-- This TextBox can be used to add new ToDoItems --&gt;</span>
         <span class="nt">&lt;TextBox</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
                  <span class="na">Text=</span><span class="s">"{Binding NewItemContent}"</span>
-                 <span class="na">Watermark=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
+                 <span class="na">PlaceholderText=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;/TextBox&gt;</span>
     <span class="nt">&lt;/Grid&gt;</span>
 <span class="nt">&lt;/Window&gt;</span></code></pre>
@@ -2693,7 +2693,7 @@ We use <code>KeyBindings</code> here as a <code>HotKey</code> would be available
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
          <span class="na">Text=</span><span class="s">"{Binding NewItemContent}"</span>
-         <span class="na">Watermark=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
+         <span class="na">PlaceholderText=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;TextBox.InnerRightContent&gt;</span>
         <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding AddItemCommand}"</span> <span class="nt">&gt;</span>
             Add

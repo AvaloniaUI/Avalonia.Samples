@@ -3265,7 +3265,7 @@ This is a common pattern of UI Composition, to read about this concept, see <a h
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="err">...</span> <span class="nt">&gt;</span>
   <span class="nt">&lt;DockPanel&gt;</span>
     <span class="nt">&lt;StackPanel</span> <span class="na">DockPanel.Dock=</span><span class="s">"Top"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;TextBox</span> <span class="na">PlaceholderText=</span><span class="s">"Search for Albums...."</span> <span class="nt">/&gt;</span>
       <span class="nt">&lt;ProgressBar</span> <span class="na">IsIndeterminate=</span><span class="s">"True"</span>  <span class="nt">/&gt;</span>
     <span class="nt">&lt;/StackPanel&gt;</span>
       <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Album"</span>
@@ -3450,7 +3450,7 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
     <span class="c">&lt;!-- ... --&gt;</span>
     <span class="nt">&lt;DockPanel&gt;</span>
       <span class="nt">&lt;StackPanel</span> <span class="na">DockPanel.Dock=</span><span class="s">"Top"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText}"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;TextBox</span> <span class="na">PlaceholderText=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText}"</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;ProgressBar</span> <span class="na">IsIndeterminate=</span><span class="s">"True"</span> <span class="na">IsVisible=</span><span class="s">"{Binding IsBusy}"</span> <span class="nt">/&gt;</span>
       <span class="nt">&lt;/StackPanel&gt;</span>
       <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Album"</span>
@@ -4093,7 +4093,7 @@ Since we directly reference <code>Avalonia.Media.Imaging.Bitmap</code> in the vi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText, Delay=400}"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">PlaceholderText=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText, Delay=400}"</span> <span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

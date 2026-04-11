@@ -2440,7 +2440,7 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <span class="c">&lt;!-- We use CommandParameter to provide the name of the robot --&gt;</span>
 <span class="c">&lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;</span>
 <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">Watermark=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">PlaceholderText=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsFellowRobotCommand}"</span>
             <span class="na">Content=</span><span class="s">"{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"</span>
             <span class="na">CommandParameter=</span><span class="s">"{Binding RobotName}"</span> <span class="nt">/&gt;</span>
@@ -2511,7 +2511,7 @@ When you execute this command, notice that the <code>Button</code> is disabled u
             <span class="c">&lt;!-- We use CommandParameter to provide the name of the robot --&gt;</span>
             <span class="c">&lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;</span>
             <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">Watermark=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">PlaceholderText=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
                 <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsFellowRobotCommand}"</span>
                         <span class="na">Content=</span><span class="s">"{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"</span>
                         <span class="na">CommandParameter=</span><span class="s">"{Binding RobotName}"</span> <span class="nt">/&gt;</span>
