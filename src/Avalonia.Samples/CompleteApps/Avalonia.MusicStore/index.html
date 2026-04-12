@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Music Store App</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2226,29 +2108,17 @@ The file names may differ a little. For example "MainViewModel.cs" may be named 
 </ul>
 </div>
 <div id="prepare-project-for-partial-properties" class="paragraph">
-<p>In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.0 and
-Avalonia version no older than 11.3.0.</p>
+<p>In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.2 and
+Avalonia version no older than 11.3.0 or 12.0.0.</p>
 </div>
 <div class="listingblock">
 <div class="title">Update nuget packages</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Avalonia"</span> <span class="na">Version=</span><span class="s">"11.3.0"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Avalonia.Desktop"</span> <span class="na">Version=</span><span class="s">"11.3.0"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Avalonia.Themes.Fluent"</span> <span class="na">Version=</span><span class="s">"11.3.0"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"CommunityToolkit.Mvvm"</span> <span class="na">Version=</span><span class="s">"8.4.0"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;PackageReference Include="Avalonia" Version="12.0.0" /&gt;
+&lt;PackageReference Include="Avalonia.Desktop" Version="12.0.0" /&gt;
+&lt;PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" /&gt;
+&lt;PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" /&gt;</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>In the same file enable preview C# language features:</p>
-</div>
-<div class="listingblock">
-<div class="title">Within the <em>PropertyGroup</em> section, add the following line:</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;LangVersion&gt;</span>preview<span class="nt">&lt;/LangVersion&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This setting enables support for the latest C# features required by this tutorial, including partial properties introduced in C# 13.</p>
 </div>
 <div class="paragraph">
 <p>Now take some time to review the files and folders that the solution template created. You will see that the following the MVVM pattern, these folders were created:</p>
@@ -2342,8 +2212,8 @@ To explore the concepts behind the MVVM pattern, and when is appropriate to use 
 <p>In the XAML, change the <code>RequestedThemeVariant</code> attribute in the <code>&lt;Application&gt;</code> element from "Default" to "Dark"</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application</span> <span class="err">...</span>
-    <span class="na">RequestedThemeVariant=</span><span class="s">"Dark"</span><span class="nt">&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application ...
+    RequestedThemeVariant="Dark"&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2391,11 +2261,11 @@ Notice that the preview pane is still showing the window in 'light' mode. The ap
 <p>After the <code>Title="Avalonia.MusicStore"</code> attribute, add two new attributes as follows:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="err">...</span>
-        <span class="na">Title=</span><span class="s">"Avalonia.MusicStore"</span>
-        <span class="err">...</span>
-        <span class="na">TransparencyLevelHint=</span><span class="s">"AcrylicBlur"</span>
-        <span class="na">Background=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window ...
+        Title="Avalonia.MusicStore"
+        ...
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2403,19 +2273,19 @@ Notice that the preview pane is still showing the window in 'light' mode. The ap
 <p>To apply the acrylic effect to the whole window, replace the <code>&lt;TextBlock&gt;</code> element in the content zone of the main window with the following XAML for a panel:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="err">...</span> <span class="nt">&gt;</span>
-    <span class="nt">&lt;Panel&gt;</span>
-        <span class="nt">&lt;ExperimentalAcrylicBorder</span> <span class="na">IsHitTestVisible=</span><span class="s">"False"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;ExperimentalAcrylicBorder.Material&gt;</span>
-                <span class="nt">&lt;ExperimentalAcrylicMaterial</span>
-                    <span class="na">BackgroundSource=</span><span class="s">"Digger"</span>
-                    <span class="na">TintColor=</span><span class="s">"Black"</span>
-                    <span class="na">TintOpacity=</span><span class="s">"1"</span>
-                    <span class="na">MaterialOpacity=</span><span class="s">"0.65"</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;/ExperimentalAcrylicBorder.Material&gt;</span>
-        <span class="nt">&lt;/ExperimentalAcrylicBorder&gt;</span>
-    <span class="nt">&lt;/Panel&gt;</span>
-<span class="nt">&lt;/Window&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window ... &gt;
+    &lt;Panel&gt;
+        &lt;ExperimentalAcrylicBorder IsHitTestVisible="False"&gt;
+            &lt;ExperimentalAcrylicBorder.Material&gt;
+                &lt;ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" /&gt;
+            &lt;/ExperimentalAcrylicBorder.Material&gt;
+        &lt;/ExperimentalAcrylicBorder&gt;
+    &lt;/Panel&gt;
+&lt;/Window&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2460,11 +2330,11 @@ Note that <em>Linux</em> users can not yet take advantage of the following code 
 <p>Add the <code>ExtendClientAreaToDecorationsHint</code> attribute as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">   <span class="nt">&lt;Window</span> <span class="err">...</span>
-           <span class="na">TransparencyLevelHint=</span><span class="s">"AcrylicBlur"</span>
-           <span class="na">Background=</span><span class="s">"Transparent"</span>
+<pre class="rouge highlight"><code data-lang="xml">   &lt;Window ...
+           TransparencyLevelHint="AcrylicBlur"
+           Background="Transparent"
 
-           <span class="na">ExtendClientAreaToDecorationsHint=</span><span class="s">"True"</span><span class="nt">&gt;</span></code></pre>
+           ExtendClientAreaToDecorationsHint="True"&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2509,19 +2379,19 @@ Note that <em>Linux</em> users can not yet take advantage of the following code 
 <p>Inside the panel element, add the following XAML for a button. The panel XAML should look like this:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Panel&gt;</span>
-    <span class="nt">&lt;ExperimentalAcrylicBorder</span> <span class="na">IsHitTestVisible=</span><span class="s">"False"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;ExperimentalAcrylicBorder.Material&gt;</span>
-            <span class="nt">&lt;ExperimentalAcrylicMaterial</span>
-                 <span class="na">BackgroundSource=</span><span class="s">"Digger"</span>
-                 <span class="na">TintColor=</span><span class="s">"Black"</span>
-                 <span class="na">TintOpacity=</span><span class="s">"1"</span>
-                 <span class="na">MaterialOpacity=</span><span class="s">"0.65"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/ExperimentalAcrylicBorder.Material&gt;</span>
-     <span class="nt">&lt;/ExperimentalAcrylicBorder&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Panel&gt;
+    &lt;ExperimentalAcrylicBorder IsHitTestVisible="False"&gt;
+        &lt;ExperimentalAcrylicBorder.Material&gt;
+            &lt;ExperimentalAcrylicMaterial
+                 BackgroundSource="Digger"
+                 TintColor="Black"
+                 TintOpacity="1"
+                 MaterialOpacity="0.65" /&gt;
+        &lt;/ExperimentalAcrylicBorder.Material&gt;
+     &lt;/ExperimentalAcrylicBorder&gt;
 
-     <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Music"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/Panel&gt;</span></code></pre>
+     &lt;Button Content="Buy Music"/&gt;
+&lt;/Panel&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2560,10 +2430,10 @@ Note that <em>Linux</em> users can not yet take advantage of the following code 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Panel</span> <span class="na">Margin=</span><span class="s">"40"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Music"</span>
-          <span class="na">HorizontalAlignment=</span><span class="s">"Right"</span> <span class="na">VerticalAlignment=</span><span class="s">"Top"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/Panel&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Panel Margin="40"&gt;
+  &lt;Button Content="Buy Music"
+          HorizontalAlignment="Right" VerticalAlignment="Top" /&gt;
+&lt;/Panel&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2587,7 +2457,7 @@ Note that <em>Linux</em> users can not yet take advantage of the following code 
 <p>Use your browser&#8217;s text search to locate the name of the icon 'store\_microsoft\_regular'. There should be some code similar to:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"store_microsoft_regular"</span><span class="nt">&gt;</span>M11.5 9.5V13H8V9.5H11.5Z M11.5 17.5V14H8V17.5H11.5Z M16 9.5V13H12.5V9.5H16Z M16 17.5V14H12.5V17.5H16Z M8 6V3.75C8 2.7835 8.7835 2 9.75 2H14.25C15.2165 2 16 2.7835 16 3.75V6H21.25C21.6642 6 22 6.33579 22 6.75V18.25C22 19.7688 20.7688 21 19.25 21H4.75C3.23122 21 2 19.7688 2 18.25V6.75C2 6.33579 2.33579 6 2.75 6H8ZM9.5 3.75V6H14.5V3.75C14.5 3.61193 14.3881 3.5 14.25 3.5H9.75C9.61193 3.5 9.5 3.61193 9.5 3.75ZM3.5 18.25C3.5 18.9404 4.05964 19.5 4.75 19.5H19.25C19.9404 19.5 20.5 18.9404 20.5 18.25V7.5H3.5V18.25Z<span class="nt">&lt;/StreamGeometry&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;StreamGeometry x:Key="store_microsoft_regular"&gt;M11.5 9.5V13H8V9.5H11.5Z M11.5 17.5V14H8V17.5H11.5Z M16 9.5V13H12.5V9.5H16Z M16 17.5V14H12.5V17.5H16Z M8 6V3.75C8 2.7835 8.7835 2 9.75 2H14.25C15.2165 2 16 2.7835 16 3.75V6H21.25C21.6642 6 22 6.33579 22 6.75V18.25C22 19.7688 20.7688 21 19.25 21H4.75C3.23122 21 2 19.7688 2 18.25V6.75C2 6.33579 2.33579 6 2.75 6H8ZM9.5 3.75V6H14.5V3.75C14.5 3.61193 14.3881 3.5 14.25 3.5H9.75C9.61193 3.5 9.5 3.61193 9.5 3.75ZM3.5 18.25C3.5 18.9404 4.05964 19.5 4.75 19.5H19.25C19.9404 19.5 20.5 18.9404 20.5 18.25V7.5H3.5V18.25Z&lt;/StreamGeometry&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2607,15 +2477,15 @@ Note that <em>Linux</em> users can not yet take advantage of the following code 
 <p>Locate and open the new <strong>Icons.axaml</strong> file that is created. The XAML will look like this:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ResourceDictionary</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-                    <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Design.PreviewWith&gt;</span>
-        <span class="c">&lt;!-- Here we can add some controls for the previewer --&gt;</span>
-    <span class="nt">&lt;/Design.PreviewWith&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+    &lt;Design.PreviewWith&gt;
+        &lt;!-- Here we can add some controls for the previewer --&gt;
+    &lt;/Design.PreviewWith&gt;
 
-    <span class="c">&lt;!-- Add the resources here. --&gt;</span>
+    &lt;!-- Add the resources here. --&gt;
 
-<span class="nt">&lt;/ResourceDictionary&gt;</span></code></pre>
+&lt;/ResourceDictionary&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2641,21 +2511,21 @@ Remember that each node needs the <code>x:Key</code> provided.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ResourceDictionary</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-                    <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Design.PreviewWith&gt;</span>
-        <span class="nt">&lt;Border</span> <span class="na">Padding=</span><span class="s">"20"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource store_microsoft_regular}"</span><span class="nt">&gt;&lt;/PathIcon&gt;</span>
-                <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource music_regular}"</span><span class="nt">&gt;&lt;/PathIcon&gt;</span>
-            <span class="nt">&lt;/StackPanel&gt;</span>
-        <span class="nt">&lt;/Border&gt;</span>
-    <span class="nt">&lt;/Design.PreviewWith&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+    &lt;Design.PreviewWith&gt;
+        &lt;Border Padding="20"&gt;
+            &lt;StackPanel Spacing="5"&gt;
+                &lt;PathIcon Data="{StaticResource store_microsoft_regular}"&gt;&lt;/PathIcon&gt;
+                &lt;PathIcon Data="{StaticResource music_regular}"&gt;&lt;/PathIcon&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Border&gt;
+    &lt;/Design.PreviewWith&gt;
 
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"store_microsoft_regular"</span><span class="nt">&gt;</span> [ ... Add the path data here ... ] <span class="nt">&lt;/StreamGeometry&gt;</span>
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"music_regular"</span><span class="nt">&gt;</span> [ ... Add the path data here ... ] <span class="nt">&lt;/StreamGeometry&gt;</span>
+    &lt;StreamGeometry x:Key="store_microsoft_regular"&gt; [ ... Add the path data here ... ] &lt;/StreamGeometry&gt;
+    &lt;StreamGeometry x:Key="music_regular"&gt; [ ... Add the path data here ... ] &lt;/StreamGeometry&gt;
 
-<span class="nt">&lt;/ResourceDictionary&gt;</span></code></pre>
+&lt;/ResourceDictionary&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2685,13 +2555,13 @@ Most of the time the path can be also extracted from any svg-path.
 <p>Add a <code>&lt;ResourceDictionary&gt;</code> element with a <code>&lt;ResourceInclude&gt;</code> as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Resources&gt;</span>
-    <span class="nt">&lt;ResourceDictionary&gt;</span>
-        <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
-            <span class="nt">&lt;ResourceInclude</span> <span class="na">Source=</span><span class="s">"avares://Avalonia.MusicStore/Icons.axaml"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
-    <span class="nt">&lt;/ResourceDictionary&gt;</span>
-<span class="nt">&lt;/Application.Resources&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.Resources&gt;
+    &lt;ResourceDictionary&gt;
+        &lt;ResourceDictionary.MergedDictionaries&gt;
+            &lt;ResourceInclude Source="avares://Avalonia.MusicStore/Icons.axaml" /&gt;
+        &lt;/ResourceDictionary.MergedDictionaries&gt;
+    &lt;/ResourceDictionary&gt;
+&lt;/Application.Resources&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2712,9 +2582,9 @@ Most of the time the path can be also extracted from any svg-path.
 <p>Alter the XAML for the button, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Button</span> <span class="na">HorizontalAlignment=</span><span class="s">"Right"</span> <span class="na">VerticalAlignment=</span><span class="s">"Top"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource store_microsoft_regular}"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/Button&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Button HorizontalAlignment="Right" VerticalAlignment="Top"&gt;
+    &lt;PathIcon Data="{StaticResource store_microsoft_regular}" /&gt;
+&lt;/Button&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -2757,26 +2627,26 @@ Follow this procedure:</p>
 <p>Delete the existing content of the class, and add the code shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.ViewModels</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainViewModel</span> <span class="p">:</span> <span class="n">ObservableObject</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">MainViewModel</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// ViewModel initialization logic.</span>
-        <span class="p">}</span>
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MainViewModel : ObservableObject
+    {
+        public MainViewModel()
+        {
+            // ViewModel initialization logic.
+        }
 
-        <span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-        <span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">AddAlbumAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// Code here will be executed when the button is clicked.</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        [RelayCommand]
+        private async Task AddAlbumAsync()
+        {
+            // Code here will be executed when the button is clicked.
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -2830,10 +2700,10 @@ For more information about the concept of data binding, see <a href="https://doc
 <p>Find the XAML for the button and add the command attribute and binding, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Button</span> <span class="na">HorizontalAlignment=</span><span class="s">"Right"</span> <span class="na">VerticalAlignment=</span><span class="s">"Top"</span>
-        <span class="na">Command=</span><span class="s">"{Binding AddAlbumCommand}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource store_microsoft_regular}"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/Button&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Button HorizontalAlignment="Right" VerticalAlignment="Top"
+        Command="{Binding AddAlbumCommand}"&gt;
+    &lt;PathIcon Data="{StaticResource store_microsoft_regular}"/&gt;
+&lt;/Button&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3042,12 +2912,12 @@ This message will be sent by the view model when it needs to show the dialog.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">Avalonia.MusicStore.ViewModels</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Messaging.Messages</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using Avalonia.MusicStore.ViewModels;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Messages</span><span class="p">;</span>
+namespace Avalonia.MusicStore.Messages;
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">PurchaseAlbumMessage</span> <span class="p">:</span> <span class="n">AsyncRequestMessage</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">?&gt;;</span></code></pre>
+public class PurchaseAlbumMessage : AsyncRequestMessage&lt;AlbumViewModel?&gt;;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3077,25 +2947,25 @@ This message will be sent by the view model when it needs to show the dialog.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">MainWindow</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nf">InitializeComponent</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">public MainWindow()
+{
+    InitializeComponent();
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">Design</span><span class="p">.</span><span class="n">IsDesignMode</span><span class="p">)</span>
-        <span class="k">return</span><span class="p">;</span>
+    if (Design.IsDesignMode)
+        return;
 
-    <span class="c1">// Whenever 'Send(new PurchaseAlbumMessage())' is called, invoke this callback on the MainWindow instance:</span>
-    <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">MainWindow</span><span class="p">,</span> <span class="n">PurchaseAlbumMessage</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">,</span> <span class="k">static</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span>
-    <span class="p">{</span>
-        <span class="c1">// Create an instance of MusicStoreWindow and set MusicStoreViewModel as its DataContext.</span>
-        <span class="kt">var</span> <span class="n">dialog</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MusicStoreWindow</span>
-        <span class="p">{</span>
-            <span class="n">DataContext</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MusicStoreViewModel</span><span class="p">()</span>
-        <span class="p">};</span>
-        <span class="c1">// Show dialog window and reply with returned AlbumViewModel or null when the dialog is closed.</span>
-        <span class="n">m</span><span class="p">.</span><span class="nf">Reply</span><span class="p">(</span><span class="n">dialog</span><span class="p">.</span><span class="n">ShowDialog</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">?&gt;(</span><span class="n">w</span><span class="p">));</span>
-    <span class="p">});</span>
-<span class="p">}</span></code></pre>
+    // Whenever 'Send(new PurchaseAlbumMessage())' is called, invoke this callback on the MainWindow instance:
+    WeakReferenceMessenger.Default.Register&lt;MainWindow, PurchaseAlbumMessage&gt;(this, static (w, m) =&gt;
+    {
+        // Create an instance of MusicStoreWindow and set MusicStoreViewModel as its DataContext.
+        var dialog = new MusicStoreWindow
+        {
+            DataContext = new MusicStoreViewModel()
+        };
+        // Show dialog window and reply with returned AlbumViewModel or null when the dialog is closed.
+        m.Reply(dialog.ShowDialog&lt;AlbumViewModel?&gt;(w));
+    });
+}</code></pre>
 </div>
 </div>
 </div>
@@ -3109,12 +2979,12 @@ This message will be sent by the view model when it needs to show the dialog.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">AddAlbumAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Send the message to the previously registered handler and await the selected album</span>
-    <span class="kt">var</span> <span class="n">album</span> <span class="p">=</span> <span class="k">await</span> <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">PurchaseAlbumMessage</span><span class="p">());</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    // Send the message to the previously registered handler and await the selected album
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3149,8 +3019,8 @@ This message will be sent by the view model when it needs to show the dialog.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="err">...</span>
-    <span class="na">WindowStartupLocation=</span><span class="s">"CenterScreen"</span><span class="nt">&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window ...
+    WindowStartupLocation="CenterScreen"&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -3168,9 +3038,9 @@ This message will be sent by the view model when it needs to show the dialog.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="err">...</span>
-    <span class="na">Width=</span><span class="s">"1000"</span> <span class="na">Height=</span><span class="s">"550"</span>
-    <span class="na">WindowStartupLocation=</span><span class="s">"CenterOwner"</span><span class="nt">&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window ...
+    Width="1000" Height="550"
+    WindowStartupLocation="CenterOwner"&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -3262,18 +3132,18 @@ This is a common pattern of UI Composition, to read about this concept, see <a h
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="err">...</span> <span class="nt">&gt;</span>
-  <span class="nt">&lt;DockPanel&gt;</span>
-    <span class="nt">&lt;StackPanel</span> <span class="na">DockPanel.Dock=</span><span class="s">"Top"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;ProgressBar</span> <span class="na">IsIndeterminate=</span><span class="s">"True"</span>  <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/StackPanel&gt;</span>
-      <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Album"</span>
-              <span class="na">DockPanel.Dock=</span><span class="s">"Bottom"</span>
-              <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;ListBox/&gt;</span>
-  <span class="nt">&lt;/DockPanel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl ... &gt;
+  &lt;DockPanel&gt;
+    &lt;StackPanel DockPanel.Dock="Top"&gt;
+      &lt;TextBox PlaceholderText="Search for Albums...." /&gt;
+      &lt;ProgressBar IsIndeterminate="True"  /&gt;
+    &lt;/StackPanel&gt;
+      &lt;Button Content="Buy Album"
+              DockPanel.Dock="Bottom"
+              HorizontalAlignment="Center" /&gt;
+      &lt;ListBox/&gt;
+  &lt;/DockPanel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3297,8 +3167,8 @@ This is a common pattern of UI Composition, to read about this concept, see <a h
 <p>Add the namespace for the views to the <code>&lt;Window&gt;</code> element:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="err">...</span>
-        <span class="na">xmlns:views=</span><span class="s">"using:Avalonia.MusicStore.Views"</span> <span class="nt">&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window ...
+        xmlns:views="using:Avalonia.MusicStore.Views" &gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3306,11 +3176,11 @@ This is a common pattern of UI Composition, to read about this concept, see <a h
 <p>Inside the panel element, add an element for new user control and a <a href="https://api-docs.avaloniaui.net/docs/T_Avalonia_Controls_Notifications_WindowNotificationManager">[NotificationManager]</a> to show notifications to the user:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Panel</span> <span class="na">Margin=</span><span class="s">"40"</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;views:MusicStoreView/&gt;</span>
-<span class="nt">&lt;/Panel&gt;</span>
-<span class="nt">&lt;WindowNotificationManager</span> <span class="na">x:Name=</span><span class="s">"NotificationManager"</span>
-                           <span class="na">Position=</span><span class="s">"TopRight"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Panel Margin="40"&gt;
+   &lt;views:MusicStoreView/&gt;
+&lt;/Panel&gt;
+&lt;WindowNotificationManager x:Name="NotificationManager"
+                           Position="TopRight" /&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3354,12 +3224,12 @@ We will use the notification manager later in the tutorial to show messages to t
 <p>Add the code to derive the class from <code>ViewModelBase</code> and make the class <code>partial</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.ViewModels</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MusicStoreViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3398,17 +3268,17 @@ You can learn more about <code>[ObservableProperty]</code> and <code>INotifyProp
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using CommunityToolkit.Mvvm.ComponentModel;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.ViewModels</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MusicStoreViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-    <span class="p">{</span>
-       <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span> <span class="k">public</span> <span class="k">partial</span> <span class="kt">string</span><span class="p">?</span> <span class="n">SearchText</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+       [ObservableProperty] public partial string? SearchText { get; set; }
 
-       <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span> <span class="k">public</span> <span class="k">partial</span> <span class="kt">bool</span> <span class="n">IsBusy</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+       [ObservableProperty] public partial bool IsBusy { get; private set; }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3444,22 +3314,22 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="err">...</span>
-    <span class="na">xmlns:vm=</span><span class="s">"clr-namespace:Avalonia.MusicStore.ViewModels"</span>
-    <span class="na">x:DataType=</span><span class="s">"vm:MusicStoreViewModel"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- ... --&gt;</span>
-    <span class="nt">&lt;DockPanel&gt;</span>
-      <span class="nt">&lt;StackPanel</span> <span class="na">DockPanel.Dock=</span><span class="s">"Top"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;ProgressBar</span> <span class="na">IsIndeterminate=</span><span class="s">"True"</span> <span class="na">IsVisible=</span><span class="s">"{Binding IsBusy}"</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/StackPanel&gt;</span>
-      <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Buy Album"</span>
-              <span class="na">DockPanel.Dock=</span><span class="s">"Bottom"</span>
-              <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;ListBox/&gt;</span>
-    <span class="nt">&lt;/DockPanel&gt;</span>
-    <span class="c">&lt;!-- ... --&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl ...
+    xmlns:vm="clr-namespace:Avalonia.MusicStore.ViewModels"
+    x:DataType="vm:MusicStoreViewModel"&gt;
+    &lt;!-- ... --&gt;
+    &lt;DockPanel&gt;
+      &lt;StackPanel DockPanel.Dock="Top"&gt;
+          &lt;TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText}" /&gt;
+        &lt;ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" /&gt;
+      &lt;/StackPanel&gt;
+      &lt;Button Content="Buy Album"
+              DockPanel.Dock="Bottom"
+              HorizontalAlignment="Center" /&gt;
+      &lt;ListBox/&gt;
+    &lt;/DockPanel&gt;
+    &lt;!-- ... --&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -3493,9 +3363,9 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 <p>Add the following code to the class:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span> <span class="k">public</span> <span class="k">partial</span> <span class="n">AlbumViewModel</span><span class="p">?</span> <span class="n">SelectedAlbum</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">[ObservableProperty] public partial AlbumViewModel? SelectedAlbum { get; set; }
 
-<span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">&gt;</span> <span class="n">SearchResults</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span></code></pre>
+public ObservableCollection&lt;AlbumViewModel&gt; SearchResults { get; } = new();</code></pre>
 </div>
 </div>
 </li>
@@ -3513,7 +3383,7 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 <p>Add the binding expressions shown to the <code>&lt;ListBox&gt;</code> element:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ListBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding SearchResults}"</span> <span class="na">SelectedItem=</span><span class="s">"{Binding SelectedAlbum}"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedAlbum}" /&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3537,12 +3407,12 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 <p>Add a constructor to the class, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">MusicStoreViewModel</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public MusicStoreViewModel()
+{
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+}</code></pre>
 </div>
 </div>
 </li>
@@ -3590,7 +3460,7 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"music_regular"</span><span class="nt">&gt;</span>M11.5,2.75 C11.5,2.22634895 12.0230228,1.86388952 12.5133347,2.04775015 L18.8913911,4.43943933 C20.1598961,4.91511241 21.0002742,6.1277638 21.0002742,7.48252202 L21.0002742,10.7513533 C21.0002742,11.2750044 20.4772513,11.6374638 19.9869395,11.4536032 L13,8.83332147 L13,17.5 C13,17.5545945 12.9941667,17.6078265 12.9830895,17.6591069 C12.9940859,17.7709636 13,17.884807 13,18 C13,20.2596863 10.7242052,22 8,22 C5.27579485,22 3,20.2596863 3,18 C3,15.7403137 5.27579485,14 8,14 C9.3521238,14 10.5937815,14.428727 11.5015337,15.1368931 L11.5,2.75 Z M8,15.5 C6.02978478,15.5 4.5,16.6698354 4.5,18 C4.5,19.3301646 6.02978478,20.5 8,20.5 C9.97021522,20.5 11.5,19.3301646 11.5,18 C11.5,16.6698354 9.97021522,15.5 8,15.5 Z M13,3.83223733 L13,7.23159672 L19.5002742,9.669116 L19.5002742,7.48252202 C19.5002742,6.75303682 19.0477629,6.10007069 18.3647217,5.84393903 L13,3.83223733 Z<span class="nt">&lt;/StreamGeometry&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;StreamGeometry x:Key="music_regular"&gt;M11.5,2.75 C11.5,2.22634895 12.0230228,1.86388952 12.5133347,2.04775015 L18.8913911,4.43943933 C20.1598961,4.91511241 21.0002742,6.1277638 21.0002742,7.48252202 L21.0002742,10.7513533 C21.0002742,11.2750044 20.4772513,11.6374638 19.9869395,11.4536032 L13,8.83332147 L13,17.5 C13,17.5545945 12.9941667,17.6078265 12.9830895,17.6591069 C12.9940859,17.7709636 13,17.884807 13,18 C13,20.2596863 10.7242052,22 8,22 C5.27579485,22 3,20.2596863 3,18 C3,15.7403137 5.27579485,14 8,14 C9.3521238,14 10.5937815,14.428727 11.5015337,15.1368931 L11.5,2.75 Z M8,15.5 C6.02978478,15.5 4.5,16.6698354 4.5,18 C4.5,19.3301646 6.02978478,20.5 8,20.5 C9.97021522,20.5 11.5,19.3301646 11.5,18 C11.5,16.6698354 9.97021522,15.5 8,15.5 Z M13,3.83223733 L13,7.23159672 L19.5002742,9.669116 L19.5002742,7.48252202 C19.5002742,6.75303682 19.0477629,6.10007069 18.3647217,5.84393903 L13,3.83223733 Z&lt;/StreamGeometry&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -3636,38 +3506,38 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 <p>Alter the XAML for the user control&#8217;s content zone as follows:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-             <span class="na">xmlns:vm=</span><span class="s">"using:Avalonia.MusicStore.ViewModels"</span>
-             <span class="na">mc:Ignorable=</span><span class="s">"d"</span> <span class="na">d:DesignWidth=</span><span class="s">"800"</span> <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
-             <span class="na">x:Class=</span><span class="s">"Avalonia.MusicStore.Views.AlbumView"</span>
-             <span class="na">x:DataType=</span><span class="s">"vm:AlbumViewModel"</span>
-             <span class="na">Width=</span><span class="s">"200"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;UserControl.Resources&gt;</span>
-    <span class="nt">&lt;DrawingImage</span> <span class="na">x:Key=</span><span class="s">"CoverFallback"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;DrawingImage.Drawing&gt;</span>
-        <span class="nt">&lt;DrawingGroup</span> <span class="nt">&gt;</span>
-          <span class="nt">&lt;GeometryDrawing&gt;</span>
-            <span class="nt">&lt;RectangleGeometry</span>  <span class="na">Rect=</span><span class="s">"-2 -2 28 28"</span> <span class="nt">/&gt;</span>
-          <span class="nt">&lt;/GeometryDrawing&gt;</span>
-          <span class="nt">&lt;GeometryDrawing</span> <span class="na">Brush=</span><span class="s">"White"</span>
-                           <span class="na">Geometry=</span><span class="s">"{DynamicResource music_regular}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/DrawingGroup&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Avalonia.MusicStore.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.MusicStore.Views.AlbumView"
+             x:DataType="vm:AlbumViewModel"
+             Width="200"&gt;
+  &lt;UserControl.Resources&gt;
+    &lt;DrawingImage x:Key="CoverFallback"&gt;
+      &lt;DrawingImage.Drawing&gt;
+        &lt;DrawingGroup &gt;
+          &lt;GeometryDrawing&gt;
+            &lt;RectangleGeometry  Rect="-2 -2 28 28" /&gt;
+          &lt;/GeometryDrawing&gt;
+          &lt;GeometryDrawing Brush="White"
+                           Geometry="{DynamicResource music_regular}" /&gt;
+        &lt;/DrawingGroup&gt;
 
-      <span class="nt">&lt;/DrawingImage.Drawing&gt;</span>
-    <span class="nt">&lt;/DrawingImage&gt;</span>
-  <span class="nt">&lt;/UserControl.Resources&gt;</span>
+      &lt;/DrawingImage.Drawing&gt;
+    &lt;/DrawingImage&gt;
+  &lt;/UserControl.Resources&gt;
 
-  <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"5"</span> <span class="na">Width=</span><span class="s">"200"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Border</span> <span class="na">CornerRadius=</span><span class="s">"10"</span> <span class="na">ClipToBounds=</span><span class="s">"True"</span> <span class="na">Background=</span><span class="s">"#7FFF22DD"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Image</span> <span class="na">Width=</span><span class="s">"200"</span> <span class="na">Height=</span><span class="s">"200"</span>
-               <span class="na">Stretch=</span><span class="s">"Uniform"</span>
-               <span class="na">Source=</span><span class="s">"{StaticResource CoverFallback}"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Border&gt;</span>
-  <span class="nt">&lt;/StackPanel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+  &lt;StackPanel Spacing="5" Width="200"&gt;
+    &lt;Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD"&gt;
+        &lt;Image Width="200" Height="200"
+               Stretch="Uniform"
+               Source="{StaticResource CoverFallback}" /&gt;
+    &lt;/Border&gt;
+  &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3696,14 +3566,14 @@ Note that the partial property syntax was introduced in C# 13 Community Toolkit 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application</span> <span class="err">...</span>
-             <span class="na">xmlns:local=</span><span class="s">"using:Avalonia.MusicStore"</span>
-             <span class="err">...</span> <span class="nt">&gt;</span>
-    <span class="nt">&lt;Application.DataTemplates&gt;</span>
-        <span class="nt">&lt;local:ViewLocator/&gt;</span>
-    <span class="nt">&lt;/Application.DataTemplates&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application ...
+             xmlns:local="using:Avalonia.MusicStore"
+             ... &gt;
+    &lt;Application.DataTemplates&gt;
+        &lt;local:ViewLocator/&gt;
+    &lt;/Application.DataTemplates&gt;
     ...
-<span class="nt">&lt;/Application&gt;</span></code></pre>
+&lt;/Application&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3749,9 +3619,9 @@ For more details about the <strong>data template</strong> concept, see <a href="
 <p>Add the code for the class to inherit from <code>ViewModelBase</code> as shown and make the class <code>partial</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">AlbumViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public partial class AlbumViewModel : ViewModelBase
+{
+}</code></pre>
 </div>
 </div>
 </li>
@@ -3784,12 +3654,12 @@ For more details about the <strong>data template</strong> concept, see <a href="
 <div class="listingblock">
 <div class="title">App.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.DataTemplates&gt;</span>
-    <span class="c">&lt;!-- &lt;local:ViewLocator/&gt; --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"viewModels:AlbumViewModel"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;views:AlbumView</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
-<span class="nt">&lt;/Application.DataTemplates&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.DataTemplates&gt;
+    &lt;!-- &lt;local:ViewLocator/&gt; --&gt;
+    &lt;DataTemplate DataType="viewModels:AlbumViewModel"&gt;
+        &lt;views:AlbumView /&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Application.DataTemplates&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -3834,15 +3704,15 @@ The benefit of using this approach is that it doesn&#8217;t require the conventi
 <p>Add the <code>&lt;ListBox.ItemsPanel&gt;</code> XAML shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ListBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding SearchResults}"</span>
-         <span class="na">SelectedItem=</span><span class="s">"{Binding SelectedAlbum}"</span>
-         <span class="na">Background=</span><span class="s">"Transparent"</span> <span class="na">Margin=</span><span class="s">"0 20"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;ListBox.ItemsPanel&gt;</span>
-        <span class="nt">&lt;ItemsPanelTemplate&gt;</span>
-            <span class="nt">&lt;WrapPanel</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/ItemsPanelTemplate&gt;</span>
-    <span class="nt">&lt;/ListBox.ItemsPanel&gt;</span>
-<span class="nt">&lt;/ListBox&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ListBox ItemsSource="{Binding SearchResults}"
+         SelectedItem="{Binding SelectedAlbum}"
+         Background="Transparent" Margin="0 20"&gt;
+    &lt;ListBox.ItemsPanel&gt;
+        &lt;ItemsPanelTemplate&gt;
+            &lt;WrapPanel /&gt;
+        &lt;/ItemsPanelTemplate&gt;
+    &lt;/ListBox.ItemsPanel&gt;
+&lt;/ListBox&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -3880,12 +3750,12 @@ The benefit of using this approach is that it doesn&#8217;t require the conventi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">MusicStoreViewModel</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">());</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public MusicStoreViewModel()
+{
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+    SearchResults.Add(new AlbumViewModel());
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3946,45 +3816,45 @@ This constructor was only used for testing the UI with mock data and is no longe
 <p>Add the following code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">iTunesSearch.Library</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using iTunesSearch.Library;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">record</span> <span class="nc">Album</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="n">iTunesSearchManager</span> <span class="n">s_SearchManager</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="n">HttpClient</span> <span class="n">s_httpClient</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+namespace Avalonia.MusicStore.Models
+{
+    public record Album
+    {
+        private static iTunesSearchManager s_SearchManager = new();
+        private static HttpClient s_httpClient = new();
 
-        <span class="k">public</span> <span class="nf">Album</span><span class="p">(</span><span class="kt">string</span> <span class="n">artist</span><span class="p">,</span> <span class="kt">string</span> <span class="n">title</span><span class="p">,</span> <span class="kt">string</span> <span class="n">coverUrl</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Artist</span> <span class="p">=</span> <span class="n">artist</span><span class="p">;</span>
-            <span class="n">Title</span> <span class="p">=</span> <span class="n">title</span><span class="p">;</span>
-            <span class="n">CoverUrl</span> <span class="p">=</span> <span class="n">coverUrl</span><span class="p">;</span>
-        <span class="p">}</span>
+        public Album(string artist, string title, string coverUrl)
+        {
+            Artist = artist;
+            Title = title;
+            CoverUrl = coverUrl;
+        }
 
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Artist</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">CoverUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        public string Artist { get; set; }
+        public string Title { get; set; }
+        public string CoverUrl { get; set; }
 
-        <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">SearchAsync</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">searchTerm</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;();</span>
-            <span class="p">}</span>
+        public static async Task&lt;IEnumerable&lt;Album&gt;&gt; SearchAsync(string? searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return Enumerable.Empty&lt;Album&gt;();
+            }
 
-            <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_SearchManager</span><span class="p">.</span><span class="nf">GetAlbumsAsync</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">)</span>
-                <span class="p">.</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+            var query = await s_SearchManager.GetAlbumsAsync(searchTerm)
+                .ConfigureAwait(false);
 
-            <span class="k">return</span> <span class="n">query</span><span class="p">.</span><span class="n">Albums</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span>
-                <span class="k">new</span> <span class="nf">Album</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">ArtistName</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">CollectionName</span><span class="p">,</span>
-                    <span class="n">x</span><span class="p">.</span><span class="n">ArtworkUrl100</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"100x100bb"</span><span class="p">,</span> <span class="s">"600x600bb"</span><span class="p">)));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            return query.Albums.Select(x =&gt;
+                new Album(x.ArtistName, x.CollectionName,
+                    x.ArtworkUrl100.Replace("100x100bb", "600x600bb")));
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4033,24 +3903,24 @@ See <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">readonly</span> <span class="n">Album</span> <span class="n">_album</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">private readonly Album _album;
 
-<span class="k">public</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">Album</span> <span class="n">album</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">_album</span> <span class="p">=</span> <span class="n">album</span><span class="p">;</span>
-<span class="p">}</span>
+public AlbumViewModel(Album album)
+{
+    _album = album;
+}
 
-<span class="k">public</span> <span class="kt">string</span> <span class="n">Artist</span> <span class="p">=&gt;</span> <span class="n">_album</span><span class="p">.</span><span class="n">Artist</span><span class="p">;</span>
+public string Artist =&gt; _album.Artist;
 
-<span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">=&gt;</span> <span class="n">_album</span><span class="p">.</span><span class="n">Title</span><span class="p">;</span>
+public string Title =&gt; _album.Title;
 
-<span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Bitmap</span><span class="p">?&gt;</span> <span class="n">Cover</span> <span class="p">=&gt;</span> <span class="nf">LoadCoverAsync</span><span class="p">();</span>
+public Task&lt;Bitmap?&gt; Cover =&gt; LoadCoverAsync();
 
-<span class="c1">// this will be implemented later</span>
-<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Bitmap</span><span class="p">?&gt;</span> <span class="nf">LoadCoverAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+// this will be implemented later
+private async Task&lt;Bitmap?&gt; LoadCoverAsync()
+{
+    return null;
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -4093,7 +3963,7 @@ Since we directly reference <code>Avalonia.Media.Imaging.Bitmap</code> in the vi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Watermark=</span><span class="s">"Search for Albums...."</span> <span class="na">Text=</span><span class="s">"{Binding SearchText, Delay=400}"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText, Delay=400}" /&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4110,10 +3980,10 @@ NOTE:`Delay=400` ensures that input is only propagated to the view model after t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">partial</span> <span class="k">void</span> <span class="nf">OnSearchTextChanged</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="k">value</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">_</span> <span class="p">=</span> <span class="nf">DoSearch</span><span class="p">(</span><span class="n">SearchText</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">partial void OnSearchTextChanged(string? value)
+{
+    _ = DoSearch(SearchText);
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4126,21 +3996,21 @@ This method is automatically called whenever the SearchText property changes.</p
 <p>Add <code>DoSearch</code> implementation:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">DoSearch</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">term</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">private async Task DoSearch(string? term)
+{
+    IsBusy = true;
+    SearchResults.Clear();
 
-    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
+    var albums = await Album.SearchAsync(term);
 
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">vm</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
-        <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">vm</span><span class="p">);</span>
-    <span class="p">}</span>
+    foreach (var album in albums)
+    {
+        var vm = new AlbumViewModel(album);
+        SearchResults.Add(vm);
+    }
 
-    <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+    IsBusy = false;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4170,54 +4040,54 @@ This method is automatically called whenever the SearchText property changes.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.ObjectModel</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Messages</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.MusicStore.Messages;
+using Avalonia.MusicStore.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.ViewModels</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MusicStoreViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-    <span class="p">{</span>
-        <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">partial</span> <span class="kt">string</span><span class="p">?</span> <span class="n">SearchText</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+namespace Avalonia.MusicStore.ViewModels
+{
+    public partial class MusicStoreViewModel : ViewModelBase
+    {
+        [ObservableProperty]
+        public partial string? SearchText { get; set; }
 
-        <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">partial</span> <span class="kt">bool</span> <span class="n">IsBusy</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        [ObservableProperty]
+        public partial bool IsBusy { get; private set; }
 
-        <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">partial</span> <span class="n">AlbumViewModel</span><span class="p">?</span> <span class="n">SelectedAlbum</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        [ObservableProperty]
+        public partial AlbumViewModel? SelectedAlbum { get; set; }
 
-        <span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">&gt;</span> <span class="n">SearchResults</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+        public ObservableCollection&lt;AlbumViewModel&gt; SearchResults { get; } = new();
 
-        <span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">DoSearch</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">term</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-            <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+        private async Task DoSearch(string? term)
+        {
+            IsBusy = true;
+            SearchResults.Clear();
 
-            <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
+            var albums = await Album.SearchAsync(term);
 
-            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">vm</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
-                <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">vm</span><span class="p">);</span>
-            <span class="p">}</span>
+            foreach (var album in albums)
+            {
+                var vm = new AlbumViewModel(album);
+                SearchResults.Add(vm);
+            }
 
-            <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-        <span class="p">}</span>
+            IsBusy = false;
+        }
 
-        <span class="k">partial</span> <span class="k">void</span> <span class="nf">OnSearchTextChanged</span><span class="p">(</span><span class="kt">string</span> <span class="k">value</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_</span> <span class="p">=</span> <span class="nf">DoSearch</span><span class="p">(</span><span class="n">SearchText</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        partial void OnSearchTextChanged(string value)
+        {
+            _ = DoSearch(SearchText);
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -4244,20 +4114,20 @@ This method is automatically called whenever the SearchText property changes.</p
 <p>To have compiled binding working, you need to indicate the datatype used in the view : <code>AlbumViewModel</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="err">...</span>
-  <span class="na">xmlns:vm=</span><span class="s">"using:Avalonia.MusicStore.ViewModels"</span>
-  <span class="na">x:DataType=</span><span class="s">"vm:AlbumViewModel"</span> <span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl ...
+  xmlns:vm="using:Avalonia.MusicStore.ViewModels"
+  x:DataType="vm:AlbumViewModel" &gt;
   [ ... ]
-  <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"5"</span> <span class="na">Width=</span><span class="s">"200"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Border</span> <span class="na">CornerRadius=</span><span class="s">"10"</span> <span class="na">ClipToBounds=</span><span class="s">"True"</span> <span class="na">Background=</span><span class="s">"#7FFF22DD"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Image</span> <span class="na">Width=</span><span class="s">"200"</span> <span class="na">Height=</span><span class="s">"200"</span>
-               <span class="na">Stretch=</span><span class="s">"Uniform"</span>
-               <span class="na">Source=</span><span class="s">"{Binding Cover^, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Border&gt;</span>
-    <span class="nt">&lt;TextBlock</span> <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="na">Text=</span><span class="s">"{Binding Title}"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;TextBlock</span> <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="na">Text=</span><span class="s">"{Binding Artist}"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;/StackPanel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+  &lt;StackPanel Spacing="5" Width="200"&gt;
+    &lt;Border CornerRadius="10" ClipToBounds="True" Background="#7FFF22DD"&gt;
+        &lt;Image Width="200" Height="200"
+               Stretch="Uniform"
+               Source="{Binding Cover^, TargetNullValue={StaticResource CoverFallback}, FallbackValue={StaticResource CoverFallback}}" /&gt;
+    &lt;/Border&gt;
+    &lt;TextBlock HorizontalAlignment="Center" Text="{Binding Title}" /&gt;
+    &lt;TextBlock HorizontalAlignment="Center" Text="{Binding Artist}" /&gt;
+  &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -4305,30 +4175,30 @@ This method is automatically called whenever the SearchText property changes.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="n">HttpClient</span> <span class="n">s_httpClient</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-<span class="k">private</span> <span class="kt">string</span> <span class="n">CachePath</span> <span class="p">=&gt;</span> <span class="s">$"./Cache/</span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">Artist</span><span class="p">)}</span><span class="s"> - </span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">Title</span><span class="p">)}</span><span class="s">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">private static HttpClient s_httpClient = new();
+private string CachePath =&gt; $"./Cache/{SanitizeFileName(Artist)} - {SanitizeFileName(Title)}";
 
-<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Stream</span><span class="p">&gt;</span> <span class="nf">LoadCoverBitmapAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">File</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span>  <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">else</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_httpClient</span><span class="p">.</span><span class="nf">GetByteArrayAsync</span><span class="p">(</span><span class="n">CoverUrl</span><span class="p">);</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">MemoryStream</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+public async Task&lt;Stream&gt; LoadCoverBitmapAsync()
+{
+    if (File.Exists(CachePath + ".bmp"))
+    {
+        return File.Open(CachePath + ".bmp", FileMode.Open,  FileAccess.Read, FileShare.Read);
+    }
+    else
+    {
+        var data = await s_httpClient.GetByteArrayAsync(CoverUrl);
+        return new MemoryStream(data);
+    }
+}
 
-<span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">SanitizeFileName</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">c</span> <span class="k">in</span> <span class="n">Path</span><span class="p">.</span><span class="nf">GetInvalidFileNameChars</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="n">input</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="sc">'_'</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+private static string SanitizeFileName(string input)
+{
+    foreach (var c in Path.GetInvalidFileNameChars())
+    {
+        input = input.Replace(c, '_');
+    }
+    return input;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4359,7 +4229,7 @@ Note that the cache is not active at this time, you will implement it later in t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">return File.OpenRead(CachePath + ".bmp");</code></pre>
 </div>
 </div>
 </td>
@@ -4396,36 +4266,36 @@ Please note that you must reference <code>Avalonia.Media.Imaging</code> in the a
 <p>Add the following code into the <code>LoadCoverAsync</code> method, replacing the existing code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">Avalonia.Media.Imaging</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
-<span class="p">...</span>
+<pre class="rouge highlight"><code data-lang="csharp">using Avalonia.Media.Imaging;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+...
 
-<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">AlbumViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+public partial class AlbumViewModel : ViewModelBase
+{
+    ...
 
-    <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Bitmap</span><span class="p">?&gt;</span> <span class="n">Cover</span> <span class="p">=&gt;</span> <span class="nf">LoadCoverAsync</span><span class="p">();</span>
+    public Task&lt;Bitmap?&gt; Cover =&gt; LoadCoverAsync();
 
-    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">LoadCover</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">try</span>
-        <span class="p">{</span>
-            <span class="c1">// We wait a few ms to demonstrate that the images are loaded in the background.</span>
-            <span class="c1">// Remove this line in production.</span>
-            <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">200</span><span class="p">);</span>
+    public async Task LoadCover()
+    {
+        try
+        {
+            // We wait a few ms to demonstrate that the images are loaded in the background.
+            // Remove this line in production.
+            await Task.Delay(200);
 
-            <span class="k">await</span> <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">imageStream</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_album</span><span class="p">.</span><span class="nf">LoadCoverBitmapAsync</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="n">Bitmap</span><span class="p">.</span><span class="nf">DecodeToWidth</span><span class="p">(</span><span class="n">imageStream</span><span class="p">,</span> <span class="m">400</span><span class="p">));</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">catch</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            await using (var imageStream = await _album.LoadCoverBitmapAsync())
+            {
+                return await Task.Run(() =&gt; Bitmap.DecodeToWidth(imageStream, 400));
+            }
+        }
+        catch
+        {
+            return null;
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4482,14 +4352,14 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <p>In the newly created file add the following code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">Avalonia.MusicStore.ViewModels</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using Avalonia.MusicStore.ViewModels;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Messages</span><span class="p">;</span>
+namespace Avalonia.MusicStore.Messages;
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">MusicStoreClosedMessage</span><span class="p">(</span><span class="n">AlbumViewModel</span> <span class="n">selectedAlbum</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="n">AlbumViewModel</span> <span class="n">SelectedAlbum</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">selectedAlbum</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+public class MusicStoreClosedMessage(AlbumViewModel selectedAlbum)
+{
+    public AlbumViewModel SelectedAlbum { get; } = selectedAlbum;
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4510,15 +4380,15 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <p>In the newly created file add the following code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">CheckAlbumAlreadyExistsMessage</span> <span class="p">:</span> <span class="n">RequestMessage</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="n">AlbumViewModel</span> <span class="n">Album</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">public class CheckAlbumAlreadyExistsMessage : RequestMessage&lt;bool&gt;
+{
+    public AlbumViewModel Album { get; }
 
-    <span class="k">public</span> <span class="nf">CheckAlbumAlreadyExistsMessage</span><span class="p">(</span><span class="n">AlbumViewModel</span> <span class="n">album</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Album</span> <span class="p">=</span> <span class="n">album</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    public CheckAlbumAlreadyExistsMessage(AlbumViewModel album)
+    {
+        Album = album;
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4539,14 +4409,14 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <p>In the newly created file add the following code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">NotificationMessage</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nf">NotificationMessage</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
-     <span class="p">{</span>
-         <span class="n">Message</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
-     <span class="p">}</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public class NotificationMessage
+{
+    public NotificationMessage(string message)
+     {
+         Message = message;
+     }
+    public string Message { get; }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4565,29 +4435,29 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">Avalonia.Controls</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Messages</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">using Avalonia.Controls;
+using Avalonia.MusicStore.Messages;
+using CommunityToolkit.Mvvm.Messaging;
 
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Views</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MusicStoreWindow</span> <span class="p">:</span> <span class="n">Window</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">MusicStoreWindow</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="nf">InitializeComponent</span><span class="p">();</span>
+namespace Avalonia.MusicStore.Views
+{
+    public partial class MusicStoreWindow : Window
+    {
+        public MusicStoreWindow()
+        {
+            InitializeComponent();
 
-            <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">MusicStoreWindow</span><span class="p">,</span> <span class="n">MusicStoreClosedMessage</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">,</span>
-                <span class="k">static</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">w</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">SelectedAlbum</span><span class="p">));</span>
+            WeakReferenceMessenger.Default.Register&lt;MusicStoreWindow, MusicStoreClosedMessage&gt;(this,
+                static (w, m) =&gt; w.Close(m.SelectedAlbum));
 
-            <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">MusicStoreWindow</span><span class="p">,</span> <span class="n">NotificationMessage</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">,</span> <span class="k">static</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span>
-            <span class="p">{</span>
-                <span class="n">w</span><span class="p">.</span><span class="n">NotificationManager</span><span class="p">.</span><span class="nf">CloseAll</span><span class="p">();</span>
-                <span class="n">w</span><span class="p">.</span><span class="n">NotificationManager</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">NotificationType</span><span class="p">.</span><span class="n">Warning</span><span class="p">,</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromSeconds</span><span class="p">(</span><span class="m">3</span><span class="p">));</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            WeakReferenceMessenger.Default.Register&lt;MusicStoreWindow, NotificationMessage&gt;(this, static (w, m) =&gt;
+            {
+                w.NotificationManager.CloseAll();
+                w.NotificationManager.Show(m.Message, NotificationType.Warning, TimeSpan.FromSeconds(3));
+            });
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4611,24 +4481,24 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <p>Add the following RelayCommand method to the class, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">RelayCommand</span> <span class="p">(</span><span class="n">CanExecute</span> <span class="p">=</span> <span class="k">nameof</span><span class="p">(</span><span class="n">CanBuyMusic</span><span class="p">))]</span>
-<span class="k">private</span> <span class="k">void</span> <span class="nf">BuyMusic</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">SelectedAlbum</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">album_exists</span> <span class="p">=</span> <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">CheckAlbumAlreadyExistsMessage</span><span class="p">(</span><span class="n">SelectedAlbum</span><span class="p">));</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">album_exists</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">NotificationMessage</span><span class="p">(</span><span class="s">"This album was already added"</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">MusicStoreClosedMessage</span><span class="p">(</span><span class="n">SelectedAlbum</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">[RelayCommand (CanExecute = nameof(CanBuyMusic))]
+private void BuyMusic()
+{
+    if (SelectedAlbum != null)
+    {
+        var album_exists = WeakReferenceMessenger.Default.Send(new CheckAlbumAlreadyExistsMessage(SelectedAlbum));
+        if (album_exists)
+        {
+            WeakReferenceMessenger.Default.Send(new NotificationMessage("This album was already added"));
+        }
+        else
+        {
+            WeakReferenceMessenger.Default.Send(new MusicStoreClosedMessage(SelectedAlbum));
+        }
+    }
+}
 
-<span class="k">private</span> <span class="kt">bool</span> <span class="nf">CanBuyMusic</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">SelectedAlbum</span> <span class="p">!=</span> <span class="k">null</span><span class="p">;</span></code></pre>
+private bool CanBuyMusic() =&gt; SelectedAlbum != null;</code></pre>
 </div>
 </div>
 </li>
@@ -4636,9 +4506,9 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <p>The command should be invalidated when the selected album changes. To do this, add the <code>NotifyCanExecuteChangedFor</code>-attribute to the <code>SelectedAlbum</code> property:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-<span class="p">[</span><span class="nf">NotifyCanExecuteChangedFor</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">BuyMusicCommand</span><span class="p">))]</span>
-<span class="k">public</span> <span class="k">partial</span> <span class="n">AlbumViewModel</span><span class="p">?</span> <span class="n">SelectedAlbum</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">[ObservableProperty]
+[NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
+public partial AlbumViewModel? SelectedAlbum { get; set; }</code></pre>
 </div>
 </div>
 </li>
@@ -4655,13 +4525,13 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">MainViewModel</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">CheckAlbumAlreadyExistsMessage</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">,</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span>
-    <span class="p">{</span>
-        <span class="n">m</span><span class="p">.</span><span class="nf">Reply</span><span class="p">(</span><span class="n">Albums</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Album</span><span class="p">));</span>
-    <span class="p">});</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public MainViewModel()
+{
+    WeakReferenceMessenger.Default.Register&lt;CheckAlbumAlreadyExistsMessage&gt;(this, (v, m) =&gt;
+    {
+        m.Reply(Albums.Contains(m.Album));
+    });
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4669,29 +4539,29 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">AlbumViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IEquatable</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">&gt;</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+<pre class="rouge highlight"><code data-lang="csharp">public partial class AlbumViewModel : ViewModelBase, IEquatable&lt;AlbumViewModel&gt;
+{
+    ...
 
-    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">AlbumViewModel</span><span class="p">?</span> <span class="n">other</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">other</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nf">ReferenceEquals</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">other</span><span class="p">))</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">_album</span><span class="p">.</span><span class="nf">Equals</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">_album</span><span class="p">);</span>
-    <span class="p">}</span>
+    public bool Equals(AlbumViewModel? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return _album.Equals(other._album);
+    }
 
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">obj</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nf">ReferenceEquals</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">obj</span><span class="p">))</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="nf">GetType</span><span class="p">()</span> <span class="p">!=</span> <span class="nf">GetType</span><span class="p">())</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nf">Equals</span><span class="p">((</span><span class="n">AlbumViewModel</span><span class="p">)</span><span class="n">obj</span><span class="p">);</span>
-    <span class="p">}</span>
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((AlbumViewModel)obj);
+    }
 
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="nf">GetHashCode</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="n">_album</span><span class="p">.</span><span class="nf">GetHashCode</span><span class="p">();</span>
-    <span class="p">}</span></code></pre>
+    public override int GetHashCode()
+    {
+        return _album.GetHashCode();
+    }</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -4767,7 +4637,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Add an observable collection, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">AlbumViewModel</span><span class="p">&gt;</span> <span class="n">Albums</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public ObservableCollection&lt;AlbumViewModel&gt; Albums { get; } = new();</code></pre>
 </div>
 </div>
 </li>
@@ -4788,15 +4658,15 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">AddAlbumAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">album</span> <span class="p">=</span> <span class="k">await</span> <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">PurchaseAlbumMessage</span><span class="p">());</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">album</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Albums</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+    if (album is not null)
+    {
+        Albums.Add(album);
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -4825,21 +4695,21 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Under the button element, add the XAML as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ScrollViewer</span> <span class="na">VerticalScrollBarVisibility=</span><span class="s">"Auto"</span> <span class="na">Margin=</span><span class="s">"0 40 0 0"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;ItemsControl</span> <span class="na">ItemsSource=</span><span class="s">"{Binding Albums}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;ItemsControl.ItemsPanel&gt;</span>
-      <span class="nt">&lt;ItemsPanelTemplate&gt;</span>
-        <span class="nt">&lt;WrapPanel</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/ItemsPanelTemplate&gt;</span>
-    <span class="nt">&lt;/ItemsControl.ItemsPanel&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 40 0 0"&gt;
+  &lt;ItemsControl ItemsSource="{Binding Albums}"&gt;
+    &lt;ItemsControl.ItemsPanel&gt;
+      &lt;ItemsPanelTemplate&gt;
+        &lt;WrapPanel /&gt;
+      &lt;/ItemsPanelTemplate&gt;
+    &lt;/ItemsControl.ItemsPanel&gt;
 
-    <span class="nt">&lt;ItemsControl.ItemTemplate&gt;</span>
-      <span class="nt">&lt;DataTemplate&gt;</span>
-        <span class="nt">&lt;views:AlbumView</span> <span class="na">Margin=</span><span class="s">"0 0 20 20"</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/DataTemplate&gt;</span>
-    <span class="nt">&lt;/ItemsControl.ItemTemplate&gt;</span>
-  <span class="nt">&lt;/ItemsControl&gt;</span>
-<span class="nt">&lt;/ScrollViewer&gt;</span></code></pre>
+    &lt;ItemsControl.ItemTemplate&gt;
+      &lt;DataTemplate&gt;
+        &lt;views:AlbumView Margin="0 0 20 20" /&gt;
+      &lt;/DataTemplate&gt;
+    &lt;/ItemsControl.ItemTemplate&gt;
+  &lt;/ItemsControl&gt;
+&lt;/ScrollViewer&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -4899,28 +4769,28 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Add the code to implement save to disk, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(!</span><span class="n">Directory</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="n">Directory</span><span class="p">.</span><span class="nf">CreateDirectory</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">);</span>
-    <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">public async Task SaveAsync()
+{
+    if (!Directory.Exists("./Cache"))
+    {
+        Directory.CreateDirectory("./Cache");
+    }
 
-    <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="n">CachePath</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="k">await</span> <span class="nf">SaveToStreamAsync</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">fs</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    using (var fs = File.OpenWrite(CachePath))
+    {
+        await SaveToStreamAsync(this, fs);
+    }
+}
 
-<span class="k">public</span> <span class="n">Stream</span> <span class="nf">SaveCoverBitmapStream</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span>
-<span class="p">}</span>
+public Stream SaveCoverBitmapStream()
+{
+    return File.OpenWrite(CachePath + ".bmp");
+}
 
-<span class="k">private</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveToStreamAsync</span><span class="p">(</span><span class="n">Album</span> <span class="n">data</span><span class="p">,</span> <span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">SerializeAsync</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">data</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+private static async Task SaveToStreamAsync(Album data, Stream stream)
+{
+    await JsonSerializer.SerializeAsync(stream, data).ConfigureAwait(false);
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4928,31 +4798,31 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Add the code to implement load from disk, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;</span> <span class="nf">LoadFromStream</span><span class="p">(</span><span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="n">DeserializeAsync</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;(</span><span class="n">stream</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">))!;</span>
-<span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">public static async Task&lt;Album&gt; LoadFromStream(Stream stream)
+{
+    return (await JsonSerializer.DeserializeAsync&lt;Album&gt;(stream).ConfigureAwait(false))!;
+}
 
-<span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">LoadCachedAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(!</span><span class="n">Directory</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="n">Directory</span><span class="p">.</span><span class="nf">CreateDirectory</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">);</span>
-    <span class="p">}</span>
+public static async Task&lt;IEnumerable&lt;Album&gt;&gt; LoadCachedAsync()
+{
+    if (!Directory.Exists("./Cache"))
+    {
+        Directory.CreateDirectory("./Cache");
+    }
 
-    <span class="kt">var</span> <span class="n">results</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;();</span>
+    var results = new List&lt;Album&gt;();
 
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">file</span> <span class="k">in</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">EnumerateFiles</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="k">new</span> <span class="nf">DirectoryInfo</span><span class="p">(</span><span class="n">file</span><span class="p">).</span><span class="n">Extension</span><span class="p">))</span>
-            <span class="k">continue</span><span class="p">;</span>
+    foreach (var file in Directory.EnumerateFiles("./Cache"))
+    {
+        if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension))
+            continue;
 
-        <span class="k">await</span> <span class="k">using</span> <span class="nn">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
-        <span class="n">results</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">LoadFromStream</span><span class="p">(</span><span class="n">fs</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
-    <span class="p">}</span>
+        await using var fs = File.OpenRead(file);
+        results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
+    }
 
-    <span class="k">return</span> <span class="n">results</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+    return results;
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4991,23 +4861,23 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveToDiskAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">await</span> <span class="n">_album</span><span class="p">.</span><span class="nf">SaveAsync</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">public async Task SaveToDiskAsync()
+{
+    await _album.SaveAsync();
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">await</span> <span class="nf">LoadCoverAsync</span><span class="p">()</span> <span class="k">is</span> <span class="n">Bitmap</span> <span class="n">cover</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">bitmap</span> <span class="p">=</span> <span class="n">Cover</span><span class="p">;</span>
+    if (await LoadCoverAsync() is Bitmap cover)
+    {
+        var bitmap = Cover;
 
-        <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
-        <span class="p">{</span>
-            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">_album</span><span class="p">.</span><span class="nf">SaveCoverBitmapStream</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="n">cover</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">fs</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        await Task.Run(() =&gt;
+        {
+            using (var fs = _album.SaveCoverBitmapStream())
+            {
+                cover.Save(fs);
+            }
+        });
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5037,16 +4907,16 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">AddAlbumAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">album</span> <span class="p">=</span> <span class="k">await</span> <span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">PurchaseAlbumMessage</span><span class="p">());</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">album</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Albums</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
-        <span class="k">await</span> <span class="n">album</span><span class="p">.</span><span class="nf">SaveToDiskAsync</span><span class="p">();</span> <span class="c1">// Add this line</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">[RelayCommand]
+private async Task AddAlbumAsync()
+{
+    var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
+    if (album is not null)
+    {
+        Albums.Add(album);
+        await album.SaveToDiskAsync(); // Add this line
+    }
+}</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -5098,7 +4968,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">return File.OpenRead(CachePath + ".bmp");</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -5151,14 +5021,14 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">LoadAlbums</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">LoadCachedAsync</span><span class="p">()).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">x</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Albums</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">private async void LoadAlbums()
+{
+    var albums = (await Album.LoadCachedAsync()).Select(x =&gt; new AlbumViewModel(x)).ToList();
+    foreach (var album in albums)
+    {
+        Albums.Add(album);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5179,10 +5049,10 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">MainViewModel</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nf">LoadAlbums</span><span class="p">();</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public MainViewModel()
+{
+    LoadAlbums();
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5249,7 +5119,7 @@ To learn more about targeting applications for Android mobile devices, see <a hr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-07 18:17:52 UTC
+Last updated 2026-04-12 21:18:40 +0200
 </div>
 </div>
 </body>

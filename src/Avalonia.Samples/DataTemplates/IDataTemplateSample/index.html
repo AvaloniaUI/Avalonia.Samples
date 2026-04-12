@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Implementing IDataTemplate</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2043,10 +1925,10 @@ pre.rouge .gs {
 <li><a href="#_the_solution">The Solution</a>
 <ul class="sectlevel2">
 <li><a href="#_step_1_create_a_new_avalonia_project">Step 1: Create a new Avalonia Project</a></li>
-<li><a href="#_step_2_setup_the_model">Step 2: Setup the Model</a></li>
-<li><a href="#_step_3_setup_the_viewmodel">Step 3: Setup the ViewModel</a></li>
+<li><a href="#_step_2_set_up_the_model">Step 2: Set up the Model</a></li>
+<li><a href="#_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</a></li>
 <li><a href="#_step_4_add_the_datatemplateselector">Step 4: Add the DataTemplateSelector</a></li>
-<li><a href="#_step_5_setup_the_view">Step 5: Setup the View</a></li>
+<li><a href="#_step_5_set_up_the_view">Step 5: Set up the View</a></li>
 <li><a href="#_step_6_run_the_app">Step 6: Run the App</a></li>
 </ul>
 </li>
@@ -2058,7 +1940,7 @@ pre.rouge .gs {
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example will show you how to implement <code>IDataTemplate</code> in your own class to have full control over your <code>DataTemplates</code>. Other than WPF, Avalonia does <strong>not</strong> have a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0">[<code>DataTemplateSelector</code>]</a>. Therefore you will learn in this sample how you can mimic it&#8217;s behavior in Avalonia, if needed.</p>
+<p>This example will show you how to implement <code>IDataTemplate</code> in your own class to have full control over your <code>DataTemplates</code>. Other than WPF, Avalonia does <strong>not</strong> have a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0">[<code>DataTemplateSelector</code>]</a>. Therefore, you will learn in this sample how you can mimic its behavior in Avalonia, if needed.</p>
 </div>
 <!-- toc disabled -->
 <h3 id="_difficulty" class="discrete">Difficulty</h3>
@@ -2080,7 +1962,7 @@ pre.rouge .gs {
 <div class="sect2">
 <h3 id="_idatatemplate">IDataTemplate</h3>
 <div class="paragraph">
-<p><a href="http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/">[<code>IDataTemplate</code>]</a> is an interface which you can implement into your own class in order to be used as a <code>DataTemplate</code>. It has the following members:</p>
+<p><a href="http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/">[<code>IDataTemplate</code>]</a> is an interface which you can implement into your own class to be used as a <code>DataTemplate</code>. It has the following members:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -2110,7 +1992,7 @@ pre.rouge .gs {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Also if we use an <code>enum</code> in this sample, it can be any object in your implementation.
+Even if we use an <code>enum</code> in this sample, it can be any object in your implementation.
 </td>
 </tr>
 </table>
@@ -2122,49 +2004,49 @@ Also if we use an <code>enum</code> in this sample, it can be any object in your
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_setup_the_model">Step 2: Setup the Model</h3>
+<h3 id="_step_2_set_up_the_model">Step 2: Set up the Model</h3>
 <div class="paragraph">
 <p>Inside the <code>Models</code> directory add an <code>enum</code> called <code>ShapeTypes.cs</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// Feel free to add more shapes based on your needs.</span>
-<span class="k">public</span> <span class="k">enum</span> <span class="n">ShapeType</span>
-<span class="p">{</span>
-    <span class="n">RedCircle</span><span class="p">,</span>
-    <span class="n">RedSquare</span><span class="p">,</span>
-    <span class="n">BlueCircle</span><span class="p">,</span>
-    <span class="n">BlueSquare</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">// Feel free to add more shapes based on your needs.
+public enum ShapeType
+{
+    RedCircle,
+    RedSquare,
+    BlueCircle,
+    BlueSquare
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_setup_the_viewmodel">Step 3: Setup the ViewModel</h3>
+<h3 id="_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</h3>
 <div class="paragraph">
 <p>In the file <code>ViewModels ► MainWindowViewModel.cs</code> we will add a Property <code>SelectedShape</code> and an <code>Array</code> of available shapes called <code>AvailableShapes</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">MainWindowViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="cs">public class MainWindowViewModel : ViewModelBase
+{
 
-    <span class="k">private</span> <span class="n">ShapeType</span> <span class="n">_selectedShape</span><span class="p">;</span>
+    private ShapeType _selectedShape;
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets or sets the selected ShapeType</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">ShapeType</span> <span class="n">SelectedShape</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_selectedShape</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_selectedShape</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-    <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// Gets or sets the selected ShapeType
+    /// &lt;/summary&gt;
+    public ShapeType SelectedShape
+    {
+        get { return _selectedShape; }
+        set { this.RaiseAndSetIfChanged(ref _selectedShape, value); }
+    }
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">///  Gets an array of all available ShapeTypes</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">ShapeType</span><span class="p">[]</span> <span class="n">AvailableShapes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">GetValues</span><span class="p">&lt;</span><span class="n">ShapeType</span><span class="p">&gt;();</span>
-<span class="p">}</span></code></pre>
+    /// &lt;summary&gt;
+    ///  Gets an array of all available ShapeTypes
+    /// &lt;/summary&gt;
+    public ShapeType[] AvailableShapes { get; } = Enum.GetValues&lt;ShapeType&gt;();
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2190,88 +2072,88 @@ To get the array of available enum members we can use <code>Enum.GetValues</code
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// Remember to add the needed usings</span>
-<span class="k">using</span> <span class="nn">Avalonia.Controls.Templates</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.Controls</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.Metadata</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">IDataTemplateSample.Models</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">// Remember to add the needed usings
+using Avalonia.Controls.Templates;
+using Avalonia.Controls;
+using Avalonia.Metadata;
+using System;
+using System.Collections.Generic;
+using IDataTemplateSample.Models;
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">ShapesTemplateSelector</span> <span class="p">:</span> <span class="n">IDataTemplate</span>
-<span class="p">{</span>
-    <span class="c1">// This Dictionary should store our shapes. We mark this as [Content], so we can directly add elements to it later.</span>
-    <span class="p">[</span><span class="n">Content</span><span class="p">]</span>
-    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">IDataTemplate</span><span class="p">&gt;</span> <span class="n">AvailableTemplates</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">IDataTemplate</span><span class="p">&gt;();</span>
+public class ShapesTemplateSelector : IDataTemplate
+{
+    // This Dictionary should store our shapes. We mark this as [Content], so we can directly add elements to it later.
+    [Content]
+    public Dictionary&lt;string, IDataTemplate&gt; AvailableTemplates { get; } = new Dictionary&lt;string, IDataTemplate&gt;();
 
-    <span class="c1">// Build the DataTemplate here</span>
-    <span class="k">public</span> <span class="n">Control</span> <span class="nf">Build</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">param</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">key</span> <span class="p">=</span> <span class="n">param</span><span class="p">?.</span><span class="nf">ToString</span><span class="p">();</span> <span class="c1">// Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="c1">// If the key is null, we throw an ArgumentNullException</span>
-        <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentNullException</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">param</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">AvailableTemplates</span><span class="p">[</span><span class="n">key</span><span class="p">].</span><span class="nf">Build</span><span class="p">(</span><span class="n">param</span><span class="p">);</span> <span class="c1">// finally we look up the provided key and let the System build the DataTemplate for us</span>
-    <span class="p">}</span>
+    // Build the DataTemplate here
+    public Control Build(object? param)
+    {
+        var key = param?.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
+        if (key is null) // If the key is null, we throw an ArgumentNullException
+        {
+            throw new ArgumentNullException(nameof(param));
+        }
+        return AvailableTemplates[key].Build(param); // finally we look up the provided key and let the System build the DataTemplate for us
+    }
 
-    <span class="c1">// Check if we can accept the provided data</span>
-    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Match</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">data</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up</span>
-        <span class="kt">var</span> <span class="n">key</span> <span class="p">=</span> <span class="n">data</span><span class="p">?.</span><span class="nf">ToString</span><span class="p">();</span>
+    // Check if we can accept the provided data
+    public bool Match(object? data)
+    {
+        // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
+        var key = data?.ToString();
 
-        <span class="k">return</span> <span class="n">data</span> <span class="k">is</span> <span class="n">ShapeType</span>                        <span class="c1">// the provided data needs to be our enum type</span>
-                <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>           <span class="c1">// and the key must not be null or empty</span>
-                <span class="p">&amp;&amp;</span> <span class="n">AvailableTemplates</span><span class="p">.</span><span class="nf">ContainsKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span> <span class="c1">// and the key must be found in our Dictionary</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        return data is ShapeType                        // the provided data needs to be our enum type
+                &amp;&amp; !string.IsNullOrEmpty(key)           // and the key must not be null or empty
+                &amp;&amp; AvailableTemplates.ContainsKey(key); // and the key must be found in our Dictionary
+    }
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_5_setup_the_view">Step 5: Setup the View</h3>
+<h3 id="_step_5_set_up_the_view">Step 5: Set up the View</h3>
 <div class="paragraph">
 <p>Open the file <code>Views ► MainWindow.axaml</code> and create a new <code>ShapesTemplateSelector</code> inside <code>Window.DataTemplates</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- Remember to add the needed namespaces
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- Remember to add the needed namespaces
 xmlns:model="using:IDataTemplateSample.Models"
-xmlns:dataTemplates="using:IDataTemplateSample.DataTemplates" --&gt;</span>
+xmlns:dataTemplates="using:IDataTemplateSample.DataTemplates" --&gt;
 
-<span class="nt">&lt;Window.DataTemplates&gt;</span>
-    <span class="nt">&lt;dataTemplates:ShapesTemplateSelector&gt;</span>
-        <span class="nt">&lt;DataTemplate</span> <span class="na">x:Key=</span><span class="s">"RedCircle"</span> <span class="na">DataType=</span><span class="s">"model:ShapeType"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Ellipse</span> <span class="na">Width=</span><span class="s">"50"</span>
-                     <span class="na">Height=</span><span class="s">"50"</span>
-                     <span class="na">Fill=</span><span class="s">"Red"</span>
-                     <span class="na">Stroke=</span><span class="s">"DarkRed"</span>
-                     <span class="na">StrokeThickness=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/DataTemplate&gt;</span>
-        <span class="nt">&lt;DataTemplate</span> <span class="na">x:Key=</span><span class="s">"BlueCircle"</span> <span class="na">DataType=</span><span class="s">"model:ShapeType"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Ellipse</span> <span class="na">Width=</span><span class="s">"50"</span>
-                     <span class="na">Height=</span><span class="s">"50"</span>
-                     <span class="na">Fill=</span><span class="s">"Blue"</span>
-                     <span class="na">Stroke=</span><span class="s">"DarkBlue"</span>
-                     <span class="na">StrokeThickness=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/DataTemplate&gt;</span>
-        <span class="nt">&lt;DataTemplate</span> <span class="na">x:Key=</span><span class="s">"RedSquare"</span> <span class="na">DataType=</span><span class="s">"model:ShapeType"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Rectangle</span> <span class="na">Width=</span><span class="s">"50"</span>
-                       <span class="na">Height=</span><span class="s">"50"</span>
-                       <span class="na">Fill=</span><span class="s">"Red"</span>
-                       <span class="na">Stroke=</span><span class="s">"DarkRed"</span>
-                       <span class="na">StrokeThickness=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/DataTemplate&gt;</span>
-        <span class="nt">&lt;DataTemplate</span> <span class="na">x:Key=</span><span class="s">"BlueSquare"</span> <span class="na">DataType=</span><span class="s">"model:ShapeType"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Rectangle</span> <span class="na">Width=</span><span class="s">"50"</span>
-                       <span class="na">Height=</span><span class="s">"50"</span>
-                       <span class="na">Fill=</span><span class="s">"Blue"</span>
-                       <span class="na">Stroke=</span><span class="s">"DarkBlue"</span>
-                       <span class="na">StrokeThickness=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/DataTemplate&gt;</span>
-    <span class="nt">&lt;/dataTemplates:ShapesTemplateSelector&gt;</span>
-<span class="nt">&lt;/Window.DataTemplates&gt;</span></code></pre>
+&lt;Window.DataTemplates&gt;
+    &lt;dataTemplates:ShapesTemplateSelector&gt;
+        &lt;DataTemplate x:Key="RedCircle" DataType="model:ShapeType"&gt;
+            &lt;Ellipse Width="50"
+                     Height="50"
+                     Fill="Red"
+                     Stroke="DarkRed"
+                     StrokeThickness="2" /&gt;
+        &lt;/DataTemplate&gt;
+        &lt;DataTemplate x:Key="BlueCircle" DataType="model:ShapeType"&gt;
+            &lt;Ellipse Width="50"
+                     Height="50"
+                     Fill="Blue"
+                     Stroke="DarkBlue"
+                     StrokeThickness="2" /&gt;
+        &lt;/DataTemplate&gt;
+        &lt;DataTemplate x:Key="RedSquare" DataType="model:ShapeType"&gt;
+            &lt;Rectangle Width="50"
+                       Height="50"
+                       Fill="Red"
+                       Stroke="DarkRed"
+                       StrokeThickness="2" /&gt;
+        &lt;/DataTemplate&gt;
+        &lt;DataTemplate x:Key="BlueSquare" DataType="model:ShapeType"&gt;
+            &lt;Rectangle Width="50"
+                       Height="50"
+                       Fill="Blue"
+                       Stroke="DarkBlue"
+                       StrokeThickness="2" /&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/dataTemplates:ShapesTemplateSelector&gt;
+&lt;/Window.DataTemplates&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2303,13 +2185,13 @@ You can also define the <code>ShapesTemplateSelector</code> in <code>App.DataTem
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;StackPanel&gt;</span>
-    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Select a Shape"</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;StackPanel&gt;
+    &lt;TextBlock Text="Select a Shape" /&gt;
 
-    <span class="nt">&lt;ComboBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding AvailableShapes}"</span>
-              <span class="na">SelectedIndex=</span><span class="s">"0"</span>
-              <span class="na">SelectedItem=</span><span class="s">"{Binding SelectedShape}"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/StackPanel&gt;</span></code></pre>
+    &lt;ComboBox ItemsSource="{Binding AvailableShapes}"
+              SelectedIndex="0"
+              SelectedItem="{Binding SelectedShape}" /&gt;
+&lt;/StackPanel&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2337,7 +2219,7 @@ You can also define the <code>ShapesTemplateSelector</code> in <code>App.DataTem
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-06 19:42:36 UTC
+Last updated 2026-04-07 19:20:59 +0200
 </div>
 </div>
 </body>

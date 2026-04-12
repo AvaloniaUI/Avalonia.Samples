@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Advanced Todo-List Sample</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2180,7 +2062,7 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">dotnet new <span class="nb">install </span>Avalonia.Templates</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">dotnet new install Avalonia.Templates</code></pre>
 </div>
 </div>
 </td>
@@ -2192,7 +2074,7 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">dotnet new avalonia.xplat <span class="nt">-o</span> AdvancedTodoList</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">dotnet new avalonia.xplat -o AdvancedTodoList</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2200,12 +2082,12 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="powershell"><span class="n">AdvancedTodoList.sln</span><span class="w">
-</span><span class="err">├──</span><span class="w"> </span><span class="nx">AdvancedTodoList.csproj</span><span class="w">            </span><span class="c"># Main application project</span><span class="w">
-</span><span class="err">├──</span><span class="w"> </span><span class="n">AdvancedTodoList.Android.csproj</span><span class="w">    </span><span class="c"># Android platform project</span><span class="w">
-</span><span class="err">├──</span><span class="w"> </span><span class="n">AdvancedTodoList.Browser.csproj</span><span class="w">    </span><span class="c"># Browser (WebAssembly) platform project</span><span class="w">
-</span><span class="err">├──</span><span class="w"> </span><span class="n">AdvancedTodoList.Desktop.csproj</span><span class="w">    </span><span class="c"># Desktop platform (Windows/Linux/macOS) project</span><span class="w">
-</span><span class="err">└──</span><span class="w"> </span><span class="n">AdvancedTodoList.iOS.csproj</span><span class="w">        </span><span class="c"># iOS platform project</span></code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="powershell">AdvancedTodoList.sln
+├── AdvancedTodoList.csproj            # Main application project
+├── AdvancedTodoList.Android.csproj    # Android platform project
+├── AdvancedTodoList.Browser.csproj    # Browser (WebAssembly) platform project
+├── AdvancedTodoList.Desktop.csproj    # Desktop platform (Windows/Linux/macOS) project
+└── AdvancedTodoList.iOS.csproj        # iOS platform project</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2330,9 +2212,9 @@ To make the previewer work as expected, you have to reverence the class library 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sql"><span class="k">REPLACE</span> <span class="k">INTO</span> <span class="n">Category</span> <span class="p">(</span><span class="n">Id</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">Description</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="o">@</span><span class="n">Id</span><span class="p">,</span> <span class="o">@</span><span class="n">Name</span><span class="p">,</span> <span class="o">@</span><span class="n">Description</span><span class="p">,</span> <span class="o">@</span><span class="n">Color</span><span class="p">);</span>
-<span class="k">SELECT</span> <span class="n">Last_insert_rowid</span><span class="p">();</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sql">REPLACE INTO Category (Id, Name, Description, Color)
+VALUES (@Id, @Name, @Description, @Color);
+SELECT Last_insert_rowid();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2410,29 +2292,29 @@ To make the previewer work as expected, you have to reverence the class library 
 <h4 id="_service_interface_example">Service Interface Example</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// IToDoService.cs - The contract</span>
-<span class="k">public</span> <span class="k">interface</span> <span class="nc">IToDoService</span>
-<span class="p">{</span>
-    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">SaveToDoItemAsync</span><span class="p">(</span><span class="n">ToDoItem</span> <span class="n">item</span><span class="p">);</span>
-    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">DeleteToDoItemAsync</span><span class="p">(</span><span class="n">ToDoItem</span> <span class="n">item</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">// IToDoService.cs - The contract
+public interface IToDoService
+{
+    Task&lt;bool&gt; SaveToDoItemAsync(ToDoItem item);
+    Task&lt;bool&gt; DeleteToDoItemAsync(ToDoItem item);
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// ToDoService.cs - The implementation</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">ToDoService</span> <span class="p">:</span> <span class="n">IToDoService</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">SaveToDoItemAsync</span><span class="p">(</span><span class="n">ToDoItem</span> <span class="n">item</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">item</span><span class="p">.</span><span class="nf">SaveAsync</span><span class="p">();</span>
-    <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">// ToDoService.cs - The implementation
+public class ToDoService : IToDoService
+{
+    public async Task&lt;bool&gt; SaveToDoItemAsync(ToDoItem item)
+    {
+        return await item.SaveAsync();
+    }
 
-    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">DeleteToDoItemAsync</span><span class="p">(</span><span class="n">ToDoItem</span> <span class="n">item</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">item</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    public async Task&lt;bool&gt; DeleteToDoItemAsync(ToDoItem item)
+    {
+        return await item.DeleteAsync();
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2443,35 +2325,35 @@ To make the previewer work as expected, you have to reverence the class library 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// App.xaml.cs or Program.cs</span>
+<pre class="rouge highlight"><code data-lang="csharp">// App.xaml.cs or Program.cs
 
-<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">Application</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="n">IServiceProvider</span> <span class="n">Services</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">null</span><span class="p">!;</span>
+public partial class App : Application
+{
+    public static IServiceProvider Services { get; set; } = null!;
 
-    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterAppServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Register common services if not already registered</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">services</span><span class="p">.</span><span class="nf">All</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">ServiceType</span> <span class="p">!=</span> <span class="k">typeof</span><span class="p">(</span><span class="n">ICategoryService</span><span class="p">)))</span>
-        <span class="p">{</span>
-            <span class="n">services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">ICategoryService</span><span class="p">,</span> <span class="n">CategoryService</span><span class="p">&gt;();</span>
-        <span class="p">}</span>
+    public static void RegisterAppServices(IServiceCollection services)
+    {
+        // Register common services if not already registered
+        if (services.All(x =&gt; x.ServiceType != typeof(ICategoryService)))
+        {
+            services.AddSingleton&lt;ICategoryService, CategoryService&gt;();
+        }
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">services</span><span class="p">.</span><span class="nf">All</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">ServiceType</span> <span class="p">!=</span> <span class="k">typeof</span><span class="p">(</span><span class="n">IToDoItemService</span><span class="p">)))</span>
-        <span class="p">{</span>
-            <span class="n">services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">IToDoItemService</span><span class="p">,</span> <span class="n">ToDoItemService</span><span class="p">&gt;();</span>
-        <span class="p">}</span>
+        if (services.All(x =&gt; x.ServiceType != typeof(IToDoItemService)))
+        {
+            services.AddSingleton&lt;IToDoItemService, ToDoItemService&gt;();
+        }
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">services</span><span class="p">.</span><span class="nf">All</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">ServiceType</span> <span class="p">!=</span> <span class="k">typeof</span><span class="p">(</span><span class="n">IDatabaseService</span><span class="p">)))</span>
-        <span class="p">{</span>
-            <span class="n">services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">IDatabaseService</span><span class="p">,</span> <span class="n">DesignDbService</span><span class="p">&gt;();</span>
-        <span class="p">}</span>
+        if (services.All(x =&gt; x.ServiceType != typeof(IDatabaseService)))
+        {
+            services.AddSingleton&lt;IDatabaseService, DesignDbService&gt;();
+        }
 
-        <span class="n">Services</span> <span class="p">=</span> <span class="n">services</span><span class="p">.</span><span class="nf">BuildServiceProvider</span><span class="p">();</span>
-    <span class="p">}</span>
+        Services = services.BuildServiceProvider();
+    }
 
-    <span class="c1">// ...  other code ...</span>
-<span class="p">}</span></code></pre>
+    // ...  other code ...
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2507,17 +2389,17 @@ To make the previewer work as expected, you have to reverence the class library 
 <h4 id="_using_services_in_viewmodels">Using Services in ViewModels</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">EditToDoItemViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IDialogParticipant</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IToDoService</span> <span class="n">_toDoService</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">public partial class EditToDoItemViewModel : ViewModelBase, IDialogParticipant
+{
+    private readonly IToDoService _toDoService;
 
-    <span class="k">public</span> <span class="nf">EditToDoItemViewModel</span><span class="p">(</span><span class="n">ToDoItemViewModel</span> <span class="n">toDoItem</span><span class="p">,</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">CategoryViewModel</span><span class="p">&gt;</span> <span class="n">availableCategories</span><span class="p">)</span>
-        <span class="p">:</span> <span class="k">this</span><span class="p">(</span><span class="n">toDoItem</span><span class="p">,</span> <span class="n">availableCategories</span><span class="p">,</span>
-            <span class="n">App</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">GetService</span><span class="p">&lt;</span><span class="n">IToDoService</span><span class="p">&gt;()</span> <span class="p">??</span> <span class="k">new</span> <span class="nf">ToDoService</span><span class="p">(),</span>
-            <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    public EditToDoItemViewModel(ToDoItemViewModel toDoItem, IList&lt;CategoryViewModel&gt; availableCategories)
+        : this(toDoItem, availableCategories,
+            App.Services.GetService&lt;IToDoService&gt;() ?? new ToDoService(),
+            null)
+    {
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2544,25 +2426,25 @@ To make the previewer work as expected, you have to reverence the class library 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// ViewModel implements IDialogParticipant</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">MyViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IDialogParticipant</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">ShowDialog</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="n">ShowOverlayDialogAsync</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span>
-            <span class="s">"Title"</span><span class="p">,</span>
-            <span class="s">"Content"</span><span class="p">,</span>
-            <span class="n">DialogCommands</span><span class="p">.</span><span class="n">OkCancel</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">// ViewModel implements IDialogParticipant
+public class MyViewModel : ViewModelBase, IDialogParticipant
+{
+    public async Task ShowDialog()
+    {
+        var result = await this.ShowOverlayDialogAsync&lt;string&gt;(
+            "Title",
+            "Content",
+            DialogCommands.OkCancel);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- View registers the ViewModel --&gt;</span>
-<span class="nt">&lt;UserControl</span> <span class="na">local:DialogManager.Register=</span><span class="s">"{Binding}"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- UI Content --&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- View registers the ViewModel --&gt;
+&lt;UserControl local:DialogManager.Register="{Binding}"&gt;
+    &lt;!-- UI Content --&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2577,8 +2459,8 @@ To make the previewer work as expected, you have to reverence the class library 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// After saving, notify other ViewModels</span>
-<span class="n">WeakReferenceMessenger</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="n">UpdateDataRequest</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;());</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">// After saving, notify other ViewModels
+WeakReferenceMessenger.Default.Send(new UpdateDataRequest&lt;ToDoItem&gt;());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2586,15 +2468,15 @@ To make the previewer work as expected, you have to reverence the class library 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ManageToDoItemsViewModel</span>
-    <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IRecipient</span><span class="p">&lt;</span><span class="n">UpdateDataRequest</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;&gt;</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">void</span> <span class="nf">Receive</span><span class="p">(</span><span class="n">UpdateDataRequest</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;</span> <span class="n">message</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Refresh the data when notified</span>
-        <span class="n">_</span> <span class="p">=</span> <span class="nf">RefreshAsync</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public partial class ManageToDoItemsViewModel
+    : ViewModelBase, IRecipient&lt;UpdateDataRequest&lt;ToDoItem&gt;&gt;
+{
+    public void Receive(UpdateDataRequest&lt;ToDoItem&gt; message)
+    {
+        // Refresh the data when notified
+        _ = RefreshAsync();
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2651,27 +2533,27 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">TestBase</span> <span class="p">:</span> <span class="n">IDisposable</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nf">TestBase</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// 1. Set up SynchronizationContext for reactive operations</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">SynchronizationContext</span><span class="p">.</span><span class="n">Current</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">SynchronizationContext</span><span class="p">.</span><span class="nf">SetSynchronizationContext</span><span class="p">(</span>
-                <span class="k">new</span> <span class="nf">AvaloniaSynchronizationContext</span><span class="p">());</span>
-        <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">public class TestBase : IDisposable
+{
+    public TestBase()
+    {
+        // 1. Set up SynchronizationContext for reactive operations
+        if (SynchronizationContext.Current == null)
+        {
+            SynchronizationContext.SetSynchronizationContext(
+                new AvaloniaSynchronizationContext());
+        }
 
-        <span class="c1">// 2. Configure mock services</span>
-        <span class="kt">var</span> <span class="n">serviceCollection</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ServiceCollection</span><span class="p">();</span>
-        <span class="n">serviceCollection</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">IDatabaseService</span><span class="p">&gt;(</span><span class="k">new</span> <span class="nf">DesignDbService</span><span class="p">());</span>
-        <span class="n">serviceCollection</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">ISettingsStorageService</span><span class="p">&gt;(</span>
-            <span class="k">new</span> <span class="nf">DefaultSettingsStorageService</span><span class="p">());</span>
+        // 2. Configure mock services
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddSingleton&lt;IDatabaseService&gt;(new DesignDbService());
+        serviceCollection.AddSingleton&lt;ISettingsStorageService&gt;(
+            new DefaultSettingsStorageService());
 
-        <span class="c1">// 3. Build service provider</span>
-        <span class="n">App</span><span class="p">.</span><span class="n">Services</span> <span class="p">=</span> <span class="n">serviceCollection</span><span class="p">.</span><span class="nf">BuildServiceProvider</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        // 3. Build service provider
+        App.Services = serviceCollection.BuildServiceProvider();
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2698,14 +2580,14 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">assembly</span><span class="p">:</span> <span class="nf">AvaloniaTestApplication</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">AdvancedToDoListTests</span><span class="p">.</span><span class="n">TestAppBuilder</span><span class="p">))]</span>
+<pre class="rouge highlight"><code data-lang="csharp">[assembly: AvaloniaTestApplication(typeof(AdvancedToDoListTests.TestAppBuilder))]
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">TestAppBuilder</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="n">AppBuilder</span> <span class="nf">BuildAvaloniaApp</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">AppBuilder</span><span class="p">.</span><span class="n">Configure</span><span class="p">&lt;</span><span class="n">App</span><span class="p">&gt;()</span>
-            <span class="p">.</span><span class="nf">UseHeadless</span><span class="p">(</span><span class="k">new</span> <span class="nf">AvaloniaHeadlessPlatformOptions</span><span class="p">());</span>
-<span class="p">}</span></code></pre>
+public class TestAppBuilder
+{
+    public static AppBuilder BuildAvaloniaApp() =&gt;
+        AppBuilder.Configure&lt;App&gt;()
+            .UseHeadless(new AvaloniaHeadlessPlatformOptions());
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2749,16 +2631,16 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">Fact</span><span class="p">]</span>
-<span class="k">public</span> <span class="k">void</span> <span class="nf">Category_Constructor_SetsDefaultValues</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">category</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Category</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">[Fact]
+public void Category_Constructor_SetsDefaultValues()
+{
+    var category = new Category();
 
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">Null</span><span class="p">(</span><span class="n">category</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">Null</span><span class="p">(</span><span class="n">category</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">Null</span><span class="p">(</span><span class="n">category</span><span class="p">.</span><span class="n">Description</span><span class="p">);</span>
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">Null</span><span class="p">(</span><span class="n">category</span><span class="p">.</span><span class="n">Color</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+    Assert.Null(category.Id);
+    Assert.Null(category.Name);
+    Assert.Null(category.Description);
+    Assert.Null(category.Color);
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2769,22 +2651,22 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">Fact</span><span class="p">]</span>
-<span class="k">public</span> <span class="k">void</span> <span class="nf">CategoryViewModel_PropertyChanges_NotifyCorrectly</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">viewModel</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CategoryViewModel</span><span class="p">();</span>
-    <span class="kt">var</span> <span class="n">nameChanged</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">[Fact]
+public void CategoryViewModel_PropertyChanges_NotifyCorrectly()
+{
+    var viewModel = new CategoryViewModel();
+    var nameChanged = false;
 
-    <span class="n">viewModel</span><span class="p">.</span><span class="n">PropertyChanged</span> <span class="p">+=</span> <span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="p">=&gt;</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">PropertyName</span> <span class="p">==</span> <span class="k">nameof</span><span class="p">(</span><span class="n">CategoryViewModel</span><span class="p">.</span><span class="n">Name</span><span class="p">))</span>
-            <span class="n">nameChanged</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="p">};</span>
+    viewModel.PropertyChanged += (sender, e) =&gt;
+    {
+        if (e.PropertyName == nameof(CategoryViewModel.Name))
+            nameChanged = true;
+    };
 
-    <span class="n">viewModel</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Updated"</span><span class="p">;</span>
+    viewModel.Name = "Updated";
 
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">True</span><span class="p">(</span><span class="n">nameChanged</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+    Assert.True(nameChanged);
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2795,25 +2677,25 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">AvaloniaFact</span><span class="p">]</span>
-<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">ManageCategoriesView_Should_Display_Categories</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">vm</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ManageCategoriesViewModel</span><span class="p">();</span>
-    <span class="kt">var</span> <span class="n">view</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManageCategoriesView</span>
-    <span class="p">{</span>
-        <span class="n">DataContext</span> <span class="p">=</span> <span class="n">vm</span>
-    <span class="p">};</span>
-    <span class="kt">var</span> <span class="n">window</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Window</span> <span class="p">{</span> <span class="n">Content</span> <span class="p">=</span> <span class="n">view</span> <span class="p">};</span>
-    <span class="n">window</span><span class="p">.</span><span class="nf">Show</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">[AvaloniaFact]
+public async Task ManageCategoriesView_Should_Display_Categories()
+{
+    var vm = new ManageCategoriesViewModel();
+    var view = new ManageCategoriesView
+    {
+        DataContext = vm
+    };
+    var window = new Window { Content = view };
+    window.Show();
 
-    <span class="c1">// Give some time for view initialization</span>
-    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+    // Give some time for view initialization
+    await Task.Delay(100);
 
-    <span class="kt">var</span> <span class="n">listBox</span> <span class="p">=</span> <span class="n">view</span><span class="p">.</span><span class="n">FindControl</span><span class="p">&lt;</span><span class="n">ListBox</span><span class="p">&gt;(</span><span class="s">"CategoriesListBox"</span><span class="p">);</span>
+    var listBox = view.FindControl&lt;ListBox&gt;("CategoriesListBox");
 
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">NotNull</span><span class="p">(</span><span class="n">listBox</span><span class="p">);</span>
-    <span class="n">Assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="n">vm</span><span class="p">.</span><span class="n">Categories</span><span class="p">.</span><span class="n">Count</span><span class="p">,</span> <span class="n">listBox</span><span class="p">.</span><span class="n">ItemCount</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+    Assert.NotNull(listBox);
+    Assert.Equal(vm.Categories.Count, listBox.ItemCount);
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2967,9 +2849,9 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">local:DialogManager.Register=</span><span class="s">"{Binding}"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- UI Content --&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl local:DialogManager.Register="{Binding}"&gt;
+    &lt;!-- UI Content --&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2980,9 +2862,9 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">await</span> <span class="k">using</span> <span class="nn">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="k">await</span> <span class="n">DatabaseHelper</span><span class="p">.</span><span class="nf">GetOpenConnectionAsync</span><span class="p">();</span>
-<span class="c1">// Use connection...</span>
-<span class="c1">// Connection automatically disposed at end of using block</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">await using var connection = await DatabaseHelper.GetOpenConnectionAsync();
+// Use connection...
+// Connection automatically disposed at end of using block</code></pre>
 </div>
 </div>
 </div>
@@ -2993,8 +2875,8 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="n">SynchronizationContext</span><span class="p">.</span><span class="nf">SetSynchronizationContext</span><span class="p">(</span>
-    <span class="k">new</span> <span class="nf">AvaloniaSynchronizationContext</span><span class="p">());</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">SynchronizationContext.SetSynchronizationContext(
+    new AvaloniaSynchronizationContext());</code></pre>
 </div>
 </div>
 </div>
@@ -3049,7 +2931,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-27 18:10:07 UTC
+Last updated 2026-02-27 19:08:57 +0100
 </div>
 </div>
 </body>

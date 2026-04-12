@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Snowflakes control sample</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2060,7 +1942,7 @@ pre.rouge .gs {
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example will show you how to create a custom control that overrides <code>OnRender</code> in order to have advanced render capabilities. It also shows how custom hit-testing can help to solve special tasks. We will create a simple game where the user should collect some snowflakes with their mouse pointer.</p>
+<p>This example will show you how to create a custom control that overrides <code>OnRender</code> in order to have advanced render capabilities. We will create a simple game where the user should collect some snowflakes with their mouse pointer.</p>
 </div>
 <!-- toc disabled -->
 <h3 id="_difficulty" class="discrete">Difficulty</h3>
@@ -2117,7 +1999,7 @@ pre.rouge .gs {
 <div class="sect2">
 <h3 id="_defining_the_game_concept">Defining the game concept</h3>
 <div class="paragraph">
-<p>Before we finally start to implement the game, we should make some considerations how our control should look like and how it should work. To shorten it, we use a plain list of notes:</p>
+<p>Before we finally start to implement the game, we should make some considerations what our control should look like and how it should work. To shorten it, we use a plain list of notes:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2135,7 +2017,7 @@ pre.rouge .gs {
 <p>Each snowflake should have a random start position</p>
 </li>
 <li>
-<p>Each snowflake should be able to move with different speed</p>
+<p>Each snowflake should be able to move with a different speed</p>
 </li>
 <li>
 <p>Snowflakes should be of different sizes</p>
@@ -2177,7 +2059,7 @@ pre.rouge .gs {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To show you how this control can be bound to a <code>ViewModel</code> we will use the <code>MVVM</code>-pattern for demonstration here, even if it is not really needed in our case.
+To show you how this control can be bound to a <code>ViewModel</code> we will use the <code>MVVM</code>-pattern for demonstration here, even if it is not really necessary in our case.
 </td>
 </tr>
 </table>
@@ -2215,17 +2097,17 @@ To show you how this control can be bound to a <code>ViewModel</code> we will us
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Diameter</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the diameter in pixel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the diameter in pixel-unit</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Radius</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the radius in pixel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the radius in pixel-unit</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Speed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the peed of the snowflake in 1/second (relative unit)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the speed of the snowflake in 1/second (relative unit)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2245,15 +2127,15 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </table>
 </div>
 <div class="paragraph">
-<p>To achieve this conversion we add method that takes a <code>Rect</code> as parameter and returns a <code>Point</code> positioned inside this rectangle.</p>
+<p>To achieve this conversion, we add method that takes a <code>Rect</code> as parameter and returns a <code>Point</code> positioned inside this rectangle.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="n">Point</span> <span class="nf">GetCenterForViewport</span><span class="p">(</span><span class="n">Rect</span> <span class="n">viewport</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">Point</span><span class="p">(</span><span class="n">X</span> <span class="p">*</span> <span class="n">viewport</span><span class="p">.</span><span class="n">Width</span> <span class="p">+</span> <span class="n">viewport</span><span class="p">.</span><span class="n">Left</span><span class="p">,</span>
-        <span class="n">Y</span> <span class="p">*</span> <span class="n">viewport</span><span class="p">.</span><span class="n">Height</span> <span class="p">+</span> <span class="n">viewport</span><span class="p">.</span><span class="n">Top</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public Point GetCenterForViewport(Rect viewport)
+{
+    return new Point(X * viewport.Width + viewport.Left,
+        Y * viewport.Height + viewport.Top);
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2261,16 +2143,16 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">void</span> <span class="nf">Move</span><span class="p">(</span><span class="kt">double</span> <span class="n">elapsedMilliseconds</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Speed is in 1/sec so we have to convert it into 1/ms.</span>
-    <span class="n">Y</span> <span class="p">+=</span> <span class="n">elapsedMilliseconds</span> <span class="p">*</span> <span class="n">Speed</span> <span class="p">/</span> <span class="m">1000.0</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">public void Move(double elapsedMilliseconds)
+{
+    // Speed is in 1/sec so we have to convert it into 1/ms.
+    Y += elapsedMilliseconds * Speed / 1000.0;
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">Y</span> <span class="p">&gt;</span> <span class="m">1</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Y</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    if (Y &gt; 1)
+    {
+        Y = 0;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2278,26 +2160,26 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">IsHit</span><span class="p">(</span><span class="n">Point</span> <span class="n">point</span><span class="p">,</span> <span class="n">Rect</span> <span class="n">viewport</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// since the snowflake is represented as a circle, we just can test</span>
-    <span class="c1">// if the distance to the center is equal of smaller than the radius.</span>
+<pre class="rouge highlight"><code data-lang="csharp">public bool IsHit(Point point, Rect viewport)
+{
+    // since the snowflake is represented as a circle, we just can test
+    // if the distance to the center is equal of smaller than the radius.
 
-    <span class="kt">var</span> <span class="n">distance</span> <span class="p">=</span> <span class="p">((</span><span class="n">Vector</span><span class="p">)(</span><span class="nf">GetCenterForViewport</span><span class="p">(</span><span class="n">viewport</span><span class="p">)</span> <span class="p">-</span> <span class="n">point</span><span class="p">)).</span><span class="n">Length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">distance</span> <span class="p">&lt;=</span> <span class="n">Radius</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+    var distance = ((Vector)(GetCenterForViewport(viewport) - point)).Length;
+    return distance &lt;= Radius;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Last but not least the hit-score can be calculated in the following way:</p>
+<p>Last but not least, the hit-score can be calculated in the following way:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="kt">int</span> <span class="nf">GetHitScore</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// The smaller and the faster the snowflake, the higher the score.</span>
-    <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="m">1</span><span class="p">/</span><span class="n">Radius</span> <span class="p">*</span> <span class="m">200</span> <span class="p">+</span> <span class="n">Speed</span> <span class="p">/</span> <span class="m">10.0</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">public int GetHitScore()
+{
+    // The smaller and the faster the snowflake, the higher the score.
+    return (int)(1/Radius * 200 + Speed / 10.0);
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2307,7 +2189,7 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 <div class="sect2">
 <h3 id="_step_2_set_up_the_gameviewmodel">Step 2: Set up the GameViewModel</h3>
 <div class="paragraph">
-<p>The <code>ViewModel</code> will be responsible for creating and managing the snowflakes, tracking the game status and storing the users current score.</p>
+<p>The <code>ViewModel</code> will be responsible for creating and managing the snowflakes, tracking the game status and storing the user’s current score.</p>
 </div>
 <div class="paragraph">
 <p>It has the following public properties:</p>
@@ -2340,7 +2222,7 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GameDurationMilliseconds</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gets duration of the game in milliseconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gets the duration of the game in milliseconds.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MillisecondsRemaining</p></td>
@@ -2390,39 +2272,39 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </tbody>
 </table>
 <div class="paragraph">
-<p>To start a new game we add a <a href="../../MVVM/CommandSample/README.html">[Command]</a> which will clear any previous snowflakes, add some new snowflakes with random parameters and start the game:</p>
+<p>To start a new game, we add a <a href="../../MVVM/CommandSample/README.html">[Command]</a> which will clear any previous snowflakes, add some new snowflakes with random parameters and start the game:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-<span class="k">private</span> <span class="k">void</span> <span class="nf">StartGame</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Clear all snowflakes.</span>
-    <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="csharp">[RelayCommand]
+private void StartGame()
+{
+    // Clear all snowflakes.
+    Snowflakes.Clear();
 
-    <span class="c1">// Reset game score.</span>
-    <span class="n">Score</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    // Reset game score.
+    Score = 0;
 
-    <span class="c1">// Add some snowflakes at random positions, having random diameters and speed.</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">200</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-    <span class="p">{</span>
-        <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">Snowflake</span><span class="p">(</span>
-            <span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">(),</span>
-            <span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">(),</span>
-            <span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">()</span> <span class="p">*</span> <span class="m">5</span> <span class="p">+</span> <span class="m">2</span><span class="p">,</span>
-            <span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">()</span> <span class="p">/</span> <span class="m">5</span> <span class="p">+</span> <span class="m">0.1</span><span class="p">));</span>
-    <span class="p">}</span>
+    // Add some snowflakes at random positions, having random diameters and speed.
+    for (int i = 0; i &lt; 200; i++)
+    {
+        Snowflakes.Add(new Snowflake(
+            Random.Shared.NextDouble(),
+            Random.Shared.NextDouble(),
+            Random.Shared.NextDouble() * 5 + 2,
+            Random.Shared.NextDouble() / 5 + 0.1));
+    }
 
-    <span class="c1">// Set game time.</span>
-    <span class="n">GameDuration</span> <span class="p">=</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromMinutes</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+    // Set game time.
+    GameDuration = TimeSpan.FromMinutes(1);
 
-    <span class="c1">// Indicate that game has started.</span>
-    <span class="n">IsGameRunning</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    // Indicate that game has started.
+    IsGameRunning = true;
 
-    <span class="c1">// Start the timer and stopwatch.</span>
-    <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
-    <span class="n">_gameTimer</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
-<span class="p">}</span></code></pre>
+    // Start the timer and stopwatch.
+    _stopwatch.Restart();
+    _gameTimer.Start();
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2430,19 +2312,19 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">void</span> <span class="nf">OnGameTimerTick</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Update the remaining milliseconds left.</span>
-    <span class="nf">OnPropertyChanged</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">MillisecondsRemaining</span><span class="p">));</span>
+<pre class="rouge highlight"><code data-lang="csharp">private void OnGameTimerTick(object? sender, EventArgs e)
+{
+    // Update the remaining milliseconds left.
+    OnPropertyChanged(nameof(MillisecondsRemaining));
 
-    <span class="c1">// If no more time is left, stop the timer and stopwatch and stop the game.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">MillisecondsRemaining</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">_gameTimer</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
-        <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
-        <span class="n">IsGameRunning</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // If no more time is left, stop the timer and stopwatch and stop the game.
+    if (MillisecondsRemaining &lt;= 0)
+    {
+        _gameTimer.Stop();
+        _stopwatch.Stop();
+        IsGameRunning = false;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2485,7 +2367,7 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Score</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gets or sets the users score. This is a direct property.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gets or sets the user’s score. This is a direct property.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2494,11 +2376,11 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">static</span> <span class="nf">SnowflakesControl</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Make sure Render is updated whenever one of these properties changes</span>
-    <span class="n">AffectsRender</span><span class="p">&lt;</span><span class="n">SnowflakesControl</span><span class="p">&gt;(</span><span class="n">IsRunningProperty</span><span class="p">,</span> <span class="n">SnowflakesProperty</span><span class="p">,</span> <span class="n">ScoreProperty</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp">static SnowflakesControl()
+{
+    // Make sure Render is updated whenever one of these properties changes
+    AffectsRender&lt;SnowflakesControl&gt;(IsRunningProperty, SnowflakesProperty, ScoreProperty);
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2531,24 +2413,24 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPropertyChanged</span><span class="p">(</span><span class="n">AvaloniaPropertyChangedEventArgs</span> <span class="n">change</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">base</span><span class="p">.</span><span class="nf">OnPropertyChanged</span><span class="p">(</span><span class="n">change</span><span class="p">);</span>
+<pre class="rouge highlight"><code data-lang="csharp">protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+{
+    base.OnPropertyChanged(change);
 
-    <span class="c1">// If IsRunning is updated, we need to start or stop the stopwatch accordingly.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">change</span><span class="p">.</span><span class="n">Property</span> <span class="p">==</span> <span class="n">IsRunningProperty</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">change</span><span class="p">.</span><span class="n">GetNewValue</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;())</span>
-        <span class="p">{</span>
-            <span class="c1">// Resets and starts the stopwatch</span>
-            <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // If IsRunning is updated, we need to start or stop the stopwatch accordingly.
+    if (change.Property == IsRunningProperty)
+    {
+        if (change.GetNewValue&lt;bool&gt;())
+        {
+            // Resets and starts the stopwatch
+            _stopwatch.Restart();
+        }
+        else
+        {
+            _stopwatch.Stop();
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2556,37 +2438,37 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span><span class="p">(</span><span class="n">DrawingContext</span> <span class="n">context</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Figure out how much time elapsed since last render loop</span>
-    <span class="kt">var</span> <span class="n">elapsedMilliseconds</span> <span class="p">=</span> <span class="n">_stopwatch</span><span class="p">.</span><span class="n">Elapsed</span><span class="p">.</span><span class="n">TotalMilliseconds</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">public override void Render(DrawingContext context)
+{
+    // Figure out how much time elapsed since last render loop
+    var elapsedMilliseconds = _stopwatch.Elapsed.TotalMilliseconds;
 
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">snowFlake</span> <span class="k">in</span> <span class="n">Snowflakes</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// If the game is running, move each flake to it's updated position</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">IsRunning</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">snowFlake</span><span class="p">.</span><span class="nf">Move</span><span class="p">(</span><span class="n">elapsedMilliseconds</span><span class="p">);</span>
-        <span class="p">}</span>
+    foreach (var snowFlake in Snowflakes)
+    {
+        // If the game is running, move each flake to it's updated position
+        if (IsRunning)
+        {
+            snowFlake.Move(elapsedMilliseconds);
+        }
 
-        <span class="c1">// Draw the snowflake (we use a simple circle here)</span>
-        <span class="n">context</span><span class="p">.</span><span class="nf">DrawEllipse</span><span class="p">(</span>
-            <span class="n">Brushes</span><span class="p">.</span><span class="n">White</span><span class="p">,</span>
-            <span class="k">null</span><span class="p">,</span>
-            <span class="n">snowFlake</span><span class="p">.</span><span class="nf">GetCenterForViewport</span><span class="p">(</span><span class="n">Bounds</span><span class="p">),</span>
-            <span class="n">snowFlake</span><span class="p">.</span><span class="n">Radius</span><span class="p">,</span>
-            <span class="n">snowFlake</span><span class="p">.</span><span class="n">Radius</span><span class="p">);</span>
-    <span class="p">}</span>
+        // Draw the snowflake (we use a simple circle here)
+        context.DrawEllipse(
+            Brushes.White,
+            null,
+            snowFlake.GetCenterForViewport(Bounds),
+            snowFlake.Radius,
+            snowFlake.Radius);
+    }
 
-    <span class="k">base</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+    base.Render(context);
 
-    <span class="c1">// Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">IsRunning</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">Dispatcher</span><span class="p">.</span><span class="n">UIThread</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="n">InvalidateVisual</span><span class="p">,</span> <span class="n">DispatcherPriority</span><span class="p">.</span><span class="n">Render</span><span class="p">);</span>
-        <span class="n">_stopwatch</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // Request next frame as soon as possible, if the game is running. Remember to reset the stopwatch.
+    if (IsRunning)
+    {
+        Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Render);
+        _stopwatch.Restart();
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2596,62 +2478,62 @@ In Avalonia you can use <code>Bounds</code> to get the Controls bounds, which we
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We use <code>Dispatcher.UIThread.Post</code> to request the next frame in order to give the UI-thread enough time to handle input etc. If we didn&#8217;t use the dispatcher, the app would freeze.
+We use <code>Dispatcher.UIThread.Post</code> to request the next frame to give the UI-thread enough time to handle input etc. If we didn&#8217;t use the dispatcher, the app would freeze.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>This is how a single render frame would look like:</p>
+<p>This is what a single render frame would look like:</p>
 </div>
 <div class="paragraph">
 <div class="title">Result of a single render loop</div>
 <p><span class="image"><img src="_docs/single_render_frame.png" alt="single render frame"></span></p>
 </div>
 <div class="paragraph">
-<p>As we want to check if our pointer is over any <code>Snowflake</code>, we will override the <code>OnPointerEntered</code> and <code>OnPointerMoved</code> methods. From the <code>PointerEventArgs</code> we can read the pointer position and forward it to a method that tests for hits,</p>
+<p>As we want to check if our pointer is over any <code>Snowflake</code>, we will override the <code>OnPointerEntered</code> and <code>OnPointerMoved</code> methods. From the <code>PointerEventArgs</code> we can read the pointer position and forward it to a method that tests for hits.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;inheritdoc /&gt;</span>
-<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPointerEntered</span><span class="p">(</span><span class="n">PointerEventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="nf">GetPosition</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-    <span class="k">base</span><span class="p">.</span><span class="nf">OnPointerEntered</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-<span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">/// &lt;inheritdoc /&gt;
+protected override void OnPointerEntered(PointerEventArgs e)
+{
+    HitTestSnowFlakes(e.GetPosition(this));
+    base.OnPointerEntered(e);
+}
 
-<span class="c1">/// &lt;inheritdoc /&gt;</span>
-<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPointerMoved</span><span class="p">(</span><span class="n">PointerEventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="nf">GetPosition</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-    <span class="k">base</span><span class="p">.</span><span class="nf">OnPointerMoved</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-<span class="p">}</span>
+/// &lt;inheritdoc /&gt;
+protected override void OnPointerMoved(PointerEventArgs e)
+{
+    HitTestSnowFlakes(e.GetPosition(this));
+    base.OnPointerMoved(e);
+}
 
-<span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// This method will check if the pointer has hit any snowflake. If so, it will remove the snowflake from the list</span>
-<span class="c1">/// and update the score.</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="c1">/// &lt;param name="point"&gt;the pointer point to test.&lt;/param&gt;</span>
-<span class="k">private</span> <span class="k">void</span> <span class="nf">HitTestSnowFlakes</span><span class="p">(</span><span class="n">Point</span> <span class="n">point</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// if the game is not running, we don't need to do anything.</span>
-    <span class="k">if</span> <span class="p">(!</span><span class="n">IsRunning</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+/// &lt;summary&gt;
+/// This method will check if the pointer has hit any snowflake. If so, it will remove the snowflake from the list
+/// and update the score.
+/// &lt;/summary&gt;
+/// &lt;param name="point"&gt;the pointer point to test.&lt;/param&gt;
+private void HitTestSnowFlakes(Point point)
+{
+    // if the game is not running, we don't need to do anything.
+    if (!IsRunning) return;
 
-    <span class="c1">// loop through all snowflakes and check if the pointer is inside one of them.</span>
-    <span class="c1">// Copy the list to avoid concurrent modification exceptions.</span>
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">snowFlake</span> <span class="k">in</span> <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">ToArray</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">snowFlake</span><span class="p">.</span><span class="nf">IsHit</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">))</span>
-        <span class="p">{</span>
-            <span class="n">Snowflakes</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">snowFlake</span><span class="p">);</span>
-            <span class="n">Score</span> <span class="p">+=</span> <span class="n">snowFlake</span><span class="p">.</span><span class="nf">GetHitScore</span><span class="p">();</span>
+    // loop through all snowflakes and check if the pointer is inside one of them.
+    // Copy the list to avoid concurrent modification exceptions.
+    foreach (var snowFlake in Snowflakes.ToArray())
+    {
+        if (snowFlake.IsHit(point, Bounds))
+        {
+            Snowflakes.Remove(snowFlake);
+            Score += snowFlake.GetHitScore();
 
-            <span class="c1">// Add a text hint about the earned score. We also hand over the containing collection,</span>
-            <span class="c1">// so it can auto-remove itself after 1 second.</span>
-            <span class="n">_scoreHintsCollection</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScoreHint</span><span class="p">(</span><span class="n">snowFlake</span><span class="p">,</span> <span class="n">_scoreHintsCollection</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            // Add a text hint about the earned score. We also hand over the containing collection,
+            // so it can auto-remove itself after 1 second.
+            _scoreHintsCollection.Add(new ScoreHint(snowFlake, _scoreHintsCollection));
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2690,51 +2572,51 @@ We use <code>Dispatcher.UIThread.Post</code> to request the next frame in order 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember to add the needed xml-namespaces
+Remember to add the necessary xml-namespaces
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-             <span class="na">xmlns:controls=</span><span class="s">"clr-namespace:SnowflakesControlSample.Controls"</span>
-             <span class="na">xmlns:viewModels=</span><span class="s">"clr-namespace:SnowflakesControlSample.ViewModels"</span>
-             <span class="na">mc:Ignorable=</span><span class="s">"d"</span>
-             <span class="na">d:DesignWidth=</span><span class="s">"800"</span>
-             <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
-             <span class="na">x:Class=</span><span class="s">"SnowflakesControlSample.Views.MainView"</span>
-             <span class="na">x:DataType=</span><span class="s">"viewModels:SnowflakeGameViewModel"</span><span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SnowflakesControlSample.Controls"
+             xmlns:viewModels="clr-namespace:SnowflakesControlSample.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SnowflakesControlSample.Views.MainView"
+             x:DataType="viewModels:SnowflakeGameViewModel"&gt;
 
-    <span class="nt">&lt;Design.DataContext&gt;</span>
-        <span class="c">&lt;!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) --&gt;</span>
-        <span class="nt">&lt;viewModels:SnowflakeGameViewModel</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Design.DataContext&gt;</span>
+    &lt;Design.DataContext&gt;
+        &lt;!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) --&gt;
+        &lt;viewModels:SnowflakeGameViewModel /&gt;
+    &lt;/Design.DataContext&gt;
 
-    <span class="nt">&lt;Panel&gt;</span>
-        <span class="c">&lt;!-- Just some Background for a nicer UI --&gt;</span>
-        <span class="nt">&lt;Panel.Background&gt;</span>
+    &lt;Panel&gt;
+        &lt;!-- Just some Background for a nicer UI --&gt;
+        &lt;Panel.Background&gt;
             ...
-        <span class="nt">&lt;/Panel.Background&gt;</span>
+        &lt;/Panel.Background&gt;
 
-        <span class="c">&lt;!-- This is our SnowFlakesControl. It can be used like any other Control. --&gt;</span>
-        <span class="nt">&lt;controls:SnowflakesControl</span> <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span>
-                                    <span class="na">VerticalAlignment=</span><span class="s">"Stretch"</span>
-                                    <span class="na">IsRunning=</span><span class="s">"{Binding IsGameRunning}"</span>
-                                    <span class="na">Snowflakes=</span><span class="s">"{Binding Snowflakes}"</span>
-                                    <span class="na">Score=</span><span class="s">"{Binding Score}"</span> <span class="nt">/&gt;</span>
+        &lt;!-- This is our SnowFlakesControl. It can be used like any other Control. --&gt;
+        &lt;controls:SnowflakesControl HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    IsRunning="{Binding IsGameRunning}"
+                                    Snowflakes="{Binding Snowflakes}"
+                                    Score="{Binding Score}" /&gt;
 
-        <span class="c">&lt;!-- Add a Progressbar to indicate the left time  here --&gt;</span>
-        <span class="nt">&lt;ProgressBar</span> <span class="err">...</span> <span class="nt">/&gt;</span>
+        &lt;!-- Add a Progressbar to indicate the left time  here --&gt;
+        &lt;ProgressBar ... /&gt;
 
-        <span class="c">&lt;!-- Add a Button the start command here --&gt;</span>
-        <span class="nt">&lt;Button</span> <span class="err">...</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Panel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+        &lt;!-- Add a Button the start command here --&gt;
+        &lt;Button ... /&gt;
+    &lt;/Panel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2750,7 +2632,7 @@ In <code>App.axaml</code> set <code>RequestedThemeVariant</code> to <code>"Dark"
 </table>
 </div>
 <div class="paragraph">
-<p>This is how the control will look like now (notice how the snowflakes disappear):</p>
+<p>This is what the control will look like now (notice how the snowflakes disappear):</p>
 </div>
 <div class="paragraph">
 <div class="title">First run output</div>
@@ -2763,7 +2645,7 @@ In <code>App.axaml</code> set <code>RequestedThemeVariant</code> to <code>"Dark"
 <div class="sect2">
 <h3 id="_bonus_1_implement_a_custom_draw_operation">Bonus 1: Implement a custom draw operation</h3>
 <div class="paragraph">
-<p>If the provided render operations are not enough, you can create a new class which implements <code>ICustomDrawOperation</code>. In this sample we want to display the user score with a nice glow effect using the <a href="https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88">[<code>SkiaSharp-API</code>]</a>.</p>
+<p>If the provided render operations are not enough, you can create a new class which implements <code>ICustomDrawOperation</code>. In this sample we want to display the user score with a nice glow effect using the <a href="https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-3.119">[<code>SkiaSharp-API</code>]</a>.</p>
 </div>
 <div class="paragraph">
 <p>The interface requires the following members to be implemented:</p>
@@ -2811,7 +2693,7 @@ In <code>App.axaml</code> set <code>RequestedThemeVariant</code> to <code>"Dark"
 </tbody>
 </table>
 <div class="paragraph">
-<p>In addition to the interface members we will add one more property:</p>
+<p>In addition to the interface members, we will add one more property:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 7. Properties of ScoreRenderer</caption>
@@ -2840,47 +2722,50 @@ In <code>App.axaml</code> set <code>RequestedThemeVariant</code> to <code>"Dark"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">void</span> <span class="nf">Render</span><span class="p">(</span><span class="n">ImmediateDrawingContext</span> <span class="n">context</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Try to get the skia-feature.</span>
-    <span class="kt">var</span> <span class="n">leaseFeature</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">TryGetFeature</span><span class="p">&lt;</span><span class="n">ISkiaSharpApiLeaseFeature</span><span class="p">&gt;();</span>
+<pre class="rouge highlight"><code data-lang="csharp">public void Render(ImmediateDrawingContext context)
+{
+    // Try to get the skia-feature.
+    var leaseFeature = context.TryGetFeature&lt;ISkiaSharpApiLeaseFeature&gt;();
 
-    <span class="c1">// In case we didn't find it, render the text with a fallback.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">leaseFeature</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">glyphs</span> <span class="p">=</span> <span class="n">Text</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">Typeface</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">GlyphTypeface</span><span class="p">.</span><span class="nf">GetGlyph</span><span class="p">(</span><span class="n">c</span><span class="p">)).</span><span class="nf">ToArray</span><span class="p">();</span>
+    // In case we didn't find it, render the text with a fallback.
+    if (leaseFeature == null)
+    {
+        var glyphRun = new GlyphRun(
+            Typeface.Default.GlyphTypeface,
+            20,
+            Text.AsMemory(),
+            TextShaper.Current.ShapeText(Text.AsMemory(), new TextShaperOptions(Typeface.Default.GlyphTypeface, 20)));
 
-        <span class="kt">var</span> <span class="n">glyphRun</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">GlyphRun</span><span class="p">(</span><span class="n">Typeface</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">GlyphTypeface</span><span class="p">,</span>
-            <span class="m">20</span><span class="p">,</span>
-            <span class="n">Text</span><span class="p">.</span><span class="nf">AsMemory</span><span class="p">(),</span>
-            <span class="n">glyphs</span><span class="p">,</span>
-            <span class="n">Bounds</span><span class="p">.</span><span class="n">TopRight</span> <span class="p">-</span> <span class="k">new</span> <span class="nf">Point</span><span class="p">(</span><span class="m">50</span><span class="p">,</span> <span class="m">50</span><span class="p">));</span>
+        if (glyphRun.TryCreateImmutableGlyphRunReference() is { } glyphRunReference)
+        {
+            context.DrawGlyphRun(Brushes.Goldenrod, glyphRunReference);
+        }
+    }
 
-        <span class="n">context</span><span class="p">.</span><span class="nf">DrawGlyphRun</span><span class="p">(</span><span class="n">Brushes</span><span class="p">.</span><span class="n">Goldenrod</span><span class="p">,</span> <span class="n">glyphRun</span><span class="p">.</span><span class="nf">TryCreateImmutableGlyphRunReference</span><span class="p">()!);</span>
-    <span class="p">}</span>
-    <span class="c1">// Otherwise use SkiaSharp to render the text and apply some glow-effect.</span>
-    <span class="c1">// Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88</span>
-    <span class="k">else</span>
-    <span class="p">{</span>
-        <span class="k">using</span> <span class="nn">var</span> <span class="n">lease</span> <span class="p">=</span> <span class="n">leaseFeature</span><span class="p">.</span><span class="nf">Lease</span><span class="p">();</span>
-        <span class="kt">var</span> <span class="n">canvas</span> <span class="p">=</span> <span class="n">lease</span><span class="p">.</span><span class="n">SkCanvas</span><span class="p">;</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="nf">Save</span><span class="p">();</span>
+    // Otherwise use SkiaSharp to render the text and apply some glow-effect.
+    // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-3.119
+    else
+    {
+        using var lease = leaseFeature.Lease();
+        var canvas = lease.SkCanvas;
+        canvas.Save();
 
-        <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">paint</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SKPaint</span><span class="p">())</span>
-        <span class="p">{</span>
-            <span class="n">paint</span><span class="p">.</span><span class="n">Shader</span> <span class="p">=</span> <span class="n">SKShader</span><span class="p">.</span><span class="nf">CreateColor</span><span class="p">(</span><span class="n">SKColors</span><span class="p">.</span><span class="n">Goldenrod</span><span class="p">);</span>
-            <span class="n">paint</span><span class="p">.</span><span class="n">TextSize</span> <span class="p">=</span> <span class="m">30</span><span class="p">;</span>
-            <span class="n">paint</span><span class="p">.</span><span class="n">TextAlign</span> <span class="p">=</span> <span class="n">SKTextAlign</span><span class="p">.</span><span class="n">Right</span><span class="p">;</span>
+        using (var paint = new SKPaint())
+        {
+            var font = new SKFont { Size = 30 };
+            paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
+            paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
 
-            <span class="kt">var</span> <span class="n">origin</span> <span class="p">=</span> <span class="n">Bounds</span><span class="p">.</span><span class="n">TopRight</span><span class="p">.</span><span class="nf">ToSKPoint</span><span class="p">();</span>
-            <span class="n">origin</span><span class="p">.</span><span class="nf">Offset</span><span class="p">(-</span><span class="m">25</span><span class="p">,</span> <span class="p">+</span><span class="m">50</span><span class="p">);</span>
+            var origin = Bounds.TopRight.ToSKPoint();
+            origin.Offset(-25, +50);
 
-            <span class="n">paint</span><span class="p">.</span><span class="n">ImageFilter</span> <span class="p">=</span> <span class="n">SKImageFilter</span><span class="p">.</span><span class="nf">CreateDropShadow</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="n">SKColors</span><span class="p">.</span><span class="n">White</span><span class="p">);</span>
-            <span class="n">canvas</span><span class="p">.</span><span class="nf">DrawText</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">paint</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="n">canvas</span><span class="p">.</span><span class="nf">Restore</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            // Use new DrawText overload with SKTextAlign
+            canvas.DrawText(Text, origin, SKTextAlign.Right, font, paint);
+            font.Dispose();
+        }
+        canvas.Restore();
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2895,31 +2780,19 @@ SkiaSharp may be not always available. In this case it is highly recommended to 
 </tr>
 </table>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You may see a warning about using an unstable API. This is okay to ignore, however you may need to adjust your code when you update to a newer Avalonia version.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>To consume the custom draw operation, add the following line into <code>SnowflakesControl.OnRender</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span><span class="p">(</span><span class="n">DrawingContext</span> <span class="n">context</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// [...]</span>
+<pre class="rouge highlight"><code data-lang="csharp">public override void Render(DrawingContext context)
+{
+    // [...]
 
-    <span class="n">context</span><span class="p">.</span><span class="nf">Custom</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScoreRenderer</span><span class="p">(</span><span class="n">Bounds</span><span class="p">,</span> <span class="s">$"Your score: </span><span class="p">{</span><span class="n">Score</span><span class="p">:</span><span class="n">N0</span><span class="p">}</span><span class="s">"</span><span class="p">));</span>
+    context.Custom(new ScoreRenderer(Bounds, $"Your score: {Score:N0}"));
 
-    <span class="c1">// [...]</span>
-<span class="p">}</span></code></pre>
+    // [...]
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2945,14 +2818,14 @@ You may see a warning about using an unstable API. This is okay to ignore, howev
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Panel.Background&gt;</span>
-    <span class="nt">&lt;LinearGradientBrush</span> <span class="na">StartPoint=</span><span class="s">"0,0"</span> <span class="na">EndPoint=</span><span class="s">"0%,100%"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;GradientStop</span> <span class="na">Offset=</span><span class="s">"0"</span>   <span class="na">Color=</span><span class="s">"DarkBlue"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;GradientStop</span> <span class="na">Offset=</span><span class="s">".85"</span> <span class="na">Color=</span><span class="s">"LightSkyBlue"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;GradientStop</span> <span class="na">Offset=</span><span class="s">".85"</span> <span class="na">Color=</span><span class="s">"LimeGreen"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;GradientStop</span> <span class="na">Offset=</span><span class="s">"1"</span>   <span class="na">Color=</span><span class="s">"DarkGreen"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/LinearGradientBrush&gt;</span>
-<span class="nt">&lt;/Panel.Background&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Panel.Background&gt;
+    &lt;LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%"&gt;
+        &lt;GradientStop Offset="0"   Color="DarkBlue" /&gt;
+        &lt;GradientStop Offset=".85" Color="LightSkyBlue" /&gt;
+        &lt;GradientStop Offset=".85" Color="LimeGreen" /&gt;
+        &lt;GradientStop Offset="1"   Color="DarkGreen" /&gt;
+    &lt;/LinearGradientBrush&gt;
+&lt;/Panel.Background&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2975,25 +2848,25 @@ This class can be internal as it is only meant to be consumed by the control its
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">internal</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">double</span> <span class="n">elapsedMilliseconds</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Increment total elapsed time</span>
-    <span class="n">_elapsedMillisecondsTotal</span> <span class="p">+=</span> <span class="n">elapsedMilliseconds</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp">internal void Update(double elapsedMilliseconds)
+{
+    // Increment total elapsed time
+    _elapsedMillisecondsTotal += elapsedMilliseconds;
 
-    <span class="c1">// remove this item from the collection if it was there for 1 second (1000 ms)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">_elapsedMillisecondsTotal</span> <span class="p">&gt;=</span> <span class="m">1000</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">_scoreHintsCollection</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-    <span class="p">}</span>
+    // remove this item from the collection if it was there for 1 second (1000 ms)
+    if (_elapsedMillisecondsTotal &gt;= 1000)
+    {
+        _scoreHintsCollection.Remove(this);
+    }
 
-    <span class="c1">// after 500 ms we wipe out the opacity and move the text upwards</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">_elapsedMillisecondsTotal</span> <span class="p">&gt;</span> <span class="m">500</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">percentage</span> <span class="p">=</span> <span class="p">(</span><span class="n">_elapsedMillisecondsTotal</span> <span class="p">-</span> <span class="m">500</span><span class="p">)</span> <span class="p">/</span> <span class="m">500</span><span class="p">;</span>
-        <span class="n">Opacity</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Max</span><span class="p">(</span><span class="m">1.0</span> <span class="p">-</span> <span class="n">percentage</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span> <span class="c1">// Negative opacity doesn't work, so make sure it is always positive.</span>
-        <span class="n">Y</span> <span class="p">-=</span> <span class="p">(</span><span class="m">0.01</span> <span class="p">*</span> <span class="n">percentage</span><span class="p">);</span> <span class="c1">// move slightly up.</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // after 500 ms we wipe out the opacity and move the text upwards
+    if (_elapsedMillisecondsTotal &gt; 500)
+    {
+        var percentage = (_elapsedMillisecondsTotal - 500) / 500;
+        Opacity = Math.Max(1.0 - percentage, 0); // Negative opacity doesn't work, so make sure it is always positive.
+        Y -= (0.01 * percentage); // move slightly up.
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3004,29 +2877,29 @@ This class can be internal as it is only meant to be consumed by the control its
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Render</span><span class="p">(</span><span class="n">DrawingContext</span> <span class="n">context</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scoreHint</span> <span class="k">in</span> <span class="n">_scoreHintsCollection</span><span class="p">.</span><span class="nf">ToArray</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="c1">// If the game is running, move each flake to it's updated position</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">IsRunning</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">scoreHint</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">elapsedMilliseconds</span><span class="p">);</span>
-        <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="csharp">public override void Render(DrawingContext context)
+{
+    foreach (var scoreHint in _scoreHintsCollection.ToArray())
+    {
+        // If the game is running, move each flake to it's updated position
+        if (IsRunning)
+        {
+            scoreHint.Update(elapsedMilliseconds);
+        }
 
-        <span class="c1">// Use a formatted text to render the score hint.</span>
-        <span class="kt">var</span> <span class="n">formattedText</span> <span class="p">=</span>
-            <span class="k">new</span> <span class="nf">FormattedText</span><span class="p">(</span>
-                <span class="n">scoreHint</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(),</span>
-                <span class="n">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="p">,</span>
-                <span class="n">FlowDirection</span><span class="p">.</span><span class="n">LeftToRight</span><span class="p">,</span>
-                <span class="n">Typeface</span><span class="p">.</span><span class="n">Default</span><span class="p">,</span>
-                <span class="m">20</span><span class="p">,</span>
-                <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Yellow</span><span class="p">,</span> <span class="n">scoreHint</span><span class="p">.</span><span class="n">Opacity</span><span class="p">));</span>
+        // Use a formatted text to render the score hint.
+        var formattedText =
+            new FormattedText(
+                scoreHint.ToString(),
+                CultureInfo.InvariantCulture,
+                FlowDirection.LeftToRight,
+                Typeface.Default,
+                20,
+                new SolidColorBrush(Colors.Yellow, scoreHint.Opacity));
 
-        <span class="n">context</span><span class="p">.</span><span class="nf">DrawText</span><span class="p">(</span><span class="n">formattedText</span><span class="p">,</span> <span class="n">scoreHint</span><span class="p">.</span><span class="nf">GetTopLeftForViewport</span><span class="p">(</span><span class="n">Bounds</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Size</span><span class="p">(</span><span class="n">formattedText</span><span class="p">.</span><span class="n">Width</span><span class="p">,</span> <span class="n">formattedText</span><span class="p">.</span><span class="n">Height</span><span class="p">)));</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        context.DrawText(formattedText, scoreHint.GetTopLeftForViewport(Bounds, new Size(formattedText.Width, formattedText.Height)));
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -3061,7 +2934,7 @@ This class can be internal as it is only meant to be consumed by the control its
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-12-25 12:47:29 UTC
+Last updated 2026-04-07 19:04:53 +0200
 </div>
 </div>
 </body>

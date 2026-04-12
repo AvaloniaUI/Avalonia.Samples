@@ -2,6 +2,7 @@
 if (-not (Get-Command "ruby" -ErrorAction SilentlyContinue)) {
     Write-Error "Ruby is not installed. Please install Ruby first."
     exit 1
+}
 
 
 # Ensure asciidoctor-pdf is installed
