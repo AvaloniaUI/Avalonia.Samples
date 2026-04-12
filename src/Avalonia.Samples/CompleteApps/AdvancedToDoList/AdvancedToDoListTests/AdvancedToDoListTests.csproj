@@ -12,7 +12,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="XUnit" />
+        <PackageReference Include="XUnit.v3" />
         <PackageReference Include="xunit.runner.visualstudio" />
         <PackageReference Include="Avalonia.Headless.XUnit" />
     </ItemGroup>

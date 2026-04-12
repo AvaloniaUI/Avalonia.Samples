@@ -2,7 +2,6 @@ using AdvancedToDoList.ViewModels;
 using Avalonia.Headless.XUnit;
 using Avalonia.Threading;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace AdvancedToDoListTests.ViewModelTests;
 

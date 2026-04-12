@@ -23,8 +23,8 @@ public class HamburgerMenuSeparatorItem : HamburgerMenuItem
     /// <summary>
     /// Initializes static members of the HamburgerMenuSeparatorItem class.
     /// Overrides defaults to ensure:
-    /// - <see cref="Enabled"/> is <c>false</c> (so it cannot be clicked)
-    /// - <see cref="AutoHide"/> is <c>true</c> (so it hides automatically when the pane is narrow)
+    /// - <see cref="HamburgerMenuItem.Enabled"/> is <c>false</c> (so it cannot be clicked)
+    /// - <see cref="HamburgerMenuItem.AutoHide"/> is <c>true</c> (so it hides automatically when the pane is narrow)
     /// </summary>
     static HamburgerMenuSeparatorItem()
     {

@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 
 namespace SharedControls.Controls;
 
