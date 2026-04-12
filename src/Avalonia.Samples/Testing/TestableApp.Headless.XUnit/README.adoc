@@ -72,15 +72,15 @@ Project is generated from the Avalonia templates with a single major change need
 </ItemGroup>
 ----
 +
-This is needed in order to make controls marked with *Name* attribute visible in the tests project. But it can be avoided, if you use *window.Find<Button>("ButtonName")* method instead directly from the tests.
+This is needed to make controls marked with the *Name* attribute visible in the test project. But it can be avoided if you use *window.Find<Button>("ButtonName")* method instead directly from the tests.
 * Program.cs, App.axaml, App.axaml.cs
 +
-Default entry point and App definitions generated from the template. No additional changes required in order to make app testable.
+Default entry point and App definitions are generated from the template. No additional changes are required in order to make the app testable.
 
 * MainWindow.axaml, MainWindow.axaml.cs
 +
 The window contains two text boxes for user input, four buttons for arithmetic operations, and a text block to display the result. The buttons are bound to commands in the MainWindowViewModel.
-Important: all control that we want to have access to have *Name* attribute on them. This allows to programmatically click button or read text fro the text block.
+Important: all controls that we want to have access to have the *Name* attribute on them. This allows you to programmatically click the button or read text from the text block.
 
 * MainWindowViewModel.cs
 +
@@ -169,21 +169,21 @@ public void Should_Add_Numbers()
 
 Important notes from this test:
 
-* Instead of the typical [Fact] attribute, we need to use [AvaloniaFact] as it sets up the UI thread. Similarly, instead of [Theory], there is a [AvaloniaTheory] attribute.
+* Instead of the typical [Fact] attribute, we need to use [AvaloniaFact] as it sets up the UI thread. Similarly, instead of [Theory], there is an [AvaloniaTheory] attribute.
 * It's easier to test when you have some top level like a Window to start with
-* Window must be shown in order to get layout processed. Note, no actual window is created, as it's a headless platform.
+* Window must be shown to get layout processed. Note, no actual window is created, as it's a headless platform.
 * We can access control by their Name, as it was set in previous steps
-* There are many ways to simulate input in the window, commons ones are:
+* There are many ways to simulate input in the window, common ones are:
 ** Focus target control and send events through helper methods on the Window class, like KeyTextInput or KeyPress
 ** Raise event directly on the control using control.RaiseEvent() 
 ** Set text directly on the control property
 ** Set text directly to the view model
 +
-While setting text directly is the easiest way, it doesn't really how user would act in the real application, as it skips input processing completely. Although, for many test cases it is sufficient.
-* We can read properties to validate that value was actually changed
+While setting text directly is the easiest way, it doesn't really simulate how the user would act in the real application, as it skips input processing completely. Although, for many test cases it is enough.
+* We can read properties to validate that the value was actually changed
 
 == More
 
-While this sample was pretty simple, Headless platform provides more features such as taking a screenshot of the control, so it can be compared with expected, or having input extension methods.
+While this sample was pretty simple, a Headless platform provides more features such as taking a screenshot of the control, so it can be compared with expected, or having input extension methods.
 
-For more information please visit detailed documentation page: https://docs.avaloniaui.net/docs/concepts/headless/
+For more information, please visit the detailed documentation page: https://docs.avaloniaui.net/docs/concepts/headless/

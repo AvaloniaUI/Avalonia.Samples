@@ -6,10 +6,13 @@ namespace TestableApp.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
-    private double? _firstOperand, _secondOperand;
-
+    public partial double? FirstOperand { get; set; }
+    
     [ObservableProperty]
-    private string? _result;
+    public partial double? SecondOperand { get; set; }
+    
+    [ObservableProperty]
+    public partial string? Result { get; set; }
 
     [RelayCommand]
     private void Add()
