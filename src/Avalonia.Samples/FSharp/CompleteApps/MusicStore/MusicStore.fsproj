@@ -38,5 +38,6 @@
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
         <PackageReference Include="iTunesSearch" Version="1.0.44" />
+        <PackageReference Update="FSharp.Core" Version="10.1.201" />
     </ItemGroup>
 </Project>
