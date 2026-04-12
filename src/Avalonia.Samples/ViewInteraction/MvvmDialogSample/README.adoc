@@ -51,16 +51,16 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard
 
 == Before we start
 
-We assume you are already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
 
 
 == Solution 1 : Use ReactiveUI-Interactions
 
 WARNING: Solution 1 requires the use of Avalonia 11.2.0 or higher due to a breaking change in ReactiveUI.
 
-In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] in order to interact with your `View`.
+In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] to interact with your `View`.
 
-=== Step 1: Setup the ViewModel 
+=== Step 1: Set up the ViewModel 
 
 In our ViewModel we add a property for the `Interaction` which we can use later to interact with the `View`, for example, inside a `Command`:
 
@@ -146,7 +146,7 @@ Now we can set up the `XAML` as following. Mind the binding of the `Button` to o
 
 === Step 3: See it in action
 
-Running the App you should be able to select any files on your system.
+Running the App, you should be able to select any files on your system.
 
 image::_docs/result_2.png[ReactiveUI interaction sample]
 
@@ -172,7 +172,7 @@ IDisposable:: This interface helps us to unregister from event listeners
 
 In addition, we will add two methods:
 
-IDisposable RegisterHandler(Func<TInput, Task<TOutput>> handler):: This method will be used by the View to register the action to be performed.
+IDisposable RegisterHandler(Func<TInput, Task<TOutput>> handler):: The View will use this method to register the action to be performed.
 
 Task<TOutput> HandleAsync(TInput input):: This method will be called from the `ViewModel` with a given input and the `View` will return the requested output.
 
@@ -238,7 +238,7 @@ public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
 
 === Step 2: Prepare the ViewModel
 
-In our `CustomInteractionViewModel` we need to add a new instance of the `Interaction`. In our sample we want to provide a dialog title (`string`) as the input and we expect a list of selected files (`string[]?`)
+In our `CustomInteractionViewModel` we need to add a new instance of the `Interaction`. In our sample we want to provide a dialog title (`string`) as the input, and we expect a list of selected files (`string[]?`)
 
 [source,c#]
 ----

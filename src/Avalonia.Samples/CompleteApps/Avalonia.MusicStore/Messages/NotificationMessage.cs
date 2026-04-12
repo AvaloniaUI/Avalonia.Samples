@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-
-namespace Avalonia.MusicStore.Messages;
+﻿namespace Avalonia.MusicStore.Messages;
 
 public class NotificationMessage 
 {

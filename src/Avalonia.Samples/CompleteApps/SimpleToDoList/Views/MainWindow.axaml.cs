@@ -1,7 +1,4 @@
-using System.Linq;
 using Avalonia.Controls;
-using SimpleToDoList.Services;
-using SimpleToDoList.ViewModels;
 
 namespace SimpleToDoList.Views;
 

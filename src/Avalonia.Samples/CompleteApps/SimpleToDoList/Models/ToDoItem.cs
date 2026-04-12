@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace SimpleToDoList.Models;
+﻿namespace SimpleToDoList.Models;
 
 /// <summary>
 /// This is our Model for a simple ToDoItem. 

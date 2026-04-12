@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SimpleToDoList.Models;
-using SimpleToDoList.Services;
 
 namespace SimpleToDoList.ViewModels;
 

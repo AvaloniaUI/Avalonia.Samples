@@ -9,7 +9,7 @@
              x:DataType="viewModels:MusicStoreViewModel">
   <DockPanel>
     <StackPanel DockPanel.Dock="Top">
-      <TextBox Watermark="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
+      <TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
       <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
     </StackPanel>
     <Button Content="Buy Album"

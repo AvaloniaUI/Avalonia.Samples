@@ -49,17 +49,17 @@ Data-Annotation, Data-Validation, Exception, Error, Error-Message, Binding, MVVM
 
 == Before we start
 
-You should already know how to set up a new Avalonia project.Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`.In this sample we will show you three options to validate a property.It's up to you which one you prefer.You can also combine them.
+You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`.In this sample we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
 
 
 [#_approach_1_validate_a_property_using_dataannotations]
 == Approach 1 : Validate a Property using DataAnnotations
 
-In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property.To get started, please create a new project using the `Avalonia MVVM Template`.
+In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template`.
 
 [NOTE] 
 ====
-Beginning with Avalonia 12, the `DataAnnotations`-validation is disabled by default.If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your App.
+Beginning with Avalonia 12, the `DataAnnotations`-validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your App.
 
 [source,diff]
 .Program.cs
@@ -165,7 +165,7 @@ a| private Dictionary errors:: A `Dictionary` that caches the errors, so we don'
 
 protected void ClearErrors(string? propertyName = null):: This void will clear all errors for the given property name or all errors if `propertyName` was `null`. The `ErrorsChanged`-event will be raised.
 
-protected void AddError(string propertyName, string errorMessage):: This void will add a given error message for a given property by it's name. The `ErrorsChanged`-event will be raised.
+protected void AddError(string propertyName, string errorMessage):: This void will add a given error message for a given property by its name. The `ErrorsChanged`-event will be raised.
 |===
 
 TIP: the `protected` keyword helps us to make the properties or methods available in derived classes, but not from any external class.
@@ -341,7 +341,7 @@ The third option we want to show you is throwing an https://learn.microsoft.com/
 
 IMPORTANT: This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash of your application.
 
-=== Step 1: Setup the ViewModel
+=== Step 1: Set up the ViewModel
 
 Once again we add another file into the `ViewModels`-folder, called `ValidationUsingExceptionInsideSetterViewModel`. As before, also this class is added as a read-only property into our `MainWindowViewModel`:
 
@@ -395,11 +395,11 @@ public class ValidationUsingExceptionInsideSetterViewModel : ViewModelBase
 
 [TIP]
 ====
-Depending on your IDE-Settings the debugger may stop execution when the `Exception` is hit. You can safely click `Resume` or `Mute and Resume` since the exception will be handled by Avalonia.
+Depending on your IDE-Settings the debugger may stop execution when the `Exception` is hit. You can safely click `Resume` or `Mute and Resume` since Avalonia will handle the exception.
 ====
 
 
-=== Step 3: Setup the View
+=== Step 3: Set up the View
 
 We add another `TabItem` into our `TabControl`.
 

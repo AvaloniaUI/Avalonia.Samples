@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using Avalonia;
+﻿using Avalonia;
 
 namespace SnowflakesControlSample.Models;
 

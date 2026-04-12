@@ -49,7 +49,7 @@ FuncDataTemplate, DataTemplate, C#, Binding from code
 
 == Before we start
 
-You should already know what a `DataTemplate` is and how it works in Avalonia. If not, read more about it in the link:..\BasicDataTemplateSample[[Basic DataTemplate Sample\]].
+You should already know what a `DataTemplate` is and how it works in Avalonia. If not, read more about it in the link:../BasicDataTemplateSample[[Basic DataTemplate Sample\]].
 
 === FuncDataTemplate
 

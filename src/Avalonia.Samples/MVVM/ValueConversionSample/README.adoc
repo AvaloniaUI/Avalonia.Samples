@@ -479,7 +479,7 @@ Our view will be made of one `TextBox` which has an `Ellipse` as the `InnerLeftC
 
 [source,xml]
 ----
-<TextBox Watermark="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
+<TextBox PlaceholderText="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
     <TextBox.InnerLeftContent>
         <Ellipse Fill="{Binding $parent[TextBox].Text, Converter={x:Static conv:FuncValueConverters.StringToBrushConverter}}"
                  Width="20"

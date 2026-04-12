@@ -50,7 +50,7 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.
 
 == Before we start
 
-We assume you are already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
 
 NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package, which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
 
@@ -69,7 +69,7 @@ Additionally, we will add an interface called `IDialogParticipant` which any cla
 
 TIP: Technically we can also map to `object` or any other base class, but since we later on want to use extension methods, these will leak into any object. Having the interface introduced will only show the extension methods where they are useful. 
 
-Comming back to the DialogManager-class, let's add a static `Dictionary` where we can store the registered mappings between the context (for example: our `ViewModel`) and the `View` or `Control`, which we want to interact with.
+Coming back to the DialogManager-class, let's add a static `Dictionary` where we can store the registered mappings between the context (for example: our `ViewModel`) and the `View` or `Control`, which we want to interact with.
 
 [source,cs]
 ----
@@ -126,16 +126,26 @@ private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventA
     // Unregister any old registered context
     if (e.GetOldValue<IDialogParticipant>() is { } oldValue)
     {
-        RegistrationMapper.Remove(oldValue);
+        // Remove only if the current mapping still points to this sender
+        if (RegistrationMapper.TryGetValue(oldValue, out var currentSender) && currentSender == sender)
+        {
+            RegistrationMapper.Remove(oldValue);
+        }
     }
 
     // Register any new context
     if (e.GetNewValue<IDialogParticipant>() is { } newValue)
     {
-        RegistrationMapper.Add(newValue, sender);
+        RegistrationMapper[newValue] = sender;
         // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
-        // so neither the ViewModel nor the Visual is kept alive by the dictionary.
-        sender.DetachedFromVisualTree += (_, _) => RegistrationMapper.Remove(newValue);
+        // and detach the event handler to avoid accumulating closures across DataContext changes.
+        EventHandler<VisualTreeAttachmentEventArgs>? handler = null;
+        handler = (_, _) =>
+        {
+            RegistrationMapper.Remove(newValue);
+            sender.DetachedFromVisualTree -= handler;
+        };
+        sender.DetachedFromVisualTree += handler;
     }
 }
 ----
