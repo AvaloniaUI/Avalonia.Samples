@@ -50,11 +50,9 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.
 
 == Before we start
 
-We assume you already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+We assume you are already now how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
 
-NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
-
-WARNING: We use partial properties that were introduced in .NET 10. If you haven't updated yet, you need to add `<LangVersion>preview</LangVersion>` to a property group in your `.csproj` file. 
+NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package, which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
 
 == The Solution : Use a DialogService to show a Dialog
 
@@ -69,9 +67,9 @@ NOTE: We do not need to inherit `AvaloniaObject` even as we want to add `Registe
 
 Additionally, we will add an interface called `IDialogParticipant` which any class need to implement, that want to use the dialog manager. 
 
-TIP: Technically we can also map to `object` or any other base class, but since we later on want to use extension methods these will leak into any object. Having the interface introduce will only show the extension methods where they are useful. 
+TIP: Technically we can also map to `object` or any other base class, but since we later on want to use extension methods, these will leak into any object. Having the interface introduced will only show the extension methods where they are useful. 
 
-Comming back to the DialogManager-class, let's add a static `Dictionary` where we can store the registered mappings between the context (for example our `ViewModel`) and the `View` or `Control`, which we want to interact with.
+Comming back to the DialogManager-class, let's add a static `Dictionary` where we can store the registered mappings between the context (for example: our `ViewModel`) and the `View` or `Control`, which we want to interact with.
 
 [source,cs]
 ----
@@ -135,10 +133,14 @@ private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventA
     if (e.GetNewValue<IDialogParticipant>() is { } newValue)
     {
         RegistrationMapper.Add(newValue, sender);
+        // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
+        // so neither the ViewModel nor the Visual is kept alive by the dictionary.
+        sender.DetachedFromVisualTree += (_, _) => RegistrationMapper.Remove(newValue);
     }
 }
 ----
 
+NOTE: Because `RegistrationMapper` is a static dictionary, forgetting to remove entries would prevent both the ViewModel and the Visual from being garbage collected. The `DetachedFromVisualTree` handler above ensures entries are cleaned up automatically when, for example, a dialog window is closed.
 
 === Step 2: Add methods to look up the view
 
@@ -169,7 +171,7 @@ public static TopLevel? GetTopLevelForContext(IDialogParticipant context)
 
 === Step 3: Create extension methods
 
-If we are even more lazy, we can add some extension methods which we can use later to call a dialog in one line. To do this we add a new static class `DialogHelper` into our `Services`-folder. 
+If we are even more lazy, we can add some extension methods that we can use later to call a dialog in one line. To do this, we add a new static class `DialogHelper` into our `Services`-folder. 
 
 [source,cs]
 ----
@@ -204,13 +206,13 @@ public static class DialogHelper
                 Title = title ?? "Select any file(s)"
             });
 
-        // return the result
-        return storageFiles.Select(s => s.Name);
+        // return the result as full local paths where available, falling back to the file name
+        return storageFiles.Select(s => s.TryGetLocalPath() ?? s.Name);
     }
 }
 ----
 
-TIP: Please have a look in the samples code for some more possible options. The `DialogHelper` can be part of a separate controls library or part of your application. A mix is also possible.
+TIP: Please have a look in the sample code for some more possible options. The `DialogHelper` can be part of a separate controls library or part of your application. A mix is also possible.
 
 === Step 4: Usage
 

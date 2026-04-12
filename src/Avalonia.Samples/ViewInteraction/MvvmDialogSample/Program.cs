@@ -16,6 +16,7 @@ namespace MvvmDialogSample
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
+                .WithDeveloperTools()
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });

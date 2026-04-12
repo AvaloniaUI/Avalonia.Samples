@@ -37,6 +37,9 @@ public class DialogManager
         if (e.GetNewValue<IDialogParticipant>() is { } newValue)
         {
             RegistrationMapper.Add(newValue, sender);
+            // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
+            // so neither the ViewModel nor the Visual is kept alive by the dictionary.
+            sender.DetachedFromVisualTree += (_, _) => RegistrationMapper.Remove(newValue);
         }
     }
 
