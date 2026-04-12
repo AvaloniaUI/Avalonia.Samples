@@ -54,14 +54,14 @@ namespace BasicViewLocatorSample.ViewModels
         }
 
 
-        // We allow navigate back in any case
+        // We allow navigating back in any case
         public override bool CanNavigatePrevious
         {
             get => true;
             protected set => throw new NotSupportedException();
         }
 
-        // Update CanNavigateNext. Allow next page if E-Mail and Password are valid
+        // Update CanNavigateNext. Allow the next page if E-Mail and Password are valid
         private void UpdateCanNavigateNext()
         {
             CanNavigateNext = 

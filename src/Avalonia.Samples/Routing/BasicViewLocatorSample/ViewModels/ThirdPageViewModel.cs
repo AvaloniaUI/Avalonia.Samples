@@ -17,7 +17,7 @@ namespace BasicViewLocatorSample.ViewModels
             protected set => throw new NotSupportedException();
         }
 
-        // We navigate back form this page in any case
+        // We navigate back from this page in any case
         public override bool CanNavigatePrevious
         {
             get => true;
