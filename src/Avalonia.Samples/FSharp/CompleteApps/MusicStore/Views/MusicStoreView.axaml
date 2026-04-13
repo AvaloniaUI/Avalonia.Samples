@@ -11,7 +11,7 @@
     </Design.DataContext>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top">
-            <TextBox Watermark="Search for Albums...."
+            <TextBox PlaceholderText="Search for Albums...."
                      Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=400}" />
             <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
         </StackPanel>

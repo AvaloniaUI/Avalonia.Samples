@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Basic DataTemplate Sample</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2093,7 +1975,7 @@ pre.rouge .gs {
 <h2 id="_before_we_start">Before we start</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You should have a basic knowledge about string format in <code>C#</code> and about the <code>MVVM</code>-pattern.</p>
+<p>You should have basic knowledge about string format in <code>C#</code> and about the <code>MVVM</code>-pattern.</p>
 </div>
 <div class="sect2">
 <h3 id="_datatemplates">DataTemplates</h3>
@@ -2164,20 +2046,20 @@ pre.rouge .gs {
 <div class="sect2">
 <h3 id="_step_2_add_the_models">Step 2: Add the Models</h3>
 <div class="paragraph">
-<p>In a school there are students and teachers. They have in common, that they are persons having a fist name, a last name, an age and a sex. Sex is an <code>enum</code> which we have to define at first, so add a new file <code>Sex.cs</code> into your <code>Models</code> folder:</p>
+<p>In a school there are students and teachers. They have in common that they are persons having a first name, a last name, an age and a sex. Sex is an <code>enum</code> which we have to define at first, so add a new file <code>Sex.cs</code> into your <code>Models</code> folder:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">namespace</span> <span class="nn">BasicDataTemplateSample.Models</span>
-<span class="p">{</span>
-    <span class="c1">// Feel free to add or reorder the entries based on your needs.</span>
-    <span class="k">public</span> <span class="k">enum</span> <span class="n">Sex</span>
-    <span class="p">{</span>
-        <span class="n">Diverse</span><span class="p">,</span>
-        <span class="n">Female</span><span class="p">,</span>
-        <span class="n">Male</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">namespace BasicDataTemplateSample.Models
+{
+    // Feel free to add or reorder the entries based on your needs.
+    public enum Sex
+    {
+        Diverse,
+        Female,
+        Male
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2185,31 +2067,31 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">namespace</span> <span class="nn">BasicDataTemplateSample.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
-    <span class="p">{</span>
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the first name of the person. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="cs">namespace BasicDataTemplateSample.Models
+{
+    public class Person
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the first name of the person. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public string? FirstName { get; init; }
 
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the last name of the person. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
+        /// &lt;summary&gt;
+        /// Gets or sets the last name of the person. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public string? LastName { get; init; }
 
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the age of the person. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
+        /// &lt;summary&gt;
+        /// Gets or sets the age of the person. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public int Age { get; init; }
 
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the sex of the person. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="n">Sex</span> <span class="n">Sex</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        /// &lt;summary&gt;
+        /// Gets or sets the sex of the person. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public Sex Sex { get; init; }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2217,16 +2099,16 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">namespace</span> <span class="nn">BasicDataTemplateSample.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Student</span> <span class="p">:</span> <span class="n">Person</span>
-    <span class="p">{</span>
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the grade of the student. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Grade</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">namespace BasicDataTemplateSample.Models
+{
+    public class Student : Person
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the grade of the student. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public int Grade { get; init; }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2234,16 +2116,16 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">namespace</span> <span class="nn">BasicDataTemplateSample.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Teacher</span> <span class="p">:</span> <span class="n">Person</span>
-    <span class="p">{</span>
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// Gets or sets the subject that the teacher is teaching. You can only set this property on init.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">Subject</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">namespace BasicDataTemplateSample.Models
+{
+    public class Teacher : Person
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the subject that the teacher is teaching. You can only set this property on init.
+        /// &lt;/summary&gt;
+        public string? Subject { get; init; }
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2254,42 +2136,42 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">namespace</span> <span class="nn">BasicDataTemplateSample.ViewModels</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">MainWindowViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-    <span class="p">{</span>
-        <span class="c1">/// &lt;summary&gt;</span>
-        <span class="c1">/// As this is a list of Persons, we can add Students and Teachers here.</span>
-        <span class="c1">/// &lt;/summary&gt;</span>
-        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">People</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;()</span>
-        <span class="p">{</span>
-            <span class="k">new</span> <span class="n">Teacher</span>
-            <span class="p">{</span>
-                <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Mr."</span><span class="p">,</span>
-                <span class="n">LastName</span> <span class="p">=</span> <span class="s">"X"</span><span class="p">,</span>
-                <span class="n">Age</span> <span class="p">=</span> <span class="m">55</span><span class="p">,</span>
-                <span class="n">Sex</span><span class="p">=</span><span class="n">Sex</span><span class="p">.</span><span class="n">Diverse</span><span class="p">,</span>
-                <span class="n">Subject</span> <span class="p">=</span> <span class="s">"My Favorite Subject"</span>
-            <span class="p">},</span>
-            <span class="k">new</span> <span class="n">Student</span>
-            <span class="p">{</span>
-                <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Hello"</span><span class="p">,</span>
-                <span class="n">LastName</span> <span class="p">=</span> <span class="s">"World"</span><span class="p">,</span>
-                <span class="n">Age</span> <span class="p">=</span> <span class="m">17</span><span class="p">,</span>
-                <span class="n">Sex</span><span class="p">=</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Male</span><span class="p">,</span>
-                <span class="n">Grade</span><span class="p">=</span><span class="m">12</span>
-            <span class="p">},</span>
-            <span class="k">new</span> <span class="n">Student</span>
-            <span class="p">{</span>
-                <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Hello"</span><span class="p">,</span>
-                <span class="n">LastName</span> <span class="p">=</span> <span class="s">"Kitty"</span><span class="p">,</span>
-                <span class="n">Age</span> <span class="p">=</span> <span class="m">12</span><span class="p">,</span>
-                <span class="n">Sex</span><span class="p">=</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Female</span><span class="p">,</span>
-                <span class="n">Grade</span><span class="p">=</span><span class="m">6</span>
-            <span class="p">}</span>
-        <span class="p">};</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">namespace BasicDataTemplateSample.ViewModels
+{
+    public class MainWindowViewModel : ViewModelBase
+    {
+        /// &lt;summary&gt;
+        /// As this is a list of Persons, we can add Students and Teachers here.
+        /// &lt;/summary&gt;
+        public List&lt;Person&gt; People { get; } = new List&lt;Person&gt;()
+        {
+            new Teacher
+            {
+                FirstName = "Mr.",
+                LastName = "X",
+                Age = 55,
+                Sex=Sex.Diverse,
+                Subject = "My Favorite Subject"
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "World",
+                Age = 17,
+                Sex= Sex.Male,
+                Grade=12
+            },
+            new Student
+            {
+                FirstName = "Hello",
+                LastName = "Kitty",
+                Age = 12,
+                Sex= Sex.Female,
+                Grade=6
+            }
+        };
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2300,27 +2182,27 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="na">x:Class=</span><span class="s">"BasicDataTemplateSample.Views.MainWindow"</span>
-        <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-        <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-        <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-        <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-        <span class="na">xmlns:vm=</span><span class="s">"using:BasicDataTemplateSample.ViewModels"</span>
-        <span class="na">Title=</span><span class="s">"BasicDataTemplateSample"</span>
-        <span class="na">Height=</span><span class="s">"350"</span>
-		<span class="na">Width=</span><span class="s">"350"</span>
-        <span class="na">x:CompileBindings=</span><span class="s">"true"</span>
-        <span class="na">x:DataType=</span><span class="s">"vm:MainWindowViewModel"</span>
-        <span class="na">Icon=</span><span class="s">"/Assets/avalonia-logo.ico"</span>
-        <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window x:Class="BasicDataTemplateSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+        Title="BasicDataTemplateSample"
+        Height="350"
+		Width="350"
+        x:CompileBindings="true"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d"&gt;
 
-    <span class="nt">&lt;Design.DataContext&gt;</span>
-        <span class="nt">&lt;vm:MainWindowViewModel</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Design.DataContext&gt;</span>
+    &lt;Design.DataContext&gt;
+        &lt;vm:MainWindowViewModel /&gt;
+    &lt;/Design.DataContext&gt;
 
-    <span class="nt">&lt;ListBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding People}"</span> <span class="nt">/&gt;</span>
+    &lt;ListBox ItemsSource="{Binding People}" /&gt;
 
-<span class="nt">&lt;/Window&gt;</span></code></pre>
+&lt;/Window&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2345,10 +2227,10 @@ pre.rouge .gs {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="s">$"</span><span class="p">{</span><span class="n">FirstName</span><span class="p">}</span><span class="s"> </span><span class="p">{</span><span class="n">LastName</span><span class="p">}</span><span class="s"> (Age: </span><span class="p">{</span><span class="n">Age</span><span class="p">}</span><span class="s">, Sex: </span><span class="p">{</span><span class="n">Sex</span><span class="p">}</span><span class="s">)"</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">public override string ToString()
+{
+    return $"{FirstName} {LastName} (Age: {Age}, Sex: {Sex})";
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2390,34 +2272,34 @@ We are using string interpolation to format the string. See the <a href="https:/
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- remember to add the needed namespace model --&gt;</span>
-<span class="c">&lt;!-- xmlns:model="using:BasicDataTemplateSample.Models" --&gt;</span>
-<span class="nt">&lt;Window.DataTemplates&gt;</span>
-    <span class="c">&lt;!--  Add a DataTemplate for any Person  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"model:Person"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Grid</span> <span class="na">ColumnDefinitions=</span><span class="s">"Auto, *"</span> <span class="na">RowDefinitions=</span><span class="s">"Auto, Auto, Auto, Auto"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span> <span class="na">Text=</span><span class="s">"First Name: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding FirstName}"</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- remember to add the needed namespace model --&gt;
+&lt;!-- xmlns:model="using:BasicDataTemplateSample.Models" --&gt;
+&lt;Window.DataTemplates&gt;
+    &lt;!--  Add a DataTemplate for any Person  --&gt;
+    &lt;DataTemplate DataType="model:Person"&gt;
+        &lt;Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto"&gt;
+            &lt;TextBlock Grid.Row="0" Text="First Name: " /&gt;
+            &lt;TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Text=</span><span class="s">"Last Name: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding LastName}"</span> <span class="nt">/&gt;</span>
+            &lt;TextBlock Grid.Row="1" Text="Last Name: " /&gt;
+            &lt;TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="na">Text=</span><span class="s">"Age: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding Age, StringFormat={}{0} years}"</span> <span class="nt">/&gt;</span>
+            &lt;TextBlock Grid.Row="2" Text="Age: " /&gt;
+            &lt;TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span> <span class="na">Text=</span><span class="s">"Sex: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding Sex}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Grid&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
-<span class="nt">&lt;/Window.DataTemplates&gt;</span></code></pre>
+            &lt;TextBlock Grid.Row="3" Text="Sex: " /&gt;
+            &lt;TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" /&gt;
+        &lt;/Grid&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Window.DataTemplates&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2427,7 +2309,7 @@ We are using string interpolation to format the string. See the <a href="https:/
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Also if we use <code>Window.DataTemplates</code> in this sample, it can also be <code>App.DataTemplates</code> or inside any other control.
+Also, if we use <code>Window.DataTemplates</code> in this sample, it can also be <code>App.DataTemplates</code> or inside any other control.
 </td>
 </tr>
 </table>
@@ -2447,40 +2329,40 @@ Also if we use <code>Window.DataTemplates</code> in this sample, it can also be 
 <div class="sect2">
 <h3 id="MoreSpecificDataTemplates">Step 3: Create more specific DataTemplates</h3>
 <div class="paragraph">
-<p>But wait, <code>Student</code> and <code>Teacher</code> look exactly the same. Moreover the additional information we have about them is not visible. Let&#8217;s see how we can improve this.</p>
+<p>But wait, <code>Student</code> and <code>Teacher</code> look exactly the same. Moreover, the additional information we have about them is not visible. Let&#8217;s see how we can improve this.</p>
 </div>
 <div class="paragraph">
 <p>We want to reuse the common <code>DataTemplate</code> for <code>Name</code>, <code>Age</code> and <code>Sex</code>. If we add more specific <code>DataTemplates</code>, only the first matching <code>DataTemplate</code> will be applied. So we will move the <code>DataTemplate</code> into <code>Window.Resources</code>. That way we can call it explicitly:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window.Resources&gt;</span>
-    <span class="c">&lt;!--  Add a DataTemplate for any Person  --&gt;</span>
-    <span class="c">&lt;!--  We add this to the Resources section, so we can access it via it's Key explicitly.  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">x:Key=</span><span class="s">"My.DataTemplates.Person"</span> <span class="na">DataType=</span><span class="s">"model:Person"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Grid</span> <span class="na">ColumnDefinitions=</span><span class="s">"Auto, *"</span> <span class="na">RowDefinitions=</span><span class="s">"Auto, Auto, Auto, Auto"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span> <span class="na">Text=</span><span class="s">"First Name: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding FirstName}"</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window.Resources&gt;
+    &lt;!--  Add a DataTemplate for any Person  --&gt;
+    &lt;!--  We add this to the Resources section, so we can access it via it's Key explicitly.  --&gt;
+    &lt;DataTemplate x:Key="My.DataTemplates.Person" DataType="model:Person"&gt;
+        &lt;Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto"&gt;
+            &lt;TextBlock Grid.Row="0" Text="First Name: " /&gt;
+            &lt;TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="{Binding FirstName}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Text=</span><span class="s">"Last Name: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding LastName}"</span> <span class="nt">/&gt;</span>
+            &lt;TextBlock Grid.Row="1" Text="Last Name: " /&gt;
+            &lt;TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding LastName}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="na">Text=</span><span class="s">"Age: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding Age, StringFormat={}{0} years}"</span> <span class="nt">/&gt;</span>
+            &lt;TextBlock Grid.Row="2" Text="Age: " /&gt;
+            &lt;TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding Age, StringFormat={}{0} years}" /&gt;
 
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span> <span class="na">Text=</span><span class="s">"Sex: "</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span>
-                       <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                       <span class="na">Text=</span><span class="s">"{Binding Sex}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Grid&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
-<span class="nt">&lt;/Window.Resources&gt;</span></code></pre>
+            &lt;TextBlock Grid.Row="3" Text="Sex: " /&gt;
+            &lt;TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="{Binding Sex}" /&gt;
+        &lt;/Grid&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Window.Resources&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2488,26 +2370,26 @@ Also if we use <code>Window.DataTemplates</code> in this sample, it can also be 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window.DataTemplates&gt;</span>
-    <span class="c">&lt;!--  Add a DataTemplate for a Student  --&gt;</span>
-    <span class="c">&lt;!--  Mind the order of the Templates. Begin with the most specific first.  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"model:Student"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;StackPanel&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">FontWeight=</span><span class="s">"Bold"</span> <span class="na">Text=</span><span class="s">"{Binding Grade, StringFormat='I am a student in {0}. grade'}"</span> <span class="nt">/&gt;</span>
-            <span class="c">&lt;!--  We re-use the PersonTemplate here by using DynamicResource  --&gt;</span>
-            <span class="nt">&lt;ContentControl</span> <span class="na">Content=</span><span class="s">"{Binding}"</span> <span class="na">ContentTemplate=</span><span class="s">"{DynamicResource My.DataTemplates.Person}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/StackPanel&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window.DataTemplates&gt;
+    &lt;!--  Add a DataTemplate for a Student  --&gt;
+    &lt;!--  Mind the order of the Templates. Begin with the most specific first.  --&gt;
+    &lt;DataTemplate DataType="model:Student"&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" /&gt;
+            &lt;!--  We re-use the PersonTemplate here by using DynamicResource  --&gt;
+            &lt;ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/DataTemplate&gt;
 
-    <span class="c">&lt;!--  Add a DataTemplate for a Teacher  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"model:Teacher"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;StackPanel&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">FontWeight=</span><span class="s">"Bold"</span> <span class="na">Text=</span><span class="s">"{Binding Subject, StringFormat='I am a teacher for: &amp;quot;{0}&amp;quot;'}"</span> <span class="nt">/&gt;</span>
-            <span class="c">&lt;!--  We use a UserControl here to display the data  --&gt;</span>
-            <span class="nt">&lt;ContentControl</span> <span class="na">Content=</span><span class="s">"{Binding}"</span> <span class="na">ContentTemplate=</span><span class="s">"{DynamicResource My.DataTemplates.Person}"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/StackPanel&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
-<span class="nt">&lt;/Window.DataTemplates&gt;</span></code></pre>
+    &lt;!--  Add a DataTemplate for a Teacher  --&gt;
+    &lt;DataTemplate DataType="model:Teacher"&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &amp;quot;{0}&amp;quot;'}" /&gt;
+            &lt;!--  We use a UserControl here to display the data  --&gt;
+            &lt;ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Window.DataTemplates&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2529,7 +2411,7 @@ We use <code>StringFormat</code> in the <code>Bindings</code>. if you want to kn
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. <code>Poodle &#8594; Dog &#8594; Animal</code> not <code>Animal &#8594; Dog &#8594; Poodle</code>). <a href="https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order">[more in the docs]</a>
+The order of DataTemplates can be important. You need to order them from most-specific to least-specific (e.g. <code>Poodle &#8594; Dog &#8594; Animal</code> not <code>Animal &#8594; Dog &#8594; Poodle</code>). <a href="https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order">[more in the docs]</a>
 </td>
 </tr>
 </table>
@@ -2552,7 +2434,7 @@ The order of DataTemplates can be important. You need to order them form most-sp
 <h2 id="_approach_3_place_a_usercontrol_inside_a_datatemplate">Approach 3 : Place a UserControl inside a DataTemplate</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you don&#8217;t want to use <code>Resources</code> for the reused parts, you can also create a <a href="https://docs.avaloniaui.net/docs/controls/usercontrol">[<code>UserControl</code>]</a> for it.</p>
+<p>If you don&#8217;t want to use <code>Resources</code> for the reused parts, you can also create a <a href="https://docs.avaloniaui.net/docs/reference/controls/usercontrol">[<code>UserControl</code>]</a> for it.</p>
 </div>
 <div class="sect2">
 <h3 id="_step_1_add_a_new_usercontrol">Step 1: Add a new UserControl</h3>
@@ -2561,31 +2443,31 @@ The order of DataTemplates can be important. You need to order them form most-sp
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">x:Class=</span><span class="s">"BasicDataTemplateSample.Views.PersonView"</span>
-             <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span> <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span> <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-             <span class="na">xmlns:model=</span><span class="s">"using:BasicDataTemplateSample.Models"</span> <span class="na">xmlns:vm=</span><span class="s">"using:BasicDataTemplateSample.ViewModels"</span>
-             <span class="na">d:DesignHeight=</span><span class="s">"450"</span> <span class="na">d:DesignWidth=</span><span class="s">"800"</span>
-             <span class="na">x:CompileBindings=</span><span class="s">"True"</span> <span class="na">x:DataType=</span><span class="s">"model:Person"</span>
-             <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Grid</span> <span class="na">ColumnDefinitions=</span><span class="s">"Auto, *"</span> <span class="na">RowDefinitions=</span><span class="s">"Auto, Auto, Auto, Auto"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span> <span class="na">Text=</span><span class="s">"First Name: "</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"0"</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding FirstName}"</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl x:Class="BasicDataTemplateSample.Views.PersonView"
+             xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:BasicDataTemplateSample.Models" xmlns:vm="using:BasicDataTemplateSample.ViewModels"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:CompileBindings="True" x:DataType="model:Person"
+             mc:Ignorable="d"&gt;
+    &lt;Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto"&gt;
+        &lt;TextBlock Grid.Row="0" Text="First Name: " /&gt;
+        &lt;TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding FirstName}" /&gt;
 
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Text=</span><span class="s">"Last Name: "</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding LastName}"</span> <span class="nt">/&gt;</span>
+        &lt;TextBlock Grid.Row="1" Text="Last Name: " /&gt;
+        &lt;TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="{Binding LastName}" /&gt;
 
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="na">Text=</span><span class="s">"Age: "</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding Age, StringFormat={}{0} years}"</span> <span class="nt">/&gt;</span>
+        &lt;TextBlock Grid.Row="2" Text="Age: " /&gt;
+        &lt;TextBlock Grid.Row="2" Grid.Column="1"
+                   Text="{Binding Age, StringFormat={}{0} years}" /&gt;
 
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span> <span class="na">Text=</span><span class="s">"Sex: "</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"3"</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding Sex}"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Grid&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+        &lt;TextBlock Grid.Row="3" Text="Sex: " /&gt;
+        &lt;TextBlock Grid.Row="3" Grid.Column="1"
+                   Text="{Binding Sex}" /&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2596,30 +2478,30 @@ The order of DataTemplates can be important. You need to order them form most-sp
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- remember to add the needed namespace view --&gt;</span>
-<span class="c">&lt;!-- xmlns:view="using:BasicDataTemplateSample.Views" --&gt;</span>
-<span class="nt">&lt;Window.DataTemplates&gt;</span>
-    <span class="c">&lt;!--  Add a DataTemplate for a Student  --&gt;</span>
-    <span class="c">&lt;!--  Mind the order of the Templates. Begin with the most specific first.  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"model:Student"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;StackPanel&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">FontWeight=</span><span class="s">"Bold"</span> <span class="na">Text=</span><span class="s">"{Binding Grade, StringFormat='I am a student in {0}. grade'}"</span> <span class="nt">/&gt;</span>
-            <span class="c">&lt;!--  We use a UserControl here to display the data  --&gt;</span>
-            <span class="c">&lt;!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly--&gt;</span>
-            <span class="nt">&lt;view:PersonView</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/StackPanel&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- remember to add the necessary namespace view --&gt;
+&lt;!-- xmlns:view="using:BasicDataTemplateSample.Views" --&gt;
+&lt;Window.DataTemplates&gt;
+    &lt;!--  Add a DataTemplate for a Student  --&gt;
+    &lt;!--  Mind the order of the Templates. Begin with the most specific first.  --&gt;
+    &lt;DataTemplate DataType="model:Student"&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" /&gt;
+            &lt;!--  We use a UserControl here to display the data  --&gt;
+            &lt;!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly--&gt;
+            &lt;view:PersonView /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/DataTemplate&gt;
 
-    <span class="c">&lt;!--  Add a DataTemplate for a Teacher  --&gt;</span>
-    <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"model:Teacher"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;StackPanel&gt;</span>
-            <span class="nt">&lt;TextBlock</span> <span class="na">FontWeight=</span><span class="s">"Bold"</span> <span class="na">Text=</span><span class="s">"{Binding Subject, StringFormat='I am a teacher for: &amp;quot;{0}&amp;quot;'}"</span> <span class="nt">/&gt;</span>
-            <span class="c">&lt;!--  We use a UserControl here to display the data  --&gt;</span>
-            <span class="c">&lt;!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly--&gt;</span>
-            <span class="nt">&lt;view:PersonView</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/StackPanel&gt;</span>
-    <span class="nt">&lt;/DataTemplate&gt;</span>
-<span class="nt">&lt;/Window.DataTemplates&gt;</span></code></pre>
+    &lt;!--  Add a DataTemplate for a Teacher  --&gt;
+    &lt;DataTemplate DataType="model:Teacher"&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &amp;quot;{0}&amp;quot;'}" /&gt;
+            &lt;!--  We use a UserControl here to display the data  --&gt;
+            &lt;!--  Note: The UserControl will inherit the DataContext, so we don't need to set it explicitly--&gt;
+            &lt;view:PersonView /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/DataTemplate&gt;
+&lt;/Window.DataTemplates&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2657,7 +2539,7 @@ The order of DataTemplates can be important. You need to order them form most-sp
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-06 19:42:36 UTC
+Last updated 2026-04-13 18:56:09 +0200
 </div>
 </div>
 </body>

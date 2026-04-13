@@ -101,24 +101,16 @@ Let's make sure you use correct version of CommunityToolkit.Mvvm:
  - Select 'Edit' -> 'Edit Avalonia.MusicStore.csproj'
 
 [[prepare-project-for-partial-properties, Setup the project]]
-In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.0 and 
-Avalonia version no older than 11.3.0.
+In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.2 and 
+Avalonia version no older than 11.3.0 or 12.0.0.
 
 .Update nuget packages
 ```xml
-<PackageReference Include="Avalonia" Version="11.3.0" />
-<PackageReference Include="Avalonia.Desktop" Version="11.3.0" />
-<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" />
-<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+<PackageReference Include="Avalonia" Version="12.0.0" />
+<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 ```
-In the same file enable preview C# language features:
-
-.Within the _PropertyGroup_ section, add the following line:
-```xml
-<LangVersion>preview</LangVersion>
-```
-
-This setting enables support for the latest C# features required by this tutorial, including partial properties introduced in C# 13.
 
 Now take some time to review the files and folders that the solution template created. You will see that the following the MVVM pattern, these folders were created:
 
@@ -670,7 +662,7 @@ Follow this procedure to add the user control and constituent controls for the d
 <UserControl ... >
   <DockPanel>
     <StackPanel DockPanel.Dock="Top">
-      <TextBox Watermark="Search for Albums...." />
+      <TextBox PlaceholderText="Search for Albums...." />
       <ProgressBar IsIndeterminate="True"  />
     </StackPanel>
       <Button Content="Buy Album" 
@@ -735,7 +727,7 @@ namespace Avalonia.MusicStore.ViewModels
 ```
 This setup allows you to use attributes like `[ObservableProperty]`, which automatically generate backing fields and property change notifications needed for UI binding.
 
-NOTE: You can learn more about `[ObservableProperty]` and `INotifyPropertyChanged` https://docs.avaloniaui.net/docs/guides/data-binding/inotifypropertychanged[[here\]].
+NOTE: You can learn more about `[ObservableProperty]` and `INotifyPropertyChanged` https://docs.avaloniaui.net/docs/data-binding/inotifypropertychanged[[here\]].
 
 At this stage, you will create two properties for the search application logic:
 
@@ -775,7 +767,7 @@ Follow this procedure to add data binding to the view:
     <!-- ... -->
     <DockPanel>
       <StackPanel DockPanel.Dock="Top">
-          <TextBox Watermark="Search for Albums...." Text="{Binding SearchText}" />
+          <TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText}" />
         <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
       </StackPanel>
       <Button Content="Buy Album"
@@ -1150,7 +1142,7 @@ private async Task<Bitmap?> LoadCoverAsync()
 
 NOTE: Note that as the view model properties will not change in the UI during runtime, they have no setter and a plain getter.
 
-TIP: Since we directly reference `Avalonia.Media.Imaging.Bitmap` in the view model, we are slightly breaking the MVVM pattern by introducing a UI framework dependency in the view model. In a more complex app, you might want to avoid this by introducing a separate service to handle image loading. A possible solution is to create a helper class as shown https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-image-files[[here\]].
+TIP: Since we directly reference `Avalonia.Media.Imaging.Bitmap` in the view model, we are slightly breaking the MVVM pattern by introducing a UI framework dependency in the view model. In a more complex app, you might want to avoid this by introducing a separate service to handle image loading. A possible solution is to create a helper class as shown https://docs.avaloniaui.net/docs/data-binding/how-to-bind-image-files[[here\]].
 
 ==== Start the Search
 
@@ -1161,7 +1153,7 @@ Follow this procedure to trigger the search with a short delay when the search t
 - Find the line with SearchText binding and add a Delay property as shown below:
 +
 ```xml
-<TextBox Watermark="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
+<TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
 ```
 +
 NOTE:`Delay=400` ensures that input is only propagated to the view model after the user pauses for 400ms, preventing unnecessary search calls.
@@ -1399,7 +1391,7 @@ This means that you will not waste large amounts of memory to display the album 
 
 Also notice how the `LoadCover` method is coded to run asynchronously, and on a background thread. This is so that the UI thread does not get blocked and make the UI unresponsive. 
 
-TIP: Avalonia has a special operator `^` that you can use in data bindings to indicate that the bound property is a `Task<T>`. This operator will automatically unwrap the task and return the result when it is available. You used this operator in the album view XAML earlier. See https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-to-a-task-result[[Avalonia docs\]] for more information about this operator.
+TIP: Avalonia has a special operator `^` that you can use in data bindings to indicate that the bound property is a `Task<T>`. This operator will automatically unwrap the task and return the result when it is available. You used this operator in the album view XAML earlier. See https://docs.avaloniaui.net/docs/data-binding/how-to-bind-to-a-task-result[[Avalonia docs\]] for more information about this operator.
 
 .This is how the album covers now appear in the search results
 image::_docs/20_displaying_images.png[Displaying images for the albums]

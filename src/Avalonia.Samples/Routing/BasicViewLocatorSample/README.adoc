@@ -58,9 +58,9 @@ You should already know what the `MVVM` Pattern is and what `DataTemplates` in A
 
 A `ViewLocator` is a class that helps your App to select the correct visual representation of a given `ViewModel`. In Avalonia this class normally implements the `IDataTemplate`-interface, so it can be seen as a https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample[[custom `DataTemplate`\]].
 
-We can add a class called `ViewLocator` which can be used to create a new instance of a view for the given data object. In this sample we are using reflection to get the needed views. You can also use different approaches such as a `switch`-statement or a source generator.
+We can add a class called `ViewLocator` which can be used to create a new instance of a view for the given data object. In this sample we are using reflection to get the necessary views. You can also use different approaches such as a `switch`-statement or a source generator.
 
-NOTE: If you have created your projects using the Avalonia version 0.10.x, you might have already noticed that a file called `ViewLocator.cs` was created. In Avalonia 11.0 or later you need to implement this class on your own if needed.
+TIP: If you create the project using the IDE of your choice, you can opt to create a `ViewLocator` class. If you didn't do it, just create a new class called `ViewLocator` in the root of your project and add the following code to it:
 
 [source,cs]
 ----
@@ -107,7 +107,7 @@ bool Match(object? data)::
 This function will return `true` if the given object derives from `ViewModelBase`. If your `ViewModels` have a different base-class, feel free to change this line to whatever you need. 
 
 Control Build(object? data)::
-This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First of all the full name of the ViewModel is extracted, for example:
+This function uses https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection[[`Reflection`\]] to create a new instance of the `View` representing the given `ViewModel`. First, the full name of the ViewModel is extracted, for example:
 +
 `MyAppsNameSpace.ViewModels.MyViewModel`
 +
@@ -115,9 +115,11 @@ Now all occurrences of `ViewModel` will be replaced by `View`:
 +
 `MyAppsNameSpace.Views.MyView`
 +
-In the next step the `ViewLocator` tries to get a `Type` of object with the given name. If it finds such a `Type`, it will create and return a new instance of the given `Type`. If it didn't find a matching `Type`, it returns a `TextBlock` with a not found message. 
+In the next step the `ViewLocator` tries to get a `Type` of an object with the given name. If it finds such a `Type`, it will create and return a new instance of the given `Type`. If it didn't find a matching `Type`, it returns a `TextBlock` with a not found message. 
 
-NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and have "ViewModel" inside it's name. The `View` on the other hand must be in the `Views`-folder and have `View` in it's name. If you don't like this convention, feel free to change it to your needs. 
+NOTE: By convention the `ViewModel` must be within the `ViewModels`-folder and have "ViewModel" inside its name. The `View` on the other hand must be in the `Views`-folder and have `View` in its name. If you don't like this convention, feel free to change it to your needs. 
+
+TIP: You can also use a `switch`-statement, a `Dictionary` or a source generator instead of reflection. Reflection is not the most performant way to get the correct view, but it is the most flexible one as you don't need to change your `ViewLocator` if you add new pages.
 
 === Where do I find the ViewLocator instance? 
 
@@ -135,7 +137,7 @@ If no other `DataTemplate` matches your object, this instance of the `ViewLocato
 
 === Can I have more than one ViewLocator?
 
-Sometimes your `ViewModels` and `Views` may be stored in a shared library. If that is the case, you can add several `ViewLocator` classes. Just remember to initiate each one in `App.DataTemplates`.
+Sometimes your `ViewModels` and `Views` may be stored in a shared library. If that is the case, you can add several `ViewLocator` classes. Remember to initiate each one in `App.DataTemplates`.
 
 == The Solution : Usage of ViewLocator
 
@@ -148,7 +150,7 @@ Create a new project using the "Avalonia MVVM Template".
 [#base-class]
 === Step 2: Add a base class for the Page-ViewModels
 
-We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. To achieve this we can either create a new `base-class` or an `interface`. In this sample we will create an https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract[[`abstract`\]] `base-class` which itself derives from `ViewModelBase`. The properties itself are also marked as `abstract` which means we have to override them in any `class` that inherits our `base-class`.
+We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. To achieve this, we can either create a new `base-class` or an `interface`. In this sample we will create an https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract[[`abstract`\]] `base-class` which itself derives from `ViewModelBase`. The properties itself are also marked as `abstract` which means we have to override them in any `class` that inherits our `base-class`.
 
 In the folder `ViewModels` create the file `PageViewModelBase.cs`:
 
@@ -171,17 +173,17 @@ public abstract class PageViewModelBase : ViewModelBase
 }
 ----
 
-NOTE: the `protected`-modifier let's us implement a setter that is not public accessible, but can be overridden in derived classes. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected[[Microsoft Docs\]]
+NOTE: the `protected`-modifier lets us implement a setter that is not publicly accessible, but can be overridden in derived classes. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected[[Microsoft Docs\]]
 
 === Step 3: Create your PageViewModels
 
-Let's create a `ViewModel` for each Wizard page we need. Each `PageViewModel` must implement the above created <<base-class,base-class>>. 
+Let's create a `ViewModel` for each Wizard page we need. Each `PageViewModel` must implement the earlier introduced <<base-class,base-class>>. 
 
 NOTE: You need to `override` all the `abstract` properties of our `base-class`. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/override[[Microsoft Docs\]]
 
 ==== FirstPageViewModel
 
-The fist page will be our welcome page. It has a `Title` and a `Message`. The user can go to the next page in any case, but there is no page to go back to. So we don't need to implement the `setter`. To indicate that we throw a https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception[[`NotSupportedException`\]]. 
+The first page will be our welcome page. It has a `Title` and a `Message`. The user can go to the next page in any case, but there is no page to go back to. So we don't need to implement the `setter`. To indicate that we throw a https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception[[`NotSupportedException`\]]. 
 
 [source,cs]
 ----
@@ -218,7 +220,7 @@ public class FirstPageViewModel : PageViewModelBase
 
 ==== SecondPageViewModel
 
-This page will have two input fields called `MailAddress` and `Password`. Inside the constructor of this class we will listen to changes of these properties and set `CanNavigateNext` to `true` if both properties matches the requirements. 
+This page will have two input fields called `MailAddress` and `Password`. Inside the constructor of this class we will listen to changes of these properties and set `CanNavigateNext` to `true` if both properties match the requirements. 
 
 The requirements are: 
 - `MailAddress` may not be empty
@@ -291,7 +293,23 @@ public class SecondPageViewModel : PageViewModelBase
 }
 ----
 
-TIP: We use `DataAnnotations` to validate the user input inside the UI. This is totally optional. You can read more about in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]].
+TIP: We use `DataAnnotations` to validate the user input inside the UI. This is totally optional. You can read more about it in the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[Microsoft Docs\]].
+
+[NOTE] 
+====
+Using Avalonia 12.0 or higher, you need to opt in for `DataAnnotations` by adding the following line to your `Program.cs`:
+
+[source,diff]
+----
+public static AppBuilder BuildAvaloniaApp()
+    => AppBuilder.Configure<App>()
+        .UsePlatformDetect()
+        .LogToTrace()
+        .WithDeveloperTools()
++       .WithDataAnnotationsValidation() // This is needed to use the validation using Attributes in the ViewModel
+        .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
+----
+====
 
 ==== ThirdPageViewModel
 
@@ -325,7 +343,7 @@ public class ThirdPageViewModel : PageViewModelBase
 
 === Step 4: Create the Page-Views
 
-Now we will create an https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for each page. 
+Now we will create a https://docs.avaloniaui.net/docs/reference/controls/usercontrol[[`UserControl`\]] for each page. 
 
 ==== FirstPageView
 
@@ -397,14 +415,14 @@ TIP: If you set any `PasswordChar` to any `TextBox` you will get a password inpu
         <TextBox VerticalAlignment="Center"
                  FontSize="16"
                  Text="{Binding MailAddress}"
-                 Watermark="E-Mail Address"
-				 UseFloatingWatermark="True"/>
+                 PlaceholderText="E-Mail Address"
+				 UseFloatingPlaceholder="True"/>
 		<TextBox VerticalAlignment="Center"
                  FontSize="16"
 				 PasswordChar="$"
                  Text="{Binding Password}"
-                 Watermark="Password"
-				 UseFloatingWatermark="True"/>
+                 PlaceholderText="Password"
+				 UseFloatingPlaceholder="True"/>
     </StackPanel>
 </UserControl>
 
@@ -416,14 +434,14 @@ We will not implement this page yet. This way you can see what happens if a spec
 
 === Step 5: Prepare the MainWindowViewModel
 
-Now we need create the navigation logic inside the file `ViewModels ► MainWindowViewModel.cs`. We will add four things: 
+Now we need to create the navigation logic inside the file `ViewModels ► MainWindowViewModel.cs`. We will add four things: 
 
 Pages:: An `Array` of `PageViewModels` that stores all possible pages
 CurrentPage:: Gets or sets the current `PageViewModel`
 NavigateNextCommand:: A `Command` that will navigate to the next page
 NavigatePreviousCommand:: A `Command` that will navigate to the previous page
 
-As you will see in the constructor we will use `WhenAnyValue` to activate or deactivate the `Commands`, depending if the `CurrentPage` can navigate in the considered direction. 
+As you will see in the constructor we will use `WhenAnyValue` to activate or deactivate the `Commands`, depending on if the `CurrentPage` can navigate in the considered direction. 
 
 Putting all together, the `MainWindowViewModel` looks now like this:
 
@@ -494,9 +512,9 @@ public class MainWindowViewModel : ViewModelBase
 }
 ----
 
-=== Step 6: Setup the MainWindow
+=== Step 6: Set up the MainWindow
 
-Now it's time to setup the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
+Now it's time to set up the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/reference/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
 
 NOTE: You can use also any other `ContentControl`, but the `TransitioningContentControl` will display a nice transition when the user navigates.
 
@@ -541,16 +559,15 @@ In your IDE hit [Run] or [Debug] and see the result:
 
 image::_docs/result.png[Result]
 
-TIP: Do you see the content of the last page? This happens because we didn't define a `View` for it and also we didn't define any `DataTemplate` for it. 
+TIP: Do you see the content of the last page? This happens because we didn't define a `View` for it, and also we didn't define any `DataTemplate` for it. 
 
 == Related 
 
-You can also use any third-party library which supports advanced routing, for example:
+You can also use any third-party library that supports advanced routing, for example:
 
 ReactiveUI::
 - https://www.reactiveui.net/docs/handbook/routing/
-- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
 
 Prism::
-- https://prismlibrary.com/docs/viewmodel-locator.html
-- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
+- https://prismlibrary.com/docs/viewmodel-locator
+- https://www.reactiveui.net/docs/handbook/routing/

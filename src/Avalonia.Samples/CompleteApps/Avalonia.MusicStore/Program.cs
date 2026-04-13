@@ -1,5 +1,4 @@
 ﻿using System;
-using Avalonia;
 
 namespace Avalonia.MusicStore
 {
@@ -16,6 +15,7 @@ namespace Avalonia.MusicStore
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
+                .WithDeveloperTools()
                 .LogToTrace();
     }
 }

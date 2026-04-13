@@ -30,13 +30,26 @@ public class DialogManager
         // Unregister any old registered context
         if (e.GetOldValue<IDialogParticipant>() is { } oldValue)
         {
-            RegistrationMapper.Remove(oldValue);
+            // Remove only if the current mapping still points to this sender
+            if (RegistrationMapper.TryGetValue(oldValue, out var currentSender) && currentSender == sender)
+            {
+                RegistrationMapper.Remove(oldValue);
+            }
         }
 
         // Register any new context
         if (e.GetNewValue<IDialogParticipant>() is { } newValue)
         {
-            RegistrationMapper.Add(newValue, sender);
+            RegistrationMapper[newValue] = sender;
+            // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
+            // and detach the event handler to avoid accumulating closures across DataContext changes.
+            EventHandler<VisualTreeAttachmentEventArgs>? handler = null;
+            handler = (_, _) =>
+            {
+                RegistrationMapper.Remove(newValue);
+                sender.DetachedFromVisualTree -= handler;
+            };
+            sender.DetachedFromVisualTree += handler;
         }
     }
 

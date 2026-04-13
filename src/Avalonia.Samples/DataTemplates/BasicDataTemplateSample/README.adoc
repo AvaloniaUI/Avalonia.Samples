@@ -48,7 +48,7 @@ DataTemplate, ToString, StringFormat, MVVM, ItemTemplate, ContentTemplate
 
 == Before we start
 
-You should have a basic knowledge about string format in `C#` and about the `MVVM`-pattern.
+You should have basic knowledge about string format in `C#` and about the `MVVM`-pattern.
 
 === DataTemplates
 
@@ -83,7 +83,7 @@ Create a new Project using the `Avalonia MVVM Application`-Template.
 
 === Step 2: Add the Models
 
-In a school there are students and teachers. They have in common, that they are persons having a fist name, a last name, an age and a sex. Sex is an `enum` which we have to define at first, so add a new file `Sex.cs` into your `Models` folder:
+In a school there are students and teachers. They have in common that they are persons having a first name, a last name, an age and a sex. Sex is an `enum` which we have to define at first, so add a new file `Sex.cs` into your `Models` folder:
 
 [source,cs]
 ----
@@ -304,7 +304,7 @@ In `Window.DataTemplates` we will add the following `DataTemplate`:
 </Window.DataTemplates>
 ----
 
-NOTE: Also if we use `Window.DataTemplates` in this sample, it can also be `App.DataTemplates` or inside any other control.
+NOTE: Also, if we use `Window.DataTemplates` in this sample, it can also be `App.DataTemplates` or inside any other control.
 
 === Step 2: Run the App
 
@@ -316,7 +316,7 @@ image::_docs/Image_03.png[]
 [#MoreSpecificDataTemplates]
 === Step 3: Create more specific DataTemplates
 
-But wait, `Student` and `Teacher` look exactly the same. Moreover the additional information we have about them is not visible. Let's see how we can improve this. 
+But wait, `Student` and `Teacher` look exactly the same. Moreover, the additional information we have about them is not visible. Let's see how we can improve this. 
 
 We want to reuse the common `DataTemplate` for `Name`, `Age` and `Sex`. If we add more specific `DataTemplates`, only the first matching `DataTemplate` will be applied. So we will move the `DataTemplate` into `Window.Resources`. That way we can call it explicitly:
 
@@ -379,7 +379,7 @@ Now we can add the more specific `DataTemplates` for `Student` and `Teacher`. As
 
 TIP: We use `StringFormat` in the `Bindings`. if you want to know more about it, read more about it in the https://docs.avaloniaui.net/docs/data-binding/bindings#binding-stringformat[[docs\]]
 
-WARNING: The order of DataTemplates can be important. You need to order them form most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more in the docs\]] 
+WARNING: The order of DataTemplates can be important. You need to order them from most-specific to least-specific (e.g. `Poodle -> Dog -> Animal` not `Animal -> Dog -> Poodle`). https://docs.avaloniaui.net/docs/templates/data-templates#evaluation-order[[more in the docs\]] 
 
 === Step 4: Run it again
 
@@ -389,7 +389,7 @@ image::_docs/Image_04.png[]
 
 == Approach 3 : Place a UserControl inside a DataTemplate
 
-If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for it.  
+If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/reference/controls/usercontrol[[`UserControl`\]] for it.  
 
 === Step 1: Add a new UserControl
 
@@ -430,7 +430,7 @@ Let's edit the `DataTemplates` we already added in <<MoreSpecificDataTemplates>>
 
 [source,xml]
 ----
-<!-- remember to add the needed namespace view -->
+<!-- remember to add the necessary namespace view -->
 <!-- xmlns:view="using:BasicDataTemplateSample.Views" -->
 <Window.DataTemplates>		
     <!--  Add a DataTemplate for a Student  -->

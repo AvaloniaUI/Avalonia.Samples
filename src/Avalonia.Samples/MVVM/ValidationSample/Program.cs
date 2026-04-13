@@ -18,6 +18,8 @@ namespace ValidationSample
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
+                .WithDeveloperTools()
+                .WithDataAnnotationsValidation() // Enable validation using DataAnnotation attributes (Needed for one of our samples)
                 .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
     }
 }

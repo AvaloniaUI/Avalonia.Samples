@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Avalonia.MusicStore.ViewModels
 {
@@ -51,7 +49,7 @@ namespace Avalonia.MusicStore.ViewModels
         {
             await _album.SaveAsync();
 
-            if (await LoadCoverAsync() is Bitmap cover)
+            if (await LoadCoverAsync() is { } cover)
             {
                 await Task.Run(() =>
                 {

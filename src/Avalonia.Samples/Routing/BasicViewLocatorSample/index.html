@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Basic ViewLocator Sample</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2049,7 +1931,7 @@ pre.rouge .gs {
 <li><a href="#_step_3_create_your_pageviewmodels">Step 3: Create your PageViewModels</a></li>
 <li><a href="#_step_4_create_the_page_views">Step 4: Create the Page-Views</a></li>
 <li><a href="#_step_5_prepare_the_mainwindowviewmodel">Step 5: Prepare the MainWindowViewModel</a></li>
-<li><a href="#_step_6_setup_the_mainwindow">Step 6: Setup the MainWindow</a></li>
+<li><a href="#_step_6_set_up_the_mainwindow">Step 6: Set up the MainWindow</a></li>
 <li><a href="#_step_6_see_it_in_action">Step 6: See it in action</a></li>
 </ul>
 </li>
@@ -2088,57 +1970,57 @@ pre.rouge .gs {
 <p>A <code>ViewLocator</code> is a class that helps your App to select the correct visual representation of a given <code>ViewModel</code>. In Avalonia this class normally implements the <code>IDataTemplate</code>-interface, so it can be seen as a <a href="https://github.com/AvaloniaUI/Avalonia.Samples/tree/main/src/Avalonia.Samples/DataTemplates/IDataTemplateSample">[custom <code>DataTemplate</code>]</a>.</p>
 </div>
 <div class="paragraph">
-<p>We can add a class called <code>ViewLocator</code> which can be used to create a new instance of a view for the given data object. In this sample we are using reflection to get the needed views. You can also use different approaches such as a <code>switch</code>-statement or a source generator.</p>
+<p>We can add a class called <code>ViewLocator</code> which can be used to create a new instance of a view for the given data object. In this sample we are using reflection to get the necessary views. You can also use different approaches such as a <code>switch</code>-statement or a source generator.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you have created your projects using the Avalonia version 0.10.x, you might have already noticed that a file called <code>ViewLocator.cs</code> was created. In Avalonia 11.0 or later you need to implement this class on your own if needed.
+If you create the project using the IDE of your choice, you can opt to create a <code>ViewLocator</code> class. If you didn&#8217;t do it, just create a new class called <code>ViewLocator</code> in the root of your project and add the following code to it:
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">Avalonia.Controls</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.Controls.Templates</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">MyNameSpace.ViewModels</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">using Avalonia.Controls;
+using Avalonia.Controls.Templates;
+using MyNameSpace.ViewModels;
+using System;
 
-<span class="k">namespace</span> <span class="nn">MyNameSpace</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ViewLocator</span> <span class="p">:</span> <span class="n">IDataTemplate</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="n">Control</span> <span class="nf">Build</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">data</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">new</span> <span class="n">TextBlock</span> <span class="p">{</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"data was null"</span> <span class="p">};</span>
-            <span class="p">}</span>
+namespace MyNameSpace
+{
+    public class ViewLocator : IDataTemplate
+    {
+        public Control Build(object? data)
+        {
+            if (data is null)
+            {
+                return new TextBlock { Text = "data was null" };
+            }
 
-            <span class="kt">var</span> <span class="n">name</span> <span class="p">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">GetType</span><span class="p">().</span><span class="n">FullName</span><span class="p">!.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"ViewModel"</span><span class="p">,</span> <span class="s">"View"</span><span class="p">);</span>
-            <span class="kt">var</span> <span class="n">type</span> <span class="p">=</span> <span class="n">Type</span><span class="p">.</span><span class="nf">GetType</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+            var name = data.GetType().FullName!.Replace("ViewModel", "View");
+            var type = Type.GetType(name);
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">Control</span><span class="p">)</span><span class="n">Activator</span><span class="p">.</span><span class="nf">CreateInstance</span><span class="p">(</span><span class="n">type</span><span class="p">)!;</span>
-            <span class="p">}</span>
-            <span class="k">else</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">new</span> <span class="n">TextBlock</span> <span class="p">{</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"Not Found: "</span> <span class="p">+</span> <span class="n">name</span> <span class="p">};</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+            if (type != null)
+            {
+                return (Control)Activator.CreateInstance(type)!;
+            }
+            else
+            {
+                return new TextBlock { Text = "Not Found: " + name };
+            }
+        }
 
-        <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Match</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">data</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">data</span> <span class="k">is</span> <span class="n">ViewModelBase</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        public bool Match(object? data)
+        {
+            return data is ViewModelBase;
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2152,7 +2034,7 @@ If you have created your projects using the Avalonia version 0.10.x, you might h
 </dd>
 <dt class="hdlist1">Control Build(object? data)</dt>
 <dd>
-<p>This function uses <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection">[<code>Reflection</code>]</a> to create a new instance of the <code>View</code> representing the given <code>ViewModel</code>. First of all the full name of the ViewModel is extracted, for example:</p>
+<p>This function uses <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection">[<code>Reflection</code>]</a> to create a new instance of the <code>View</code> representing the given <code>ViewModel</code>. First, the full name of the ViewModel is extracted, for example:</p>
 <div class="paragraph">
 <p><code>MyAppsNameSpace.ViewModels.MyViewModel</code></p>
 </div>
@@ -2163,7 +2045,7 @@ If you have created your projects using the Avalonia version 0.10.x, you might h
 <p><code>MyAppsNameSpace.Views.MyView</code></p>
 </div>
 <div class="paragraph">
-<p>In the next step the <code>ViewLocator</code> tries to get a <code>Type</code> of object with the given name. If it finds such a <code>Type</code>, it will create and return a new instance of the given <code>Type</code>. If it didn&#8217;t find a matching <code>Type</code>, it returns a <code>TextBlock</code> with a not found message.</p>
+<p>In the next step the <code>ViewLocator</code> tries to get a <code>Type</code> of an object with the given name. If it finds such a <code>Type</code>, it will create and return a new instance of the given <code>Type</code>. If it didn&#8217;t find a matching <code>Type</code>, it returns a <code>TextBlock</code> with a not found message.</p>
 </div>
 </dd>
 </dl>
@@ -2175,7 +2057,19 @@ If you have created your projects using the Avalonia version 0.10.x, you might h
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By convention the <code>ViewModel</code> must be within the <code>ViewModels</code>-folder and have "ViewModel" inside it&#8217;s name. The <code>View</code> on the other hand must be in the <code>Views</code>-folder and have <code>View</code> in it&#8217;s name. If you don&#8217;t like this convention, feel free to change it to your needs.
+By convention the <code>ViewModel</code> must be within the <code>ViewModels</code>-folder and have "ViewModel" inside its name. The <code>View</code> on the other hand must be in the <code>Views</code>-folder and have <code>View</code> in its name. If you don&#8217;t like this convention, feel free to change it to your needs.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can also use a <code>switch</code>-statement, a <code>Dictionary</code> or a source generator instead of reflection. Reflection is not the most performant way to get the correct view, but it is the most flexible one as you don&#8217;t need to change your <code>ViewLocator</code> if you add new pages.
 </td>
 </tr>
 </table>
@@ -2188,10 +2082,10 @@ By convention the <code>ViewModel</code> must be within the <code>ViewModels</co
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- remember to add: xmlns:local="using:MyNameSpace" --&gt;</span>
-<span class="nt">&lt;Application.DataTemplates&gt;</span>
-    <span class="nt">&lt;local:ViewLocator/&gt;</span>
-<span class="nt">&lt;/Application.DataTemplates&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- remember to add: xmlns:local="using:MyNameSpace" --&gt;
+&lt;Application.DataTemplates&gt;
+    &lt;local:ViewLocator/&gt;
+&lt;/Application.DataTemplates&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2201,7 +2095,7 @@ By convention the <code>ViewModel</code> must be within the <code>ViewModels</co
 <div class="sect2">
 <h3 id="_can_i_have_more_than_one_viewlocator">Can I have more than one ViewLocator?</h3>
 <div class="paragraph">
-<p>Sometimes your <code>ViewModels</code> and <code>Views</code> may be stored in a shared library. If that is the case, you can add several <code>ViewLocator</code> classes. Just remember to initiate each one in <code>App.DataTemplates</code>.</p>
+<p>Sometimes your <code>ViewModels</code> and <code>Views</code> may be stored in a shared library. If that is the case, you can add several <code>ViewLocator</code> classes. Remember to initiate each one in <code>App.DataTemplates</code>.</p>
 </div>
 </div>
 </div>
@@ -2221,28 +2115,28 @@ By convention the <code>ViewModel</code> must be within the <code>ViewModels</co
 <div class="sect2">
 <h3 id="base-class">Step 2: Add a base class for the Page-ViewModels</h3>
 <div class="paragraph">
-<p>We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. To achieve this we can either create a new <code>base-class</code> or an <code>interface</code>. In this sample we will create an <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract">[<code>abstract</code>]</a> <code>base-class</code> which itself derives from <code>ViewModelBase</code>. The properties itself are also marked as <code>abstract</code> which means we have to override them in any <code>class</code> that inherits our <code>base-class</code>.</p>
+<p>We want to allow or disallow navigation based on the state of the current user input. For example, the user should not be able to go to the next page until all required fields are filled successfully. To achieve this, we can either create a new <code>base-class</code> or an <code>interface</code>. In this sample we will create an <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract">[<code>abstract</code>]</a> <code>base-class</code> which itself derives from <code>ViewModelBase</code>. The properties itself are also marked as <code>abstract</code> which means we have to override them in any <code>class</code> that inherits our <code>base-class</code>.</p>
 </div>
 <div class="paragraph">
 <p>In the folder <code>ViewModels</code> create the file <code>PageViewModelBase.cs</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// An abstract class for enabling page navigation.</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">PageViewModelBase</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets if the user can navigate to the next page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="k">abstract</span> <span class="kt">bool</span> <span class="n">CanNavigateNext</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">protected</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// An abstract class for enabling page navigation.
+/// &lt;/summary&gt;
+public abstract class PageViewModelBase : ViewModelBase
+{
+    /// &lt;summary&gt;
+    /// Gets if the user can navigate to the next page
+    /// &lt;/summary&gt;
+    public abstract bool CanNavigateNext { get; protected set; }
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets if the user can navigate to the previous page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="k">abstract</span> <span class="kt">bool</span> <span class="n">CanNavigatePrevious</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">protected</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    /// &lt;summary&gt;
+    /// Gets if the user can navigate to the previous page
+    /// &lt;/summary&gt;
+    public abstract bool CanNavigatePrevious { get; protected set; }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2252,7 +2146,7 @@ By convention the <code>ViewModel</code> must be within the <code>ViewModels</co
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-the <code>protected</code>-modifier let&#8217;s us implement a setter that is not public accessible, but can be overridden in derived classes. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected">[Microsoft Docs]</a>
+the <code>protected</code>-modifier lets us implement a setter that is not publicly accessible, but can be overridden in derived classes. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/protected">[Microsoft Docs]</a>
 </td>
 </tr>
 </table>
@@ -2261,7 +2155,7 @@ the <code>protected</code>-modifier let&#8217;s us implement a setter that is no
 <div class="sect2">
 <h3 id="_step_3_create_your_pageviewmodels">Step 3: Create your PageViewModels</h3>
 <div class="paragraph">
-<p>Let&#8217;s create a <code>ViewModel</code> for each Wizard page we need. Each <code>PageViewModel</code> must implement the above created <a href="#base-class">base-class</a>.</p>
+<p>Let&#8217;s create a <code>ViewModel</code> for each Wizard page we need. Each <code>PageViewModel</code> must implement the earlier introduced <a href="#base-class">base-class</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2278,46 +2172,46 @@ You need to <code>override</code> all the <code>abstract</code> properties of ou
 <div class="sect3">
 <h4 id="_firstpageviewmodel">FirstPageViewModel</h4>
 <div class="paragraph">
-<p>The fist page will be our welcome page. It has a <code>Title</code> and a <code>Message</code>. The user can go to the next page in any case, but there is no page to go back to. So we don&#8217;t need to implement the <code>setter</code>. To indicate that we throw a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception">[<code>NotSupportedException</code>]</a>.</p>
+<p>The first page will be our welcome page. It has a <code>Title</code> and a <code>Message</code>. The user can go to the next page in any case, but there is no page to go back to. So we don&#8217;t need to implement the <code>setter</code>. To indicate that we throw a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception">[<code>NotSupportedException</code>]</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">///  This is our ViewModel for the first page</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">FirstPageViewModel</span> <span class="p">:</span> <span class="n">PageViewModelBase</span>
-<span class="p">{</span>
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// The Title of this page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">=&gt;</span> <span class="s">"Welcome to our Wizard-Sample."</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+///  This is our ViewModel for the first page
+/// &lt;/summary&gt;
+public class FirstPageViewModel : PageViewModelBase
+{
+    /// &lt;summary&gt;
+    /// The Title of this page
+    /// &lt;/summary&gt;
+    public string Title =&gt; "Welcome to our Wizard-Sample.";
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// The content of this page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">=&gt;</span> <span class="s">"Press \"Next\" to register yourself."</span><span class="p">;</span>
+    /// &lt;summary&gt;
+    /// The content of this page
+    /// &lt;/summary&gt;
+    public string Message =&gt; "Press \"Next\" to register yourself.";
 
-    <span class="c1">// This is our first page, so we can navigate to the next page in any case</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigateNext</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotSupportedException</span><span class="p">();</span>
-    <span class="p">}</span>
+    // This is our first page, so we can navigate to the next page in any case
+    public override bool CanNavigateNext
+    {
+        get =&gt; true;
+        protected set =&gt; throw new NotSupportedException();
+    }
 
-    <span class="c1">// You cannot go back from this page</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigatePrevious</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">=&gt;</span> <span class="k">false</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotSupportedException</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // You cannot go back from this page
+    public override bool CanNavigatePrevious
+    {
+        get =&gt; false;
+        protected set =&gt; throw new NotSupportedException();
+    }
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_secondpageviewmodel">SecondPageViewModel</h4>
 <div class="paragraph">
-<p>This page will have two input fields called <code>MailAddress</code> and <code>Password</code>. Inside the constructor of this class we will listen to changes of these properties and set <code>CanNavigateNext</code> to <code>true</code> if both properties matches the requirements.</p>
+<p>This page will have two input fields called <code>MailAddress</code> and <code>Password</code>. Inside the constructor of this class we will listen to changes of these properties and set <code>CanNavigateNext</code> to <code>true</code> if both properties match the requirements.</p>
 </div>
 <div class="paragraph">
 <p>The requirements are:
@@ -2327,68 +2221,68 @@ You need to <code>override</code> all the <code>abstract</code> properties of ou
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">///  This is our ViewModel for the second page</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">SecondPageViewModel</span> <span class="p">:</span> <span class="n">PageViewModelBase</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nf">SecondPageViewModel</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// Listen to changes of MailAddress and Password and update CanNavigateNext accordingly</span>
-        <span class="k">this</span><span class="p">.</span><span class="nf">WhenAnyValue</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">MailAddress</span><span class="p">,</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Password</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">Subscribe</span><span class="p">(</span><span class="n">_</span> <span class="p">=&gt;</span> <span class="nf">UpdateCanNavigateNext</span><span class="p">());</span>
-    <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+///  This is our ViewModel for the second page
+/// &lt;/summary&gt;
+public class SecondPageViewModel : PageViewModelBase
+{
+    public SecondPageViewModel()
+    {
+        // Listen to changes of MailAddress and Password and update CanNavigateNext accordingly
+        this.WhenAnyValue(x =&gt; x.MailAddress, x =&gt; x.Password)
+            .Subscribe(_ =&gt; UpdateCanNavigateNext());
+    }
 
-    <span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_MailAddress</span><span class="p">;</span>
+    private string? _MailAddress;
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// The E-Mail of the user. This field is required</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="p">[</span><span class="n">Required</span><span class="p">]</span>
-    <span class="p">[</span><span class="n">EmailAddress</span><span class="p">]</span>
-    <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">MailAddress</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_MailAddress</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_MailAddress</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-    <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// The E-Mail of the user. This field is required
+    /// &lt;/summary&gt;
+    [Required]
+    [EmailAddress]
+    public string? MailAddress
+    {
+        get { return _MailAddress; }
+        set { this.RaiseAndSetIfChanged(ref _MailAddress, value); }
+    }
 
-    <span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_Password</span><span class="p">;</span>
+    private string? _Password;
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// The password of the user. This field is required.</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="p">[</span><span class="n">Required</span><span class="p">]</span>
-    <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">Password</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_Password</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_Password</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-    <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// The password of the user. This field is required.
+    /// &lt;/summary&gt;
+    [Required]
+    public string? Password
+    {
+        get { return _Password; }
+        set { this.RaiseAndSetIfChanged(ref _Password, value); }
+    }
 
-    <span class="k">private</span> <span class="kt">bool</span> <span class="n">_CanNavigateNext</span><span class="p">;</span>
+    private bool _CanNavigateNext;
 
-    <span class="c1">// For this page the user can only go to the next page if all fields are valid. So we need a private setter.</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigateNext</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_CanNavigateNext</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_CanNavigateNext</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-    <span class="p">}</span>
+    // For this page the user can only go to the next page if all fields are valid. So we need a private setter.
+    public override bool CanNavigateNext
+    {
+        get { return _CanNavigateNext; }
+        protected set { this.RaiseAndSetIfChanged(ref _CanNavigateNext, value); }
+    }
 
-    <span class="c1">// We allow navigate back in any case</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigatePrevious</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotSupportedException</span><span class="p">();</span>
-    <span class="p">}</span>
+    // We allow navigate back in any case
+    public override bool CanNavigatePrevious
+    {
+        get =&gt; true;
+        protected set =&gt; throw new NotSupportedException();
+    }
 
-    <span class="c1">// Update CanNavigateNext. Allow next page if E-Mail and Password are valid</span>
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateCanNavigateNext</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="n">CanNavigateNext</span> <span class="p">=</span>
-                <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">_MailAddress</span><span class="p">)</span>
-            <span class="p">&amp;&amp;</span> <span class="n">_MailAddress</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"@"</span><span class="p">)</span>
-            <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">_Password</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // Update CanNavigateNext. Allow next page if E-Mail and Password are valid
+    private void UpdateCanNavigateNext()
+    {
+        CanNavigateNext =
+                !string.IsNullOrEmpty(_MailAddress)
+            &amp;&amp; _MailAddress.Contains("@")
+            &amp;&amp; !string.IsNullOrEmpty(_Password);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2398,7 +2292,32 @@ You need to <code>override</code> all the <code>abstract</code> properties of ou
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-We use <code>DataAnnotations</code> to validate the user input inside the UI. This is totally optional. You can read more about in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[Microsoft Docs]</a>.
+We use <code>DataAnnotations</code> to validate the user input inside the UI. This is totally optional. You can read more about it in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[Microsoft Docs]</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Using Avalonia 12.0 or higher, you need to opt in for <code>DataAnnotations</code> by adding the following line to your <code>Program.cs</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="diff">public static AppBuilder BuildAvaloniaApp()
+    =&gt; AppBuilder.Configure&lt;App&gt;()
+        .UsePlatformDetect()
+        .LogToTrace()
+        .WithDeveloperTools()
++       .WithDataAnnotationsValidation() // This is needed to use the validation using Attributes in the ViewModel
+        .UseReactiveUI(builder =&gt; { /* We don't need to configure anything for the samples */ });</code></pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
@@ -2411,28 +2330,28 @@ We use <code>DataAnnotations</code> to validate the user input inside the UI. Th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">///  This is our ViewModel for the third page</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">ThirdPageViewModel</span> <span class="p">:</span> <span class="n">PageViewModelBase</span>
-<span class="p">{</span>
-    <span class="c1">// The message to display</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">=&gt;</span> <span class="s">"Done"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+///  This is our ViewModel for the third page
+/// &lt;/summary&gt;
+public class ThirdPageViewModel : PageViewModelBase
+{
+    // The message to display
+    public string Message =&gt; "Done";
 
-    <span class="c1">// This is the last page, so we cannot navigate next in our sample.</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigateNext</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">=&gt;</span> <span class="k">false</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotSupportedException</span><span class="p">();</span>
-    <span class="p">}</span>
+    // This is the last page, so we cannot navigate next in our sample.
+    public override bool CanNavigateNext
+    {
+        get =&gt; false;
+        protected set =&gt; throw new NotSupportedException();
+    }
 
-    <span class="c1">// We navigate back form this page in any case</span>
-    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="n">CanNavigatePrevious</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">protected</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotSupportedException</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    // We navigate back form this page in any case
+    public override bool CanNavigatePrevious
+    {
+        get =&gt; true;
+        protected set =&gt; throw new NotSupportedException();
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2440,7 +2359,7 @@ We use <code>DataAnnotations</code> to validate the user input inside the UI. Th
 <div class="sect2">
 <h3 id="_step_4_create_the_page_views">Step 4: Create the Page-Views</h3>
 <div class="paragraph">
-<p>Now we will create an <a href="https://docs.avaloniaui.net/docs/controls/usercontrol">[<code>UserControl</code>]</a> for each page.</p>
+<p>Now we will create a <a href="https://docs.avaloniaui.net/docs/reference/controls/usercontrol">[<code>UserControl</code>]</a> for each page.</p>
 </div>
 <div class="sect3">
 <h4 id="_firstpageview">FirstPageView</h4>
@@ -2449,35 +2368,35 @@ We use <code>DataAnnotations</code> to validate the user input inside the UI. Th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">x:Class=</span><span class="s">"BasicViewLocatorSample.Views.FirstPageView"</span>
-             <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-             <span class="na">xmlns:vm=</span><span class="s">"using:BasicViewLocatorSample.ViewModels"</span>
-             <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
-             <span class="na">d:DesignWidth=</span><span class="s">"800"</span>
-             <span class="na">x:CompileBindings=</span><span class="s">"True"</span>
-             <span class="na">x:DataType=</span><span class="s">"vm:FirstPageViewModel"</span>
-             <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;Design.DataContext&gt;</span>
-		<span class="nt">&lt;vm:FirstPageViewModel</span> <span class="nt">/&gt;</span>
-	<span class="nt">&lt;/Design.DataContext&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl x:Class="BasicViewLocatorSample.Views.FirstPageView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="vm:FirstPageViewModel"
+             mc:Ignorable="d"&gt;
+	&lt;Design.DataContext&gt;
+		&lt;vm:FirstPageViewModel /&gt;
+	&lt;/Design.DataContext&gt;
 
-	<span class="nt">&lt;StackPanel</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;TextBlock</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
-			       <span class="na">TextAlignment=</span><span class="s">"Center"</span>
-			       <span class="na">FontSize=</span><span class="s">"16"</span>
-			       <span class="na">FontWeight=</span><span class="s">"SemiBold"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding Title}"</span>
-                   <span class="na">TextWrapping=</span><span class="s">"Wrap"</span> <span class="nt">/&gt;</span>
-		<span class="nt">&lt;TextBlock</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
-			       <span class="na">TextAlignment=</span><span class="s">"Center"</span>
-			       <span class="na">FontSize=</span><span class="s">"16"</span>
-                   <span class="na">Text=</span><span class="s">"{Binding Message}"</span>
-                   <span class="na">TextWrapping=</span><span class="s">"Wrap"</span> <span class="nt">/&gt;</span>
-	<span class="nt">&lt;/StackPanel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+	&lt;StackPanel VerticalAlignment="Center" Spacing="5"&gt;
+		&lt;TextBlock VerticalAlignment="Center"
+			       TextAlignment="Center"
+			       FontSize="16"
+			       FontWeight="SemiBold"
+                   Text="{Binding Title}"
+                   TextWrapping="Wrap" /&gt;
+		&lt;TextBlock VerticalAlignment="Center"
+			       TextAlignment="Center"
+			       FontSize="16"
+                   Text="{Binding Message}"
+                   TextWrapping="Wrap" /&gt;
+	&lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2500,41 +2419,41 @@ If you set any <code>PasswordChar</code> to any <code>TextBox</code> you will ge
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">x:Class=</span><span class="s">"BasicViewLocatorSample.Views.SecondPageView"</span>
-             <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-             <span class="na">xmlns:vm=</span><span class="s">"using:BasicViewLocatorSample.ViewModels"</span>
-             <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
-             <span class="na">d:DesignWidth=</span><span class="s">"800"</span>
-             <span class="na">x:CompileBindings=</span><span class="s">"True"</span>
-             <span class="na">x:DataType=</span><span class="s">"vm:SecondPageViewModel"</span>
-             <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Design.DataContext&gt;</span>
-        <span class="nt">&lt;vm:SecondPageViewModel</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Design.DataContext&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl x:Class="BasicViewLocatorSample.Views.SecondPageView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:CompileBindings="True"
+             x:DataType="vm:SecondPageViewModel"
+             mc:Ignorable="d"&gt;
+    &lt;Design.DataContext&gt;
+        &lt;vm:SecondPageViewModel /&gt;
+    &lt;/Design.DataContext&gt;
 
-    <span class="nt">&lt;StackPanel</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span> <span class="na">Spacing=</span><span class="s">"5"</span> <span class="na">MaxWidth=</span><span class="s">"350"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
-                   <span class="na">FontSize=</span><span class="s">"16"</span>
-                   <span class="na">FontWeight=</span><span class="s">"SemiBold"</span>
-                   <span class="na">Text=</span><span class="s">"Enter your Credentials"</span>
-                   <span class="na">TextAlignment=</span><span class="s">"Center"</span>
-                   <span class="na">TextWrapping=</span><span class="s">"Wrap"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBox</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
-                 <span class="na">FontSize=</span><span class="s">"16"</span>
-                 <span class="na">Text=</span><span class="s">"{Binding MailAddress}"</span>
-                 <span class="na">Watermark=</span><span class="s">"E-Mail Address"</span>
-				 <span class="na">UseFloatingWatermark=</span><span class="s">"True"</span><span class="nt">/&gt;</span>
-		<span class="nt">&lt;TextBox</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
-                 <span class="na">FontSize=</span><span class="s">"16"</span>
-				 <span class="na">PasswordChar=</span><span class="s">"$"</span>
-                 <span class="na">Text=</span><span class="s">"{Binding Password}"</span>
-                 <span class="na">Watermark=</span><span class="s">"Password"</span>
-				 <span class="na">UseFloatingWatermark=</span><span class="s">"True"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/StackPanel&gt;</span>
-<span class="nt">&lt;/UserControl&gt;</span></code></pre>
+    &lt;StackPanel VerticalAlignment="Center" Spacing="5" MaxWidth="350"&gt;
+        &lt;TextBlock VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Enter your Credentials"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" /&gt;
+        &lt;TextBox VerticalAlignment="Center"
+                 FontSize="16"
+                 Text="{Binding MailAddress}"
+                 PlaceholderText="E-Mail Address"
+				 UseFloatingPlaceholder="True"/&gt;
+		&lt;TextBox VerticalAlignment="Center"
+                 FontSize="16"
+				 PasswordChar="$"
+                 Text="{Binding Password}"
+                 PlaceholderText="Password"
+				 UseFloatingPlaceholder="True"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2548,7 +2467,7 @@ If you set any <code>PasswordChar</code> to any <code>TextBox</code> you will ge
 <div class="sect2">
 <h3 id="_step_5_prepare_the_mainwindowviewmodel">Step 5: Prepare the MainWindowViewModel</h3>
 <div class="paragraph">
-<p>Now we need create the navigation logic inside the file <code>ViewModels ► MainWindowViewModel.cs</code>. We will add four things:</p>
+<p>Now we need to create the navigation logic inside the file <code>ViewModels ► MainWindowViewModel.cs</code>. We will add four things:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -2571,83 +2490,83 @@ If you set any <code>PasswordChar</code> to any <code>TextBox</code> you will ge
 </dl>
 </div>
 <div class="paragraph">
-<p>As you will see in the constructor we will use <code>WhenAnyValue</code> to activate or deactivate the <code>Commands</code>, depending if the <code>CurrentPage</code> can navigate in the considered direction.</p>
+<p>As you will see in the constructor we will use <code>WhenAnyValue</code> to activate or deactivate the <code>Commands</code>, depending on if the <code>CurrentPage</code> can navigate in the considered direction.</p>
 </div>
 <div class="paragraph">
 <p>Putting all together, the <code>MainWindowViewModel</code> looks now like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">MainWindowViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nf">MainWindowViewModel</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// Set current page to first on start up</span>
-        <span class="n">_CurrentPage</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+<pre class="rouge highlight"><code data-lang="cs">public class MainWindowViewModel : ViewModelBase
+{
+    public MainWindowViewModel()
+    {
+        // Set current page to first on start up
+        _CurrentPage = Pages[0];
 
-        <span class="c1">// Create Observables which will activate to deactivate our commands based on CurrentPage state</span>
-        <span class="kt">var</span> <span class="n">canNavNext</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="nf">WhenAnyValue</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">CurrentPage</span><span class="p">.</span><span class="n">CanNavigateNext</span><span class="p">);</span>
-        <span class="kt">var</span> <span class="n">canNavPrev</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="nf">WhenAnyValue</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">CurrentPage</span><span class="p">.</span><span class="n">CanNavigatePrevious</span><span class="p">);</span>
+        // Create Observables which will activate to deactivate our commands based on CurrentPage state
+        var canNavNext = this.WhenAnyValue(x =&gt; x.CurrentPage.CanNavigateNext);
+        var canNavPrev = this.WhenAnyValue(x =&gt; x.CurrentPage.CanNavigatePrevious);
 
-        <span class="n">NavigateNextCommand</span> <span class="p">=</span> <span class="n">ReactiveCommand</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">NavigateNext</span><span class="p">,</span> <span class="n">canNavNext</span><span class="p">);</span>
-        <span class="n">NavigatePreviousCommand</span> <span class="p">=</span> <span class="n">ReactiveCommand</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">NavigatePrevious</span><span class="p">,</span> <span class="n">canNavPrev</span><span class="p">);</span>
-    <span class="p">}</span>
+        NavigateNextCommand = ReactiveCommand.Create(NavigateNext, canNavNext);
+        NavigatePreviousCommand = ReactiveCommand.Create(NavigatePrevious, canNavPrev);
+    }
 
-    <span class="c1">// A read.only array of possible pages</span>
-    <span class="k">private</span> <span class="k">readonly</span> <span class="n">PageViewModelBase</span><span class="p">[]</span> <span class="n">Pages</span> <span class="p">=</span>
-    <span class="p">{</span>
-        <span class="k">new</span> <span class="nf">FirstPageViewModel</span><span class="p">(),</span>
-        <span class="k">new</span> <span class="nf">SecondPageViewModel</span><span class="p">(),</span>
-        <span class="k">new</span> <span class="nf">ThirdPageViewModel</span><span class="p">()</span>
-    <span class="p">};</span>
+    // A read.only array of possible pages
+    private readonly PageViewModelBase[] Pages =
+    {
+        new FirstPageViewModel(),
+        new SecondPageViewModel(),
+        new ThirdPageViewModel()
+    };
 
-    <span class="c1">// The default is the first page</span>
-    <span class="k">private</span> <span class="n">PageViewModelBase</span> <span class="n">_CurrentPage</span><span class="p">;</span>
+    // The default is the first page
+    private PageViewModelBase _CurrentPage;
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets the current page. The property is read-only</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">PageViewModelBase</span> <span class="n">CurrentPage</span>
-    <span class="p">{</span>
-        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_CurrentPage</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">private</span> <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_CurrentPage</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-    <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// Gets the current page. The property is read-only
+    /// &lt;/summary&gt;
+    public PageViewModelBase CurrentPage
+    {
+        get { return _CurrentPage; }
+        private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }
+    }
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets a command that navigates to the next page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">ICommand</span> <span class="n">NavigateNextCommand</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// Gets a command that navigates to the next page
+    /// &lt;/summary&gt;
+    public ICommand NavigateNextCommand { get; }
 
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">NavigateNext</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// get the current index and add 1</span>
-        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">CurrentPage</span><span class="p">)</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+    private void NavigateNext()
+    {
+        // get the current index and add 1
+        var index = Pages.IndexOf(CurrentPage) + 1;
 
-        <span class="c1">//  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\</span>
-        <span class="n">CurrentPage</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-    <span class="p">}</span>
+        //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+        CurrentPage = Pages[index];
+    }
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets a command that navigates to the previous page</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">ICommand</span> <span class="n">NavigatePreviousCommand</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    /// &lt;summary&gt;
+    /// Gets a command that navigates to the previous page
+    /// &lt;/summary&gt;
+    public ICommand NavigatePreviousCommand { get; }
 
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">NavigatePrevious</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// get the current index and subtract 1</span>
-        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">CurrentPage</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+    private void NavigatePrevious()
+    {
+        // get the current index and subtract 1
+        var index = Pages.IndexOf(CurrentPage) - 1;
 
-        <span class="c1">//  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\</span>
-        <span class="n">CurrentPage</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
+        CurrentPage = Pages[index];
+    }
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_6_setup_the_mainwindow">Step 6: Setup the MainWindow</h3>
+<h3 id="_step_6_set_up_the_mainwindow">Step 6: Set up the MainWindow</h3>
 <div class="paragraph">
-<p>Now it&#8217;s time to setup the file <code>Views ► MainWindow.axaml</code>. We will add <code>Grid</code> containing two <code>Buttons</code> as well as a <a href="https://docs.avaloniaui.net/docs/controls/transitioningcontentcontrol">[<code>TransitioningContentControl</code>]</a>.</p>
+<p>Now it&#8217;s time to set up the file <code>Views ► MainWindow.axaml</code>. We will add <code>Grid</code> containing two <code>Buttons</code> as well as a <a href="https://docs.avaloniaui.net/docs/reference/controls/transitioningcontentcontrol">[<code>TransitioningContentControl</code>]</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2666,34 +2585,34 @@ You can use also any other <code>ContentControl</code>, but the <code>Transition
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="na">x:Class=</span><span class="s">"BasicViewLocatorSample.Views.MainWindow"</span>
-        <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-        <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-        <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-        <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-        <span class="na">xmlns:vm=</span><span class="s">"using:BasicViewLocatorSample.ViewModels"</span>
-        <span class="na">Title=</span><span class="s">"BasicViewLocatorSample"</span>
-        <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
-        <span class="na">d:DesignWidth=</span><span class="s">"800"</span>
-        <span class="na">x:CompileBindings=</span><span class="s">"True"</span>
-        <span class="na">x:DataType=</span><span class="s">"vm:MainWindowViewModel"</span>
-        <span class="na">Icon=</span><span class="s">"/Assets/avalonia-logo.ico"</span>
-        <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Window x:Class="BasicViewLocatorSample.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:BasicViewLocatorSample.ViewModels"
+        Title="BasicViewLocatorSample"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:CompileBindings="True"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        mc:Ignorable="d"&gt;
 
-    <span class="nt">&lt;Design.DataContext&gt;</span>
-        <span class="nt">&lt;vm:MainWindowViewModel</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Design.DataContext&gt;</span>
+    &lt;Design.DataContext&gt;
+        &lt;vm:MainWindowViewModel /&gt;
+    &lt;/Design.DataContext&gt;
 
-    <span class="nt">&lt;Grid</span> <span class="na">RowDefinitions=</span><span class="s">"*,Auto"</span> <span class="na">Margin=</span><span class="s">"10"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;TransitioningContentControl</span> <span class="na">Content=</span><span class="s">"{Binding CurrentPage}"</span> <span class="nt">/&gt;</span>
+    &lt;Grid RowDefinitions="*,Auto" Margin="10"&gt;
+        &lt;TransitioningContentControl Content="{Binding CurrentPage}" /&gt;
 
-        <span class="nt">&lt;StackPanel</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span> <span class="na">Spacing=</span><span class="s">"5"</span>
-					<span class="na">HorizontalAlignment=</span><span class="s">"Right"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding NavigatePreviousCommand}"</span> <span class="na">Content=</span><span class="s">"Back"</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding NavigateNextCommand}"</span> <span class="na">Content=</span><span class="s">"Next"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/StackPanel&gt;</span>
-    <span class="nt">&lt;/Grid&gt;</span>
-<span class="nt">&lt;/Window&gt;</span></code></pre>
+        &lt;StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5"
+					HorizontalAlignment="Right"&gt;
+            &lt;Button Command="{Binding NavigatePreviousCommand}" Content="Back" /&gt;
+            &lt;Button Command="{Binding NavigateNextCommand}" Content="Next" /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -2714,7 +2633,7 @@ You can use also any other <code>ContentControl</code>, but the <code>Transition
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Do you see the content of the last page? This happens because we didn&#8217;t define a <code>View</code> for it and also we didn&#8217;t define any <code>DataTemplate</code> for it.
+Do you see the content of the last page? This happens because we didn&#8217;t define a <code>View</code> for it, and also we didn&#8217;t define any <code>DataTemplate</code> for it.
 </td>
 </tr>
 </table>
@@ -2726,7 +2645,7 @@ Do you see the content of the last page? This happens because we didn&#8217;t de
 <h2 id="_related">Related</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can also use any third-party library which supports advanced routing, for example:</p>
+<p>You can also use any third-party library that supports advanced routing, for example:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -2737,9 +2656,6 @@ Do you see the content of the last page? This happens because we didn&#8217;t de
 <li>
 <p><a href="https://www.reactiveui.net/docs/handbook/routing/" class="bare">https://www.reactiveui.net/docs/handbook/routing/</a></p>
 </li>
-<li>
-<p><a href="https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing" class="bare">https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing</a></p>
-</li>
 </ul>
 </div>
 </dd>
@@ -2748,10 +2664,10 @@ Do you see the content of the last page? This happens because we didn&#8217;t de
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://prismlibrary.com/docs/viewmodel-locator.html" class="bare">https://prismlibrary.com/docs/viewmodel-locator.html</a></p>
+<p><a href="https://prismlibrary.com/docs/viewmodel-locator" class="bare">https://prismlibrary.com/docs/viewmodel-locator</a></p>
 </li>
 <li>
-<p><a href="https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing" class="bare">https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing</a></p>
+<p><a href="https://www.reactiveui.net/docs/handbook/routing/" class="bare">https://www.reactiveui.net/docs/handbook/routing/</a></p>
 </li>
 </ul>
 </div>
@@ -2763,7 +2679,7 @@ Do you see the content of the last page? This happens because we didn&#8217;t de
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-11-06 19:42:36 UTC
+Last updated 2026-04-13 18:56:57 +0200
 </div>
 </div>
 </body>

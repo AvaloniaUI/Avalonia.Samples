@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Media;
-using Avalonia.Platform;
+using Avalonia.Media.TextFormatting;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Skia;
 using SkiaSharp;
@@ -50,35 +49,40 @@ internal class ScoreRenderer : ICustomDrawOperation
         // In case we didn't find it, render the text with a fallback.
         if (leaseFeature == null)
         {
-            var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
-
-            var glyphRun = new GlyphRun(Typeface.Default.GlyphTypeface,
+            using var shapedBuffer = TextShaper.Current.ShapeText(Text.AsMemory(), new TextShaperOptions(Typeface.Default.GlyphTypeface, 20));
+            var glyphRun = new GlyphRun(
+                Typeface.Default.GlyphTypeface,
                 20,
                 Text.AsMemory(),
-                glyphs,
+                shapedBuffer,
                 Bounds.TopRight - new Point(50, 50));
-                
-            context.DrawGlyphRun(Brushes.Goldenrod, glyphRun.TryCreateImmutableGlyphRunReference()!);
+
+            if (glyphRun.TryCreateImmutableGlyphRunReference() is { } glyphRunReference)
+            {
+                context.DrawGlyphRun(Brushes.Goldenrod, glyphRunReference);
+            }
         }
+        
         // Otherwise use SkiaSharp to render the text and apply some glow-effect.
-        // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-2.88 
+        // Find the SkiaSharp-API here: https://learn.microsoft.com/en-us/dotnet/api/skiasharp?view=skiasharp-3.119
         else
         {
             using var lease = leaseFeature.Lease();
             var canvas = lease.SkCanvas;
             canvas.Save();
-                
+
             using (var paint = new SKPaint())
             {
+                var font = new SKFont { Size = 30 };
                 paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
-                paint.TextSize = 30;
-                paint.TextAlign = SKTextAlign.Right;
-                    
+                paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
+
                 var origin = Bounds.TopRight.ToSKPoint();
                 origin.Offset(-25, +50);
 
-                paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
-                canvas.DrawText(Text, origin, paint);
+                // Use new DrawText overload with SKTextAlign
+                canvas.DrawText(Text, origin, SKTextAlign.Right, font, paint);
+                font.Dispose();
             }
             canvas.Restore();
         }

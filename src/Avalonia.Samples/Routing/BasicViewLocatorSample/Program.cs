@@ -18,6 +18,8 @@ namespace BasicViewLocatorSample
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
+                .WithDeveloperTools()
+                .WithDataAnnotationsValidation() // This is needed to use the validation using Attributes in the ViewModel
                 .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
     }
 }

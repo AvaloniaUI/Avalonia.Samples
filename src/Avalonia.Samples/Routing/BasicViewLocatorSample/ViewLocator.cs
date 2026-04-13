@@ -13,7 +13,7 @@ namespace BasicViewLocatorSample
             {
                 return new TextBlock { Text = "data was null" };
             }
-            
+
             var name = data.GetType().FullName!.Replace("ViewModel", "View");
             var type = Type.GetType(name);
 

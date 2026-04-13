@@ -37,7 +37,7 @@ namespace ValidationSample.ViewModels
             }
 
             // Property-level errors, if any
-            if (this.errors.TryGetValue(propertyName!, out List<ValidationResult>? result))
+            if (this.errors.TryGetValue(propertyName, out List<ValidationResult>? result))
             {
                 return result;
             }

@@ -124,7 +124,7 @@
                 <controls:LabeledControl Header="Search:" HeaderPosition="Left">
                     <TextBox CornerRadius="8"
                              Text="{Binding FilterString}"
-                             Watermark="Find Items..." />
+                             PlaceholderText="Find Items..." />
                 </controls:LabeledControl>
                 
                 <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"

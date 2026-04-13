@@ -14,7 +14,7 @@ using SnowflakesControlSample.Models;
 namespace SnowflakesControlSample.Controls;
 
 /// <summary>
-/// A control to render some <see cref="Snowflake">Snowflakes</see>. This control also adds the needed interaction logic
+/// A control to render some <see cref="Snowflake">Snowflakes</see>. This control also adds the necessary interaction logic
 /// for the game to operate.
 /// </summary>
 public class SnowflakesControl : Control
@@ -114,7 +114,7 @@ public class SnowflakesControl : Control
     /// <inheritdoc />
     public override void Render(DrawingContext context)
     {
-        // Figure out how much time elapsed since last render loop
+        // Figure out how much time has elapsed since last render loop
         var elapsedMilliseconds = _stopwatch.Elapsed.TotalMilliseconds;
 
         foreach (var snowFlake in Snowflakes)

@@ -16,8 +16,19 @@ public class DefaultCollection : ICollectionFixture<DefaultAppFixture>
 
 public class DefaultAppFixture : IDisposable
 {
-    private const string TestAppPath =
-        @"..\..\..\..\TestableApp\bin\Debug\net6.0\TestableApp.exe";
+    // The .NET version is used in the path to the test app, so we need to determine it at runtime.
+    // Alternatively, we could hard-code it, but this way it will work regardless of the .NET version used to run the tests.
+    private static string GetDotnetVersion() => $"net{Environment.Version.Major}.{Environment.Version.Minor}";
+    
+    // The test app path is resolved from the test host base directory and normalized to an absolute path.
+    // This avoids depending on the current working directory used by a specific test runner.
+    private static readonly string TestAppPath = ResolveTestAppPath();
+
+    private static string ResolveTestAppPath() =>
+        Path.GetFullPath(Path.Combine(
+            AppContext.BaseDirectory,
+            "..", "..", "..", "..", "..",
+            "TestableApp", "bin", "Debug", GetDotnetVersion(), "TestableApp.exe"));
 
     private const string TestAppBundleId = "net.avaloniaui.testableApp";
 
@@ -52,7 +63,14 @@ public class DefaultAppFixture : IDisposable
 
     protected virtual void ConfigureWin32Options(AppiumOptions options)
     {
-        var path = Path.GetFullPath(TestAppPath);
+        var path = TestAppPath;
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException(
+                $"Test app was not found at '{path}'. Build TestableApp in Debug first or adjust fixture path resolution.",
+                path);
+        }
+
         options.App = path;
         options.PlatformName = MobilePlatform.Windows;
         options.DeviceName= "WindowsPC";

@@ -77,7 +77,7 @@ The tutorial covers:
 == Running This Sample
 
 . Open the solution in your IDE (Visual Studio, JetBrains Rider, or VS Code with Ionide)
-. Ensure you have .NET 9.0 SDK installed
+. Ensure you have .NET 10.0 SDK installed
 . Build and run the project
 . Click the store icon to search for albums
 . Type a search term and select albums to add to your collection

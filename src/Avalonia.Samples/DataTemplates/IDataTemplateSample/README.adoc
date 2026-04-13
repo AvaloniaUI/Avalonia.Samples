@@ -25,7 +25,7 @@ endif::[]
 
 
 // Write a short summary here what this examples does
-This example will show you how to implement `IDataTemplate` in your own class to have full control over your `DataTemplates`. Other than WPF, Avalonia does *not* have a https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0[[`DataTemplateSelector`\]]. Therefore you will learn in this sample how you can mimic it's behavior in Avalonia, if needed.
+This example will show you how to implement `IDataTemplate` in your own class to have full control over your `DataTemplates`. Other than WPF, Avalonia does *not* have a https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datatemplateselector?view=windowsdesktop-7.0[[`DataTemplateSelector`\]]. Therefore, you will learn in this sample how you can mimic its behavior in Avalonia, if needed.
 
 
 
@@ -55,7 +55,7 @@ You should already have a basic knowledge of `DataTemplates`.
 
 === IDataTemplate
 
-http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/[[`IDataTemplate`\]] is an interface which you can implement into your own class in order to be used as a `DataTemplate`. It has the following members:
+http://reference.avaloniaui.net/api/Avalonia.Controls.Templates/IDataTemplate/[[`IDataTemplate`\]] is an interface which you can implement into your own class to be used as a `DataTemplate`. It has the following members:
 
 bool Match(object?)::
 Use this function to return if the given object matches to your `DataTemplate`.
@@ -68,13 +68,13 @@ Use this function to build the control which represents the given object.
 
 We will create a convenient way to select a matching `DataTemplate` based on an `enum` value. The possible `DataTemplates` can be defined in `XAML` which should feel familiar to most developers. 
 
-NOTE: Also if we use an `enum` in this sample, it can be any object in your implementation.
+NOTE: Even if we use an `enum` in this sample, it can be any object in your implementation.
 
 === Step 1: Create a new Avalonia Project
 
 Create a new Project using the `Avalonia MVVM Project` template. 
 
-=== Step 2: Setup the Model
+=== Step 2: Set up the Model
 
 Inside the `Models` directory add an `enum` called `ShapeTypes.cs`:
 
@@ -90,7 +90,7 @@ public enum ShapeType
 }
 ----
 
-=== Step 3: Setup the ViewModel
+=== Step 3: Set up the ViewModel
 
 In the file `ViewModels ► MainWindowViewModel.cs` we will add a Property `SelectedShape` and an `Array` of available shapes called `AvailableShapes`:
 
@@ -165,7 +165,7 @@ public class ShapesTemplateSelector : IDataTemplate
 } 
 ----
 
-=== Step 5: Setup the View
+=== Step 5: Set up the View
 
 Open the file `Views ► MainWindow.axaml` and create a new `ShapesTemplateSelector` inside `Window.DataTemplates`: 
 

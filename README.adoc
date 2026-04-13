@@ -27,7 +27,7 @@ Welcome to **Avalonia.Samples**. This is a collection of minimal samples, which 
 [#get-in-touch]
 == 🗯 Get in touch with us
 
-If you have feedback, questions or suggestions feel free to contact us via:
+If you have feedback, questions or suggestions, feel free to contact us via:
 
 image:https://raw.githubusercontent.com/Patrolavia/telegram-badge/master/chat.svg[link=https://t.me/Avalonia]
 image:https://img.shields.io/badge/https%3A%2F%2Fimg.shields.io%2Fbadge%2Fgithub-discussions-blue%3Flogo%3Dgithub?style=flat&label=github&color=darkgreen&link=https%3A%2F%2Fgithub.com%2FAvaloniaUI%2FAvalonia.Samples%2Fdiscussions[link=https://github.com/AvaloniaUI/Avalonia.Samples/discussions]
@@ -39,9 +39,9 @@ Or file a new bug-report or feature request in the https://github.com/AvaloniaUI
 [#_organization_of_the_samples]
 == 📂 Organization of the Samples
 
-Every sample can be found in its own sub-folder and can run without any reference to another sample. Nevertheless we have a `*.slnx`-file which has all projects in one solution, if you are looking for a complete collection of samples.
+Every sample can be found in its own subfolder and can run without any reference to another sample. Nevertheless, we have a `*.slnx`-file which has all projects in one solution, if you are looking for a complete collection of samples.
 
-NOTE: We migrated to the newer *.slnx-File format, which should be supported from all major IDEs. If it doesn't work for you, please use the project-files inside the sub-directories. 
+NOTE: We migrated to the newer *.slnx-File format, which should be supported from all major IDEs. If it doesn't work for you, please use the project-files inside the subdirectories. 
 
 You can find the list of samples <<samples,below>>. The samples are structured in different categories and difficulties. For better search results, each sample is also tagged with some **buzz-words**.
 
@@ -59,7 +59,7 @@ Each sample is tagged with its difficulty. The degree of difficulty describes ho
 | 🔘 | Difficulty  | Degree of knowledge
 
 | 🐣 | Beginner
-| A Beginner must not have any knowledge of Avalonia. Nevertheless some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory.
+| A Beginner must not have any knowledge of Avalonia. Nevertheless, some basic knowledge of `C#`, `X(A)ML` and  your IDE is mandatory.
 
 | 🐥 | Easy
 | Some very basic knowledge of Avalonia is needed.
@@ -278,7 +278,7 @@ NOTE: Pull requests may be discussed and probably not every pull request will be
 [#_fixing_an_existing_sample]
 ==== Fixing an existing sample
 
-If you find that in an existing sample, that something is unclear or missing, you can update the sample and file a pull request. Spelling mistakes or wrong wording can also be changed in a pull request.
+If you find that in an existing sample something is unclear or missing, you can update the sample and file a pull request. Spelling mistakes or wrong wording can also be changed in a pull request.
 
 IMPORTANT: If you change the difficulty or the buzz-words, remember to also update the main page.
 

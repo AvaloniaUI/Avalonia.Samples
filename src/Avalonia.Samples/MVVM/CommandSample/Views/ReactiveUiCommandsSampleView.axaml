@@ -29,7 +29,7 @@
 			<!-- We use CommandParameter to provide the name of the robot -->
 			<!-- Note that the button is automatically disabled if we don't enter a name-->
 			<StackPanel Orientation="Horizontal" Spacing="5">	
-				<TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
+				<TextBox Text="{Binding RobotName}" PlaceholderText="Robot Name" />
 				<Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
 						Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
 						CommandParameter="{Binding RobotName}" />

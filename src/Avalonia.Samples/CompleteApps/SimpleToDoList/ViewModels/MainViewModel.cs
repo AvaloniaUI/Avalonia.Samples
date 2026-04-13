@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SimpleToDoList.Models;
-using SimpleToDoList.Services;
 
 namespace SimpleToDoList.ViewModels;
 
@@ -50,9 +49,9 @@ public partial class MainViewModel : ViewModelBase
     /// <summary>
     /// Gets or set the content for new Items to add. If this string is not empty, the AddItemCommand will be enabled automatically
     /// </summary>
-    [ObservableProperty] 
+    [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(AddItemCommand))] // This attribute will invalidate the command each time this property changes
-    private string? _newItemContent;
+    public partial string? NewItemContent { get; set; }
 
     /// <summary>
     /// Returns if a new Item can be added. We require to have the NewItem some Text

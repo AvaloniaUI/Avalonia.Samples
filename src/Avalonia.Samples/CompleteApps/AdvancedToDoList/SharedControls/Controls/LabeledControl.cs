@@ -28,7 +28,7 @@ namespace SharedControls.Controls;
 /// <code language="xaml">
 /// <![CDATA[
 /// <controls:LabeledControl Header="Title">
-///     <TextBox Text="{Binding Title}" Watermark="Enter a title..." />
+///     <TextBox Text="{Binding Title}" PlaceholderText="Enter a title..." />
 /// </controls:LabeledControl>
 /// ]]>
 /// </code>

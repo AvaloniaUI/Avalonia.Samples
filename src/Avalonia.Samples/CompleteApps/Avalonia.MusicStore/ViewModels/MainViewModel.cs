@@ -17,7 +17,7 @@ namespace Avalonia.MusicStore.ViewModels
         {
             LoadAlbums();
             
-            WeakReferenceMessenger.Default.Register<CheckAlbumAlreadyExistsMessage>(this, (v, m) =>
+            WeakReferenceMessenger.Default.Register<CheckAlbumAlreadyExistsMessage>(this, (_, m) =>
             {
                 m.Reply(Albums.Contains(m.Album));
             });

@@ -40,8 +40,8 @@ public static class DialogHelper
                 Title = title ?? "Select any file(s)"
             });
 
-        // return the result
-        return storageFiles.Select(s => s.Name);
+        // return the result as full local paths where available, falling back to the file name
+        return storageFiles.Select(s => s.TryGetLocalPath() ?? s.Name);
     }
 
     /// <summary>

@@ -11,6 +11,7 @@ module Program =
             .Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            .WithDeveloperTools()
             .LogToTrace(areas = Array.empty)
 
     [<EntryPoint; STAThread>]

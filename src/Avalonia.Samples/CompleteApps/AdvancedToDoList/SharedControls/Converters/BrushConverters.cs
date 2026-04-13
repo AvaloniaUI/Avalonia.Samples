@@ -41,7 +41,7 @@ public static class BrushConverters
     /// - Uses WCAG luminance formula for accessibility compliance
     /// </remarks>
     public static FuncValueConverter<Color, SolidColorBrush> ColorToForegroundBrushConverter { get; } =
-        new FuncValueConverter<Color, SolidColorBrush>(color => new SolidColorBrush(GetIdeaForegroundColor(color)));
+        new FuncValueConverter<Color, SolidColorBrush>(color => new SolidColorBrush(GetIdealForegroundColor(color)));
     
     
     /// <summary>
@@ -67,7 +67,7 @@ public static class BrushConverters
     /// 
     /// Threshold of 128 was chosen empirically as a good balance point
     /// </remarks>
-    public static Color GetIdeaForegroundColor(Color backgroundColor)
+    public static Color GetIdealForegroundColor(Color backgroundColor)
     {
         // Calculate relative luminance using WCAG 2.0 formula
         var luminance = (backgroundColor.R * 299 + backgroundColor.G * 587 + backgroundColor.B * 114) / 1000;

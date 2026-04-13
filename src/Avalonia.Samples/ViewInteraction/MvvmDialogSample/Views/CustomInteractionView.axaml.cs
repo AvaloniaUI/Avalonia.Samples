@@ -46,7 +46,7 @@ namespace MvvmDialogSample.Views
                             });
 
             // Transform the files as needed and return them. If no file was selected, null will be returned
-            return storageFiles?.Select(x => x.Name)?.ToArray();
+            return storageFiles.Select(x => x.Name).ToArray();
         }
     }
 }

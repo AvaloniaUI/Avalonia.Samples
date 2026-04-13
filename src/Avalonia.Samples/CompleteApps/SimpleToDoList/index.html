@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Simple ToDo-List</title>
 <style>
@@ -1910,124 +1910,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
-}
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
-}
-pre.rouge .gr {
-  color: #f6f8fa;
-}
-pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
-}
-pre.rouge .nb {
-  color: #953800;
-}
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .ges {
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
-}
-pre.rouge .gh {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
-}
-pre.rouge .gt {
-  color: #6e7781;
-}
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
-  font-weight: bold;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2045,7 +1927,7 @@ pre.rouge .gs {
 <ul class="sectlevel2">
 <li><a href="#_step_1_create_and_set_up_a_new_project">Step 1: Create and set up a new project</a></li>
 <li><a href="#_step_2_set_up_the_model">Step 2: Set up the Model</a></li>
-<li><a href="#_step_3_setup_the_viewmodel">Step 3: Setup the ViewModel</a></li>
+<li><a href="#_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</a></li>
 <li><a href="#_step_4_set_up_the_view">Step 4: Set up the View</a></li>
 <li><a href="#_step_5_optional_add_some_styles_to_improve_the_ui">Step 5 (Optional): Add some Styles to improve the UI</a></li>
 <li><a href="#_step_7_optional_data_persistence">Step 7 (Optional): Data Persistence</a></li>
@@ -2059,7 +1941,7 @@ pre.rouge .gs {
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This example will show you how a simple ToDo-List App can be build using Avalonia in combination with the MVVM-Community-Toolkit.</p>
+<p>This example will show you how a simple ToDo-List App can be built using Avalonia in combination with the MVVM-Community-Toolkit.</p>
 </div>
 <!-- toc disabled -->
 <h3 id="_difficulty" class="discrete">Difficulty</h3>
@@ -2076,7 +1958,7 @@ pre.rouge .gs {
 <h2 id="_before_we_start">Before we start</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This sample assumes that you have a basic knowledge about the following topics:</p>
+<p>This sample assumes that you have basic knowledge about the following topics:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2112,7 +1994,7 @@ Some sections are optional. You can skip these if you want to.
 <div class="sect2">
 <h3 id="_communitytoolkit_mvvm">CommunityToolkit.MVVM</h3>
 <div class="paragraph">
-<p>The <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">[CommunityToolkit.MVVM]</a>-package is one of many third-party packages for MVVM-Apps. We will use it in this sample as it is very lightweight. In addition, it comes with built-in source generators which allows us to write less boilerplate code.</p>
+<p>The <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">[CommunityToolkit.MVVM]</a>-package is one of many third-party packages for MVVM-Apps. We will use it in this sample as it is very lightweight. In addition, it comes with built-in source generators, which allow us to write less boilerplate code.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2122,22 +2004,22 @@ Some sections are optional. You can skip these if you want to.
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For example, we can annotate private fields with the <code>[ObservableProperty]</code>-attribute which will let the source generator create a property for us:</p>
+<p>For example, we can annotate private fields or partial properties with the <code>[ObservableProperty]</code>-attribute which will let the source generator create a property for us:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// Using the source generator:</span>
-<span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-<span class="k">private</span> <span class="kt">bool</span> <span class="n">_isChecked</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">// Using the source generator:
+[ObservableProperty]
+public partial bool IsChecked {get; set;}
 
-<span class="c1">// Without using the source generator we would need to write:</span>
-<span class="k">private</span> <span class="kt">bool</span> <span class="n">_isChecked</span><span class="p">;</span>
+// Without using the source generator we would need to write:
+private bool _isChecked;
 
-<span class="k">public</span> <span class="kt">bool</span> <span class="n">IsChecked</span>
-<span class="p">{</span>
-    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_isChecked</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">set</span> <span class="p">{</span> <span class="nf">SetProperty</span><span class="p">(</span><span class="k">ref</span> <span class="n">_isChecked</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
-<span class="p">}</span></code></pre>
+public bool IsChecked
+{
+    get { return _isChecked; }
+    set { SetProperty(ref _isChecked, value); }
+}</code></pre>
 </div>
 </div>
 </td>
@@ -2190,10 +2072,10 @@ If you want to learn more about how these source generators work, please see <a 
 <div class="ulist">
 <ul>
 <li>
-<p>The user should have a visual feedback when hovering a to-do item</p>
+<p>The user should have visual feedback when hovering a to-do item</p>
 </li>
 <li>
-<p>The user should have a visual feedback if a new item can be added or not</p>
+<p>The user should have visual feedback if a new item can be added or not</p>
 </li>
 <li>
 <p>The user should be able to save and load a to-do-list (not a scope of this tutorial)</p>
@@ -2207,7 +2089,7 @@ If you want to learn more about how these source generators work, please see <a 
 <p><strong>Draft UI Layout</strong></p>
 </div>
 <div class="paragraph">
-<p>It would be nice to have a single page user interface (UI) where the user can interact with the to-do list. We will use the operating system&#8217;s window frame to present our App. In the bottom of the page, the user will have a <code>TextBox</code> where they can type any new item content to add. A <code>Watermark</code> or <code>ToolTip</code> shall indicate that visually. As soon as we receive valid input for a new item, a <code>Button</code> next to the input field should be enabled. If the user invokes this <code>Button</code>, the new item will be added into our list. The list itself will fill the rest of our available space. In case the space is not enough to render all items, a <code>ScrollBar</code> will enable vertical scrolling.
+<p>It would be nice to have a single-page user interface (UI) where the user can interact with the to-do list. We will use the operating system&#8217;s window frame to present our App. In the bottom of the page, the user will have a <code>TextBox</code> where they can type any new item content to add. A <code>PlaceholderText</code> or <code>ToolTip</code> shall indicate that visually. As soon as we receive valid input for a new item, a <code>Button</code> next to the input field should be enabled. If the user invokes this <code>Button</code>, the new item will be added into our list. The list itself will fill the available space. In case the space is not enough to render all items, a <code>ScrollBar</code> will enable vertical scrolling.
 Each item in the list is going to be represented by a <code>CheckBox</code> followed by the content and a <code>Button</code> to delete the item.</p>
 </div>
 <div class="imageblock">
@@ -2251,43 +2133,17 @@ Depending on the IDE used to create your project, you may see a file structure t
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>By default, the Avalonia-MVVM template installs <code>ReactiveUI.Avalonia</code> as the MVVM framework. However, we want to use another MVVM framework. Therefore we will uninstall that package and instead install the <code>CommunityToolkit.Mvvm</code> package. We need to edit two files to get the changes applied:</p>
-</div>
-<div class="paragraph">
-<p><strong>Program.cs</strong>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="diff">    using Avalonia;
-<span class="gd">-   using ReactiveUI.Avalonia; // remove this using
-</span>    using System;
-<span class="err">
-</span>[...]
-<span class="err">
-</span>    public static AppBuilder BuildAvaloniaApp()
-        =&gt; AppBuilder.Configure&lt;App&gt;()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
-<span class="gd">-           .UseReactiveUI(); // remove this line</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>ViewModels/ViewModelBase</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="diff"><span class="gd">-   using ReactiveUI;
-</span><span class="gi">+   using CommunityToolkit.Mvvm.ComponentModel;
-</span><span class="err">
-</span>    namespace GetStartedApp.ViewModels;
-<span class="err">
-</span><span class="gd">-   public class ViewModelBase : ReactiveObject
-</span><span class="gi">+   public class ViewModelBase : ObservableObject
-</span>    {
-    }</code></pre>
-</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When you create a new project from the IDE you can choose the MVVM package you prefer. If you didn&#8217;t choose the <code>CommunityToolkit.MVVM</code>-package, you may need to install <code>CommunityToolkit.MVVM</code> via NuGet to be able to use the source generators in this tutorial.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -2322,26 +2178,26 @@ In case the folder <code>Models</code> is missing on your side, just add it to y
 <div class="listingblock">
 <div class="title">Models/ToDoItem.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// This is our Model for a simple ToDoItem.</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">ToDoItem</span>
-<span class="p">{</span>
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets or sets the checked status of each item</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsChecked</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// This is our Model for a simple ToDoItem.
+/// &lt;/summary&gt;
+public class ToDoItem
+{
+    /// &lt;summary&gt;
+    /// Gets or sets the checked status of each item
+    /// &lt;/summary&gt;
+    public bool IsChecked { get; set; }
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets or sets the content of the to-do item</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">Content</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    /// &lt;summary&gt;
+    /// Gets or sets the content of the to-do item
+    /// &lt;/summary&gt;
+    public string? Content { get; set; }
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_setup_the_viewmodel">Step 3: Setup the ViewModel</h3>
+<h3 id="_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</h3>
 <div class="sect3">
 <h4 id="_the_todoitem_viewmodel">The ToDoItem-ViewModel</h4>
 <div class="paragraph">
@@ -2362,27 +2218,27 @@ If you want to use the source generators, remember to mark the class as <code>pa
 <div class="listingblock">
 <div class="title">ViewModels/ToDoItemViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// This is a ViewModel which represents a &lt;see cref="Models.ToDoItem"/&gt;</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ToDoItemViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
-<span class="p">{</span>
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets or sets the checked status of each item</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-    <span class="k">private</span> <span class="kt">bool</span> <span class="n">_isChecked</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// This is a ViewModel which represents a &lt;see cref="Models.ToDoItem"/&gt;
+/// &lt;/summary&gt;
+public partial class ToDoItemViewModel : ViewModelBase
+{
+    /// &lt;summary&gt;
+    /// Gets or sets the checked status of each item
+    /// &lt;/summary&gt;
+    [ObservableProperty]
+    public partial bool _isChecked;
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Gets or sets the content of the to-do item</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-    <span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_content</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+    /// &lt;summary&gt;
+    /// Gets or sets the content of the to-do item
+    /// &lt;/summary&gt;
+    [ObservableProperty]
+    public partial string? _content;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Our <code>ViewModel</code> is not yet connected to our <code>Model</code>. In order to create a new <code>ToDoItemViewModel</code> from an existing <code>ToDoItem</code>, we can add a constructor that takes the <code>ToDoItem</code> as an argument.</p>
+<p>Our <code>ViewModel</code> is not yet connected to our <code>Model</code>. To create a new <code>ToDoItemViewModel</code> from an existing <code>ToDoItem</code>, we can add a constructor that takes the <code>ToDoItem</code> as an argument.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2398,50 +2254,50 @@ We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. T
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Creates a new blank ToDoItemViewModel</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="nf">ToDoItemViewModel</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// empty</span>
-<span class="p">}</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Creates a new blank ToDoItemViewModel
+/// &lt;/summary&gt;
+public ToDoItemViewModel()
+{
+    // empty
+}
 
-<span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Creates a new ToDoItemViewModel for the given &lt;see cref="Models.ToDoItem"/&gt;</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="c1">/// &lt;param name="item"&gt;The item to load&lt;/param&gt;</span>
-<span class="k">public</span> <span class="nf">ToDoItemViewModel</span><span class="p">(</span><span class="n">ToDoItem</span> <span class="n">item</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Init the properties with the given values</span>
-    <span class="n">IsChecked</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">IsChecked</span><span class="p">;</span>
-    <span class="n">Content</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">Content</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+/// &lt;summary&gt;
+/// Creates a new ToDoItemViewModel for the given &lt;see cref="Models.ToDoItem"/&gt;
+/// &lt;/summary&gt;
+/// &lt;param name="item"&gt;The item to load&lt;/param&gt;
+public ToDoItemViewModel(ToDoItem item)
+{
+    // Init the properties with the given values
+    IsChecked = item.IsChecked;
+    Content = item.Content;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Okay, now we also need a way to get the updated <code>Model</code> back, if the user made some changes. We can do this for example using a read-only property or a method like shown below:</p>
+<p>Okay, now we also need a way to get the updated <code>Model</code> back, if the user made some changes. We can do this, for example, using a read-only property or a method like shown below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Gets a ToDoItem of this ViewModel</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="c1">/// &lt;returns&gt;The ToDoItem&lt;/returns&gt;</span>
-<span class="k">public</span> <span class="n">ToDoItem</span> <span class="nf">GetToDoItem</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">ToDoItem</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="n">IsChecked</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">IsChecked</span><span class="p">,</span>
-        <span class="n">Content</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">Content</span>
-    <span class="p">};</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Gets a ToDoItem of this ViewModel
+/// &lt;/summary&gt;
+/// &lt;returns&gt;The ToDoItem&lt;/returns&gt;
+public ToDoItem GetToDoItem()
+{
+    return new ToDoItem()
+    {
+        IsChecked = this.IsChecked,
+        Content = this.Content
+    };
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_the_mainviewmodel">The MainViewModel</h4>
 <div class="paragraph">
-<p>Depending on the template used to create the project you should see a file called <code>MainViewModel</code> or <code>MainWindowViewModel</code>. Open this file in order to edit it.</p>
+<p>Depending on the template used to create the project you should see a file called <code>MainViewModel</code> or <code>MainWindowViewModel</code>. Open this file to edit it.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2461,10 +2317,10 @@ If you see a property called <code>Greetings</code>, feel free to delete it as w
 <div class="listingblock">
 <div class="title">ViewModels/MainViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Gets a collection of &lt;see cref="ToDoItem"/&gt; which allows adding and removing items</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;</span> <span class="n">ToDoItems</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;();</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Gets a collection of &lt;see cref="ToDoItem"/&gt; which allows adding and removing items
+/// &lt;/summary&gt;
+public ObservableCollection&lt;ToDoItemViewModel&gt; ToDoItems { get; } = new ObservableCollection&lt;ToDoItemViewModel&gt;();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2484,12 +2340,12 @@ The command and the properties will be created using the source generator provid
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Gets or set the content for new Items to add. If this string is not empty, the AddItemCommand will be enabled automatically</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-<span class="p">[</span><span class="nf">NotifyCanExecuteChangedFor</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">AddItemCommand</span><span class="p">))]</span> <span class="c1">// This attribute will invalidate the command each time this property changes</span>
-<span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_newItemContent</span><span class="p">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Gets or set the content for new Items to add. If this string is not empty, the AddItemCommand will be enabled automatically
+/// &lt;/summary&gt;
+[ObservableProperty]
+[NotifyCanExecuteChangedFor(nameof(AddItemCommand))] // This attribute will invalidate the command each time this property changes
+public partial string? NewItemContent { get; set; }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2497,10 +2353,10 @@ The command and the properties will be created using the source generator provid
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Returns if a new Item can be added. We require to have the NewItem some Text</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">private</span> <span class="kt">bool</span> <span class="nf">CanAddItem</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">NewItemContent</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Returns if a new Item can be added. We require to have the NewItem some Text
+/// &lt;/summary&gt;
+private bool CanAddItem() =&gt; !string.IsNullOrWhiteSpace(NewItemContent);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2508,18 +2364,18 @@ The command and the properties will be created using the source generator provid
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// This command is used to add a new Item to the List</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="p">[</span><span class="nf">RelayCommand</span> <span class="p">(</span><span class="n">CanExecute</span> <span class="p">=</span> <span class="k">nameof</span><span class="p">(</span><span class="n">CanAddItem</span><span class="p">))]</span>
-<span class="k">private</span> <span class="k">void</span> <span class="nf">AddItem</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Add a new item to the list</span>
-    <span class="n">ToDoItems</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ToDoItemViewModel</span><span class="p">()</span> <span class="p">{</span><span class="n">Content</span> <span class="p">=</span> <span class="n">NewItemContent</span><span class="p">});</span>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// This command is used to add a new Item to the List
+/// &lt;/summary&gt;
+[RelayCommand (CanExecute = nameof(CanAddItem))]
+private void AddItem()
+{
+    // Add a new item to the list
+    ToDoItems.Add(new ToDoItemViewModel() {Content = NewItemContent});
 
-    <span class="c1">// reset the NewItemContent</span>
-    <span class="n">NewItemContent</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
+    // reset the NewItemContent
+    NewItemContent = null;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2539,16 +2395,16 @@ According to our App draft, we want to add the <code>Delete-Button</code> next t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Removes the given Item from the list</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="c1">/// &lt;param name="item"&gt;the item to remove&lt;/param&gt;</span>
-<span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
-<span class="k">private</span> <span class="k">void</span> <span class="nf">RemoveItem</span><span class="p">(</span><span class="n">ToDoItemViewModel</span> <span class="n">item</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// Remove the given item from the list</span>
-    <span class="n">ToDoItems</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
+/// Removes the given Item from the list
+/// &lt;/summary&gt;
+/// &lt;param name="item"&gt;the item to remove&lt;/param&gt;
+[RelayCommand]
+private void RemoveItem(ToDoItemViewModel item)
+{
+    // Remove the given item from the list
+    ToDoItems.Remove(item);
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2577,7 +2433,7 @@ Depending on the template you used to create your project, you may see a file ca
 <div class="title">Figure 2. Our sketch of the App-design</div>
 </div>
 <div class="paragraph">
-<p>As shown above we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use <a href="https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels">[<code>Panels</code>]</a> to achieve different layouts. In our case we can use a <code>DockPanel</code> or a <code>Grid</code>. We will use a <code>Grid</code> as this offers the most flexible layout.</p>
+<p>As shown above, we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use <a href="https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels">[<code>Panels</code>]</a> to achieve different layouts. In our case we can use a <code>DockPanel</code> or a <code>Grid</code>. We will use a <code>Grid</code> as this offers the most flexible layout.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2624,39 +2480,39 @@ You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properti
 <div class="listingblock">
 <div class="title">Views/MainWindow.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- Leave the root-Node untouched beside setting Width, Height and Padding --&gt;</span>
-<span class="nt">&lt;Window</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
-        <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
-        <span class="na">xmlns:vm=</span><span class="s">"using:SimpleToDoList.ViewModels"</span>
-        <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
-        <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
-        <span class="na">mc:Ignorable=</span><span class="s">"d"</span>
-        <span class="na">Width=</span><span class="s">"300"</span> <span class="na">Height=</span><span class="s">"500"</span> <span class="na">Padding=</span><span class="s">"4"</span>
-        <span class="na">x:Class=</span><span class="s">"SimpleToDoList.Views.MainWindow"</span>
-        <span class="na">x:DataType=</span><span class="s">"vm:MainViewModel"</span>
-        <span class="na">Icon=</span><span class="s">"/Assets/avalonia-logo.ico"</span>
-        <span class="na">Title=</span><span class="s">"SimpleToDoList"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- We give a name to the root grid in order to access it later --&gt;</span>
-    <span class="nt">&lt;Grid</span> <span class="na">RowDefinitions=</span><span class="s">"Auto, *, Auto"</span>
-          <span class="na">x:Name=</span><span class="s">"Root"</span><span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- Leave the root-Node untouched beside setting Width, Height and Padding --&gt;
+&lt;Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SimpleToDoList.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="300" Height="500" Padding="4"
+        x:Class="SimpleToDoList.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SimpleToDoList"&gt;
+    &lt;!-- We give a name to the root grid in order to access it later --&gt;
+    &lt;Grid RowDefinitions="Auto, *, Auto"
+          x:Name="Root"&gt;
 
-        <span class="c">&lt;!-- This is our title text block.  --&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"My ToDo-List"</span> <span class="nt">/&gt;</span>
+        &lt;!-- This is our title text block.  --&gt;
+        &lt;TextBlock Text="My ToDo-List" /&gt;
 
-        <span class="nt">&lt;ScrollViewer</span> <span class="na">Grid.Row=</span><span class="s">"1"</span><span class="nt">&gt;</span>
-            <span class="c">&lt;!-- This ItemsControl show all added ToDoItems. --&gt;</span>
-            <span class="c">&lt;!-- It needs to be placed inside a ScrollViewer because other than a ListBox it has not its own --&gt;</span>
-            <span class="nt">&lt;ItemsControl</span> <span class="na">ItemsSource=</span><span class="s">"{Binding ToDoItems}"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;/ItemsControl&gt;</span>
-        <span class="nt">&lt;/ScrollViewer&gt;</span>
+        &lt;ScrollViewer Grid.Row="1"&gt;
+            &lt;!-- This ItemsControl show all added ToDoItems. --&gt;
+            &lt;!-- It needs to be placed inside a ScrollViewer because other than a ListBox it has not its own --&gt;
+            &lt;ItemsControl ItemsSource="{Binding ToDoItems}"&gt;
+            &lt;/ItemsControl&gt;
+        &lt;/ScrollViewer&gt;
 
-        <span class="c">&lt;!-- This TextBox can be used to add new ToDoItems --&gt;</span>
-        <span class="nt">&lt;TextBox</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
-                 <span class="na">Text=</span><span class="s">"{Binding NewItemContent}"</span>
-                 <span class="na">Watermark=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;/TextBox&gt;</span>
-    <span class="nt">&lt;/Grid&gt;</span>
-<span class="nt">&lt;/Window&gt;</span></code></pre>
+        &lt;!-- This TextBox can be used to add new ToDoItems --&gt;
+        &lt;TextBox Grid.Row="2"
+                 Text="{Binding NewItemContent}"
+                 PlaceholderText="Add a new Item"&gt;
+        &lt;/TextBox&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2672,7 +2528,7 @@ You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properti
 <p>We can see the title <code>TextBlock</code> is there and also the entry field for new items to add. We can add some text into the <code>TextBox</code>, however we have no button to add it into our list yet. Let&#8217;s fix that.</p>
 </div>
 <div class="paragraph">
-<p>In Avalonia a TextBox has the option to add <code>InnerLeftContent</code> and <code>InnerRightContent</code>, which can be used to add any content you like. For example, we can add a button to it. The <code>Button</code> will execute the <code>AddItemCommand</code>. For convenience, we also want to allow adding items using the keyboard. That is what <a href="https://docs.avaloniaui.net/docs/concepts/input/hotkeys">[<code>KeyBindings</code> and <code>HotKeys</code>]</a> can be used for.</p>
+<p>In Avalonia a TextBox can add <code>InnerLeftContent</code> and <code>InnerRightContent</code>, which can be used to add any content you like. For example, we can add a button to it. The <code>Button</code> will execute the <code>AddItemCommand</code>. For convenience, we also want to allow adding items using the keyboard. That is what <a href="https://docs.avaloniaui.net/docs/concepts/input/hotkeys">[<code>KeyBindings</code> and <code>HotKeys</code>]</a> can be used for.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2687,24 +2543,24 @@ We use <code>KeyBindings</code> here as a <code>HotKey</code> would be available
 </table>
 </div>
 <div class="paragraph">
-<p>Here is how our modified input box looks like:</p>
+<p>Here is what our modified input box looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
-         <span class="na">Text=</span><span class="s">"{Binding NewItemContent}"</span>
-         <span class="na">Watermark=</span><span class="s">"Add a new Item"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;TextBox.InnerRightContent&gt;</span>
-        <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding AddItemCommand}"</span> <span class="nt">&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;TextBox Grid.Row="2"
+         Text="{Binding NewItemContent}"
+         PlaceholderText="Add a new Item"&gt;
+    &lt;TextBox.InnerRightContent&gt;
+        &lt;Button Command="{Binding AddItemCommand}" &gt;
             Add
-            <span class="c">&lt;!-- &lt;PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" /&gt; --&gt;</span>
-        <span class="nt">&lt;/Button&gt;</span>
-    <span class="nt">&lt;/TextBox.InnerRightContent&gt;</span>
-    <span class="c">&lt;!--  KeyBindings allow us to define keyboard gestures  --&gt;</span>
-    <span class="nt">&lt;TextBox.KeyBindings&gt;</span>
-        <span class="nt">&lt;KeyBinding</span> <span class="na">Command=</span><span class="s">"{Binding AddItemCommand}"</span> <span class="na">Gesture=</span><span class="s">"Enter"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/TextBox.KeyBindings&gt;</span>
-<span class="nt">&lt;/TextBox&gt;</span></code></pre>
+            &lt;!-- &lt;PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" /&gt; --&gt;
+        &lt;/Button&gt;
+    &lt;/TextBox.InnerRightContent&gt;
+    &lt;!--  KeyBindings allow us to define keyboard gestures  --&gt;
+    &lt;TextBox.KeyBindings&gt;
+        &lt;KeyBinding Command="{Binding AddItemCommand}" Gesture="Enter" /&gt;
+    &lt;/TextBox.KeyBindings&gt;
+&lt;/TextBox&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2748,25 +2604,25 @@ Inside the <code>ItemTemplate</code> we can only use members of our <code>ItemVi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ItemsControl</span> <span class="na">ItemsSource=</span><span class="s">"{Binding ToDoItems}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;ItemsControl.ItemTemplate&gt;</span>
-        <span class="c">&lt;!--  The ItemTemplate defines how each item should be represented  --&gt;</span>
-        <span class="c">&lt;!--  Our Item will be represented by a CheckBox and a Delete-Button  --&gt;</span>
-        <span class="nt">&lt;DataTemplate</span> <span class="na">DataType=</span><span class="s">"vm:ToDoItemViewModel"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;Grid</span> <span class="na">ColumnDefinitions=</span><span class="s">"*, Auto"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;CheckBox</span> <span class="na">Content=</span><span class="s">"{Binding Content}"</span>
-                          <span class="na">IsChecked=</span><span class="s">"{Binding IsChecked}"</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;ItemsControl ItemsSource="{Binding ToDoItems}"&gt;
+    &lt;ItemsControl.ItemTemplate&gt;
+        &lt;!--  The ItemTemplate defines how each item should be represented  --&gt;
+        &lt;!--  Our Item will be represented by a CheckBox and a Delete-Button  --&gt;
+        &lt;DataTemplate DataType="vm:ToDoItemViewModel"&gt;
+            &lt;Grid ColumnDefinitions="*, Auto"&gt;
+                &lt;CheckBox Content="{Binding Content}"
+                          IsChecked="{Binding IsChecked}" /&gt;
 
-                <span class="c">&lt;!--  Note how we use the Root-Grid to get the MainViewModel here. As we use compiled bindings we have to cast the DataContext  --&gt;</span>
-                <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding #Root.((vm:MainViewModel)DataContext).RemoveItemCommand}"</span>
-                        <span class="na">CommandParameter=</span><span class="s">"{Binding .}"</span>
-                        <span class="na">Grid.Column=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+                &lt;!--  Note how we use the Root-Grid to get the MainViewModel here. As we use compiled bindings we have to cast the DataContext  --&gt;
+                &lt;Button Command="{Binding #Root.((vm:MainViewModel)DataContext).RemoveItemCommand}"
+                        CommandParameter="{Binding .}"
+                        Grid.Column="1"&gt;
                     Delete
-                <span class="nt">&lt;/Button&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-        <span class="nt">&lt;/DataTemplate&gt;</span>
-    <span class="nt">&lt;/ItemsControl.ItemTemplate&gt;</span>
-<span class="nt">&lt;/ItemsControl&gt;</span></code></pre>
+                &lt;/Button&gt;
+            &lt;/Grid&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/ItemsControl.ItemTemplate&gt;
+&lt;/ItemsControl&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2782,7 +2638,7 @@ Inside the <code>ItemTemplate</code> we can only use members of our <code>ItemVi
 <div class="sect2">
 <h3 id="_step_5_optional_add_some_styles_to_improve_the_ui">Step 5 (Optional): Add some Styles to improve the UI</h3>
 <div class="paragraph">
-<p>While our App is now fully functional and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user-friendly:</p>
+<p>While our App is now fully functional, and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user-friendly:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2793,29 +2649,29 @@ Inside the <code>ItemTemplate</code> we can only use members of our <code>ItemVi
 <p>The Buttons have English-only content. Having symbols would make them more understandable for all folks.</p>
 </li>
 <li>
-<p>It would be nice, if the item that the pointer is over would be highlighted. This would help the user to click the intended item.</p>
+<p>It would be nice if the item that the pointer is over were highlighted. This would help the user to click the intended item.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>For the header text we can use <a href="https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class">[<code>Style.Classes</code>]</a>.
-In <code>App.axaml</code> add following Style:</p>
+In <code>App.axaml</code> add the following Style:</p>
 </div>
 <div class="listingblock">
 <div class="title">App.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
-    <span class="c">&lt;!-- Do not touch this --&gt;</span>
-    <span class="nt">&lt;FluentTheme</span> <span class="nt">/&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.Styles&gt;
+    &lt;!-- Do not touch this --&gt;
+    &lt;FluentTheme /&gt;
 
-    <span class="c">&lt;!--  Some custom Styles  --&gt;</span>
-    <span class="c">&lt;!--  Our header Style  --&gt;</span>
-    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"TextBlock.h1"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"FontWeight"</span> <span class="na">Value=</span><span class="s">"Bold"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"FontSize"</span> <span class="na">Value=</span><span class="s">"15"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Margin"</span> <span class="na">Value=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Style&gt;</span>
-<span class="nt">&lt;/Application.Styles&gt;</span></code></pre>
+    &lt;!--  Some custom Styles  --&gt;
+    &lt;!--  Our header Style  --&gt;
+    &lt;Style Selector="TextBlock.h1"&gt;
+        &lt;Setter Property="FontWeight" Value="Bold" /&gt;
+        &lt;Setter Property="FontSize" Value="15" /&gt;
+        &lt;Setter Property="Margin" Value="5" /&gt;
+    &lt;/Style&gt;
+&lt;/Application.Styles&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2824,8 +2680,8 @@ In <code>App.axaml</code> add following Style:</p>
 <div class="listingblock">
 <div class="title">Views/MainWindow.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!--  This is our title text block. We use Style.Classes to style it accordingly  --&gt;</span>
-<span class="nt">&lt;TextBlock</span> <span class="na">Classes=</span><span class="s">"h1"</span> <span class="na">Text=</span><span class="s">"My ToDo-List"</span> <span class="nt">/&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!--  This is our title text block. We use Style.Classes to style it accordingly  --&gt;
+&lt;TextBlock Classes="h1" Text="My ToDo-List" /&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2852,7 +2708,7 @@ Avalonia has pseudo-class selectors that can be used to style a control accordin
 <td class="content">
 <div class="paragraph">
 <p>Sometimes you need to apply a style to a visual child of the control template (see <a href="https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes">[docs]</a>).
-To understand which selector to use, you may use <a href="https://docs.avaloniaui.net/docs/guides/implementation-guides/developer-tools">[developer tools]</a> (use the visual tree tab).
+To understand which selector to use, you may use <a href="https://docs.avaloniaui.net/tools/developer-tools/installation">[developer tools]</a>.
 Moreover, you can look up the original styles on <a href="https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls">[GitHub in source]</a></p>
 </div>
 <div class="paragraph">
@@ -2883,18 +2739,18 @@ Instead of hard-coding colors and brushes, you can use <a href="https://docs.ava
 <div class="listingblock">
 <div class="title">App.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
-    <span class="c">&lt;!-- ... other styles ... --&gt;</span>
-    <span class="c">&lt;!--  We want our CheckBox to be stretched horizontally (the default is left-aligned)  --&gt;</span>
-    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"CheckBox"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"HorizontalAlignment"</span> <span class="na">Value=</span><span class="s">"Stretch"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Style&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.Styles&gt;
+    &lt;!-- ... other styles ... --&gt;
+    &lt;!--  We want our CheckBox to be stretched horizontally (the default is left-aligned)  --&gt;
+    &lt;Style Selector="CheckBox"&gt;
+        &lt;Setter Property="HorizontalAlignment" Value="Stretch" /&gt;
+    &lt;/Style&gt;
 
-    <span class="c">&lt;!--  These styles add some useful feedback for the user  --&gt;</span>
-    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"CheckBox:pointerover /template/ Grid#RootGrid"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Background"</span> <span class="na">Value=</span><span class="s">"{DynamicResource SystemAccentColorLight3}"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Style&gt;</span>
-<span class="nt">&lt;/Application.Styles&gt;</span></code></pre>
+    &lt;!--  These styles add some useful feedback for the user  --&gt;
+    &lt;Style Selector="CheckBox:pointerover /template/ Grid#RootGrid"&gt;
+        &lt;Setter Property="Background" Value="{DynamicResource SystemAccentColorLight3}" /&gt;
+    &lt;/Style&gt;
+&lt;/Application.Styles&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2915,11 +2771,11 @@ If you use an icon from one of several online available icon galleries, make sur
 <div class="listingblock">
 <div class="title">App.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Resources&gt;</span>
-    <span class="c">&lt;!--  These are re-usable Icon data. You can get the path data from svg-files for example  --&gt;</span>
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"DeleteIconData"</span><span class="nt">&gt;</span>The path data<span class="nt">&lt;/StreamGeometry&gt;</span>
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"AcceptIconData"</span><span class="nt">&gt;</span>The path data<span class="nt">&lt;/StreamGeometry&gt;</span>
-<span class="nt">&lt;/Application.Resources&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.Resources&gt;
+    &lt;!--  These are re-usable Icon data. You can get the path data from svg-files for example  --&gt;
+    &lt;StreamGeometry x:Key="DeleteIconData"&gt;The path data&lt;/StreamGeometry&gt;
+    &lt;StreamGeometry x:Key="AcceptIconData"&gt;The path data&lt;/StreamGeometry&gt;
+&lt;/Application.Resources&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2928,10 +2784,10 @@ If you use an icon from one of several online available icon galleries, make sur
 <div class="listingblock">
 <div class="title">Views/MainWindow.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- The same applies for the Delete-Button --&gt;</span>
-<span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding AddItemCommand}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{DynamicResource AcceptIconData}"</span> <span class="na">Foreground=</span><span class="s">"Green"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/Button&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="xml">&lt;!-- The same applies for the Delete-Button --&gt;
+&lt;Button Command="{Binding AddItemCommand}"&gt;
+    &lt;PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" /&gt;
+&lt;/Button&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2940,14 +2796,14 @@ If you use an icon from one of several online available icon galleries, make sur
 <div class="listingblock">
 <div class="title">App.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
-    <span class="c">&lt;!-- ... --&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml">&lt;Application.Styles&gt;
+    &lt;!-- ... --&gt;
 
-    <span class="c">&lt;!-- This style will make the icon semi-transparent, if a button is disabled --&gt;</span>
-    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Button:disabled PathIcon"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Opacity"</span> <span class="na">Value=</span><span class="s">"0.4"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/Style&gt;</span>
-<span class="nt">&lt;/Application.Styles&gt;</span></code></pre>
+    &lt;!-- This style will make the icon semi-transparent, if a button is disabled --&gt;
+    &lt;Style Selector="Button:disabled PathIcon"&gt;
+        &lt;Setter Property="Opacity" Value="0.4" /&gt;
+    &lt;/Style&gt;
+&lt;/Application.Styles&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3007,37 +2863,37 @@ We use a hard-coded filename here. This may not be the perfect solution, as the 
 <div class="listingblock">
 <div class="title">Services/ToDoListFileService</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text.Json</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">SimpleToDoList.Models</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="c#">using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
+using SimpleToDoList.Models;
 
-<span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">ToDoListFileService</span>
-<span class="p">{</span>
-    <span class="c1">// This is a hard coded path to the file. It may not be available on every platform. In your real world App you may</span>
-    <span class="c1">// want to make this configurable</span>
-    <span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="n">_jsonFileName</span> <span class="p">=</span>
-        <span class="n">Path</span><span class="p">.</span><span class="nf">Combine</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="nf">GetFolderPath</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">SpecialFolder</span><span class="p">.</span><span class="n">ApplicationData</span><span class="p">),</span>
-        <span class="s">"Avalonia.SimpleToDoList"</span><span class="p">,</span> <span class="s">"MyToDoList.txt"</span><span class="p">);</span>
+public static class ToDoListFileService
+{
+    // This is a hard coded path to the file. It may not be available on every platform. In your real world App you may
+    // want to make this configurable
+    private static string _jsonFileName =
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Avalonia.SimpleToDoList", "MyToDoList.txt");
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Stores the given items into a file on disc</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="c1">/// &lt;param name="itemsToSave"&gt;The items to save&lt;/param&gt;</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveToFileAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;</span> <span class="n">itemsToSave</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Ensure all directories exists</span>
-        <span class="n">Directory</span><span class="p">.</span><span class="nf">CreateDirectory</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetDirectoryName</span><span class="p">(</span><span class="n">_jsonFileName</span><span class="p">)!);</span>
+    /// &lt;summary&gt;
+    /// Stores the given items into a file on disc
+    /// &lt;/summary&gt;
+    /// &lt;param name="itemsToSave"&gt;The items to save&lt;/param&gt;
+    public static async Task SaveToFileAsync(IEnumerable&lt;ToDoItem&gt; itemsToSave)
+    {
+        // Ensure all directories exists
+        Directory.CreateDirectory(Path.GetDirectoryName(_jsonFileName)!);
 
-        <span class="c1">// We use a FileStream to write all items to disc</span>
-        <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">_jsonFileName</span><span class="p">))</span>
-        <span class="p">{</span>
-            <span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">SerializeAsync</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">itemsToSave</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        // We use a FileStream to write all items to disc
+        using (var fs = File.Create(_jsonFileName))
+        {
+            await JsonSerializer.SerializeAsync(fs, itemsToSave);
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3046,25 +2902,25 @@ We use a hard-coded filename here. This may not be the perfect solution, as the 
 <div class="listingblock">
 <div class="title">App.axaml.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#"><span class="c1">// This is a reference to our MainViewModel which we use to save the list on shutdown. You can also use Dependency Injection</span>
-<span class="c1">// in your App.</span>
-<span class="k">private</span> <span class="k">readonly</span> <span class="n">MainViewModel</span> <span class="n">_mainViewModel</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MainViewModel</span><span class="p">();</span>
+<pre class="rouge highlight"><code data-lang="c#">// This is a reference to our MainViewModel which we use to save the list on shutdown. You can also use Dependency Injection
+// in your App.
+private readonly MainViewModel _mainViewModel = new MainViewModel();
 
-<span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnFrameworkInitializationCompleted</span><span class="p">()</span>
-<span class="p">{</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">ApplicationLifetime</span> <span class="k">is</span> <span class="n">IClassicDesktopStyleApplicationLifetime</span> <span class="n">desktop</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">desktop</span><span class="p">.</span><span class="n">MainWindow</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MainWindow</span>
-    <span class="p">{</span>
-        <span class="n">DataContext</span> <span class="p">=</span> <span class="n">_mainViewModel</span> <span class="c1">// Remember to change this line to use our private reference to the MainViewModel</span>
-    <span class="p">};</span>
+public override void OnFrameworkInitializationCompleted()
+{
+if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+{
+    desktop.MainWindow = new MainWindow
+    {
+        DataContext = _mainViewModel // Remember to change this line to use our private reference to the MainViewModel
+    };
 
-    <span class="c1">// Listen to the ShutdownRequested-event</span>
-    <span class="n">desktop</span><span class="p">.</span><span class="n">ShutdownRequested</span> <span class="p">+=</span> <span class="n">DesktopOnShutdownRequested</span><span class="p">;</span>
-<span class="p">}</span>
+    // Listen to the ShutdownRequested-event
+    desktop.ShutdownRequested += DesktopOnShutdownRequested;
+}
 
-<span class="k">base</span><span class="p">.</span><span class="nf">OnFrameworkInitializationCompleted</span><span class="p">();</span>
-<span class="p">}</span></code></pre>
+base.OnFrameworkInitializationCompleted();
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3085,28 +2941,28 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <div class="listingblock">
 <div class="title">App.axaml.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#"><span class="c1">// We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed</span>
-<span class="c1">// before we can actually close this window</span>
+<pre class="rouge highlight"><code data-lang="c#">// We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
+// before we can actually close this window
 
-<span class="k">private</span> <span class="kt">bool</span> <span class="n">_canClose</span><span class="p">;</span> <span class="c1">// This flag is used to check if window is allowed to close</span>
-<span class="k">private</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">DesktopOnShutdownRequested</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">sender</span><span class="p">,</span> <span class="n">ShutdownRequestedEventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">e</span><span class="p">.</span><span class="n">Cancel</span> <span class="p">=</span> <span class="p">!</span><span class="n">_canClose</span><span class="p">;</span> <span class="c1">// cancel closing event first time</span>
+private bool _canClose; // This flag is used to check if window is allowed to close
+private async void DesktopOnShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
+{
+    e.Cancel = !_canClose; // cancel closing event first time
 
-    <span class="k">if</span> <span class="p">(!</span><span class="n">_canClose</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// To save the items, we map them to the ToDoItem-Model which is better suited for I/O operations</span>
-        <span class="kt">var</span> <span class="n">itemsToSave</span> <span class="p">=</span> <span class="n">_mainViewModel</span><span class="p">.</span><span class="n">ToDoItems</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">item</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="nf">GetToDoItem</span><span class="p">());</span>
-        <span class="k">await</span> <span class="n">ToDoListFileService</span><span class="p">.</span><span class="nf">SaveToFileAsync</span><span class="p">(</span><span class="n">itemsToSave</span><span class="p">);</span>
+    if (!_canClose)
+    {
+        // To save the items, we map them to the ToDoItem-Model which is better suited for I/O operations
+        var itemsToSave = _mainViewModel.ToDoItems.Select(item =&gt; item.GetToDoItem());
+        await ToDoListFileService.SaveToFileAsync(itemsToSave);
 
-        <span class="c1">// Set _canClose to true and Close this Window again</span>
-        <span class="n">_canClose</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">ApplicationLifetime</span> <span class="k">is</span> <span class="n">IClassicDesktopStyleApplicationLifetime</span> <span class="n">desktop</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">desktop</span><span class="p">.</span><span class="nf">Shutdown</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+        // Set _canClose to true and Close this Window again
+        _canClose = true;
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3115,16 +2971,16 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <div class="listingblock">
 <div class="title">MyToDoList.txt</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello Avalonia"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"IsChecked"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"IsChecked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="json">[
+    {
+        "Content": "Hello Avalonia",
+        "IsChecked": true
+    },
+    {
+        "Content": "Hello World",
+        "IsChecked": false
+    }
+]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3133,58 +2989,58 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <div class="listingblock">
 <div class="title">Services/ToDoListFileService</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">ToDoListFileService</span>
-<span class="p">{</span>
-    <span class="c1">// ...</span>
+<pre class="rouge highlight"><code data-lang="c#">public static class ToDoListFileService
+{
+    // ...
 
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Loads the file from disc and returns the items stored inside</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="c1">/// &lt;returns&gt;An IEnumerable of items loaded or null in case the file was not found&lt;/returns&gt;</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;?&gt;</span> <span class="nf">LoadFromFileAsync</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">try</span>
-        <span class="p">{</span>
-            <span class="c1">// We try to read the saved file and return the ToDoItemsList if successful</span>
-            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">_jsonFileName</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="n">DeserializeAsync</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">ToDoItem</span><span class="p">&gt;&gt;(</span><span class="n">fs</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="k">when</span> <span class="p">(</span><span class="n">e</span> <span class="k">is</span> <span class="n">FileNotFoundException</span> <span class="p">||</span> <span class="n">e</span> <span class="k">is</span> <span class="n">DirectoryNotFoundException</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// In case the file was not found, we simply return null</span>
-            <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    /// &lt;summary&gt;
+    /// Loads the file from disc and returns the items stored inside
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;An IEnumerable of items loaded or null in case the file was not found&lt;/returns&gt;
+    public static async Task&lt;IEnumerable&lt;ToDoItem&gt;?&gt; LoadFromFileAsync()
+    {
+        try
+        {
+            // We try to read the saved file and return the ToDoItemsList if successful
+            using (var fs = File.OpenRead(_jsonFileName))
+            {
+                return await JsonSerializer.DeserializeAsync&lt;IEnumerable&lt;ToDoItem&gt;&gt;(fs);
+            }
+        }
+        catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
+        {
+            // In case the file was not found, we simply return null
+            return null;
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">App.axaml.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#"><span class="k">public</span> <span class="k">override</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">OnFrameworkInitializationCompleted</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// ...</span>
+<pre class="rouge highlight"><code data-lang="c#">public override async void OnFrameworkInitializationCompleted()
+{
+    // ...
 
-    <span class="c1">// Init the MainViewModel</span>
-    <span class="k">await</span> <span class="nf">InitMainViewModelAsync</span><span class="p">();</span>
-<span class="p">}</span>
+    // Init the MainViewModel
+    await InitMainViewModelAsync();
+}
 
-<span class="c1">// Optional: Load data from disc</span>
-<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InitMainViewModelAsync</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// get the items to load</span>
-    <span class="kt">var</span> <span class="n">itemsLoaded</span> <span class="p">=</span> <span class="k">await</span> <span class="n">ToDoListFileService</span><span class="p">.</span><span class="nf">LoadFromFileAsync</span><span class="p">();</span>
+// Optional: Load data from disc
+private async Task InitMainViewModelAsync()
+{
+    // get the items to load
+    var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">itemsLoaded</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">item</span> <span class="k">in</span> <span class="n">itemsLoaded</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_mainViewModel</span><span class="p">.</span><span class="n">ToDoItems</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ToDoItemViewModel</span><span class="p">(</span><span class="n">item</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+    if (itemsLoaded is not null)
+    {
+        foreach (var item in itemsLoaded)
+        {
+            _mainViewModel.ToDoItems.Add(new ToDoItemViewModel(item));
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -3201,7 +3057,7 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-03-16 10:21:53 UTC
+Last updated 2026-04-12 21:18:45 +0200
 </div>
 </div>
 </body>
