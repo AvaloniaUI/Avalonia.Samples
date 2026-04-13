@@ -109,7 +109,7 @@ AdvancedTodoList.sln
 
 TIP: Technically, you can remove or unload any platform that you don't want to target. For easier debugging and for the previewer to work as expected, we highly suggest keeping the Desktop-project. 
 
-TIP: If you later want to add another platform, it is often easier to create a new xplat project and copy the necessary files instead of creating those by hand. 
+TIP: If you later want to add another platform, it is often easier to create a new x-plat project and copy the necessary files instead of creating those by hand. 
 
 NOTE: We use central package management in this project. Please refer to https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management[[official docs\]] for more info about it.
 
@@ -217,7 +217,7 @@ public class ToDoService : IToDoService
 
 ==== Register the Services
 
-In the main application project (typically `App.xaml.cs` or `Program.cs`) we provide a helper method to regiter all services by providing the `ServiceCollection`. Missing services will be added via the default implementation. That way we only have to provide platform-specific services where absolutely needed.
+In the main application project (typically `App.xaml.cs` or `Program.cs`) we provide a helper method to register all services by providing the `ServiceCollection`. Missing services will be added via the default implementation. That way we only have to provide platform-specific services where absolutely needed.
 
 [source,csharp]
 ----
@@ -257,8 +257,8 @@ public partial class App : Application
 ====
 * The `Services` property acts as the global DI container accessor
 * Register services *before* the app starts—typically in the static constructor or `Main` method
-* For platform-specific implementations (like Browser vs Desktop), use the platform project to register those services.
-* For the perviewer, you may need to register a special implementation depending on the use-case.
+* For platform-specific implementations (like Browser vs. Desktop), use the platform project to register those services.
+* For the previewer, you may need to register a special implementation depending on the use-case.
 ====
 
 ==== Using Services in ViewModels
@@ -341,8 +341,8 @@ public partial class ManageToDoItemsViewModel
 ====
 Why WeakReferenceMessenger?
 
-. No strong references - prevents memory leaks
-. Decoupled communication - senders don't know receivers
+. No strong references – prevents memory leaks
+. Decoupled communication – senders don't know receivers
 . Simple pattern - easy to implement
 ====
 
@@ -356,7 +356,7 @@ This sample includes comprehensive unit tests demonstrating headless testing wit
 
 ===== TestBase Class
 
-All tests inherit from TestBase which sets up the environment:
+All tests inherit from TestBase, which sets up the environment:
 
 [source,csharp]
 ----
@@ -409,8 +409,8 @@ public class TestAppBuilder
 ====
 What does "headless" mean?
 
-. No visible windows - tests run in console
-. Fast execution - no GUI rendering
+. No visible windows - tests run in the console
+. Fast execution – no GUI rendering
 . Perfect for CI/CD - no display required
 . Tests logic, not pixel-perfect rendering
 ====
@@ -498,7 +498,7 @@ In production, all Controls, Converters and Helper-classes should be tested.
 Benefits of testing with mocked services:
 
 . *Isolation*: Tests don't need actual database connections
-. *Speed*: Mock services are instant (milliseconds vs seconds)
+. *Speed*: Mock services are instant (milliseconds vs. seconds)
 . *Reliability*: No external dependencies = consistent results
 . *CI/CD*: Can run anywhere without file system access
 ====
@@ -514,7 +514,7 @@ Benefits of testing with mocked services:
 
 === Mobile (Android, iOS)
 
-* SQLite stored in app's documents directory
+* SQLite stored in the app's documents directory
 * Touch-optimized UI considerations
 * Platform-specific service implementations
 * Similar to desktop in code structure
@@ -525,7 +525,7 @@ Benefits of testing with mocked services:
 * No direct file system access
 * Asynchronous operations required
 * Smaller feature set in some areas
-* Great for sharing on the Web, for example via GitHub Pages!
+* Great for sharing on the Web, for example, via GitHub Pages!
 
 [IMPORTANT]
 ====
