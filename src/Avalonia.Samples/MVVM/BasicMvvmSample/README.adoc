@@ -242,7 +242,7 @@ NOTE: Note that the lines `x:CompileBindings="True"` and `x:DataType="vm:MainWin
 
 ==== Add the Content to MainWindow
 
-Our `View` will be built using two [https://docs.avaloniaui.net/docs/controls/textbox[`TextBoxes`,window=_blank]]: one for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [https://docs.avaloniaui.net/docs/layout[`Panel`,window=_blank]]. We will choose a [https://docs.avaloniaui.net/docs/controls/stackpanel[`StackPanel`,window=_blank]], but you can use any other `Panel` variant to give you greater control over the layout. 
+Our `View` will be built using two [https://docs.avaloniaui.net/docs/reference/controls/detailed-reference/textbox[`TextBoxes`,window=_blank]]: one for the user to enter their name and another one to present the greeting. As a `Window` can only have one child, we need to wrap our controls in a [https://docs.avaloniaui.net/docs/layout[`Panel`,window=_blank]]. We will choose a [https://docs.avaloniaui.net/docs/reference/controls/stackpanel[`StackPanel`,window=_blank]], but you can use any other `Panel` variant to give you greater control over the layout. 
 
 The `StackPanel`'s `DataContext` will [https://docs.avaloniaui.net/docs/data-binding/bindings[bind,window=_blank]] to our `SimpleViewModel`. As the `DataContext` is inherited from the parent control, our `TextBoxes` will have the same `DataContext`. Therefore we can just bind `TextBox.Text` to `Name` and `Greeting` respectively.  The complete `MainWindow.axaml` code is shown below:
 
@@ -438,7 +438,7 @@ Even though Avalonia ships ReactiveUI by default, you are not tied to it. You ca
 
 - https://www.reactiveui.net[[ReactiveUI\],window=_blank]
 - https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction[[CommunityToolkit.MVVM\],window=_blank]
-- https://docs.prismlibrary.com/docs/[[Prism\],window=_blank]
+- https://prismlibrary.com/docs/[[Prism\],window=_blank]
 - https://caliburnmicro.com"[[Caliburn Micro\],window=_blank]
 - ... And many more.
 

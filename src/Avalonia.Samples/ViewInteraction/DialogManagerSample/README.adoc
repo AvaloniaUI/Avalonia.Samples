@@ -50,7 +50,7 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard, DialogManager, CommunityToolkit.
 
 == Before we start
 
-We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for.
 
 NOTE: In this sample we will use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.MVVM\]]-package, which provides source generators for less boilerplate code. Please check out their docs if you want to learn more about this. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview)
 
@@ -80,7 +80,7 @@ public class DialogManager
 }
 ----
 
-In the next step we add an https://docs.avaloniaui.net/docs/next/concepts/attached-property[[AttachedProperty]] to our dialog manager, which we call `Register`. Later we can bind any `IDialogParticipant` to this property from every available `Visual` in our `Views`.
+In the next step we add an https://docs.avaloniaui.net/docs/concepts/attached-property[[AttachedProperty]] to our dialog manager, which we call `Register`. Later we can bind any `IDialogParticipant` to this property from every available `Visual` in our `Views`.
 
 [source,cs]
 ----

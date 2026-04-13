@@ -25,7 +25,7 @@ endif::[]
 
 
 // Write a short summary here what this examples does
-This example will show you how to use `Interactions` to show https://docs.avaloniaui.net/docs/next/basics/user-interface/file-dialogs[[dialogs\]] in your MVVM application
+This example will show you how to use `Interactions` to show https://docs.avaloniaui.net/docs/basics/user-interface/file-dialogs[[dialogs\]] in your MVVM application
 
 
 
@@ -51,7 +51,7 @@ MVVM, Dialog, FileDialogs, TopLevel, Clipboard
 
 == Before we start
 
-We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/next/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
+We assume you already know how the MVVM pattern works and how dialogs, such as file dialogs, can be shown in general. You should also know what a https://docs.avaloniaui.net/docs/concepts/toplevel[[TopLevel\]]-control in Avalonia is and what it can be used for. 
 
 
 == Solution 1 : Use ReactiveUI-Interactions

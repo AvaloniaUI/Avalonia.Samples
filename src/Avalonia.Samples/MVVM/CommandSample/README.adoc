@@ -663,5 +663,5 @@ image::_docs/command_sample_result.gif[Result]
 
 Beside the options shown above, you can also try out other `ICommand` implementations. Here are a few to try: 
 
-- https://prismlibrary.com/docs/commands/commanding.html[[DelegateCommand\]] from `Prism Library`
+- https://prismlibrary.com/docs/commands/commanding[[DelegateCommand\]] from `Prism Library`
 - https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-to-a-command-without-reactiveui[[Avalonia can bind to methods\]]

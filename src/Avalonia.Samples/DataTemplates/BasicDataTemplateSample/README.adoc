@@ -389,7 +389,7 @@ image::_docs/Image_04.png[]
 
 == Approach 3 : Place a UserControl inside a DataTemplate
 
-If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for it.  
+If you don't want to use `Resources` for the reused parts, you can also create a https://docs.avaloniaui.net/docs/reference/controls/usercontrol[[`UserControl`\]] for it.  
 
 === Step 1: Add a new UserControl
 

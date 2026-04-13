@@ -2268,7 +2268,7 @@ Note that the lines <code>x:CompileBindings="True"</code> and <code>x:DataType="
 <div class="sect3">
 <h4 id="_add_the_content_to_mainwindow">Add the Content to MainWindow</h4>
 <div class="paragraph">
-<p>Our <code>View</code> will be built using two [<a href="https://docs.avaloniaui.net/docs/controls/textbox" target="_blank" rel="noopener"><code>TextBoxes</code></a>]: one for the user to enter their name and another one to present the greeting. As a <code>Window</code> can only have one child, we need to wrap our controls in a [<a href="https://docs.avaloniaui.net/docs/layout" target="_blank" rel="noopener"><code>Panel</code></a>]. We will choose a [<a href="https://docs.avaloniaui.net/docs/controls/stackpanel" target="_blank" rel="noopener"><code>StackPanel</code></a>], but you can use any other <code>Panel</code> variant to give you greater control over the layout.</p>
+<p>Our <code>View</code> will be built using two [<a href="https://docs.avaloniaui.net/docs/reference/controls/detailed-reference/textbox" target="_blank" rel="noopener"><code>TextBoxes</code></a>]: one for the user to enter their name and another one to present the greeting. As a <code>Window</code> can only have one child, we need to wrap our controls in a [<a href="https://docs.avaloniaui.net/docs/layout" target="_blank" rel="noopener"><code>Panel</code></a>]. We will choose a [<a href="https://docs.avaloniaui.net/docs/reference/controls/stackpanel" target="_blank" rel="noopener"><code>StackPanel</code></a>], but you can use any other <code>Panel</code> variant to give you greater control over the layout.</p>
 </div>
 <div class="paragraph">
 <p>The <code>StackPanel&#8217;s `DataContext</code> will [<a href="https://docs.avaloniaui.net/docs/data-binding/bindings" target="_blank" rel="noopener">bind</a>] to our <code>SimpleViewModel</code>. As the <code>DataContext</code> is inherited from the parent control, our <code>TextBoxes</code> will have the same <code>DataContext</code>. Therefore we can just bind <code>TextBox.Text</code> to <code>Name</code> and <code>Greeting</code> respectively.  The complete <code>MainWindow.axaml</code> code is shown below:</p>
@@ -2505,7 +2505,7 @@ public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();</
 <p><a href="https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction" target="_blank" rel="noopener">[CommunityToolkit.MVVM]</a></p>
 </li>
 <li>
-<p><a href="https://docs.prismlibrary.com/docs/" target="_blank" rel="noopener">[Prism]</a></p>
+<p><a href="https://prismlibrary.com/docs/" target="_blank" rel="noopener">[Prism]</a></p>
 </li>
 <li>
 <p><a href="https://caliburnmicro.com"" target="_blank" rel="noopener">[Caliburn Micro]</a></p>
@@ -2541,7 +2541,7 @@ public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();</
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-11 20:14:49 +0200
+Last updated 2026-04-13 18:54:46 +0200
 </div>
 </div>
 </body>

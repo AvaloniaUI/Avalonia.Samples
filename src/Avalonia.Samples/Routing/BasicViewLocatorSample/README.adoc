@@ -343,7 +343,7 @@ public class ThirdPageViewModel : PageViewModelBase
 
 === Step 4: Create the Page-Views
 
-Now we will create a https://docs.avaloniaui.net/docs/controls/usercontrol[[`UserControl`\]] for each page. 
+Now we will create a https://docs.avaloniaui.net/docs/reference/controls/usercontrol[[`UserControl`\]] for each page. 
 
 ==== FirstPageView
 
@@ -514,7 +514,7 @@ public class MainWindowViewModel : ViewModelBase
 
 === Step 6: Set up the MainWindow
 
-Now it's time to set up the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
+Now it's time to set up the file `Views ► MainWindow.axaml`. We will add `Grid` containing two `Buttons` as well as a https://docs.avaloniaui.net/docs/reference/controls/transitioningcontentcontrol[[`TransitioningContentControl`\]]. 
 
 NOTE: You can use also any other `ContentControl`, but the `TransitioningContentControl` will display a nice transition when the user navigates.
 
@@ -567,8 +567,7 @@ You can also use any third-party library that supports advanced routing, for exa
 
 ReactiveUI::
 - https://www.reactiveui.net/docs/handbook/routing/
-- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
 
 Prism::
-- https://prismlibrary.com/docs/viewmodel-locator.html
-- https://docs.avaloniaui.net/guides/deep-dives/reactiveui/routing
+- https://prismlibrary.com/docs/viewmodel-locator
+- https://www.reactiveui.net/docs/handbook/routing/

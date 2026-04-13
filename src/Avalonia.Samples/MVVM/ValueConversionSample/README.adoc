@@ -98,7 +98,7 @@ public decimal? Number1
 }
 ----
 
-NOTE: The `NumericUpDown` control works best with `decimal` or `decimal` values as these can store exact numbers. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-podecimal-numeric-types[[more about it\]]
+NOTE: The `NumericUpDown` control works best with `decimal` or `decimal` values as these can store exact numbers. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types[[more about it\]]
 
 === Step 2: Create the MathAddConverter
 
@@ -168,7 +168,7 @@ NOTE: Each Resource must have a unique key defined by `x:Key`
 </Window>
 ----
 
-Now we can add two https://docs.avaloniaui.net/docs/controls/numericupdown[[`NumericUpDown`\]]-controls to our UI. Both will bind to `Number1` while the second one will use our `Converter` to calculate the sum of `Number1` and the `ConverterParameter` defined in `Resources`. 
+Now we can add two https://docs.avaloniaui.net/docs/reference/controls/numericupdown[[`NumericUpDown`\]]-controls to our UI. Both will bind to `Number1` while the second one will use our `Converter` to calculate the sum of `Number1` and the `ConverterParameter` defined in `Resources`. 
 
 [source,xml]
 ----
@@ -377,7 +377,7 @@ Again we need to add a new `MathMultiConverter` into our `Resources` section:
 </Window>
 ----
 
-Our view will consist of one https://docs.avaloniaui.net/docs/controls/combobox[[`ComboBox`\]] and two `NumericUpDown`-controls. In the `ComboBox` the user can select one of the available operators. 
+Our view will consist of one https://docs.avaloniaui.net/docs/reference/controls/combobox[[`ComboBox`\]] and two `NumericUpDown`-controls. In the `ComboBox` the user can select one of the available operators. 
 
 The result will be shown in another `NumericUpDown`-control, which is read-only. As we cannot convert back, a user input is not allowed here. As you can see we use a `MultiBinding` with three nested `Bindings`:
 
@@ -491,7 +491,7 @@ Our view will be made of one `TextBox` which has an `Ellipse` as the `InnerLeftC
 </TextBox>
 ----
 
-NOTE: We use a binding to an ancestor using the `$parent`-syntax in this sample. See https://docs.avaloniaui.net/docs/guides/data-binding/binding-to-controls#binding-to-an-ancestor[[here\]] for more about it.
+NOTE: We use a binding to an ancestor using the `$parent`-syntax in this sample. See https://docs.avaloniaui.net/docs/data-binding/binding-to-controls[[here\]] for more about it.
 
 === Step 3: See it in action
 
