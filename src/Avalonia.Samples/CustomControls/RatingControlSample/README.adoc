@@ -672,7 +672,7 @@ In Avalonia an external `ResourceDictionary`-file needs to be added via `Resourc
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <!-- Don't miss this line -->
-        <ResourceInclude Source="/Styles/RatingControlTheme.axaml"/>
+        <ResourceInclude Source="/Themes/RatingControlTheme.axaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
