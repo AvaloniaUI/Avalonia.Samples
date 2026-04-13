@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>FuncDataTemplate Sample</title>
 <style>
@@ -1910,6 +1910,124 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -1991,29 +2109,29 @@ If you are not familiar with lambda expressions, please visit the <a href="https
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public class Person
-{
-    /// &lt;summary&gt;
-    /// Gets or sets the first name of the person. You can only set this property on init.
-    /// &lt;/summary&gt;
-    public string? FirstName { get; init; }
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Gets or sets the first name of the person. You can only set this property on init.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// Gets or sets the last name of the person. You can only set this property on init.
-    /// &lt;/summary&gt;
-    public string? LastName { get; init; }
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Gets or sets the last name of the person. You can only set this property on init.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// Gets or sets the sex of the person. You can only set this property on init.
-    /// &lt;/summary&gt;
-    public Sex Sex { get; init; }
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Gets or sets the sex of the person. You can only set this property on init.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="n">Sex</span> <span class="n">Sex</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">init</span><span class="p">;</span> <span class="p">}</span>
 
-    // Override ToString()
-    public override string ToString()
-    {
-        return $"{FirstName} {LastName}";
-    }
-}</code></pre>
+    <span class="c1">// Override ToString()</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s">$"</span><span class="p">{</span><span class="n">FirstName</span><span class="p">}</span><span class="s"> </span><span class="p">{</span><span class="n">LastName</span><span class="p">}</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2023,13 +2141,13 @@ If you are not familiar with lambda expressions, please visit the <a href="https
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// Feel free to add or reorder the entries based on your needs.
-public enum Sex
-{
-    Diverse,
-    Female,
-    Male
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// Feel free to add or reorder the entries based on your needs.</span>
+<span class="k">public</span> <span class="k">enum</span> <span class="n">Sex</span>
+<span class="p">{</span>
+    <span class="n">Diverse</span><span class="p">,</span>
+    <span class="n">Female</span><span class="p">,</span>
+    <span class="n">Male</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2040,27 +2158,27 @@ public enum Sex
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public List&lt;Person&gt; People { get; } = new List&lt;Person&gt;()
-{
-    new Person
-    {
-        FirstName = "Mr.",
-        LastName = "X",
-        Sex=Sex.Diverse
-    },
-    new Person
-    {
-        FirstName = "Hello",
-        LastName = "World",
-        Sex= Sex.Male
-    },
-    new Person
-    {
-        FirstName = "Hello",
-        LastName = "Kitty",
-        Sex= Sex.Female
-    }
-};</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">People</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;()</span>
+<span class="p">{</span>
+    <span class="k">new</span> <span class="n">Person</span>
+    <span class="p">{</span>
+        <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Mr."</span><span class="p">,</span>
+        <span class="n">LastName</span> <span class="p">=</span> <span class="s">"X"</span><span class="p">,</span>
+        <span class="n">Sex</span><span class="p">=</span><span class="n">Sex</span><span class="p">.</span><span class="n">Diverse</span>
+    <span class="p">},</span>
+    <span class="k">new</span> <span class="n">Person</span>
+    <span class="p">{</span>
+        <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Hello"</span><span class="p">,</span>
+        <span class="n">LastName</span> <span class="p">=</span> <span class="s">"World"</span><span class="p">,</span>
+        <span class="n">Sex</span><span class="p">=</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Male</span>
+    <span class="p">},</span>
+    <span class="k">new</span> <span class="n">Person</span>
+    <span class="p">{</span>
+        <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Hello"</span><span class="p">,</span>
+        <span class="n">LastName</span> <span class="p">=</span> <span class="s">"Kitty"</span><span class="p">,</span>
+        <span class="n">Sex</span><span class="p">=</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Female</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre>
 </div>
 </div>
 </div>
@@ -2086,61 +2204,61 @@ We make this class static as nothing depends on instance members. If you need to
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// This private function will return a control that represents our persons sex as a gender symbol.
-private static Control BuildGenderPresenter(Person person)
-{
-    // Create a new Path as a presenter. You can also use any other Control.
-    // If you want to add more than one control, remember to wrap them inside a Panel.
-    Path path = new Path()
-    {
-        Width = 32,
-        Height = 32,
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// This private function will return a control that represents our persons sex as a gender symbol.</span>
+<span class="k">private</span> <span class="k">static</span> <span class="n">Control</span> <span class="nf">BuildGenderPresenter</span><span class="p">(</span><span class="n">Person</span> <span class="n">person</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Create a new Path as a presenter. You can also use any other Control.</span>
+    <span class="c1">// If you want to add more than one control, remember to wrap them inside a Panel.</span>
+    <span class="n">Path</span> <span class="n">path</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Path</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Width</span> <span class="p">=</span> <span class="m">32</span><span class="p">,</span>
+        <span class="n">Height</span> <span class="p">=</span> <span class="m">32</span><span class="p">,</span>
 
-        // We set Stretch to Uniform. That way our Path will be made as big as needed while keeping the aspect ratio.
-        Stretch = Stretch.Uniform,
+        <span class="c1">// We set Stretch to Uniform. That way our Path will be made as big as needed while keeping the aspect ratio.</span>
+        <span class="n">Stretch</span> <span class="p">=</span> <span class="n">Stretch</span><span class="p">.</span><span class="n">Uniform</span><span class="p">,</span>
 
-        // Create a Binding for the ToolTip
-        [!ToolTip.TipProperty] = new Binding(nameof(person.Sex))
-    };
+        <span class="c1">// Create a Binding for the ToolTip</span>
+        <span class="p">[!</span><span class="n">ToolTip</span><span class="p">.</span><span class="n">TipProperty</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Binding</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="n">Sex</span><span class="p">))</span>
+    <span class="p">};</span>
 
 
-    switch (person.Sex)
-    {
-        case Sex.Diverse:
-            // We use StreamGeometry.Parse() to get the needed Data.
-            path.Data = StreamGeometry.Parse("...");
+    <span class="k">switch</span> <span class="p">(</span><span class="n">person</span><span class="p">.</span><span class="n">Sex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">case</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Diverse</span><span class="p">:</span>
+            <span class="c1">// We use StreamGeometry.Parse() to get the needed Data.</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Data</span> <span class="p">=</span> <span class="n">StreamGeometry</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"..."</span><span class="p">);</span>
 
-            // We can set Fill to any Brush. We can also look up a Brush in Resources, if needed.
-            path.Fill = new LinearGradientBrush
-            {
-                StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
-                EndPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
-                GradientStops =
-                {
-                    new GradientStop(Colors.Red, 0),
-                    new GradientStop(Colors.Orange, 0.2),
-                    new GradientStop(Colors.Yellow, 0.4),
-                    new GradientStop(Colors.DarkTurquoise, 0.6),
-                    new GradientStop(Colors.Blue, 0.8),
-                    new GradientStop(Colors.Violet, 1),
-                }
-            };
-            break;
-        case Sex.Female:
-            path.Data = StreamGeometry.Parse("...");
-            path.Fill = new SolidColorBrush(Colors.DeepPink);
-            break;
-        case Sex.Male:
-            path.Data = StreamGeometry.Parse("...");
-            path.Fill = new SolidColorBrush(Colors.Blue);
-            break;
-        default:
-            // Fall-back value
-            return new TextBlock { Text = "NOT SUPPORTED" };
-    }
+            <span class="c1">// We can set Fill to any Brush. We can also look up a Brush in Resources, if needed.</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinearGradientBrush</span>
+            <span class="p">{</span>
+                <span class="n">StartPoint</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">RelativePoint</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">RelativeUnit</span><span class="p">.</span><span class="n">Relative</span><span class="p">),</span>
+                <span class="n">EndPoint</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">RelativePoint</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">RelativeUnit</span><span class="p">.</span><span class="n">Relative</span><span class="p">),</span>
+                <span class="n">GradientStops</span> <span class="p">=</span>
+                <span class="p">{</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Red</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Orange</span><span class="p">,</span> <span class="m">0.2</span><span class="p">),</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Yellow</span><span class="p">,</span> <span class="m">0.4</span><span class="p">),</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">DarkTurquoise</span><span class="p">,</span> <span class="m">0.6</span><span class="p">),</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Blue</span><span class="p">,</span> <span class="m">0.8</span><span class="p">),</span>
+                    <span class="k">new</span> <span class="nf">GradientStop</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Violet</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Female</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Data</span> <span class="p">=</span> <span class="n">StreamGeometry</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"..."</span><span class="p">);</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">DeepPink</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">Sex</span><span class="p">.</span><span class="n">Male</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Data</span> <span class="p">=</span> <span class="n">StreamGeometry</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"..."</span><span class="p">);</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">Colors</span><span class="p">.</span><span class="n">Blue</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="c1">// Fall-back value</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">TextBlock</span> <span class="p">{</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"NOT SUPPORTED"</span> <span class="p">};</span>
+    <span class="p">}</span>
 
-    return path;
-}</code></pre>
+    <span class="k">return</span> <span class="n">path</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2167,7 +2285,7 @@ The <code>Path.Data</code> is not shown in the above sample code. Please refer t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">[!MyProperty] = new Binding("The Binding Path");</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="p">[!</span><span class="n">MyProperty</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Binding</span><span class="p">(</span><span class="s">"The Binding Path"</span><span class="p">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2182,15 +2300,15 @@ The <code>Path.Data</code> is not shown in the above sample code. Please refer t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// This FuncDataTemplate can be static, as it will not change over time.
-public static FuncDataTemplate&lt;Person&gt; GenderDataTemplate { get; }
-    = new FuncDataTemplate&lt;Person&gt;(
-        // Check if we have a valid object and return true if it is valid.
-        (person) =&gt; person is not null,
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// This FuncDataTemplate can be static, as it will not change over time.</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">FuncDataTemplate</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">GenderDataTemplate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">=</span> <span class="k">new</span> <span class="n">FuncDataTemplate</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;(</span>
+        <span class="c1">// Check if we have a valid object and return true if it is valid.</span>
+        <span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">person</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">,</span>
 
-        // Avalonia will provide the Person automatically as the functions parameter.
-        // We can also write (person) =&gt; BuildGenderPresenter(person)
-        BuildGenderPresenter);</code></pre>
+        <span class="c1">// Avalonia will provide the Person automatically as the functions parameter.</span>
+        <span class="c1">// We can also write (person) =&gt; BuildGenderPresenter(person)</span>
+        <span class="n">BuildGenderPresenter</span><span class="p">);</span></code></pre>
 </div>
 </div>
 </div>
@@ -2210,7 +2328,7 @@ public static FuncDataTemplate&lt;Person&gt; GenderDataTemplate { get; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:56:15 +0200
+Last updated 2026-04-13 18:32:08 UTC
 </div>
 </div>
 </body>
