@@ -555,11 +555,13 @@ public void Render(ImmediateDrawingContext context)
     // In case we didn't find it, render the text with a fallback.
     if (leaseFeature == null)
     {
+        using var shapedBuffer = TextShaper.Current.ShapeText(Text.AsMemory(), new TextShaperOptions(Typeface.Default.GlyphTypeface, 20));
         var glyphRun = new GlyphRun(
             Typeface.Default.GlyphTypeface,
             20,
             Text.AsMemory(),
-            TextShaper.Current.ShapeText(Text.AsMemory(), new TextShaperOptions(Typeface.Default.GlyphTypeface, 20)));
+            shapedBuffer,
+            Bounds.TopRight - new Point(50, 50));
 
         if (glyphRun.TryCreateImmutableGlyphRunReference() is { } glyphRunReference)
         {
