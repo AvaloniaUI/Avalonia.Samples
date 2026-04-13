@@ -98,7 +98,7 @@ public decimal? Number1
 }
 ----
 
-NOTE: The `NumericUpDown` control works best with `decimal` or `decimal` values as these can store exact numbers. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types[[more about it\]]
+NOTE: The `NumericUpDown` control works best with `decimal` values rather than `double` values, as `decimal` can store exact numbers. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types[[more about it\]]
 
 === Step 2: Create the MathAddConverter
 
