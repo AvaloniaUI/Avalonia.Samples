@@ -40,7 +40,7 @@ MVVM, Model-View-ViewModel, ReactiveUI, INotifyPropertyChanged, XAML, Binding
 == Before we start
 
 === Prepare your IDE
-Please make sure you have set up your IDE according to the [https://docs.avaloniaui.net/docs/get-started/set-up-an-editor[docs,window=_blank]]. Moreover, you should have read the [https://docs.avaloniaui.net/docs/welcome[Getting Started guide,window=_blank]]. 
+Please make sure you have set up your IDE according to the https://docs.avaloniaui.net/docs/get-started/set-up-an-editor[[docs\],window=_blank]. Moreover, you should have read the https://docs.avaloniaui.net/docs/welcome[[Getting Started guide\],window=_blank]. 
 
 === The MVVM Pattern in short
 
@@ -59,7 +59,6 @@ The `MVVM` pattern helps us to focus on either of the three parts. If we get new
 
 - https://docs.avaloniaui.net/docs/concepts/the-mvvm-pattern/[[Avalonia Docs\],window=_blank]
 - https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel[[Wikipedia\],window=_blank]
-- https://www.codeproject.com/Articles/278901/MVVM-Pattern-Made-Simple[[CodeProject\],window=_blank]
 - https://www.tutorialspoint.com/mvvm/index.htm[[tutorialspoint\],window=_blank]
 
 === Properties, Fields, Classes, and Interfaces
@@ -81,9 +80,9 @@ More: https://docs.microsoft.com/en-US/dotnet/api/system.componentmodel.inotifyp
 
 === Bindings
 
-Avalonia uses `Controls` to represent functional components of a GUI Layout.  Example `Controls` include https://docs.avaloniaui.net/docs/reference/controls/scrollbar[[`ScrollBar`\]], [https://docs.avaloniaui.net/docs/reference/controls/buttons/button[[`Button`,window=_blank]], and [https://docs.avaloniaui.net/docs/reference/controls/detailed-reference/textbox[`TextBox`,window=_blank]]. `Properties` (like the `Text`-property of a `TextBox`) describe and allow interaction with the `Controls`.
+Avalonia uses `Controls` to represent functional components of a GUI Layout.  Example `Controls` include https://docs.avaloniaui.net/docs/reference/controls/scrollbar[[`ScrollBar`\]], https://docs.avaloniaui.net/docs/reference/controls/buttons/button[[`Button`\],window=_blank], and https://docs.avaloniaui.net/docs/reference/controls/detailed-reference/textbox[[`TextBox`\],window=_blank]. `Properties` (like the `Text`-property of a `TextBox`) describe and allow interaction with the `Controls`.
 
-We need a way to connect the `Properties` of our controls with the `Properties` in our `ViewModel`. Luckily we have  [https://docs.avaloniaui.net/docs/basics/data/data-binding/[`Bindings`,window=_blank]] which will do this for us. The `Binding` will update the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`.
+We need a way to connect the `Properties` of our controls with the `Properties` in our `ViewModel`. Luckily, we have  https://docs.avaloniaui.net/docs/basics/data/data-binding/[[`Bindings`\],window=_blank] which will do this for us. The `Binding` will update the `View` whenever the `ViewModel` reports changes and will also update the `ViewModel` whenever the user interacts with the `View`.
 
 === Create a new Project
 
