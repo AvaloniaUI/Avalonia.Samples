@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Commands Example</title>
 <style>
@@ -1910,6 +1910,124 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2055,7 +2173,7 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
         =&gt; AppBuilder.Configure&lt;App&gt;()
             .UsePlatformDetect()
             .LogToTrace()
-+           .UseReactiveUI(builder =&gt; { /* configure this if needed */ });</code></pre>
+<span class="gi">+           .UseReactiveUI(builder =&gt; { /* configure this if needed */ });</span></code></pre>
 </div>
 </div>
 </td>
@@ -2072,10 +2190,10 @@ Now open the file <code>ViewModels ► MainWindowViewModel.cs</code> or <code>Ma
 <div class="listingblock">
 <div class="title">MainViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public class MainViewModel : ViewModelBase
-{
-    public ReactiveUiCommandsViewModel ReactiveUiCommandsViewModel { get; } = new ReactiveUiCommandsViewModel();
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">MainViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">ReactiveUiCommandsViewModel</span> <span class="n">ReactiveUiCommandsViewModel</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ReactiveUiCommandsViewModel</span><span class="p">();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2084,16 +2202,16 @@ Now open the file <code>ViewModels ► MainWindowViewModel.cs</code> or <code>Ma
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-///  This collection will store what the computer said
-/// &lt;/summary&gt;
-public ObservableCollection&lt;string&gt; ConversationLog { get; } = new ObservableCollection&lt;string&gt;();
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">///  This collection will store what the computer said</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">ConversationLog</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
 
-// Just a helper to add content to ConversationLog
-private void AddToConvo(string content)
-{
-    ConversationLog.Add(content);
-}</code></pre>
+<span class="c1">// Just a helper to add content to ConversationLog</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">AddToConvo</span><span class="p">(</span><span class="kt">string</span> <span class="n">content</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2103,17 +2221,17 @@ from a fellow robot. We want a field to put in the robot&#8217;s name. Let&#8217
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">// Backing field for RobotName
-private string? _RobotName;
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// Backing field for RobotName</span>
+<span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_RobotName</span><span class="p">;</span>
 
-/// &lt;summary&gt;
-/// The name of a robot. If the name is null or empty, there is no other robot present.
-/// &lt;/summary&gt;
-public string? RobotName
-{
-    get =&gt; _RobotName;
-    set =&gt; this.RaiseAndSetIfChanged(ref _RobotName, value);
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// The name of a robot. If the name is null or empty, there is no other robot present.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">RobotName</span>
+<span class="p">{</span>
+    <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">_RobotName</span><span class="p">;</span>
+    <span class="k">set</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_RobotName</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2125,10 +2243,10 @@ public string? RobotName
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// This command will ask HAL-9000 to open the pod bay doors
-/// &lt;/summary&gt;
-public ICommand OpenThePodBayDoorsDirectCommand { get; }</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This command will ask HAL-9000 to open the pod bay doors</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">ICommand</span> <span class="n">OpenThePodBayDoorsDirectCommand</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2141,12 +2259,12 @@ This is a famous line from the movie.</p>
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">// The method that will be executed when the command is invoked
-private void OpenThePodBayDoors()
-{
-    ConversationLog.Clear();
-    AddToConvo( "I'm sorry, Dave, I'm afraid I can't do that.");
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// The method that will be executed when the command is invoked</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OpenThePodBayDoors</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">"I'm sorry, Dave, I'm afraid I can't do that."</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2155,11 +2273,11 @@ private void OpenThePodBayDoors()
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public ReactiveUiCommandsViewModel()
-{
-    // Init OpenThePodBayDoorsDirectCommand
-    OpenThePodBayDoorsDirectCommand = ReactiveCommand.Create(OpenThePodBayDoors);
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">ReactiveUiCommandsViewModel</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Init OpenThePodBayDoorsDirectCommand</span>
+    <span class="n">OpenThePodBayDoorsDirectCommand</span> <span class="p">=</span> <span class="n">ReactiveCommand</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">OpenThePodBayDoors</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2174,11 +2292,11 @@ private void OpenThePodBayDoors()
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// This command will ask HAL to open the pod bay doors, but this time we
-/// check that the command is issued by a fellow robot (really any non-null name)
-/// &lt;/summary&gt;
-public ICommand OpenThePodBayDoorsFellowRobotCommand { get; }</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This command will ask HAL to open the pod bay doors, but this time we</span>
+<span class="c1">/// check that the command is issued by a fellow robot (really any non-null name)</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">ICommand</span> <span class="n">OpenThePodBayDoorsFellowRobotCommand</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2187,11 +2305,11 @@ public ICommand OpenThePodBayDoorsFellowRobotCommand { get; }</code></pre>
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">private void OpenThePodBayDoorsFellowRobot(string? robotName)
-{
-    ConversationLog.Clear();
-    AddToConvo( $"Hello {robotName}, the Pod Bay is open :-)");
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">void</span> <span class="nf">OpenThePodBayDoorsFellowRobot</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">robotName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">$"Hello </span><span class="p">{</span><span class="n">robotName</span><span class="p">}</span><span class="s">, the Pod Bay is open :-)"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2212,16 +2330,16 @@ We use string interpolation in the above method. If you want to learn more about
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public ReactiveUiCommandsViewModel()
-{
-    // The IObservable&lt;bool&gt; is needed to enable or disable the command depending on valid parameters
-    // The Observable listens to RobotName and will enable the Command if the name is not empty.
-    IObservable&lt;bool&gt; canExecuteFellowRobotCommand =
-        this.WhenAnyValue(vm =&gt; vm.RobotName, (name) =&gt; !string.IsNullOrEmpty(name));
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">ReactiveUiCommandsViewModel</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// The IObservable&lt;bool&gt; is needed to enable or disable the command depending on valid parameters</span>
+    <span class="c1">// The Observable listens to RobotName and will enable the Command if the name is not empty.</span>
+    <span class="n">IObservable</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="n">canExecuteFellowRobotCommand</span> <span class="p">=</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">WhenAnyValue</span><span class="p">(</span><span class="n">vm</span> <span class="p">=&gt;</span> <span class="n">vm</span><span class="p">.</span><span class="n">RobotName</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
 
-    OpenThePodBayDoorsFellowRobotCommand =
-        ReactiveCommand.Create&lt;string?&gt;(name =&gt; OpenThePodBayDoorsFellowRobot(name), canExecuteFellowRobotCommand);
-}</code></pre>
+    <span class="n">OpenThePodBayDoorsFellowRobotCommand</span> <span class="p">=</span>
+        <span class="n">ReactiveCommand</span><span class="p">.</span><span class="n">Create</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">?&gt;(</span><span class="n">name</span> <span class="p">=&gt;</span> <span class="nf">OpenThePodBayDoorsFellowRobot</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">canExecuteFellowRobotCommand</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2249,25 +2367,25 @@ we wait for the sequence of operations to complete. One way to do this in <code>
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">// This method is an async Task because opening the pod bay doors can take long time.
-// We don't want our UI to become unresponsive.
-private async Task OpenThePodBayDoorsAsync()
-{
-    ConversationLog.Clear();
-    AddToConvo( "Preparing to open the Pod Bay...");
-    // wait a second
-    await Task.Delay(1000);
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">// This method is an async Task because opening the pod bay doors can take long time.</span>
+<span class="c1">// We don't want our UI to become unresponsive.</span>
+<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">OpenThePodBayDoorsAsync</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">"Preparing to open the Pod Bay..."</span><span class="p">);</span>
+    <span class="c1">// wait a second</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
 
-    AddToConvo( "Depressurizing Airlock...");
-    // wait 2 seconds
-    await Task.Delay(2000);
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">"Depressurizing Airlock..."</span><span class="p">);</span>
+    <span class="c1">// wait 2 seconds</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">2000</span><span class="p">);</span>
 
-    AddToConvo( "Retracting blast doors...");
-    // wait 2 more seconds
-    await Task.Delay(2000);
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">"Retracting blast doors..."</span><span class="p">);</span>
+    <span class="c1">// wait 2 more seconds</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">2000</span><span class="p">);</span>
 
-    AddToConvo("Pod Bay is open to space!");
-}</code></pre>
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">"Pod Bay is open to space!"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2276,11 +2394,11 @@ private async Task OpenThePodBayDoorsAsync()
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public ReactiveUiCommandsViewModel()
-{
-    // Init OpenThePodBayDoorsAsyncCommand
-    OpenThePodBayDoorsAsyncCommand = ReactiveCommand.CreateFromTask(OpenThePodBayDoorsAsync);
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">ReactiveUiCommandsViewModel</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Init OpenThePodBayDoorsAsyncCommand</span>
+    <span class="n">OpenThePodBayDoorsAsyncCommand</span> <span class="p">=</span> <span class="n">ReactiveCommand</span><span class="p">.</span><span class="nf">CreateFromTask</span><span class="p">(</span><span class="n">OpenThePodBayDoorsAsync</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2307,9 +2425,9 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsSampleView.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;!-- This button will ask HAL to open the doors --&gt;
-&lt;Button Command="{Binding OpenThePodBayDoorsDirectCommand}"
-        Content="Open the pod bay doors, HAL." /&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- This button will ask HAL to open the doors --&gt;</span>
+<span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsDirectCommand}"</span>
+        <span class="na">Content=</span><span class="s">"Open the pod bay doors, HAL."</span> <span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2318,15 +2436,15 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsSampleView.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;!-- This button will ask HAL to open the doors for a fellow robot --&gt;
-&lt;!-- We use CommandParameter to provide the name of the robot --&gt;
-&lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;
-&lt;StackPanel Orientation="Horizontal" Spacing="5"&gt;
-    &lt;TextBox Text="{Binding RobotName}" PlaceholderText="Robot Name" /&gt;
-    &lt;Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
-            Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
-            CommandParameter="{Binding RobotName}" /&gt;
-&lt;/StackPanel&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- This button will ask HAL to open the doors for a fellow robot --&gt;</span>
+<span class="c">&lt;!-- We use CommandParameter to provide the name of the robot --&gt;</span>
+<span class="c">&lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;</span>
+<span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">PlaceholderText=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsFellowRobotCommand}"</span>
+            <span class="na">Content=</span><span class="s">"{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"</span>
+            <span class="na">CommandParameter=</span><span class="s">"{Binding RobotName}"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/StackPanel&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2335,11 +2453,11 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsSampleView.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;!-- This button will ask start a multi-step sequence to open the doors --&gt;
-&lt;!-- As this is a long operation, the command is async.--&gt;
-&lt;!-- HAL inform us about the current progress of the doors.--&gt;
-&lt;Button Command="{Binding OpenThePodBayDoorsAsyncCommand}"
-        Content="Start Pod Bay Opening Sequence" /&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- This button will ask start a multi-step sequence to open the doors --&gt;</span>
+<span class="c">&lt;!-- As this is a long operation, the command is async.--&gt;</span>
+<span class="c">&lt;!-- HAL inform us about the current progress of the doors.--&gt;</span>
+<span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsAsyncCommand}"</span>
+        <span class="na">Content=</span><span class="s">"Start Pod Bay Opening Sequence"</span> <span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2348,12 +2466,12 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsSampleView.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;!-- This button will clear the recent conversation log --&gt;
-&lt;Button Grid.Column="1"
-        VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-        Background="Transparent"
-        Command="{Binding ConversationLog.Clear}"
-        Content="❌"/&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- This button will clear the recent conversation log --&gt;</span>
+<span class="nt">&lt;Button</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
+        <span class="na">VerticalAlignment=</span><span class="s">"Stretch"</span> <span class="na">VerticalContentAlignment=</span><span class="s">"Center"</span>
+        <span class="na">Background=</span><span class="s">"Transparent"</span>
+        <span class="na">Command=</span><span class="s">"{Binding ConversationLog.Clear}"</span>
+        <span class="na">Content=</span><span class="s">"❌"</span><span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2362,83 +2480,83 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">ReactiveUiCommandsSampleView.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:CommandSample.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="viewModels:ReactiveUiCommandsViewModel"
-             x:Class="CommandSample.Views.ReactiveUiCommandsSampleView"&gt;
-    &lt;Design.DataContext&gt;
-        &lt;viewModels:ReactiveUiCommandsViewModel/&gt;
-    &lt;/Design.DataContext&gt;
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
+             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
+             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
+             <span class="na">xmlns:viewModels=</span><span class="s">"clr-namespace:CommandSample.ViewModels"</span>
+             <span class="na">mc:Ignorable=</span><span class="s">"d"</span> <span class="na">d:DesignWidth=</span><span class="s">"800"</span> <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
+             <span class="na">x:DataType=</span><span class="s">"viewModels:ReactiveUiCommandsViewModel"</span>
+             <span class="na">x:Class=</span><span class="s">"CommandSample.Views.ReactiveUiCommandsSampleView"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Design.DataContext&gt;</span>
+        <span class="nt">&lt;viewModels:ReactiveUiCommandsViewModel/&gt;</span>
+    <span class="nt">&lt;/Design.DataContext&gt;</span>
 
-    &lt;Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *"&gt;
+    <span class="nt">&lt;Grid</span> <span class="na">RowDefinitions=</span><span class="s">"Auto, Auto, *"</span> <span class="na">ColumnDefinitions=</span><span class="s">"Auto, *"</span><span class="nt">&gt;</span>
 
-        &lt;TextBlock Grid.Column="0" Grid.Row="0"
-                   Text="Command:"
-                   FontWeight="Bold"
-                   VerticalAlignment="Center"
-                   Margin="5" /&gt;
+        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Column=</span><span class="s">"0"</span> <span class="na">Grid.Row=</span><span class="s">"0"</span>
+                   <span class="na">Text=</span><span class="s">"Command:"</span>
+                   <span class="na">FontWeight=</span><span class="s">"Bold"</span>
+                   <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                   <span class="na">Margin=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
 
-        &lt;StackPanel Grid.Column="1" Grid.Row="0"
-                    Spacing="5" Margin="5" &gt;
+        <span class="nt">&lt;StackPanel</span> <span class="na">Grid.Column=</span><span class="s">"1"</span> <span class="na">Grid.Row=</span><span class="s">"0"</span>
+                    <span class="na">Spacing=</span><span class="s">"5"</span> <span class="na">Margin=</span><span class="s">"5"</span> <span class="nt">&gt;</span>
 
-            &lt;!-- This button will ask HAL to open the doors --&gt;
-            &lt;Button Command="{Binding OpenThePodBayDoorsDirectCommand}"
-                    Content="Open the pod bay doors, HAL." /&gt;
+            <span class="c">&lt;!-- This button will ask HAL to open the doors --&gt;</span>
+            <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsDirectCommand}"</span>
+                    <span class="na">Content=</span><span class="s">"Open the pod bay doors, HAL."</span> <span class="nt">/&gt;</span>
 
-            &lt;!-- This button will ask HAL to open the doors for a fellow robot --&gt;
-            &lt;!-- We use CommandParameter to provide the name of the robot --&gt;
-            &lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;
-            &lt;StackPanel Orientation="Horizontal" Spacing="5"&gt;
-                &lt;TextBox Text="{Binding RobotName}" PlaceholderText="Robot Name" /&gt;
-                &lt;Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
-                        Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
-                        CommandParameter="{Binding RobotName}" /&gt;
-            &lt;/StackPanel&gt;
+            <span class="c">&lt;!-- This button will ask HAL to open the doors for a fellow robot --&gt;</span>
+            <span class="c">&lt;!-- We use CommandParameter to provide the name of the robot --&gt;</span>
+            <span class="c">&lt;!-- Note that the button is automatically disabled if we don't enter a name--&gt;</span>
+            <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span> <span class="na">Spacing=</span><span class="s">"5"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;TextBox</span> <span class="na">Text=</span><span class="s">"{Binding RobotName}"</span> <span class="na">PlaceholderText=</span><span class="s">"Robot Name"</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsFellowRobotCommand}"</span>
+                        <span class="na">Content=</span><span class="s">"{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"</span>
+                        <span class="na">CommandParameter=</span><span class="s">"{Binding RobotName}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/StackPanel&gt;</span>
 
-            &lt;!-- This button will ask start a multi-step sequence to open the doors --&gt;
-            &lt;!-- As this is a long operation, the command is async.--&gt;
-            &lt;!-- HAL inform us about the current progress of the doors.--&gt;
-            &lt;!-- Note: The button will be disabled while the process is running. --&gt;
-            &lt;Button Command="{Binding OpenThePodBayDoorsAsyncCommand}"
-                    Content="Start Pod Bay Opening Sequence" /&gt;
+            <span class="c">&lt;!-- This button will ask start a multi-step sequence to open the doors --&gt;</span>
+            <span class="c">&lt;!-- As this is a long operation, the command is async.--&gt;</span>
+            <span class="c">&lt;!-- HAL inform us about the current progress of the doors.--&gt;</span>
+            <span class="c">&lt;!-- Note: The button will be disabled while the process is running. --&gt;</span>
+            <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding OpenThePodBayDoorsAsyncCommand}"</span>
+                    <span class="na">Content=</span><span class="s">"Start Pod Bay Opening Sequence"</span> <span class="nt">/&gt;</span>
 
-        &lt;/StackPanel&gt;
+        <span class="nt">&lt;/StackPanel&gt;</span>
 
-        &lt;Separator Grid.Row="1" Grid.ColumnSpan="2"
-                   HorizontalAlignment="Stretch"
-                   Margin="5"
-                   Height="2"
-                   Background="LightGray"/&gt;
+        <span class="nt">&lt;Separator</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="na">Grid.ColumnSpan=</span><span class="s">"2"</span>
+                   <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span>
+                   <span class="na">Margin=</span><span class="s">"5"</span>
+                   <span class="na">Height=</span><span class="s">"2"</span>
+                   <span class="na">Background=</span><span class="s">"LightGray"</span><span class="nt">/&gt;</span>
 
-        &lt;TextBlock Grid.Column="0" Grid.Row="2"
-                   Text="HAL 9000:"
-                   FontWeight="Bold"
-                   Margin="5"
-                   VerticalAlignment="Center"/&gt;
+        <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Column=</span><span class="s">"0"</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
+                   <span class="na">Text=</span><span class="s">"HAL 9000:"</span>
+                   <span class="na">FontWeight=</span><span class="s">"Bold"</span>
+                   <span class="na">Margin=</span><span class="s">"5"</span>
+                   <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
 
-        &lt;!-- This is the area where the output of HAL9000 is rendered --&gt;
-        &lt;Border Grid.Column="1" Grid.Row="2"
-                CornerRadius="10" Margin="5"
-                BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}"&gt;
-            &lt;Grid ColumnDefinitions="*,Auto"&gt;
-                &lt;ItemsControl Margin="5"
-                              ItemsSource="{Binding ConversationLog}" /&gt;
+        <span class="c">&lt;!-- This is the area where the output of HAL9000 is rendered --&gt;</span>
+        <span class="nt">&lt;Border</span> <span class="na">Grid.Column=</span><span class="s">"1"</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
+                <span class="na">CornerRadius=</span><span class="s">"10"</span> <span class="na">Margin=</span><span class="s">"5"</span>
+                <span class="na">BorderThickness=</span><span class="s">"1"</span> <span class="na">BorderBrush=</span><span class="s">"{DynamicResource SystemAccentColor}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Grid</span> <span class="na">ColumnDefinitions=</span><span class="s">"*,Auto"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ItemsControl</span> <span class="na">Margin=</span><span class="s">"5"</span>
+                              <span class="na">ItemsSource=</span><span class="s">"{Binding ConversationLog}"</span> <span class="nt">/&gt;</span>
 
-                &lt;!-- This button will clear the recent conversation log--&gt;
-                &lt;!-- which is not supported via CompiledBinding.                                 --&gt;
-                &lt;Button Grid.Column="1"
-                        VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-                        Background="Transparent"
-                        Command="{Binding ConversationLog.Clear}"
-                        Content="❌"/&gt;
-            &lt;/Grid&gt;
-        &lt;/Border&gt;
-    &lt;/Grid&gt;
-&lt;/UserControl&gt;</code></pre>
+                <span class="c">&lt;!-- This button will clear the recent conversation log--&gt;</span>
+                <span class="c">&lt;!-- which is not supported via CompiledBinding.                                 --&gt;</span>
+                <span class="nt">&lt;Button</span> <span class="na">Grid.Column=</span><span class="s">"1"</span>
+                        <span class="na">VerticalAlignment=</span><span class="s">"Stretch"</span> <span class="na">VerticalContentAlignment=</span><span class="s">"Center"</span>
+                        <span class="na">Background=</span><span class="s">"Transparent"</span>
+                        <span class="na">Command=</span><span class="s">"{Binding ConversationLog.Clear}"</span>
+                        <span class="na">Content=</span><span class="s">"❌"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;/Border&gt;</span>
+    <span class="nt">&lt;/Grid&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2447,11 +2565,11 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">MainWindow.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;TabControl&gt;
-	&lt;TabItem Header="ReactiveUI"&gt;
-		&lt;views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" /&gt;
-	&lt;/TabItem&gt;
-&lt;/TabControl&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TabControl&gt;</span>
+	<span class="nt">&lt;TabItem</span> <span class="na">Header=</span><span class="s">"ReactiveUI"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;views:ReactiveUiCommandsSampleView</span> <span class="na">DataContext=</span><span class="s">"{Binding ReactiveUiCommandsViewModel}"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/TabItem&gt;</span>
+<span class="nt">&lt;/TabControl&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -2519,18 +2637,18 @@ We want to use source generators here. To make this work, our class must be mark
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public partial class CommunityToolkitCommandsViewModel : ObservableObject
-{
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">CommunityToolkitCommandsViewModel</span> <span class="p">:</span> <span class="n">ObservableObject</span>
+<span class="p">{</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">MainViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public class MainViewModel : ViewModelBase
-{
-    public CommunityToolkitCommandsViewModel CommunityToolkitCommandsViewModel { get; } = new CommunityToolkitCommandsViewModel();
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">MainViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">CommunityToolkitCommandsViewModel</span> <span class="n">CommunityToolkitCommandsViewModel</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CommunityToolkitCommandsViewModel</span><span class="p">();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2539,16 +2657,16 @@ We want to use source generators here. To make this work, our class must be mark
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-///  This collection will store what the computer said
-/// &lt;/summary&gt;
-public ObservableCollection&lt;string&gt; ConversationLog { get; } = new ObservableCollection&lt;string&gt;();
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">///  This collection will store what the computer said</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">ConversationLog</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
 
-// Just a helper to add content to ConversationLog
-private void AddToConvo(string content)
-{
-    ConversationLog.Add(content);
-}</code></pre>
+<span class="c1">// Just a helper to add content to ConversationLog</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">AddToConvo</span><span class="p">(</span><span class="kt">string</span> <span class="n">content</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2558,11 +2676,11 @@ from a fellow robot. We want a field to put in the robot&#8217;s name. Let&#8217
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// The name of a robot. If the name is null or empty, there is no other robot present.
-/// &lt;/summary&gt;
-[ObservableProperty]
-private string? _robotName;</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// The name of a robot. If the name is null or empty, there is no other robot present.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
+<span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_robotName</span><span class="p">;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2591,17 +2709,17 @@ Even though you don’t write this property yourself, you can bind to it directl
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// The method that will be executed when the RelayCommand is invoked.
-/// HAL responds to the human named "Dave" that he can't do that.
-/// This is a famous line from the movie.
-/// &lt;summary&gt;
-[RelayCommand]
-private void OpenThePodBayDoorsDirect()
-{
-    ConversationLog.Clear();
-    AddToConvo( "I'm sorry, Dave, I'm afraid I can't do that.");
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// The method that will be executed when the RelayCommand is invoked.</span>
+<span class="c1">/// HAL responds to the human named "Dave" that he can't do that.</span>
+<span class="c1">/// This is a famous line from the movie.</span>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OpenThePodBayDoorsDirect</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span> <span class="s">"I'm sorry, Dave, I'm afraid I can't do that."</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2616,27 +2734,27 @@ private void OpenThePodBayDoorsDirect()
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// This command will ask HAL to open the pod bay doors, but this time we
-/// check that the command is issued by a fellow robot (really any non-null name)
-/// &lt;/summary&gt;
-/// &lt;remarks&gt;
-/// We use the provided &lt;see href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand"&gt;source generator&lt;/see&gt;,
-/// since this is quite convenient. We just have to add the &lt;c&gt;[RelayCommand]&lt;/c&gt;-attribute.
-/// Please visit the docs for more info about this.
-/// &lt;/remarks&gt;
-[RelayCommand(CanExecute = nameof(CanRobotOpenTheDoor))]
-private void OpenThePodBayDoorsFellowRobot(string? robotName)
-{
-    ConversationLog.Clear();
-    AddToConvo($"Hello {robotName}, the Pod Bay is open :-)");
-}
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This command will ask HAL to open the pod bay doors, but this time we</span>
+<span class="c1">/// check that the command is issued by a fellow robot (really any non-null name)</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;remarks&gt;</span>
+<span class="c1">/// We use the provided &lt;see href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand"&gt;source generator&lt;/see&gt;,</span>
+<span class="c1">/// since this is quite convenient. We just have to add the &lt;c&gt;[RelayCommand]&lt;/c&gt;-attribute.</span>
+<span class="c1">/// Please visit the docs for more info about this.</span>
+<span class="c1">/// &lt;/remarks&gt;</span>
+<span class="p">[</span><span class="nf">RelayCommand</span><span class="p">(</span><span class="n">CanExecute</span> <span class="p">=</span> <span class="k">nameof</span><span class="p">(</span><span class="n">CanRobotOpenTheDoor</span><span class="p">))]</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OpenThePodBayDoorsFellowRobot</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">robotName</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">$"Hello </span><span class="p">{</span><span class="n">robotName</span><span class="p">}</span><span class="s">, the Pod Bay is open :-)"</span><span class="p">);</span>
+<span class="p">}</span>
 
-/// &lt;summary&gt;
-/// Check if the Robot can open the door (it needs to have a valid name)
-/// &lt;/summary&gt;
-/// &lt;returns&gt;true if the robot has a name&lt;/returns&gt;
-private bool CanRobotOpenTheDoor() =&gt; !string.IsNullOrWhiteSpace(RobotName);</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Check if the Robot can open the door (it needs to have a valid name)</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;returns&gt;true if the robot has a name&lt;/returns&gt;</span>
+<span class="k">private</span> <span class="kt">bool</span> <span class="nf">CanRobotOpenTheDoor</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">RobotName</span><span class="p">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2646,8 +2764,8 @@ private bool CanRobotOpenTheDoor() =&gt; !string.IsNullOrWhiteSpace(RobotName);<
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="diff">    [ObservableProperty]
-+   [NotifyCanExecuteChangedFor(nameof(OpenThePodBayDoorsFellowRobotCommand))]
-    private string? _robotName;</code></pre>
+<span class="gi">+   [NotifyCanExecuteChangedFor(nameof(OpenThePodBayDoorsFellowRobotCommand))]
+</span>    private string? _robotName;</code></pre>
 </div>
 </div>
 </div>
@@ -2663,31 +2781,31 @@ we wait for sequence of operations to complete. One way to do this in <code>C#</
 <div class="listingblock">
 <div class="title">CommunityToolkitCommandsViewModel.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">/// &lt;summary&gt;
-/// This command will start an async task for the multi-step Pod bay opening sequence
-/// &lt;/summary&gt;
-/// &lt;remarks&gt;
-/// This method is an async Task because opening the pod bay doors can take long time.
-/// We don't want our UI to become unresponsive.
-/// &lt;/remarks&gt;
-[RelayCommand]
-private async Task OpenThePodBayDoorsAsync()
-{
-    ConversationLog.Clear();
-    AddToConvo("Preparing to open the Pod Bay...");
-    // wait a second
-    await Task.Delay(1000);
+<pre class="rouge highlight"><code data-lang="csharp"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This command will start an async task for the multi-step Pod bay opening sequence</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;remarks&gt;</span>
+<span class="c1">/// This method is an async Task because opening the pod bay doors can take long time.</span>
+<span class="c1">/// We don't want our UI to become unresponsive.</span>
+<span class="c1">/// &lt;/remarks&gt;</span>
+<span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
+<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">OpenThePodBayDoorsAsync</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ConversationLog</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">"Preparing to open the Pod Bay..."</span><span class="p">);</span>
+    <span class="c1">// wait a second</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
 
-    AddToConvo("Depressurizing Airlock...");
-    // wait 2 seconds
-    await Task.Delay(2000);
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">"Depressurizing Airlock..."</span><span class="p">);</span>
+    <span class="c1">// wait 2 seconds</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">2000</span><span class="p">);</span>
 
-    AddToConvo("Retracting blast doors...");
-    // wait 2 more seconds
-    await Task.Delay(2000);
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">"Retracting blast doors..."</span><span class="p">);</span>
+    <span class="c1">// wait 2 more seconds</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">2000</span><span class="p">);</span>
 
-    AddToConvo("Pod Bay is open to space!");
-}</code></pre>
+    <span class="nf">AddToConvo</span><span class="p">(</span><span class="s">"Pod Bay is open to space!"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2720,12 +2838,12 @@ When you execute this command, notice that the <code>Button</code> is disabled u
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:CommandSample.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-!            x:DataType="viewModels:CommunityToolkitCommandsViewModel"
-             x:Class="CommandSample.Views.CommunityToolkitCommandsSampleView"&gt;
-
-    &lt;Design.DataContext&gt;
-!       &lt;viewModels:CommunityToolkitCommandsViewModel/&gt;
-    &lt;/Design.DataContext&gt;</code></pre>
+<span class="gs">!            x:DataType="viewModels:CommunityToolkitCommandsViewModel"
+</span>             x:Class="CommandSample.Views.CommunityToolkitCommandsSampleView"&gt;
+<span class="err">
+</span>    &lt;Design.DataContext&gt;
+<span class="gs">!       &lt;viewModels:CommunityToolkitCommandsViewModel/&gt;
+</span>    &lt;/Design.DataContext&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2734,14 +2852,14 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 <div class="listingblock">
 <div class="title">MainWindow.axaml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;TabControl&gt;
-	&lt;TabItem Header="ReactiveUI"&gt;
-		&lt;views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" /&gt;
-	&lt;/TabItem&gt;
-    &lt;TabItem Header="CommunityToolkit-MVVM"&gt;
-        &lt;views:CommunityToolkitCommandsSampleView DataContext="{Binding CommunityToolkitCommandsViewModel}" /&gt;
-    &lt;/TabItem&gt;
-&lt;/TabControl&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TabControl&gt;</span>
+	<span class="nt">&lt;TabItem</span> <span class="na">Header=</span><span class="s">"ReactiveUI"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;views:ReactiveUiCommandsSampleView</span> <span class="na">DataContext=</span><span class="s">"{Binding ReactiveUiCommandsViewModel}"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/TabItem&gt;</span>
+    <span class="nt">&lt;TabItem</span> <span class="na">Header=</span><span class="s">"CommunityToolkit-MVVM"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;views:CommunityToolkitCommandsSampleView</span> <span class="na">DataContext=</span><span class="s">"{Binding CommunityToolkitCommandsViewModel}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/TabItem&gt;</span>
+<span class="nt">&lt;/TabControl&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -2779,7 +2897,7 @@ When you execute this command, notice that the <code>Button</code> is disabled u
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:55:37 +0200
+Last updated 2026-04-13 18:32:08 UTC
 </div>
 </div>
 </body>

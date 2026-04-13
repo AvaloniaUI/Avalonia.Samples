@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>RatingControl Sample</title>
 <style>
@@ -1910,6 +1910,124 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2125,9 +2243,9 @@ Items listed above containing the word <em>should</em> mean they are nice to hav
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public class RatingControl : TemplatedControl
-{
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">RatingControl</span> <span class="p">:</span> <span class="n">TemplatedControl</span>
+<span class="p">{</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2138,27 +2256,27 @@ Items listed above containing the word <em>should</em> mean they are nice to hav
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// Defines the &lt;see cref="NumberOfStars"/&gt; property.
-/// &lt;/summary&gt;
-/// &lt;remarks&gt;
-/// We define this property as a styled property, so you can set this property inside your style of the rating control.
-/// &lt;/remarks&gt;
-public static readonly StyledProperty&lt;int&gt; NumberOfStarsProperty =
-    AvaloniaProperty.Register&lt;RatingControl, int&gt;(
-        nameof(NumberOfStars),          // Sets the name of the property
-        defaultValue: 5,                // The default value of this property
-        coerce: CoerceNumberOfStars);   // Ensures that we always have a valid number of stars
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Defines the &lt;see cref="NumberOfStars"/&gt; property.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;remarks&gt;</span>
+<span class="c1">/// We define this property as a styled property, so you can set this property inside your style of the rating control.</span>
+<span class="c1">/// &lt;/remarks&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">StyledProperty</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">NumberOfStarsProperty</span> <span class="p">=</span>
+    <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">RatingControl</span><span class="p">,</span> <span class="kt">int</span><span class="p">&gt;(</span>
+        <span class="k">nameof</span><span class="p">(</span><span class="n">NumberOfStars</span><span class="p">),</span>          <span class="c1">// Sets the name of the property</span>
+        <span class="n">defaultValue</span><span class="p">:</span> <span class="m">5</span><span class="p">,</span>                <span class="c1">// The default value of this property</span>
+        <span class="n">coerce</span><span class="p">:</span> <span class="n">CoerceNumberOfStars</span><span class="p">);</span>   <span class="c1">// Ensures that we always have a valid number of stars</span>
 
 
-/// &lt;summary&gt;
-/// Gets or sets the number of available stars
-/// &lt;/summary&gt;
-public int NumberOfStars
-{
-    get { return GetValue(NumberOfStarsProperty); }
-    set { SetValue(NumberOfStarsProperty, value); }
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets or sets the number of available stars</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="kt">int</span> <span class="n">NumberOfStars</span>
+<span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">GetValue</span><span class="p">(</span><span class="n">NumberOfStarsProperty</span><span class="p">);</span> <span class="p">}</span>
+    <span class="k">set</span> <span class="p">{</span> <span class="nf">SetValue</span><span class="p">(</span><span class="n">NumberOfStarsProperty</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2166,25 +2284,25 @@ public int NumberOfStars
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// This function will coerce the &lt;see cref="NumberOfStars"/&gt; property. The minimum allowed number is 1
-/// &lt;/summary&gt;
-/// &lt;param name="sender"&gt;the RatingControl-instance calling this method&lt;/param&gt;
-/// &lt;param name="value"&gt;the value to coerce&lt;/param&gt;
-/// &lt;returns&gt;The coerced value&lt;/returns&gt;
-private static int CoerceNumberOfStars(AvaloniaObject instance, int value)
-{
-    // the value should not be lower than 1.
-    // Hint: You can also return Math.Max(1, value)
-    if (value &lt; 1)
-    {
-        return 1;
-    }
-    else
-    {
-        return value;
-    }
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This function will coerce the &lt;see cref="NumberOfStars"/&gt; property. The minimum allowed number is 1</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name="sender"&gt;the RatingControl-instance calling this method&lt;/param&gt;</span>
+<span class="c1">/// &lt;param name="value"&gt;the value to coerce&lt;/param&gt;</span>
+<span class="c1">/// &lt;returns&gt;The coerced value&lt;/returns&gt;</span>
+<span class="k">private</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">CoerceNumberOfStars</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">instance</span><span class="p">,</span> <span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// the value should not be lower than 1.</span>
+    <span class="c1">// Hint: You can also return Math.Max(1, value)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;</span> <span class="m">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2207,32 +2325,32 @@ We use a <code>DirectProperty</code> because it will improve performance and all
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// Defines the &lt;see cref="Value"/&gt; property.
-/// &lt;/summary&gt;
-/// &lt;remarks&gt;
-/// This property doesn't need to be styled. Therefore we can use a direct property, which improves performance and
-/// allows us to add validation support.
-/// &lt;/remarks&gt;
-public static readonly DirectProperty&lt;RatingControl, int&gt; ValueProperty =
-    AvaloniaProperty.RegisterDirect&lt;RatingControl, int&gt;(
-        nameof(Value),                            // The name of the property
-        o =&gt; o.Value,                             // The getter of the property
-        (o, v) =&gt; o.Value = v,                    // The setter of the property
-        defaultBindingMode: BindingMode.TwoWay,   // We change the default binding mode to be two-way, so if the user selects a new value, it will automatically update the bound property
-        enableDataValidation: true);              // Enables DataValidation
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Defines the &lt;see cref="Value"/&gt; property.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;remarks&gt;</span>
+<span class="c1">/// This property doesn't need to be styled. Therefore we can use a direct property, which improves performance and</span>
+<span class="c1">/// allows us to add validation support.</span>
+<span class="c1">/// &lt;/remarks&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">DirectProperty</span><span class="p">&lt;</span><span class="n">RatingControl</span><span class="p">,</span> <span class="kt">int</span><span class="p">&gt;</span> <span class="n">ValueProperty</span> <span class="p">=</span>
+    <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">RegisterDirect</span><span class="p">&lt;</span><span class="n">RatingControl</span><span class="p">,</span> <span class="kt">int</span><span class="p">&gt;(</span>
+        <span class="k">nameof</span><span class="p">(</span><span class="n">Value</span><span class="p">),</span>                            <span class="c1">// The name of the property</span>
+        <span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>                             <span class="c1">// The getter of the property</span>
+        <span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Value</span> <span class="p">=</span> <span class="n">v</span><span class="p">,</span>                    <span class="c1">// The setter of the property</span>
+        <span class="n">defaultBindingMode</span><span class="p">:</span> <span class="n">BindingMode</span><span class="p">.</span><span class="n">TwoWay</span><span class="p">,</span>   <span class="c1">// We change the default binding mode to be two-way, so if the user selects a new value, it will automatically update the bound property</span>
+        <span class="n">enableDataValidation</span><span class="p">:</span> <span class="k">true</span><span class="p">);</span>              <span class="c1">// Enables DataValidation</span>
 
-// For direct properties we need to have a backing field
-private int _value;
+<span class="c1">// For direct properties we need to have a backing field</span>
+<span class="k">private</span> <span class="kt">int</span> <span class="n">_value</span><span class="p">;</span>
 
-/// &lt;summary&gt;
-/// Gets or sets the current value
-/// &lt;/summary&gt;
-public int Value
-{
-    get { return _value; }
-    set { SetAndRaise(ValueProperty, ref _value, value); }
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets or sets the current value</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="kt">int</span> <span class="n">Value</span>
+<span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">set</span> <span class="p">{</span> <span class="nf">SetAndRaise</span><span class="p">(</span><span class="n">ValueProperty</span><span class="p">,</span> <span class="k">ref</span> <span class="n">_value</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2252,22 +2370,22 @@ In this sample the value is of type <code>int</code>, so only full stars can be 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// Called to update the validation state for properties for which data validation is
-/// enabled.
-/// &lt;/summary&gt;
-/// &lt;param name="property"&gt;The property.&lt;/param&gt;
-/// &lt;param name="state"&gt;The current data binding state.&lt;/param&gt;
-/// &lt;param name="error"&gt;The Exception that was passed&lt;/param&gt;
-protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
-{
-    base.UpdateDataValidation(property, state, error);
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Called to update the validation state for properties for which data validation is</span>
+<span class="c1">/// enabled.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name="property"&gt;The property.&lt;/param&gt;</span>
+<span class="c1">/// &lt;param name="state"&gt;The current data binding state.&lt;/param&gt;</span>
+<span class="c1">/// &lt;param name="error"&gt;The Exception that was passed&lt;/param&gt;</span>
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">UpdateDataValidation</span><span class="p">(</span><span class="n">AvaloniaProperty</span> <span class="n">property</span><span class="p">,</span> <span class="n">BindingValueType</span> <span class="n">state</span><span class="p">,</span> <span class="n">Exception</span><span class="p">?</span> <span class="n">error</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">UpdateDataValidation</span><span class="p">(</span><span class="n">property</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
 
-    if(property == ValueProperty)
-    {
-        DataValidationErrors.SetError(this, error);
-    }
-}</code></pre>
+    <span class="k">if</span><span class="p">(</span><span class="n">property</span> <span class="p">==</span> <span class="n">ValueProperty</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">DataValidationErrors</span><span class="p">.</span><span class="nf">SetError</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2278,28 +2396,28 @@ protected override void UpdateDataValidation(AvaloniaProperty property, BindingV
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// Defines the &lt;see cref="Stars"/&gt; property.
-/// &lt;/summary&gt;
-/// &lt;remarks&gt;
-/// ´This property holds a read-only array of stars.
-/// &lt;/remarks&gt;
-public static readonly DirectProperty&lt;RatingControl, IEnumerable&lt;int&gt;&gt; StarsProperty =
-    AvaloniaProperty.RegisterDirect &lt; RatingControl, IEnumerable&lt;int&gt;&gt;(
-        nameof(Stars),              // The name of the Property
-        o =&gt; o.Stars);   // The getter. As we don't add a setter, this property is read-only
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Defines the &lt;see cref="Stars"/&gt; property.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;remarks&gt;</span>
+<span class="c1">/// ´This property holds a read-only array of stars.</span>
+<span class="c1">/// &lt;/remarks&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">DirectProperty</span><span class="p">&lt;</span><span class="n">RatingControl</span><span class="p">,</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;&gt;</span> <span class="n">StarsProperty</span> <span class="p">=</span>
+    <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">RegisterDirect</span> <span class="p">&lt;</span> <span class="n">RatingControl</span><span class="p">,</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;&gt;(</span>
+        <span class="k">nameof</span><span class="p">(</span><span class="n">Stars</span><span class="p">),</span>              <span class="c1">// The name of the Property</span>
+        <span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Stars</span><span class="p">);</span>   <span class="c1">// The getter. As we don't add a setter, this property is read-only</span>
 
-// For read-only properties we need to have a backing field. The default value is [1..5]
-private IEnumerable&lt;int&gt; _stars = Enumerable.Range(1, 5);
+<span class="c1">// For read-only properties we need to have a backing field. The default value is [1..5]</span>
+<span class="k">private</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">_stars</span> <span class="p">=</span> <span class="n">Enumerable</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">);</span>
 
-/// &lt;summary&gt;
-/// Gets the current collection of visible stars
-/// &lt;/summary&gt;
-public IEnumerable&lt;int&gt; Stars
-{
-    get { return _stars; }
-    private set { SetAndRaise(StarsProperty, ref _stars, value); } // make sure the setter is private
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets the current collection of visible stars</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">Stars</span>
+<span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_stars</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">private</span> <span class="k">set</span> <span class="p">{</span> <span class="nf">SetAndRaise</span><span class="p">(</span><span class="n">StarsProperty</span><span class="p">,</span> <span class="k">ref</span> <span class="n">_stars</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span> <span class="c1">// make sure the setter is private</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2310,12 +2428,12 @@ public IEnumerable&lt;int&gt; Stars
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// called when the number of stars changed
-private void UpdateStars()
-{
-    // Stars is an array from 1 to NumberOfStars
-    Stars = Enumerable.Range(1, NumberOfStars);
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// called when the number of stars changed</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateStars</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Stars is an array from 1 to NumberOfStars</span>
+    <span class="n">Stars</span> <span class="p">=</span> <span class="n">Enumerable</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">NumberOfStars</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2323,17 +2441,17 @@ private void UpdateStars()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// We override OnPropertyChanged of the base class. That way we can react on property changes
-protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-{
-    base.OnPropertyChanged(change);
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// We override OnPropertyChanged of the base class. That way we can react on property changes</span>
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnPropertyChanged</span><span class="p">(</span><span class="n">AvaloniaPropertyChangedEventArgs</span> <span class="n">change</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnPropertyChanged</span><span class="p">(</span><span class="n">change</span><span class="p">);</span>
 
-    // if the changed property is the NumberOfStarsProperty, we need to update the stars
-    if (change.Property == NumberOfStarsProperty)
-    {
-        UpdateStars();
-    }
-}</code></pre>
+    <span class="c1">// if the changed property is the NumberOfStarsProperty, we need to update the stars</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">change</span><span class="p">.</span><span class="n">Property</span> <span class="p">==</span> <span class="n">NumberOfStarsProperty</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nf">UpdateStars</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2341,11 +2459,11 @@ protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs chang
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public RatingControl()
-{
-    // When a new instance of the control is created, we need to update the rating stars visible
-    UpdateStars();
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="nf">RatingControl</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// When a new instance of the control is created, we need to update the rating stars visible</span>
+    <span class="nf">UpdateStars</span><span class="p">();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2356,12 +2474,12 @@ protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs chang
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// This Attribute specifies that "PART_StarsPresenter" is a control, which must be present in the Control-Template
-[TemplatePart("PART_StarsPresenter", typeof(ItemsControl))]
-public class RatingControl : TemplatedControl
-{
-    ...
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// This Attribute specifies that "PART_StarsPresenter" is a control, which must be present in the Control-Template</span>
+<span class="p">[</span><span class="nf">TemplatePart</span><span class="p">(</span><span class="s">"PART_StarsPresenter"</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">ItemsControl</span><span class="p">))]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RatingControl</span> <span class="p">:</span> <span class="n">TemplatedControl</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2369,8 +2487,8 @@ public class RatingControl : TemplatedControl
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// this field holds a reference to the part in the control template that holds the rating stars
-private ItemsControl? _starsPresenter;</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// this field holds a reference to the part in the control template that holds the rating stars</span>
+<span class="k">private</span> <span class="n">ItemsControl</span><span class="p">?</span> <span class="n">_starsPresenter</span><span class="p">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2378,27 +2496,27 @@ private ItemsControl? _starsPresenter;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">// We override what happens when the control template is being applied.
-// That way we can for example listen to events of controls which are part of the template
-protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-{
-    base.OnApplyTemplate(e);
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">// We override what happens when the control template is being applied.</span>
+<span class="c1">// That way we can for example listen to events of controls which are part of the template</span>
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnApplyTemplate</span><span class="p">(</span><span class="n">TemplateAppliedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnApplyTemplate</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
 
-    // if we had a control template before, we need to unsubscribe any event listeners
-    if(_starsPresenter is not null)
-    {
-        _starsPresenter.PointerReleased-= StarsPresenter_PointerReleased;
-    }
+    <span class="c1">// if we had a control template before, we need to unsubscribe any event listeners</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_starsPresenter</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_starsPresenter</span><span class="p">.</span><span class="n">PointerReleased</span><span class="p">-=</span> <span class="n">StarsPresenter_PointerReleased</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    // try to find the control with the given name
-    _starsPresenter = e.NameScope.Find("PART_StarsPresenter") as ItemsControl;
+    <span class="c1">// try to find the control with the given name</span>
+    <span class="n">_starsPresenter</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">NameScope</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="s">"PART_StarsPresenter"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ItemsControl</span><span class="p">;</span>
 
-    // listen to pointer-released events on the stars presenter.
-    if(_starsPresenter != null)
-    {
-        _starsPresenter.PointerReleased += StarsPresenter_PointerReleased;
-    }
-}</code></pre>
+    <span class="c1">// listen to pointer-released events on the stars presenter.</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_starsPresenter</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_starsPresenter</span><span class="p">.</span><span class="n">PointerReleased</span> <span class="p">+=</span> <span class="n">StarsPresenter_PointerReleased</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2425,16 +2543,16 @@ protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
-{
-    // e.Source is the original source of this event. In our case, if the user clicked on a star, the original source is a Path.
-    if (e.Source is Path star)
-    {
-        // The DataContext of the star is one of the numbers we have in the Stars-Collection.
-        // Let's cast the DataContext to an int. If that cast fails, use "0" as a fallback.
-        Value = star.DataContext as int? ?? 0;
-    }
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">private</span> <span class="k">void</span> <span class="nf">StarsPresenter_PointerReleased</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">sender</span><span class="p">,</span> <span class="n">Avalonia</span><span class="p">.</span><span class="n">Input</span><span class="p">.</span><span class="n">PointerReleasedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// e.Source is the original source of this event. In our case, if the user clicked on a star, the original source is a Path.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Source</span> <span class="k">is</span> <span class="n">Path</span> <span class="n">star</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// The DataContext of the star is one of the numbers we have in the Stars-Collection.</span>
+        <span class="c1">// Let's cast the DataContext to an int. If that cast fails, use "0" as a fallback.</span>
+        <span class="n">Value</span> <span class="p">=</span> <span class="n">star</span><span class="p">.</span><span class="n">DataContext</span> <span class="k">as</span> <span class="kt">int</span><span class="p">?</span> <span class="p">??</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2460,11 +2578,11 @@ Because we use the <code>as</code>-operator, our <code>Value</code> would become
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;ResourceDictionary xmlns="https://github.com/avaloniaui"
-		xmlns:controls="using:RatingControlSample.Controls"
-		xmlns:converter="using:RatingControlSample.Converter"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
-&lt;/ResourceDictionary&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ResourceDictionary</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
+		<span class="na">xmlns:controls=</span><span class="s">"using:RatingControlSample.Controls"</span>
+		<span class="na">xmlns:converter=</span><span class="s">"using:RatingControlSample.Converter"</span>
+        <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ResourceDictionary&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2479,13 +2597,13 @@ Because we use the <code>as</code>-operator, our <code>Value</code> would become
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;Design.PreviewWith&gt;
-    &lt;StackPanel Spacing="10"&gt;
-        &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
-        &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
-        &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
-    &lt;/StackPanel&gt;
-&lt;/Design.PreviewWith&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Design.PreviewWith&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"10"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"0"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"6"</span> <span class="na">NumberOfStars=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/Design.PreviewWith&gt;</span></code></pre>
 </div>
 </div>
 </td>
@@ -2497,52 +2615,52 @@ Because we use the <code>as</code>-operator, our <code>Value</code> would become
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">  &lt;!--This is the ControlTheme for our RatingControl--&gt;
-  &lt;ControlTheme x:Key="{x:Type controls:RatingControl}" TargetType="controls:RatingControl"&gt;
-    &lt;ControlTheme.Resources&gt;
-      &lt;!--We need to add our IsSmallerOrEqualConverter here as a Resource--&gt;
-      &lt;converter:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" /&gt;
-    &lt;/ControlTheme.Resources&gt;
-    &lt;!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.--&gt;
-    &lt;Setter Property="Template"&gt;
-      &lt;ControlTemplate&gt;
+<pre class="rouge highlight"><code data-lang="xml">  <span class="c">&lt;!--This is the ControlTheme for our RatingControl--&gt;</span>
+  <span class="nt">&lt;ControlTheme</span> <span class="na">x:Key=</span><span class="s">"{x:Type controls:RatingControl}"</span> <span class="na">TargetType=</span><span class="s">"controls:RatingControl"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ControlTheme.Resources&gt;</span>
+      <span class="c">&lt;!--We need to add our IsSmallerOrEqualConverter here as a Resource--&gt;</span>
+      <span class="nt">&lt;converter:IsSmallerOrEqualConverter</span> <span class="na">x:Key=</span><span class="s">"IsSmallerOrEqualConverter"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ControlTheme.Resources&gt;</span>
+    <span class="c">&lt;!--Every TemplatedControl needs to have a ControlTemplate applied. In this setter we define it.--&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Template"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ControlTemplate&gt;</span>
 
-        &lt;!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--&gt;
-        &lt;DataValidationErrors&gt;
-          &lt;!--This is our stars-presenter. Make sure to set the name, so the control can be found.--&gt;
-          &lt;ItemsControl x:Name="PART_StarsPresenter"
-                  ItemsSource="{TemplateBinding Stars}"&gt;
-            &lt;!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly--&gt;
-            &lt;ItemsControl.ItemsPanel&gt;
-              &lt;ItemsPanelTemplate&gt;
-                &lt;StackPanel Orientation="Horizontal"
-                      Spacing="5" /&gt;
-              &lt;/ItemsPanelTemplate&gt;
-            &lt;/ItemsControl.ItemsPanel&gt;
+        <span class="c">&lt;!--We wrap our content inside a DataValidationErrors-control, so error messages are displayed properly--&gt;</span>
+        <span class="nt">&lt;DataValidationErrors&gt;</span>
+          <span class="c">&lt;!--This is our stars-presenter. Make sure to set the name, so the control can be found.--&gt;</span>
+          <span class="nt">&lt;ItemsControl</span> <span class="na">x:Name=</span><span class="s">"PART_StarsPresenter"</span>
+                  <span class="na">ItemsSource=</span><span class="s">"{TemplateBinding Stars}"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--We want to have the stars drawn horizontally. Therefore we change the ItemsPanel accordingly--&gt;</span>
+            <span class="nt">&lt;ItemsControl.ItemsPanel&gt;</span>
+              <span class="nt">&lt;ItemsPanelTemplate&gt;</span>
+                <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                      <span class="na">Spacing=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;/ItemsPanelTemplate&gt;</span>
+            <span class="nt">&lt;/ItemsControl.ItemsPanel&gt;</span>
 
-            &lt;!--Items is an array if integer. Let's add a Path as the DataTemplate--&gt;
-            &lt;ItemsControl.ItemTemplate&gt;
-              &lt;DataTemplate&gt;
-                &lt;Path Classes="star"&gt;
-                  &lt;!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --&gt;
-                  &lt;Classes.selected&gt;
-                    &lt;MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}"&gt;
-                      &lt;!--This is our dataContext, so the number of this item--&gt;
-                      &lt;Binding /&gt;
-                      &lt;!--This is the binding to the RatingControls current value--&gt;
-                      &lt;Binding RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" Path="Value" /&gt;
-                    &lt;/MultiBinding&gt;
-                  &lt;/Classes.selected&gt;
-                &lt;/Path&gt;
-              &lt;/DataTemplate&gt;
-            &lt;/ItemsControl.ItemTemplate&gt;
+            <span class="c">&lt;!--Items is an array if integer. Let's add a Path as the DataTemplate--&gt;</span>
+            <span class="nt">&lt;ItemsControl.ItemTemplate&gt;</span>
+              <span class="nt">&lt;DataTemplate&gt;</span>
+                <span class="nt">&lt;Path</span> <span class="na">Classes=</span><span class="s">"star"</span><span class="nt">&gt;</span>
+                  <span class="c">&lt;!--We enable or disable classes through a boolean value. We use our IsSmallerOrEqualConverter to do so. --&gt;</span>
+                  <span class="nt">&lt;Classes.selected&gt;</span>
+                    <span class="nt">&lt;MultiBinding</span> <span class="na">Converter=</span><span class="s">"{StaticResource IsSmallerOrEqualConverter}"</span><span class="nt">&gt;</span>
+                      <span class="c">&lt;!--This is our dataContext, so the number of this item--&gt;</span>
+                      <span class="nt">&lt;Binding</span> <span class="nt">/&gt;</span>
+                      <span class="c">&lt;!--This is the binding to the RatingControls current value--&gt;</span>
+                      <span class="nt">&lt;Binding</span> <span class="na">RelativeSource=</span><span class="s">"{RelativeSource AncestorType=controls:RatingControl}"</span> <span class="na">Path=</span><span class="s">"Value"</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/MultiBinding&gt;</span>
+                  <span class="nt">&lt;/Classes.selected&gt;</span>
+                <span class="nt">&lt;/Path&gt;</span>
+              <span class="nt">&lt;/DataTemplate&gt;</span>
+            <span class="nt">&lt;/ItemsControl.ItemTemplate&gt;</span>
 
-          &lt;/ItemsControl&gt;
-        &lt;/DataValidationErrors&gt;
+          <span class="nt">&lt;/ItemsControl&gt;</span>
+        <span class="nt">&lt;/DataValidationErrors&gt;</span>
 
-      &lt;/ControlTemplate&gt;
-    &lt;/Setter&gt;
-  &lt;/ControlTheme&gt;</code></pre>
+      <span class="nt">&lt;/ControlTemplate&gt;</span>
+    <span class="nt">&lt;/Setter&gt;</span>
+  <span class="nt">&lt;/ControlTheme&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2562,17 +2680,17 @@ Because we use the <code>as</code>-operator, our <code>Value</code> would become
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;!--This Style is for a Path which has the Class "star" applied.--&gt;
-&lt;Style Selector="Path.star" &gt;
-    &lt;Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" /&gt;
-    &lt;Setter Property="Width" Value="32" /&gt;
-    &lt;Setter Property="Height" Value="32" /&gt;
-    &lt;Setter Property="Margin" Value="5" /&gt;
-    &lt;Setter Property="Fill" Value="White" /&gt;
-    &lt;Setter Property="Stroke" Value="Gray" /&gt;
-    &lt;Setter Property="StrokeThickness" Value="2" /&gt;
-    &lt;Setter Property="Stretch" Value="Uniform" /&gt;
-&lt;/Style&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!--This Style is for a Path which has the Class "star" applied.--&gt;</span>
+<span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.star"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Data"</span> <span class="na">Value=</span><span class="s">"M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Width"</span> <span class="na">Value=</span><span class="s">"32"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Height"</span> <span class="na">Value=</span><span class="s">"32"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Margin"</span> <span class="na">Value=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Fill"</span> <span class="na">Value=</span><span class="s">"White"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stroke"</span> <span class="na">Value=</span><span class="s">"Gray"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"StrokeThickness"</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stretch"</span> <span class="na">Value=</span><span class="s">"Uniform"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Style&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2580,31 +2698,31 @@ Because we use the <code>as</code>-operator, our <code>Value</code> would become
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;Style Selector="Path.selected" &gt;
-    &lt;Setter Property="Fill" Value="Gold" /&gt;
-    &lt;Setter Property="Stroke" Value="Goldenrod" /&gt;
-&lt;/Style&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.selected"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Fill"</span> <span class="na">Value=</span><span class="s">"Gold"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stroke"</span> <span class="na">Value=</span><span class="s">"Goldenrod"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Style&gt;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// A converter that compares two integers and returns true if the first number is smaller or equal to the second number
-/// &lt;/summary&gt;
-public class IsSmallerOrEqualConverter : IMultiValueConverter
-{
-    public object? Convert(IList&lt;object?&gt; values, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (values.Count != 2)
-        {
-            throw new ArgumentException("Expected exactly two numbers");
-        }
-        var firstNumber = values[0] as int?;
-        var secondNumber = values[1] as int?;
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// A converter that compares two integers and returns true if the first number is smaller or equal to the second number</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">IsSmallerOrEqualConverter</span> <span class="p">:</span> <span class="n">IMultiValueConverter</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">object</span><span class="p">?</span> <span class="nf">Convert</span><span class="p">(</span><span class="n">IList</span><span class="p">&lt;</span><span class="kt">object</span><span class="p">?&gt;</span> <span class="n">values</span><span class="p">,</span> <span class="n">Type</span> <span class="n">targetType</span><span class="p">,</span> <span class="kt">object</span><span class="p">?</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">CultureInfo</span> <span class="n">culture</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="n">Count</span> <span class="p">!=</span> <span class="m">2</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="s">"Expected exactly two numbers"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kt">var</span> <span class="n">firstNumber</span> <span class="p">=</span> <span class="n">values</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="k">as</span> <span class="kt">int</span><span class="p">?;</span>
+        <span class="kt">var</span> <span class="n">secondNumber</span> <span class="p">=</span> <span class="n">values</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="k">as</span> <span class="kt">int</span><span class="p">?;</span>
 
-        return firstNumber &lt;= secondNumber;
-    }
-}</code></pre>
+        <span class="k">return</span> <span class="n">firstNumber</span> <span class="p">&lt;=</span> <span class="n">secondNumber</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2612,10 +2730,10 @@ public class IsSmallerOrEqualConverter : IMultiValueConverter
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;Style Selector="Path.star:pointerover" &gt;
-    &lt;Setter Property="RenderTransform" Value="scale(1.3)" /&gt;
-    &lt;Setter Property="Fill" Value="Goldenrod" /&gt;
-&lt;/Style&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.star:pointerover"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"RenderTransform"</span> <span class="na">Value=</span><span class="s">"scale(1.3)"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Fill"</span> <span class="na">Value=</span><span class="s">"Goldenrod"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Style&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2656,27 +2774,27 @@ If you don&#8217;t want to use <code>ControlThemes</code>, you can also use <cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">    &lt;!--This Style is for a Path which has the Class "star" applied.--&gt;
-    &lt;Style Selector="Path.star" &gt;
-        &lt;Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" /&gt;
-        &lt;Setter Property="Width" Value="32" /&gt;
-        &lt;Setter Property="Height" Value="32" /&gt;
-        &lt;Setter Property="Margin" Value="5" /&gt;
-        &lt;Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" /&gt;
-        &lt;Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokeBrush}" /&gt;
-        &lt;Setter Property="StrokeThickness" Value="2" /&gt;
-        &lt;Setter Property="Stretch" Value="Uniform" /&gt;
-    &lt;/Style&gt;
+<pre class="rouge highlight"><code data-lang="xml">    <span class="c">&lt;!--This Style is for a Path which has the Class "star" applied.--&gt;</span>
+    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.star"</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Data"</span> <span class="na">Value=</span><span class="s">"M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Width"</span> <span class="na">Value=</span><span class="s">"32"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Height"</span> <span class="na">Value=</span><span class="s">"32"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Margin"</span> <span class="na">Value=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Fill"</span> <span class="na">Value=</span><span class="s">"{DynamicResource RatingControlUnselectedBrush}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stroke"</span> <span class="na">Value=</span><span class="s">"{DynamicResource RatingControlUnselectedStrokeBrush}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"StrokeThickness"</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stretch"</span> <span class="na">Value=</span><span class="s">"Uniform"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Style&gt;</span>
 
-    &lt;Style Selector="Path.selected" &gt;
-        &lt;Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" /&gt;
-        &lt;Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokeBrush}" /&gt;
-    &lt;/Style&gt;
+    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.selected"</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Fill"</span> <span class="na">Value=</span><span class="s">"{DynamicResource RatingControlSelectedBrush}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stroke"</span> <span class="na">Value=</span><span class="s">"{DynamicResource RatingControlSelectedStrokeBrush}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Style&gt;</span>
 
-    &lt;Style Selector="Path.star:pointerover" &gt;
-        &lt;Setter Property="RenderTransform" Value="scale(1.3)" /&gt;
-        &lt;Setter Property="Stroke" Value="{DynamicResource RatingControlPointerOverStrokeBrush}" /&gt;
-    &lt;/Style&gt;</code></pre>
+    <span class="nt">&lt;Style</span> <span class="na">Selector=</span><span class="s">"Path.star:pointerover"</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"RenderTransform"</span> <span class="na">Value=</span><span class="s">"scale(1.3)"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"Stroke"</span> <span class="na">Value=</span><span class="s">"{DynamicResource RatingControlPointerOverStrokeBrush}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Style&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2684,39 +2802,39 @@ If you don&#8217;t want to use <code>ControlThemes</code>, you can also use <cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">  &lt;!-- Define the Theme Variants --&gt;
-  &lt;ResourceDictionary.ThemeDictionaries&gt;
-    &lt;ResourceDictionary x:Key="Default"&gt;
-      &lt;!-- Selected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="Goldenrod"/&gt;
-      &lt;!-- Unselected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/&gt;
-      &lt;!-- PointerOverBrush --&gt;
-      &lt;SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="Black" /&gt;
-    &lt;/ResourceDictionary&gt;
-    &lt;ResourceDictionary x:Key="Light"&gt;
-      &lt;!-- Selected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Gold"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="Gray"/&gt;
-      &lt;!-- Unselected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="White"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/&gt;
-      &lt;!-- PointerOverBrush --&gt;
-      &lt;SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="Black" /&gt;
-    &lt;/ResourceDictionary&gt;
-    &lt;ResourceDictionary x:Key="Dark"&gt;
-      &lt;!-- Selected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedBrush" Color="Red"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlSelectedStrokeBrush" Color="White"/&gt;
-      &lt;!-- Unselected Brushes--&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedBrush" Color="Transparent"/&gt;
-      &lt;SolidColorBrush x:Key="RatingControlUnselectedStrokeBrush" Color="Gray"/&gt;
-      &lt;!-- PointerOverBrush --&gt;
-      &lt;SolidColorBrush x:Key="RatingControlPointerOverStrokeBrush" Color="White" /&gt;
-    &lt;/ResourceDictionary&gt;
-  &lt;/ResourceDictionary.ThemeDictionaries&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml">  <span class="c">&lt;!-- Define the Theme Variants --&gt;</span>
+  <span class="nt">&lt;ResourceDictionary.ThemeDictionaries&gt;</span>
+    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Default"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Selected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedBrush"</span> <span class="na">Color=</span><span class="s">"Gold"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Goldenrod"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- Unselected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedBrush"</span> <span class="na">Color=</span><span class="s">"White"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Gray"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- PointerOverBrush --&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlPointerOverStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Black"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Light"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Selected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedBrush"</span> <span class="na">Color=</span><span class="s">"Gold"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Gray"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- Unselected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedBrush"</span> <span class="na">Color=</span><span class="s">"White"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Gray"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- PointerOverBrush --&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlPointerOverStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Black"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Dark"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Selected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedBrush"</span> <span class="na">Color=</span><span class="s">"Red"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlSelectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"White"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- Unselected Brushes--&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedBrush"</span> <span class="na">Color=</span><span class="s">"Transparent"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlUnselectedStrokeBrush"</span> <span class="na">Color=</span><span class="s">"Gray"</span><span class="nt">/&gt;</span>
+      <span class="c">&lt;!-- PointerOverBrush --&gt;</span>
+      <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"RatingControlPointerOverStrokeBrush"</span> <span class="na">Color=</span><span class="s">"White"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+  <span class="nt">&lt;/ResourceDictionary.ThemeDictionaries&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2731,35 +2849,35 @@ If you don&#8217;t want to use <code>ControlThemes</code>, you can also use <cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">  &lt;!-- Design time preview --&gt;
-  &lt;Design.PreviewWith&gt;
-    &lt;StackPanel Width="400" Spacing="10"&gt;
-      &lt;!-- Force using default Theme Variant --&gt;
-      &lt;ThemeVariantScope RequestedThemeVariant="Default"&gt;
-        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
-          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
-        &lt;/StackPanel&gt;
-      &lt;/ThemeVariantScope&gt;
-      &lt;!-- Force using Light Theme Variant --&gt;
-      &lt;ThemeVariantScope RequestedThemeVariant="Light"&gt;
-        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
-          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
-        &lt;/StackPanel&gt;
-      &lt;/ThemeVariantScope&gt;
-      &lt;!-- Force using Dark Theme Variant --&gt;
-      &lt;ThemeVariantScope RequestedThemeVariant="Dark"&gt;
-        &lt;StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}"&gt;
-          &lt;controls:RatingControl Value="0" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="2" NumberOfStars="5" /&gt;
-          &lt;controls:RatingControl Value="6" NumberOfStars="6" /&gt;
-        &lt;/StackPanel&gt;
-      &lt;/ThemeVariantScope&gt;
-    &lt;/StackPanel&gt;
-  &lt;/Design.PreviewWith&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml">  <span class="c">&lt;!-- Design time preview --&gt;</span>
+  <span class="nt">&lt;Design.PreviewWith&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Width=</span><span class="s">"400"</span> <span class="na">Spacing=</span><span class="s">"10"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Force using default Theme Variant --&gt;</span>
+      <span class="nt">&lt;ThemeVariantScope</span> <span class="na">RequestedThemeVariant=</span><span class="s">"Default"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"10"</span> <span class="na">Background=</span><span class="s">"{DynamicResource SystemRegionBrush}"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"0"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"6"</span> <span class="na">NumberOfStars=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/StackPanel&gt;</span>
+      <span class="nt">&lt;/ThemeVariantScope&gt;</span>
+      <span class="c">&lt;!-- Force using Light Theme Variant --&gt;</span>
+      <span class="nt">&lt;ThemeVariantScope</span> <span class="na">RequestedThemeVariant=</span><span class="s">"Light"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"10"</span> <span class="na">Background=</span><span class="s">"{DynamicResource SystemRegionBrush}"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"0"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"6"</span> <span class="na">NumberOfStars=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/StackPanel&gt;</span>
+      <span class="nt">&lt;/ThemeVariantScope&gt;</span>
+      <span class="c">&lt;!-- Force using Dark Theme Variant --&gt;</span>
+      <span class="nt">&lt;ThemeVariantScope</span> <span class="na">RequestedThemeVariant=</span><span class="s">"Dark"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"10"</span> <span class="na">Background=</span><span class="s">"{DynamicResource SystemRegionBrush}"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"0"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"2"</span> <span class="na">NumberOfStars=</span><span class="s">"5"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;controls:RatingControl</span> <span class="na">Value=</span><span class="s">"6"</span> <span class="na">NumberOfStars=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/StackPanel&gt;</span>
+      <span class="nt">&lt;/ThemeVariantScope&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+  <span class="nt">&lt;/Design.PreviewWith&gt;</span></code></pre>
 </div>
 </div>
 </td>
@@ -2774,14 +2892,14 @@ If you don&#8217;t want to use <code>ControlThemes</code>, you can also use <cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">  &lt;Application.Resources&gt;
-    &lt;ResourceDictionary&gt;
-      &lt;ResourceDictionary.MergedDictionaries&gt;
-        &lt;!-- Don't miss this line --&gt;
-        &lt;ResourceInclude Source="/Styles/RatingControlTheme.axaml"/&gt;
-      &lt;/ResourceDictionary.MergedDictionaries&gt;
-    &lt;/ResourceDictionary&gt;
-  &lt;/Application.Resources&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml">  <span class="nt">&lt;Application.Resources&gt;</span>
+    <span class="nt">&lt;ResourceDictionary&gt;</span>
+      <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
+        <span class="c">&lt;!-- Don't miss this line --&gt;</span>
+        <span class="nt">&lt;ResourceInclude</span> <span class="na">Source=</span><span class="s">"/Themes/RatingControlTheme.axaml"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+  <span class="nt">&lt;/Application.Resources&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -2801,23 +2919,23 @@ You need to do this for every project where you want to use this control. You wi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        [...]
-        xmlns:controls="using:RatingControlSample.Controls"
-		[...]
-        Title="RatingControlSample"&gt;
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Window</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
+        <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+        <span class="err">[...]</span>
+        <span class="na">xmlns:controls=</span><span class="s">"using:RatingControlSample.Controls"</span>
+		<span class="err">[...]</span>
+        <span class="na">Title=</span><span class="s">"RatingControlSample"</span><span class="nt">&gt;</span>
 
-    &lt;Design.DataContext&gt;
-        &lt;vm:MainWindowViewModel/&gt;
-    &lt;/Design.DataContext&gt;
+    <span class="nt">&lt;Design.DataContext&gt;</span>
+        <span class="nt">&lt;vm:MainWindowViewModel/&gt;</span>
+    <span class="nt">&lt;/Design.DataContext&gt;</span>
 
-	&lt;StackPanel Spacing="5" Margin="10"&gt;
+	<span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"5"</span> <span class="na">Margin=</span><span class="s">"10"</span><span class="nt">&gt;</span>
         [...]
-		&lt;controls:RatingControl NumberOfStars="{Binding NumberOfStars}"
-								Value="{Binding RatingValue}" /&gt;
-	&lt;/StackPanel&gt;
-&lt;/Window&gt;</code></pre>
+		<span class="nt">&lt;controls:RatingControl</span> <span class="na">NumberOfStars=</span><span class="s">"{Binding NumberOfStars}"</span>
+								<span class="na">Value=</span><span class="s">"{Binding RatingValue}"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/Window&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2876,7 +2994,7 @@ For the complete sample including the <code>ViewModel</code> please see the sour
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-07 18:52:34 +0200
+Last updated 2026-04-13 18:32:08 UTC
 </div>
 </div>
 </body>

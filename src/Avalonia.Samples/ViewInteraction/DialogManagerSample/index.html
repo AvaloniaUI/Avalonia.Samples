@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>Dialog Manager Sample</title>
 <style>
@@ -1910,6 +1910,124 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -2008,11 +2126,11 @@ Technically we can also map to <code>object</code> or any other base class, but 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public class DialogManager
-{
-    private static readonly Dictionary&lt;IDialogParticipant, Visual&gt; RegistrationMapper =
-        new Dictionary&lt;IDialogParticipant, Visual&gt;();
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">DialogManager</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;</span> <span class="n">RegistrationMapper</span> <span class="p">=</span>
+        <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">,</span> <span class="n">Visual</span><span class="p">&gt;();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2020,27 +2138,27 @@ Technically we can also map to <code>object</code> or any other base class, but 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// This property handles the registration of Views and ViewModel
-/// &lt;/summary&gt;
-public static readonly AttachedProperty&lt;IDialogParticipant?&gt; RegisterProperty = AvaloniaProperty.RegisterAttached&lt;DialogManager, Visual, IDialogParticipant?&gt;(
-    "Register");
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This property handles the registration of Views and ViewModel</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">AttachedProperty</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">?&gt;</span> <span class="n">RegisterProperty</span> <span class="p">=</span> <span class="n">AvaloniaProperty</span><span class="p">.</span><span class="n">RegisterAttached</span><span class="p">&lt;</span><span class="n">DialogManager</span><span class="p">,</span> <span class="n">Visual</span><span class="p">,</span> <span class="n">IDialogParticipant</span><span class="p">?&gt;(</span>
+    <span class="s">"Register"</span><span class="p">);</span>
 
-/// &lt;summary&gt;
-/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.
-/// &lt;/summary&gt;
-public static void SetRegister(AvaloniaObject element, IDialogParticipant value)
-{
-    element.SetValue(RegisterProperty, value);
-}
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">SetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">,</span> <span class="n">IDialogParticipant</span> <span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">element</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">RegisterProperty</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span>
+<span class="p">}</span>
 
-/// &lt;summary&gt;
-/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.
-/// &lt;/summary&gt;
-public static IDialogParticipant? GetRegister(AvaloniaObject element)
-{
-    return element.GetValue(RegisterProperty);
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Accessor for Attached property &lt;see cref="RegisterProperty"/&gt;.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">IDialogParticipant</span><span class="p">?</span> <span class="nf">GetRegister</span><span class="p">(</span><span class="n">AvaloniaObject</span> <span class="n">element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">element</span><span class="p">.</span><span class="nf">GetValue</span><span class="p">(</span><span class="n">RegisterProperty</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2048,43 +2166,43 @@ public static IDialogParticipant? GetRegister(AvaloniaObject element)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">static DialogManager()
-{
-    RegisterProperty.Changed.AddClassHandler&lt;Visual&gt;(RegisterChanged);
-}
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">static</span> <span class="nf">DialogManager</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">RegisterProperty</span><span class="p">.</span><span class="n">Changed</span><span class="p">.</span><span class="n">AddClassHandler</span><span class="p">&lt;</span><span class="n">Visual</span><span class="p">&gt;(</span><span class="n">RegisterChanged</span><span class="p">);</span>
+<span class="p">}</span>
 
-private static void RegisterChanged(Visual sender, AvaloniaPropertyChangedEventArgs e)
-{
-    if (sender is null)
-    {
-        throw new InvalidOperationException("The DialogManager can only be registered on a Visual");
-    }
+<span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterChanged</span><span class="p">(</span><span class="n">Visual</span> <span class="n">sender</span><span class="p">,</span> <span class="n">AvaloniaPropertyChangedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sender</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"The DialogManager can only be registered on a Visual"</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    // Unregister any old registered context
-    if (e.GetOldValue&lt;IDialogParticipant&gt;() is { } oldValue)
-    {
-        // Remove only if the current mapping still points to this sender
-        if (RegistrationMapper.TryGetValue(oldValue, out var currentSender) &amp;&amp; currentSender == sender)
-        {
-            RegistrationMapper.Remove(oldValue);
-        }
-    }
+    <span class="c1">// Unregister any old registered context</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">GetOldValue</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">&gt;()</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">oldValue</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Remove only if the current mapping still points to this sender</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">oldValue</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">currentSender</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="n">currentSender</span> <span class="p">==</span> <span class="n">sender</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">oldValue</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    // Register any new context
-    if (e.GetNewValue&lt;IDialogParticipant&gt;() is { } newValue)
-    {
-        RegistrationMapper[newValue] = sender;
-        // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
-        // and detach the event handler to avoid accumulating closures across DataContext changes.
-        EventHandler&lt;VisualTreeAttachmentEventArgs&gt;? handler = null;
-        handler = (_, _) =&gt;
-        {
-            RegistrationMapper.Remove(newValue);
-            sender.DetachedFromVisualTree -= handler;
-        };
-        sender.DetachedFromVisualTree += handler;
-    }
-}</code></pre>
+    <span class="c1">// Register any new context</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">GetNewValue</span><span class="p">&lt;</span><span class="n">IDialogParticipant</span><span class="p">&gt;()</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">newValue</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">RegistrationMapper</span><span class="p">[</span><span class="n">newValue</span><span class="p">]</span> <span class="p">=</span> <span class="n">sender</span><span class="p">;</span>
+        <span class="c1">// Clean up when the visual is detached from the visual tree (e.g. dialog closed),</span>
+        <span class="c1">// and detach the event handler to avoid accumulating closures across DataContext changes.</span>
+        <span class="n">EventHandler</span><span class="p">&lt;</span><span class="n">VisualTreeAttachmentEventArgs</span><span class="p">&gt;?</span> <span class="n">handler</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="n">handler</span> <span class="p">=</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">newValue</span><span class="p">);</span>
+            <span class="n">sender</span><span class="p">.</span><span class="n">DetachedFromVisualTree</span> <span class="p">-=</span> <span class="n">handler</span><span class="p">;</span>
+        <span class="p">};</span>
+        <span class="n">sender</span><span class="p">.</span><span class="n">DetachedFromVisualTree</span> <span class="p">+=</span> <span class="n">handler</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2107,25 +2225,25 @@ Because <code>RegistrationMapper</code> is a static dictionary, forgetting to re
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// Gets the associated &lt;see cref="Visual"/&gt; for a given context. Returns null, if none was registered
-/// &lt;/summary&gt;
-/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;
-/// &lt;returns&gt;The registered Visual for the context or null if none was found&lt;/returns&gt;
-public static Visual? GetVisualForContext(IDialogParticipant context)
-{
-    return RegistrationMapper.TryGetValue(context, out var result) ? result : null;
-}
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets the associated &lt;see cref="Visual"/&gt; for a given context. Returns null, if none was registered</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;</span>
+<span class="c1">/// &lt;returns&gt;The registered Visual for the context or null if none was found&lt;/returns&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">Visual</span><span class="p">?</span> <span class="nf">GetVisualForContext</span><span class="p">(</span><span class="n">IDialogParticipant</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">RegistrationMapper</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">result</span><span class="p">)</span> <span class="p">?</span> <span class="n">result</span> <span class="p">:</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
 
-/// &lt;summary&gt;
-/// Gets the parent &lt;see cref="TopLevel"/&gt; for the given context. Returns null, if no TopLevel was found
-/// &lt;/summary&gt;
-/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;
-/// &lt;returns&gt;The registered TopLevel for the context or null if none was found&lt;/returns&gt;
-public static TopLevel? GetTopLevelForContext(IDialogParticipant context)
-{
-    return TopLevel.GetTopLevel(GetVisualForContext(context));
-}</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets the parent &lt;see cref="TopLevel"/&gt; for the given context. Returns null, if no TopLevel was found</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;param name="context"&gt;The context to lookup&lt;/param&gt;</span>
+<span class="c1">/// &lt;returns&gt;The registered TopLevel for the context or null if none was found&lt;/returns&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">TopLevel</span><span class="p">?</span> <span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="n">IDialogParticipant</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">TopLevel</span><span class="p">.</span><span class="nf">GetTopLevel</span><span class="p">(</span><span class="nf">GetVisualForContext</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2136,41 +2254,41 @@ public static TopLevel? GetTopLevelForContext(IDialogParticipant context)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">/// &lt;summary&gt;
-/// A helper class to manage dialogs via extension methods. Add more on your own
-/// &lt;/summary&gt;
-public static class DialogHelper
-{
-    /// &lt;summary&gt;
-    /// Shows an open file dialog for a registered context, most likely a ViewModel
-    /// &lt;/summary&gt;
-    /// &lt;param name="context"&gt;The context&lt;/param&gt;
-    /// &lt;param name="title"&gt;The dialog title or a default is null&lt;/param&gt;
-    /// &lt;param name="selectMany"&gt;Is selecting many files allowed?&lt;/param&gt;
-    /// &lt;returns&gt;An array of file names&lt;/returns&gt;
-    /// &lt;exception cref="ArgumentNullException"&gt;if context was null&lt;/exception&gt;
-    public static async Task&lt;IEnumerable&lt;string&gt;?&gt; OpenFileDialogAsync(this IDialogParticipant? context,
-        string? title = null,
-        bool selectMany = true)
-    {
-        ArgumentNullException.ThrowIfNull(context);
+<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// A helper class to manage dialogs via extension methods. Add more on your own</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">DialogHelper</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Shows an open file dialog for a registered context, most likely a ViewModel</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="context"&gt;The context&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="title"&gt;The dialog title or a default is null&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="selectMany"&gt;Is selecting many files allowed?&lt;/param&gt;</span>
+    <span class="c1">/// &lt;returns&gt;An array of file names&lt;/returns&gt;</span>
+    <span class="c1">/// &lt;exception cref="ArgumentNullException"&gt;if context was null&lt;/exception&gt;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;?&gt;</span> <span class="nf">OpenFileDialogAsync</span><span class="p">(</span><span class="k">this</span> <span class="n">IDialogParticipant</span><span class="p">?</span> <span class="n">context</span><span class="p">,</span>
+        <span class="kt">string</span><span class="p">?</span> <span class="n">title</span> <span class="p">=</span> <span class="k">null</span><span class="p">,</span>
+        <span class="kt">bool</span> <span class="n">selectMany</span> <span class="p">=</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ArgumentNullException</span><span class="p">.</span><span class="nf">ThrowIfNull</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
 
-        // lookup the TopLevel for the context. If no TopLevel was found, we throw an exception
-        var topLevel = DialogManager.GetTopLevelForContext(context)
-                       ?? throw new InvalidOperationException("No TopLevel was resolved for the given context.");
+        <span class="c1">// lookup the TopLevel for the context. If no TopLevel was found, we throw an exception</span>
+        <span class="kt">var</span> <span class="n">topLevel</span> <span class="p">=</span> <span class="n">DialogManager</span><span class="p">.</span><span class="nf">GetTopLevelForContext</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+                       <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"No TopLevel was resolved for the given context."</span><span class="p">);</span>
 
-        // Open the file dialog
-        var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(
-            new FilePickerOpenOptions()
-            {
-                AllowMultiple = selectMany,
-                Title = title ?? "Select any file(s)"
-            });
+        <span class="c1">// Open the file dialog</span>
+        <span class="kt">var</span> <span class="n">storageFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">topLevel</span><span class="p">.</span><span class="n">StorageProvider</span><span class="p">.</span><span class="nf">OpenFilePickerAsync</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nf">FilePickerOpenOptions</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">AllowMultiple</span> <span class="p">=</span> <span class="n">selectMany</span><span class="p">,</span>
+                <span class="n">Title</span> <span class="p">=</span> <span class="n">title</span> <span class="p">??</span> <span class="s">"Select any file(s)"</span>
+            <span class="p">});</span>
 
-        // return the result as full local paths where available, falling back to the file name
-        return storageFiles.Select(s =&gt; s.TryGetLocalPath() ?? s.Name);
-    }
-}</code></pre>
+        <span class="c1">// return the result as full local paths where available, falling back to the file name</span>
+        <span class="k">return</span> <span class="n">storageFiles</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="nf">TryGetLocalPath</span><span class="p">()</span> <span class="p">??</span> <span class="n">s</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2193,7 +2311,7 @@ Please have a look in the sample code for some more possible options. The <code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs">public partial class MainWindowViewModel : ViewModelBase, IDialogParticipant</code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainWindowViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">IDialogParticipant</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2201,11 +2319,11 @@ Please have a look in the sample code for some more possible options. The <code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:services="using:DialogManagerSample.Services"
-             services:DialogManager.Register="{Binding}"&gt;
-    &lt;!-- Your content goes here --&gt;
-&lt;/UserControl&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
+             <span class="na">xmlns:services=</span><span class="s">"using:DialogManagerSample.Services"</span>
+             <span class="na">services:DialogManager.Register=</span><span class="s">"{Binding}"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Your content goes here --&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2213,12 +2331,12 @@ Please have a look in the sample code for some more possible options. The <code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">[RelayCommand]
-private async Task SelectFilesAsync()
-{
-    // Selected Files is a property of our ViewModel
-    SelectedFiles = await this.OpenFileDialogAsync("Hello Avalonia");
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="c#"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
+<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SelectFilesAsync</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Selected Files is a property of our ViewModel</span>
+    <span class="n">SelectedFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nf">OpenFileDialogAsync</span><span class="p">(</span><span class="s">"Hello Avalonia"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2226,13 +2344,13 @@ private async Task SelectFilesAsync()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;Grid RowDefinitions="Auto,*,Auto"&gt;
-    &lt;TextBlock Text="Selected Files:" /&gt;
-    &lt;ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" /&gt;
-    &lt;Button Content="Select Files"
-            Command="{Binding SelectFilesCommand}"
-            Grid.Row="2" /&gt;
-&lt;/Grid&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Grid</span> <span class="na">RowDefinitions=</span><span class="s">"Auto,*,Auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Selected Files:"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;ListBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding SelectedFiles}"</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Select Files"</span>
+            <span class="na">Command=</span><span class="s">"{Binding SelectFilesCommand}"</span>
+            <span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Grid&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -2285,7 +2403,7 @@ In the source code of this sample we have some more dialogs applied. Feel free t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:57:49 +0200
+Last updated 2026-04-13 18:32:08 UTC
 </div>
 </div>
 </body>

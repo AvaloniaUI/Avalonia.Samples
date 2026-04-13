@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.26">
 <link rel="icon" type="image/svg" href="../../../../_docs/_Assets/Logo.svg">
 <title>MVVM Dialog Sample</title>
 <style>
@@ -1910,6 +1910,124 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
     text-align: center;
 }
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #24292f;
+  background-color: #f6f8fa;
+}
+pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
+  color: #cf222e;
+}
+pre.rouge .gr {
+  color: #f6f8fa;
+}
+pre.rouge .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+pre.rouge .nb {
+  color: #953800;
+}
+pre.rouge .nc {
+  color: #953800;
+}
+pre.rouge .no {
+  color: #953800;
+}
+pre.rouge .nn {
+  color: #953800;
+}
+pre.rouge .sr {
+  color: #116329;
+}
+pre.rouge .na {
+  color: #116329;
+}
+pre.rouge .nt {
+  color: #116329;
+}
+pre.rouge .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+pre.rouge .ges {
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .kc {
+  color: #0550ae;
+}
+pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #0550ae;
+}
+pre.rouge .sb {
+  color: #0550ae;
+}
+pre.rouge .bp {
+  color: #0550ae;
+}
+pre.rouge .ne {
+  color: #0550ae;
+}
+pre.rouge .nl {
+  color: #0550ae;
+}
+pre.rouge .py {
+  color: #0550ae;
+}
+pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
+  color: #0550ae;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #0550ae;
+}
+pre.rouge .gh {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #0550ae;
+  font-weight: bold;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
+  color: #0a3069;
+}
+pre.rouge .nd {
+  color: #8250df;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #8250df;
+}
+pre.rouge .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #6e7781;
+}
+pre.rouge .gl {
+  color: #6e7781;
+}
+pre.rouge .gt {
+  color: #6e7781;
+}
+pre.rouge .ni {
+  color: #24292f;
+}
+pre.rouge .si {
+  color: #24292f;
+}
+pre.rouge .ge {
+  color: #24292f;
+  font-style: italic;
+}
+pre.rouge .gs {
+  color: #24292f;
+  font-weight: bold;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -1987,17 +2105,17 @@ Solution 1 requires the use of Avalonia 11.2.0 or higher due to a breaking chang
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">public InteractionViewModel()
-{
-    _selectFilesInteraction = new Interaction&lt;string?, string[]?&gt;();
-}
+<pre class="rouge highlight"><code data-lang="c#"><span class="k">public</span> <span class="nf">InteractionViewModel</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">_selectFilesInteraction</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">?,</span> <span class="kt">string</span><span class="p">[]?&gt;();</span>
+<span class="p">}</span>
 
-private readonly Interaction&lt;string?, string[]?&gt; _selectFilesInteraction;
+<span class="k">private</span> <span class="k">readonly</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">?,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">_selectFilesInteraction</span><span class="p">;</span>
 
-/// &lt;summary&gt;
-/// Gets the select files interaction
-/// &lt;/summary&gt;
-public Interaction&lt;string?, string[]?&gt; SelectFilesInteraction =&gt; this.selectFilesInteraction;</code></pre>
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets the select files interaction</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">?,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">SelectFilesInteraction</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="n">selectFilesInteraction</span><span class="p">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2011,21 +2129,21 @@ public Interaction&lt;string?, string[]?&gt; SelectFilesInteraction =&gt; this.s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">private async Task InteractionHandler(IInteractionContext&lt;string?, string[]?&gt; context)
-{
-    // Get our parent top level control in order to get the needed service (in our sample the storage provider. Can also be the clipboard etc.)
-    var topLevel = TopLevel.GetTopLevel(this);
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InteractionHandler</span><span class="p">(</span><span class="n">IInteractionContext</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">?,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Get our parent top level control in order to get the needed service (in our sample the storage provider. Can also be the clipboard etc.)</span>
+    <span class="kt">var</span> <span class="n">topLevel</span> <span class="p">=</span> <span class="n">TopLevel</span><span class="p">.</span><span class="nf">GetTopLevel</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
-    var storageFiles = await topLevel!.StorageProvider
-        .OpenFilePickerAsync(
-                    new FilePickerOpenOptions()
-                    {
-                        AllowMultiple = true,
-                        Title = context.Input
-                    });
+    <span class="kt">var</span> <span class="n">storageFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">topLevel</span><span class="p">!.</span><span class="n">StorageProvider</span>
+        <span class="p">.</span><span class="nf">OpenFilePickerAsync</span><span class="p">(</span>
+                    <span class="k">new</span> <span class="nf">FilePickerOpenOptions</span><span class="p">()</span>
+                    <span class="p">{</span>
+                        <span class="n">AllowMultiple</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+                        <span class="n">Title</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Input</span>
+                    <span class="p">});</span>
 
-    context.SetOutput(storageFiles.Select(x =&gt; x.Name).ToArray());
-}</code></pre>
+    <span class="n">context</span><span class="p">.</span><span class="nf">SetOutput</span><span class="p">(</span><span class="n">storageFiles</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">).</span><span class="nf">ToArray</span><span class="p">());</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2045,15 +2163,15 @@ We are using an async Task to not block the UI. As parameter, we need to pass an
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp">public InteractionView()
-{
-    InitializeComponent();
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="nf">InteractionView</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nf">InitializeComponent</span><span class="p">();</span>
 
-    this.WhenActivated(d =&gt;
-    {
-        d(ViewModel!.SelectFilesInteraction.RegisterHandler(this.InteractionHandler));
-    });
-}</code></pre>
+    <span class="k">this</span><span class="p">.</span><span class="nf">WhenActivated</span><span class="p">(</span><span class="n">d</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="nf">d</span><span class="p">(</span><span class="n">ViewModel</span><span class="p">!.</span><span class="n">SelectFilesInteraction</span><span class="p">.</span><span class="nf">RegisterHandler</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">InteractionHandler</span><span class="p">));</span>
+    <span class="p">});</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2061,22 +2179,22 @@ We are using an async Task to not block the UI. As parameter, we need to pass an
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml">&lt;UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:MvvmDialogSample.ViewModels"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:InteractionViewModel"
-			 x:Class="MvvmDialogSample.Views.InteractionView"&gt;
-	&lt;Grid RowDefinitions="Auto,*,Auto"&gt;
-		&lt;TextBlock Text="Selected Files:" /&gt;
-		&lt;ListBox ItemsSource="{Binding SelectedFiles}" Grid.Row="1" /&gt;
-		&lt;Button Content="Select Files"
-				Command="{Binding SelectFilesCommand}"
-				Grid.Row="2" /&gt;
-	&lt;/Grid&gt;
-&lt;/UserControl&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;UserControl</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
+             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
+             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
+             <span class="na">xmlns:vm=</span><span class="s">"using:MvvmDialogSample.ViewModels"</span>
+			 <span class="na">mc:Ignorable=</span><span class="s">"d"</span> <span class="na">d:DesignWidth=</span><span class="s">"800"</span> <span class="na">d:DesignHeight=</span><span class="s">"450"</span>
+             <span class="na">x:DataType=</span><span class="s">"vm:InteractionViewModel"</span>
+			 <span class="na">x:Class=</span><span class="s">"MvvmDialogSample.Views.InteractionView"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;Grid</span> <span class="na">RowDefinitions=</span><span class="s">"Auto,*,Auto"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Selected Files:"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;ListBox</span> <span class="na">ItemsSource=</span><span class="s">"{Binding SelectedFiles}"</span> <span class="na">Grid.Row=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Select Files"</span>
+				<span class="na">Command=</span><span class="s">"{Binding SelectFilesCommand}"</span>
+				<span class="na">Grid.Row=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/Grid&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -2166,60 +2284,60 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">/// &lt;summary&gt;
-/// Simple implementation of Interaction pattern from ReactiveUI framework.
-/// https://www.reactiveui.net/docs/handbook/interactions/
-/// &lt;/summary&gt;
-public sealed class Interaction&lt;TInput, TOutput&gt; : IDisposable, ICommand
-{
-    // this is a reference to the registered interaction handler.
-    private Func&lt;TInput, Task&lt;TOutput&gt;&gt;? _handler;
+<pre class="rouge highlight"><code data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Simple implementation of Interaction pattern from ReactiveUI framework.</span>
+<span class="c1">/// https://www.reactiveui.net/docs/handbook/interactions/</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Interaction</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">TOutput</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IDisposable</span><span class="p">,</span> <span class="n">ICommand</span>
+<span class="p">{</span>
+    <span class="c1">// this is a reference to the registered interaction handler.</span>
+    <span class="k">private</span> <span class="n">Func</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TOutput</span><span class="p">&gt;&gt;?</span> <span class="n">_handler</span><span class="p">;</span>
 
-    /// &lt;summary&gt;
-    /// Performs the requested interaction &lt;see langword="async"/&gt;. Returns the result provided by the View
-    /// &lt;/summary&gt;
-    /// &lt;param name="input"&gt;The input parameter&lt;/param&gt;
-    /// &lt;returns&gt;The result of the interaction&lt;/returns&gt;
-    /// &lt;exception cref="InvalidOperationException"&gt;&lt;/exception&gt;
-    public Task&lt;TOutput&gt; HandleAsync(TInput input)
-    {
-        if (_handler is null)
-        {
-            throw new InvalidOperationException("Handler wasn't registered");
-        }
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Performs the requested interaction &lt;see langword="async"/&gt;. Returns the result provided by the View</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="input"&gt;The input parameter&lt;/param&gt;</span>
+    <span class="c1">/// &lt;returns&gt;The result of the interaction&lt;/returns&gt;</span>
+    <span class="c1">/// &lt;exception cref="InvalidOperationException"&gt;&lt;/exception&gt;</span>
+    <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TOutput</span><span class="p">&gt;</span> <span class="nf">HandleAsync</span><span class="p">(</span><span class="n">TInput</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">_handler</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"Handler wasn't registered"</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        return _handler(input);
-    }
+        <span class="k">return</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    /// &lt;summary&gt;
-    /// Registers a handler to our Interaction
-    /// &lt;/summary&gt;
-    /// &lt;param name="handler"&gt;the handler to register&lt;/param&gt;
-    /// &lt;returns&gt;a disposable object to clean up memory if not in use anymore/&gt;&lt;/returns&gt;
-    /// &lt;exception cref="InvalidOperationException"&gt;&lt;/exception&gt;
-    public IDisposable RegisterHandler(Func&lt;TInput, Task&lt;TOutput&gt;&gt; handler)
-    {
-        if (_handler is not null)
-        {
-            throw new InvalidOperationException("Handler was already registered");
-        }
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Registers a handler to our Interaction</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="handler"&gt;the handler to register&lt;/param&gt;</span>
+    <span class="c1">/// &lt;returns&gt;a disposable object to clean up memory if not in use anymore/&gt;&lt;/returns&gt;</span>
+    <span class="c1">/// &lt;exception cref="InvalidOperationException"&gt;&lt;/exception&gt;</span>
+    <span class="k">public</span> <span class="n">IDisposable</span> <span class="nf">RegisterHandler</span><span class="p">(</span><span class="n">Func</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TOutput</span><span class="p">&gt;&gt;</span> <span class="n">handler</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">_handler</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"Handler was already registered"</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        _handler = handler;
-        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        return this;
-    }
+        <span class="n">_handler</span> <span class="p">=</span> <span class="n">handler</span><span class="p">;</span>
+        <span class="n">CanExecuteChanged</span><span class="p">?.</span><span class="nf">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">EventArgs</span><span class="p">.</span><span class="n">Empty</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public void Dispose()
-    {
-        _handler = null;
-    }
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Dispose</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">_handler</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public bool CanExecute(object? parameter) =&gt; _handler is not null;
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">CanExecute</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">parameter</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_handler</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span><span class="p">;</span>
 
-    public void Execute(object? parameter) =&gt; HandleAsync((TInput?)parameter!);
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Execute</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">parameter</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nf">HandleAsync</span><span class="p">((</span><span class="n">TInput</span><span class="p">?)</span><span class="n">parameter</span><span class="p">!);</span>
 
-    public event EventHandler? CanExecuteChanged;
-}</code></pre>
+    <span class="k">public</span> <span class="k">event</span> <span class="n">EventHandler</span><span class="p">?</span> <span class="n">CanExecuteChanged</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2230,10 +2348,10 @@ public sealed class Interaction&lt;TInput, TOutput&gt; : IDisposable, ICommand
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">/// &lt;summary&gt;
-/// Gets an instance of our own Interaction class
-/// &lt;/summary&gt;
-public Interaction&lt;string, string[]?&gt; SelectFilesInteraction { get; } = new Interaction&lt;string, string[]?&gt;();</code></pre>
+<pre class="rouge highlight"><code data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Gets an instance of our own Interaction class</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">SelectFilesInteraction</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;();</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2241,11 +2359,11 @@ public Interaction&lt;string, string[]?&gt; SelectFilesInteraction { get; } = ne
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">[RelayCommand]
-private async Task SelectFilesAsync()
-{
-    SelectedFiles = await SelectFilesInteraction.HandleAsync("Hello from Avalonia");
-}</code></pre>
+<pre class="rouge highlight"><code data-lang="c#"><span class="p">[</span><span class="n">RelayCommand</span><span class="p">]</span>
+<span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SelectFilesAsync</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">SelectedFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">SelectFilesInteraction</span><span class="p">.</span><span class="nf">HandleAsync</span><span class="p">(</span><span class="s">"Hello from Avalonia"</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2256,23 +2374,23 @@ private async Task SelectFilesAsync()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">// Stores a reference to the disposable in order to clean it up if needed
-IDisposable? _selectFilesInteractionDisposable;
+<pre class="rouge highlight"><code data-lang="c#"><span class="c1">// Stores a reference to the disposable in order to clean it up if needed</span>
+<span class="n">IDisposable</span><span class="p">?</span> <span class="n">_selectFilesInteractionDisposable</span><span class="p">;</span>
 
-protected override void OnDataContextChanged(EventArgs e)
-{
-    // Dispose any old handler
-    _selectFilesInteractionDisposable?.Dispose();
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnDataContextChanged</span><span class="p">(</span><span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Dispose any old handler</span>
+    <span class="n">_selectFilesInteractionDisposable</span><span class="p">?.</span><span class="nf">Dispose</span><span class="p">();</span>
 
-    if (DataContext is CustomInteractionViewModel vm)
-    {
-        // register the interaction handler
-        _selectFilesInteractionDisposable =
-            vm.SelectFilesInteraction.RegisterHandler(InteractionHandler);
-    }
+    <span class="k">if</span> <span class="p">(</span><span class="n">DataContext</span> <span class="k">is</span> <span class="n">CustomInteractionViewModel</span> <span class="n">vm</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// register the interaction handler</span>
+        <span class="n">_selectFilesInteractionDisposable</span> <span class="p">=</span>
+            <span class="n">vm</span><span class="p">.</span><span class="n">SelectFilesInteraction</span><span class="p">.</span><span class="nf">RegisterHandler</span><span class="p">(</span><span class="n">InteractionHandler</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    base.OnDataContextChanged(e);
-}</code></pre>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnDataContextChanged</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -2292,22 +2410,22 @@ Remember that the DataContext can change several times. To not get any memory le
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">private async Task&lt;string[]?&gt; InteractionHandler(string input)
-{
-    // Get a reference to our TopLevel (in our case the parent Window)
-    var topLevel = TopLevel.GetTopLevel(this);
+<pre class="rouge highlight"><code data-lang="c#"><span class="k">private</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">[]?&gt;</span> <span class="nf">InteractionHandler</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Get a reference to our TopLevel (in our case the parent Window)</span>
+    <span class="kt">var</span> <span class="n">topLevel</span> <span class="p">=</span> <span class="n">TopLevel</span><span class="p">.</span><span class="nf">GetTopLevel</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
-    // Try to get the files
-    var storageFiles = await topLevel!.StorageProvider.OpenFilePickerAsync(
-                    new FilePickerOpenOptions()
-                    {
-                        AllowMultiple = true,
-                        Title = input
-                    });
+    <span class="c1">// Try to get the files</span>
+    <span class="kt">var</span> <span class="n">storageFiles</span> <span class="p">=</span> <span class="k">await</span> <span class="n">topLevel</span><span class="p">!.</span><span class="n">StorageProvider</span><span class="p">.</span><span class="nf">OpenFilePickerAsync</span><span class="p">(</span>
+                    <span class="k">new</span> <span class="nf">FilePickerOpenOptions</span><span class="p">()</span>
+                    <span class="p">{</span>
+                        <span class="n">AllowMultiple</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+                        <span class="n">Title</span> <span class="p">=</span> <span class="n">input</span>
+                    <span class="p">});</span>
 
-    // Transform the files as needed and return them. If no file was selected, null will be returned
-    return storageFiles?.Select(x =&gt; x.Name)?.ToArray();
-}</code></pre>
+    <span class="c1">// Transform the files as needed and return them. If no file was selected, null will be returned</span>
+    <span class="k">return</span> <span class="n">storageFiles</span><span class="p">?.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">)?.</span><span class="nf">ToArray</span><span class="p">();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
@@ -2348,7 +2466,7 @@ Remember that the DataContext can change several times. To not get any memory le
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:57:51 +0200
+Last updated 2026-04-13 18:32:08 UTC
 </div>
 </div>
 </body>
