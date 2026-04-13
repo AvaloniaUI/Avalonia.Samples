@@ -96,6 +96,8 @@ foreach ($file in $adocFiles) {
         if ($file.Name -ieq "ReadMe.adoc") {
             $outFileName = Join-Path -Path $file.Directory -ChildPath 'index.html'
             $cmdArgs += "-o"; $cmdArgs += $outFileName
+        } else {
+            $outFileName = [System.IO.Path]::ChangeExtension($file.FullName, '.html')
         }
 
         # enable trace logging
@@ -106,6 +108,18 @@ foreach ($file in $adocFiles) {
 
         # Call asciidoctor with argument array so arguments are preserved
         & asciidoctor @cmdArgs
+
+        # Rewrite cross-reference links: asciidoctor converts xref:SomeDir/README.adoc to
+        # SomeDir/README.html, but since all ReadMe.adoc files are output as index.html,
+        # we fix those links in the generated HTML after the fact.
+        if (Test-Path $outFileName) {
+            $content = Get-Content -Raw $outFileName
+            $updated = $content -replace '(?i)readme\.html', 'index.html'
+            if ($updated -ne $content) {
+                Set-Content -Path $outFileName -Value $updated -NoNewline
+                Write-Output "Rewrote README.html -> index.html links in $outFileName"
+            }
+        }
 
     } catch {
         Write-Error "Failed to process $($file.FullName): $_"

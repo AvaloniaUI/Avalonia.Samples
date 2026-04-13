@@ -587,7 +587,7 @@ Here are topics to explore after mastering this sample:
 
 == See it in Action
 
-video::_docs/final_result-2026-02-16_20.12.27.mp4[Final result]
+video::_docs/final_result-2026-02-16_20.12.27.mp4[title="Final result"]
 
 https://timunie.github.io/AdvancedTodoList/[Test the result on your own]
 

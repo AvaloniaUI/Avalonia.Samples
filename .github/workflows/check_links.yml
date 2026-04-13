@@ -34,5 +34,6 @@ jobs:
             --timeout 30
             --max-retries 3
             --accept 200,206,429
+            --root-dir .
             ${{ steps.files.outputs.files }}
           fail: true

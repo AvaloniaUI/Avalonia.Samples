@@ -2109,7 +2109,7 @@ Technically, you can remove or unload any platform that you don&#8217;t want to 
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you later want to add another platform, it is often easier to create a new xplat project and copy the necessary files instead of creating those by hand.
+If you later want to add another platform, it is often easier to create a new x-plat project and copy the necessary files instead of creating those by hand.
 </td>
 </tr>
 </table>
@@ -2321,7 +2321,7 @@ public class ToDoService : IToDoService
 <div class="sect3">
 <h4 id="_register_the_services">Register the Services</h4>
 <div class="paragraph">
-<p>In the main application project (typically <code>App.xaml.cs</code> or <code>Program.cs</code>) we provide a helper method to regiter all services by providing the <code>ServiceCollection</code>. Missing services will be added via the default implementation. That way we only have to provide platform-specific services where absolutely needed.</p>
+<p>In the main application project (typically <code>App.xaml.cs</code> or <code>Program.cs</code>) we provide a helper method to register all services by providing the <code>ServiceCollection</code>. Missing services will be added via the default implementation. That way we only have to provide platform-specific services where absolutely needed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2373,10 +2373,10 @@ public partial class App : Application
 <p>Register services <strong>before</strong> the app starts—typically in the static constructor or <code>Main</code> method</p>
 </li>
 <li>
-<p>For platform-specific implementations (like Browser vs Desktop), use the platform project to register those services.</p>
+<p>For platform-specific implementations (like Browser vs. Desktop), use the platform project to register those services.</p>
 </li>
 <li>
-<p>For the perviewer, you may need to register a special implementation depending on the use-case.</p>
+<p>For the previewer, you may need to register a special implementation depending on the use-case.</p>
 </li>
 </ul>
 </div>
@@ -2492,10 +2492,10 @@ WeakReferenceMessenger.Default.Send(new UpdateDataRequest&lt;ToDoItem&gt;());</c
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>No strong references - prevents memory leaks</p>
+<p>No strong references – prevents memory leaks</p>
 </li>
 <li>
-<p>Decoupled communication - senders don&#8217;t know receivers</p>
+<p>Decoupled communication – senders don&#8217;t know receivers</p>
 </li>
 <li>
 <p>Simple pattern - easy to implement</p>
@@ -2529,7 +2529,7 @@ You can find out more <a href="../Avalonia.MusicStore/README.adoc#_messengers">[
 <div class="sect4">
 <h5 id="_testbase_class">TestBase Class</h5>
 <div class="paragraph">
-<p>All tests inherit from TestBase which sets up the environment:</p>
+<p>All tests inherit from TestBase, which sets up the environment:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2603,10 +2603,10 @@ public class TestAppBuilder
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>No visible windows - tests run in console</p>
+<p>No visible windows - tests run in the console</p>
 </li>
 <li>
-<p>Fast execution - no GUI rendering</p>
+<p>Fast execution – no GUI rendering</p>
 </li>
 <li>
 <p>Perfect for CI/CD - no display required</p>
@@ -2724,7 +2724,7 @@ public async Task ManageCategoriesView_Should_Display_Categories()
 <p><strong>Isolation</strong>: Tests don&#8217;t need actual database connections</p>
 </li>
 <li>
-<p><strong>Speed</strong>: Mock services are instant (milliseconds vs seconds)</p>
+<p><strong>Speed</strong>: Mock services are instant (milliseconds vs. seconds)</p>
 </li>
 <li>
 <p><strong>Reliability</strong>: No external dependencies = consistent results</p>
@@ -2769,7 +2769,7 @@ public async Task ManageCategoriesView_Should_Display_Categories()
 <div class="ulist">
 <ul>
 <li>
-<p>SQLite stored in app&#8217;s documents directory</p>
+<p>SQLite stored in the app&#8217;s documents directory</p>
 </li>
 <li>
 <p>Touch-optimized UI considerations</p>
@@ -2800,7 +2800,7 @@ public async Task ManageCategoriesView_Should_Display_Categories()
 <p>Smaller feature set in some areas</p>
 </li>
 <li>
-<p>Great for sharing on the Web, for example via GitHub Pages!</p>
+<p>Great for sharing on the Web, for example, via GitHub Pages!</p>
 </li>
 </ul>
 </div>
@@ -2917,8 +2917,9 @@ public async Task ManageCategoriesView_Should_Display_Categories()
 <h2 id="_see_it_in_action">See it in Action</h2>
 <div class="sectionbody">
 <div class="videoblock">
+<div class="title">Final result</div>
 <div class="content">
-<video src="_docs/final_result-2026-02-16_20.12.27.mp4" poster="Final%20result" controls>
+<video src="_docs/final_result-2026-02-16_20.12.27.mp4" controls>
 Your browser does not support the video tag.
 </video>
 </div>
@@ -2931,7 +2932,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-27 19:08:57 +0100
+Last updated 2026-04-13 19:57:39 +0200
 </div>
 </div>
 </body>
