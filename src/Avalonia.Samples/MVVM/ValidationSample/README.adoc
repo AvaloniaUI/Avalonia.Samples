@@ -49,7 +49,7 @@ Data-Annotation, Data-Validation, Exception, Error, Error-Message, Binding, MVVM
 
 == Before we start
 
-You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`.In this sample we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
+You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`. In this sample we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
 
 
 [#_approach_1_validate_a_property_using_dataannotations]
