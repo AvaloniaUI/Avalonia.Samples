@@ -22,7 +22,7 @@ using SharedControlsTests;
 // - UI event simulation and verification
 // - Visual tree inspection and validation
 
-[assembly: AvaloniaTestApplication(typeof(TestAppliction))]
+[assembly: AvaloniaTestApplication(typeof(TestApplication))]
 namespace SharedControlsTests;
 
 /// <summary>
@@ -43,7 +43,7 @@ namespace SharedControlsTests;
 /// - No display output needed - all rendering is virtual
 /// - Tests can create windows and controls programmatically
 /// </remarks>
-public class TestAppliction : Application
+public class TestApplication : Application
 {
     /// <summary>
     /// Configures and returns the application builder for testing.
@@ -60,6 +60,6 @@ public class TestAppliction : Application
     /// - Allows control manipulation and property verification
     /// - Supports all Avalonia features needed for testing
     /// </remarks>
-    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<TestAppliction>()
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<TestApplication>()
          .UseHeadless(new AvaloniaHeadlessPlatformOptions());
 }
