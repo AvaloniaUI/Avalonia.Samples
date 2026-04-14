@@ -8,14 +8,14 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.iOS" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Browser" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Android" Version="12.0.0" />
+    <PackageVersion Include="Avalonia" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.iOS" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Browser" Version="12.0.1" />
+    <PackageVersion Include="Avalonia.Android" Version="12.0.1" />
     <!-- Avalonia diagnostics package -->
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
     <!-- Android packages -->
@@ -39,7 +39,7 @@
     <!-- UnitTests-->
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.0.0" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
   </ItemGroup>
 </Project>
