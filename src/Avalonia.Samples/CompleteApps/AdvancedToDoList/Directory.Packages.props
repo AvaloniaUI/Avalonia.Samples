@@ -17,9 +17,9 @@
     <PackageVersion Include="Avalonia.Browser" Version="12.0.1" />
     <PackageVersion Include="Avalonia.Android" Version="12.0.1" />
     <!-- Avalonia diagnostics package -->
-    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <!-- Android packages -->
-    <PackageVersion Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" Version="10.0.201" />
+    <PackageVersion Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" Version="10.0.202" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
@@ -29,9 +29,9 @@
     <PackageVersion Include="Dapper" Version="2.1.72" />
     <PackageVersion Include="Dapper.AOT" Version="1.0.48" />
     <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.6" />
     <!-- Dependency injection -->
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
     <!-- Logging packages -->
     <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
