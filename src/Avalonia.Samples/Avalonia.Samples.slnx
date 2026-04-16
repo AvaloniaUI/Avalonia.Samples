@@ -7,6 +7,7 @@
   <Folder Name="/CompleteApps/">
     <Project Path="CompleteApps/Avalonia.MusicStore/Avalonia.MusicStore.csproj" />
     <Project Path="CompleteApps/SimpleToDoList/SimpleToDoList.csproj" />
+    <Project Path="CompleteApps/SimpleToDoListTests/SimpleToDoListTests.csproj" />
   </Folder>
   <Folder Name="/CompleteApps/AdvancedToDoList/" />
   <Folder Name="/CustomControls/">

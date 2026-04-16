@@ -32,16 +32,20 @@
     <ItemGroup />
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.0.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.0" />
+        <PackageReference Include="Avalonia" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.1" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.13">
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.14">
             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
         <PackageReference Include="iTunesSearch" Version="1.0.44" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="FSharp.Core" Version="10.1.202" />
     </ItemGroup>
 </Project>

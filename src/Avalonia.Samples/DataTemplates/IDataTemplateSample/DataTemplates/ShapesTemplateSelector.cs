@@ -21,7 +21,7 @@ namespace IDataTemplateSample.DataTemplates
             {
                 throw new ArgumentNullException(nameof(param));
             }
-            return AvailableTemplates[key].Build(param); // finally we look up the provided key and let the System build the DataTemplate for us
+            return AvailableTemplates[key].Build(param)!; // finally we look up the provided key and let the System build the DataTemplate for us
         }
 
         // Check if we can accept the provided data
