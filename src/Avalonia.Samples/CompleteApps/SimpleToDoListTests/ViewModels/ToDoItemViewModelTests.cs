@@ -42,7 +42,7 @@ namespace SimpleToDoList.ViewModels.Tests
             Assert.AreEqual("", sTestLog);
         }
 
-        [DataTestMethod()]
+        [TestMethod()]
         public void GetToDoItemTest2()
         {
             //Act

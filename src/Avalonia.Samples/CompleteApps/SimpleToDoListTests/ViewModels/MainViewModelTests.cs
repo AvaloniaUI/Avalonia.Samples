@@ -60,7 +60,7 @@ public class MainViewModelTests
         Assert.AreEqual(2,testModel2.ToDoItems.Count);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(new string[0], "")]
     [DataRow(new[]{ "Test" }, @"PropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $Test\r\nCmdChg(Sender: RelayCommand) = True\r\n")]
     [DataRow(new[]{ "Test2", null  },@"PropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $Test2\r\nCmdChg(Sender: RelayCommand) = True\r\nPropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $\r\nCmdChg(Sender: RelayCommand) = False\r\n")]
@@ -77,7 +77,7 @@ public class MainViewModelTests
         Assert.AreEqual(sExp.Replace("\\r\\n","\r\n"), sTestLog);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow("Test", 1, @"PropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $Test\r\nCmdChg(Sender: RelayCommand) = True\r\nPropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $\r\nCmdChg(Sender: RelayCommand) = False\r\n")]
     [DataRow("",0, "PropChg(Sender: MainViewModel, Prop: NewItemContent), Value = $\\r\\nCmdChg(Sender: RelayCommand) = False\\r\\n")]
     public void AddItemTest(string sAct,int iExp,string sExp)
@@ -96,7 +96,7 @@ public class MainViewModelTests
         Assert.AreEqual( sExp.Replace("\\r\\n", "\r\n"), sTestLog);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(new[] { "Test", "Test2" }, "Test" )]
     [DataRow(new[] { "Test", "Test2" }, "Test2" )]
     public void RemoveItemTest(string[] sAct, string sAct2)

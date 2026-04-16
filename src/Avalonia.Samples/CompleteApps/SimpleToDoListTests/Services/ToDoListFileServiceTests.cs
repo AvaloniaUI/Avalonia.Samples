@@ -6,7 +6,7 @@ namespace SimpleToDoList.Services.Tests;
 public class ToDoListFileServiceTests
 {
     // The path to the file we are going to test
-    private string destPath;
+    private string destPath ="";
 
     [TestInitialize]
     public void TestInitialize()
@@ -38,7 +38,7 @@ public class ToDoListFileServiceTests
     }
 
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(new[] { "Hello World" }, new[] { true }, "[{\"IsChecked\":true,\"Content\":\"Hello World\"}]")]
     [DataRow(new[] { "Get up", "Do chores" }, new[] { true, false }, "[{\"IsChecked\":true,\"Content\":\"Get up\"},{\"IsChecked\":false,\"Content\":\"Do chores\"}]")]
     public void SaveToFileAsyncTest(string[] sAct, bool[] xAct, string sExp)
@@ -55,7 +55,7 @@ public class ToDoListFileServiceTests
         Assert.AreEqual(sExp, File.ReadAllText(destPath));
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(new[] { "Hello World" }, new[] { true }, "[{\"IsChecked\":true,\"Content\":\"Hello World\"}]")]
     [DataRow(new[] { "Get up", "Do chores" }, new[] { true, false }, "[{\"IsChecked\":true,\"Content\":\"Get up\"},{\"IsChecked\":false,\"Content\":\"Do chores\"}]")]
     public void LoadFromFileAsyncTest(string[] sExp, bool[] xExp, string sAct)

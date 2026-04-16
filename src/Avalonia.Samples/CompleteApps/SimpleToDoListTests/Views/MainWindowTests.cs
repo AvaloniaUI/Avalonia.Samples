@@ -15,7 +15,7 @@ namespace SimpleToDoList.Views.Tests;
 [TestClass()]
 public class MainWindowTests
 {
-    private MainViewModel _vm;
+    private MainViewModel? _vm;
 
     [AvaloniaTestMethod()]
     public void MainWindowTest()
