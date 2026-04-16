@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="DesignData\ToDoItems.db" />
+    <File Path="Directory.Packages.props" />
+    <File Path="ReadMe.adoc" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="AdvancedToDoListTests\AdvancedToDoListTests.csproj" />
+    <Project Path="SharedControlsTests/SharedControlsTests.csproj" />
+  </Folder>
+  <Project Path="AdvancedToDoList.Android/AdvancedToDoList.Android.csproj" />
+  <Project Path="AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj" />
+  <Project Path="AdvancedToDoList.Desktop/AdvancedToDoList.Desktop.csproj" />
+  <Project Path="AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj" />
+  <Project Path="AdvancedToDoList/AdvancedToDoList.csproj" />
+  <Project Path="SharedControls/SharedControls.csproj" />
+</Solution>

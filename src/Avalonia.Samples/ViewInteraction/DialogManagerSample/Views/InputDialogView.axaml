@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:DialogManagerSample.ViewModels"
+             xmlns:services="clr-namespace:DialogManagerSample.Services"
+             mc:Ignorable="d" 
+             MinWidth="400"
+             services:DialogManager.Register="{Binding}"
+             x:DataType="viewModels:InputDialogViewModel"
+             x:Class="DialogManagerSample.Views.InputDialogView">
+    <StackPanel Spacing="5" Margin="10">
+        <TextBlock Text="{Binding PromptText}" />
+        <TextBox Text="{Binding InputText}" />
+        <!-- The Dialog Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <Button Content="OK" Command="{Binding ReturnResultCommand}" IsDefault="True" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

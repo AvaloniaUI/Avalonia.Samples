@@ -1,6 +1,6 @@
 ﻿using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
+using ReactiveUI.Avalonia;
 
 namespace MvvmDialogSample
 {
@@ -18,6 +18,6 @@ namespace MvvmDialogSample
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseReactiveUI();
+                .UseReactiveUI(builder => { /* We don't need to configure anything for the samples */ });
     }
 }

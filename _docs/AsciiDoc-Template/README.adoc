@@ -1,12 +1,25 @@
 = Enter the Title here
 // --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
 :toc:
 :toc-placement!:
+endif::[]
+
+ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
 // ----------------------------------------------------------
 
 
@@ -21,6 +34,7 @@ toc::[]
 // ---------------------------------------------------------
 
 
+[discrete]
 === Difficulty
 // Choose one of the below difficulties. You can just delete the ones you don't need.
 
@@ -34,6 +48,7 @@ toc::[]
 
 
 
+[discrete]
 === Buzz-Words
 
 // Write some buzz-words here. You can separate them by ", "

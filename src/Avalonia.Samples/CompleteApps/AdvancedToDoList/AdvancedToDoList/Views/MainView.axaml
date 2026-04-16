@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:AdvancedToDoList.ViewModels"
+             xmlns:views="clr-namespace:AdvancedToDoList.Views"
+             xmlns:controls="clr-namespace:SharedControls.Controls;assembly=SharedControls"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d" d:DesignWidth="690" d:DesignHeight="450"
+             x:Class="AdvancedToDoList.Views.MainView"
+             x:Name="Root"
+             x:DataType="vm:MainViewModel">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <!-- Note: Content refers to the selected item's tag -->
+    <controls:HamburgerMenu x:Name="MainMenu" 
+                            Content="{Binding $self.SelectedMenuItem.Tag}"
+                            AutoClosePaneThreshold="700">
+        
+        <!-- The available Items -->
+        <controls:HamburgerMenu.MenuItems>
+            <controls:HamburgerMenuItem Label="To-Do Items"
+                                        Icon="{DynamicResource PhosphorIcons.ListChecksThin}"
+                                        Tag="{Binding ToDoItemsViewModel}"/>
+            <controls:HamburgerMenuItem Label="Manage Categories"
+                                        Icon="{DynamicResource PhosphorIcons.CirclesThreePlusThin}"
+                                        Tag="{Binding CategoriesViewModel}"/>
+        </controls:HamburgerMenu.MenuItems>
+
+        <!-- The Option Items (in Production, we should also add an About page) -->
+        <controls:HamburgerMenu.OptionsMenuItems>
+            <controls:HamburgerMenuItem Label="Settings"
+                                        Icon="{DynamicResource PhosphorIcons.GearLight}"
+                                        Tag="{Binding SettingsViewModel}" />
+        </controls:HamburgerMenu.OptionsMenuItems>
+        
+        <!-- Specify DataTemplates for the Content -->
+        <controls:HamburgerMenu.DataTemplates>
+            <DataTemplate DataType="vm:ManageToDoItemsViewModel">
+                <views:ManageToDoItemsView />
+            </DataTemplate>
+            <DataTemplate DataType="vm:ManageCategoriesViewModel">
+                <views:ManageCategoriesView />
+            </DataTemplate>
+            <DataTemplate DataType="vm:SettingsViewModel">
+                <views:SettingsView />
+            </DataTemplate>
+        </controls:HamburgerMenu.DataTemplates>
+    </controls:HamburgerMenu>
+</UserControl>

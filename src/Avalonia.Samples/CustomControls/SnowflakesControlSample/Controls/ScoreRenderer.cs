@@ -50,7 +50,7 @@ internal class ScoreRenderer : ICustomDrawOperation
         // In case we didn't find it, render the text with a fallback.
         if (leaseFeature == null)
         {
-            var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.GetGlyph(c)).ToArray();
+            var glyphs = Text.Select(c => Typeface.Default.GlyphTypeface.CharacterToGlyphMap.GetGlyph(c)).ToArray();
 
             var glyphRun = new GlyphRun(Typeface.Default.GlyphTypeface,
                 20,
@@ -71,14 +71,16 @@ internal class ScoreRenderer : ICustomDrawOperation
             using (var paint = new SKPaint())
             {
                 paint.Shader = SKShader.CreateColor(SKColors.Goldenrod);
-                paint.TextSize = 30;
-                paint.TextAlign = SKTextAlign.Right;
+                using var font = new SKFont
+                {
+                    Size = 30
+                };
                     
                 var origin = Bounds.TopRight.ToSKPoint();
                 origin.Offset(-25, +50);
 
                 paint.ImageFilter = SKImageFilter.CreateDropShadow(0, 0, 10, 10, SKColors.White);
-                canvas.DrawText(Text, origin, paint);
+                canvas.DrawText(Text, origin, SKTextAlign.Right, font, paint);
             }
             canvas.Restore();
         }

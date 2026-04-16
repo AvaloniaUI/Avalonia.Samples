@@ -6,6 +6,7 @@
         xmlns:vm="using:RectPainter.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RectPainter.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
         Title="Rect Painter Sample - Drag out rectangles with the mouse. Use Shift/Ctrl/Alt to change color"
         Icon="/Assets/avalonia-logo.ico">
     <Design.DataContext>

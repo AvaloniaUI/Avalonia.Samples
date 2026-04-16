@@ -1,0 +1,28 @@
+<linker>
+    <!--
+        This file configures the .NET Trimmer (ILLink) to preserve types and members
+        that are used via reflection, dynamic code generation, or XAML compilation.
+        
+        Why is this needed?
+        - trimming removes "unused" code to reduce app size
+        - but XAML, MVVM, and source generators use reflection at runtime
+        - without this, your app would crash with MissingMethodException
+        
+        How it works:
+        - preserve="all" tells the trimmer: "Don't touch these types"
+        - Applies to both debug/release builds when PublishAot=true
+        
+        Note: This file is included in AdvancedToDoList.csproj via:
+        <TrimmerRootDescriptor Include="LinkerConfig.xml" />
+    -->
+    <assembly fullname="AdvancedToDoList">
+        <!-- ViewModelBase: Base class for all ViewModels -->
+        <type fullname="AdvancedToDoList.ViewModels.ViewModelBase" preserve="all" />
+        
+        <!-- CategoryViewModel: Represented in XAML, uses [ObservableProperty] and dynamic binding -->
+        <type fullname="AdvancedToDoList.ViewModels.CategoryViewModel" preserve="all" />
+        
+        <!-- ToDoItemViewModel: Same as CategoryViewModel, used in XAML with data binding -->
+        <type fullname="AdvancedToDoList.ViewModels.ToDoItemViewModel" preserve="all" />
+    </assembly>
+</linker>

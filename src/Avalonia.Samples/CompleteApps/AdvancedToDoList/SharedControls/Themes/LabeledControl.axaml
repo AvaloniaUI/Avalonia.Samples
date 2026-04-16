@@ -1,0 +1,94 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:controls="clr-namespace:SharedControls.Controls"
+                    xmlns:converters="clr-namespace:SharedControls.Converters">
+
+    <Design.PreviewWith>
+        <StackPanel Width="500">
+            <controls:LabeledControl Header="Test">
+                <TextBox> Hello World</TextBox>
+            </controls:LabeledControl>
+        </StackPanel>
+    </Design.PreviewWith>
+    
+    <Thickness x:Key="LabeledControl.HeaderMargin">0,6,0,4</Thickness>
+
+    <ControlTheme x:Key="{x:Type controls:LabeledControl}" TargetType="controls:LabeledControl">
+
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="HeaderPosition" Value="{Binding $self.Bounds, Converter={x:Static converters:BoundsToHeaderPositionConverter.Instance}}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="HeaderCol" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Name="PART_HeaderLabel"
+                                          Margin="{DynamicResource HeaderedControl.HeaderMargin}"
+                                          Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          Target="{Binding #PART_ContentPresenter.Child}" />
+                        <ContentPresenter Grid.Row="1" Grid.Column="0" 
+                                          Name="PART_ContentPresenter"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          RecognizesAccessKey="True" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <!--  HeaderPosition: Left  -->
+        <Style Selector="^[HeaderPosition=Left] /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Grid.ColumnSpan" Value="1" />
+        </Style>
+
+        <Style Selector="^[HeaderPosition=Left] /template/ Label#PART_HeaderLabel">
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Grid.ColumnSpan" Value="1" />
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+
+        <!--  HeaderPosition: Top  -->
+        <Style Selector="^[HeaderPosition=Top] /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="Grid.RowSpan" Value="1" />
+        </Style>
+
+        <Style Selector="^[HeaderPosition=Top] /template/ Label#PART_HeaderLabel">
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="Grid.RowSpan" Value="1" />
+        </Style>
+
+    </ControlTheme>
+</ResourceDictionary>

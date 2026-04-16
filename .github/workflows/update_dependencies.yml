@@ -1,0 +1,139 @@
+
+name: Update dependencies
+
+# ----------------------------------------------------------------------
+#  Triggers
+# ----------------------------------------------------------------------
+on:
+  schedule:
+    - cron: '0 2 * * *' # Every day at 02:00 UTC
+  workflow_dispatch:   # Allows manual runs from the UI
+
+# ----------------------------------------------------------------------
+#  Jobs
+# ----------------------------------------------------------------------
+jobs:
+  update-nuget:
+    if: github.repository == 'AvaloniaUI/Avalonia.Samples'
+    runs-on: windows-latest
+    name: Update latest NuGets
+
+    # ------------------------------------------------------------------
+    #  Steps
+    # ------------------------------------------------------------------
+    steps:
+      # --------------------------------------------------------------
+      #  Checkout the repo (using the default GITHUB_TOKEN)
+      # --------------------------------------------------------------
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # --------------------------------------------------------------
+      #  Install .NET SDK 10.x (the latest 10.x version at run time)
+      # --------------------------------------------------------------
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      # --------------------------------------------------------------
+      #  Java (required by Android tooling) + Android SDK
+      # --------------------------------------------------------------
+      - name: Set up Java (Zulu 17)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # --------------------------------------------------------------
+      #  Restore mobile‑specific workloads (iOS / Android / Wasm)
+      # --------------------------------------------------------------
+      - name: Restore mobile / wasm workloads
+        run: |
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+      
+      # --------------------------------------------------------------
+      #  Install dotnet‑outdated **and put it on PATH**
+      # --------------------------------------------------------------
+      - name: Install dotnet-outdated tool
+        run: |
+          dotnet tool install --global dotnet-outdated-tool
+          # Add the global‑tool folder to PATH for the remainder of the job
+          $toolPath = "$HOME\.dotnet\tools"
+          if (Test-Path $toolPath) {
+            Add-Content -Path $env:GITHUB_PATH -Value $toolPath
+          }
+        shell: pwsh
+
+      # --------------------------------------------------------------
+      # Run dotnet‑outdated (only real .sln / .slnf / .csproj files)
+      # --------------------------------------------------------------
+      - name: Run dotnet-outdated (upgrade)
+        shell: pwsh
+        run: |
+          # Find *only* .sln, .slnf or .csproj files – ignore *.slnx, *.sln.backup, …
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.sln,*.slnf,*.csproj,*.fsproj -File |
+                    Select-Object -ExpandProperty FullName
+
+          if (-not $files) {
+            Write-Host "⚠️ No solution or project files were found – nothing to do."
+            exit 0
+          }
+
+          foreach ($proj in $files) {
+            Write-Host "🔎 Checking $proj"
+            # `--no-restore` speeds things up – we already restored workloads above.
+            dotnet outdated $proj --upgrade --no-restore
+          }
+
+      # --------------------------------------------------------------
+      #  Detect whether any file changed after the upgrade step
+      # --------------------------------------------------------------
+      - name: Detect changes
+        id: changes
+        shell: pwsh
+        run: |
+          # Run the diff – we only care about the exit code, not the output
+          git diff --quiet
+      
+          # $LASTEXITCODE holds the numeric exit code from the last native command
+          if ($LASTEXITCODE -eq 0) {
+            # No changes
+            Write-Host "✅ No repository changes detected."
+            "CHANGES=false" >> $env:GITHUB_OUTPUT
+          }
+          else {
+            # At least one change
+            Write-Host "🔄 Changes detected."
+            "CHANGES=true" >> $env:GITHUB_OUTPUT
+          }
+          # Explicitly end with a success code (optional – PowerShell will return 0
+          # if the script reaches the end without throwing a terminating error)
+          exit 0
+
+      # --------------------------------------------------------------
+      #  **If** something changed → push a PR
+      # --------------------------------------------------------------
+      - name: Create Pull Request (only when updates exist)
+        if: steps.changes.outputs.CHANGES == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: Update NuGet packages"
+          title: "chore: Update NuGet packages"
+          body: |
+            This PR was generated automatically by the **Update dependencies** workflow.
+            It contains the latest NuGet package upgrades.
+          branch: update-nuget-packages
+          base: main
+          # Optional – keep the PR tidy
+          delete-branch: true
+          signoff: true
