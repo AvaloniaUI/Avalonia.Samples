@@ -16,6 +16,6 @@
     <!-- See https://docs.avaloniaui.net/tools/developer-tools/installation -->
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="System.Text.Json" Version="10.0.6" />
+    <PackageReference Include="System.Text.Json" Version="10.0.7" />
   </ItemGroup>
 </Project>
