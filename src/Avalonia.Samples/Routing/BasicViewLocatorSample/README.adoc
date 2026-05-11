@@ -343,7 +343,7 @@ public class ThirdPageViewModel : PageViewModelBase
 
 === Step 4: Create the Page-Views
 
-Now we will create a https://docs.avaloniaui.net/docs/reference/controls/usercontrol[[`UserControl`\]] for each page. 
+Now we will create a https://docs.avaloniaui.net/controls/primitives/usercontrol[[`UserControl`\]] for each page. 
 
 ==== FirstPageView
 
@@ -566,8 +566,8 @@ TIP: Do you see the content of the last page? This happens because we didn't def
 You can also use any third-party library that supports advanced routing, for example:
 
 ReactiveUI::
-- https://www.reactiveui.net/docs/handbook/routing/
+- https://www.reactiveui.net/documentation/handbook/routing/
 
 Prism::
 - https://prismlibrary.com/docs/viewmodel-locator
-- https://www.reactiveui.net/docs/handbook/routing/
+- https://www.reactiveui.net/documentation/handbook/routing/

@@ -566,7 +566,7 @@ NOTE: We will be storing the data as a https://learn.microsoft.com/en-us/dotnet/
 
 Right now every time we close the App, all data is lost. For a simple demo that is all fine, but what if we wanted to start using this App for our daily to-do's? Well, we can add basic data persistence as we already made sure our `Model` is able to handle that. For the actual file-operations we will use a helper class which is used as a service. So add a folder called `Services` and inside a new class called `ToDoListFileService.cs`.
 
-TIP: We can make this class `static` in our case. In a more complex App this may better be handled using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection[[Dependency Injection\]]
+TIP: We can make this class `static` in our case. In a more complex App this may better be handled using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[Dependency Injection\]]
 
 WARNING: We use a hard-coded filename here. This may not be the perfect solution, as the path may vary by user settings or platform limitations. However, this is not a part we want to cover in this sample
 
