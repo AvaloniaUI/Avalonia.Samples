@@ -8,7 +8,9 @@
     <Project Path="CompleteApps/Avalonia.MusicStore/Avalonia.MusicStore.csproj" />
     <Project Path="CompleteApps/SimpleToDoList/SimpleToDoList.csproj" />
   </Folder>
-  <Folder Name="/CompleteApps/AdvancedToDoList/" />
+  <Folder Name="/CompleteApps/AdvancedToDoList/">
+    <File Path="CompleteApps\AdvancedToDoList\ReadMe.adoc" />
+  </Folder>
   <Folder Name="/CustomControls/">
     <Project Path="CustomControls/RatingControlSample/RatingControlSample.csproj" />
     <Project Path="CustomControls/SnowflakesControlSample/SnowflakesControlSample.csproj" />

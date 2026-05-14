@@ -11,7 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Browser" />
-    <PackageReference Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" />
+    <PackageReference Include="Microsoft.DotNet.HotReload.WebAssembly.Browser"
+                      Condition="'$(Configuration)' == 'Debug' and '$(RunAOTCompilation)' != 'true'"/>
   </ItemGroup>
 
   <ItemGroup>
