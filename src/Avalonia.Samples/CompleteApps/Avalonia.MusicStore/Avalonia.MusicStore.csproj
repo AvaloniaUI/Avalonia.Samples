@@ -23,6 +23,5 @@
     <!-- See https://docs.avaloniaui.net/tools/developer-tools/installation -->
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="iTunesSearch" Version="1.0.44" />
   </ItemGroup>
 </Project>

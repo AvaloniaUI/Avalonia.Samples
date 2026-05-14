@@ -19,7 +19,6 @@
     <!-- Avalonia diagnostics package -->
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <!-- Android packages -->
-    <PackageVersion Include="Microsoft.DotNet.HotReload.WebAssembly.Browser" Version="10.0.204" />
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.MusicStore.Messages;
-using Avalonia.MusicStore.Models;
+using Avalonia.MusicStore.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,6 +11,8 @@ namespace Avalonia.MusicStore.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        private static readonly AlbumService s_albumService = new();
+
         public ObservableCollection<AlbumViewModel> Albums { get; } = new();
 
         public MainViewModel()
@@ -43,7 +45,7 @@ namespace Avalonia.MusicStore.ViewModels
         /// </summary>
         private async void LoadAlbums()
         {
-            var albums = (await Album.LoadCachedAsync()).Select(x => new AlbumViewModel(x)).ToList();
+            var albums = (await s_albumService.LoadCachedAsync()).Select(x => new AlbumViewModel(x)).ToList();
             foreach (var album in albums)
             {
                 Albums.Add(album);
