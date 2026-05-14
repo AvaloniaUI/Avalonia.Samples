@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.MusicStore.Messages;
-using Avalonia.MusicStore.Models;
+using Avalonia.MusicStore.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,6 +11,7 @@ namespace Avalonia.MusicStore.ViewModels
 {
     public partial class MusicStoreViewModel : ViewModelBase
     {
+        private static readonly AlbumService s_albumService = new();
         private CancellationTokenSource? _cancellationTokenSource;
 
         [ObservableProperty]
@@ -59,7 +60,7 @@ namespace Avalonia.MusicStore.ViewModels
             IsBusy = true;
             SearchResults.Clear();
 
-            var albums = await Album.SearchAsync(term);
+            var albums = await s_albumService.SearchAsync(term);
 
             foreach (var album in albums)
             {

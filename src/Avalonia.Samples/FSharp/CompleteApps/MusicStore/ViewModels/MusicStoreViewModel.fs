@@ -10,11 +10,12 @@ open System.Collections.ObjectModel
 open CommunityToolkit.Mvvm.Input
 open CommunityToolkit.Mvvm.Messaging
 open MusicStore.Messages
-open MusicStore.Models
+open MusicStore.Services
 
 type MusicStoreViewModel() as this =
     inherit ViewModelBase()
 
+    static let s_albumService = AlbumService()
     let searchResults = ObservableCollection<AlbumViewModel>()
     let mutable _cancellationTokenSource: CancellationTokenSource option = None
 
@@ -44,7 +45,7 @@ type MusicStoreViewModel() as this =
 
                 let cancellationToken = _cancellationTokenSource.Value.Token
                 // call async search
-                let! albums = Album.SearchAsync term
+                let! albums = s_albumService.SearchAsync term
                 albums |> Seq.map AlbumViewModel |> Seq.iter searchResults.Add
 #if DEBUG
                 Debug.WriteLine $"Search for '{term}' returned {searchResults.Count} results"

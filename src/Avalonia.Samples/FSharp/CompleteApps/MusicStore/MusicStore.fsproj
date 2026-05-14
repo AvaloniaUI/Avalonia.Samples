@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <Compile Include="Models\Album.fs" />
+        <Compile Include="Services\AlbumService.fs" />
         <Compile Include="ViewModels\ViewModelBase.fs" />
         <Compile Include="ViewModels\AlbumViewModel.fs" />
         <Compile Include="Messages\PurchaseAlbumMessage.fs" />

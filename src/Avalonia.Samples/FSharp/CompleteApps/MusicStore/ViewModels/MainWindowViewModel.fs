@@ -7,10 +7,12 @@ open System.Windows.Input
 open CommunityToolkit.Mvvm.ComponentModel
 open CommunityToolkit.Mvvm.Input
 open CommunityToolkit.Mvvm.Messaging
-open MusicStore.Models
+open MusicStore.Services
 
 type MainWindowViewModel() =
     inherit ViewModelBase()
+
+    static let s_albumService = AlbumService()
 
     [<ObservableProperty>]
     member val Albums = ObservableCollection<AlbumViewModel>() with get, set
@@ -45,7 +47,7 @@ type MainWindowViewModel() =
 
     member private this.LoadAlbumsAsync() =
         task {
-            let! albums = Album.LoadCachedAsync()
+            let! albums = s_albumService.LoadCachedAsync()
             Debug.WriteLine $"Loaded %d{Seq.length albums} cached albums"
             let albumViewModels = albums |> Seq.map AlbumViewModel |> Seq.toArray
 

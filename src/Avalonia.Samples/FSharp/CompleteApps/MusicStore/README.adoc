@@ -89,7 +89,10 @@ The tutorial covers:
 | File | Description
 
 | Models/Album.fs
-| Album data model and iTunes API integration
+| Album data model (Artist, Title, CoverUrl)
+
+| Services/AlbumService.fs
+| iTunes API integration, cover-art loading, and cache persistence
 
 | ViewModels/ViewModelBase.fs
 | Base class for all view models

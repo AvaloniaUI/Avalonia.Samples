@@ -1036,73 +1036,82 @@ This constructor was only used for testing the UI with mock data and is no longe
 
 ==== Apple Web API Package
 
-Follow this procedure to add the required _NuGet_ package:
-
-- Stop the app if it is still running.
-- Right-click the project.
-- Click **Manage NuGet Packages**.
-+
-.Find the iTunes-API nuget package
-image::_docs/18_iTunes_search_nuget.png[iTunes-API nuget package]
-
-- Type 'itunes' in the search box (top-left).
-- Click **iTunesSearch**, then click **Install**.
+This sample calls the iTunes Search API directly using `HttpClient` and `System.Text.Json` — no additional NuGet package is needed.
 
 ==== MVVM Model
 
-In this tutorial the application is simple, and you can implement the business services required for the 'Model' part of the MVVM pattern, in one class. This class will contain both the data model for an album, and the method needed for the search.
+In this tutorial the application follows a clear separation between the *data model* and the *business service*:
 
-Follow this procedure to add the album business logic:
+* `Album` (in `/Models`) is a plain data record that holds `Artist`, `Title`, and `CoverUrl`.
+* `AlbumService` (in `/Services`) owns all iTunes API calls, HTTP networking, and file-system caching.
 
-- In the solution explorer, right-click the **/Models** folder and then click **Add**. 
+This keeps the data model clean and testable, while the service layer handles all external I/O.
+
+Follow this procedure to add the album data model:
+
+- In the solution explorer, right-click the **/Models** folder and then click **Add**.
 - Click **Class** -> **Record**.
 - When prompted for the name, type 'Album'.
 - Add the following code:
 +
 ```csharp
-using iTunesSearch.Library;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Avalonia.MusicStore.Models
 {
-    public record Album
+    // We use a record for Album since it helps to encapsulate data. 
+    // See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record
+    public record Album(string Artist, string Title, string CoverUrl);
+}
+```
+
+NOTE: We use a record for Album since it helps to encapsulate data. 
+See https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record[[microsoft docs\]] for more information about records in C#.
+
+Now create the album service:
+
+- In the solution explorer, right-click the project and click **Add** -> **New Folder**. Name it **Services**.
+- Right-click the new **/Services** folder and click **Add** -> **Class**.
+- When prompted for the name, type 'AlbumService'.
+- Add the following code:
++
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Avalonia.MusicStore.Models;
+
+namespace Avalonia.MusicStore.Services
+{
+    public class AlbumService
     {
-        private static iTunesSearchManager s_SearchManager = new();
-        private static HttpClient s_httpClient = new();
+        private static readonly HttpClient s_httpClient = new();
+        private static readonly JsonSerializerOptions s_jsonOptions = new() { PropertyNameCaseInsensitive = true };
 
-        public Album(string artist, string title, string coverUrl)
-        {
-            Artist = artist;
-            Title = title;
-            CoverUrl = coverUrl;
-        }
+        private record ItunesAlbum(string ArtistName, string CollectionName, string ArtworkUrl100);
+        private record ItunesSearchResult(ItunesAlbum[] Results);
 
-        public string Artist { get; set; }
-        public string Title { get; set; }
-        public string CoverUrl { get; set; }
-
-        public static async Task<IEnumerable<Album>> SearchAsync(string? searchTerm)
+        public async Task<IEnumerable<Album>> SearchAsync(string? searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 return Enumerable.Empty<Album>();
             }
-            
-            var query = await s_SearchManager.GetAlbumsAsync(searchTerm)
-                .ConfigureAwait(false);
-                
-            return query.Albums.Select(x =>
-                new Album(x.ArtistName, x.CollectionName, 
-                    x.ArtworkUrl100.Replace("100x100bb", "600x600bb")));
+
+            var url = $"https://itunes.apple.com/search?term={Uri.EscapeDataString(searchTerm)}&entity=album&limit=25";
+            var json = await s_httpClient.GetStringAsync(url).ConfigureAwait(false);
+            var result = JsonSerializer.Deserialize<ItunesSearchResult>(json, s_jsonOptions);
+
+            return result?.Results.Select(x =>
+                new Album(x.ArtistName, x.CollectionName,
+                    x.ArtworkUrl100.Replace("100x100bb", "600x600bb")))
+                ?? Enumerable.Empty<Album>();
         }
-    }  
+    }
 }
 ```
-
-NOTE: We use a record for Album since it helps to encapsulate data. 
-See https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record[[micsrosoft docs\]] for more information about records in C#.
 
 ==== Album View Model
 
@@ -1179,7 +1188,7 @@ private async Task DoSearch(string? term)
     IsBusy = true;
     SearchResults.Clear();
 
-    var albums = await Album.SearchAsync(term);
+    var albums = await s_albumService.SearchAsync(term);
 
     foreach (var album in albums)
     {
@@ -1195,7 +1204,7 @@ This method:
 
 ** Sets a busy flag to show the loading spinner in the UI.
 ** Clears existing results.
-** Calls the album model's `SearchAsync` method to fetch data from the iTunes API.
+** Calls the album service's `SearchAsync` method to fetch data from the iTunes API.
 ** Wraps each result in an `AlbumViewModel` and adds it to `SearchResults`.
 
 
@@ -1207,7 +1216,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.MusicStore.Messages;
-using Avalonia.MusicStore.Models;
+using Avalonia.MusicStore.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -1216,6 +1225,8 @@ namespace Avalonia.MusicStore.ViewModels
 {
     public partial class MusicStoreViewModel : ViewModelBase
     {
+        private static readonly AlbumService s_albumService = new();
+
         [ObservableProperty]
         public partial string? SearchText { get; set; }
 
@@ -1232,7 +1243,7 @@ namespace Avalonia.MusicStore.ViewModels
             IsBusy = true;
             SearchResults.Clear();
 
-            var albums = await Album.SearchAsync(term);
+            var albums = await s_albumService.SearchAsync(term);
 
             foreach (var album in albums)
             {
@@ -1292,27 +1303,28 @@ You will now learn how to retrieve the cover art bitmap for each album in the se
 
 ==== Album Service
 
-Your first step is to modify the business service to retrieve the album cover art from the _Apple iTunes_ Web API.
+Your first step is to extend the `AlbumService` to retrieve the album cover art from the _Apple iTunes_ Web API.
 
-Follow this procedure to get the album cover art from the Web API:
+Follow this procedure to add cover loading to `AlbumService`:
 
 - Stop the app if it is still running.
-- Locate and open the **Album.cs** file in the **/Models** folder.
-- Add the code as shown:
+- Locate and open the **AlbumService.cs** file in the **/Services** folder.
+- Add the `LoadCoverBitmapAsync` and `SanitizeFileName` methods as shown:
 
 ```csharp
-private static HttpClient s_httpClient = new();
-private string CachePath => $"./Cache/{SanitizeFileName(Artist)} - {SanitizeFileName(Title)}";
+private static string CachePath(Album album) =>
+    $"./Cache/{SanitizeFileName(album.Artist)} - {SanitizeFileName(album.Title)}";
 
-public async Task<Stream> LoadCoverBitmapAsync()
+public async Task<Stream> LoadCoverBitmapAsync(Album album)
 {
-    if (File.Exists(CachePath + ".bmp"))
+    var cachePath = CachePath(album);
+    if (File.Exists(cachePath + ".bmp"))
     {
-        return File.Open(CachePath + ".bmp", FileMode.Open,  FileAccess.Read, FileShare.Read);
+        return File.Open(cachePath + ".bmp", FileMode.Open, FileAccess.Read, FileShare.Read);
     }
     else
     {
-        var data = await s_httpClient.GetByteArrayAsync(CoverUrl);
+        var data = await s_httpClient.GetByteArrayAsync(album.CoverUrl);
         return new MemoryStream(data);
     }
 }
@@ -1327,7 +1339,7 @@ private static string SanitizeFileName(string input)
 }
 ```
 
-Method `LoadCoverBitmapAsync()` returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
+Method `LoadCoverBitmapAsync(album)` returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
 Method  `SanitizeFileName()` sanitizes input to replace characters that cannot be used in the file name with `_`.
 
 NOTE: Note that the cache is not active at this time, you will implement it later in the tutorial.
@@ -1337,7 +1349,7 @@ NOTE: Note that the cache is not active at this time, you will implement it late
 So that you will see as soon as the cache becomes active, place a debug breakpoint at the following line:
 
 ```csharp
-return File.OpenRead(CachePath + ".bmp");
+return File.Open(cachePath + ".bmp", FileMode.Open, FileAccess.Read, FileShare.Read);
 ```
 ====
 
@@ -1354,17 +1366,19 @@ Follow this procedure to update the album view model:
 +
 ```csharp
 using Avalonia.Media.Imaging;
+using Avalonia.MusicStore.Services;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 ...
 
 public partial class AlbumViewModel : ViewModelBase
 {
+    private static readonly AlbumService s_albumService = new();
     ...
     
     public Task<Bitmap?> Cover => LoadCoverAsync();
     
-    public async Task LoadCover()
+    private async Task<Bitmap?> LoadCoverAsync()
     {
         try
         {
@@ -1372,7 +1386,7 @@ public partial class AlbumViewModel : ViewModelBase
             // Remove this line in production.
             await Task.Delay(200);
             
-            await using (var imageStream = await _album.LoadCoverBitmapAsync())
+            await using (var imageStream = await s_albumService.LoadCoverBitmapAsync(_album))
             {
                 return await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
             }
@@ -1666,35 +1680,33 @@ You will see the user's album collection building as you search and select. Howe
 
 === Add Data Persistence
 
-Finally. you will add some code to the album model (business service) to save the user's album collection to disk, so that it can be recovered when the app next runs.
+Finally. you will add some code to the album service to save the user's album collection to disk, so that it can be recovered when the app next runs.
 
 As a welcome side-effect, this will also activate the album cover cache - so that album cover images can be retrieved from disk (if they exist), rather than from the Web API.
 
-==== Album Model 
+==== Album Service
 
-Follow this procedure to add persistence services (save and load) to the album model:
+Follow this procedure to add persistence methods (save and load) to the album service:
 
 - Stop the app if it is running.
-- Locate and open the **Album.cs** file in the **/Models** folder.
+- Locate and open the **AlbumService.cs** file in the **/Services** folder.
 - Add the code to implement save to disk, as shown:
 +
 ```csharp
-public async Task SaveAsync()
+public async Task SaveAsync(Album album)
 {
     if (!Directory.Exists("./Cache"))
     {
         Directory.CreateDirectory("./Cache");
     }
 
-    using (var fs = File.OpenWrite(CachePath))
-    {
-        await SaveToStreamAsync(this, fs);
-    }
+    using var fs = File.OpenWrite(CachePath(album) + ".json");
+    await SaveToStreamAsync(album, fs);
 }
 
-public Stream SaveCoverBitmapStream()
+public Stream SaveCoverBitmapStream(Album album)
 {
-    return File.OpenWrite(CachePath + ".bmp");
+    return File.OpenWrite(CachePath(album) + ".bmp");
 }
 
 private static async Task SaveToStreamAsync(Album data, Stream stream)
@@ -1706,12 +1718,7 @@ private static async Task SaveToStreamAsync(Album data, Stream stream)
 - Add the code to implement load from disk, as shown:
 +
 ```csharp
-public static async Task<Album> LoadFromStream(Stream stream)
-{
-    return (await JsonSerializer.DeserializeAsync<Album>(stream).ConfigureAwait(false))!;
-}
-
-public static async Task<IEnumerable<Album>> LoadCachedAsync()
+public async Task<IEnumerable<Album>> LoadCachedAsync()
 {
     if (!Directory.Exists("./Cache"))
     {
@@ -1722,24 +1729,29 @@ public static async Task<IEnumerable<Album>> LoadCachedAsync()
 
     foreach (var file in Directory.EnumerateFiles("./Cache"))
     {
-        if (!string.IsNullOrWhiteSpace(new DirectoryInfo(file).Extension)) 
+        if ((new DirectoryInfo(file).Extension) != ".json")
             continue;
 
-        await using var fs = File.OpenRead(file);
-        results.Add(await Album.LoadFromStream(fs).ConfigureAwait(false));
+        await using var fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+        results.Add(await LoadFromStreamAsync(fs).ConfigureAwait(false));
     }
 
     return results;
+}
+
+private static async Task<Album> LoadFromStreamAsync(Stream stream)
+{
+    return (await JsonSerializer.DeserializeAsync<Album>(stream).ConfigureAwait(false))!;
 }
 ```
 
 ==== Album View Model
 
-Your next step is to add a method to the album view model that it can call the business service persistence save methods:
+Your next step is to add a method to the album view model that calls the album service persistence methods:
 
-SaveAsync:: persists the album text data as a JSON file,
+SaveAsync(album):: persists the album text data as a JSON file,
 
-SaveCoverBitmapStream:: saves the cover art as a bitmap (.BMP) file.
+SaveCoverBitmapStream(album):: saves the cover art as a bitmap (.BMP) file.
 
 To alter the album view model , follow this procedure:
 
@@ -1749,15 +1761,13 @@ To alter the album view model , follow this procedure:
 ```csharp
 public async Task SaveToDiskAsync()
 {
-    await _album.SaveAsync();
+    await s_albumService.SaveAsync(_album);
 
-    if (await LoadCoverAsync() is Bitmap cover)
+    if (await LoadCoverAsync() is { } cover)
     {
-        var bitmap = Cover;
-
         await Task.Run(() =>
         {
-            using (var fs = _album.SaveCoverBitmapStream())
+            using (var fs = s_albumService.SaveCoverBitmapStream(_album))
             {
                 cover.Save(fs);
             }
@@ -1808,11 +1818,11 @@ Notice that because the `SaveToDiskAsync` method writes both the JSON data and t
 To show that the bitmap loading cache is now in operation, follow this procedure:
 
 - Stop the app if it is running.
-- Locate and open the **Album.cs** file in the **/Models** folder.
+- Locate and open the **AlbumService.cs** file in the **/Services** folder.
 - Check to see that there is still a debug breakpoint in the `LoadCoverBitmapAsync` method at this line:
 
 ```csharp
-return File.OpenRead(CachePath + ".bmp");
+return File.Open(cachePath + ".bmp", FileMode.Open, FileAccess.Read, FileShare.Read);
 ```
 
 * Click **Debug** to compile and run the project.
@@ -1828,7 +1838,7 @@ The debug breakpoint should stop the app. This demonstrates that the album art i
 
 But wait, the data is not restored on start-up yet. So you will add code to load the user's album collection from disk when the app starts.
 
-You have already added code to the business service that can load both the files you will need from disk. All that remains for you to do, is to add some code to the main window view model to handle the start-up.
+You have already added code to the album service that can load both the files you will need from disk. All that remains for you to do, is to add some code to the main window view model to handle the start-up.
 
 Follow this procedure to add a method to load the user's album collection from disk:
 
@@ -1839,7 +1849,7 @@ Follow this procedure to add a method to load the user's album collection from d
 ```csharp
 private async void LoadAlbums()
 {
-    var albums = (await Album.LoadCachedAsync()).Select(x => new AlbumViewModel(x)).ToList();
+    var albums = (await s_albumService.LoadCachedAsync()).Select(x => new AlbumViewModel(x)).ToList();
     foreach (var album in albums)
     {
         Albums.Add(album);
@@ -1847,7 +1857,7 @@ private async void LoadAlbums()
 }
 ```
 
-As you can see this method uses the business service to load the list of albums from the disk cache. It then transforms each data model (`Album` class) into a view model (`AlbumViewModel` class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.
+As you can see this method uses the album service to load the list of albums from the disk cache. It then transforms each data model (`Album` class) into a view model (`AlbumViewModel` class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.
 
 Your next step is to schedule the `LoadAlbum` method to run when the app starts:
 
