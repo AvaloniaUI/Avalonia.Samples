@@ -105,12 +105,13 @@ In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm pa
 Avalonia version no older than 11.3.0 or 12.0.0.
 
 .Update nuget packages
-```xml
+[source,xml]
+----
 <PackageReference Include="Avalonia" Version="12.0.0" />
 <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
 <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-```
+----
 
 Now take some time to review the files and folders that the solution template created. You will see that the following the MVVM pattern, these folders were created:
 
@@ -161,10 +162,11 @@ Follow this procedure to style the main window in 'dark' mode:
 - Locate and open the file **App.axaml**.
 - In the XAML, change the `RequestedThemeVariant` attribute in the `<Application>` element from "Default" to "Dark"
 +
-```xml
+[source,xml]
+----
 <Application ...
     RequestedThemeVariant="Dark">
-```
+----
 
 - Now locate and open the **MainWindow.axaml** file in the **/Views** folder.
 +
@@ -184,17 +186,19 @@ Follow this procedure to style the background of the main window with an acrylic
 - Find the end of the opening tag of the `<Window>` element.
 - After the `Title="Avalonia.MusicStore"` attribute, add two new attributes as follows:
 +
-```xml
+[source,xml]
+----
 <Window ...
         Title="Avalonia.MusicStore"
         ...
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent">
-```
+----
 
 - To apply the acrylic effect to the whole window, replace the `<TextBlock>` element in the content zone of the main window with the following XAML for a panel:
 +
-```xml
+[source,xml]
+----
 <Window ... >
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -208,7 +212,7 @@ Follow this procedure to style the background of the main window with an acrylic
         </ExperimentalAcrylicBorder>
     </Panel>
 </Window>
-```
+----
 
 - Click **Debug** to compile and run the project.
 +
@@ -226,13 +230,14 @@ Follow this procedure to extend the acrylic blur effect onto the title bar:
 - Find the end of the opening tag of the `<Window>` element again.
 - Add the `ExtendClientAreaToDecorationsHint` attribute as shown:
 +
-```xml
+[source,xml]
+----
    <Window ...
            TransparencyLevelHint="AcrylicBlur"
            Background="Transparent"
 
            ExtendClientAreaToDecorationsHint="True">
-```
+----
 
 - Click **Debug** to compile and run the project.
 
@@ -256,7 +261,8 @@ To display a button in the content zone of the main window, follow this procedur
 - Locate and open the **MainWindow.axaml** file.
 - Inside the panel element, add the following XAML for a button. The panel XAML should look like this:
 +
-```xml
+[source,xml]
+----
 <Panel>
     <ExperimentalAcrylicBorder IsHitTestVisible="False">
         <ExperimentalAcrylicBorder.Material>
@@ -270,7 +276,7 @@ To display a button in the content zone of the main window, follow this procedur
 
      <Button Content="Buy Music"/>
 </Panel>
-```
+----
 
 - Click **Debug** to compile and run the project.
 +
@@ -286,12 +292,13 @@ Follow this procedure to position the button correctly:
 - Add a margin attribute to the new panel element, with a value of 40. 
 - Add horizontal and vertical alignment attributes to the button element, as shown:
 
-```xml
+[source,xml]
+----
 <Panel Margin="40">
   <Button Content="Buy Music" 
           HorizontalAlignment="Right" VerticalAlignment="Top" />
 </Panel>
-```
+----
 
 You should see all these changes reflected in the preview pane as you add them.
 
@@ -304,9 +311,10 @@ To use the Microsoft Store icon, follow this procedure:
 - Navigate to the _Avalonia UI_ _GitHub_ to find the list of Fluent Icons at https://avaloniaui.github.io/icons.html
 - Use your browser's text search to locate the name of the icon 'store\_microsoft\_regular'. There should be some code similar to:
 +
-```xml
+[source,xml]
+----
 <StreamGeometry x:Key="store_microsoft_regular">M11.5 9.5V13H8V9.5H11.5Z M11.5 17.5V14H8V17.5H11.5Z M16 9.5V13H12.5V9.5H16Z M16 17.5V14H12.5V17.5H16Z M8 6V3.75C8 2.7835 8.7835 2 9.75 2H14.25C15.2165 2 16 2.7835 16 3.75V6H21.25C21.6642 6 22 6.33579 22 6.75V18.25C22 19.7688 20.7688 21 19.25 21H4.75C3.23122 21 2 19.7688 2 18.25V6.75C2 6.33579 2.33579 6 2.75 6H8ZM9.5 3.75V6H14.5V3.75C14.5 3.61193 14.3881 3.5 14.25 3.5H9.75C9.61193 3.5 9.5 3.61193 9.5 3.75ZM3.5 18.25C3.5 18.9404 4.05964 19.5 4.75 19.5H19.25C19.9404 19.5 20.5 18.9404 20.5 18.25V7.5H3.5V18.25Z</StreamGeometry>
-```
+----
 
 - Copy all of the code for the icon.
 - In the solution explorer, right-click the project.
@@ -314,7 +322,8 @@ To use the Microsoft Store icon, follow this procedure:
 - Enter the **Name** 'Icons', press enter.
 - Locate and open the new **Icons.axaml** file that is created. The XAML will look like this:
 +
-```xml
+[source,xml]
+----
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
@@ -324,7 +333,7 @@ To use the Microsoft Store icon, follow this procedure:
     <!-- Add the resources here. -->
 
 </ResourceDictionary>
-```
+----
 
 - Paste your icon code inside the `<ResourceDictionary>`. 
 +
@@ -332,7 +341,8 @@ TIP: Remember that each node needs the `x:Key` provided.
 
 The icons file now looks like this:
 
-```xml
+[source,xml]
+----
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
@@ -348,7 +358,7 @@ The icons file now looks like this:
     <StreamGeometry x:Key="music_regular"> [ ... Add the path data here ... ] </StreamGeometry>
     
 </ResourceDictionary>
-```
+----
 
 TIP: Most of the time the path can be also extracted from any svg-path.
 
@@ -359,7 +369,8 @@ Follow this procedure to include the icons file:
 - Locate and open the **App.axaml** file.
 - Add a `<ResourceDictionary>` element with a `<ResourceInclude>` as shown:
 +
-```xml
+[source,xml]
+----
 <Application.Resources>
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
@@ -367,7 +378,7 @@ Follow this procedure to include the icons file:
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
 </Application.Resources>
-```
+----
 
 You need to build the application so that the icons become available to the preview pane.
 
@@ -376,11 +387,12 @@ To change the button from text to icon content, follow this procedure:
 - Locate and open the **MainWindow.axaml** file.
 - Alter the XAML for the button, as shown:
 +
-```xml
+[source,xml]
+----
 <Button HorizontalAlignment="Right" VerticalAlignment="Top">       
     <PathIcon Data="{StaticResource store_microsoft_regular}" /> 
 </Button>
-```
+----
 
 - Click **Debug** to compile and run the project.
 +
@@ -402,7 +414,8 @@ Follow this procedure:
 - Locate and open the **MainViewModel.cs** file in the **/ViewModels** folder.
 - Delete the existing content of the class, and add the code shown:
 +
-```csharp
+[source,csharp]
+----
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
@@ -423,7 +436,7 @@ namespace Avalonia.MusicStore.ViewModels
         }
     }
 }
-```
+----
 
 ==== How it works
 The `[RelayCommand]` attribute generates a public property for you at compile time named `AddAlbumCommand`, which implements `ICommand`.
@@ -441,12 +454,13 @@ To add the button data binding, follow this procedure:
 - Locate and open the **MainWindow.axaml** file.
 - Find the XAML for the button and add the command attribute and binding, as shown:
 +
-```xml
+[source,xml]
+----
 <Button HorizontalAlignment="Right" VerticalAlignment="Top"
         Command="{Binding AddAlbumCommand}">
     <PathIcon Data="{StaticResource store_microsoft_regular}"/>
 </Button>
-```
+----
 
 ==== Why it is `AddAlbumCommand`?
 The `[RelayCommand]` attribute automatically generates command properties based on your method names. If your method name ends with _Async_, the generator removes the _Async_ suffix and appends _Command_ to form the property name.
@@ -478,7 +492,8 @@ NotificationMessage:: sent by the main view model to display a notification, for
 
 Below is a stripped down diagram showing the message flow between the components that you are going to implement in the next steps:
 
-```mermaid
+[source,mermaid]
+----
 graph TD;
     A[MainViewModel] -->|Send PurchaseAlbumMessage| B(MainWindow)
     B -->|Show MusicStoreWindow<br>await AlbumViewModel| C[MusicStoreWindow]
@@ -486,7 +501,7 @@ graph TD;
     D -->|Send MusicStoreClosedMessage<br>with SelectedAlbum| C
     C -->|Close dialog<br>return SelectedAlbum| B
     B -->|Reply with AlbumViewModel| A
-```
+----
 NOTE: The diagram above is simplified to show the basic message flow. In the actual implementation, there are additional message exchanges for checking if an album already exists and for displaying notifications.
 
 === Add a New Dialog Window
@@ -539,14 +554,15 @@ This message will be sent by the view model when it needs to show the dialog.
 
 Open **PurchaseAlbumMessage.cs** and add the following code there:
 
-```csharp
+[source,csharp]
+----
 using Avalonia.MusicStore.ViewModels;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Avalonia.MusicStore.Messages;
 
 public class PurchaseAlbumMessage : AsyncRequestMessage<AlbumViewModel?>;
-```
+----
 
 _`AsyncRequestMessage<T>`_ lets you send a request and await a reply of type T (in our case, AlbumViewModel?).
 
@@ -559,7 +575,9 @@ In _MainWindow.axaml.cs_ register a handler for `PurchaseAlbumMessage`. This han
 
 
 Open _MainWindow.axaml.cs_ and add the following code into MainWindow constructor:
-```csharp
+
+[source,csharp]
+----
 public MainWindow()
 {
     InitializeComponent();
@@ -579,21 +597,23 @@ public MainWindow()
         m.Reply(dialog.ShowDialog<AlbumViewModel?>(w));
     });
 }
-```
+----
 
 ==== Send the Message from the ViewModel
 Now, update the `AddAlbumAsync()` method inside `MainViewModel` to send `PurchaseAlbumMessage` when the user clicks on the store button.
 - Open **MainViewModel.cs**
 - Locate the `AddAlbumAsync()` method that we added in the previous steps.
 - Edit `AddAlbumAsync()` as shown:
-```csharp
+
+[source,csharp]
+----
 [RelayCommand]
 private async Task AddAlbumAsync()
 {
     // Send the message to the previously registered handler and await the selected album
     var album = await WeakReferenceMessenger.Default.Send(new PurchaseAlbumMessage());
 }
-```
+----
 Now:
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -610,20 +630,22 @@ Follow this procedure:
 - Locate and open the **MainWindow.axaml** file.
 - Add an attribute to the `<Window>` element to set the start-up position:
 
-```xml
+[source,xml]
+----
 <Window ...
     WindowStartupLocation="CenterScreen">
-```
+----
 
 - Locate and open the **MusicStoreWindow.axaml** file.
 - Add attributes for the width and height of the dialog, set at 1000 and 550 respectively.
 - Add the start-up position attribute set to `CenterOwner`, as shown:
 
-```xml
+[source,xml]
+----
 <Window ...
     Width="1000" Height="550"
     WindowStartupLocation="CenterOwner">
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -658,7 +680,8 @@ Follow this procedure to add the user control and constituent controls for the d
 - Press enter.
 - Alter the XAML for the user control's content zone as follows:
 
-```xml
+[source,xml]
+----
 <UserControl ... >
   <DockPanel>
     <StackPanel DockPanel.Dock="Top">
@@ -671,7 +694,7 @@ Follow this procedure to add the user control and constituent controls for the d
       <ListBox/>
   </DockPanel>
 </UserControl>
-```
+----
 
 Inside the dialog the user will be able to search for albums, but this will use a Web API, and may take some time to return. It is for this reason that you have added a progress bar. The progress bar will be active during the search - to provide visual feedback to the user.
 
@@ -684,20 +707,22 @@ To add the user control, follow this procedure:
 - Locate and open the **MusicStoreWindow.axaml** file.
 - Add the namespace for the views to the `<Window>` element:
 +
-```xml
+[source,xml]
+----
 <Window ...
         xmlns:views="using:Avalonia.MusicStore.Views" >    
-```
+----
 
 - Inside the panel element, add an element for new user control and a https://api-docs.avaloniaui.net/docs/T_Avalonia_Controls_Notifications_WindowNotificationManager[[NotificationManager\]] to show notifications to the user:
 +
-```xml
+[source,xml]
+----
 <Panel Margin="40">
    <views:MusicStoreView/>
 </Panel>
 <WindowNotificationManager x:Name="NotificationManager"
                            Position="TopRight" />
-```
+----
 
 NOTE: We will use the notification manager later in the tutorial to show messages to the user. To access it from code behind, give it the name `NotificationManager`.
 
@@ -717,14 +742,15 @@ Follow this procedure to derive from the `ObservableObject` class:
 - Locate and open the **MusicStoreViewModel.cs** file.
 - Add the code to derive the class from `ViewModelBase` and make the class `partial`.
 +
-```csharp
+[source,csharp]
+----
 namespace Avalonia.MusicStore.ViewModels
 {
     public partial class MusicStoreViewModel : ViewModelBase
     {
     }
 }
-```
+----
 This setup allows you to use attributes like `[ObservableProperty]`, which automatically generate backing fields and property change notifications needed for UI binding.
 
 NOTE: You can learn more about `[ObservableProperty]` and `INotifyPropertyChanged` https://docs.avaloniaui.net/docs/data-binding/inotifypropertychanged[[here\]].
@@ -736,7 +762,8 @@ At this stage, you will create two properties for the search application logic:
 
 Add the following properties using the  `[ObservableProperty]` attribute:
 
-```csharp
+[source,csharp]
+----
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Avalonia.MusicStore.ViewModels
@@ -748,7 +775,7 @@ namespace Avalonia.MusicStore.ViewModels
        [ObservableProperty] public partial bool IsBusy { get; private set; }
     }
 }
-```
+----
 NOTE: Note that the partial property syntax was introduced in C# 13 Community Toolkit 8.4, visit <<prepare-project-for-partial-properties>> for correct setup.
 
 ==== Data Binding
@@ -760,7 +787,8 @@ Follow this procedure to add data binding to the view:
 - Locate and open the **MusicStoreView.axaml** file.
 - Add the binding expressions shown:
 
-```xml
+[source,xml]
+----
 <UserControl ...
     xmlns:vm="clr-namespace:Avalonia.MusicStore.ViewModels"
     x:DataType="vm:MusicStoreViewModel">
@@ -777,7 +805,7 @@ Follow this procedure to add data binding to the view:
     </DockPanel>
     <!-- ... -->
 </UserControl>
-```
+----
 
 ==== Album Search and Selection
 
@@ -793,20 +821,22 @@ Follow this procedure to add the above properties:
 - Locate and open the **MusicStoreViewModel.cs** file.
 - Add the following code to the class:
 +
-```csharp
+[source,csharp]
+----
 [ObservableProperty] public partial AlbumViewModel? SelectedAlbum { get; set; }
 
 public ObservableCollection<AlbumViewModel> SearchResults { get; } = new();
-```
+----
 
 Next to bind these properties to the list box in the view, follow this procedure:
 
 - Locate and open the **MusicStoreView.axaml** file.
 - Add the binding expressions shown to the `<ListBox>` element:
 +
-```xml
+[source,xml]
+----
 <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedAlbum}" />
-```
+----
 
 ==== Mock Data
 
@@ -817,14 +847,15 @@ Follow this procedure:
 - Locate and open the **MusicStoreViewModel.cs** file again.
 - Add a constructor to the class, as shown:
 +
-```csharp
+[source,csharp]
+----
 public MusicStoreViewModel()
 {
     SearchResults.Add(new AlbumViewModel());
     SearchResults.Add(new AlbumViewModel());
     SearchResults.Add(new AlbumViewModel());
 }
-```
+----
 
 - Click **Debug** to compile and run the project.
 +
@@ -848,9 +879,10 @@ To add the music note icon resource, follow this procedure:
 - Navigate to the _Avalonia UI_ _GitHub_ to find the list of Fluent Icons at https://avaloniaui.github.io/icons.html
 - Use your browser's text search to locate the name of the icon 'music_regular'. There should be some code similar to:
 
-```xml
+[source,xml]
+----
 <StreamGeometry x:Key="music_regular">M11.5,2.75 C11.5,2.22634895 12.0230228,1.86388952 12.5133347,2.04775015 L18.8913911,4.43943933 C20.1598961,4.91511241 21.0002742,6.1277638 21.0002742,7.48252202 L21.0002742,10.7513533 C21.0002742,11.2750044 20.4772513,11.6374638 19.9869395,11.4536032 L13,8.83332147 L13,17.5 C13,17.5545945 12.9941667,17.6078265 12.9830895,17.6591069 C12.9940859,17.7709636 13,17.884807 13,18 C13,20.2596863 10.7242052,22 8,22 C5.27579485,22 3,20.2596863 3,18 C3,15.7403137 5.27579485,14 8,14 C9.3521238,14 10.5937815,14.428727 11.5015337,15.1368931 L11.5,2.75 Z M8,15.5 C6.02978478,15.5 4.5,16.6698354 4.5,18 C4.5,19.3301646 6.02978478,20.5 8,20.5 C9.97021522,20.5 11.5,19.3301646 11.5,18 C11.5,16.6698354 9.97021522,15.5 8,15.5 Z M13,3.83223733 L13,7.23159672 L19.5002742,9.669116 L19.5002742,7.48252202 C19.5002742,6.75303682 19.0477629,6.10007069 18.3647217,5.84393903 L13,3.83223733 Z</StreamGeometry>
-```
+----
 
 - Copy all of the code for the icon.
 - Locate and open the **Icons.axaml** file that you created earlier (see: <<Button Icon>>).
@@ -869,7 +901,8 @@ To create the graphical 'tile' view, follow this procedure:
 - Add the attribute `Width="200"` to the `<UserControl>` element.
 - Alter the XAML for the user control's content zone as follows:
 +
-```xml
+[source,xml]
+----
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -902,7 +935,7 @@ To create the graphical 'tile' view, follow this procedure:
     </Border>
   </StackPanel>
 </UserControl>
-```
+----
 
 As the image source we are using a static resource `CoverFallback` that displays the music note icon above a rectangle. This will act as a placeholder for the album cover art. It is defined in `<UserControl.Resources>` section.
 
@@ -918,7 +951,8 @@ image:_docs/15_Album_view_before_template.png[Album view before template]
 
 In this step you will be using the view locator class (**ViewLocator.cs** file) that was added to the project by the solution template. This class was registered (by the solution template) as a data template at the highest level in the app in the **App.axaml** file. The data template registration looks like this:
 
-```xml
+[source,xml]
+----
 <Application ...
              xmlns:local="using:Avalonia.MusicStore"
              ... >
@@ -927,7 +961,7 @@ In this step you will be using the view locator class (**ViewLocator.cs** file) 
     </Application.DataTemplates>
     ...
 </Application>
-```
+----
 
 The view locator can therefore always be found by _Avalonia UI,_ when it searches for a data template.
 
@@ -945,11 +979,12 @@ Follow this procedure:
 - Locate and open the **AlbumViewModel.cs** file you created earlier.
 - Add the code for the class to inherit from `ViewModelBase` as shown and make the class `partial`:
 +
-```csharp
+[source,csharp]
+----
 public partial class AlbumViewModel : ViewModelBase
 {        
 }
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -994,7 +1029,8 @@ To tidy up the list, follow this procedure:
 - Expand the `<ListBox>` element so that it has start and end tags.
 - Add the `<ListBox.ItemsPanel>` XAML shown:
 +
-```xml
+[source,xml]
+----
 <ListBox ItemsSource="{Binding SearchResults}" 
          SelectedItem="{Binding SelectedAlbum}"
          Background="Transparent" Margin="0 20">
@@ -1004,7 +1040,7 @@ To tidy up the list, follow this procedure:
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
 </ListBox>
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -1017,26 +1053,27 @@ image::_docs/17_Album_view_wrap_layout.png[Album view with wrap layout]
 
 In the below section, you will add some business logic to the app. This will allow you to replace the mock data and get some real album data from the search. This business logic code forms the 'Model' part of the MVVM pattern.
 
-To implement a real album search in the app, you will use a _NuGet_ package that can call the _Apple iTunes_ Web API album search.
+To implement a real album search in the app, you will use the _Apple iTunes_ Web API album search.
 
 Firstly, let's remove the constructor for mock search that we will not need anymore. 
 - Go to **MusicStoreViewModel.cs** file.
 - Remove constructor.
 +
-```csharp
+[source,csharp]
+----
 public MusicStoreViewModel()
 {
     SearchResults.Add(new AlbumViewModel());
     SearchResults.Add(new AlbumViewModel());
     SearchResults.Add(new AlbumViewModel());
 }
-```
+----
 +
 This constructor was only used for testing the UI with mock data and is no longer needed.
 
-==== Apple Web API Package
+==== Apple iTunes Web API
 
-This sample calls the iTunes Search API directly using `HttpClient` and `System.Text.Json` — no additional NuGet package is needed.
+This sample calls the iTunes Search API directly using `HttpClient` and `System.Text.Json` — no additional NuGet package is needed. See https://performance-partners.apple.com/search-api[[the official iTunes Search API documentation\]] for more information about the API.
 
 ==== MVVM Model
 
@@ -1054,14 +1091,13 @@ Follow this procedure to add the album data model:
 - When prompted for the name, type 'Album'.
 - Add the following code:
 +
-```csharp
+[source,csharp]
+----
 namespace Avalonia.MusicStore.Models
 {
-    // We use a record for Album since it helps to encapsulate data. 
-    // See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record
     public record Album(string Artist, string Title, string CoverUrl);
 }
-```
+----
 
 NOTE: We use a record for Album since it helps to encapsulate data. 
 See https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record[[microsoft docs\]] for more information about records in C#.
@@ -1073,7 +1109,8 @@ Now create the album service:
 - When prompted for the name, type 'AlbumService'.
 - Add the following code:
 +
-```csharp
+[source,csharp]
+----
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1111,7 +1148,7 @@ namespace Avalonia.MusicStore.Services
         }
     }
 }
-```
+----
 
 ==== Album View Model
 
@@ -1128,7 +1165,8 @@ Follow this procedure to prepare the album view model:
 - Locate and open the **AlbumViewModel.cs** file.
 - Add the code as shown:
 
-```csharp
+[source,csharp]
+----
 private readonly Album _album;
 
 public AlbumViewModel(Album album)
@@ -1147,7 +1185,7 @@ private async Task<Bitmap?> LoadCoverAsync()
 {
     return null;
 }
-```
+----
 
 NOTE: Note that as the view model properties will not change in the UI during runtime, they have no setter and a plain getter.
 
@@ -1161,9 +1199,10 @@ Follow this procedure to trigger the search with a short delay when the search t
 - Locate and open the **MusicStoreView.axaml** file.
 - Find the line with SearchText binding and add a Delay property as shown below:
 +
-```xml
+[source,xml]
+----
 <TextBox PlaceholderText="Search for Albums...." Text="{Binding SearchText, Delay=400}" />
-```
+----
 +
 NOTE:`Delay=400` ensures that input is only propagated to the view model after the user pauses for 400ms, preventing unnecessary search calls.
 
@@ -1171,18 +1210,20 @@ Now:
 - Locate and open the **MusicStoreViewModel.cs** file.
 - Add the following method there:
 +
-```csharp
+[source,csharp]
+----
 partial void OnSearchTextChanged(string? value)
 {
     _ = DoSearch(SearchText);
 }
-```
+----
 +
 This method is automatically called whenever the SearchText property changes.
 
 - Add `DoSearch` implementation:
 +
-```csharp
+[source,csharp]
+----
 private async Task DoSearch(string? term)
 {
     IsBusy = true;
@@ -1198,7 +1239,7 @@ private async Task DoSearch(string? term)
 
     IsBusy = false;
 }
-```
+----
 +
 This method:
 
@@ -1209,7 +1250,9 @@ This method:
 
 
 Now your **MusicStoreViewModel** file should now look like this:
-```csharp
+
+[source,csharp]
+----
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -1260,7 +1303,7 @@ namespace Avalonia.MusicStore.ViewModels
         }
     }
 }
-```
+----
 
 ==== Bind the Album View
 
@@ -1273,7 +1316,8 @@ Follow this procedure to add the album name and artist name to the tile:
 - Add the two text block controls with their data bindings, as shown:
 - To have compiled binding working, you need to indicate the datatype used in the view : `AlbumViewModel`.
 +
-```xml
+[source,xml]
+----
 <UserControl ...
   xmlns:vm="using:Avalonia.MusicStore.ViewModels"
   x:DataType="vm:AlbumViewModel" >
@@ -1288,7 +1332,7 @@ Follow this procedure to add the album name and artist name to the tile:
     <TextBlock HorizontalAlignment="Center" Text="{Binding Artist}" />
   </StackPanel>
 </UserControl>
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -1311,7 +1355,8 @@ Follow this procedure to add cover loading to `AlbumService`:
 - Locate and open the **AlbumService.cs** file in the **/Services** folder.
 - Add the `LoadCoverBitmapAsync` and `SanitizeFileName` methods as shown:
 
-```csharp
+[source,csharp]
+----
 private static string CachePath(Album album) =>
     $"./Cache/{SanitizeFileName(album.Artist)} - {SanitizeFileName(album.Title)}";
 
@@ -1337,7 +1382,7 @@ private static string SanitizeFileName(string input)
     }
     return input;
 }
-```
+----
 
 Method `LoadCoverBitmapAsync(album)` returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
 Method  `SanitizeFileName()` sanitizes input to replace characters that cannot be used in the file name with `_`.
@@ -1348,9 +1393,10 @@ NOTE: Note that the cache is not active at this time, you will implement it late
 ====
 So that you will see as soon as the cache becomes active, place a debug breakpoint at the following line:
 
-```csharp
+[source,csharp]
+----
 return File.Open(cachePath + ".bmp", FileMode.Open, FileAccess.Read, FileShare.Read);
-```
+----
 ====
 
 ==== Album View Model
@@ -1364,7 +1410,8 @@ Follow this procedure to update the album view model:
 - Locate and open the **AlbumViewModel.cs** file.
 - Add the following code into the `LoadCoverAsync` method, replacing the existing code:
 +
-```csharp
+[source,csharp]
+----
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Services;
 using System.Threading.Tasks;
@@ -1397,7 +1444,7 @@ public partial class AlbumViewModel : ViewModelBase
         }
     }
 }   
-```
+----
 
 Take some time to examine this code because it gives an insight into manipulating images with _Avalonia UI._ For example, the above uses the `DecodeToWidth` method to convert the image stream for display in _Avalonia UI_. This method can convert a stream for a large high resolution image into a smaller bitmap, at a specified width and while maintaining the aspect ratio.
 
@@ -1422,7 +1469,8 @@ Firstly, let's create a message class that will carry the selected album from th
 - In the previously created **/Messages** folder add new class `MusicStoreClosedMessage`.
 - In the newly created file add the following code:
 +
-```csharp
+[source,csharp]
+----
 using Avalonia.MusicStore.ViewModels;
 
 namespace Avalonia.MusicStore.Messages;
@@ -1431,7 +1479,7 @@ public class MusicStoreClosedMessage(AlbumViewModel selectedAlbum)
 {
     public AlbumViewModel SelectedAlbum { get; } = selectedAlbum;
 }
-```
+----
 
 ==== Create the CheckAlbumAlreadyExistsMessage Class
 Next, you will create a message class that will be used to check if an album already exists in the user's collection.
@@ -1439,7 +1487,8 @@ Next, you will create a message class that will be used to check if an album alr
 - In the **/Messages** folder add new class `CheckAlbumAlreadyExistsMessage`.
 - In the newly created file add the following code:
 +
-```csharp
+[source,csharp]
+----
 public class CheckAlbumAlreadyExistsMessage : RequestMessage<bool>
 {
     public AlbumViewModel Album { get; }
@@ -1449,7 +1498,7 @@ public class CheckAlbumAlreadyExistsMessage : RequestMessage<bool>
         Album = album;
     }
 }
-```
+----
 
 ==== Create the NotificationMessage Class
 As the last message to implement, you will create a message class that will be used to show notification messages to the user.
@@ -1457,7 +1506,8 @@ As the last message to implement, you will create a message class that will be u
 - In the **/Messages** folder add new class `NotificationMessage`.
 - In the newly created file add the following code:
 +
-```csharp
+[source,csharp]
+----
 public class NotificationMessage 
 {
     public NotificationMessage(string message)
@@ -1466,14 +1516,15 @@ public class NotificationMessage
      }
     public string Message { get; }
 }
-```
+----
 
 ==== Register the Message Handlers in MusicStoreWindow
 To close the dialog and return the selected album to the main window, you’ll register a handler that listens for a `MusicStoreClosedMessage`. In addition we add a handler that can show notification messages to the user, in case the album already exists in the user's collection.
 - Locate and open the **MusicStoreWindow.axaml.cs** file.
 - Add the following code to the constructor:
 +
-```csharp
+[source,csharp]
+----
 using Avalonia.Controls;
 using Avalonia.MusicStore.Messages;
 using CommunityToolkit.Mvvm.Messaging;
@@ -1497,7 +1548,7 @@ namespace Avalonia.MusicStore.Views
         }
     }
 }
-```
+----
 
 When `MusicStoreViewModel` sends a `MusicStoreClosedMessage`, this handler will close the dialog and return the selected album using Avalonia’s dialog result system.
 
@@ -1510,7 +1561,8 @@ Now you will add a relay command to the music store view model. You will bind th
 - Locate and open the **MusicStoreViewModel.cs** file.
 - Add the following RelayCommand method to the class, as shown:
 +
-```csharp
+[source,csharp]
+----
 [RelayCommand (CanExecute = nameof(CanBuyMusic))]
 private void BuyMusic()
 {
@@ -1529,20 +1581,23 @@ private void BuyMusic()
 }
 
 private bool CanBuyMusic() => SelectedAlbum != null;
-```
+----
 - The command should be invalidated when the selected album changes. To do this, add the `NotifyCanExecuteChangedFor`-attribute to the `SelectedAlbum` property:
 +
-```csharp
+[source,csharp]
+----
 [ObservableProperty]
 [NotifyCanExecuteChangedFor(nameof(BuyMusicCommand))]
 public partial AlbumViewModel? SelectedAlbum { get; set; }
-```
+----
 
 ==== Implement the Album Existence Check in MainViewModel
 The MainViewModel will handle the `CheckAlbumAlreadyExistsMessage` to determine if the selected album is already in the user's collection. To do this, you will implement a message handler that checks the observable collection of albums for the presence of the selected album.
 
 In the **MainViewModel.cs** file, add the following code to the constructor:
-```csharp
+
+[source,csharp]
+----
 public MainViewModel()
 {
     WeakReferenceMessenger.Default.Register<CheckAlbumAlreadyExistsMessage>(this, (v, m) =>
@@ -1550,11 +1605,12 @@ public MainViewModel()
         m.Reply(Albums.Contains(m.Album));
     });
 }
-```
+----
 
 An album is considered to be equal, if both the artist name and the album title are the same. The default equality comparer for records in C# checks all properties for equality, so no additional implementation is needed in the `Album` class. However, in the `AlbumViewModel` class, you need to override the equality members to delegate the comparison to the underlying `Album` model.
 
-```csharp
+[source,csharp]
+----
 public partial class AlbumViewModel : ViewModelBase, IEquatable<AlbumViewModel>
 {
     ...
@@ -1578,7 +1634,7 @@ public partial class AlbumViewModel : ViewModelBase, IEquatable<AlbumViewModel>
     {
         return _album.GetHashCode();
     }
-```
+----
 
 TIP: You can learn more about the ``IEquatable<T>`` interface and overriding equality members in C# from the Microsoft docs https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1[[here\]].
 
@@ -1610,9 +1666,10 @@ Follow this procedure:
 - Locate and open the **MainViewModel.cs** file.
 - Add an observable collection, as shown:
 +
-```csharp
+[source,csharp]
+----
 public ObservableCollection<AlbumViewModel> Albums { get; } = new();
-```
+----
 
 ==== Process the Dialog Result
 
@@ -1620,7 +1677,8 @@ Your next step is to alter the `AddAlbumAsync` command so that it adds the dialo
 
 - In the same **MainViewModel.cs** file update the `AddAlbumAsync()` command method:
 
-```csharp
+[source,csharp]
+----
 [RelayCommand]
 private async Task AddAlbumAsync()
 {
@@ -1630,7 +1688,7 @@ private async Task AddAlbumAsync()
         Albums.Add(album);
     }
 }
-```
+----
 
 ==== Main Window View
 
@@ -1641,13 +1699,15 @@ To add the items control and its data template, follow this procedure:
 - Locate and open the **MainWindow.axaml** file.
 - Add the following namespace declaration to the `<Window>` element:
 +
-```xml
+[source,xml]
+----
 xmlns:views="clr-namespace:Avalonia.MusicStore.Views"
-```
+----
 
 - Under the button element, add the XAML as shown:
 +
-```xml
+[source,xml]
+----
 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 40 0 0">
   <ItemsControl ItemsSource="{Binding Albums}">
     <ItemsControl.ItemsPanel>
@@ -1663,7 +1723,7 @@ xmlns:views="clr-namespace:Avalonia.MusicStore.Views"
     </ItemsControl.ItemTemplate>
   </ItemsControl>
 </ScrollViewer>
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -1692,7 +1752,8 @@ Follow this procedure to add persistence methods (save and load) to the album se
 - Locate and open the **AlbumService.cs** file in the **/Services** folder.
 - Add the code to implement save to disk, as shown:
 +
-```csharp
+[source,csharp]
+----
 public async Task SaveAsync(Album album)
 {
     if (!Directory.Exists("./Cache"))
@@ -1713,11 +1774,12 @@ private static async Task SaveToStreamAsync(Album data, Stream stream)
 {
     await JsonSerializer.SerializeAsync(stream, data).ConfigureAwait(false);
 }
-```
+----
 
 - Add the code to implement load from disk, as shown:
 +
-```csharp
+[source,csharp]
+----
 public async Task<IEnumerable<Album>> LoadCachedAsync()
 {
     if (!Directory.Exists("./Cache"))
@@ -1743,7 +1805,7 @@ private static async Task<Album> LoadFromStreamAsync(Stream stream)
 {
     return (await JsonSerializer.DeserializeAsync<Album>(stream).ConfigureAwait(false))!;
 }
-```
+----
 
 ==== Album View Model
 
@@ -1758,7 +1820,8 @@ To alter the album view model , follow this procedure:
 - Locate and open the **AlbumViewModel.cs** file.
 - Add the method as shown:
 
-```csharp
+[source,csharp]
+----
 public async Task SaveToDiskAsync()
 {
     await s_albumService.SaveAsync(_album);
@@ -1774,7 +1837,7 @@ public async Task SaveToDiskAsync()
         });
     }
 }
-```
+----
 
 Once again, you will notice that the bitmap is saved from a copy in case the `Cover` property gets changed mid-operation by another thread.
 
@@ -1789,7 +1852,8 @@ To alter the main window view model, follow this procedure:
 
 Your code to initialize the relay command will now look like this:
 
-```csharp
+[source,csharp]
+----
 [RelayCommand]
 private async Task AddAlbumAsync()
 {
@@ -1800,7 +1864,7 @@ private async Task AddAlbumAsync()
         await album.SaveToDiskAsync(); // Add this line
     }
 }
-```
+----
 
 - Click **Debug** to compile and run the project.
 - Click the icon button.
@@ -1821,9 +1885,10 @@ To show that the bitmap loading cache is now in operation, follow this procedure
 - Locate and open the **AlbumService.cs** file in the **/Services** folder.
 - Check to see that there is still a debug breakpoint in the `LoadCoverBitmapAsync` method at this line:
 
-```csharp
+[source,csharp]
+----
 return File.Open(cachePath + ".bmp", FileMode.Open, FileAccess.Read, FileShare.Read);
-```
+----
 
 * Click **Debug** to compile and run the project.
 * Click the icon button.
@@ -1846,7 +1911,8 @@ Follow this procedure to add a method to load the user's album collection from d
 - Locate and open the **MainViewModel.cs** file.
 - Add the code as shown:
 
-```csharp
+[source,csharp]
+----
 private async void LoadAlbums()
 {
     var albums = (await s_albumService.LoadCachedAsync()).Select(x => new AlbumViewModel(x)).ToList();
@@ -1855,7 +1921,7 @@ private async void LoadAlbums()
         Albums.Add(album);
     }
 }
-```
+----
 
 As you can see this method uses the album service to load the list of albums from the disk cache. It then transforms each data model (`Album` class) into a view model (`AlbumViewModel` class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.
 
@@ -1864,12 +1930,13 @@ Your next step is to schedule the `LoadAlbum` method to run when the app starts:
 - Keep the **MainViewModel.cs** file open.
 - Call LoadAlbums() from the MainViewModel constructor:
 
-```csharp
+[source,csharp]
+----
 public MainViewModel()
 {
     LoadAlbums();
 }
-```
+----
 With this change, now the app will automatically load previously added albums every time it starts.
 
 - Click **Debug** to compile and run the project.
@@ -1885,7 +1952,7 @@ In this tutorial you have seen how _Avalonia UI_ can be used to create a highly 
 
 This tutorial has used an application solution architecture that uses the MVVM pattern with the help of the _CommunityToolkit.Mvvm_ framework. It manages multiple windows from the code-behind files.
 
-Application state is kept in the 'top level' view model, and can be persisted to disk. The main window and search dialog are composed from in _Avalonia UI_ window controls, built-in controls and user controls.
+Application state is kept in the 'top level' view model, and can be persisted to disk. The main window and search dialog are composed from in _Avalonia UI_ window controls, built-in controls, and user controls.
 
 This tutorial application targets a windowing platform such as _Apple Mac OS_ or _Windows_.
 
