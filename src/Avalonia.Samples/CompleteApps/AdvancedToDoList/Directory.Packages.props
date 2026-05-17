@@ -25,8 +25,8 @@
     <PackageVersion Include="DynamicData" Version="9.4.31" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <!-- SQL related packages -->
-    <PackageVersion Include="Dapper" Version="2.1.72" />
-    <PackageVersion Include="Dapper.AOT" Version="1.0.48" />
+    <PackageVersion Include="Dapper" Version="2.1.79" />
+    <PackageVersion Include="Dapper.AOT" Version="1.0.52" />
     <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.8" />
     <!-- Dependency injection -->
