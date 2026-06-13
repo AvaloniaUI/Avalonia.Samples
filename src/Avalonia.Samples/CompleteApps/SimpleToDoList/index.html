@@ -2344,14 +2344,21 @@ If you want to use the source generators, remember to mark the class as <code>pa
     <span class="c1">/// &lt;summary&gt;</span>
     <span class="c1">/// Gets or sets the checked status of each item</span>
     <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="kt">bool</span> <span class="n">_isChecked</span><span class="p">;</span>
+    <span class="c1">// NOTE: This property is made without source generator. Uncomment the line below to use the source generator</span>
+    <span class="c1">// [ObservableProperty]</span>
+    <span class="k">private</span> <span class="kt">bool</span> <span class="n">_isChecked</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsChecked</span>
+    <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_isChecked</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span> <span class="nf">SetProperty</span><span class="p">(</span><span class="k">ref</span> <span class="n">_isChecked</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="c1">/// &lt;summary&gt;</span>
     <span class="c1">/// Gets or sets the content of the to-do item</span>
     <span class="c1">/// &lt;/summary&gt;</span>
     <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">partial</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_content</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">partial</span> <span class="kt">string</span><span class="p">?</span> <span class="n">Content</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
@@ -3175,7 +3182,7 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-11 20:39:52 UTC
+Last updated 2026-06-13 10:46:34 UTC
 </div>
 </div>
 </body>
