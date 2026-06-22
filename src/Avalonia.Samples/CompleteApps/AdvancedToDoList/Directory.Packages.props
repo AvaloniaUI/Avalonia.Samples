@@ -17,7 +17,7 @@
     <PackageVersion Include="Avalonia.Browser" Version="12.0.4" />
     <PackageVersion Include="Avalonia.Android" Version="12.0.4" />
     <!-- Avalonia diagnostics package -->
-    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.2" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <!-- Android packages -->
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
