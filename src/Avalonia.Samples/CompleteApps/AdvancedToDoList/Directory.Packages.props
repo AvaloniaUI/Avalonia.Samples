@@ -8,28 +8,28 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Desktop" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.iOS" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Browser" Version="11.3.12" />
-    <PackageVersion Include="Avalonia.Android" Version="11.3.12" />
+    <PackageVersion Include="Avalonia" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.iOS" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Browser" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Android" Version="12.0.5" />
     <!-- Android packages -->
-    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.3" />
     <!-- ViewModel-related packages-->
-    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.1" />
-    <PackageVersion Include="DynamicData" Version="9.4.31" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="DynamicData" Version="9.4.33" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <!-- SQL related packages -->
-    <PackageVersion Include="Dapper" Version="2.1.72" />
-    <PackageVersion Include="Dapper.AOT" Version="1.0.48" />
+    <PackageVersion Include="Dapper" Version="2.1.79" />
+    <PackageVersion Include="Dapper.AOT" Version="1.0.52" />
     <PackageVersion Include="Dapper.SqlBuilder" Version="2.1.66" />
-    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.9" />
     <!-- Dependency injection -->
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
     <!-- Logging packages -->
     <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
@@ -37,7 +37,7 @@
     <!-- UnitTests-->
     <PackageVersion Include="XUnit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.3.12" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.0.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
   </ItemGroup>
 </Project>
