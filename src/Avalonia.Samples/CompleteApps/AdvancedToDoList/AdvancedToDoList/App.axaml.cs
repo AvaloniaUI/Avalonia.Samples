@@ -227,10 +227,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
-            
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainViewModel()
@@ -245,39 +241,5 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    /// <summary>
-    /// Removes Avalonia's built-in DataAnnotations validation plugin to prevent duplicate validation errors.
-    /// </summary>
-    /// <remarks>
-    /// Why suppress trim analysis?
-    /// - The BindingPlugins collection is accessed via reflection at runtime
-    /// - Trim analysis can't prove these types are preserved
-    /// - We know this is safe because we always use CommunityToolkit validation
-    /// 
-    /// Why remove these plugins?
-    /// - CommunityToolkit.Mvvm provides [NotifyDataErrorInfo] and [ValidateProperty]
-    /// - Avalonia's DataAnnotationsValidationPlugin does the same thing
-    /// - Having both would show the same error twice (bad UX)
-    /// 
-    /// What's preserved?
-    /// - The [NotifyDataErrorInfo] plugin from CommunityToolkit remains active
-    /// - All validation logic is still fully functional
-    /// </remarks>
-    [UnconditionalSuppressMessage("Trimming",
-        "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
-        Justification = "This is well tested and known to work as intended.")]
-    private void DisableAvaloniaDataAnnotationValidation()
-    {
-        // Get an array of plugins to remove
-        var dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
-
-        // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
     }
 }
