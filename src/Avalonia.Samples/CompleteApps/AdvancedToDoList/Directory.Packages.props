@@ -8,21 +8,21 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Desktop" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.iOS" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Browser" Version="12.0.4" />
-    <PackageVersion Include="Avalonia.Android" Version="12.0.4" />
+    <PackageVersion Include="Avalonia" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.iOS" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Browser" Version="12.0.5" />
+    <PackageVersion Include="Avalonia.Android" Version="12.0.5" />
     <!-- Avalonia diagnostics package -->
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <!-- Android packages -->
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
     <!-- ViewModel-related packages-->
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageVersion Include="DynamicData" Version="9.4.31" />
+    <PackageVersion Include="DynamicData" Version="9.4.33" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <!-- SQL related packages -->
     <PackageVersion Include="Dapper" Version="2.1.79" />
@@ -38,7 +38,7 @@
     <!-- UnitTests-->
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.0.4" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.6.0" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.0.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
   </ItemGroup>
 </Project>
