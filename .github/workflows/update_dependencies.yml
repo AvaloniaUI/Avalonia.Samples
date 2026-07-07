@@ -114,10 +114,10 @@ jobs:
           }
           
           # Read the generated markdown file back into a variable so we can pass it to the PR body
-          $report = Get-Content -Path $reportPath -Raw
-      
-          # Publish the markdown as the step output “list”
-          Add-Content -Path $env:GITHUB_OUTPUT -Value "list=$report"
+          # Use the GitHub Actions multi-line output format
+          "list<<EOF" >> $env:GITHUB_OUTPUT
+          $report >> $env:GITHUB_OUTPUT
+          "EOF" >> $env:GITHUB_OUTPUT
 
       # --------------------------------------------------------------
       #  Detect whether any file changed after the upgrade step
