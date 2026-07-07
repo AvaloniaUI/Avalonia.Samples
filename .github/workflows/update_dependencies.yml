@@ -6,7 +6,7 @@ name: Update dependencies
 # ----------------------------------------------------------------------
 on:
   schedule:
-    - cron: '0 2 * * *' # Every day at 02:00 UTC
+    - cron: '0 2 * * *' # Every day at 02:00 UTC
   workflow_dispatch:   # Allows manual runs from the UI
 
 # ----------------------------------------------------------------------
@@ -96,6 +96,16 @@ jobs:
             # `--no-restore` speeds things up – we already restored workloads above.
             dotnet outdated $proj --upgrade --no-restore --exclude $exclude
           }
+
+      # --------------------------------------------------------------
+      #  Generate package report for PR body
+      # --------------------------------------------------------------
+      - name: Generate package report
+        id: updated-packages
+        shell: pwsh
+        run: |
+          $report = dotnet outdated ./src/Avalonia.Samples --format table 2>&1
+          "list=$report" >> $env:GITHUB_OUTPUT
 
       # --------------------------------------------------------------
       #  Detect whether any file changed after the upgrade step
