@@ -97,15 +97,27 @@ jobs:
             dotnet outdated $proj --upgrade --no-restore --exclude $exclude
           }
 
-      # --------------------------------------------------------------
-      #  Generate package report for PR body
-      # --------------------------------------------------------------
       - name: Generate package report
         id: updated-packages
         shell: pwsh
         run: |
-          $report = dotnet outdated ./src/Avalonia.Samples 2>&1
-          "list=$report" >> $env:GITHUB_OUTPUT
+          # Path where we want the report to be written (relative to the repo root)
+          $reportPath = "$env:GITHUB_WORKSPACE/dependency-report.md"
+          
+          # Run dotnet‑outdated and capture *all* output
+          dotnet outdated ./src/Avalonia.Samples  -o $reportPath -of markdown 2>&1
+
+          # If the tool itself failed (e.g., couldn’t find a project) surface the error
+          if ($LASTEXITCODE -ne 0) {
+              Write-Error "dotnet-outdated exited with code $LASTEXITCODE"
+              exit $LASTEXITCODE
+          }
+          
+          # Read the generated markdown file back into a variable so we can pass it to the PR body
+          $report = Get-Content -Path $reportPath -Raw
+      
+          # Publish the markdown as the step output “list”
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "list=$report"
 
       # --------------------------------------------------------------
       #  Detect whether any file changed after the upgrade step
