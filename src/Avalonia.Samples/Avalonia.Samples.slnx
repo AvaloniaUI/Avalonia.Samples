@@ -25,6 +25,7 @@
   </Folder>
   <Folder Name="/Drawing/">
     <Project Path="Drawing/BattleCity/BattleCity.csproj" />
+    <Project Path="Drawing/QrCodeSample/QrCodeSample.csproj" />
     <Project Path="Drawing/RectPainter/RectPainter.csproj" />
   </Folder>
   <Folder Name="/FSharp/">
