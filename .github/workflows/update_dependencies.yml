@@ -104,7 +104,7 @@ jobs:
         id: updated-packages
         shell: pwsh
         run: |
-          $report = dotnet outdated ./src/Avalonia.Samples --format table 2>&1
+          $report = dotnet outdated ./src/Avalonia.Samples 2>&1
           "list=$report" >> $env:GITHUB_OUTPUT
 
       # --------------------------------------------------------------
