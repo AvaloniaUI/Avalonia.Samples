@@ -2,6 +2,13 @@
 name: Update dependencies
 
 # ----------------------------------------------------------------------
+#  Permissions (explicitly request write access for PR creation)
+# ----------------------------------------------------------------------
+permissions:
+  contents: write          # needed for committing & pushing changes
+  pull-requests: write    # needed for the create‑pull‑request action
+
+# ----------------------------------------------------------------------
 #  Triggers
 # ----------------------------------------------------------------------
 on:
@@ -29,6 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: '0' # Fetch all history for all branches and tags
 
       # --------------------------------------------------------------
       #  Install .NET SDK 10.x (the latest 10.x version at run time)
@@ -77,6 +85,7 @@ jobs:
       # --------------------------------------------------------------
       - name: Run dotnet-outdated (upgrade)
         shell: pwsh
+        continue-on-error: true
         run: |
           # Packages that must **not** be upgraded – add or remove as needed
           $exclude = "Xamarin.AndroidX.Core.SplashScreen"
@@ -122,15 +131,23 @@ jobs:
           # if the script reaches the end without throwing a terminating error)
           exit 0
           
+        - name: Restore after upgrades
+          shell: pwsh
+          run: |
+            # Ensure the solution is in a consistent state after any package upgrades
+            dotnet restore ./src/Avalonia.Samples
+            
       # --------------------------------------------------------------
       #  Create the report of updated packages (in Markdown) for the PR body
       # --------------------------------------------------------------
       - name: Generate package report
         id: updated-packages
         shell: pwsh
+        continue-on-error: true
         run: |
-          # Path where we want the report to be written (relative to the repo root)
-          $reportPath = "$env:GITHUB_WORKSPACE/dependency-report.md"
+          # Use the runner's temporary directory – it is not part of the repository
+          # and will be cleaned up automatically after the job finishes.
+          $reportPath = "$env:RUNNER_TEMP\dependency-report.md"
           
           # Run dotnet‑outdated and capture *all* output
           dotnet outdated ./src/Avalonia.Samples  -o $reportPath -of markdown 2>&1
