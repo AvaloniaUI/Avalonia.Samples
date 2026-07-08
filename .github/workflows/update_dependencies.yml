@@ -1,6 +1,13 @@
 name: Update dependencies
 
 # ----------------------------------------------------------------------
+#  Permissions (explicitly request write access for PR creation)
+# ----------------------------------------------------------------------
+permissions:
+  contents: write          # needed for committing & pushing changes
+  pull-requests: write    # needed for the create‑pull‑request action
+  
+# ----------------------------------------------------------------------
 #  Triggers
 # ----------------------------------------------------------------------
 on:
@@ -123,11 +130,11 @@ jobs:
           # if the script reaches the end without throwing a terminating error)
           exit 0
           
-        - name: Restore after upgrades
-          shell: pwsh
-          run: |
-            # Ensure the solution is in a consistent state after any package upgrades
-            dotnet restore ./src/Avalonia.Samples
+      - name: Restore after upgrades
+        shell: pwsh
+        run: |
+          # Ensure the solution is in a consistent state after any package upgrades
+          dotnet restore ./src/Avalonia.Samples
             
       # --------------------------------------------------------------
       #  Create the report of updated packages (in Markdown) for the PR body
