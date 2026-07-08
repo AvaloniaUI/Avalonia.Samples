@@ -1,13 +1,6 @@
 name: Update dependencies
 
 # ----------------------------------------------------------------------
-#  Permissions (explicitly request write access for PR creation)
-# ----------------------------------------------------------------------
-permissions:
-  contents: write          # needed for committing & pushing changes
-  pull-requests: write    # needed for the create‑pull‑request action
-
-# ----------------------------------------------------------------------
 #  Triggers
 # ----------------------------------------------------------------------
 on:
