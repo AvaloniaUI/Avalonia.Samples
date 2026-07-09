@@ -17,11 +17,11 @@
 		<TrimmableAssembly Include="Avalonia.Themes.Default" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="12.0.5" />
-		<PackageReference Include="Avalonia.Desktop" Version="12.0.5" />
+		<PackageReference Include="Avalonia" Version="12.1.0" />
+		<PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
 		<PackageReference Include="ReactiveUI.Avalonia" Version="12.0.3" />
 		<PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.5" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
 	</ItemGroup>
 	<PropertyGroup>
 		<PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
