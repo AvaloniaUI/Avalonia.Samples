@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:QrCodeSample.ViewModels"
+             xmlns:services="clr-namespace:QrCodeSample.Services"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:DecodeQrViewModel"
+             services:DialogManager.Register="{Binding}"
+             x:Class="QrCodeSample.Views.QrDecoderView">
+    <UserControl.DataContext>
+        <viewModels:DecodeQrViewModel />
+    </UserControl.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, *"
+          Margin="10"
+          RowSpacing="15">
+        <CommandBar CornerRadius="10"
+                    DefaultLabelPosition="Right">
+            <CommandBar.PrimaryCommands>
+                <CommandBarButton Label="Clipboard"
+                                  Icon="📋️"
+                                  CornerRadius="100"
+                                  Command="{Binding ReadImageFromClipboardCommand}" />
+                <CommandBarButton Label="Load Image"
+                                  Icon="🖼️"
+                                  CornerRadius="100"
+                                  Command="{Binding ReadImageFromFileCommand}" />
+            </CommandBar.PrimaryCommands>
+            <CommandBar.Content>
+                <TextBlock Text="Decode QR Code"
+                           Classes="h1" />
+            </CommandBar.Content>
+
+        </CommandBar>
+
+        <GroupBox Grid.Row="1"
+                  Header="Result">
+            <SelectableTextBlock Text="{Binding Result}" />
+        </GroupBox>
+
+        <GroupBox Grid.Row="2"
+                  Header="Image">
+            <Image Source="{Binding PreviewImage}" />
+        </GroupBox>
+    </Grid>
+</UserControl>
