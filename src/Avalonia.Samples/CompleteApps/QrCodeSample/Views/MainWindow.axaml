@@ -16,5 +16,5 @@
         <vm:MainViewModel/>
     </Design.DataContext>
 
-    <views:QrEncoderView />
+    <views:MainView />
 </Window>

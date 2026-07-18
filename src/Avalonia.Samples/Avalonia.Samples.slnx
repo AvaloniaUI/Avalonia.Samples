@@ -7,6 +7,7 @@
   <Folder Name="/CompleteApps/">
     <Project Path="CompleteApps/Avalonia.MusicStore/Avalonia.MusicStore.csproj" />
     <Project Path="CompleteApps/SimpleToDoList/SimpleToDoList.csproj" />
+    <Project Path="CompleteApps/QrCodeSample/QrCodeSample.csproj" />
   </Folder>
   <Folder Name="/CompleteApps/AdvancedToDoList/">
     <File Path="CompleteApps\AdvancedToDoList\ReadMe.adoc" />
@@ -25,7 +26,6 @@
   </Folder>
   <Folder Name="/Drawing/">
     <Project Path="Drawing/BattleCity/BattleCity.csproj" />
-    <Project Path="Drawing/QrCodeSample/QrCodeSample.csproj" />
     <Project Path="Drawing/RectPainter/RectPainter.csproj" />
   </Folder>
   <Folder Name="/FSharp/">
