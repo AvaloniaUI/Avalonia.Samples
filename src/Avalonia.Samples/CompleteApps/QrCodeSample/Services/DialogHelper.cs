@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Input.Platform;
@@ -100,5 +101,45 @@ public static class DialogHelper
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Tries to launch a provided URL string. 
+    /// </summary>
+    /// <param name="context">the context to resolve the view for</param>
+    /// <param name="url">the url to launch</param>
+    /// <returns>true if successful, otherwise false</returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static async Task<bool> LaunchUrlAsync(this IDialogParticipant context, string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return false;
+        var topLevel = DialogManager.GetTopLevelForContext(context);
+
+        try
+        {
+            // Try to create the Uri as supplied.
+            var uri = new Uri(url, UriKind.RelativeOrAbsolute);
+
+            // If it’s relative (e.g. "t.me"), turn it into an absolute web Uri.
+            if (!uri.IsAbsoluteUri)
+            {
+                // Prepend a default scheme – you can change this to any fallback you prefer.
+                uri = new Uri("https://" + url.TrimStart('/'), UriKind.Absolute);
+            }
+
+            // Launch the (now‑absolute) Uri.
+            return await topLevel!.Launcher.LaunchUriAsync(uri);
+        }
+        catch (UriFormatException)
+        {
+            // The string couldn’t be turned into a valid Uri at all.
+            return false;
+        }
+        catch (Exception e)
+        {
+            // Any other unexpected error (e.g., launcher failure).
+            Trace.WriteLine($"Failed to launch URL '{url}':\n {e.Message}");
+            return false;
+        }
     }
 }

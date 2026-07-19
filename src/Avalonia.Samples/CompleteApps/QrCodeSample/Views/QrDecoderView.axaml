@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:QrCodeSample.ViewModels"
              xmlns:services="clr-namespace:QrCodeSample.Services"
+             xmlns:markupExtensions="clr-namespace:QrCodeSample.MarkupExtensions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:DecodeQrViewModel"
              services:DialogManager.Register="{Binding}"
@@ -18,12 +19,12 @@
         <CommandBar CornerRadius="10"
                     DefaultLabelPosition="Right">
             <CommandBar.PrimaryCommands>
-                <CommandBarButton Label="Clipboard"
-                                  Icon="📋️"
+                <CommandBarButton Label="Paste Image"
+                                  Icon="{markupExtensions:PathIconEx Data={DynamicResource PasteIcon}, Height=15}"
                                   CornerRadius="100"
                                   Command="{Binding ReadImageFromClipboardCommand}" />
                 <CommandBarButton Label="Load Image"
-                                  Icon="🖼️"
+                                  Icon="{markupExtensions:PathIconEx Data={DynamicResource OpenFileIcon}, Height=15}"
                                   CornerRadius="100"
                                   Command="{Binding ReadImageFromFileCommand}" />
             </CommandBar.PrimaryCommands>
@@ -36,12 +37,27 @@
 
         <GroupBox Grid.Row="1"
                   Header="Result">
-            <SelectableTextBlock Text="{Binding Result}" />
+            <Grid ColumnDefinitions="*, Auto">
+                <SelectableTextBlock Text="{Binding Result}"
+                                     TextWrapping="Wrap" 
+                                     VerticalAlignment="Center"/>
+                <Button Grid.Column="1" 
+                        VerticalAlignment="Stretch" 
+                        Background="Transparent"
+                        Padding="5,0"
+                        Margin="0,-10,-5,-10"
+                        Content="{markupExtensions:PathIconEx Data={DynamicResource OpenLinkIcon}, Height=18}"
+                        Command="{Binding VisitUrlCommand}"
+                        CommandParameter="{Binding Result}" 
+                        ToolTip.Tip="Try to visist the URL"/>
+            </Grid>
         </GroupBox>
 
         <GroupBox Grid.Row="2"
                   Header="Image">
-            <Image Source="{Binding PreviewImage}" />
+            <Image Source="{Binding Image}"
+                   Stretch="Uniform"
+                   StretchDirection="DownOnly"/>
         </GroupBox>
     </Grid>
 </UserControl>

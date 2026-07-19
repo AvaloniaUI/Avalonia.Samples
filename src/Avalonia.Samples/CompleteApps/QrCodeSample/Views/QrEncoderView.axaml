@@ -5,7 +5,7 @@
              xmlns:viewModels="clr-namespace:QrCodeSample.ViewModels"
              xmlns:markupExtensions="clr-namespace:QrCodeSample.MarkupExtensions"
              xmlns:services="clr-namespace:QrCodeSample.Services"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              services:DialogManager.Register="{Binding}"
              x:DataType="viewModels:EncodeQrViewModel"
              x:Class="QrCodeSample.Views.QrEncoderView">
@@ -25,18 +25,13 @@
             <CommandBar.PrimaryCommands>
                 <!-- Copy result to Clipboard -->
                 <CommandBarButton Label="Copy"
-                                  Command="{Binding CopyCommand}">
-                    <CommandBarButton.Icon>
-                        <PathIcon Data="{DynamicResource CopyIcon}" />
-                    </CommandBarButton.Icon>
-                </CommandBarButton>
+                                  Icon="{markupExtensions:PathIconEx Data={DynamicResource CopyIcon}, Height=15}"
+                                  Command="{Binding CopyCommand}" />
 
+                <!-- Save result to file -->
                 <CommandBarButton Label="Save"
-                                  Command="{Binding SaveCommand}">
-                    <CommandBarButton.Icon>
-                        <PathIcon Data="{DynamicResource SaveIcon}" />
-                    </CommandBarButton.Icon>
-                </CommandBarButton>
+                                  Command="{Binding SaveCommand}"
+                                  Icon="{markupExtensions:PathIconEx Data={DynamicResource SaveIcon}, Height=15}" />
 
             </CommandBar.PrimaryCommands>
         </CommandBar>
@@ -49,22 +44,31 @@
                   RowSpacing="10">
                 <TextBlock Text="Text to encode:"
                            VerticalAlignment="Center" />
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding TextToEncode}" />
+                <TextBox Grid.Column="1" Grid.Row="0" 
+                         Text="{Binding TextToEncode}" 
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"/>
                 
-                <TextBlock Grid.Row="1" Text="Foregound:"
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="Foregound:"
                            VerticalAlignment="Center" />
-                <ColorPicker Grid.Column="1" Grid.Row="1" Color="{Binding ForegroundColor}" />
+                <ColorPicker Grid.Column="1" Grid.Row="1" 
+                             Color="{Binding ForegroundColor}" />
                 
-                <TextBlock Grid.Row="2" Text="Background:"
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="Background:"
                            VerticalAlignment="Center" />
-                <ColorPicker Grid.Column="1" Grid.Row="2" Color="{Binding BackgroundColor}" />
+                <ColorPicker Grid.Column="1" Grid.Row="2" 
+                             Color="{Binding BackgroundColor}" />
             </Grid>
         </GroupBox>
 
         <GroupBox Grid.Row="2"
                   Header="Result">
             <Image Source="{Binding QrCodeImage}" 
-                   RenderOptions.BitmapInterpolationMode="None"/>
+                   RenderOptions.BitmapInterpolationMode="None"
+                   Stretch="Uniform"
+                   StretchDirection="DownOnly"/>
         </GroupBox>
     </Grid>
 </UserControl>

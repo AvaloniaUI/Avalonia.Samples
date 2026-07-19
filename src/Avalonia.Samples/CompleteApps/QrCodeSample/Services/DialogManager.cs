@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.VisualTree;
 
 namespace QrCodeSample.Services;
 
@@ -13,6 +14,11 @@ public class DialogManager
     // this dictionary stores the mapping
     private static readonly Dictionary<IDialogParticipant, Visual> RegistrationMapper =
         new Dictionary<IDialogParticipant, Visual>();
+
+    // Keep track of per-Visual subscription so we can properly (un)subscribe
+    private static readonly AttachedProperty<RegistrationSubscription?> SubscriptionProperty =
+        AvaloniaProperty.RegisterAttached<DialogManager, Visual, RegistrationSubscription?>(
+            "Subscription");
 
     static DialogManager()
     {
@@ -35,21 +41,28 @@ public class DialogManager
             {
                 RegistrationMapper.Remove(oldValue);
             }
+
+            // Dispose any existing subscription bound to this sender for the old value
+            if (sender.GetValue(SubscriptionProperty) is { } oldSub && ReferenceEquals(oldSub.Participant, oldValue))
+            {
+                oldSub.Dispose();
+                sender.SetValue(SubscriptionProperty, null);
+            }
         }
 
-        // Register any new context
+        // Register any new context (and ensure it re-registers on re-attach)
         if (e.GetNewValue<IDialogParticipant>() is { } newValue)
         {
-            RegistrationMapper[newValue] = sender;
-            // Clean up when the visual is detached from the visual tree (e.g. dialog closed),
-            // and detach the event handler to avoid accumulating closures across DataContext changes.
-            EventHandler<VisualTreeAttachmentEventArgs>? handler = null;
-            handler = (_, _) =>
+            // Clean up previous subscription if any (defensive)
+            if (sender.GetValue(SubscriptionProperty) is { } existing)
             {
-                RegistrationMapper.Remove(newValue);
-                sender.DetachedFromVisualTree -= handler;
-            };
-            sender.DetachedFromVisualTree += handler;
+                existing.Dispose();
+                sender.SetValue(SubscriptionProperty, null);
+            }
+
+            var sub = new RegistrationSubscription(sender, newValue);
+            sender.SetValue(SubscriptionProperty, sub);
+            sub.ApplyCurrentAttachmentState();
         }
     }
 
@@ -94,5 +107,50 @@ public class DialogManager
     public static TopLevel? GetTopLevelForContext(IDialogParticipant context)
     {
         return TopLevel.GetTopLevel(GetVisualForContext(context));
+    }
+
+    private sealed class RegistrationSubscription : IDisposable
+    {
+        private readonly Visual _sender;
+        public IDialogParticipant Participant { get; }
+
+        private readonly EventHandler<VisualTreeAttachmentEventArgs> _onAttached;
+        private readonly EventHandler<VisualTreeAttachmentEventArgs> _onDetached;
+        private bool _disposed;
+
+        public RegistrationSubscription(Visual sender, IDialogParticipant participant)
+        {
+            _sender = sender ?? throw new ArgumentNullException(nameof(sender));
+            Participant = participant ?? throw new ArgumentNullException(nameof(participant));
+
+            _onAttached = (_, _) => RegistrationMapper[Participant] = _sender;
+            _onDetached = (_, _) => RegistrationMapper.Remove(Participant);
+
+            _sender.AttachedToVisualTree += _onAttached;
+            _sender.DetachedFromVisualTree += _onDetached;
+        }
+
+        public void ApplyCurrentAttachmentState()
+        {
+            // If already attached, ensure we are registered now
+            if (_sender.IsAttachedToVisualTree())
+            {
+                RegistrationMapper[Participant] = _sender;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            _sender.AttachedToVisualTree -= _onAttached;
+            _sender.DetachedFromVisualTree -= _onDetached;
+            // On dispose, also make sure the mapping is cleared for this participant → sender
+            if (RegistrationMapper.TryGetValue(Participant, out var currentSender) && ReferenceEquals(currentSender, _sender))
+            {
+                RegistrationMapper.Remove(Participant);
+            }
+        }
     }
 }

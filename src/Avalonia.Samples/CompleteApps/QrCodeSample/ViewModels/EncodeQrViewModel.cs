@@ -15,12 +15,29 @@ namespace QrCodeSample.ViewModels;
 
 public partial class EncodeQrViewModel : ViewModelBase, IDialogParticipant
 {
-    [ObservableProperty] 
-    public partial string? TextToEncode { get; set; }
+    /// <summary>
+    /// Creates a new instance of the <see cref="EncodeQrViewModel"/> class and encodes the default QR-Code.
+    /// </summary>
+    public EncodeQrViewModel()
+    {
+        EncodeQr();
+    }
+    
+    /// <summary>
+    /// Gets or sets the text to create the QR-Code for. The default is our landing page.
+    /// </summary>
+    [ObservableProperty]
+    public partial string? TextToEncode { get; set; } = "https://avaloniaui.github.io/Avalonia.Samples/";
 
+    /// <summary>
+    /// Gets or sets the foreground of the QR-Code. The default is black.
+    /// </summary>
     [ObservableProperty] 
     public partial Color ForegroundColor { get; set; } = Colors.Black;
-
+    
+    /// <summary>
+    /// Gets or sets the background of the QR-Code. The default is white.
+    /// </summary>
     [ObservableProperty] 
     public partial Color BackgroundColor { get; set; } = Colors.White;
 
