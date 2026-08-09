@@ -1,6 +1,7 @@
 name: Build or Update HTML from AsciiDoc
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
