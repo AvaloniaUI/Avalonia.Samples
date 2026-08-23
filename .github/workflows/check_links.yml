@@ -33,7 +33,8 @@ jobs:
             --no-progress
             --timeout 30
             --max-retries 3
-            --accept 200,206,429
+            --accept 200,206,429,403
+            --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
             --root-dir .
             ${{ steps.files.outputs.files }}
           fail: true
