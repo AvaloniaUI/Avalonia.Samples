@@ -102,7 +102,7 @@ jobs:
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
             # `--no-restore` speeds things up – we already restored workloads above.
-            dotnet outdated $proj --upgrade --no-restore --exclude $exclude
+            dotnet outdated $proj --upgrade --no-restore --exclude $exclude --allowed-updates minor,patch
           }
 
       # --------------------------------------------------------------
