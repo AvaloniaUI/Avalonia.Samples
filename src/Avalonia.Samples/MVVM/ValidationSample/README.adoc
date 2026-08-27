@@ -55,83 +55,79 @@ You should already know how to set up a new Avalonia project. Moreover, you shou
 [#_approach_1_validate_a_property_using_dataannotations]
 == Approach 1 : Validate a Property using DataAnnotations
 
-In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template` and the MVVM Community Toolkit.
+In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template`.
 
-=== Step 1: Enable data annotations validation
+[NOTE] 
+====
+Beginning with Avalonia 12, the `DataAnnotations`-validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your App.
 
-Beginning with Avalonia 12, the `DataAnnotations` validation is disabled by default. To use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your app.
-
-.*Program.cs*
 [source,diff]
+.Program.cs
 ----
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
         .UsePlatformDetect()
+        .LogToTrace()
+        .WithDeveloperTools()
 +       .WithDataAnnotationsValidation() // Enable validation using DataAnnotation attributes 
-#if DEBUG
-            .WithDeveloperTools()
-#endif
-            .WithInterFont()
-            .LogToTrace();
+        .UseReactiveUI(builder => { });
+----
+====
+
+
+=== Step 1: Set up the ViewModel
+
+As we want to show different validation options, we create a new file called `ValidationUsingDataAnnotationViewModel.cs`. Put this new file in the `ViewModels` folder.
+
+Then, in `MainWindowViewModel.cs`, add the new class as a read-only property:
+
+.*MainWindowViewModel.cs*
+[source,cs]
+----
+/// <summary>
+/// Gets a ViewModel showing how to use DataAnnotations for validation
+/// </summary>
+public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewModel { get; } 
+    = new ValidationUsingDataAnnotationViewModel();
 ----
 
 === Step 2: Add the Property
 
-Create a new file called `ValidationUsingDataAnnotationViewModel.cs`. Put this new file in the `ViewModels` folder.
+Let's assume we want to make a registration-form where an e-mail-address is required and must be a valid e-mail-address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
 
-Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want, as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
-
-In `ValidationUsingDataAnnotationViewModel.cs`, add the following:
-
-1. `using` statements for `System.ComponentModel.DataAnnotations` and `CommunityToolkit.Mvvm.ComponentModel`.
-2. The `ValidationUsingDataAnnotationViewModel` class as an `ObservableValidator`.
-3. The `EMail` observable property.
-
-.*ValidationUsingDataAnnotationViewModel.cs*
 [source,cs]
 ----
-using System.ComponentModel.DataAnnotations;
-using CommunityToolkit.Mvvm.ComponentModel;
+private string? _EMail;
 
-namespace DataValidationGuide.ViewModels;
-
-public partial class ValidationUsingDataAnnotationViewModel : ObservableValidator
+/// <summary>
+/// Validation using DataAnnotation
+/// </summary>
+[Required]
+[EmailAddress]
+public string? EMail
 {
-    /// <summary>
-    /// Validation using DataAnnotation
-    /// </summary>
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required]
-    [EmailAddress]
-    public partial string? EMail { get; set; }
+    get { return _EMail; }
+    set { this.RaiseAndSetIfChanged(ref _EMail, value); }
 }
 ----
 
 === Step 3: Set up the View
 
-In `MainWindow.axaml`, add a `TabControl`. Set the `DataContext` of the tab control to `ValidationUsingDataAnnotationViewModel`, and set a corresponding `x:DataType` to allow the binding data type to be inferred.
+In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` represents one of our options. Inside the `TabItem` there is just one `TextBox` which binds to our property `EMail`. 
 
-Inside the tab control, add a `TabItem` containing a single `TextBox` which binds to our property `EMail`. 
-
-.*MainWindow.axaml*
 [source,xml]
 ----
-<TabControl TabStripPlacement="Bottom"
-            x:DataType="viewModels:ValidationUsingDataAnnotationViewModel">
-    <TabControl.DataContext>
-        <vm:ValidationUsingDataAnnotationViewModel />
-    </TabControl.DataContext>
+<TabControl TabStripPlacement="Bottom">
     <!--Validation using DataAnnotations-->
     <TabItem Header="DataAnnotations">
-        <TextBox Text="{Binding EMail}" />
+        <TextBox Text="{Binding ValidationUsingDataAnnotationViewModel.EMail}" />
     </TabItem>
 </TabControl>
 ----
 
 === Step 4: Run the App
 
-In your IDE, hit `Run` or `Debug` to see the result: 
+In your IDE hit `Run` or `Debug` to see the result: 
 
 .Result Option 1
 image::_docs/option1.png[Result Option 1]
