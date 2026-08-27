@@ -150,6 +150,7 @@ In `MainWindow.axaml`, add a `TabControl`. Inside the `TabItem`, add a single `T
 In your IDE, hit `Run` or `Debug` to see the result: 
 
 image::_docs/option1.png[Result Option 1]
+{nbsp}
 
 [#_approach_2_validate_a_property_using_inotifydataerrorinfo]
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
@@ -379,13 +380,15 @@ NOTE: *Note:* Some `MVVM` frameworks, like the https://learn.microsoft.com/en-us
 
 == Approach 3 : Validate a Property using Exceptions inside setters
 
-The third option we want to show you is throwing an https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/[[Exception\]] inside the setter of your property. 
+The third option is throwing an https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/[[exception\]] inside the setter of your property. 
 
-IMPORTANT: This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash of your application.
+IMPORTANT: *Important:* This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash.
 
-=== Step 1: Set up the ViewModel
+=== Step 1: Set up the main view model
 
-Once again we add another file into the `ViewModels`-folder, called `ValidationUsingExceptionInsideSetterViewModel`. As before, also this class is added as a read-only property into our `MainWindowViewModel`:
+Once again, we add a new file to the `ViewModels` folder. This time, call it `ValidationUsingExceptionInsideSetterViewModel.cs`.
+
+As before, in MainWindowViewModel.cs, add the new class as a read-only property:
 
 [source,cs]
 ----
@@ -396,12 +399,18 @@ public ValidationUsingExceptionInsideSetterViewModel ValidationUsingExceptionIns
     = new ValidationUsingExceptionInsideSetterViewModel();
 ----
 
-=== Step 2: Add the Property
+=== Step 2: Add the property
 
-As written above, we can throw exceptions inside the setter of a property. We will have a set of `if`-conditions, where we throw an `Exception` under a certain condition.
+Define the `if`-conditions where we want the app to throw an `Exception` inside the setter of the property.
 
+.*ValidationUsingExceptionInsideSetterViewModel.cs*
 [source,cs]
 ----
+using System;
+using ReactiveUI;
+
+namespace ValidationSample.ViewModels;
+
 public class ValidationUsingExceptionInsideSetterViewModel : ViewModelBase
 {
 
@@ -435,16 +444,13 @@ public class ValidationUsingExceptionInsideSetterViewModel : ViewModelBase
 }
 ----
 
-[TIP]
-====
-Depending on your IDE-Settings the debugger may stop execution when the `Exception` is hit. You can safely click `Resume` or `Mute and Resume` since Avalonia will handle the exception.
-====
+TIP: *Tip:* Depending on your IDE settings, the debugger may stop execution when it hits the `Exception`. You can safely click `Resume` or `Mute and Resume`, since Avalonia will handle the exception.
 
+=== Step 3: Set up the view
 
-=== Step 3: Set up the View
+Add another `TabItem` to the `TabControl` in `MainWindow.axaml`.
 
-We add another `TabItem` into our `TabControl`.
-
+.*MainWindow.axaml*
 [source,xml]
 ----
 <TabControl TabStripPlacement="Bottom">
@@ -455,17 +461,14 @@ We add another `TabItem` into our `TabControl`.
 </TabControl>
 ----
 
-=== Step 4: Run the App
+=== Step 4: Run the app
 
-In your IDE hit `Run` or `Debug` to see the result: 
+In your IDE, hit `Run` or `Debug` to see the result: 
 
-.Result Option 3
 image::_docs/option3.png[Result Option 3]
+{nbsp}
 
-
-== Related 
-
-Below, please find a collection with helpful links:
+== See also 
 
 * https://docs.avaloniaui.net/docs/data-binding/data-validation#customize-the-appearance-of-the-validation-message[How to configure the appearance of the error message]
 * https://docs.avaloniaui.net/docs/data-binding/data-validation#manage-validationplugins[How to add or remove a certain validation option]
