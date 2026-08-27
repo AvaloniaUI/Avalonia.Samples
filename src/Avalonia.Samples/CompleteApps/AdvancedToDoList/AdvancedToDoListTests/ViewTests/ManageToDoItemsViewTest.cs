@@ -2,6 +2,7 @@ using AdvancedToDoList.ViewModels;
 using AdvancedToDoList.Views;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
+using Avalonia.Threading;
 using Xunit;
 
 namespace AdvancedToDoListTests.ViewTests;
@@ -35,11 +36,11 @@ public class ManageToDoItemsViewTest : TestBase
     /// - The list item count matches the ViewModel's To-Do item count
     /// - The UI properly reflects the underlying data model
     /// 
-    /// Note: A small delay (100ms) is included to allow for asynchronous
-    /// UI initialization before testing control states.
+    /// Note: We need to run pending dispatcher jobs to ensure the UI
+    /// is fully initialized before asserting the list box item count.
     /// </remarks>
     [AvaloniaFact]
-    public async Task ManageToDoItemsView_Should_Display_Items()
+    public void ManageToDoItemsView_Should_Display_Items()
     {
         // Arrange
         var vm = new ManageToDoItemsViewModel();
@@ -50,8 +51,8 @@ public class ManageToDoItemsViewTest : TestBase
         var window = new Window { Content = view };
         window.Show();
 
-        // Give some time for view initialization
-        await Task.Delay(100);
+        // Run all pending dispatcher jobs to ensure the UI is fully initialized
+        Dispatcher.UIThread.RunJobs();
 
         // Act
         var listBox = view.FindControl<ListBox>("ToDoItemsListBox");
