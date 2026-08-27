@@ -1,5 +1,6 @@
 using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
+using ValidationSample.ViewModels;
 
 namespace ValidationSample.ViewModels
 {

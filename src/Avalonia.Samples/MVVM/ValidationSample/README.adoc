@@ -49,33 +49,35 @@ Data-Annotation, Data-Validation, Exception, Error, Error-Message, Binding, MVVM
 
 == Before we start
 
-You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`. In this sample we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
+You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`. In this sample, we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
 
+Note that this sample uses the *ReactiveUI* toolkit, not `CommunityToolkit.MVVM`.
 
 [#_approach_1_validate_a_property_using_dataannotations]
 == Approach 1 : Validate a Property using DataAnnotations
 
-In the first approach we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template`.
+In the first approach, we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template` with the ReactiveUI toolkit.
 
-[NOTE] 
-====
-Beginning with Avalonia 12, the `DataAnnotations`-validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your App.
+==== Step 1: Enable data annotations validation
 
+Beginning with Avalonia 12, the `DataAnnotations` validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your app.
+
+.*Program.cs*
 [source,diff]
-.Program.cs
 ----
 public static AppBuilder BuildAvaloniaApp()
     => AppBuilder.Configure<App>()
         .UsePlatformDetect()
-        .LogToTrace()
-        .WithDeveloperTools()
 +       .WithDataAnnotationsValidation() // Enable validation using DataAnnotation attributes 
-        .UseReactiveUI(builder => { });
+#if DEBUG
+        .WithDeveloperTools()
+#endif
+        .WithInterFont()
+        .LogToTrace()
+        .UseReactiveUI(_ => { });
 ----
-====
 
-
-=== Step 1: Set up the ViewModel
+=== Step 2: Set up the view model
 
 As we want to show different validation options, we create a new file called `ValidationUsingDataAnnotationViewModel.cs`. Put this new file in the `ViewModels` folder.
 
@@ -91,30 +93,48 @@ public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewM
     = new ValidationUsingDataAnnotationViewModel();
 ----
 
-=== Step 2: Add the Property
+=== Step 3: Add the property
 
-Let's assume we want to make a registration-form where an e-mail-address is required and must be a valid e-mail-address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
+Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
 
+In the class file `ValidationUsingDataAnnotationViewModel.cs`, add the following:
+
+- `using` statements for `ReactiveUI`, `System.ComponentModel.DataAnnotations`, and `DataValidationGuide.ViewModels`.
+- The class `ValidationUsingDataAnnotationViewModel` as a `ViewModelBase`.
+- The `EMail` property.
+
+.*ValidationUsingDataAnnotationViewModel.cs*
 [source,cs]
 ----
-private string? _EMail;
+using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
+using ValidationSample.ViewModels;
 
-/// <summary>
-/// Validation using DataAnnotation
-/// </summary>
-[Required]
-[EmailAddress]
-public string? EMail
+namespace ValidationSample.ViewModels
 {
-    get { return _EMail; }
-    set { this.RaiseAndSetIfChanged(ref _EMail, value); }
+    public class ValidationUsingDataAnnotationViewModel : ViewModelBase
+    {
+        private string? _EMail;
+
+        /// <summary>
+        /// Validation using DataAnnotation
+        /// </summary>
+        [Required]
+        [EmailAddress]
+        public string? EMail
+        {
+            get { return _EMail; }
+            set { this.RaiseAndSetIfChanged(ref _EMail, value); }
+        }
+    }
 }
 ----
 
-=== Step 3: Set up the View
+=== Step 4: Set up the view
 
-In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` represents one of our options. Inside the `TabItem` there is just one `TextBox` which binds to our property `EMail`. 
+In `MainWindow.axaml`, add a `TabControl`. Inside the `TabItem`, add a single `TextBox` which binds to our property `EMail`. 
 
+.*MainWindow.axaml*
 [source,xml]
 ----
 <TabControl TabStripPlacement="Bottom">
@@ -125,11 +145,10 @@ In the file `MainWindow.axaml` we add a `TabControl` where each `TabItem` repres
 </TabControl>
 ----
 
-=== Step 4: Run the App
+=== Step 5: Run the app
 
 In your IDE hit `Run` or `Debug` to see the result: 
 
-.Result Option 1
 image::_docs/option1.png[Result Option 1]
 
 
