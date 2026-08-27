@@ -133,8 +133,7 @@ Inside the tab control, add a `TabItem` containing a single `TextBox` which bind
 
 In your IDE, hit `Run` or `Debug` to see the result: 
 
-image::_docs/option1.png
-
+image::_docs/option1.png["Result of option 1"]
 
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
