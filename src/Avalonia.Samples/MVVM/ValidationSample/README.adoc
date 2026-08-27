@@ -151,7 +151,6 @@ In your IDE, hit `Run` or `Debug` to see the result:
 
 image::_docs/option1.png[Result Option 1]
 
-
 [#_approach_2_validate_a_property_using_inotifydataerrorinfo]
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
@@ -373,7 +372,7 @@ Let's add another `TabItem` to the `TabControl` in `MainWindow.axaml`:
 In your IDE, hit `Run` or `Debug` to see the result: 
 
 image::_docs/option2.png[Result Option 2]
-
+{nbsp}
 
 NOTE: *Note:* Some `MVVM` frameworks, like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]], implement the `INotifyDataErrorInfo` interface and use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case, you may end up seeing your validation twice. Consider https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[disabling one of the validators\]] in your app.
 
