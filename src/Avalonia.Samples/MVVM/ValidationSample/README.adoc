@@ -77,8 +77,11 @@ public static AppBuilder BuildAvaloniaApp()
 
 === Step 1: Set up the ViewModel
 
-As we want to show different validation options, we add another file called `ValidationUsingDataAnnotationViewModel` into the `ViewModels`-folder. This class will be added as a read-only Property into our `MainWindowViewModel`:
+As we want to show different validation options, we create a new file called `ValidationUsingDataAnnotationViewModel.cs`. Put this new file in the `ViewModels` folder.
 
+Then, in `MainWindowViewModel.cs`, add the new class as a read-only property:
+
+.MainWindowViewModel.cs
 [source,cs]
 ----
 /// <summary>
