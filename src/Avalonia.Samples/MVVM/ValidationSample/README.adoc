@@ -95,7 +95,7 @@ public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewM
 
 === Step 3: Add the property
 
-Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
+Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EmailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
 
 In the class file `ValidationUsingDataAnnotationViewModel.cs`, add the following:
 
@@ -180,7 +180,7 @@ Now we have to implement the interface if this is not already done by the base c
 |====
 a| bool HasErrors:: Gets if there are any errors.
 
-void GetErrors(string? propertyName):: Gets the errors for a given property (by its name), or all errors if property name is `null` or `string.Empty`.
+IEnumerable GetErrors(string? propertyName):: Gets the errors for a given property (by its name), or all errors if property name is `null` or `string.Empty`.
 
 event ErrorsChanged:: Raised whenever any error is added or removed.
 |====
