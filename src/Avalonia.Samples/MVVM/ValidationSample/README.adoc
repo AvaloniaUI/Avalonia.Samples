@@ -81,7 +81,7 @@ As we want to show different validation options, we create a new file called `Va
 
 Then, in `MainWindowViewModel.cs`, add the new class as a read-only property:
 
-.MainWindowViewModel.cs
+.*MainWindowViewModel.cs*
 [source,cs]
 ----
 /// <summary>
