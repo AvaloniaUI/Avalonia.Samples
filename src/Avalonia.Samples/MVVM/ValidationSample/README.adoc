@@ -147,19 +147,22 @@ In `MainWindow.axaml`, add a `TabControl`. Inside the `TabItem`, add a single `T
 
 === Step 5: Run the app
 
-In your IDE hit `Run` or `Debug` to see the result: 
+In your IDE, hit `Run` or `Debug` to see the result: 
 
 image::_docs/option1.png[Result Option 1]
 
-
+[#_approach_2_validate_a_property_using_inotifydataerrorinfo]
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
-You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or it's base class. Some MVVM-libraries already implement this interface by default.
+You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or its base class. Some MVVM libraries implement this interface by default.
 
-=== Step 1: Set up the ViewModel
+=== Step 1: Set up the view model
 
-Again we add another file called `ValidationUsingINotifyDataErrorInfoViewModel` into the `ViewModels`-folder. This class will be added as a read-only Property into our `MainWindowViewModel`:
+Add another file called `ValidationUsingINotifyDataErrorInfoViewModel.cs` into the `ViewModels` folder.
 
+Then, in `MainWindowViewModel.cs`, add the new class as a read-only property:
+
+.*MainWindowViewModel.cs*
 [source,cs]
 ----
 /// <summary>
@@ -169,15 +172,14 @@ public ValidationUsingINotifyDataErrorInfoViewModel ValidationUsingINotifyDataEr
     = new ValidationUsingINotifyDataErrorInfoViewModel();
 ----
 
-Now we have to implement the interface if this is not already done by the base-class you use. In our sample we add the interface on our own. The interface requires these members: 
-
+Now we have to implement the interface if this is not already done by the base class you use. In this sample, we add the interface on our own. The interface requires these members: 
 
 |====
 a| bool HasErrors:: Gets if there are any errors.
 
-void GetErrors(string? propertyName):: Gets the errors for a given property (by its name) or all errors, if property name was `null` or `string.Empty`.
+void GetErrors(string? propertyName):: Gets the errors for a given property (by its name), or all errors if property name is `null` or `string.Empty`.
 
-event ErrorsChanged:: this event is raised whenever any error was added or removed.
+event ErrorsChanged:: Raised whenever any error is added or removed.
 |====
 
 In addition to the interface members, we add the following items: 
@@ -185,14 +187,14 @@ In addition to the interface members, we add the following items:
 |===
 a| private Dictionary errors:: A `Dictionary` that caches the errors, so we don't need to validate the properties every time.
 
-protected void ClearErrors(string? propertyName = null):: This void will clear all errors for the given property name or all errors if `propertyName` was `null`. The `ErrorsChanged`-event will be raised.
+protected void ClearErrors(string? propertyName = null):: Clears all errors for the given property name, or all errors if `propertyName` is `null`. Raises the `ErrorsChanged` event.
 
-protected void AddError(string propertyName, string errorMessage):: This void will add a given error message for a given property by its name. The `ErrorsChanged`-event will be raised.
+protected void AddError(string propertyName, string errorMessage):: Adds a given error message for a given property by its name. Raises the `ErrorsChanged` event.
 |===
 
-TIP: the `protected` keyword helps us to make the properties or methods available in derived classes, but not from any external class.
+*Tip:* The `protected` keyword makes the properties or methods available in derived classes, but not from any external class.
 
-Below you can see the final implementation:
+Below is the final implementation:
 
 [source,cs]
 ----
