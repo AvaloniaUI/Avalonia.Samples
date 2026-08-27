@@ -58,7 +58,7 @@ Note that this sample uses the *ReactiveUI* toolkit.
 
 In the first approach, we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template` with the ReactiveUI toolkit.
 
-==== Step 1: Enable data annotations validation
+=== Step 1: Enable data annotations validation
 
 Beginning with Avalonia 12, the `DataAnnotations` validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your app.
 
@@ -99,7 +99,7 @@ Let's assume we want to make a registration form where an e-mail address is requ
 
 In the class file `ValidationUsingDataAnnotationViewModel.cs`, add the following:
 
-- `using` statements for `ReactiveUI`, `System.ComponentModel.DataAnnotations`, and the `ViewModels` of your project.
+- The required `using` statements.
 - The class `ValidationUsingDataAnnotationViewModel` as a `ViewModelBase`.
 - The `EMail` property.
 
@@ -150,6 +150,7 @@ In `MainWindow.axaml`, add a `TabControl`. Inside the `TabItem`, add a single `T
 In your IDE, hit `Run` or `Debug` to see the result: 
 
 image::_docs/option1.png[Result Option 1]
+
 
 [#_approach_2_validate_a_property_using_inotifydataerrorinfo]
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
@@ -372,6 +373,7 @@ Let's add another `TabItem` to the `TabControl` in `MainWindow.axaml`:
 In your IDE, hit `Run` or `Debug` to see the result: 
 
 image::_docs/option2.png[Result Option 2]
+
 
 NOTE: *Note:* Some `MVVM` frameworks, like the https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator[[Windows MVVM Community Toolkit\]], implement the `INotifyDataErrorInfo` interface and use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to run the validation. In this case, you may end up seeing your validation twice. Consider https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[disabling one of the validators\]] in your app.
 
