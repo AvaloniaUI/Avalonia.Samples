@@ -75,7 +75,7 @@ public static AppBuilder BuildAvaloniaApp()
             .LogToTrace();
 ----
 
-=== Step 2: Add the property
+=== Step 2: Add the Property
 
 Create a new file called `ValidationUsingDataAnnotationViewModel.cs`. Put this new file in the `ViewModels` folder.
 
@@ -83,9 +83,9 @@ Let's assume we want to make a registration form where an e-mail address is requ
 
 In `ValidationUsingDataAnnotationViewModel.cs`, add the following:
 
-- `using` statements for `System.ComponentModel.DataAnnotations` and `CommunityToolkit.Mvvm.ComponentModel`.
-- The `ValidationUsingDataAnnotationViewModel` class as an `ObservableValidator`.
-- The `EMail` observable property.
+1. `using` statements for `System.ComponentModel.DataAnnotations` and `CommunityToolkit.Mvvm.ComponentModel`.
+2. The `ValidationUsingDataAnnotationViewModel` class as an `ObservableValidator`.
+3. The `EMail` observable property.
 
 .*ValidationUsingDataAnnotationViewModel.cs*
 [source,cs]
@@ -108,7 +108,7 @@ public partial class ValidationUsingDataAnnotationViewModel : ObservableValidato
 }
 ----
 
-=== Step 3: Set up the view
+=== Step 3: Set up the View
 
 In `MainWindow.axaml`, add a `TabControl`. Set the `DataContext` of the tab control to `ValidationUsingDataAnnotationViewModel`, and set a corresponding `x:DataType` to allow the binding data type to be inferred.
 
@@ -129,11 +129,12 @@ Inside the tab control, add a `TabItem` containing a single `TextBox` which bind
 </TabControl>
 ----
 
-=== Step 4: Run the app
+=== Step 4: Run the App
 
 In your IDE, hit `Run` or `Debug` to see the result: 
 
-image::_docs/option1.png
+.Result Option 1
+image::_docs/option1.png[Result Option 1]
 
 
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
