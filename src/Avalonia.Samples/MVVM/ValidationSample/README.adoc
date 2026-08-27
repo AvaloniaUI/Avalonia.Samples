@@ -137,7 +137,7 @@ image::_docs/option1.png["Result of option 1"]
 
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
-You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or its base class. Some MVVM libraries implement this interface by default.
+You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or it's base class. Some MVVM-libraries already implement this interface by default.
 
 === Step 1: Set up the ViewModel
 
