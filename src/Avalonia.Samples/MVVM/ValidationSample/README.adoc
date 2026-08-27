@@ -51,16 +51,16 @@ Data-Annotation, Data-Validation, Exception, Error, Error-Message, Binding, MVVM
 
 You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your `ViewModel` to your `View`. In this sample, we will show you three options to validate a property. It's up to you which one you prefer. You can also combine them.
 
-Note that this sample uses the *ReactiveUI* toolkit, not `CommunityToolkit.MVVM`.
+Note that this sample uses the *ReactiveUI* toolkit.
 
 [#_approach_1_validate_a_property_using_dataannotations]
 == Approach 1 : Validate a Property using DataAnnotations
 
-In the first approach, we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`DataAnnotations`\]] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template` with the ReactiveUI toolkit.
+In the first approach, we will show you how to use https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[`DataAnnotations`\] to validate a property. To get started, please create a new project using the `Avalonia MVVM Template` with the ReactiveUI toolkit.
 
 ==== Step 1: Enable data annotations validation
 
-Beginning with Avalonia 12, the `DataAnnotations` validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[[enable the DataAnnotationsValidator\]] in your app.
+Beginning with Avalonia 12, the `DataAnnotations` validation is disabled by default. If you want to use this option, you have to https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins[enable the DataAnnotationsValidator\] in your app.
 
 .*Program.cs*
 [source,diff]
@@ -95,7 +95,7 @@ public ValidationUsingDataAnnotationViewModel ValidationUsingDataAnnotationViewM
 
 === Step 3: Add the property
 
-Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[[`RequiredAttribute`\]] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[[`EMailAddressAttribute`\]]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[[`ValidationAttribute`\]].
+Let's assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called `EMail`. This property will be decorated with the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute[`RequiredAttribute`\] and the https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute[`EMailAddressAttribute`\]. You can combine as many attributes as you want as well as creating your own https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute[`ValidationAttribute`\].
 
 In the class file `ValidationUsingDataAnnotationViewModel.cs`, add the following:
 
@@ -154,7 +154,7 @@ image::_docs/option1.png[Result Option 1]
 
 == Approach 2 : Validate a Property using INotifyDataErrorInfo
 
-You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[[`INotifyDataErrorInfo`\]] into your `ViewModel` or it's base class. Some MVVM-libraries already implement this interface by default.
+You can also implement the interface https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo[`INotifyDataErrorInfo`\] into your `ViewModel` or it's base class. Some MVVM-libraries already implement this interface by default.
 
 === Step 1: Set up the ViewModel
 
