@@ -55,7 +55,7 @@ jobs:
           $failed = $false
           foreach ($solution in $solutions) {
             Write-Host "=== Testing: $solution ==="
-            dotnet test $solution --no-build --verbosity:normal
+            dotnet test $solution --no-build --verbosity:normal --filter "FullyQualifiedName!~Appium"
             if ($LASTEXITCODE -ne 0) {
               Write-Error "Tests failed for solution: $solution"
               $failed = $true

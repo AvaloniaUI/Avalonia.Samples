@@ -27,7 +27,7 @@ public class DefaultAppFixture : IDisposable
     private static string ResolveTestAppPath() =>
         Path.GetFullPath(Path.Combine(
             AppContext.BaseDirectory,
-            "..", "..", "..", "..", "..",
+            "..", "..", "..", "..",
             "TestableApp", "bin", "Debug", GetDotnetVersion(), "TestableApp.exe"));
 
     private const string TestAppBundleId = "net.avaloniaui.testableApp";
