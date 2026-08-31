@@ -65,10 +65,10 @@ public class ManageToDoItemsViewModelTest : TestBase
         // Log test start for debugging
         _testOutputHelper.WriteLine("Starting ManageToDoItemsViewModel constructor test...");
 
-        // Arrange & Act - Construct the ViewModel and flush dispatcher jobs
+        // Arrange & Act - Construct the ViewModel, await initialization and flush dispatcher jobs
         var vm = new ManageToDoItemsViewModel();
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(500);
 
         // Log values before assertions for easier debugging
         _testOutputHelper.WriteLine($"Items count: {vm.ToDoItems.Count}");
@@ -102,19 +102,21 @@ public class ManageToDoItemsViewModelTest : TestBase
         // Arrange - Create the ViewModel
         var vm = new ManageToDoItemsViewModel();
         
-        // Flush dispatcher jobs to ensure initialization completes
+        // Await initialization and flush dispatcher jobs to ensure items are loaded
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(500);
         
+        var selectedItem = vm.ToDoItems.First();
+
         // Act - Set properties to new values
-        vm.FilterString = "Test";
+        vm.FilterString = selectedItem.Title;
         vm.ShowAlsoCompletedItems = true;
-        vm.SelectedToDoItem = vm.ToDoItems.First();
+        vm.SelectedToDoItem = selectedItem;
 
         // Assert - Verify all properties were updated correctly
-        Assert.Equal("Test", vm.FilterString);
+        Assert.Equal(selectedItem.Title, vm.FilterString);
         Assert.True(vm.ShowAlsoCompletedItems);
         Assert.NotNull(vm.SelectedToDoItem);
-        Assert.Equal(vm.ToDoItems[0], vm.SelectedToDoItem);
+        Assert.Equal(selectedItem, vm.SelectedToDoItem);
     }
 }

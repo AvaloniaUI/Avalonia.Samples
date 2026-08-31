@@ -1,7 +1,12 @@
+using System;
+using System.Threading;
 using AdvancedToDoList;
 using AdvancedToDoList.Services;
 using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace AdvancedToDoListTests;
 
