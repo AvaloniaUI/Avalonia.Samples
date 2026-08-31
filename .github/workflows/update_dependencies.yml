@@ -6,6 +6,7 @@ name: Update dependencies
 permissions:
   contents: write          # needed for committing & pushing changes
   pull-requests: write    # needed for the create‑pull‑request action
+  issues: write           # needed for creating tracking issues for major updates
   
 # ----------------------------------------------------------------------
 #  Triggers
@@ -102,7 +103,8 @@ jobs:
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
             # `--no-restore` speeds things up – we already restored workloads above.
-            dotnet outdated $proj --upgrade --no-restore --exclude $exclude
+            # `-vl Major` restricts upgrades to minor and patch versions only.
+            dotnet outdated $proj --upgrade --no-restore --exclude $exclude -vl Major
           }
 
       # --------------------------------------------------------------
@@ -135,6 +137,109 @@ jobs:
         run: |
           # Ensure the solution is in a consistent state after any package upgrades
           dotnet restore ./src/Avalonia.Samples
+
+      # --------------------------------------------------------------
+      #  Check for available major version upgrades and open issues
+      # --------------------------------------------------------------
+      - name: Notify on major package updates
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.csproj,*.fsproj -File |
+                    Select-Object -ExpandProperty FullName
+
+          if (-not $files) {
+            Write-Host "No project files found for major upgrade inspection."
+            exit 0
+          }
+
+          $majorUpdates = @{}
+
+          foreach ($proj in $files) {
+            Write-Host "🔍 Inspecting $proj for major updates..."
+            $jsonOutput = dotnet list $proj package --outdated --format json | Out-String
+            if (-not [string]::IsNullOrWhiteSpace($jsonOutput)) {
+              try {
+                $parsed = $jsonOutput | ConvertFrom-Json
+                if ($parsed.projects) {
+                  foreach ($p in $parsed.projects) {
+                    if ($p.frameworks) {
+                      foreach ($fw in $p.frameworks) {
+                        if ($fw.topLevelPackages) {
+                          foreach ($pkg in $fw.topLevelPackages) {
+                            if ($pkg.resolvedVersion -and $pkg.latestVersion) {
+                              $currMajor = ($pkg.resolvedVersion -split '\.')[0]
+                              $latestMajor = ($pkg.latestVersion -split '\.')[0]
+                              if ([int]::TryParse($currMajor, [ref]$null) -and [int]::TryParse($latestMajor, [ref]$null)) {
+                                if ([int]$latestMajor -gt [int]$currMajor) {
+                                  $key = "$($pkg.id)@$latestMajor"
+                                  if (-not $majorUpdates.ContainsKey($key)) {
+                                    $majorUpdates[$key] = @{
+                                      Id = $pkg.id
+                                      CurrentVersion = $pkg.resolvedVersion
+                                      LatestVersion = $pkg.latestVersion
+                                      MajorVersion = $latestMajor
+                                      Projects = @()
+                                    }
+                                  }
+                                  $projName = Split-Path -Leaf $proj
+                                  if ($majorUpdates[$key].Projects -notcontains $projName) {
+                                    $majorUpdates[$key].Projects += $projName
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              } catch {
+                Write-Warning "Could not parse outdated json for $proj: $_"
+              }
+            }
+          }
+
+          if ($majorUpdates.Count -eq 0) {
+            Write-Host "✅ No major version upgrades detected."
+            exit 0
+          }
+
+          Write-Host "Found $($majorUpdates.Count) package(s) with major version upgrades available."
+
+          foreach ($update in $majorUpdates.Values) {
+            $pkgId = $update.Id
+            $latestVer = $update.LatestVersion
+            $currVer = $update.CurrentVersion
+            $majorVer = $update.MajorVersion
+            $projList = ($update.Projects -join ", ")
+            $title = "Major dependency update available: $pkgId $latestVer"
+
+            Write-Host "Checking if issue already exists for $pkgId (major $majorVer)..."
+            $existingIssues = gh issue list --state all --search "$pkgId $majorVer in:title" --json number,title | ConvertFrom-Json
+
+            if ($existingIssues -and $existingIssues.Count -gt 0) {
+              Write-Host "ℹ️ Issue already exists for $pkgId $majorVer. Skipping."
+            } else {
+              Write-Host "📢 Creating tracking issue for $pkgId $latestVer..."
+              $body = @"
+### Major Dependency Update Available
+
+A major version update is available for package **$pkgId**.
+
+- **Current Resolved Version:** $currVer
+- **Latest Major Version:** $latestVer
+- **Projects Affected:** $projList
+
+Because major updates may include breaking changes, manual validation is recommended before upgrading.
+"@
+              gh issue create --title $title --body $body
+            }
+          }
 
       # --------------------------------------------------------------
       #  **If** something changed → push a PR

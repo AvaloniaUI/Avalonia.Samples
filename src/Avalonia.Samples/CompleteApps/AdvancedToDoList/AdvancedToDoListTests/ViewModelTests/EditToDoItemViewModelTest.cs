@@ -31,7 +31,7 @@ namespace AdvancedToDoListTests.ViewModelTests;
 /// - Mock object pattern for dependencies (IDialogService, IToDoService)
 /// - Independent test isolation (no shared state)
 /// </remarks>
-public class EditToDoItemViewModelTest
+public class EditToDoItemViewModelTest : TestBase
 {
     /// <summary>
     /// Tests that the constructor properly initializes the ViewModel with item and categories.
