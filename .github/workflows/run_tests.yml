@@ -34,7 +34,7 @@ jobs:
 
       - name: Build all solutions with diagnostics
         run: |
-          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse -File | Where-Object { $_.Extension -in '.sln', '.slnx' } | Select-Object -ExpandProperty FullName
           foreach ($solution in $solutions) {
             Write-Host "=== Restoring: $solution ==="
             dotnet restore $solution --ignore-failed-sources --verbosity:detailed
@@ -51,7 +51,7 @@ jobs:
 
       - name: Run all tests
         run: |
-          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse -File | Where-Object { $_.Extension -in '.sln', '.slnx' } | Select-Object -ExpandProperty FullName
           $failed = $false
           foreach ($solution in $solutions) {
             Write-Host "=== Testing: $solution ==="
