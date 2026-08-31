@@ -38,11 +38,30 @@ jobs:
           foreach ($solution in $solutions) {
             Write-Host "=== Restoring: $solution ==="
             dotnet restore $solution --ignore-failed-sources --verbosity:detailed
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             Write-Host "=== Building: $solution ==="
             dotnet build $solution --no-restore --verbosity:detailed
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
         shell: pwsh
         env:
           MSBUILDSINGLEPROCESSBUILD: "1"
           DOTNET_CLI_TELEMETRY_PROFILE: "True"
           NUGET_VERBOSITY: "detailed"
+
+      - name: Run all tests
+        run: |
+          $solutions = Get-ChildItem -Path "./src/Avalonia.Samples" -Filter "*.sln*" -Recurse | Select-Object -ExpandProperty FullName
+          $failed = $false
+          foreach ($solution in $solutions) {
+            Write-Host "=== Testing: $solution ==="
+            dotnet test $solution --no-build --verbosity:normal
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Tests failed for solution: $solution"
+              $failed = $true
+            }
+          }
+          if ($failed) {
+            exit 1
+          }
+        shell: pwsh
