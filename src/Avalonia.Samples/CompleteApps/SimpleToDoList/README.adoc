@@ -117,6 +117,8 @@ In your preferred IDE, create a new Avalonia MVVM project with the `CommunityToo
 
 This tutorial shows Visual Studio in use. The exact file structure you see may vary if you use a different IDE.
 
+For more information on creating new Avalonia projects, see the https://docs.avaloniaui.net/docs/get-started/create-your-first-project[[Avalonia documentation\]].
+
 === Step 2: Set up the Model
 
 TIP: In our case we need the model for I/O operations. If you have no use for the model in your own App, feel free to skip that part.
