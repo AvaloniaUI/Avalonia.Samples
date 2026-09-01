@@ -108,7 +108,6 @@ In the class file `ValidationUsingDataAnnotationViewModel.cs`, add the following
 ----
 using ReactiveUI;
 using System.ComponentModel.DataAnnotations;
-using ValidationSample.ViewModels;
 
 namespace ValidationSample.ViewModels
 {
