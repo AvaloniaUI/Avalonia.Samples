@@ -113,7 +113,7 @@ NOTE: In this sample we will use the MVVM (Model-View-ViewModel) approach, where
 
 === Step 1: Create and set up a new project
 
-In your preferred IDE, create a new Avalonia MVVM project with the `CommunityToolkit.MVVM` toolkit. You can install the toolkit manually via https://www.nuget.org/packages/CommunityToolkit.Mvvm[[NuGet]] if you are using the command line.
+In your preferred IDE, create a new Avalonia MVVM project with the `CommunityToolkit.MVVM` toolkit. You can install the toolkit manually via https://www.nuget.org/packages/CommunityToolkit.Mvvm[[NuGet\]] if you are using the command line.
 
 This tutorial shows Visual Studio in use. The exact file structure you see may vary if you use a different IDE.
 
