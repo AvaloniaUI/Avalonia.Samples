@@ -104,7 +104,7 @@ Before we start with the implementation of the app, we need to define a list of 
 
 ==== Draft UI Layout
 
-image::_docs/Sketch.png[alt="Sketch of the UI", title="Sketch of the UI"]
+image::_docs/Sketch.png[alt="Sketch of the UI"]
 
 
 == The Solution
