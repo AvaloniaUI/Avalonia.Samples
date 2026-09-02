@@ -111,7 +111,7 @@ image::_docs/Sketch.png[alt="Sketch of the UI", title="Sketch of the UI"]
 
 NOTE: In this sample we will use the MVVM (Model-View-ViewModel) approach, where we will start with the Model and ViewModel first.
 
-=== Step 1: Create and set up a new project
+=== Step 1: Create a new project
 
 In your preferred IDE, create a new Avalonia MVVM project with the `CommunityToolkit.MVVM` toolkit. You can install the toolkit manually via https://www.nuget.org/packages/CommunityToolkit.Mvvm[[NuGet\]] if you are using the command line.
 
@@ -119,9 +119,11 @@ This tutorial shows Visual Studio in use. The exact file structure you see may v
 
 For more information on creating new Avalonia projects, see the https://docs.avaloniaui.net/docs/get-started/create-your-first-project[[Avalonia documentation\]].
 
-=== Step 2: Set up the Model
+=== Step 2: Set up the model
 
-Inside your `Models` folder, add a new file `ToDoItem.cs`. This is the class file for the `ToDoItem` class, which has two properties. This model is used to save and restore the user's ToDo list.
+Inside your `Models` folder, add a new file `ToDoItem.cs`. This is the class file for the `ToDoItem` class, which is used to save and restore the user's ToDo list.
+
+Give the class two properties: one for the content of the item and one for whether it is checked or not.
 
 .*Models/ToDoItem.cs*
 [source,cs]
@@ -144,17 +146,16 @@ public class ToDoItem
 ----
 
 
-=== Step 3: Set up the ViewModel
+=== Step 3: Set up the view models
 
-==== The ToDoItem-ViewModel
+==== ToDoItem view model
 
-Our next task is to create a `ViewModel` for our to-do-items, which we will use as an intermediate layer between the `View` and the `Model`. Inside the folder `ViewModels` add a new class `ToDoItemViewModel` which inherits `ViewModelBase`.
+Our next task is to create a `ViewModel` for our to-do items, which we will use as an intermediate layer between the `View` and the `Model`. Inside the folder `ViewModels`, add a new class `ToDoItemViewModel`, which inherits from `ViewModelBase`.
 
-IMPORTANT: If you want to use the source generators, remember to mark the class as `partial`.
+IMPORTANT: *Important:* If you want to use the source generators, remember to mark the class as `partial`.
 
-
+.*ViewModels/ToDoItemViewModel.cs*
 [source,cs]
-.ViewModels/ToDoItemViewModel.cs
 ----
 /// <summary>
 /// This is a ViewModel which represents a <see cref="Models.ToDoItem"/>
@@ -182,7 +183,7 @@ public partial class ToDoItemViewModel : ViewModelBase
 }
 ----
 
-Our `ViewModel` is not yet connected to our `Model`. To create a new `ToDoItemViewModel` from an existing `ToDoItem`, we can add a constructor that takes the `ToDoItem` as an argument.
+At this point, `ToDoItemViewModel` is not yet connected to the `ToDoItem` model. To create a new `ToDoItemViewModel` from an existing `ToDoItem`, we can add a constructor that takes the `ToDoItem` as an argument.
 
 NOTE: We also want to be able to create a new, empty `ToDoItemViewModel`. Therefore, we also add a parameterless constructor.
 
