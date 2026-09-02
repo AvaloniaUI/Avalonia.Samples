@@ -224,7 +224,7 @@ public ToDoItemViewModel(ToDoItem item)
 }
 ----
 
-Lastly, the view model needs a way to get the updated model back, if the user makes changes to it. We can use a read-only property or a method like the one shown below:
+Lastly, the view model needs a way to get the updated model back, if the user makes changes to it. Add a method that does this to the `ViewModel` class:
 
 .*ViewModels/ToDoItemViewModel.cs*
 [source,cs]
