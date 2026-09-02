@@ -121,14 +121,10 @@ For more information on creating new Avalonia projects, see the https://docs.ava
 
 === Step 2: Set up the Model
 
-TIP: In our case we need the model for I/O operations. If you have no use for the model in your own App, feel free to skip that part.
+Inside your `Models` folder, add a new file `ToDoItem.cs`. This is the class file for the `ToDoItem` class, which has two properties. This model is used to save and restore the user's ToDo list.
 
-NOTE: In case the folder `Models` is missing on your side, just add it to your project.
-
-The Model will be quite simple in our case. We want to have one class called `ToDoItem`, which has two `Properties`. This model will also be used to save and restore the users ToDo-List later on. Inside the folder `Models`, add a new class called `ToDoItem`:
-
+.*Models/ToDoItem.cs*
 [source,cs]
-.Models/ToDoItem.cs
 ----
 /// <summary>
 /// This is our Model for a simple ToDoItem.
