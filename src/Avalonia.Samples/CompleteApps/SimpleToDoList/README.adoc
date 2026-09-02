@@ -157,6 +157,10 @@ IMPORTANT: *Important:* If you want to use the source generators, remember to ma
 .*ViewModels/ToDoItemViewModel.cs*
 [source,cs]
 ----
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace SimpleToDoList.ViewModels;
+
 /// <summary>
 /// This is a ViewModel which represents a <see cref="Models.ToDoItem"/>
 /// </summary>
@@ -183,10 +187,21 @@ public partial class ToDoItemViewModel : ViewModelBase
 }
 ----
 
-At this point, `ToDoItemViewModel` is not yet connected to the `ToDoItem` model. To create a new `ToDoItemViewModel` from an existing `ToDoItem`, we can add a constructor that takes the `ToDoItem` as an argument.
+At this point, `ToDoItemViewModel` is not yet connected to the `ToDoItem` model.
 
-NOTE: We also want to be able to create a new, empty `ToDoItemViewModel`. Therefore, we also add a parameterless constructor.
+In `ToDoItemViewModel.cs`, add a `using` statement to the top of the file to use the `Models` in your namespace.
 
+.*ViewModels/ToDoItemViewModel.cs*
+[source,cs]
+----
+using SimpleToDoList.Models;
+----
+
+To create a new `ToDoItemViewModel` from an existing `ToDoItem`, add a constructor to the `ViewModel` class that takes the `ToDoItem` as an argument.
+
+We also want to be able to create a new, empty `ToDoItemViewModel`. Therefore, we also add a parameterless constructor.
+
+.*ViewModels/ToDoItemViewModel.cs*
 [source,cs]
 ----
 /// <summary>
@@ -209,8 +224,9 @@ public ToDoItemViewModel(ToDoItem item)
 }
 ----
 
-Okay, now we also need a way to get the updated `Model` back, if the user made some changes. We can do this, for example, using a read-only property or a method like shown below:
+Lastly, the view model needs a way to get the updated model back, if the user makes changes to it. We can use a read-only property or a method like the one shown below:
 
+.*ViewModels/ToDoItemViewModel.cs*
 [source,cs]
 ----
 /// <summary>
@@ -226,6 +242,8 @@ public ToDoItem GetToDoItem()
     };
 }
 ----
+
+See https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/ToDoItemViewModel.cs[[`ToDoItemViewModel`\]] for the completed view model file.
 
 ==== The MainViewModel
 
