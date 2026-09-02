@@ -245,11 +245,11 @@ public ToDoItem GetToDoItem()
 
 See https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/ToDoItemViewModel.cs[[`ToDoItemViewModel`\]] for the completed view model file.
 
-==== The MainViewModel
+==== Main view model
 
-Depending on the template used to create the project you should see a file called `MainViewModel` or `MainWindowViewModel`. Open this file to edit it.
+Avalonia templates automatically create `MainViewModel.cs` in a new project. Open this file to edit it.
 
-TIP: If you see a property called `Greetings`, feel free to delete it as we don't need that in our App.
+TIP: *Tip:* If you see a property called `Greeting`, feel free to delete it. We don't need it for this app.
 
 Let's add an `ObservableCollection` called `ToDoItems`. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus, a getter is enough here.
 
