@@ -89,7 +89,7 @@ NOTE: If you want to learn more about how these source generators work, please s
 
 Before we start with the implementation of the app, we need to define a list of requirements and a sketch of the UI.
 
-==== Must-Haves
+==== Must-haves
 
 - The user must be able to view a list of to-do items.
 - All items must be easily discoverable.
@@ -97,12 +97,12 @@ Before we start with the implementation of the app, we need to define a list of 
 - The user must be able to add new items.
 - The user must be able to delete an existing item.
 
-==== Nice-To-Haves
+==== Nice-to-haves
 
 - The user should have visual feedback when hovering a to-do item.
 - The user should have visual feedback if a new item can be added or not.
 
-==== Draft UI Layout
+==== Sketch of UI layout
 
 image::_docs/Sketch.png[alt="Sketch of the UI"]
 
