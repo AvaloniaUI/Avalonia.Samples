@@ -251,21 +251,29 @@ Avalonia templates automatically create `MainViewModel.cs` in a new project. Ope
 
 TIP: *Tip:* If you see a property called `Greeting`, feel free to delete it. We don't need it for this app.
 
-Let's add an `ObservableCollection` called `ToDoItems`. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus, a getter is enough here.
+In `MainViewModel.cs`, add an `ObservableCollection` called `ToDoItems`. This collection will notify the UI whenever an item is added or removed. Only a getter is needed, as the property can be read-only.
 
+You also need to add two `using` statements to be able to use the `ObservableCollection`.
+
+.*ViewModels/MainViewModel.cs*
 [source,cs]
-.ViewModels/MainViewModel.cs
 ----
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+...
+
 /// <summary>
 /// Gets a collection of <see cref="ToDoItem"/> which allows adding and removing items
 /// </summary>
 public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
 ----
 
-Well, now we have a collection of `ToDoItems` but how can we add new items to it? In our case this is quite simple as we only expect a non-empty `string` as content to construct a new item. We will add a helper property called `NewItemContent`. If that `string` is not empty, a command called `AddItemCommand` will be enabled.
+To add new items to the `ToDoItems` collection, we need a helper property. In the case of this to-do list, the helper property is only expected to accept a non-empty string as content to construct a new item.
 
-NOTE: The command and the properties will be created using the source generator provided by the MVVM-toolkit we use. Remember to make the `MainViewModel` `partial`.
+In `MainViewModel.cs`, add a new observable property and give it a name such as `NewItemContent`. Give it a command called `AddItemCommand`, which adds the item if it is a non-empty string. The command and property will be created by the source generator provided by `CommunityToolkit.MVVM` so long as you have used `partial`.
 
+.*ViewModels/MainViewModel.cs*
 [source,cs]
 ----
 /// <summary>
@@ -276,8 +284,9 @@ NOTE: The command and the properties will be created using the source generator 
 public partial string? NewItemContent { get; set; }
 ----
 
-Next step is to create a method or a property that returns a `bool` indicating whether the `AddItemCommand` can execute:
+Next step is to create a `bool` method or a property that indicates whether the `AddItemCommand` can execute:
 
+.*ViewModels/MainViewModel.cs*
 [source,cs]
 ----
 /// <summary>
@@ -286,10 +295,19 @@ Next step is to create a method or a property that returns a `bool` indicating w
 private bool CanAddItem() => !string.IsNullOrWhiteSpace(NewItemContent);
 ----
 
-Last but not least we can add the `Command`. If we annotate a `void` or a `Task` with the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`RelayCommand`-attribute\]], a new `RelayCommand` will be generated for us. In our case we use a `void` called `AddItem` which will add a new item into `ToDoItems`-collection. After that we want to reset the `NewItemContent`, so that the input field is cleared for the next item to be added.
+Now you can add the `Command` itself. With `CommunityToolkit.MVVM`, you can use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`RelayCommand` attribute\]] to generate a command from a `void` or a `Task`.
 
+In this tutorial, `AddItem` is created as a `void`. Other than adding a new item to the `ToDoItems` collection, it also resets the `NewItemContent` property, so that the input field is cleared and ready for the next item.
+
+Be sure to also add another `using` statement to the top of `MainViewModel.cs` to allow `RelayCommand` to be used.
+
+.*ViewModels/MainViewModel.cs*
 [source,cs]
 ----
+using CommunityToolkit.Mvvm.Input;
+
+...
+
 /// <summary>
 /// This command is used to add a new Item to the List
 /// </summary>
@@ -304,10 +322,13 @@ private void AddItem()
 }
 ----
 
-Adding items is possible now, but we also want to be able to remove items. So we will add another `Command` for that. However, we need to know which item to remove. So we will pass the item to remove as a `CommandParameter`.
+`AddItemCommand` makes it possible to add items to the collection, but we also want to be able to remove items from it. For that, a second command is needed.
 
-NOTE: According to our App draft, we want to add the `Delete-Button` next to each item. Therefore, we can be sure that always a valid `CommandParameter` is sent to the `Command`. Therefore, we don't need to set `CanExecute` in this case.
+Create another `RelayCommand` named `RemoveItem`. Pass the item to remove as a `CommandParameter` to specify what the command should remove.
 
+NOTE: *Note:* According to the app draft, we want to add the Delete button next to each item. Therefore, we don't need to set `CanExecute` in this case, as we can be certain that the button only ever appears when there is a valid `CommandParameter`.
+
+.*ViewModels/MainViewModel.cs*
 [source, cs]
 ----
 /// <summary>
@@ -322,6 +343,9 @@ private void RemoveItem(ToDoItemViewModel item)
 }
 ----
 
+At this point, your IDE may be reporting errors for some of the elements in `MainViewModel.cs`. These will be resolved in the following steps—there is no need to debug extensively right now.
+
+See https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/MainViewModel.cs[[`MainViewModel`\]] for the completed view model file.
 
 === Step 4: Set up the View
 
