@@ -284,7 +284,7 @@ In `MainViewModel.cs`, add a new observable property and give it a name such as 
 public partial string? NewItemContent { get; set; }
 ----
 
-Next step is to create a `bool` method or a property that indicates whether the `AddItemCommand` can execute:
+Next step is to create a `bool` method or a property that indicates whether the `AddItemCommand` can execute, i.e., whether the string is empty:
 
 .*ViewModels/MainViewModel.cs*
 [source,cs]
