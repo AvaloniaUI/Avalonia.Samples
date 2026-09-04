@@ -251,9 +251,9 @@ Avalonia templates automatically create `MainViewModel.cs` in a new project. Ope
 
 TIP: *Tip:* If you see a property called `Greeting`, feel free to delete it. We don't need it for this app.
 
-In `MainViewModel.cs`, add an `ObservableCollection` called `ToDoItems`. This collection will notify the UI whenever an item is added or removed. Only a getter is needed, as the property can be read-only.
+Within the `public partial class MainViewModel`, add an `ObservableCollection` called `ToDoItems`. This collection will notify the UI whenever an item is added or removed. Only a getter is needed, as the property can be read-only.
 
-You also need to add two `using` statements to be able to use the `ObservableCollection`.
+You also need to add two `using` statements to the file to be able to use the `ObservableCollection`.
 
 .*ViewModels/MainViewModel.cs*
 [source,cs]
@@ -261,17 +261,20 @@ You also need to add two `using` statements to be able to use the `ObservableCol
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-...
+namespace SimpleToDoList.ViewModels;
 
-/// <summary>
-/// Gets a collection of <see cref="ToDoItem"/> which allows adding and removing items
-/// </summary>
-public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
+public partial class MainViewModel : ViewModelBase
+{
+    /// <summary>
+    /// Gets a collection of <see cref="ToDoItem"/> which allows adding and removing items
+    /// </summary>
+    public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
+}
 ----
 
 To add new items to the `ToDoItems` collection, we need a helper property. In the case of this to-do list, the helper property is only expected to accept a non-empty string as content to construct a new item.
 
-In `MainViewModel.cs`, add a new observable property and give it a name such as `NewItemContent`. Give it a command called `AddItemCommand`, which adds the item if it is a non-empty string. The command and property will be created by the source generator provided by `CommunityToolkit.MVVM` so long as you have used `partial`.
+In the `MainViewModel`, add a new observable property and give it a name such as `NewItemContent`. Give it a command called `AddItemCommand`, which adds the item if it is a non-empty string. The command and property will be created by the source generator provided by `CommunityToolkit.MVVM` so long as the `MainViewModel` is `partial`.
 
 .*ViewModels/MainViewModel.cs*
 [source,cs]
@@ -326,7 +329,7 @@ private void AddItem()
 
 Create another `RelayCommand` named `RemoveItem`. Pass the item to remove as a `CommandParameter` to specify what the command should remove.
 
-NOTE: *Note:* According to the app draft, we want to add the Delete button next to each item. Therefore, we don't need to set `CanExecute` in this case, as we can be certain that the button only ever appears when there is a valid `CommandParameter`.
+NOTE: *Note:* According to the app draft, we want to add the Delete button next to each item. Therefore, we don't need to set `CanExecute` on the removal command, as we can be certain that the button only ever appears when there is a valid `CommandParameter`.
 
 .*ViewModels/MainViewModel.cs*
 [source, cs]
@@ -343,36 +346,23 @@ private void RemoveItem(ToDoItemViewModel item)
 }
 ----
 
-At this point, your IDE may be reporting errors for some of the elements in `MainViewModel.cs`. These will be resolved in the following steps—there is no need to debug extensively right now.
-
 See https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/MainViewModel.cs[[`MainViewModel`\]] for the completed view model file.
 
-=== Step 4: Set up the View
+=== Step 4: Set up the view
 
-NOTE: Depending on the template you used to create your project, you may see a file called `MainView` alongside `MainWindow`. In this case, please use `MainView` to add the content shown below. `MainWindow` will present this view for you.
+NOTE: *Note:* Depending on the template you used, you may have a file called `MainView.axaml` as well as `MainWindow.axaml`. If this is the case, carry out the steps in this section in `MainView.axaml`. `MainWindow` will present the view automatically.
 
-Let's recall the App-design we planned:
+Let's review the app design. The UI is intended to have a header at the top, a content body in the middle that occupies most of the space in the window, and a footer with an input field to add new items.
 
-image::_docs/Sketch.png[title="Our sketch of the App-design", alt="Our sketch of the App-design"]
+image::_docs/Sketch.png[alt="Sketch of the UI"]
 
 
-As shown above, we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels[[`Panels`\]] to achieve different layouts. In our case we can use a `DockPanel` or a `Grid`. We will use a `Grid` as this offers the most flexible layout.
+In Avalonia, each window accepts one control only. To have multiple controls in a view, you must nest them within a https://docs.avaloniaui.net/controls[[layout control\]], such as a `Panel` or `Grid`. For this tutorial, use a `Grid`.
 
-[TIP]
-====
-A `Grid-Row` or `Grid-Column` can have different `GridSizes`:
+TIP: *Tip:* For more information on how to use grids, see the https://docs.avaloniaui.net/controls/layout/panels/grid[[`Grid` control reference\]].
 
-- https://docs.avaloniaui.net/docs/reference/controls/grid/#absolute-size-definitions[Absolute Size Definition]
-- https://docs.avaloniaui.net/docs/reference/controls/grid/#proportional-size-definitions[Proportional Size Definitions]
-- https://docs.avaloniaui.net/docs/reference/controls/grid/#automatic-size-definitions[Automatic Size Definitions]
-====
-
-NOTE: You can set `Grid.Row` and `Grid.Column`-attached properties on every child control to define the exact cell where the control should be shown.
-
-Here is our basic layout:
-
+.*Views/MainWindow.axaml*
 [source,xml]
-.Views/MainWindow.axaml
 ----
 <!-- Leave the root-Node untouched beside setting Width, Height and Padding -->
 <Window xmlns="https://github.com/avaloniaui"
@@ -409,19 +399,28 @@ Here is our basic layout:
 </Window>
 ----
 
-We are now good to go and run our App for the first time. You should see something similar to this:
+=== Step 5: Running the app and making improvements
 
-image::_docs/First_Run.png[caption="Figure 3: ", title="First App run", alt="First App run"]
+==== Adding a button
+
+It is now possible to run the app, now that it has a view, model and view model set up. If you do that, you should see something similar to this:
+
+image::_docs/First_Run.png[alt="First app run"]
 
 
-We can see the title `TextBlock` is there and also the entry field for new items to add. We can add some text into the `TextBox`, however we have no button to add it into our list yet. Let's fix that.
+The app has a title, an empty content body and an input field. We can enter text into the input field. However, there is no button to add it to the to-do list, and the content area stays empty as a consequence.
 
-In Avalonia a TextBox can add `InnerLeftContent` and `InnerRightContent`, which can be used to add any content you like. For example, we can add a button to it. The `Button` will execute the `AddItemCommand`. For convenience, we also want to allow adding items using the keyboard. That is what https://docs.avaloniaui.net/docs/concepts/input/hotkeys[[`KeyBindings` and `HotKeys`\]] can be used for.
+For the app to be usable, it must have a confirmation button. In Avalonia, a `TextBox` can have an `InnerLeftContent` or `InnerRightContent`, which can host a button. Use this property to add a `Button` that executes the `AddItemCommand`.
 
-TIP: We use `KeyBindings` here as a `HotKey` would be available for the whole view, where we want it only to work when the `TextBox` is focused.
+For convenience, you can also allow confirmation using the keyboard. To do this, set a https://docs.avaloniaui.net/docs/input-interaction/mouse-and-keyboard-shortcuts#key-bindings[[key binding\]].
 
-Here is what our modified input box looks like:
+TIP: *Tip:* Hotkeys can also be set to allow command execution from the keyboard. In this case, `KeyBinding` is preferred over `HotKey`, because `HotKey` applies to the whole view, whereas `KeyBinding` fits the expected behavior of only working when the `TextBox` is focused.
 
+Modify the `TextBox` in `MainWindow.axaml` by setting an `InnerRightContent` within its tags. Place a `Button` as the content, and bind it to `AddItemCommand`. For the key binding, separately set a `KeyBinding` within the `TextBox` tags and also bind it to `AddItemCommand`.
+
+You should end up with a `Grid` like this:
+
+.*Views/MainWindow.axaml*
 [source,xml]
 ----
 <TextBox Grid.Row="2"
@@ -440,19 +439,24 @@ Here is what our modified input box looks like:
 </TextBox>
 ----
 
-Now, if you run your App again, you will notice that we have a Button which is grayed out if the input field is empty and gets enabled as soon as you start typing. Invoking the `Button` will add a new item to our list above.
+==== Defining a data template
 
-image::_docs/Second_Run.png[caption="Figure 4: ", title="Second App run", alt="Second App run"]
+If you run the app again after adding the button, you can see that the window now has an *Add* button that is grayed out if the input field is empty and enabled if you start typing. You can now add items to the content area by clicking the button or pressing Enter.
+
+image::_docs/Second_Run.png[alt="Second app run"]
 
 
-Great, we can add new items to our list. However, they don't display themselves as we wanted them to. Instead of showing the content, we see the name of the `ItemViewModel`. We can fix that by defining the `ItemTemplate` for the `ItemsControl`.
+At this point, if you try to add an item, you may notice that the actual text you enter is not displayed. Instead of something like "Item 1", you see the name of the ToDoItemViewModel`.
 
-NOTE: If you want to learn more about `DataTemplates`, see these samples: https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples[[DataTemplate-Samples\]]
+To make the app display the expected input, we must define an `ItemTemplate` for the `ItemsControl`, i.e., the control  on row 1 of the `Grid` which displays the to-do list.
 
-Our `DataTemplate` uses a `CheckBox` where the `Content` is bound to `ToDoItemViewModel.Content` and `IsChecked` is bound to `ToDoItemViewModel.IsChecked`. Next to it, we will add a `Button` which is there to delete the given item. The `Command` is bound to the `MainViewModel.DeleteCommand` and the `CommandParameter` is the `ToDoItemViewModel` itself.
+To create the data template, add an `ItemTemplate` within the `ItemsControl` tags. The `ItemTemplate` itself can then host a `DataTemplate` that takes data from the `ToDoITemViewModel`. In the `DataTemplate`, place a `Grid` that holds the controls with which to display the data from the view model.
 
-NOTE: Inside the `ItemTemplate` we can only use members of our `ItemViewModel`. However, the `DeleteCommand` is part of our `MainViewModel`. We can access this by accessing the parents or named controls `DataContext`. As we use compiled bindings, we have to https://docs.avaloniaui.net/docs/basics/data/data-binding/compiled-bindings#type-casting[[cast the `DataContext`\]]
+Add a `CheckBox` to the `Grid`. Bind `ToDoItemViewModel.Content` as its `Content` and `ToDoItemViewModel.IsChecked` as its `IsChecked` status. Then, add a `Button` bound to `RemoveItemCommand` so that a "Delete" button is provided next to each list item.
 
+*Note:* Because we set the `DataTemplate` to use `vm:ToDoItemViewModel`, only data from `ToDoItemViewModel` can be used in the ItemTemplate by default. However, `RemoveItemCommand` is in `MainViewModel`. To circumvent this, we can use https://docs.avaloniaui.net/docs/data-binding/compiled-bindings#explicit-type-casting[[explicit type casting\]] to access the required data context.
+
+.*Views/MainWindow.axaml*
 [source,xml]
 ----
 <ItemsControl ItemsSource="{Binding ToDoItems}">
@@ -476,9 +480,11 @@ NOTE: Inside the `ItemTemplate` we can only use members of our `ItemViewModel`. 
 </ItemsControl>
 ----
 
-If we now run the App once again, we will see that the items are now displayed as intended. Moreover, we can now check and uncheck them as well as delete them.
+NOTE: To learn more about `DataTemplates`, see the https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples[[data template samples\]] or the https://docs.avaloniaui.net/docs/data-templates/introduction-to-data-templates[[data template documentation\]].
 
-image::_docs/Third_Run.png[caption="Figure 5: ", title="Third App run", alt="Third App run"]
+Run the app a third time. Now, the app functions as intended, allowing you to add, delete, check and uncheck items.
+
+image::_docs/Third_Run.png[alt="Third app run"]
 
 
 === Step 5 (Optional): Add some Styles to improve the UI
