@@ -487,13 +487,15 @@ Run the app a third time. Now, the app functions as intended, allowing you to ad
 image::_docs/Third_Run.png[alt="Third app run"]
 
 
-=== Step 5 (Optional): Add some Styles to improve the UI
+=== Step 6 (Optional): Styling the UI
 
-While our App is now fully functional, and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user-friendly:
+The app is now fully functional and fulfils all of the stated must-haves. However, you may feel that some parts of the UI could be improved, for example:
 
-- The Title looks exactly as any other content, this should be improved
-- The Buttons have English-only content. Having symbols would make them more understandable for all folks.
-- It would be nice if the item that the pointer is over were highlighted. This would help the user to click the intended item.
+- The title looks exactly the same as the list content.
+- The buttons display English text. Symbols would be more appropriate for a global userbase.
+- The item targeted by the pointer has no highlight, which could make it hard for the user to select their intended item.
+
+Avalonia's styling system provides the tools to make these improvements to the app. For more information on styling, see the https://docs.avaloniaui.net/docs/styling/styles[[Styles documentation\]].
 
 For the header text we can use https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class[[`Style.Classes`\]].
 In `App.axaml` add the following Style:
