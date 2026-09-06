@@ -74,7 +74,7 @@ jobs:
         run: |
           dotnet tool install --global dotnet-outdated-tool
           # Add the global‑tool folder to PATH for the remainder of the job
-          $toolPath = "$HOME\.dotnet\tools"
+          $toolPath = "$HOME/.dotnet/tools"
           if (Test-Path $toolPath) {
             Add-Content -Path $env:GITHUB_PATH -Value $toolPath
           }
@@ -104,7 +104,7 @@ jobs:
             Write-Host "🔎 Checking $proj"
             # `--no-restore` speeds things up – we already restored workloads above.
             # `-vl Major` restricts upgrades to minor and patch versions only.
-            dotnet outdated $proj --upgrade --no-restore --exclude $exclude -vl Major
+            dotnet outdated "$proj" --upgrade --no-restore --exclude $exclude -vl Major
           }
 
       # --------------------------------------------------------------
@@ -160,9 +160,9 @@ jobs:
 
           foreach ($proj in $files) {
             Write-Host "🔍 Inspecting $proj for major updates..."
-            $jsonOutput = dotnet list $proj package --outdated --format json | Out-String
-            if (-not [string]::IsNullOrWhiteSpace($jsonOutput)) {
-              try {
+            try {
+              $jsonOutput = dotnet list $proj package --outdated --format json 2>$null
+              if (-not [string]::IsNullOrWhiteSpace($jsonOutput)) {
                 $parsed = $jsonOutput | ConvertFrom-Json
                 if ($parsed.projects) {
                   foreach ($p in $parsed.projects) {
@@ -171,8 +171,9 @@ jobs:
                         if ($fw.topLevelPackages) {
                           foreach ($pkg in $fw.topLevelPackages) {
                             if ($pkg.resolvedVersion -and $pkg.latestVersion) {
-                              $currMajor = ($pkg.resolvedVersion -split '\.')[0]
-                              $latestMajor = ($pkg.latestVersion -split '\.')[0]
+                              # Extract major version, handling pre-release versions
+                              $currMajor = ($pkg.resolvedVersion -split '\.')[0] -replace '[^0-9].*', ''
+                              $latestMajor = ($pkg.latestVersion -split '\.')[0] -replace '[^0-9].*', ''
                               if ([int]::TryParse($currMajor, [ref]$null) -and [int]::TryParse($latestMajor, [ref]$null)) {
                                 if ([int]$latestMajor -gt [int]$currMajor) {
                                   $key = "$($pkg.id)@$latestMajor"
@@ -198,9 +199,9 @@ jobs:
                     }
                   }
                 }
-              } catch {
-                Write-Warning "Could not parse outdated json for $proj: $_"
               }
+            } catch {
+              Write-Warning "Could not parse outdated json for $proj : $_"
             }
           }
 
@@ -220,13 +221,14 @@ jobs:
             $title = "Major dependency update available: $pkgId $latestVer"
 
             Write-Host "Checking if issue already exists for $pkgId (major $majorVer)..."
-            $existingIssues = gh issue list --state all --search "$pkgId $majorVer in:title" --json number,title | ConvertFrom-Json
-
-            if ($existingIssues -and $existingIssues.Count -gt 0) {
-              Write-Host "ℹ️ Issue already exists for $pkgId $majorVer. Skipping."
-            } else {
-              Write-Host "📢 Creating tracking issue for $pkgId $latestVer..."
-              $body = @"
+            try {
+              $existingIssues = gh issue list --state all --search "$pkgId $majorVer in:title" --json number,title 2>$null | ConvertFrom-Json
+              
+              if ($existingIssues -and $existingIssues.Count -gt 0) {
+                Write-Host "ℹ️ Issue already exists for $pkgId $majorVer. Skipping."
+              } else {
+                Write-Host "📢 Creating tracking issue for $pkgId $latestVer..."
+                $body = @"
 ### Major Dependency Update Available
 
 A major version update is available for package **$pkgId**.
@@ -237,7 +239,10 @@ A major version update is available for package **$pkgId**.
 
 Because major updates may include breaking changes, manual validation is recommended before upgrading.
 "@
-              gh issue create --title $title --body $body
+                gh issue create --title $title --body $body
+              }
+            } catch {
+              Write-Warning "Failed to check/create issue for $pkgId : $_"
             }
           }
 
