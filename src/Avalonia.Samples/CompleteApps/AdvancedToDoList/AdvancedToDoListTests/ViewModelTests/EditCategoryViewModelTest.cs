@@ -27,7 +27,7 @@ namespace AdvancedToDoListTests.ViewModelTests;
 /// - Mock object pattern for dependencies (IDialogService, ICategoryService)
 /// - Independent test isolation (no shared state)
 /// </remarks>
-public class EditCategoryViewModelTest
+public class EditCategoryViewModelTest : TestBase
 {
     /// <summary>
     /// Tests that creating a new EditCategoryViewModel without parameters creates a new item.

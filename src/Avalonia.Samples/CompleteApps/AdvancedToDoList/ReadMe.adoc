@@ -476,8 +476,9 @@ public async Task ManageCategoriesView_Should_Display_Categories()
     var window = new Window { Content = view };
     window.Show();
 
-    // Give some time for view initialization
-    await Task.Delay(100);
+    // Await initialization and flush dispatcher jobs
+    await vm.InitializationTask;
+    Dispatcher.UIThread.RunJobs();
 
     var listBox = view.FindControl<ListBox>("CategoriesListBox");
 

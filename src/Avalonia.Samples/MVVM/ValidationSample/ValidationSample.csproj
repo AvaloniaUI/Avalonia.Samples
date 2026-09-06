@@ -22,6 +22,7 @@
 		<PackageReference Include="ReactiveUI.Avalonia" Version="12.1.1" />
 		<PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+		<PackageReference Include="System.Reactive" Version="6.0.1" />
 	</ItemGroup>
 	<PropertyGroup>
 		<PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
