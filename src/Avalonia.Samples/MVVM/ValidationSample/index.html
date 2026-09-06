@@ -2038,29 +2038,32 @@ pre.rouge .gs {
 <li><a href="#_before_we_start">Before we start</a></li>
 <li><a href="#_approach_1_validate_a_property_using_dataannotations">Approach 1 : Validate a Property using DataAnnotations</a>
 <ul class="sectlevel2">
-<li><a href="#_step_1_set_up_the_viewmodel">Step 1: Set up the ViewModel</a></li>
-<li><a href="#_step_2_add_the_property">Step 2: Add the Property</a></li>
-<li><a href="#_step_3_set_up_the_view">Step 3: Set up the View</a></li>
-<li><a href="#_step_4_run_the_app">Step 4: Run the App</a></li>
+<li><a href="#_step_1_enable_data_annotations_validation">Step 1: Enable data annotations validation</a></li>
+<li><a href="#_step_2_set_up_the_view_model">Step 2: Set up the view model</a></li>
+<li><a href="#_step_3_add_the_property">Step 3: Add the property</a></li>
+<li><a href="#_step_4_set_up_the_view">Step 4: Set up the view</a></li>
+<li><a href="#_step_5_run_the_app">Step 5: Run the app</a></li>
 </ul>
 </li>
 <li><a href="#_approach_2_validate_a_property_using_inotifydataerrorinfo">Approach 2 : Validate a Property using INotifyDataErrorInfo</a>
 <ul class="sectlevel2">
-<li><a href="#_step_1_set_up_the_viewmodel_2">Step 1: Set up the ViewModel</a></li>
-<li><a href="#_step_2_add_the_property_2">Step 2: Add the Property</a></li>
-<li><a href="#_step_3_set_up_the_view_2">Step 3: Set up the View</a></li>
-<li><a href="#_step_4_run_the_app_2">Step 4: Run the App</a></li>
+<li><a href="#_step_1_set_up_the_main_view_model">Step 1: Set up the main view model</a></li>
+<li><a href="#_step_2_set_up_the_validation_view_model">Step 2: Set up the validation view model</a></li>
+<li><a href="#_step_3_add_the_property_2">Step 3: Add the property</a></li>
+<li><a href="#_step_4_add_a_listener">Step 4: Add a listener</a></li>
+<li><a href="#_step_5_set_up_the_view">Step 5: Set up the view</a></li>
+<li><a href="#_step_6_run_the_app">Step 6: Run the app</a></li>
 </ul>
 </li>
 <li><a href="#_approach_3_validate_a_property_using_exceptions_inside_setters">Approach 3 : Validate a Property using Exceptions inside setters</a>
 <ul class="sectlevel2">
-<li><a href="#_step_1_set_up_the_viewmodel_3">Step 1: Set up the ViewModel</a></li>
-<li><a href="#_step_2_add_the_property_3">Step 2: Add the Property</a></li>
-<li><a href="#_step_3_set_up_the_view_3">Step 3: Set up the View</a></li>
-<li><a href="#_step_4_run_the_app_3">Step 4: Run the App</a></li>
+<li><a href="#_step_1_set_up_the_main_view_model_2">Step 1: Set up the main view model</a></li>
+<li><a href="#_step_2_add_the_property">Step 2: Add the property</a></li>
+<li><a href="#_step_3_set_up_the_view">Step 3: Set up the view</a></li>
+<li><a href="#_step_4_run_the_app">Step 4: Run the app</a></li>
 </ul>
 </li>
-<li><a href="#_related">Related</a></li>
+<li><a href="#_see_also">See also</a></li>
 </ul>
 </div>
 </div>
@@ -2085,7 +2088,10 @@ pre.rouge .gs {
 <h2 id="_before_we_start">Before we start</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your <code>ViewModel</code> to your <code>View</code>. In this sample we will show you three options to validate a property. It&#8217;s up to you which one you prefer. You can also combine them.</p>
+<p>You should already know how to set up a new Avalonia project. Moreover, you should know the basics about the MVVM-pattern and how to bind a property of your <code>ViewModel</code> to your <code>View</code>. In this sample, we will show you three options to validate a property. It&#8217;s up to you which one you prefer. You can also combine them.</p>
+</div>
+<div class="paragraph">
+<p>Note that this sample uses the <strong>ReactiveUI</strong> toolkit.</p>
 </div>
 </div>
 </div>
@@ -2093,40 +2099,39 @@ pre.rouge .gs {
 <h2 id="_approach_1_validate_a_property_using_dataannotations">Approach 1 : Validate a Property using DataAnnotations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the first approach we will show you how to use <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>DataAnnotations</code>]</a> to validate a property. To get started, please create a new project using the <code>Avalonia MVVM Template</code>.</p>
+<p>In the first approach, we will show you how to use <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>DataAnnotations</code>]</a> to validate a property. To get started, please create a new project using the <code>Avalonia MVVM Template</code> with the ReactiveUI toolkit.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+<div class="sect2">
+<h3 id="_step_1_enable_data_annotations_validation">Step 1: Enable data annotations validation</h3>
 <div class="paragraph">
-<p>Beginning with Avalonia 12, the <code>DataAnnotations</code>-validation is disabled by default. If you want to use this option, you have to <a href="https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins">[enable the DataAnnotationsValidator]</a> in your App.</p>
+<p>Beginning with Avalonia 12, the <code>DataAnnotations</code> validation is disabled by default. If you want to use this option, you have to <a href="https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins">[enable the DataAnnotationsValidator]</a> in your app.</p>
 </div>
 <div class="listingblock">
-<div class="title">Program.cs</div>
+<div class="title"><strong>Program.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="diff"><span class="p">public static AppBuilder BuildAvaloniaApp()
 </span>    =&gt; AppBuilder.Configure&lt;App&gt;()
         .UsePlatformDetect()
-        .LogToTrace()
-        .WithDeveloperTools()
 <span class="gi">+       .WithDataAnnotationsValidation() // Enable validation using DataAnnotation attributes
-</span>        .UseReactiveUI(builder =&gt; { });</code></pre>
+</span>#if DEBUG
+        .WithDeveloperTools()
+#endif
+        .WithInterFont()
+        .LogToTrace()
+        .UseReactiveUI(_ =&gt; { });</code></pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
 </div>
 <div class="sect2">
-<h3 id="_step_1_set_up_the_viewmodel">Step 1: Set up the ViewModel</h3>
+<h3 id="_step_2_set_up_the_view_model">Step 2: Set up the view model</h3>
 <div class="paragraph">
-<p>As we want to show different validation options, we add another file called <code>ValidationUsingDataAnnotationViewModel</code> into the <code>ViewModels</code>-folder. This class will be added as a read-only Property into our <code>MainWindowViewModel</code>:</p>
+<p>As we want to show different validation options, we create a new file called <code>ValidationUsingDataAnnotationViewModel.cs</code>. Put this new file in the <code>ViewModels</code> folder.</p>
+</div>
+<div class="paragraph">
+<p>Then, in <code>MainWindowViewModel.cs</code>, add the new class as a read-only property:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>MainWindowViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Gets a ViewModel showing how to use DataAnnotations for validation</span>
@@ -2137,33 +2142,60 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_add_the_property">Step 2: Add the Property</h3>
+<h3 id="_step_3_add_the_property">Step 3: Add the property</h3>
 <div class="paragraph">
-<p>Let&#8217;s assume we want to make a registration-form where an e-mail-address is required and must be a valid e-mail-address. We add a property called <code>EMail</code>. This property will be decorated with the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute">[<code>RequiredAttribute</code>]</a> and the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute">[<code>EMailAddressAttribute</code>]</a>. You can combine as many attributes as you want as well as creating your own <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>ValidationAttribute</code>]</a>.</p>
+<p>Let&#8217;s assume we want to make a registration form where an e-mail address is required and must be a valid e-mail address. We add a property called <code>EMail</code>. This property will be decorated with the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.requiredattribute">[<code>RequiredAttribute</code>]</a> and the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute">[<code>EmailAddressAttribute</code>]</a>. You can combine as many attributes as you want as well as creating your own <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>ValidationAttribute</code>]</a>.</p>
+</div>
+<div class="paragraph">
+<p>In the class file <code>ValidationUsingDataAnnotationViewModel.cs</code>, add the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The required <code>using</code> statements.</p>
+</li>
+<li>
+<p>The class <code>ValidationUsingDataAnnotationViewModel</code> as a <code>ViewModelBase</code>.</p>
+</li>
+<li>
+<p>The <code>EMail</code> property.</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingDataAnnotationViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_EMail</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">ReactiveUI</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
 
-<span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Validation using DataAnnotation</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="p">[</span><span class="n">Required</span><span class="p">]</span>
-<span class="p">[</span><span class="n">EmailAddress</span><span class="p">]</span>
-<span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">EMail</span>
+<span class="k">namespace</span> <span class="nn">ValidationSample.ViewModels</span>
 <span class="p">{</span>
-    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_EMail</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_EMail</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ValidationUsingDataAnnotationViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_EMail</span><span class="p">;</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Validation using DataAnnotation</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="p">[</span><span class="n">Required</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">EmailAddress</span><span class="p">]</span>
+        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">EMail</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_EMail</span><span class="p">;</span> <span class="p">}</span>
+            <span class="k">set</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nf">RaiseAndSetIfChanged</span><span class="p">(</span><span class="k">ref</span> <span class="n">_EMail</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_set_up_the_view">Step 3: Set up the View</h3>
+<h3 id="_step_4_set_up_the_view">Step 4: Set up the view</h3>
 <div class="paragraph">
-<p>In the file <code>MainWindow.axaml</code> we add a <code>TabControl</code> where each <code>TabItem</code> represents one of our options. Inside the <code>TabItem</code> there is just one <code>TextBox</code> which binds to our property <code>EMail</code>.</p>
+<p>In <code>MainWindow.axaml</code>, add a <code>TabControl</code>. Inside the <code>TabItem</code>, add a single <code>TextBox</code> which binds to our property <code>EMail</code>.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TabControl</span> <span class="na">TabStripPlacement=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
     <span class="c">&lt;!--Validation using DataAnnotations--&gt;</span>
@@ -2175,15 +2207,17 @@ pre.rouge .gs {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_4_run_the_app">Step 4: Run the App</h3>
+<h3 id="_step_5_run_the_app">Step 5: Run the app</h3>
 <div class="paragraph">
-<p>In your IDE hit <code>Run</code> or <code>Debug</code> to see the result:</p>
+<p>In your IDE, hit <code>Run</code> or <code>Debug</code> to see the result:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_docs/option1.png" alt="Result Option 1">
 </div>
-<div class="title">Figure 1. Result Option 1</div>
+</div>
+<div class="paragraph">
+<p>&#160;</p>
 </div>
 </div>
 </div>
@@ -2192,14 +2226,18 @@ pre.rouge .gs {
 <h2 id="_approach_2_validate_a_property_using_inotifydataerrorinfo">Approach 2 : Validate a Property using INotifyDataErrorInfo</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can also implement the interface <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo">[<code>INotifyDataErrorInfo</code>]</a> into your <code>ViewModel</code> or it&#8217;s base class. Some MVVM-libraries already implement this interface by default.</p>
+<p>You can also implement the interface <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo">[<code>INotifyDataErrorInfo</code>]</a> into your <code>ViewModel</code> or its base class. Some MVVM libraries implement this interface by default.</p>
 </div>
 <div class="sect2">
-<h3 id="_step_1_set_up_the_viewmodel_2">Step 1: Set up the ViewModel</h3>
+<h3 id="_step_1_set_up_the_main_view_model">Step 1: Set up the main view model</h3>
 <div class="paragraph">
-<p>Again we add another file called <code>ValidationUsingINotifyDataErrorInfoViewModel</code> into the <code>ViewModels</code>-folder. This class will be added as a read-only Property into our <code>MainWindowViewModel</code>:</p>
+<p>Add another file called <code>ValidationUsingINotifyDataErrorInfoViewModel.cs</code> into the <code>ViewModels</code> folder.</p>
+</div>
+<div class="paragraph">
+<p>Then, in <code>MainWindowViewModel.cs</code>, add the new class as a read-only property:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>MainWindowViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Gets a ViewModel showing how to use INotifyDataErrorInfo for validation</span>
@@ -2208,8 +2246,11 @@ pre.rouge .gs {
     <span class="p">=</span> <span class="k">new</span> <span class="nf">ValidationUsingINotifyDataErrorInfoViewModel</span><span class="p">();</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_set_up_the_validation_view_model">Step 2: Set up the validation view model</h3>
 <div class="paragraph">
-<p>Now we have to implement the interface if this is not already done by the base-class you use. In our sample we add the interface on our own. The interface requires these members:</p>
+<p>Now we have to implement the interface if this is not already done by the base class you use. In this sample, we add the interface on our own. The interface requires these members:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2223,13 +2264,13 @@ pre.rouge .gs {
 <dd>
 <p>Gets if there are any errors.</p>
 </dd>
-<dt class="hdlist1">void GetErrors(string? propertyName)</dt>
+<dt class="hdlist1">IEnumerable GetErrors(string? propertyName)</dt>
 <dd>
-<p>Gets the errors for a given property (by its name) or all errors, if property name was <code>null</code> or <code>string.Empty</code>.</p>
+<p>Gets the errors for a given property (by its name), or all errors if property name is <code>null</code> or <code>string.Empty</code>.</p>
 </dd>
 <dt class="hdlist1">event ErrorsChanged</dt>
 <dd>
-<p>this event is raised whenever any error was added or removed.</p>
+<p>Raised whenever any error is added or removed.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -2253,11 +2294,11 @@ pre.rouge .gs {
 </dd>
 <dt class="hdlist1">protected void ClearErrors(string? propertyName = null)</dt>
 <dd>
-<p>This void will clear all errors for the given property name or all errors if <code>propertyName</code> was <code>null</code>. The <code>ErrorsChanged</code>-event will be raised.</p>
+<p>Clears all errors for the given property name, or all errors if <code>propertyName</code> is <code>null</code>. Raises the <code>ErrorsChanged</code> event.</p>
 </dd>
 <dt class="hdlist1">protected void AddError(string propertyName, string errorMessage)</dt>
 <dd>
-<p>This void will add a given error message for a given property by its name. The <code>ErrorsChanged</code>-event will be raised.</p>
+<p>Adds a given error message for a given property by its name. Raises the <code>ErrorsChanged</code> event.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -2271,17 +2312,28 @@ pre.rouge .gs {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-the <code>protected</code> keyword helps us to make the properties or methods available in derived classes, but not from any external class.
+<strong>Tip:</strong> The <code>protected</code> keyword makes the properties or methods available in derived classes, but not from any external class.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Below you can see the final implementation:</p>
+<p>Below is the implementation of the interface in <code>ValidationUsingINotifyDataErrorInfoViewModel.cs</code>:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingINotifyDataErrorInfoViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">ValidationUsingINotifyDataErrorInfoViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">INotifyDataErrorInfo</span>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">ReactiveUI</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ValidationSample.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ValidationUsingINotifyDataErrorInfoViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span><span class="p">,</span> <span class="n">INotifyDataErrorInfo</span>
 <span class="p">{</span>
     <span class="c1">// Implement members of INotifyDataErrorInfo</span>
 
@@ -2358,11 +2410,12 @@ the <code>protected</code> keyword helps us to make the properties or methods av
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_add_the_property_2">Step 2: Add the Property</h3>
+<h3 id="_step_3_add_the_property_2">Step 3: Add the property</h3>
 <div class="paragraph">
-<p>The property is implemented like any other property of our <code>ViewModel</code>:</p>
+<p>Add the <code>EMail</code> property to the <code>ValidationUsingINotifyDataErrorInfoViewModel</code>:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingINotifyDataErrorInfoViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_EMail</span><span class="p">;</span>
 
@@ -2377,9 +2430,10 @@ the <code>protected</code> keyword helps us to make the properties or methods av
 </div>
 </div>
 <div class="paragraph">
-<p>In addition, we will add a method called <code>Validate_EMail</code> that will validate our property:</p>
+<p>In addition, we must add a method called <code>Validate_EMail</code> that will validate our property:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingINotifyDataErrorInfoViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="k">private</span> <span class="k">void</span> <span class="nf">Validate_EMail</span><span class="p">()</span>
 <span class="p">{</span>
@@ -2400,8 +2454,11 @@ the <code>protected</code> keyword helps us to make the properties or methods av
 <span class="p">}</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_add_a_listener">Step 4: Add a listener</h3>
 <div class="paragraph">
-<p>In the constructor of our <code>ViewModel</code> we will listen to changes of the property <code>EMail</code> and run the validation with every change. Moreover, we will run the validation inside the constructor to make sure the initial value is already validated.</p>
+<p>In the constructor of <code>ValidationUsingINotifyDataErrorInfoViewModel</code>, we will listen to changes of the property <code>EMail</code> and run the validation with every change. Moreover, we will run the validation inside the constructor to make sure the initial value is already validated.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2410,12 +2467,13 @@ the <code>protected</code> keyword helps us to make the properties or methods av
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you want to avoid using <code>WhenAnyValue</code> you can also call the validation inside the properties' setter.
+<strong>Tip:</strong> If you want to avoid using <code>WhenAnyValue</code>, you can also call the validation inside the property&#8217;s setter.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingINotifyDataErrorInfoViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="nf">ValidationUsingINotifyDataErrorInfoViewModel</span><span class="p">()</span>
 <span class="p">{</span>
@@ -2428,13 +2486,17 @@ If you want to avoid using <code>WhenAnyValue</code> you can also call the valid
 <span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>See <a href="https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/MVVM/ValidationSample/ViewModels/ValidationUsingINotifyDataErrorInfoViewModel.cs">[ValidationUsingINotifyDataErrorInfoViewModel.cs</a>] for the final state of the class file.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_set_up_the_view_2">Step 3: Set up the View</h3>
+<h3 id="_step_5_set_up_the_view">Step 5: Set up the view</h3>
 <div class="paragraph">
-<p>Let&#8217;s add another <code>TabItem</code> into our <code>TabControl</code>:</p>
+<p>Let&#8217;s add another <code>TabItem</code> to the <code>TabControl</code> in <code>MainWindow.axaml</code>:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TabControl</span> <span class="na">TabStripPlacement=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
     <span class="c">&lt;!--Validation using INotifyDataErrorInfo--&gt;</span>
@@ -2446,15 +2508,17 @@ If you want to avoid using <code>WhenAnyValue</code> you can also call the valid
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_4_run_the_app_2">Step 4: Run the App</h3>
+<h3 id="_step_6_run_the_app">Step 6: Run the app</h3>
 <div class="paragraph">
-<p>In your IDE hit <code>Run</code> or <code>Debug</code> to see the result:</p>
+<p>In your IDE, hit <code>Run</code> or <code>Debug</code> to see the result:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_docs/option2.png" alt="Result Option 2">
 </div>
-<div class="title">Figure 2. Result Option 2</div>
+</div>
+<div class="paragraph">
+<p>&#160;</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2463,7 +2527,7 @@ If you want to avoid using <code>WhenAnyValue</code> you can also call the valid
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Some <code>MVVM</code>-frameworks like the <a href="https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator">[Windows MVVM Community Toolkit]</a> implement the <code>INotifyDataErrorInfo</code>-interface and are using <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>DataAnnotations</code>]</a> to run the validation. In this case you may end up seeing your validation twice. If you are facing such an issue, you can <a href="https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins">[disable one of the validators]</a> in your App.
+<strong>Note:</strong> Some <code>MVVM</code> frameworks, like the <a href="https://learn.microsoft.com/en-us/windows/communitytoolkit/mvvm/observablevalidator">[Windows MVVM Community Toolkit]</a>, implement the <code>INotifyDataErrorInfo</code> interface and use <a href="https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.validationattribute">[<code>DataAnnotations</code>]</a> to run the validation. In this case, you may end up seeing your validation twice. Consider <a href="https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins">[disabling one of the validators]</a> in your app.
 </td>
 </tr>
 </table>
@@ -2475,7 +2539,7 @@ Some <code>MVVM</code>-frameworks like the <a href="https://learn.microsoft.com/
 <h2 id="_approach_3_validate_a_property_using_exceptions_inside_setters">Approach 3 : Validate a Property using Exceptions inside setters</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The third option we want to show you is throwing an <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/">[Exception]</a> inside the setter of your property.</p>
+<p>The third option is throwing an <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/">[exception]</a> inside the setter of your property.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -2484,15 +2548,18 @@ Some <code>MVVM</code>-frameworks like the <a href="https://learn.microsoft.com/
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash of your application.
+<strong>Important:</strong> This only works inside setters. Exceptions inside the getter of your property are not allowed and will result in a crash.
 </td>
 </tr>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_step_1_set_up_the_viewmodel_3">Step 1: Set up the ViewModel</h3>
+<h3 id="_step_1_set_up_the_main_view_model_2">Step 1: Set up the main view model</h3>
 <div class="paragraph">
-<p>Once again we add another file into the <code>ViewModels</code>-folder, called <code>ValidationUsingExceptionInsideSetterViewModel</code>. As before, also this class is added as a read-only property into our <code>MainWindowViewModel</code>:</p>
+<p>Once again, we add a new file to the <code>ViewModels</code> folder. This time, call it <code>ValidationUsingExceptionInsideSetterViewModel.cs</code>.</p>
+</div>
+<div class="paragraph">
+<p>As before, in MainWindowViewModel.cs, add the new class as a read-only property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2505,13 +2572,19 @@ This only works inside setters. Exceptions inside the getter of your property ar
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_add_the_property_3">Step 2: Add the Property</h3>
+<h3 id="_step_2_add_the_property">Step 2: Add the property</h3>
 <div class="paragraph">
-<p>As written above, we can throw exceptions inside the setter of a property. We will have a set of <code>if</code>-conditions, where we throw an <code>Exception</code> under a certain condition.</p>
+<p>Define the <code>if</code>-conditions where we want the app to throw an <code>Exception</code> inside the setter of the property.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ValidationUsingExceptionInsideSetterViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">ValidationUsingExceptionInsideSetterViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ReactiveUI</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ValidationSample.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ValidationUsingExceptionInsideSetterViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
 <span class="p">{</span>
 
     <span class="k">private</span> <span class="kt">string</span><span class="p">?</span> <span class="n">_EMail</span><span class="p">;</span>
@@ -2551,20 +2624,19 @@ This only works inside setters. Exceptions inside the getter of your property ar
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>Depending on your IDE-Settings the debugger may stop execution when the <code>Exception</code> is hit. You can safely click <code>Resume</code> or <code>Mute and Resume</code> since Avalonia will handle the exception.</p>
-</div>
+<strong>Tip:</strong> Depending on your IDE settings, the debugger may stop execution when it hits the <code>Exception</code>. You can safely click <code>Resume</code> or <code>Mute and Resume</code>, since Avalonia will handle the exception.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_set_up_the_view_3">Step 3: Set up the View</h3>
+<h3 id="_step_3_set_up_the_view">Step 3: Set up the view</h3>
 <div class="paragraph">
-<p>We add another <code>TabItem</code> into our <code>TabControl</code>.</p>
+<p>Add another <code>TabItem</code> to the <code>TabControl</code> in <code>MainWindow.axaml</code>.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TabControl</span> <span class="na">TabStripPlacement=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
     <span class="c">&lt;!--Validation using Exceptions in setter--&gt;</span>
@@ -2576,25 +2648,24 @@ This only works inside setters. Exceptions inside the getter of your property ar
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_4_run_the_app_3">Step 4: Run the App</h3>
+<h3 id="_step_4_run_the_app">Step 4: Run the app</h3>
 <div class="paragraph">
-<p>In your IDE hit <code>Run</code> or <code>Debug</code> to see the result:</p>
+<p>In your IDE, hit <code>Run</code> or <code>Debug</code> to see the result:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_docs/option3.png" alt="Result Option 3">
 </div>
-<div class="title">Figure 3. Result Option 3</div>
+</div>
+<div class="paragraph">
+<p>&#160;</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_related">Related</h2>
+<h2 id="_see_also">See also</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Below, please find a collection with helpful links:</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
@@ -2613,7 +2684,7 @@ This only works inside setters. Exceptions inside the getter of your property ar
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:32:08 UTC
+Last updated 2026-09-06 12:12:51 UTC
 </div>
 </div>
 </body>
