@@ -48,9 +48,9 @@ public class MainViewTest : TestBase
         // Act
         var hamburgerMenu = view.FindControl<HamburgerMenu>("MainMenu");
         
-        // Wait for the UI to load
+        // Await initialization and flush dispatcher jobs
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(100);
         
         // Assert
         Assert.NotNull(hamburgerMenu);

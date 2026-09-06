@@ -50,8 +50,13 @@ public partial class ManageCategoriesViewModel
 
         // In the constructor, we don't want to wait for the data to be loaded. This can happen in the background. 
         // Some more info about fire-and-forget calls: https://techcommunity.microsoft.com/blog/educatordeveloperblog/fire-and-forget-methods-in-c-%E2%80%94-best-practices--pitfalls/4299605
-        _ = LoadDataAsync();
+        InitializationTask = LoadDataAsync();
     }
+
+    /// <summary>
+    /// Gets a task that represents the asynchronous initialization of this ViewModel.
+    /// </summary>
+    public Task InitializationTask { get; }
 
     /// <summary>
     /// This task will load the data async.

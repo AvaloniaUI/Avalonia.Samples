@@ -40,10 +40,10 @@ public class MainViewModelTest : TestBase
     [AvaloniaFact]
     public async Task MainViewModel_Constructor_InitializesChildViewModels()
     {
-        // Arrange & Act - Create the MainViewModel and flush dispatcher jobs
+        // Arrange & Act - Create the MainViewModel, await initialization and flush dispatcher jobs
         var vm = new MainViewModel();
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(100); // wait some milliseconds to process the I/O operations
         
         // Assert - Verify all child ViewModels are initialized
         Assert.NotNull(vm.CategoriesViewModel);
