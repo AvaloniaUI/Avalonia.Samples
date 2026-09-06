@@ -7,15 +7,38 @@
         x:Class="RestApiSample.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="RestApiSample">
+        Title="RestApiSample"
+        Loaded="HandleWindowLoaded">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top"
+                   Margin="5"
+                   Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage,
+                   Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+        <ScrollViewer DockPanel.Dock="Top">
+            <ItemsControl ItemsSource="{Binding Pokemons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="5" Margin="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Name}" />
+                            <Label Content="{Binding Url}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
 </Window>
