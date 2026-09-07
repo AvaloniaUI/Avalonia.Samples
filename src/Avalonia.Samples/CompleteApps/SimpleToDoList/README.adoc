@@ -564,7 +564,7 @@ In `App.axaml`, add the two new styles. Note that a https://docs.avaloniaui.net/
 </Application.Styles>
 ----
 
-In this case, it is not necessary to set your styles in XAML. They are automatically applied to new instances of `CheckBox`, i.e., list items added by the user via the UI.
+In this case, it is not necessary to set your styles in XAML. They are automatically applied to new instances of `CheckBox` created when the user adds new list items.
 
 ==== Changing button text to icons
 
@@ -602,7 +602,7 @@ Then, to display the icons on the UI, replace the text in each `Button` with the
 </Button>
 ----
 
-You may want the icons to become semi-transparent when a `Button` is disabled, to clearly indicate it is not usable. This can be done by adding yet another style in `App.axaml`:
+You may want the icons to dim when a `Button` is disabled, to clearly indicate it is not usable. This can be done by adding yet another style in `App.axaml`:
 
 .*App.axaml*
 [source,xml]
