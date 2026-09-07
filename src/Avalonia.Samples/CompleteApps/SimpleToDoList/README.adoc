@@ -492,19 +492,19 @@ image::_docs/Third_Run.png[alt="Third app run"]
 The app is now fully functional and fulfils all of the stated must-haves. However, you may feel that some parts of the UI could be improved, for example:
 
 - The title looks exactly the same as the list content.
-- The buttons display English text. Symbols would be more appropriate for a global userbase.
 - The item targeted by the pointer has no highlight, which could make it hard for the user to select their intended item.
+- The buttons display English text. Symbols would be more appropriate for a global userbase.
 
 Avalonia's styling system provides the tools to make these improvements to the app. For more information on styling, see the https://docs.avaloniaui.net/docs/styling/styles[[Styles documentation\]].
 
 ==== Improving the header text
 
-For the header text, use https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class[[`Style.Classes`\]] to set an H1 header style.
+For the header text, use a https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class[[style class\]] to create an H1 header style.
 
-In `App.axaml` add the following Style:
+In `App.axaml`, add a style to `Application.Styles` and define the desired font properties:
 
+.*App.axaml*
 [source,xml]
-.App.axaml
 ----
 <Application.Styles>
     <!-- Do not touch this -->
@@ -520,28 +520,31 @@ In `App.axaml` add the following Style:
 </Application.Styles>
 ----
 
-Usage:
+To use your H1 style, set `Classes` on the title `TextBlock` in XAML:
 
+.*Views/MainWindow.axaml*
 [source,xml]
-.Views/MainWindow.axaml
 ----
 <!--  This is our title text block. We use Style.Classes to style it accordingly  -->
 <TextBlock Classes="h1" Text="My ToDo-List" />
 ----
 
-For the `CheckBox` we want to add two different `Styles`. One that applies to each `CheckBox` and sets the `HorizontalAlignment` to fill the entire available space and another one that sets a highlight color to it's background on pointer-over.
+==== Adding checklist highlights
 
-TIP: Avalonia has pseudo-class selectors that can be used to style a control according to its visual state. See https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes[[docs\]] for more info.
+For the next improvement, use styles to display a highlight when the pointer moves over a checklist item.
+
+Two styles are needed for this design, both targeting the `CheckBox` control. The first sets `HorizontalAlignment` to fill the entire available width of the window. The second sets a highlight color for the background on the pointer-over state.
+
+To target that state, you can use one of Avalonia's pseudoclass selectors, specifically, the `:pointerover` pseudoclass. For more information, see https://docs.avaloniaui.net/docs/styling/pseudoclasses[[Pseudoclasses\]].
 
 [TIP]
 ====
-Sometimes you need to apply a style to a visual child of the control template (see https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes[[docs\]]).
-To understand which selector to use, you may use https://docs.avaloniaui.net/tools/developer-tools/installation[[developer tools\]].
-Moreover, you can look up the original styles on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls[[GitHub in source\]]
+Sometimes, you need to apply a style to a visual child of the control template.
+To understand which selector to use, you may use the https://docs.avaloniaui.net/tools/developer-tools/installation[[developer tools\]]. You can also look up the original styles on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls[[GitHub in source\]].
 
-Press `[F12]` and you can expand the visual tree to see the visual children of all controls in your view
+Press `[F12]` to open the developer tools. View the https://docs.avaloniaui.net/tools/developer-tools/elements-tool[[Elements Tree\]] to see the visual children of all controls in your view.
 
-image::_docs/DevTools.png[caption="Figure 6: ", title="DevTools in action"]
+image::_docs/DevTools.png[title="DevTools in action"]
 ====
 
 TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[`DynamicResources`\]] which will make sure style follows the overall App-design. To explore the available ones from `FluentTheme`, look them up on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Accents[[GitHub in source\]]
