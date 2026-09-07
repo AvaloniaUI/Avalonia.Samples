@@ -543,8 +543,6 @@ Sometimes, you need to apply a style to a visual child of the control template.
 To understand which selector to use, you may use the https://docs.avaloniaui.net/tools/developer-tools/installation[[developer tools\]]. You can also look up the original styles on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls[[GitHub in source\]].
 
 Press `[F12]` to open the developer tools. View the https://docs.avaloniaui.net/tools/developer-tools/elements-tool[[Elements Tree\]] to see the visual children of all controls in your view.
-
-image::_docs/DevTools.png[title="DevTools in action"]
 ====
 
 In `App.axaml`, add the two new styles. Note that a https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[dynamic resource\]] is used for the background color. Dynamic resources help avoid the need to hard-code colors and ensure the visual style of your app is consistent with the system.
