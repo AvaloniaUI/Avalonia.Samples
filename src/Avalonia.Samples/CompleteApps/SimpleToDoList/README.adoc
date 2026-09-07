@@ -547,12 +547,11 @@ Press `[F12]` to open the developer tools. View the https://docs.avaloniaui.net/
 image::_docs/DevTools.png[title="DevTools in action"]
 ====
 
-TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[`DynamicResources`\]] which will make sure style follows the overall App-design. To explore the available ones from `FluentTheme`, look them up on https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Accents[[GitHub in source\]]
+In `App.axaml`, add the two new styles. Note that a https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources[[dynamic resource\]] is used for the background color. Dynamic resources help avoid the need to hard-code colors and ensure the visual style of your app is consistent with the system.
 
+.*App.axaml*
 [source,xml]
-.App.axaml
 ----
-
 <Application.Styles>
     <!-- ... other styles ... -->
     <!--  We want our CheckBox to be stretched horizontally (the default is left-aligned)  -->
@@ -566,6 +565,10 @@ TIP: Instead of hard-coding colors and brushes, you can use https://docs.avaloni
     </Style>
 </Application.Styles>
 ----
+
+In this case, it is not necessary to set your styles in XAML. They are automatically applied to new instances of `CheckBox`, i.e., list items added by the user via the UI.
+
+==== Changing button text to icons
 
 To display icons we can use `PathIcon` which accepts any path-data. This data can be taken from a svg-file.
 
