@@ -570,35 +570,44 @@ In this case, it is not necessary to set your styles in XAML. They are automatic
 
 ==== Changing button text to icons
 
-To display icons we can use `PathIcon` which accepts any path-data. This data can be taken from a svg-file.
+To display icons, use https://docs.avaloniaui.net/controls/media/pathicon[[`PathIcon`\]]. `PathIcon` is a control that accepts path data, like you might get from an SVG file.
 
-WARNING: If you use an icon from one of several online available icon galleries, make sure the license suits your needs.
+WARNING: *Warning:* If you use an icon from an online icon gallery, make sure the license suits your needs.
 
+Start by defining the icon data as `StreamGeometry` in your `Application.Resources`. You can use any icon data you wish, but to replicate the icons used in this sample, you can refer to https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/App.axaml[[the completed `App.axaml` file]].
+
+.*App.axaml*
 [source,xml]
-.App.axaml
 ----
 <Application.Resources>
     <!--  These are re-usable Icon data. You can get the path data from svg-files for example  -->
-    <StreamGeometry x:Key="DeleteIconData">The path data</StreamGeometry>
-    <StreamGeometry x:Key="AcceptIconData">The path data</StreamGeometry>
+    <StreamGeometry x:Key="DeleteIconData">Path data</StreamGeometry>
+    <StreamGeometry x:Key="AcceptIconData">Path data</StreamGeometry>
 </Application.Resources>
 ----
 
-To display the icons in our App we add them as our `Buttons` content:
+Then, to display the icons on the UI, replace the text in each `Button` with the corresponding `PathIcon` in XAML.
 
+.*Views/MainWindow.axaml*
 [source,xml]
-.Views/MainWindow.axaml
 ----
-<!-- The same applies for the Delete-Button -->
+<Button Command="{Binding #Root.((vm:MainViewModel)DataContext).RemoveItemCommand}"
+        CommandParameter="{Binding .}"
+        Grid.Column="1">
+    <PathIcon Data="{DynamicResource DeleteIconData}" Foreground="Red" />
+</Button>
+
+...
+
 <Button Command="{Binding AddItemCommand}">
     <PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" />
 </Button>
 ----
 
-We want our icons to become semi-transparent if a `Button` is disabled. We can use yet another `Style` for that:
+You may want the icons to become semi-transparent when a `Button` is disabled, to clearly indicate it is not usable. This can be done by adding yet another style in `App.axaml`:
 
+.*App.axaml*
 [source,xml]
-.App.axaml
 ----
 <Application.Styles>
     <!-- ... -->
@@ -610,9 +619,10 @@ We want our icons to become semi-transparent if a `Button` is disabled. We can u
 </Application.Styles>
 ----
 
-And here is the final result:
+==== Final result
 
-image::_docs/Final_Result.png[caption="Figure 6: ", title="The final result", alt="Final result"]
+image::_docs/Final_Result.png[alt="Final result"]
+
 
 === Step 7 (Optional): Data Persistence
 
