@@ -497,7 +497,10 @@ The app is now fully functional and fulfils all of the stated must-haves. Howeve
 
 Avalonia's styling system provides the tools to make these improvements to the app. For more information on styling, see the https://docs.avaloniaui.net/docs/styling/styles[[Styles documentation\]].
 
-For the header text we can use https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class[[`Style.Classes`\]].
+==== Improving the header text
+
+For the header text, use https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class[[`Style.Classes`\]] to set an H1 header style.
+
 In `App.axaml` add the following Style:
 
 [source,xml]
