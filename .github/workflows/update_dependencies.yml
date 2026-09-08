@@ -81,30 +81,30 @@ jobs:
         shell: pwsh
 
       # --------------------------------------------------------------
-      # Run dotnet‑outdated (only real .sln / .slnf / .csproj files)
+      # Run dotnet‑outdated once per project, including F# and mobile projects
       # --------------------------------------------------------------
       - name: Run dotnet-outdated (upgrade)
         shell: pwsh
-        continue-on-error: true
         run: |
           # Packages that must **not** be upgraded – add or remove as needed
           $exclude = "Xamarin.AndroidX.Core.SplashScreen"
 
-          # Find *only* .sln, .slnf or .csproj files – ignore *.slnx, *.sln.backup, …
+          # Enumerate projects directly so solution formats do not affect coverage.
           $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
-                    -Include *.sln,*.slnf,*.csproj,*.fsproj -File |
+                    -Include *.csproj,*.fsproj -File |
                     Select-Object -ExpandProperty FullName
 
           if (-not $files) {
-            Write-Host "⚠️ No solution or project files were found – nothing to do."
+            Write-Host "⚠️ No project files were found – nothing to do."
             exit 0
           }
 
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
-            # `--no-restore` speeds things up – we already restored workloads above.
+            # Allow package restore; workload restore does not restore every project.
             # `-vl Major` restricts upgrades to minor and patch versions only.
-            dotnet outdated "$proj" --upgrade --no-restore --exclude $exclude -vl Major
+            dotnet outdated "$proj" --upgrade --exclude $exclude -vl Major
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
 
       # --------------------------------------------------------------
@@ -135,8 +135,14 @@ jobs:
       - name: Restore after upgrades
         shell: pwsh
         run: |
-          # Ensure the solution is in a consistent state after any package upgrades
-          dotnet restore ./src/Avalonia.Samples
+          # Restore every inspected project, including those outside the root solution.
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.csproj,*.fsproj -File |
+                    Select-Object -ExpandProperty FullName
+          foreach ($proj in $files) {
+            dotnet restore "$proj"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
 
       # --------------------------------------------------------------
       #  Check for available major version upgrades and open issues
@@ -161,7 +167,7 @@ jobs:
           foreach ($proj in $files) {
             Write-Host "🔍 Inspecting $proj for major updates..."
             try {
-              $jsonOutput = dotnet list $proj package --outdated --format json 2>$null
+              $jsonOutput = dotnet list $proj package --outdated --format json 2>$null | Out-String
               if (-not [string]::IsNullOrWhiteSpace($jsonOutput)) {
                 $parsed = $jsonOutput | ConvertFrom-Json
                 if ($parsed.projects) {
@@ -229,16 +235,16 @@ jobs:
               } else {
                 Write-Host "📢 Creating tracking issue for $pkgId $latestVer..."
                 $body = @"
-### Major Dependency Update Available
+          ### Major Dependency Update Available
 
-A major version update is available for package **$pkgId**.
+          A major version update is available for package **$pkgId**.
 
-- **Current Resolved Version:** $currVer
-- **Latest Major Version:** $latestVer
-- **Projects Affected:** $projList
+          - **Current Resolved Version:** $currVer
+          - **Latest Major Version:** $latestVer
+          - **Projects Affected:** $projList
 
-Because major updates may include breaking changes, manual validation is recommended before upgrading.
-"@
+          Because major updates may include breaking changes, manual validation is recommended before upgrading.
+          "@
                 gh issue create --title $title --body $body
               }
             } catch {
@@ -249,6 +255,12 @@ Because major updates may include breaking changes, manual validation is recomme
       # --------------------------------------------------------------
       #  **If** something changed → push a PR
       # --------------------------------------------------------------
+      - name: Generate dependency update description
+        if: steps.changes.outputs.CHANGES == 'true'
+        shell: pwsh
+        run: |
+          ./.github/scripts/New-DependencyUpdateBody.ps1 -OutputPath "$env:RUNNER_TEMP/dependency-update-body.md"
+
       - name: Create Pull Request (only when updates exist)
         if: steps.changes.outputs.CHANGES == 'true'
         uses: peter-evans/create-pull-request@v5
@@ -256,20 +268,7 @@ Because major updates may include breaking changes, manual validation is recomme
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: Update NuGet packages"
           title: "chore: Update NuGet packages"
-          body: |
-            This PR was generated automatically by the **Update dependencies** workflow.
-            It contains the latest NuGet package upgrades.
-            
-            **Packages that were upgraded** (generated by the workflow):
-            
-            See the diff for the full list of changes.
-    
-            **What to check before merging**
-
-            1. Verify that the solution builds on all target platforms (Desktop, Android, iOS, Browser).  
-            2. Run the unit‑test suite (`dotnet test`).  
-            3. Ensure no breaking API changes affect the sample app (run the app locally if possible).
-
+          body-path: ${{ runner.temp }}/dependency-update-body.md
           branch: update-nuget-packages
           base: main
           # Optional – keep the PR tidy
