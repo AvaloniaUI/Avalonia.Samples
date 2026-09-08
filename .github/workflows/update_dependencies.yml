@@ -101,10 +101,17 @@ jobs:
 
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
-            # Allow package restore; workload restore does not restore every project.
+            # Update related packages together without restoring after each package.
+            # The Restore after upgrades step validates the final dependency graph.
             # `-vl Major` restricts upgrades to minor and patch versions only.
-            dotnet outdated "$proj" --upgrade --exclude $exclude -vl Major
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            dotnet outdated "$proj" --upgrade --no-restore --exclude $exclude -vl Major
+            if ($LASTEXITCODE -ne 0) {
+              $upgradeExitCode = $LASTEXITCODE
+              Write-Host "::error::Dependency upgrade failed for $proj (exit code $upgradeExitCode)."
+              # Surface restore diagnostics that the tool's summary may omit.
+              dotnet restore "$proj" --verbosity normal
+              exit $upgradeExitCode
+            }
           }
 
       # --------------------------------------------------------------

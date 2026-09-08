@@ -2,6 +2,8 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0</TargetFramework>
+        <!-- Own the reference so dependency tools can update it without editing SDK imports. -->
+        <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
@@ -38,6 +40,6 @@
         <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-        <PackageReference Update="FSharp.Core" Version="10.1.201" />
+        <PackageReference Include="FSharp.Core" Version="10.1.201" />
     </ItemGroup>
 </Project>
