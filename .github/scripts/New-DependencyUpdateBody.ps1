@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory)]
     [string] $OutputPath,
-    [string] $BaseRef = 'HEAD'
+    [string] $BaseRef = 'HEAD',
+    [string] $PackageCachePath = $(if ($env:NUGET_PACKAGES) { $env:NUGET_PACKAGES } else { Join-Path ([Environment]::GetFolderPath('UserProfile')) '.nuget/packages' })
 )
 
 $ErrorActionPreference = 'Stop'
@@ -36,6 +37,22 @@ function Get-PackageVersions([string] $Content, [string] $Source) {
 
 function Format-Cell([string] $Value) {
     return [System.Net.WebUtility]::HtmlEncode($Value).Replace('|', '&#124;').Replace('`', '&#96;').Replace("`r", '').Replace("`n", ' ')
+}
+
+function Get-ReleaseNotes([string] $Package, [string] $Version) {
+    # Only concrete package versions have a cache entry (MSBuild expressions do not).
+    if ($Package -notmatch '^[A-Za-z0-9_.-]+$' -or $Version -notmatch '^\d+(\.\d+){1,3}(-[A-Za-z0-9.-]+)?(\+[A-Za-z0-9.-]+)?$') { return }
+    $cacheVersion = ($Version -split '\+')[0].ToLowerInvariant()
+    $id = $Package.ToLowerInvariant()
+    $path = Join-Path $PackageCachePath "$id/$cacheVersion/$id.nuspec"
+    try {
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return }
+        $document = [xml] (Get-Content -LiteralPath $path -Raw).TrimStart([char] 0xFEFF)
+        $node = $document.SelectSingleNode("/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='releaseNotes']")
+        if ($node) { return $node.InnerText.Trim() }
+    } catch {
+        Write-Warning "Could not read release notes for $Package ${Version}: $($_.Exception.Message)"
+    }
 }
 
 $files = @(git diff --name-only --diff-filter=M $BaseRef -- 'src/Avalonia.Samples/*.csproj' 'src/Avalonia.Samples/*.fsproj' 'src/Avalonia.Samples/*.props')
@@ -75,10 +92,42 @@ if ($updates.Count -gt 0) {
     $lines.Add('| --- | --- | --- | --- |')
     foreach ($update in ($updates.Values | Sort-Object Package, From, To)) {
         $paths = ($update.Files | Sort-Object | ForEach-Object { '<code>{0}</code>' -f (Format-Cell $_) }) -join '<br>'
-        $lines.Add(('| {0} | {1} | {2} | {3} |' -f (Format-Cell $update.Package), (Format-Cell $update.From), (Format-Cell $update.To), $paths))
+        $packageUrl = 'https://www.nuget.org/packages/{0}/{1}' -f [uri]::EscapeDataString($update.Package), [uri]::EscapeDataString($update.To)
+        $lines.Add(('| [{0}]({4}) | {1} | {2} | {3} |' -f (Format-Cell $update.Package), (Format-Cell $update.From), (Format-Cell $update.To), $paths, $packageUrl))
     }
 } else {
     $lines.Add('No explicit package version changes were found in project or central package files. Review the diff for other changes before merging.')
+}
+if ($updates.Count -gt 0) {
+    $lines.Add('')
+    $lines.Add('## Release notes')
+    $lines.Add('')
+    $lines.Add('Notes from the restored target versions; skipped releases may contain additional changes.')
+    $lines.Add('')
+    # Leave room in the PR body for the package table and review checklist.
+    $notesBudget = 16000
+    foreach ($release in ($updates.Values | Sort-Object Package, To -Unique)) {
+        $packageUrl = 'https://www.nuget.org/packages/{0}/{1}' -f [uri]::EscapeDataString($release.Package), [uri]::EscapeDataString($release.To)
+        $lines.Add(('- <code>{0} {1}</code> — [NuGet package]({2})' -f (Format-Cell $release.Package), (Format-Cell $release.To), $packageUrl))
+        $notes = Get-ReleaseNotes -Package $release.Package -Version $release.To
+        if (-not $notes) {
+            $lines.Add('  Release notes unavailable in restored package metadata; see the package page.')
+        } elseif ($notesBudget -le 0) {
+            $lines.Add('  Additional notes omitted to keep the PR body short; see the package page.')
+        } else {
+            $uri = $null
+            if ($notes -notmatch '\s' -and [uri]::TryCreate($notes, [UriKind]::Absolute, [ref] $uri) -and $uri.Scheme -in @('http', 'https')) {
+                $rendered = '  <a href="{0}">Release notes</a>' -f [System.Net.WebUtility]::HtmlEncode($uri.AbsoluteUri)
+            } else {
+                $limit = [Math]::Min(1500, $notesBudget)
+                if ($notes.Length -gt $limit) { $notes = $notes.Substring(0, $limit) + ' … (truncated; see package page)' }
+                $rendered = '  <pre>{0}</pre>' -f [System.Net.WebUtility]::HtmlEncode($notes)
+            }
+            $lines.Add($rendered)
+            $notesBudget -= $rendered.Length
+        }
+        $lines.Add('')
+    }
 }
 $lines.Add('')
 $lines.Add('## Validation')
