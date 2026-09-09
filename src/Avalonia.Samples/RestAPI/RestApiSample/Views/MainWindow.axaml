@@ -11,34 +11,36 @@
         Loaded="HandleWindowLoaded">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <DockPanel>
-        <TextBlock DockPanel.Dock="Top"
-                   Margin="5"
-                   Text="{Binding ErrorMessage}"
-                   IsVisible="{Binding ErrorMessage,
-                   Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+    <StackPanel>
+        <Label Content="Loading..." IsVisible="{Binding IsLoading}"/>
 
-        <ScrollViewer DockPanel.Dock="Top">
-            <ItemsControl ItemsSource="{Binding Pokemons}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Spacing="5" Margin="5" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Label Content="{Binding Name}" />
-                            <Label Content="{Binding Url}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-    </DockPanel>
+        <DockPanel IsVisible="{Binding !IsLoading}">
+                <TextBlock DockPanel.Dock="Top"
+                           Margin="5"
+                           Text="{Binding ErrorMessage}"
+                           IsVisible="{Binding ErrorMessage,
+                           Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+                <ScrollViewer DockPanel.Dock="Top">
+                    <ItemsControl ItemsSource="{Binding Pokemons}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="5" Margin="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label Content="{Binding Name}" />
+                                    <Label Content="{Binding Url}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+        </DockPanel>
+    </StackPanel>
 </Window>
