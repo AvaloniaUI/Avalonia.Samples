@@ -6,7 +6,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-function Get-PackageVersions([xml] $Document) {
+function Get-PackageVersions([string] $Content, [string] $Source) {
+    # Git stdout can retain a BOM, and file reads can leave one after a doubled BOM.
+    # Normalize both sources before PowerShell attempts XML conversion.
+    try {
+        $Document = [xml] $Content.TrimStart([char] 0xFEFF)
+    } catch {
+        throw "Could not parse package XML from ${Source}: $($_.Exception.Message)"
+    }
     $versions = @{}
     foreach ($node in $Document.SelectNodes("//*[local-name()='PackageReference' or local-name()='PackageVersion']")) {
         $id = $node.GetAttribute('Include')
@@ -38,10 +45,8 @@ $updates = @{}
 foreach ($file in $files) {
     $original = git show "${BaseRef}:$file" | Out-String
     if ($LASTEXITCODE -ne 0) { throw "Could not read the original version of $file." }
-    # Native stdout preserves a UTF-8 BOM as U+FEFF; XML string parsing rejects it.
-    $original = $original.TrimStart([char] 0xFEFF)
-    $before = Get-PackageVersions ([xml] $original)
-    $after = Get-PackageVersions ([xml] (Get-Content -LiteralPath $file -Raw))
+    $before = Get-PackageVersions -Content $original -Source "${BaseRef}:$file"
+    $after = Get-PackageVersions -Content (Get-Content -LiteralPath $file -Raw) -Source "working tree:$file"
     foreach ($key in $after.Keys) {
         if (-not $before.ContainsKey($key) -or $before[$key].Version -eq $after[$key].Version) { continue }
         $package = $after[$key].Id
