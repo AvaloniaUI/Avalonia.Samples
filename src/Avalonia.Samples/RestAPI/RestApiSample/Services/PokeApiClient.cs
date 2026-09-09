@@ -1,5 +1,6 @@
 ﻿using RestApiSample.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -15,12 +16,37 @@ public class PokeApiClient
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<PokemonListResponse> GetPokemonsAsync(int offset, int limit)
+    public async Task<List<PokemonDetails>> GetPokemonsAsync(int offset, int limit)
     {
-        var httpClient = _httpClientFactory.CreateClient("PokeApi");
+        HttpClient httpClient = _httpClientFactory.CreateClient("PokeApi");
 
-        return await httpClient.GetFromJsonAsync<PokemonListResponse>(
-                $"pokemon?offset={offset}&limit={limit}")
-            ?? throw new InvalidOperationException("PokeAPI returned an empty response.");
+        PokemonListResponse? response = await httpClient.GetFromJsonAsync<PokemonListResponse>(
+                $"pokemon?offset={offset}&limit={limit}");
+        if (response is null)
+        {
+            return [];
+        }
+
+        List<PokemonDetails> results = [];
+
+        foreach (PokemonListItem item in response.Results)
+        {
+            PokemonDetails? pokemon = await httpClient.GetFromJsonAsync<PokemonDetails>($"pokemon/{item.Name}");
+            if (pokemon is null)
+            {
+                continue;
+            }
+
+            results.Add(pokemon);
+        }
+
+        return results;
+    }
+
+    public async Task<PokemonDetails?> GetPokemonByName(string name)
+    {
+        HttpClient httpClient = _httpClientFactory.CreateClient("PokeApi");
+     
+        return await httpClient.GetFromJsonAsync<PokemonDetails>($"pokemon/{name}");
     }
 }

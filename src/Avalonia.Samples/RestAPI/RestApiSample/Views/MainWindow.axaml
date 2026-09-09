@@ -14,33 +14,44 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-        <Label Content="Loading..." IsVisible="{Binding IsLoading}"/>
+    <DockPanel Margin="5">
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Spacing="5">
+            <TextBox PlaceholderText="Pokemon name"
+                     Text="{Binding PokemonName}"
+                     Width="125"/>
 
-        <DockPanel IsVisible="{Binding !IsLoading}">
-                <TextBlock DockPanel.Dock="Top"
-                           Margin="5"
-                           Text="{Binding ErrorMessage}"
-                           IsVisible="{Binding ErrorMessage,
-                           Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <Button Content="Search"
+                    Command="{Binding SearchCommand}" />
+            <Button Content="Clear"
+                    Command="{Binding ClearFiltersCommand}" />
+        </StackPanel>
 
-                <ScrollViewer DockPanel.Dock="Top">
-                    <ItemsControl ItemsSource="{Binding Pokemons}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Spacing="5" Margin="5" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <Label Content="{Binding Name}" />
-                                    <Label Content="{Binding Url}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-        </DockPanel>
-    </StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Label Content="Loading..."
+                   IsVisible="{Binding IsLoading}"/>
+
+            <TextBlock Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+
+        <ScrollViewer DockPanel.Dock="Top">
+            <ItemsControl ItemsSource="{Binding Pokemons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="5" Margin="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Id}" />
+                            <Label Content="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
 </Window>

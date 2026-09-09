@@ -2,20 +2,6 @@
 
 namespace RestApiSample.Models;
 
-public class PokemonListResponse
-{
-    public int Count { get; set; }
+public record PokemonListResponse(int Count, string? Next, string? Previous, List<PokemonListItem> Results);
 
-    public string? Next { get; set; }
-
-    public string? Previous { get; set; }
-
-    public List<PokemonListItem> Results { get; set; } = [];
-}
-
-public class PokemonListItem
-{
-    public string? Name { get; set; }
-
-    public string? Url { get; set; }
-}
+public record PokemonListItem(string? Name, string? Url);

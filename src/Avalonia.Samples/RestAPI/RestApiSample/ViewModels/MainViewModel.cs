@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RestApiSample.Models;
 using RestApiSample.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,19 +23,63 @@ public partial class MainViewModel : ViewModelBase
     private bool _isLoading = false;
 
     [ObservableProperty]
+    private string _pokemonName = string.Empty;
+
+    [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public ObservableCollection<PokemonListItem> Pokemons { get; set; } = [];
+    public ObservableCollection<PokemonDetails> Pokemons { get; set; } = [];
 
-    public async Task LoadPokemonsAsync()
+    [RelayCommand]
+    private async Task SearchAsync()
     {
+        if (PokemonName == string.Empty)
+        {
+            return;
+        }
+
         IsLoading = true;
 
         try
         {
-            PokemonListResponse response = await _pokeApiClient.GetPokemonsAsync(0, 25);
+            PokemonDetails? response = await _pokeApiClient.GetPokemonByName(PokemonName);
+            if (response is null)
+            {
+                ErrorMessage = "PokeAPI returned no data for this Pokemon.";
+                IsLoading = false;
+                return;
+            }
 
-            foreach (var item in response.Results)
+            Pokemons.Clear();
+            Pokemons.Add(response);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ClearFilters()
+    {
+        PokemonName = string.Empty;
+        await LoadPokemonsAsync();
+    }
+
+    public async Task LoadPokemonsAsync()
+    {
+        IsLoading = true;
+        Pokemons.Clear();
+
+        try
+        {
+            List<PokemonDetails> response = await _pokeApiClient.GetPokemonsAsync(0, 25);
+
+            foreach (var item in response)
             {
                 Pokemons.Add(item);
             }
