@@ -38,6 +38,8 @@ $updates = @{}
 foreach ($file in $files) {
     $original = git show "${BaseRef}:$file" | Out-String
     if ($LASTEXITCODE -ne 0) { throw "Could not read the original version of $file." }
+    # Native stdout preserves a UTF-8 BOM as U+FEFF; XML string parsing rejects it.
+    $original = $original.TrimStart([char] 0xFEFF)
     $before = Get-PackageVersions ([xml] $original)
     $after = Get-PackageVersions ([xml] (Get-Content -LiteralPath $file -Raw))
     foreach ($key in $after.Keys) {
