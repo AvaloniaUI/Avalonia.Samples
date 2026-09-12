@@ -1,0 +1,36 @@
+<DrawerPage xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:views="using:QrCodeSample.Views"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            DisplayMode="Inline"
+            DrawerLength="200"
+            DrawerBehavior="Locked"
+            x:Class="QrCodeSample.Views.MainView">
+    <DrawerPage.Drawer>
+        <StackPanel Spacing="10" Margin="10">
+            <TextBlock Classes="h1"
+                       Text="QR Code Sample"
+                       Margin="0,10"
+                       HorizontalAlignment="Center"/>
+            <ListBox x:Name="NavListBox"
+                     Background="Transparent"
+                     SelectedIndex="0">
+                <ListBoxItem Content="Endode" CornerRadius="50">
+                    <ListBoxItem.Tag>
+                        <views:QrEncoderView />
+                    </ListBoxItem.Tag>
+                </ListBoxItem>
+                
+                <ListBoxItem Content="Decode" CornerRadius="50">
+                    <ListBoxItem.Tag>
+                        <views:QrDecoderView />
+                    </ListBoxItem.Tag>
+                </ListBoxItem>
+            </ListBox>
+        </StackPanel>
+
+    </DrawerPage.Drawer>
+    <ContentControl Content="{Binding #NavListBox.((ListBoxItem)SelectedItem).Tag}"></ContentControl>
+</DrawerPage>
