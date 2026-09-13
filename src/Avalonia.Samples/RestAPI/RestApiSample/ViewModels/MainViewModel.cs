@@ -5,7 +5,9 @@ using RestApiSample.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RestApiSample.ViewModels;
@@ -20,7 +22,9 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [ObservableProperty]
-    private bool _isLoading = false;
+    [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearFiltersCommand))]
+    private bool _isLoading;
 
     [ObservableProperty]
     private string _pokemonName = string.Empty;
@@ -28,34 +32,49 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public ObservableCollection<PokemonDetails> Pokemons { get; set; } = [];
+    public ObservableCollection<PokemonDetails> Pokemons { get; } = [];
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
     private async Task SearchAsync()
     {
-        if (PokemonName == string.Empty)
+        if (string.IsNullOrWhiteSpace(PokemonName))
         {
             return;
         }
 
+        Pokemons.Clear();
+
+        string pokemonName = PokemonName.Trim();
+        PokemonName = pokemonName;
         IsLoading = true;
+        ErrorMessage = string.Empty;
 
         try
         {
-            PokemonDetails? response = await _pokeApiClient.GetPokemonByName(PokemonName);
+            PokemonDetails? response = await _pokeApiClient.GetPokemonByName(pokemonName);
             if (response is null)
             {
                 ErrorMessage = "PokeAPI returned no data for this Pokemon.";
-                IsLoading = false;
                 return;
             }
 
-            Pokemons.Clear();
             Pokemons.Add(response);
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
         {
-            ErrorMessage = ex.Message;
+            ErrorMessage = "PokeAPI returned no data for this Pokemon.";
+        }
+        catch (HttpRequestException)
+        {
+            ErrorMessage = "Unable to load Pokemon.";
+        }
+        catch (InvalidOperationException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
+        }
+        catch (JsonException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
         }
         finally
         {
@@ -63,7 +82,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
     private async Task ClearFilters()
     {
         PokemonName = string.Empty;
@@ -72,29 +91,45 @@ public partial class MainViewModel : ViewModelBase
 
     public async Task LoadPokemonsAsync()
     {
-        IsLoading = true;
+        if (IsLoading)
+        {
+            return;
+        }
+
         Pokemons.Clear();
+
+        IsLoading = true;
+        ErrorMessage = string.Empty;
 
         try
         {
             List<PokemonDetails> response = await _pokeApiClient.GetPokemonsAsync(0, 25);
 
-            foreach (var item in response)
+            foreach (PokemonDetails item in response)
             {
                 Pokemons.Add(item);
             }
-        }
-        catch (InvalidOperationException ex)
-        {
-            ErrorMessage = $"PokeAPI returned an invalid response.\n {ex.Message}";
         }
         catch (HttpRequestException)
         {
             ErrorMessage = "Unable to load Pokemons.";
         }
+        catch (InvalidOperationException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
+        }
+        catch (System.Text.Json.JsonException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
+        }
         finally
         {
             IsLoading = false;
         }
+    }
+
+    private bool CanExecuteCommands()
+    {
+        return !IsLoading;
     }
 }
