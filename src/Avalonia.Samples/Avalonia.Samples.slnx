@@ -36,6 +36,9 @@
     <Project Path="MVVM/ValidationSample/ValidationSample.csproj" />
     <Project Path="MVVM/ValueConversionSample/ValueConversionSample.csproj" />
   </Folder>
+  <Folder Name="/RestAPI/">
+    <Project Path="RestAPI/RestApiSample/RestApiSample.csproj" Id="7ea56731-c682-4ff2-8548-34248cf609f9" />
+  </Folder>
   <Folder Name="/Routing/">
     <Project Path="Routing/BasicViewLocatorSample/BasicViewLocatorSample.csproj" />
   </Folder>
