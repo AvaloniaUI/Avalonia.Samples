@@ -5,6 +5,7 @@ using RestApiSample.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -21,6 +22,18 @@ public partial class MainViewModel : ViewModelBase
         _pokeApiClient = pokeApiClient;
     }
 
+    public async Task InitializeAsync()
+    {
+        List<PokemonType> pokemonTypes = await _pokeApiClient.GetPokemonTypes();
+
+        foreach (PokemonType item in pokemonTypes)
+        {
+            AllPokemonType.Add(item);
+        }
+
+        await LoadPokemonsAsync();
+    }
+
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
     [NotifyCanExecuteChangedFor(nameof(ClearFiltersCommand))]
@@ -32,33 +45,58 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public ObservableCollection<PokemonDetails> Pokemons { get; } = [];
+    [ObservableProperty]
+    private PokemonType? _currentPokemonType;
+
+    public ObservableCollection<PokemonDetails> Pokemons { get; set; } = [];
+
+    public ObservableCollection<PokemonType> AllPokemonType { get; set; } = [];
 
     [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
     private async Task SearchAsync()
     {
-        if (string.IsNullOrWhiteSpace(PokemonName))
+        string pokemonName = PokemonName.Trim();
+        PokemonName = pokemonName;
+
+        if (string.IsNullOrWhiteSpace(pokemonName) && CurrentPokemonType is null)
         {
+            await LoadPokemonsAsync();
             return;
         }
 
         Pokemons.Clear();
 
-        string pokemonName = PokemonName.Trim();
-        PokemonName = pokemonName;
         IsLoading = true;
         ErrorMessage = string.Empty;
 
         try
         {
-            PokemonDetails? response = await _pokeApiClient.GetPokemonByName(pokemonName);
-            if (response is null)
+            if (!string.IsNullOrWhiteSpace(pokemonName))
             {
-                ErrorMessage = "PokeAPI returned no data for this Pokemon.";
+                PokemonDetails? response = await _pokeApiClient.GetPokemonByName(pokemonName);
+                if (response is null || !MatchesSelectedType(response))
+                {
+                    ErrorMessage = "PokeAPI returned no data for the selected filters.";
+                    return;
+                }
+
+                Pokemons.Add(response);
                 return;
             }
 
-            Pokemons.Add(response);
+            List<PokemonDetails> responseByType = await _pokeApiClient.GetPokemonsByTypeAsync(
+                CurrentPokemonType!.Name,
+                25);
+
+            foreach (PokemonDetails pokemon in responseByType)
+            {
+                Pokemons.Add(pokemon);
+            }
+
+            if (Pokemons.Count == 0)
+            {
+                ErrorMessage = "PokeAPI returned no data for the selected filters.";
+            }
         }
         catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
         {
@@ -86,6 +124,7 @@ public partial class MainViewModel : ViewModelBase
     private async Task ClearFilters()
     {
         PokemonName = string.Empty;
+        CurrentPokemonType = null;
         await LoadPokemonsAsync();
     }
 
@@ -118,7 +157,7 @@ public partial class MainViewModel : ViewModelBase
         {
             ErrorMessage = "PokeAPI returned an invalid response.";
         }
-        catch (System.Text.Json.JsonException)
+        catch (JsonException)
         {
             ErrorMessage = "PokeAPI returned an invalid response.";
         }
@@ -131,5 +170,11 @@ public partial class MainViewModel : ViewModelBase
     private bool CanExecuteCommands()
     {
         return !IsLoading;
+    }
+
+    private bool MatchesSelectedType(PokemonDetails pokemon)
+    {
+        return CurrentPokemonType is null || pokemon.Types.Any(type =>
+            string.Equals(type.Type.Name, CurrentPokemonType.Name, StringComparison.OrdinalIgnoreCase));
     }
 }

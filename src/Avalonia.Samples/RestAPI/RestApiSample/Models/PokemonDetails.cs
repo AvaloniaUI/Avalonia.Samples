@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RestApiSample.Models;
 
@@ -14,4 +15,11 @@ public sealed class PokemonDetails
 
     [JsonPropertyName("base_experience")]
     public required int BaseExperience { get; init; }
+
+    public List<PokemonTypeSlot> Types { get; init; } = [];
+}
+
+public sealed class PokemonTypeSlot
+{
+    public PokemonType Type { get; init; } = new();
 }

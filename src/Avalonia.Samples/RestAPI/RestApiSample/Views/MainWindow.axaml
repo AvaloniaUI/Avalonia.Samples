@@ -3,6 +3,7 @@
         xmlns:vm="using:RestApiSample.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:RestApiSample.Models"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RestApiSample.Views.MainWindow"
         x:DataType="vm:MainViewModel"
@@ -14,19 +15,41 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <DockPanel Margin="5">
-        <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal"
-                    Spacing="5">
-            <TextBox PlaceholderText="Pokemon name"
-                     Text="{Binding PokemonName}"
-                     Width="125"/>
+    <DockPanel>
+        <Border DockPanel.Dock="Top"
+                Margin="5"
+                Padding="5"
+                BorderBrush="LightGray"
+                CornerRadius="5"
+                BorderThickness=".75">
+            <StackPanel Spacing="7"
+                        HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="5">
+                    <TextBox PlaceholderText="Pokemon name"
+                             Text="{Binding PokemonName}"
+                             Width="125"/>
 
-            <Button Content="Search"
-                    Command="{Binding SearchCommand}" />
-            <Button Content="Clear"
-                    Command="{Binding ClearFiltersCommand}" />
-        </StackPanel>
+                    <ComboBox ItemsSource="{Binding AllPokemonType}"
+                              SelectedItem="{Binding CurrentPokemonType}"
+                              PlaceholderText="Select type">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:PokemonType">
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Spacing="5">
+                    <Button Content="Search"
+                            Command="{Binding SearchCommand}" />
+                    <Button Content="Clear"
+                            Command="{Binding ClearFiltersCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
         <StackPanel DockPanel.Dock="Top">
             <Label Content="Loading..."
