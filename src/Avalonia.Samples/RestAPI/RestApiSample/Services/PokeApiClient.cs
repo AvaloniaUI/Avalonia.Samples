@@ -43,10 +43,11 @@ public class PokeApiClient : IPokeApiClient
         return response.Results;
     }
 
-    public async Task<List<PokemonDetails>> SearchPokemonsAsync(
+    public async Task<PokemonSearchResult> SearchPokemonsAsync(
         string? name,
         string? typeName,
         string? generationName,
+        int offset,
         int limit)
     {
         if (!string.IsNullOrWhiteSpace(name))
@@ -54,10 +55,12 @@ public class PokeApiClient : IPokeApiClient
             PokemonDetails? pokemon = await GetPokemonByNameAsync(name);
             if (pokemon is null || !MatchesType(pokemon, typeName) || !await IsInGenerationAsync(pokemon.Name, generationName))
             {
-                return [];
+                return new PokemonSearchResult([], 0);
             }
 
-            return [pokemon];
+            return offset == 0
+                ? new PokemonSearchResult([pokemon], 1)
+                : new PokemonSearchResult([], 1);
         }
 
         IReadOnlyList<string>? pokemonNames = null;
@@ -76,29 +79,46 @@ public class PokeApiClient : IPokeApiClient
 
         if (pokemonNames is null)
         {
-            pokemonNames = await GetPokemonNamesAsync(0, limit);
+            return await GetPokemonPageAsync(offset, limit);
         }
 
-        IEnumerable<string> selectedNames = pokemonNames.Take(limit);
+        int totalCount = pokemonNames.Count;
+        IEnumerable<string> selectedNames = pokemonNames.Skip(offset).Take(limit);
         PokemonDetails?[] pokemons = await Task.WhenAll(selectedNames.Select(GetPokemonByNameAsync));
-        return pokemons.Where(pokemon => pokemon is not null).Select(pokemon => pokemon!).ToList();
+
+        return new PokemonSearchResult(
+            pokemons
+                .Where(pokemon => pokemon is not null)
+                .Select(pokemon => pokemon!)
+                .ToList(),
+            totalCount);
     }
 
-    private async Task<List<string>> GetPokemonNamesAsync(int offset, int limit)
+    private async Task<PokemonSearchResult> GetPokemonPageAsync(int offset, int limit)
     {
         HttpClient httpClient = _httpClientFactory.CreateClient("PokeApi");
         PokemonListResponse? response = await httpClient.GetFromJsonAsync<PokemonListResponse>(
             $"pokemon?offset={offset}&limit={limit}");
 
-        return response?.Results
+        if (response is null)
+        {
+            return new PokemonSearchResult([], 0);
+        }
+
+        IEnumerable<string> names = response.Results
             .Where(item => !string.IsNullOrWhiteSpace(item.Name))
-            .Select(item => item.Name!)
-            .ToList() ?? [];
+            .Select(item => item.Name!);
+        PokemonDetails?[] pokemons = await Task.WhenAll(names.Select(GetPokemonByNameAsync));
+        return new PokemonSearchResult(
+            pokemons
+                .Where(pokemon => pokemon is not null)
+                .Select(pokemon => pokemon!)
+                .ToList(),
+            response.Count);
     }
 
     private async Task<PokemonDetails?> GetPokemonByNameAsync(string name)
     {
-
         HttpClient httpClient = _httpClientFactory.CreateClient("PokeApi");
         PokemonDetails? pokemon = await httpClient.GetFromJsonAsync<PokemonDetails>(
             $"pokemon/{Uri.EscapeDataString(name)}");

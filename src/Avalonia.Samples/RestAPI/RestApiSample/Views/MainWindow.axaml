@@ -6,6 +6,7 @@
         xmlns:models="using:RestApiSample.Models"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RestApiSample.Views.MainWindow"
+        x:Name="Root"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="RestApiSample"
@@ -17,66 +18,96 @@
 
     <DockPanel>
         <Border DockPanel.Dock="Top"
-                Margin="5"
-                Padding="5"
-                BorderBrush="LightGray"
-                CornerRadius="5"
-                BorderThickness=".75">
-            <StackPanel Spacing="7"
-                        HorizontalAlignment="Left">
+                Margin="8"
+                Padding="14"
+                Background="#F6F8FC"
+                BorderBrush="#D7DCE5"
+                CornerRadius="8"
+                BorderThickness="1">
+            <StackPanel Spacing="12">
+                <TextBlock Text="Find Pokémon"
+                           FontSize="18"
+                           FontWeight="SemiBold" />
+
+                <WrapPanel ItemHeight="68"
+                           HorizontalAlignment="Stretch">
+                    <StackPanel Width="190"
+                                Margin="0,0,10,0"
+                                Spacing="4">
+                        <TextBlock Text="Name"
+                                   Foreground="DimGray" />
+                        <TextBox PlaceholderText="e.g. pikachu"
+                                 Text="{Binding PokemonName}" />
+                    </StackPanel>
+
+                    <StackPanel Width="170"
+                                Margin="0,0,10,0"
+                                Spacing="4">
+                        <TextBlock Text="Type"
+                                   Foreground="DimGray" />
+                        <ComboBox ItemsSource="{Binding AllPokemonTypes}"
+                                  SelectedItem="{Binding CurrentPokemonType}"
+                                  PlaceholderText="All types">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:PokemonType">
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Width="190"
+                                Margin="0,0,10,0"
+                                Spacing="4">
+                        <TextBlock Text="Generation"
+                                   Foreground="DimGray" />
+                        <ComboBox ItemsSource="{Binding AllPokemonGenerations}"
+                                  SelectedItem="{Binding CurrentPokemonGeneration}"
+                                  PlaceholderText="All generations">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:PokemonGeneration">
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Width="145"
+                                Margin="0,0,10,0"
+                                Spacing="4">
+                        <TextBlock Text="Sort by"
+                                   Foreground="DimGray" />
+                        <ComboBox ItemsSource="{Binding SortFields}"
+                                  SelectedItem="{Binding CurrentSortField}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Width="145"
+                                Margin="0,0,10,0"
+                                Spacing="4">
+                        <TextBlock Text="Order"
+                                   Foreground="DimGray" />
+                        <ComboBox ItemsSource="{Binding SortDirections}"
+                                  SelectedItem="{Binding CurrentSortDirection}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </WrapPanel>
+
                 <StackPanel Orientation="Horizontal"
-                            Spacing="5">
-                    <TextBox PlaceholderText="Pokemon name"
-                             Text="{Binding PokemonName}"
-                             Width="125"/>
-
-                    <ComboBox ItemsSource="{Binding AllPokemonTypes}"
-                              SelectedItem="{Binding CurrentPokemonType}"
-                              PlaceholderText="Select type">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="models:PokemonType">
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-                    <ComboBox ItemsSource="{Binding AllPokemonGenerations}"
-                              SelectedItem="{Binding CurrentPokemonGeneration}"
-                              PlaceholderText="Select generation">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="models:PokemonGeneration">
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal"
-                            Spacing="5">
-                    <ComboBox ItemsSource="{Binding SortFields}"
-                              SelectedItem="{Binding CurrentSortField}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding DisplayName}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-                    <ComboBox ItemsSource="{Binding SortDirections}"
-                              SelectedItem="{Binding CurrentSortDirection}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding DisplayName}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal"
-                            Spacing="5">
+                            Spacing="8">
                     <Button Content="Search"
                             Command="{Binding SearchCommand}" />
-                    <Button Content="Clear"
+                    <Button Content="Clear filters"
                             Command="{Binding ClearFiltersCommand}" />
                 </StackPanel>
             </StackPanel>
@@ -89,6 +120,44 @@
             <TextBlock Text="{Binding ErrorMessage}"
                        IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
         </StackPanel>
+
+        <Border DockPanel.Dock="Bottom"
+                Margin="8"
+                Padding="10"
+                Background="#F6F8FC"
+                BorderBrush="#D7DCE5"
+                BorderThickness="1"
+                CornerRadius="8">
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="12">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="8">
+                    <TextBlock Text="Items per page"
+                               VerticalAlignment="Center" />
+                    <ComboBox Width="70"
+                              ItemsSource="{Binding PageSizeOptions}"
+                              SelectedItem="{Binding CurrentPageSize}" />
+                </StackPanel>
+
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <Run Text="Page " />
+                    <Run Text="{Binding CurrentPage}" />
+                    <Run Text=" of " />
+                    <Run Text="{Binding TotalPages}" />
+                </TextBlock>
+
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                    <Button Content="← Back"
+                            Command="{Binding GoToPreviousPageCommand}" />
+                    <Button Content="Next →"
+                            Command="{Binding GoToNextPageCommand}" />
+                </StackPanel>
+            </Grid>
+        </Border>
 
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Pokemons}">

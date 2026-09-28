@@ -14,7 +14,7 @@ namespace RestApiSample.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private const int ResultLimit = 25;
+    private const int DefaultPageSize = 25;
     private readonly IPokeApiClient _pokeApiClient;
 
     public MainViewModel(IPokeApiClient pokeApiClient)
@@ -65,6 +65,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
     [NotifyCanExecuteChangedFor(nameof(ClearFiltersCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveFilterCommand))]
     private bool _isLoading;
 
     [ObservableProperty]
@@ -85,6 +86,23 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private PokemonSortOption<SortDirection> _currentSortDirection = new(SortDirection.Ascending, "Ascending");
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TotalPages))]
+    [NotifyPropertyChangedFor(nameof(HasNextPage))]
+    private int _totalPokemonCount;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasPreviousPage))]
+    [NotifyPropertyChangedFor(nameof(HasNextPage))]
+    [NotifyCanExecuteChangedFor(nameof(GoToPreviousPageCommand))]
+    [NotifyCanExecuteChangedFor(nameof(GoToNextPageCommand))]
+    private int _currentPage = 1;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TotalPages))]
+    [NotifyPropertyChangedFor(nameof(HasNextPage))]
+    private int _currentPageSize = DefaultPageSize;
+
     public ObservableCollection<PokemonDetails> Pokemons { get; } = [];
 
     public ObservableCollection<PokemonType> AllPokemonTypes { get; } = [];
@@ -103,12 +121,21 @@ public partial class MainViewModel : ViewModelBase
         new(SortDirection.Descending, "Descending"),
     ];
 
+    public IReadOnlyList<int> PageSizeOptions { get; } = [25, 50, 100];
+
+    public int TotalPages => Math.Max(1, (int)Math.Ceiling((double)TotalPokemonCount / CurrentPageSize));
+
+    public bool HasPreviousPage => CurrentPage > 1;
+
+    public bool HasNextPage => CurrentPage < TotalPages;
+
     [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
     private async Task SearchAsync()
     {
         string pokemonName = PokemonName.Trim();
         PokemonName = pokemonName;
 
+        CurrentPage = 1;
         await LoadPokemonsAsync();
     }
 
@@ -118,6 +145,41 @@ public partial class MainViewModel : ViewModelBase
         PokemonName = string.Empty;
         CurrentPokemonType = null;
         CurrentPokemonGeneration = null;
+        CurrentPage = 1;
+        await LoadPokemonsAsync();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
+    private async Task RemoveFilterAsync(PokemonFilterKind filter)
+    {
+        switch (filter)
+        {
+            case PokemonFilterKind.Name:
+                PokemonName = string.Empty;
+                break;
+            case PokemonFilterKind.Type:
+                CurrentPokemonType = null;
+                break;
+            case PokemonFilterKind.Generation:
+                CurrentPokemonGeneration = null;
+                break;
+        }
+
+        CurrentPage = 1;
+        await LoadPokemonsAsync();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGoToPreviousPage))]
+    private async Task GoToPreviousPageAsync()
+    {
+        CurrentPage--;
+        await LoadPokemonsAsync();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanGoToNextPage))]
+    private async Task GoToNextPageAsync()
+    {
+        CurrentPage++;
         await LoadPokemonsAsync();
     }
 
@@ -129,19 +191,22 @@ public partial class MainViewModel : ViewModelBase
         }
 
         Pokemons.Clear();
+        TotalPokemonCount = 0;
 
         IsLoading = true;
         ErrorMessage = string.Empty;
 
         try
         {
-            List<PokemonDetails> response = await _pokeApiClient.SearchPokemonsAsync(
+            PokemonSearchResult response = await _pokeApiClient.SearchPokemonsAsync(
                 PokemonName,
                 CurrentPokemonType?.Name,
                 CurrentPokemonGeneration?.Name,
-                ResultLimit);
+                (CurrentPage - 1) * CurrentPageSize,
+                CurrentPageSize);
 
-            ReplacePokemons(response);
+            TotalPokemonCount = response.TotalCount;
+            ReplacePokemons(response.Pokemons);
 
             if (Pokemons.Count == 0)
             {
@@ -171,6 +236,22 @@ public partial class MainViewModel : ViewModelBase
         return !IsLoading;
     }
 
+    private bool CanGoToPreviousPage()
+    {
+        return !IsLoading && HasPreviousPage;
+    }
+
+    private bool CanGoToNextPage()
+    {
+        return !IsLoading && HasNextPage;
+    }
+
+    partial void OnIsLoadingChanged(bool value)
+    {
+        GoToPreviousPageCommand.NotifyCanExecuteChanged();
+        GoToNextPageCommand.NotifyCanExecuteChanged();
+    }
+
     private void ReplacePokemons(IEnumerable<PokemonDetails> pokemons)
     {
         Pokemons.Clear();
@@ -178,14 +259,6 @@ public partial class MainViewModel : ViewModelBase
         foreach (PokemonDetails pokemon in SortPokemons(pokemons))
         {
             Pokemons.Add(pokemon);
-        }
-    }
-
-    private void ApplySort()
-    {
-        if (Pokemons.Count > 1)
-        {
-            ReplacePokemons(Pokemons.ToList());
         }
     }
 

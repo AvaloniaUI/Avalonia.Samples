@@ -10,9 +10,10 @@ public interface IPokeApiClient
 
     Task<List<PokemonGeneration>> GetPokemonGenerationsAsync();
 
-    Task<List<PokemonDetails>> SearchPokemonsAsync(
+    Task<PokemonSearchResult> SearchPokemonsAsync(
         string? name,
         string? typeName,
         string? generationName,
+        int offset,
         int limit);
 }
