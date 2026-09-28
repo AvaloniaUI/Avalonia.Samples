@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,20 +14,49 @@ namespace RestApiSample.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private readonly PokeApiClient _pokeApiClient;
+    private const int ResultLimit = 25;
+    private readonly IPokeApiClient _pokeApiClient;
 
-    public MainViewModel(PokeApiClient pokeApiClient)
+    public MainViewModel(IPokeApiClient pokeApiClient)
     {
         _pokeApiClient = pokeApiClient;
     }
 
     public async Task InitializeAsync()
     {
-        List<PokemonType> pokemonTypes = await _pokeApiClient.GetPokemonTypes();
+        IsLoading = true;
+        ErrorMessage = string.Empty;
 
-        foreach (PokemonType item in pokemonTypes)
+        try
         {
-            AllPokemonType.Add(item);
+            List<PokemonType> pokemonTypes = await _pokeApiClient.GetPokemonTypesAsync();
+            List<PokemonGeneration> pokemonGenerations = await _pokeApiClient.GetPokemonGenerationsAsync();
+
+            foreach (PokemonType item in pokemonTypes)
+            {
+                AllPokemonTypes.Add(item);
+            }
+
+            foreach (PokemonGeneration item in pokemonGenerations)
+            {
+                AllPokemonGenerations.Add(item);
+            }
+        }
+        catch (HttpRequestException)
+        {
+            ErrorMessage = "Unable to load filters from PokeAPI.";
+        }
+        catch (InvalidOperationException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
+        }
+        catch (JsonException)
+        {
+            ErrorMessage = "PokeAPI returned an invalid response.";
+        }
+        finally
+        {
+            IsLoading = false;
         }
 
         await LoadPokemonsAsync();
@@ -48,9 +76,32 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private PokemonType? _currentPokemonType;
 
-    public ObservableCollection<PokemonDetails> Pokemons { get; set; } = [];
+    [ObservableProperty]
+    private PokemonGeneration? _currentPokemonGeneration;
 
-    public ObservableCollection<PokemonType> AllPokemonType { get; set; } = [];
+    [ObservableProperty]
+    private PokemonSortOption<PokemonSortField> _currentSortField = new(PokemonSortField.Number, "Number");
+
+    [ObservableProperty]
+    private PokemonSortOption<SortDirection> _currentSortDirection = new(SortDirection.Ascending, "Ascending");
+
+    public ObservableCollection<PokemonDetails> Pokemons { get; } = [];
+
+    public ObservableCollection<PokemonType> AllPokemonTypes { get; } = [];
+
+    public ObservableCollection<PokemonGeneration> AllPokemonGenerations { get; } = [];
+
+    public IReadOnlyList<PokemonSortOption<PokemonSortField>> SortFields { get; } =
+    [
+        new(PokemonSortField.Number, "Number"),
+        new(PokemonSortField.Name, "Name"),
+    ];
+
+    public IReadOnlyList<PokemonSortOption<SortDirection>> SortDirections { get; } =
+    [
+        new(SortDirection.Ascending, "Ascending"),
+        new(SortDirection.Descending, "Descending"),
+    ];
 
     [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
     private async Task SearchAsync()
@@ -58,66 +109,7 @@ public partial class MainViewModel : ViewModelBase
         string pokemonName = PokemonName.Trim();
         PokemonName = pokemonName;
 
-        if (string.IsNullOrWhiteSpace(pokemonName) && CurrentPokemonType is null)
-        {
-            await LoadPokemonsAsync();
-            return;
-        }
-
-        Pokemons.Clear();
-
-        IsLoading = true;
-        ErrorMessage = string.Empty;
-
-        try
-        {
-            if (!string.IsNullOrWhiteSpace(pokemonName))
-            {
-                PokemonDetails? response = await _pokeApiClient.GetPokemonByName(pokemonName);
-                if (response is null || !MatchesSelectedType(response))
-                {
-                    ErrorMessage = "PokeAPI returned no data for the selected filters.";
-                    return;
-                }
-
-                Pokemons.Add(response);
-                return;
-            }
-
-            List<PokemonDetails> responseByType = await _pokeApiClient.GetPokemonsByTypeAsync(
-                CurrentPokemonType!.Name,
-                25);
-
-            foreach (PokemonDetails pokemon in responseByType)
-            {
-                Pokemons.Add(pokemon);
-            }
-
-            if (Pokemons.Count == 0)
-            {
-                ErrorMessage = "PokeAPI returned no data for the selected filters.";
-            }
-        }
-        catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
-        {
-            ErrorMessage = "PokeAPI returned no data for this Pokemon.";
-        }
-        catch (HttpRequestException)
-        {
-            ErrorMessage = "Unable to load Pokemon.";
-        }
-        catch (InvalidOperationException)
-        {
-            ErrorMessage = "PokeAPI returned an invalid response.";
-        }
-        catch (JsonException)
-        {
-            ErrorMessage = "PokeAPI returned an invalid response.";
-        }
-        finally
-        {
-            IsLoading = false;
-        }
+        await LoadPokemonsAsync();
     }
 
     [RelayCommand(CanExecute = nameof(CanExecuteCommands))]
@@ -125,6 +117,7 @@ public partial class MainViewModel : ViewModelBase
     {
         PokemonName = string.Empty;
         CurrentPokemonType = null;
+        CurrentPokemonGeneration = null;
         await LoadPokemonsAsync();
     }
 
@@ -142,11 +135,17 @@ public partial class MainViewModel : ViewModelBase
 
         try
         {
-            List<PokemonDetails> response = await _pokeApiClient.GetPokemonsAsync(0, 25);
+            List<PokemonDetails> response = await _pokeApiClient.SearchPokemonsAsync(
+                PokemonName,
+                CurrentPokemonType?.Name,
+                CurrentPokemonGeneration?.Name,
+                ResultLimit);
 
-            foreach (PokemonDetails item in response)
+            ReplacePokemons(response);
+
+            if (Pokemons.Count == 0)
             {
-                Pokemons.Add(item);
+                ErrorMessage = "PokeAPI returned no data for the selected filters.";
             }
         }
         catch (HttpRequestException)
@@ -172,9 +171,33 @@ public partial class MainViewModel : ViewModelBase
         return !IsLoading;
     }
 
-    private bool MatchesSelectedType(PokemonDetails pokemon)
+    private void ReplacePokemons(IEnumerable<PokemonDetails> pokemons)
     {
-        return CurrentPokemonType is null || pokemon.Types.Any(type =>
-            string.Equals(type.Type.Name, CurrentPokemonType.Name, StringComparison.OrdinalIgnoreCase));
+        Pokemons.Clear();
+
+        foreach (PokemonDetails pokemon in SortPokemons(pokemons))
+        {
+            Pokemons.Add(pokemon);
+        }
+    }
+
+    private void ApplySort()
+    {
+        if (Pokemons.Count > 1)
+        {
+            ReplacePokemons(Pokemons.ToList());
+        }
+    }
+
+    private IEnumerable<PokemonDetails> SortPokemons(IEnumerable<PokemonDetails> pokemons)
+    {
+        return (CurrentSortField.Value, CurrentSortDirection.Value) switch
+        {
+            (PokemonSortField.Number, SortDirection.Ascending) => pokemons.OrderBy(pokemon => pokemon.Id),
+            (PokemonSortField.Number, SortDirection.Descending) => pokemons.OrderByDescending(pokemon => pokemon.Id),
+            (PokemonSortField.Name, SortDirection.Ascending) => pokemons.OrderBy(pokemon => pokemon.Name, StringComparer.OrdinalIgnoreCase),
+            (PokemonSortField.Name, SortDirection.Descending) => pokemons.OrderByDescending(pokemon => pokemon.Name, StringComparer.OrdinalIgnoreCase),
+            _ => pokemons,
+        };
     }
 }

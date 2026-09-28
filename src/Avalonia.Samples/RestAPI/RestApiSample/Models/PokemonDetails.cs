@@ -17,6 +17,10 @@ public sealed class PokemonDetails
     public required int BaseExperience { get; init; }
 
     public List<PokemonTypeSlot> Types { get; init; } = [];
+
+    public double HeightMetres => Height / 10d;
+
+    public double WeightKilograms => Weight / 10d;
 }
 
 public sealed class PokemonTypeSlot

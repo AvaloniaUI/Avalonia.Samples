@@ -30,12 +30,43 @@
                              Text="{Binding PokemonName}"
                              Width="125"/>
 
-                    <ComboBox ItemsSource="{Binding AllPokemonType}"
+                    <ComboBox ItemsSource="{Binding AllPokemonTypes}"
                               SelectedItem="{Binding CurrentPokemonType}"
                               PlaceholderText="Select type">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:PokemonType">
                                 <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ComboBox ItemsSource="{Binding AllPokemonGenerations}"
+                              SelectedItem="{Binding CurrentPokemonGeneration}"
+                              PlaceholderText="Select generation">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:PokemonGeneration">
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Spacing="5">
+                    <ComboBox ItemsSource="{Binding SortFields}"
+                              SelectedItem="{Binding CurrentSortField}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ComboBox ItemsSource="{Binding SortDirections}"
+                              SelectedItem="{Binding CurrentSortDirection}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -59,19 +90,83 @@
                        IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
         </StackPanel>
 
-        <ScrollViewer DockPanel.Dock="Top">
+        <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Pokemons}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Spacing="5" Margin="5" />
+                        <WrapPanel ItemWidth="240"
+                                   Margin="8" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Label Content="{Binding Id}" />
-                            <Label Content="{Binding Name}" />
-                        </StackPanel>
+                        <Border Width="224"
+                                Margin="4"
+                                Padding="14"
+                                Background="#FAFAFA"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                            <StackPanel Spacing="10">
+                                <Grid ColumnDefinitions="Auto,*"
+                                      ColumnSpacing="10">
+                                    <Border Background="#E8F1FF"
+                                            Padding="7,3"
+                                            CornerRadius="10">
+                                        <TextBlock Text="{Binding Id, StringFormat=\#{0:D4}}"
+                                                   FontWeight="SemiBold" />
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding Name}"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                </Grid>
+
+                                <ItemsControl ItemsSource="{Binding Types}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="0,0,5,0"
+                                                    Padding="8,2"
+                                                    Background="#EDF7EE"
+                                                    CornerRadius="10">
+                                                <TextBlock Text="{Binding Type.Name}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Grid ColumnDefinitions="*,*"
+                                      RowDefinitions="Auto,Auto"
+                                      ColumnSpacing="12"
+                                      RowSpacing="8">
+                                    <StackPanel>
+                                        <TextBlock Text="Height"
+                                                   Foreground="DimGray" />
+                                        <TextBlock Text="{Binding HeightMetres, StringFormat={}{0:0.0} m}"
+                                                   FontWeight="SemiBold" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Weight"
+                                                   Foreground="DimGray" />
+                                        <TextBlock Text="{Binding WeightKilograms, StringFormat={}{0:0.0} kg}"
+                                                   FontWeight="SemiBold" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1">
+                                        <TextBlock Text="Base experience"
+                                                   Foreground="DimGray" />
+                                        <TextBlock Text="{Binding BaseExperience}"
+                                                   FontWeight="SemiBold" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

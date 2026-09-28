@@ -25,7 +25,7 @@ public partial class App : Application
             client.BaseAddress = new Uri("https://pokeapi.co/api/v2/");
         });
 
-        services.AddScoped<PokeApiClient>();
+        services.AddScoped<IPokeApiClient, PokeApiClient>();
         services.AddScoped<MainViewModel>();
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
