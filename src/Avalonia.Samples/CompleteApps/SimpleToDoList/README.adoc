@@ -59,7 +59,7 @@ This sample assumes that you have basic knowledge about the following topics:
 - Some basics about C# and https://docs.avaloniaui.net/docs/get-started/test-drive/[[XAML\]]
 - What the link:../../MVVM/BasicMvvmSample[[MVVM pattern\]] (Model-View-ViewModel) is and how it works
 - What a link:../../MVVM/CommandSample[[Command\]] is and how it works
-- What a link:https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0[[ObservableCollection\]] is and how it works
+- What an link:https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0[[ObservableCollection\]] is and how it works
 
 === CommunityToolkit.MVVM
 
