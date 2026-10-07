@@ -626,11 +626,11 @@ image::_docs/Final_Result.png[alt="Final result"]
 
 NOTE: *Note:* This tutorial shows how to store the data as a https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0[[JSON file\]]. You can apply the same approach to any other file format you prefer.
 
-Right now, every time the app closes, all data is lost. For the app to be usable in a real-world setting, it must have data persistence so that the user's input is saved between sessions. Storing data can be handled by the `Model`, which is set up for such a task.
+Right now, every time the app closes, all data is lost. For the app to be usable in a real-world setting, it must have data persistence so that the user's input is saved between sessions. Storing data can be handled by the `Model`, which is already set up for such a task.
 
 For file operations, we can use a service helper class. Add a folder called `Services`. Inside this folder, create a new class and name it `ToDoListFileService.cs`.
 
-For this simple to-do list, the class can be `static` In a more complex app, consider using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[dependency injection\]] instead.
+For this simple to-do list, the class can be `static`. In a more complex app, consider using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[dependency injection\]] instead.
 
 WARNING: *Warning:* In this example, a hardcoded filename is used for simplicity. This is not recommended in a real cross-platform app, where file paths may vary by user or platform conventions.
 
@@ -698,7 +698,7 @@ base.OnFrameworkInitializationCompleted();
 }
 ----
 
-Then, set the shutdown event itself to cancel. Doing this allows you to perform the save operation first, and then go back and close the window for real by changing `_canClose` to `true`.
+Set the shutdown event itself to cancel. Doing this allows you to perform the save operation first, and then go back and close the window for real by changing `_canClose` to `true`.
 
 It is highly recommended to run I/O operations https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o[[`async`\]].
 
@@ -746,7 +746,7 @@ Try running your app now. Add some items to the to-do list, then close the app. 
 ]
 ----
 
-Now that the app can save data to a JSON file, it must also be able to load the same data from the stored file. To do this, open the `ToDoListFileService.cs` class file again and add the following:
+Now that the app can save data to a JSON file, it must also be able to load the same data from the stored file. To do this, open `ToDoListFileService.cs` again and add the following:
 
 .*Services/ToDoListFileService.cs*
 [source,c#]
@@ -778,7 +778,7 @@ public static class ToDoListFileService
 }
 ----
 
-Next, set the app to use the file service to load the stored data on startup and recreate the list items on the UI.
+Next, set the app to use the file service to load the stored data on startup. Using the JSON file as reference, the user's saved list items can be recreated on the UI.
 
 .*App.axaml.cs*
 [source,c#]
@@ -807,7 +807,7 @@ private async Task InitMainViewModelAsync()
 }
 ----
 
-
+This concludes the Simple To-do List tutorial.
 
 
 == Related
