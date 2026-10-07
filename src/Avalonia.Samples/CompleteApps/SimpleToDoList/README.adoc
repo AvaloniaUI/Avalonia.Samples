@@ -622,20 +622,20 @@ You may want the icons to dim when a `Button` is disabled, to clearly indicate i
 image::_docs/Final_Result.png[alt="Final result"]
 
 
-=== Step 7 (Optional): Data Persistence
+=== Step 7 (Optional): Persisting data
 
-NOTE: We will be storing the data as a https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0[[JSON-File\]]. You can apply the same approach to any other file-format you prefer.
+NOTE: *Note:* This tutorial shows how to store the data as a https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0[[JSON file\]]. You can apply the same approach to any other file format you prefer.
 
-Right now every time we close the App, all data is lost. For a simple demo that is all fine, but what if we wanted to start using this App for our daily to-do's? Well, we can add basic data persistence as we already made sure our `Model` is able to handle that. For the actual file-operations we will use a helper class which is used as a service. So add a folder called `Services` and inside a new class called `ToDoListFileService.cs`.
+Right now, every time the app closes, all data is lost. For the app to be usable in a real-world setting, it must have data persistence so that the user's input is saved between sessions. Storing data can be handled by the `Model`, which is set up for such a task.
 
-TIP: We can make this class `static` in our case. In a more complex App this may better be handled using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[Dependency Injection\]]
+For file operations, we can use a service helper class. Add a folder called `Services`. Inside this folder, create a new class and name it `ToDoListFileService.cs`.
 
-WARNING: We use a hard-coded filename here. This may not be the perfect solution, as the path may vary by user settings or platform limitations. However, this is not a part we want to cover in this sample
+For this simple to-do list, the class can be `static` In a more complex app, consider using https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[dependency injection\]] instead.
 
-This is how we can save a list of `Todo-Items`:
+WARNING: *Warning:* In this example, a hardcoded filename is used for simplicity. This is not recommended in a real cross-platform app, where file paths may vary by user or platform conventions.
 
+.*Services/ToDoListFileService.cs*
 [source,c#]
-.Services/ToDoListFileService
 ----
 using System;
 using System.Collections.Generic;
@@ -670,10 +670,12 @@ public static class ToDoListFileService
 }
 ----
 
-To actually save the file, we need a way to call the `SaveToFileAsync`-method when the App is terminating. As we only target `Desktop`, we can do so in an event called `ShutdownRequested`. Moreover, we need a reference to the `MainViewModel` to be accessible form the event, and thus we store it in a private field instead of creating in inline.
+The above class defines the rules to save the user's to-do list to disc. To trigger the app to execute the task and actually save the file, the `SaveToFileAsync` method must be called. In this case, use the event `ShutdownRequested` to trigger save when the app is terminating on desktop platforms.
 
+A `private readonly` field can be used to reference the `MainViewModel`. An alternative is to use https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview[[dependency injection\]].
+
+.*App.axaml.cs*
 [source,c#]
-.App.axaml.cs
 ----
 // This is a reference to our MainViewModel which we use to save the list on shutdown. You can also use Dependency Injection
 // in your App.
@@ -696,12 +698,12 @@ base.OnFrameworkInitializationCompleted();
 }
 ----
 
-In the event itself we cancel the event as long as `_canClose` is not set to true.
+Then, set the shutdown event itself to cancel. Doing this allows you to perform the save operation first, and then go back and close the window for real by changing `_canClose` to `true`.
 
-NOTE: It is highly recommended to run I/O-operations https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o[[`async`\]].
+It is highly recommended to run I/O operations https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o[[`async`\]].
 
+.*App.axaml.cs*
 [source,c#]
-.App.axaml.cs
 ----
 // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
 // before we can actually close this window
@@ -727,10 +729,10 @@ private async void DesktopOnShutdownRequested(object? sender, ShutdownRequestedE
 }
 ----
 
-If you run the App, add some items and close it, you should see a new file in `%APPDATA%\Avalonia.SimpleToDoList` called `MyToDoList.txt` with a content similar to this:
+Try running your app now. Add some items to the to-do list, then close the app. If you go to the app directory, you should now find a file called `MyToDoList.json` that contains content similar to this:
 
+.*MyToDoList.json*
 [source,json]
-.MyToDoList.txt
 ----
 [
     {
@@ -744,10 +746,10 @@ If you run the App, add some items and close it, you should see a new file in `%
 ]
 ----
 
-Loading the stored file can also be done in a similar way:
+Now that the app can save data to a JSON file, it must also be able to load the same data from the stored file. To do this, open the `ToDoListFileService.cs` class file again and add the following:
 
+.*Services/ToDoListFileService.cs*
 [source,c#]
-.Services/ToDoListFileService
 ----
 public static class ToDoListFileService
 {
@@ -776,8 +778,10 @@ public static class ToDoListFileService
 }
 ----
 
+Next, set the app to use the file service to load the stored data on startup and recreate the list items on the UI.
+
+.*App.axaml.cs*
 [source,c#]
-.App.axaml.cs
 ----
 public override async void OnFrameworkInitializationCompleted()
 {
@@ -808,9 +812,9 @@ private async Task InitMainViewModelAsync()
 
 == Related
 
-If you want to explore more samples, please also visit https://github.com/AvaloniaCommunity/awesome-avalonia.
+If you want to explore more samples, please visit https://github.com/AvaloniaCommunity/awesome-avalonia.
 
-// Any related information or further readings goes here.
+// Any related information or further reading go here.
 
 
 
