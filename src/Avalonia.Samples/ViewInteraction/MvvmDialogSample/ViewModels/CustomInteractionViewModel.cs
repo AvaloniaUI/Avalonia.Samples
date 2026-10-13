@@ -22,7 +22,7 @@ namespace MvvmDialogSample.ViewModels
         /// <summary>
         /// Gets an instance of our own Interaction class
         /// </summary>
-        public Interaction<string, string[]?> SelectFilesInteraction { get; } = new Interaction<string, string[]?>();
+        public MvvmDialogSample.Core.Interaction<string, string[]?> SelectFilesInteraction { get; } = new MvvmDialogSample.Core.Interaction<string, string[]?>();
 
         [RelayCommand]
         private async Task SelectFilesAsync()
