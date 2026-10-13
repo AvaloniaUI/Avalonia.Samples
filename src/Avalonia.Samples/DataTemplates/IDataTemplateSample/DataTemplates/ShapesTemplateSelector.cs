@@ -14,7 +14,7 @@ namespace IDataTemplateSample.DataTemplates
         public Dictionary<string, IDataTemplate> AvailableTemplates { get; } = new Dictionary<string, IDataTemplate>();
 
         // Build the DataTemplate here
-        public Control Build(object? param)
+        public Control? Build(object? param)
         {
             var key = param?.ToString(); // Our Keys in the dictionary are strings, so we call .ToString() to get the key to look up
             if (key is null) // If the key is null, we throw an ArgumentNullException

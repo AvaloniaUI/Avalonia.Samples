@@ -6,10 +6,12 @@ open Avalonia.Threading
 open System
 open System.Threading.Tasks
 open MusicStore.Models
+open MusicStore.Services
 
 type AlbumViewModel(album: Album) =
     inherit ViewModelBase()
     
+    static let s_albumService = AlbumService()
     let _album = album
     let mutable _cover: Bitmap | null = null
     
@@ -34,7 +36,7 @@ type AlbumViewModel(album: Album) =
         task {
             try
                 let width = defaultArg width 400
-                use! imageStream = _album.LoadCoverBitmapAsync()
+                use! imageStream = s_albumService.LoadCoverBitmapAsync(_album)
                 let! bmp = Task.Run(fun () -> Bitmap.DecodeToWidth(imageStream, width))
                 // Ensure property change is raised on the UI thread so the Image.Source updates correctly
                 Dispatcher.UIThread.Post(fun () -> this.Cover <- bmp)
@@ -44,12 +46,12 @@ type AlbumViewModel(album: Album) =
         
     member this.SaveToDiskAsync() =
         task {
-            do! _album.SaveAsync();
+            do! s_albumService.SaveAsync(_album)
     
             if not (isNull this.Cover) then
                 let bitmap = this.Cover
                 do! Task.Run(fun () ->
-                    use fs = _album.SaveCoverBitmapStream()
+                    use fs = s_albumService.SaveCoverBitmapStream(_album)
                     bitmap.Save(fs)
                 )
         }

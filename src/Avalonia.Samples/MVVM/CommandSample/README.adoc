@@ -64,7 +64,7 @@ _Definitions copied from https://docs.microsoft.com/en-us/dotnet/api/system.wind
 
 There are many MVVM-packages available that already have implemented the interface for us. In this sample we will use these two options:
 
-ReactiveUI:: This library ships https://www.reactiveui.net/docs/handbook/commands/[[`ReactiveCommand`\]].
+ReactiveUI:: This library ships https://www.reactiveui.net/documentation/handbook/commands/[[`ReactiveCommand`\]].
 
 CommunityToolkit-MVVM:: This library ships https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand[[`RelayCommand`\]] and https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/asyncrelaycommand[[`AsyncRelayCommand`\]]. In addition it provides a https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand[[`source generator`\]] to reduce the boilerplate code needed.  
 
@@ -176,7 +176,7 @@ private void OpenThePodBayDoors()
 }
 ----
 
-Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/docs/handbook/commands/[`[ReactiveCommand.Create()\]`] method which will take a method or a lambda as a parameter.
+Last but not least we need to initialize our `Command` before we can use it. We will do this in our https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors[`[Constructor\]`] as shown below. We create our Commands using https://www.reactiveui.net/documentation/handbook/commands/[`[ReactiveCommand.Create()\]`] method which will take a method or a lambda as a parameter.
 
 .ReactiveUiCommandsViewModel.cs
 [source,csharp]
@@ -218,7 +218,7 @@ private void OpenThePodBayDoorsFellowRobot(string? robotName)
 
 TIP: We use string interpolation in the above method. If you want to learn more about it visit https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated[[Microsoft Docs\]].
 
-Again we have to initialize our command in the constructor. We will first create an https://docs.microsoft.com/en-us/dotnet/api/system.iobservable-1?view=net-6.0[[`Observable`\]] using `ReactiveUI's` https://www.reactiveui.net/docs/handbook/when-any/#watching-single-property[[`WhenAnyValue`\]] which will listen to `RobotName`. The `Observable` will automatically enable our `Command` whenever `RobotName` is not null or empty and disable the `Command` whenever `RobotName` is `null` or empty. Add the following lines to our constructor: 
+Again we have to initialize our command in the constructor. We will first create an https://docs.microsoft.com/en-us/dotnet/api/system.iobservable-1?view=net-6.0[[`Observable`\]] using `ReactiveUI's` https://www.reactiveui.net/documentation/handbook/when-any/#watching-single-property[[`WhenAnyValue`\]] which will listen to `RobotName`. The `Observable` will automatically enable our `Command` whenever `RobotName` is not null or empty and disable the `Command` whenever `RobotName` is `null` or empty. Add the following lines to our constructor: 
 
 
 .ReactiveUiCommandsViewModel.cs

@@ -58,7 +58,7 @@ We assume you already know how the MVVM pattern works and how dialogs, such as f
 
 WARNING: Solution 1 requires the use of Avalonia 11.2.0 or higher due to a breaking change in ReactiveUI.
 
-In this section you will learn how to use Reactive UI https://www.reactiveui.net/docs/handbook/interactions/[[`Interactions`\]] to interact with your `View`.
+In this section you will learn how to use Reactive UI https://www.reactiveui.net/documentation/handbook/interactions/[[`Interactions`\]] to interact with your `View`.
 
 === Step 1: Set up the ViewModel 
 
@@ -182,7 +182,7 @@ And this is what the final class looks like:
 ----
 /// <summary>
 /// Simple implementation of Interaction pattern from ReactiveUI framework.
-/// https://www.reactiveui.net/docs/handbook/interactions/
+/// https://www.reactiveui.net/documentation/handbook/interactions/
 /// </summary>
 public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
 {

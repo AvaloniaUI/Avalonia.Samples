@@ -2,6 +2,8 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0</TargetFramework>
+        <!-- Own the reference so dependency tools can update it without editing SDK imports. -->
+        <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
@@ -12,6 +14,7 @@
 
     <ItemGroup>
         <Compile Include="Models\Album.fs" />
+        <Compile Include="Services\AlbumService.fs" />
         <Compile Include="ViewModels\ViewModelBase.fs" />
         <Compile Include="ViewModels\AlbumViewModel.fs" />
         <Compile Include="Messages\PurchaseAlbumMessage.fs" />
@@ -31,13 +34,12 @@
     <ItemGroup />
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.0.1" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.1" />
-        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
+        <PackageReference Include="Avalonia" Version="12.1.3" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.3" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.3" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.3" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-        <PackageReference Include="iTunesSearch" Version="1.0.44" />
-        <PackageReference Update="FSharp.Core" Version="10.1.201" />
+        <PackageReference Include="FSharp.Core" Version="10.1.401" />
     </ItemGroup>
 </Project>

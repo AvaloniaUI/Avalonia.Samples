@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.MusicStore.Models;
+using Avalonia.MusicStore.Services;
 
 namespace Avalonia.MusicStore.ViewModels
 {
     public partial class AlbumViewModel : ViewModelBase, IEquatable<AlbumViewModel>
     {
+        private static readonly AlbumService s_albumService = new();
         private readonly Album _album;
 
         public AlbumViewModel(Album album)
@@ -31,7 +33,7 @@ namespace Avalonia.MusicStore.ViewModels
                 // Remove this line in production.
                 await Task.Delay(200);
                 
-                await using (var imageStream = await _album.LoadCoverBitmapAsync())
+                await using (var imageStream = await s_albumService.LoadCoverBitmapAsync(_album))
                 {
                     return await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
                 }
@@ -47,13 +49,13 @@ namespace Avalonia.MusicStore.ViewModels
         /// </summary>        
         public async Task SaveToDiskAsync()
         {
-            await _album.SaveAsync();
+            await s_albumService.SaveAsync(_album);
 
             if (await LoadCoverAsync() is { } cover)
             {
                 await Task.Run(() =>
                 {
-                    using (var fs = _album.SaveCoverBitmapStream())
+                    using (var fs = s_albumService.SaveCoverBitmapStream(_album))
                     {
                         cover.Save(fs);
                     }

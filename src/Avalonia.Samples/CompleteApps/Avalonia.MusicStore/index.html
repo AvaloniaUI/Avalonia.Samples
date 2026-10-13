@@ -3856,7 +3856,7 @@ The benefit of using this approach is that it doesn&#8217;t require the conventi
 <p>In the below section, you will add some business logic to the app. This will allow you to replace the mock data and get some real album data from the search. This business logic code forms the 'Model' part of the MVVM pattern.</p>
 </div>
 <div class="paragraph">
-<p>To implement a real album search in the app, you will use a <em>NuGet</em> package that can call the <em>Apple iTunes</em> Web API album search.</p>
+<p>To implement a real album search in the app, you will use the <em>Apple iTunes</em> Web API album search.</p>
 </div>
 <div class="paragraph">
 <p>Firstly, let&#8217;s remove the constructor for mock search that we will not need anymore.
@@ -3881,43 +3881,31 @@ The benefit of using this approach is that it doesn&#8217;t require the conventi
 This constructor was only used for testing the UI with mock data and is no longer needed.</p>
 </div>
 <div class="sect3">
-<h4 id="_apple_web_api_package">Apple Web API Package</h4>
+<h4 id="_apple_itunes_web_api">Apple iTunes Web API</h4>
 <div class="paragraph">
-<p>Follow this procedure to add the required <em>NuGet</em> package:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Stop the app if it is still running.</p>
-</li>
-<li>
-<p>Right-click the project.</p>
-</li>
-<li>
-<p>Click <strong>Manage NuGet Packages</strong>.</p>
-<div class="imageblock">
-<div class="content">
-<img src="_docs/18_iTunes_search_nuget.png" alt="iTunes-API nuget package">
-</div>
-<div class="title">Figure 13. Find the iTunes-API nuget package</div>
-</div>
-</li>
-<li>
-<p>Type 'itunes' in the search box (top-left).</p>
-</li>
-<li>
-<p>Click <strong>iTunesSearch</strong>, then click <strong>Install</strong>.</p>
-</li>
-</ul>
+<p>This sample calls the iTunes Search API directly using <code>HttpClient</code> and <code>System.Text.Json</code> — no additional NuGet package is needed. See <a href="https://performance-partners.apple.com/search-api">[the official iTunes Search API documentation]</a> for more information about the API.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_mvvm_model">MVVM Model</h4>
 <div class="paragraph">
-<p>In this tutorial the application is simple, and you can implement the business services required for the 'Model' part of the MVVM pattern, in one class. This class will contain both the data model for an album, and the method needed for the search.</p>
+<p>In this tutorial the application follows a clear separation between the <strong>data model</strong> and the <strong>business service</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Album</code> (in <code>/Models</code>) is a plain data record that holds <code>Artist</code>, <code>Title</code>, and <code>CoverUrl</code>.</p>
+</li>
+<li>
+<p><code>AlbumService</code> (in <code>/Services</code>) owns all iTunes API calls, HTTP networking, and file-system caching.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Follow this procedure to add the album business logic:</p>
+<p>This keeps the data model clean and testable, while the service layer handles all external I/O.</p>
+</div>
+<div class="paragraph">
+<p>Follow this procedure to add the album data model:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3934,44 +3922,9 @@ This constructor was only used for testing the UI with mock data and is no longe
 <p>Add the following code:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">iTunesSearch.Library</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Models</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Models</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">record</span> <span class="nc">Album</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="n">iTunesSearchManager</span> <span class="n">s_SearchManager</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="n">HttpClient</span> <span class="n">s_httpClient</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-
-        <span class="k">public</span> <span class="nf">Album</span><span class="p">(</span><span class="kt">string</span> <span class="n">artist</span><span class="p">,</span> <span class="kt">string</span> <span class="n">title</span><span class="p">,</span> <span class="kt">string</span> <span class="n">coverUrl</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Artist</span> <span class="p">=</span> <span class="n">artist</span><span class="p">;</span>
-            <span class="n">Title</span> <span class="p">=</span> <span class="n">title</span><span class="p">;</span>
-            <span class="n">CoverUrl</span> <span class="p">=</span> <span class="n">coverUrl</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Artist</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">CoverUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">SearchAsync</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">searchTerm</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;();</span>
-            <span class="p">}</span>
-
-            <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_SearchManager</span><span class="p">.</span><span class="nf">GetAlbumsAsync</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">)</span>
-                <span class="p">.</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
-
-            <span class="k">return</span> <span class="n">query</span><span class="p">.</span><span class="n">Albums</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span>
-                <span class="k">new</span> <span class="nf">Album</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">ArtistName</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">CollectionName</span><span class="p">,</span>
-                    <span class="n">x</span><span class="p">.</span><span class="n">ArtworkUrl100</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"100x100bb"</span><span class="p">,</span> <span class="s">"600x600bb"</span><span class="p">)));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">record</span> <span class="nc">Album</span><span class="p">(</span><span class="kt">string</span> <span class="n">Artist</span><span class="p">,</span> <span class="kt">string</span> <span class="n">Title</span><span class="p">,</span> <span class="kt">string</span> <span class="n">CoverUrl</span><span class="p">);</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
@@ -3986,10 +3939,70 @@ This constructor was only used for testing the UI with mock data and is no longe
 </td>
 <td class="content">
 We use a record for Album since it helps to encapsulate data.
-See <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record">[micsrosoft docs]</a> for more information about records in C#.
+See <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record">[microsoft docs]</a> for more information about records in C#.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Now create the album service:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the solution explorer, right-click the project and click <strong>Add</strong> &#8594; <strong>New Folder</strong>. Name it <strong>Services</strong>.</p>
+</li>
+<li>
+<p>Right-click the new <strong>/Services</strong> folder and click <strong>Add</strong> &#8594; <strong>Class</strong>.</p>
+</li>
+<li>
+<p>When prompted for the name, type 'AlbumService'.</p>
+</li>
+<li>
+<p>Add the following code:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Avalonia.MusicStore.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AlbumService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">HttpClient</span> <span class="n">s_httpClient</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">JsonSerializerOptions</span> <span class="n">s_jsonOptions</span> <span class="p">=</span> <span class="k">new</span><span class="p">()</span> <span class="p">{</span> <span class="n">PropertyNameCaseInsensitive</span> <span class="p">=</span> <span class="k">true</span> <span class="p">};</span>
+
+        <span class="k">private</span> <span class="k">record</span> <span class="nc">ItunesAlbum</span><span class="p">(</span><span class="kt">string</span> <span class="n">ArtistName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">CollectionName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">ArtworkUrl100</span><span class="p">);</span>
+        <span class="k">private</span> <span class="k">record</span> <span class="nc">ItunesSearchResult</span><span class="p">(</span><span class="n">ItunesAlbum</span><span class="p">[]</span> <span class="n">Results</span><span class="p">);</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">SearchAsync</span><span class="p">(</span><span class="kt">string</span><span class="p">?</span> <span class="n">searchTerm</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;();</span>
+            <span class="p">}</span>
+
+            <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="s">$"https://itunes.apple.com/search?term=</span><span class="p">{</span><span class="n">Uri</span><span class="p">.</span><span class="nf">EscapeDataString</span><span class="p">(</span><span class="n">searchTerm</span><span class="p">)}</span><span class="s">&amp;entity=album&amp;limit=25"</span><span class="p">;</span>
+            <span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_httpClient</span><span class="p">.</span><span class="nf">GetStringAsync</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">&lt;</span><span class="n">ItunesSearchResult</span><span class="p">&gt;(</span><span class="n">json</span><span class="p">,</span> <span class="n">s_jsonOptions</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="n">result</span><span class="p">?.</span><span class="n">Results</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span>
+                <span class="k">new</span> <span class="nf">Album</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">ArtistName</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">CollectionName</span><span class="p">,</span>
+                    <span class="n">x</span><span class="p">.</span><span class="n">ArtworkUrl100</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"100x100bb"</span><span class="p">,</span> <span class="s">"600x600bb"</span><span class="p">)))</span>
+                <span class="p">??</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -4119,7 +4132,7 @@ This method is automatically called whenever the SearchText property changes.</p
     <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
     <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
 
-    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
 
     <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
     <span class="p">{</span>
@@ -4143,7 +4156,7 @@ This method is automatically called whenever the SearchText property changes.</p
 <p>Clears existing results.</p>
 </li>
 <li>
-<p>Calls the album model&#8217;s <code>SearchAsync</code> method to fetch data from the iTunes API.</p>
+<p>Calls the album service&#8217;s <code>SearchAsync</code> method to fetch data from the iTunes API.</p>
 </li>
 <li>
 <p>Wraps each result in an <code>AlbumViewModel</code> and adds it to <code>SearchResults</code>.</p>
@@ -4164,7 +4177,7 @@ This method is automatically called whenever the SearchText property changes.</p
 <span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Avalonia.MusicStore.Messages</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Services</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Messaging</span><span class="p">;</span>
@@ -4173,6 +4186,8 @@ This method is automatically called whenever the SearchText property changes.</p
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MusicStoreViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
     <span class="p">{</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">AlbumService</span> <span class="n">s_albumService</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+
         <span class="p">[</span><span class="n">ObservableProperty</span><span class="p">]</span>
         <span class="k">public</span> <span class="k">partial</span> <span class="kt">string</span><span class="p">?</span> <span class="n">SearchText</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
@@ -4189,7 +4204,7 @@ This method is automatically called whenever the SearchText property changes.</p
             <span class="n">IsBusy</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
             <span class="n">SearchResults</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
 
-            <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">SearchAsync</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
 
             <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
             <span class="p">{</span>
@@ -4273,10 +4288,10 @@ This method is automatically called whenever the SearchText property changes.</p
 <div class="sect3">
 <h4 id="_album_service_2">Album Service</h4>
 <div class="paragraph">
-<p>Your first step is to modify the business service to retrieve the album cover art from the <em>Apple iTunes</em> Web API.</p>
+<p>Your first step is to extend the <code>AlbumService</code> to retrieve the album cover art from the <em>Apple iTunes</em> Web API.</p>
 </div>
 <div class="paragraph">
-<p>Follow this procedure to get the album cover art from the Web API:</p>
+<p>Follow this procedure to add cover loading to <code>AlbumService</code>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4284,27 +4299,28 @@ This method is automatically called whenever the SearchText property changes.</p
 <p>Stop the app if it is still running.</p>
 </li>
 <li>
-<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+<p>Locate and open the <strong>AlbumService.cs</strong> file in the <strong>/Services</strong> folder.</p>
 </li>
 <li>
-<p>Add the code as shown:</p>
+<p>Add the <code>LoadCoverBitmapAsync</code> and <code>SanitizeFileName</code> methods as shown:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="n">HttpClient</span> <span class="n">s_httpClient</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-<span class="k">private</span> <span class="kt">string</span> <span class="n">CachePath</span> <span class="p">=&gt;</span> <span class="s">$"./Cache/</span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">Artist</span><span class="p">)}</span><span class="s"> - </span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">Title</span><span class="p">)}</span><span class="s">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">CachePath</span><span class="p">(</span><span class="n">Album</span> <span class="n">album</span><span class="p">)</span> <span class="p">=&gt;</span>
+    <span class="s">$"./Cache/</span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">Artist</span><span class="p">)}</span><span class="s"> - </span><span class="p">{</span><span class="nf">SanitizeFileName</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">Title</span><span class="p">)}</span><span class="s">"</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Stream</span><span class="p">&gt;</span> <span class="nf">LoadCoverBitmapAsync</span><span class="p">()</span>
+<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Stream</span><span class="p">&gt;</span> <span class="nf">LoadCoverBitmapAsync</span><span class="p">(</span><span class="n">Album</span> <span class="n">album</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">File</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">))</span>
+    <span class="kt">var</span> <span class="n">cachePath</span> <span class="p">=</span> <span class="nf">CachePath</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">File</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">cachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">))</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span>  <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">cachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="k">else</span>
     <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_httpClient</span><span class="p">.</span><span class="nf">GetByteArrayAsync</span><span class="p">(</span><span class="n">CoverUrl</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_httpClient</span><span class="p">.</span><span class="nf">GetByteArrayAsync</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">CoverUrl</span><span class="p">);</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nf">MemoryStream</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -4320,7 +4336,7 @@ This method is automatically called whenever the SearchText property changes.</p
 </div>
 </div>
 <div class="paragraph">
-<p>Method <code>LoadCoverBitmapAsync()</code> returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
+<p>Method <code>LoadCoverBitmapAsync(album)</code> returns a stream that can be used to load a bitmap from, either from a cache file or from the API.
 Method  <code>SanitizeFileName()</code> sanitizes input to replace characters that cannot be used in the file name with <code>_</code>.</p>
 </div>
 <div class="admonitionblock note">
@@ -4347,7 +4363,7 @@ Note that the cache is not active at this time, you will implement it later in t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">cachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span></code></pre>
 </div>
 </div>
 </td>
@@ -4385,17 +4401,19 @@ Please note that you must reference <code>Avalonia.Media.Imaging</code> in the a
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="csharp"><span class="k">using</span> <span class="nn">Avalonia.Media.Imaging</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Avalonia.MusicStore.Services</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
 <span class="p">...</span>
 
 <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">AlbumViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
 <span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">AlbumService</span> <span class="n">s_albumService</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
     <span class="p">...</span>
 
     <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Bitmap</span><span class="p">?&gt;</span> <span class="n">Cover</span> <span class="p">=&gt;</span> <span class="nf">LoadCoverAsync</span><span class="p">();</span>
 
-    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">LoadCover</span><span class="p">()</span>
+    <span class="k">private</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Bitmap</span><span class="p">?&gt;</span> <span class="nf">LoadCoverAsync</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">try</span>
         <span class="p">{</span>
@@ -4403,7 +4421,7 @@ Please note that you must reference <code>Avalonia.Media.Imaging</code> in the a
             <span class="c1">// Remove this line in production.</span>
             <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">200</span><span class="p">);</span>
 
-            <span class="k">await</span> <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">imageStream</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_album</span><span class="p">.</span><span class="nf">LoadCoverBitmapAsync</span><span class="p">())</span>
+            <span class="k">await</span> <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">imageStream</span> <span class="p">=</span> <span class="k">await</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">LoadCoverBitmapAsync</span><span class="p">(</span><span class="n">_album</span><span class="p">))</span>
             <span class="p">{</span>
                 <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="n">Bitmap</span><span class="p">.</span><span class="nf">DecodeToWidth</span><span class="p">(</span><span class="n">imageStream</span><span class="p">,</span> <span class="m">400</span><span class="p">));</span>
             <span class="p">}</span>
@@ -4444,7 +4462,7 @@ Avalonia has a special operator <code>^</code> that you can use in data bindings
 <div class="content">
 <img src="_docs/20_displaying_images.png" alt="Displaying images for the albums">
 </div>
-<div class="title">Figure 14. This is how the album covers now appear in the search results</div>
+<div class="title">Figure 13. This is how the album covers now appear in the search results</div>
 </div>
 <div class="paragraph">
 <p>Notice how the album covers load one by one, and the UI remains responsive.</p>
@@ -4855,7 +4873,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="content">
 <img src="_docs/21_user_album_collection.png" alt="User&#8217;s bought albums">
 </div>
-<div class="title">Figure 15. Showing the user&#8217;s album collection in the main window</div>
+<div class="title">Figure 14. Showing the user&#8217;s album collection in the main window</div>
 </div>
 <div class="paragraph">
 <p>You will see the user&#8217;s album collection building as you search and select. However, if you stop the app running and then start it again, the collection reverts to empty.</p>
@@ -4865,15 +4883,15 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="sect2">
 <h3 id="_add_data_persistence">Add Data Persistence</h3>
 <div class="paragraph">
-<p>Finally. you will add some code to the album model (business service) to save the user&#8217;s album collection to disk, so that it can be recovered when the app next runs.</p>
+<p>Finally. you will add some code to the album service to save the user&#8217;s album collection to disk, so that it can be recovered when the app next runs.</p>
 </div>
 <div class="paragraph">
 <p>As a welcome side-effect, this will also activate the album cover cache - so that album cover images can be retrieved from disk (if they exist), rather than from the Web API.</p>
 </div>
 <div class="sect3">
-<h4 id="_album_model">Album Model</h4>
+<h4 id="_album_service_3">Album Service</h4>
 <div class="paragraph">
-<p>Follow this procedure to add persistence services (save and load) to the album model:</p>
+<p>Follow this procedure to add persistence methods (save and load) to the album service:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4881,28 +4899,26 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Stop the app if it is running.</p>
 </li>
 <li>
-<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+<p>Locate and open the <strong>AlbumService.cs</strong> file in the <strong>/Services</strong> folder.</p>
 </li>
 <li>
 <p>Add the code to implement save to disk, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveAsync</span><span class="p">()</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveAsync</span><span class="p">(</span><span class="n">Album</span> <span class="n">album</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(!</span><span class="n">Directory</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
     <span class="p">{</span>
         <span class="n">Directory</span><span class="p">.</span><span class="nf">CreateDirectory</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="n">CachePath</span><span class="p">))</span>
-    <span class="p">{</span>
-        <span class="k">await</span> <span class="nf">SaveToStreamAsync</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">fs</span><span class="p">);</span>
-    <span class="p">}</span>
+    <span class="k">using</span> <span class="nn">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="nf">CachePath</span><span class="p">(</span><span class="n">album</span><span class="p">)</span> <span class="p">+</span> <span class="s">".json"</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nf">SaveToStreamAsync</span><span class="p">(</span><span class="n">album</span><span class="p">,</span> <span class="n">fs</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">public</span> <span class="n">Stream</span> <span class="nf">SaveCoverBitmapStream</span><span class="p">()</span>
+<span class="k">public</span> <span class="n">Stream</span> <span class="nf">SaveCoverBitmapStream</span><span class="p">(</span><span class="n">Album</span> <span class="n">album</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenWrite</span><span class="p">(</span><span class="nf">CachePath</span><span class="p">(</span><span class="n">album</span><span class="p">)</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">private</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveToStreamAsync</span><span class="p">(</span><span class="n">Album</span> <span class="n">data</span><span class="p">,</span> <span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
@@ -4916,12 +4932,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Add the code to implement load from disk, as shown:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;</span> <span class="nf">LoadFromStream</span><span class="p">(</span><span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="n">DeserializeAsync</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;(</span><span class="n">stream</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">))!;</span>
-<span class="p">}</span>
-
-<span class="k">public</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">LoadCachedAsync</span><span class="p">()</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;&gt;</span> <span class="nf">LoadCachedAsync</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(!</span><span class="n">Directory</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
     <span class="p">{</span>
@@ -4932,14 +4943,19 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 
     <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">file</span> <span class="k">in</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">EnumerateFiles</span><span class="p">(</span><span class="s">"./Cache"</span><span class="p">))</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="k">new</span> <span class="nf">DirectoryInfo</span><span class="p">(</span><span class="n">file</span><span class="p">).</span><span class="n">Extension</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">((</span><span class="k">new</span> <span class="nf">DirectoryInfo</span><span class="p">(</span><span class="n">file</span><span class="p">).</span><span class="n">Extension</span><span class="p">)</span> <span class="p">!=</span> <span class="s">".json"</span><span class="p">)</span>
             <span class="k">continue</span><span class="p">;</span>
 
-        <span class="k">await</span> <span class="k">using</span> <span class="nn">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
-        <span class="n">results</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">LoadFromStream</span><span class="p">(</span><span class="n">fs</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+        <span class="k">await</span> <span class="k">using</span> <span class="nn">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span>
+        <span class="n">results</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">await</span> <span class="nf">LoadFromStreamAsync</span><span class="p">(</span><span class="n">fs</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">results</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">static</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;</span> <span class="nf">LoadFromStreamAsync</span><span class="p">(</span><span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="n">DeserializeAsync</span><span class="p">&lt;</span><span class="n">Album</span><span class="p">&gt;(</span><span class="n">stream</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">))!;</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
@@ -4950,15 +4966,15 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="sect3">
 <h4 id="_album_view_model_3">Album View Model</h4>
 <div class="paragraph">
-<p>Your next step is to add a method to the album view model that it can call the business service persistence save methods:</p>
+<p>Your next step is to add a method to the album view model that calls the album service persistence methods:</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">SaveAsync</dt>
+<dt class="hdlist1">SaveAsync(album)</dt>
 <dd>
 <p>persists the album text data as a JSON file,</p>
 </dd>
-<dt class="hdlist1">SaveCoverBitmapStream</dt>
+<dt class="hdlist1">SaveCoverBitmapStream(album)</dt>
 <dd>
 <p>saves the cover art as a bitmap (.BMP) file.</p>
 </dd>
@@ -4981,15 +4997,13 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="content">
 <pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SaveToDiskAsync</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="k">await</span> <span class="n">_album</span><span class="p">.</span><span class="nf">SaveAsync</span><span class="p">();</span>
+    <span class="k">await</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">SaveAsync</span><span class="p">(</span><span class="n">_album</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">await</span> <span class="nf">LoadCoverAsync</span><span class="p">()</span> <span class="k">is</span> <span class="n">Bitmap</span> <span class="n">cover</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">await</span> <span class="nf">LoadCoverAsync</span><span class="p">()</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">cover</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">bitmap</span> <span class="p">=</span> <span class="n">Cover</span><span class="p">;</span>
-
         <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
         <span class="p">{</span>
-            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">_album</span><span class="p">.</span><span class="nf">SaveCoverBitmapStream</span><span class="p">())</span>
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">fs</span> <span class="p">=</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">SaveCoverBitmapStream</span><span class="p">(</span><span class="n">_album</span><span class="p">))</span>
             <span class="p">{</span>
                 <span class="n">cover</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">fs</span><span class="p">);</span>
             <span class="p">}</span>
@@ -5077,7 +5091,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>Stop the app if it is running.</p>
 </li>
 <li>
-<p>Locate and open the <strong>Album.cs</strong> file in the <strong>/Models</strong> folder.</p>
+<p>Locate and open the <strong>AlbumService.cs</strong> file in the <strong>/Services</strong> folder.</p>
 </li>
 <li>
 <p>Check to see that there is still a debug breakpoint in the <code>LoadCoverBitmapAsync</code> method at this line:</p>
@@ -5086,7 +5100,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">OpenRead</span><span class="p">(</span><span class="n">CachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">return</span> <span class="n">File</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">cachePath</span> <span class="p">+</span> <span class="s">".bmp"</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">FileAccess</span><span class="p">.</span><span class="n">Read</span><span class="p">,</span> <span class="n">FileShare</span><span class="p">.</span><span class="n">Read</span><span class="p">);</span></code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -5119,7 +5133,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>But wait, the data is not restored on start-up yet. So you will add code to load the user&#8217;s album collection from disk when the app starts.</p>
 </div>
 <div class="paragraph">
-<p>You have already added code to the business service that can load both the files you will need from disk. All that remains for you to do, is to add some code to the main window view model to handle the start-up.</p>
+<p>You have already added code to the album service that can load both the files you will need from disk. All that remains for you to do, is to add some code to the main window view model to handle the start-up.</p>
 </div>
 <div class="paragraph">
 <p>Follow this procedure to add a method to load the user&#8217;s album collection from disk:</p>
@@ -5141,7 +5155,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="content">
 <pre class="rouge highlight"><code data-lang="csharp"><span class="k">private</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">LoadAlbums</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">Album</span><span class="p">.</span><span class="nf">LoadCachedAsync</span><span class="p">()).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">x</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">albums</span> <span class="p">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">s_albumService</span><span class="p">.</span><span class="nf">LoadCachedAsync</span><span class="p">()).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">AlbumViewModel</span><span class="p">(</span><span class="n">x</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
     <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">album</span> <span class="k">in</span> <span class="n">albums</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">Albums</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">album</span><span class="p">);</span>
@@ -5150,7 +5164,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see this method uses the business service to load the list of albums from the disk cache. It then transforms each data model (<code>Album</code> class) into a view model (<code>AlbumViewModel</code> class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.</p>
+<p>As you can see this method uses the album service to load the list of albums from the disk cache. It then transforms each data model (<code>Album</code> class) into a view model (<code>AlbumViewModel</code> class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.</p>
 </div>
 <div class="paragraph">
 <p>Your next step is to schedule the <code>LoadAlbum</code> method to run when the app starts:</p>
@@ -5187,7 +5201,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <div class="content">
 <img src="_docs/22_final_result.png" alt="Final result">
 </div>
-<div class="title">Figure 16. Well done, this is the final result of the Music Store App tutorial</div>
+<div class="title">Figure 15. Well done, this is the final result of the Music Store App tutorial</div>
 </div>
 </div>
 <div class="sect2">
@@ -5201,7 +5215,7 @@ You can learn more about the <code>IEquatable&lt;T&gt;</code> interface and over
 <p>This tutorial has used an application solution architecture that uses the MVVM pattern with the help of the <em>CommunityToolkit.Mvvm</em> framework. It manages multiple windows from the code-behind files.</p>
 </div>
 <div class="paragraph">
-<p>Application state is kept in the 'top level' view model, and can be persisted to disk. The main window and search dialog are composed from in <em>Avalonia UI</em> window controls, built-in controls and user controls.</p>
+<p>Application state is kept in the 'top level' view model, and can be persisted to disk. The main window and search dialog are composed from in <em>Avalonia UI</em> window controls, built-in controls, and user controls.</p>
 </div>
 <div class="paragraph">
 <p>This tutorial application targets a windowing platform such as <em>Apple Mac OS</em> or <em>Windows</em>.</p>
@@ -5237,7 +5251,7 @@ To learn more about targeting applications for Android mobile devices, see <a hr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-13 18:32:08 UTC
+Last updated 2026-05-14 20:41:13 UTC
 </div>
 </div>
 </body>

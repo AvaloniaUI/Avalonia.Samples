@@ -351,7 +351,7 @@ public string Greeting
 }
 ----
 
-But wait, how do we notify the `View` that `Greeting` should update? In ReactiveUI we can use [https://www.reactiveui.net/docs/handbook/when-any/#whenanyvalue[`WhenAnyValue`,window=_blank]] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`.  Add the constructor code shown below to the `ReactiveViewModel` class.
+But wait, how do we notify the `View` that `Greeting` should update? In ReactiveUI we can use [https://www.reactiveui.net/documentation/handbook/when-any/#whenanyvalue[`WhenAnyValue`,window=_blank]] to listen and react to property changes. We will setup that listener in the constructor of our `ReactiveViewModel`.  Add the constructor code shown below to the `ReactiveViewModel` class.
 
 [source,cs]
 ----

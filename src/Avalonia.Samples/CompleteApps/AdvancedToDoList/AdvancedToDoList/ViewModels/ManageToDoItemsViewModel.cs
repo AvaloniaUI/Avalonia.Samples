@@ -40,9 +40,8 @@ public partial class ManageToDoItemsViewModel
         // Get the current synchronization context for UI thread operations
         var syncContext = SynchronizationContext.Current  ?? throw new InvalidOperationException("No SynchronizationContext provided.");
 
-        // Create reactive observable for text filtering with 300ms throttle to reduce frequent updates
+        // Create reactive observable for text filtering
         var filterStringObservable = this.ObserveValue(nameof(FilterString), () => FilterString)
-            .Throttle(TimeSpan.FromMilliseconds(300))
             .DistinctUntilChanged()
             .Select(FilterToDoItemsByText);
 
@@ -65,9 +64,7 @@ public partial class ManageToDoItemsViewModel
         
         // Set up a reactive data pipeline: auto-refresh progress changes, apply filters and sorting
         _toDoItemsSourceCache.Connect()
-            .AutoRefresh(
-                x => x.Progress, 
-                propertyChangeThrottle: TimeSpan.FromMilliseconds(500))
+            .AutoRefresh(x => x.Progress)
             .Filter(filterStringObservable)
             .Filter(filterIsCompletedObservable)
             .ObserveOn(syncContext)
@@ -75,8 +72,13 @@ public partial class ManageToDoItemsViewModel
             .Subscribe();
 
         // Load initial data from database
-        _ = LoadDataAsync();
+        InitializationTask = LoadDataAsync();
     }
+    
+    /// <summary>
+    /// Gets a task that represents the asynchronous initialization of this ViewModel.
+    /// </summary>
+    public Task InitializationTask { get; }
     
     /// <summary>
     /// Loads ToDoItems from the database and populates the source cache.

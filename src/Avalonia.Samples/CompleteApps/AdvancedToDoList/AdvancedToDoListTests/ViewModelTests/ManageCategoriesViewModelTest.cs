@@ -45,10 +45,10 @@ public class ManageCategoriesViewModelTest : TestBase
     [AvaloniaFact]
     public async Task ManageCategoriesViewModel_Constructor_InitializesCorrectly()
     {
-        // Arrange & Act - Construct the ViewModel and flush dispatcher jobs
+        // Arrange & Act - Construct the ViewModel, await initialization and flush dispatcher jobs
         var vm = new ManageCategoriesViewModel();
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(500);
 
         // Assert - Verify categories collection is initialized and no item is selected
         Assert.NotNull(vm.Categories);
@@ -72,9 +72,9 @@ public class ManageCategoriesViewModelTest : TestBase
         // Arrange - Create the ViewModel and a test category
         var vm = new ManageCategoriesViewModel();
 
-        // Flush dispatcher jobs to ensure initialization completes
+        // Await initialization and flush dispatcher jobs to ensure items are loaded
+        await vm.InitializationTask;
         Dispatcher.UIThread.RunJobs();
-        await Task.Delay(500);
 
         // Act - Assign the test category to SelectedCategory
         vm.SelectedCategory = vm.Categories.First();

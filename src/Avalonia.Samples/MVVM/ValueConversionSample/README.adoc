@@ -501,4 +501,4 @@ image::_docs/result_03.png[FuncValueConverter sample]
 
 == Related 
 
-Avalonia has some really nice built-in `Converters` for you. Read more about  in the https://docs.avaloniaui.net/docs/data-binding/converting-binding-values[[Docs\]].
+Avalonia has some really nice built-in `Converters` for you. Read more about  in the https://docs.avaloniaui.net/docs/data-binding/introduction-to-data-binding[[Docs\]].
