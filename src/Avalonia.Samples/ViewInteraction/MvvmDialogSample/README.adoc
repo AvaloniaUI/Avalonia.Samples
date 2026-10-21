@@ -156,9 +156,9 @@ If you don't want to use Reactive-UI, you can also write your own `Interaction`-
 
 NOTE: We are going to use the https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/[[CommunityToolkit.Mvvm\]] in this sample, especially their source generators. If you are not familiar with it yet, read the online docs they provide first.
 
-=== Step1: Create the Interaction-class
+=== Step1: Create the CustomInteraction-class
 
-In our project (or in a class library we use) we add a folder called `Core`. Inside this folder we add a new generic class called `Interaction`, which has basically the below mentioned API.
+In our project (or in a class library we use) we add a folder called `Core`. Inside this folder we add a new generic class called `CustomInteraction`, which has basically the below-mentioned API.
 
 The class will have two generic parameters:
 
@@ -184,7 +184,7 @@ And this is what the final class looks like:
 /// Simple implementation of Interaction pattern from ReactiveUI framework.
 /// https://www.reactiveui.net/documentation/handbook/interactions/
 /// </summary>
-public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
+public sealed class CustomInteraction<TInput, TOutput> : IDisposable, ICommand
 {
     // this is a reference to the registered interaction handler. 
     private Func<TInput, Task<TOutput>>? _handler;
@@ -206,7 +206,7 @@ public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
     }
 
     /// <summary>
-    /// Registers a handler to our Interaction
+    /// Registers a handler to our CustomInteraction
     /// </summary>
     /// <param name="handler">the handler to register</param>
     /// <returns>a disposable object to clean up memory if not in use anymore/></returns>
@@ -238,14 +238,14 @@ public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
 
 === Step 2: Prepare the ViewModel
 
-In our `CustomInteractionViewModel` we need to add a new instance of the `Interaction`. In our sample we want to provide a dialog title (`string`) as the input, and we expect a list of selected files (`string[]?`)
+In our `CustomInteractionViewModel` we need to add a new instance of the `CustomInteraction`. In our sample we want to provide a dialog title (`string`) as the input, and we expect a list of selected files (`string[]?`)
 
 [source,c#]
 ----
 /// <summary>
-/// Gets an instance of our own Interaction class
+/// Gets an instance of our own CustomInteraction class
 /// </summary>
-public Interaction<string, string[]?> SelectFilesInteraction { get; } = new Interaction<string, string[]?>();
+public CustomInteraction<string, string[]?> SelectFilesInteraction { get; } = new CustomInteraction<string, string[]?>();
 ----
 
 In the next step we add a Command which will call the interaction:
@@ -261,7 +261,7 @@ private async Task SelectFilesAsync()
 
 === Step 3: Prepare the View
 
-Somehow we need to register the `View` to the `Interaction` of the `ViewModel`. In Avalonia we have an event called `OnDataContextChanged` which we can subscribe, or, if we are in code behind, simply override it.
+Somehow we need to register the `View` to the `CustomInteraction` of the `ViewModel`. In Avalonia we have an event called `OnDataContextChanged` which we can subscribe, or, if we are in code behind, simply override it.
 
 [source, c#]
 ----

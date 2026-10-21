@@ -8,7 +8,7 @@ namespace MvvmDialogSample.Core
     /// Simple implementation of Interaction pattern from ReactiveUI framework.
     /// https://www.reactiveui.net/docs/handbook/interactions/
     /// </summary>
-    public sealed class Interaction<TInput, TOutput> : IDisposable, ICommand
+    public sealed class CustomInteraction<TInput, TOutput> : IDisposable, ICommand
     {
         // this is a reference to the registered interaction handler. 
         private Func<TInput, Task<TOutput>>? _handler;
@@ -30,7 +30,7 @@ namespace MvvmDialogSample.Core
         }
 
         /// <summary>
-        /// Registers a handler to our Interaction
+        /// Registers a handler to our CustomInteraction
         /// </summary>
         /// <param name="handler">the handler to register</param>
         /// <returns>a disposable object to clean up memory if not in use anymore/></returns>
