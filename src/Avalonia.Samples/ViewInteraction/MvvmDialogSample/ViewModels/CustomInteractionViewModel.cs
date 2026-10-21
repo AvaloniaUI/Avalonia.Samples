@@ -20,9 +20,9 @@ namespace MvvmDialogSample.ViewModels
         string[]? _SelectedFiles;
 
         /// <summary>
-        /// Gets an instance of our own Interaction class
+        /// Gets an instance of our own CustomInteraction class
         /// </summary>
-        public Interaction<string, string[]?> SelectFilesInteraction { get; } = new Interaction<string, string[]?>();
+        public CustomInteraction<string, string[]?> SelectFilesInteraction { get; } = new CustomInteraction<string, string[]?>();
 
         [RelayCommand]
         private async Task SelectFilesAsync()
