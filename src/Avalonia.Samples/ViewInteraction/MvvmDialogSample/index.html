@@ -2045,7 +2045,7 @@ pre.rouge .gs {
 </li>
 <li><a href="#_solution_2_write_your_own_interaction_class">Solution 2 : Write your own Interaction-class</a>
 <ul class="sectlevel2">
-<li><a href="#_step1_create_the_interaction_class">Step1: Create the Interaction-class</a></li>
+<li><a href="#_step1_create_the_custominteraction_class">Step1: Create the CustomInteraction-class</a></li>
 <li><a href="#_step_2_prepare_the_viewmodel">Step 2: Prepare the ViewModel</a></li>
 <li><a href="#_step_3_prepare_the_view">Step 3: Prepare the View</a></li>
 <li><a href="#_step_4_see_it_in_action">Step 4: See it in action</a></li>
@@ -2230,9 +2230,9 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
 </table>
 </div>
 <div class="sect2">
-<h3 id="_step1_create_the_interaction_class">Step1: Create the Interaction-class</h3>
+<h3 id="_step1_create_the_custominteraction_class">Step1: Create the CustomInteraction-class</h3>
 <div class="paragraph">
-<p>In our project (or in a class library we use) we add a folder called <code>Core</code>. Inside this folder we add a new generic class called <code>Interaction</code>, which has basically the below mentioned API.</p>
+<p>In our project (or in a class library we use) we add a folder called <code>Core</code>. Inside this folder we add a new generic class called <code>CustomInteraction</code>, which has basically the below-mentioned API.</p>
 </div>
 <div class="paragraph">
 <p>The class will have two generic parameters:</p>
@@ -2288,7 +2288,7 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
 <span class="c1">/// Simple implementation of Interaction pattern from ReactiveUI framework.</span>
 <span class="c1">/// https://www.reactiveui.net/documentation/handbook/interactions/</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Interaction</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">TOutput</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IDisposable</span><span class="p">,</span> <span class="n">ICommand</span>
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">CustomInteraction</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">TOutput</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">IDisposable</span><span class="p">,</span> <span class="n">ICommand</span>
 <span class="p">{</span>
     <span class="c1">// this is a reference to the registered interaction handler.</span>
     <span class="k">private</span> <span class="n">Func</span><span class="p">&lt;</span><span class="n">TInput</span><span class="p">,</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TOutput</span><span class="p">&gt;&gt;?</span> <span class="n">_handler</span><span class="p">;</span>
@@ -2310,7 +2310,7 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
     <span class="p">}</span>
 
     <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Registers a handler to our Interaction</span>
+    <span class="c1">/// Registers a handler to our CustomInteraction</span>
     <span class="c1">/// &lt;/summary&gt;</span>
     <span class="c1">/// &lt;param name="handler"&gt;the handler to register&lt;/param&gt;</span>
     <span class="c1">/// &lt;returns&gt;a disposable object to clean up memory if not in use anymore/&gt;&lt;/returns&gt;</span>
@@ -2344,14 +2344,14 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
 <div class="sect2">
 <h3 id="_step_2_prepare_the_viewmodel">Step 2: Prepare the ViewModel</h3>
 <div class="paragraph">
-<p>In our <code>CustomInteractionViewModel</code> we need to add a new instance of the <code>Interaction</code>. In our sample we want to provide a dialog title (<code>string</code>) as the input, and we expect a list of selected files (<code>string[]?</code>)</p>
+<p>In our <code>CustomInteractionViewModel</code> we need to add a new instance of the <code>CustomInteraction</code>. In our sample we want to provide a dialog title (<code>string</code>) as the input, and we expect a list of selected files (<code>string[]?</code>)</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Gets an instance of our own Interaction class</span>
+<span class="c1">/// Gets an instance of our own CustomInteraction class</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">SelectFilesInteraction</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Interaction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;();</span></code></pre>
+<span class="k">public</span> <span class="n">CustomInteraction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;</span> <span class="n">SelectFilesInteraction</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CustomInteraction</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">[]?&gt;();</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2370,7 +2370,7 @@ We are going to use the <a href="https://learn.microsoft.com/en-us/dotnet/commun
 <div class="sect2">
 <h3 id="_step_3_prepare_the_view">Step 3: Prepare the View</h3>
 <div class="paragraph">
-<p>Somehow we need to register the <code>View</code> to the <code>Interaction</code> of the <code>ViewModel</code>. In Avalonia we have an event called <code>OnDataContextChanged</code> which we can subscribe, or, if we are in code behind, simply override it.</p>
+<p>Somehow we need to register the <code>View</code> to the <code>CustomInteraction</code> of the <code>ViewModel</code>. In Avalonia we have an event called <code>OnDataContextChanged</code> which we can subscribe, or, if we are in code behind, simply override it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2466,7 +2466,7 @@ Remember that the DataContext can change several times. To not get any memory le
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-11 20:39:52 UTC
+Last updated 2026-10-21 19:14:37 UTC
 </div>
 </div>
 </body>
