@@ -811,6 +811,7 @@ This concludes the Simple To-do List tutorial.
 
 
 == Related
+A more advanced ToDo-List tutorial can be found link:https://avaloniaui.github.io/Avalonia.Samples/src/Avalonia.Samples/CompleteApps/AdvancedToDoList/[[here\]].
 
 If you want to explore more samples, please visit https://github.com/AvaloniaCommunity/awesome-avalonia.
 
