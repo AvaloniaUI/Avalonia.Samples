@@ -6,6 +6,7 @@ name: Update dependencies
 permissions:
   contents: write          # needed for committing & pushing changes
   pull-requests: write    # needed for the create‑pull‑request action
+  issues: write           # needed for creating tracking issues for major updates
   
 # ----------------------------------------------------------------------
 #  Triggers
@@ -32,7 +33,7 @@ jobs:
       #  Checkout the repo (using the default GITHUB_TOKEN)
       # --------------------------------------------------------------
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: '0' # Fetch all history for all branches and tags
@@ -41,7 +42,7 @@ jobs:
       #  Install .NET SDK 10.x (the latest 10.x version at run time)
       # --------------------------------------------------------------
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0.x'
 
@@ -49,13 +50,18 @@ jobs:
       #  Java (required by Android tooling) + Android SDK
       # --------------------------------------------------------------
       - name: Set up Java (Zulu 17)
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          # Keep command-line tools 16.0 with the existing Java 17 setup.
+          cmdline-tools-version: '12266719'
+          # The legacy 'tools' package is no longer available.
+          packages: 'platform-tools'
 
       # --------------------------------------------------------------
       #  Restore mobile‑specific workloads (iOS / Android / Wasm)
@@ -73,36 +79,44 @@ jobs:
         run: |
           dotnet tool install --global dotnet-outdated-tool
           # Add the global‑tool folder to PATH for the remainder of the job
-          $toolPath = "$HOME\.dotnet\tools"
+          $toolPath = "$HOME/.dotnet/tools"
           if (Test-Path $toolPath) {
             Add-Content -Path $env:GITHUB_PATH -Value $toolPath
           }
         shell: pwsh
 
       # --------------------------------------------------------------
-      # Run dotnet‑outdated (only real .sln / .slnf / .csproj files)
+      # Run dotnet‑outdated once per project, including F# and mobile projects
       # --------------------------------------------------------------
       - name: Run dotnet-outdated (upgrade)
         shell: pwsh
-        continue-on-error: true
         run: |
           # Packages that must **not** be upgraded – add or remove as needed
           $exclude = "Xamarin.AndroidX.Core.SplashScreen"
 
-          # Find *only* .sln, .slnf or .csproj files – ignore *.slnx, *.sln.backup, …
+          # Enumerate projects directly so solution formats do not affect coverage.
           $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
-                    -Include *.sln,*.slnf,*.csproj,*.fsproj -File |
+                    -Include *.csproj,*.fsproj -File |
                     Select-Object -ExpandProperty FullName
 
           if (-not $files) {
-            Write-Host "⚠️ No solution or project files were found – nothing to do."
+            Write-Host "⚠️ No project files were found – nothing to do."
             exit 0
           }
 
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
-            # `--no-restore` speeds things up – we already restored workloads above.
-            dotnet outdated $proj --upgrade --no-restore --exclude $exclude
+            # Update related packages together without restoring after each package.
+            # The Restore after upgrades step validates the final dependency graph.
+            # `-vl Major` restricts upgrades to minor and patch versions only.
+            dotnet outdated "$proj" --upgrade --no-restore --exclude $exclude -vl Major
+            if ($LASTEXITCODE -ne 0) {
+              $upgradeExitCode = $LASTEXITCODE
+              Write-Host "::error::Dependency upgrade failed for $proj (exit code $upgradeExitCode)."
+              # Surface restore diagnostics that the tool's summary may omit.
+              dotnet restore "$proj" --verbosity normal
+              exit $upgradeExitCode
+            }
           }
 
       # --------------------------------------------------------------
@@ -133,12 +147,132 @@ jobs:
       - name: Restore after upgrades
         shell: pwsh
         run: |
-          # Ensure the solution is in a consistent state after any package upgrades
-          dotnet restore ./src/Avalonia.Samples
+          # Restore every inspected project, including those outside the root solution.
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.csproj,*.fsproj -File |
+                    Select-Object -ExpandProperty FullName
+          foreach ($proj in $files) {
+            dotnet restore "$proj"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+
+      # --------------------------------------------------------------
+      #  Check for available major version upgrades and open issues
+      # --------------------------------------------------------------
+      - name: Notify on major package updates
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
+                    -Include *.csproj,*.fsproj -File |
+                    Select-Object -ExpandProperty FullName
+
+          if (-not $files) {
+            Write-Host "No project files found for major upgrade inspection."
+            exit 0
+          }
+
+          $majorUpdates = @{}
+
+          foreach ($proj in $files) {
+            Write-Host "🔍 Inspecting $proj for major updates..."
+            try {
+              $jsonOutput = dotnet list $proj package --outdated --format json 2>$null | Out-String
+              if (-not [string]::IsNullOrWhiteSpace($jsonOutput)) {
+                $parsed = $jsonOutput | ConvertFrom-Json
+                if ($parsed.projects) {
+                  foreach ($p in $parsed.projects) {
+                    if ($p.frameworks) {
+                      foreach ($fw in $p.frameworks) {
+                        if ($fw.topLevelPackages) {
+                          foreach ($pkg in $fw.topLevelPackages) {
+                            if ($pkg.resolvedVersion -and $pkg.latestVersion) {
+                              # Extract major version, handling pre-release versions
+                              $currMajor = ($pkg.resolvedVersion -split '\.')[0] -replace '[^0-9].*', ''
+                              $latestMajor = ($pkg.latestVersion -split '\.')[0] -replace '[^0-9].*', ''
+                              if ([int]::TryParse($currMajor, [ref]$null) -and [int]::TryParse($latestMajor, [ref]$null)) {
+                                if ([int]$latestMajor -gt [int]$currMajor) {
+                                  $key = "$($pkg.id)@$latestMajor"
+                                  if (-not $majorUpdates.ContainsKey($key)) {
+                                    $majorUpdates[$key] = @{
+                                      Id = $pkg.id
+                                      CurrentVersion = $pkg.resolvedVersion
+                                      LatestVersion = $pkg.latestVersion
+                                      MajorVersion = $latestMajor
+                                      Projects = @()
+                                    }
+                                  }
+                                  $projName = Split-Path -Leaf $proj
+                                  if ($majorUpdates[$key].Projects -notcontains $projName) {
+                                    $majorUpdates[$key].Projects += $projName
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            } catch {
+              Write-Warning "Could not parse outdated json for $proj : $_"
+            }
+          }
+
+          if ($majorUpdates.Count -eq 0) {
+            Write-Host "✅ No major version upgrades detected."
+            exit 0
+          }
+
+          Write-Host "Found $($majorUpdates.Count) package(s) with major version upgrades available."
+
+          foreach ($update in $majorUpdates.Values) {
+            $pkgId = $update.Id
+            $latestVer = $update.LatestVersion
+            $currVer = $update.CurrentVersion
+            $majorVer = $update.MajorVersion
+            $projList = ($update.Projects -join ", ")
+            $title = "Major dependency update available: $pkgId $latestVer"
+
+            Write-Host "Checking if issue already exists for $pkgId (major $majorVer)..."
+            try {
+              $existingIssues = gh issue list --state all --search "$pkgId $majorVer in:title" --json number,title 2>$null | ConvertFrom-Json
+              
+              if ($existingIssues -and $existingIssues.Count -gt 0) {
+                Write-Host "ℹ️ Issue already exists for $pkgId $majorVer. Skipping."
+              } else {
+                Write-Host "📢 Creating tracking issue for $pkgId $latestVer..."
+                $body = @"
+          ### Major Dependency Update Available
+
+          A major version update is available for package **$pkgId**.
+
+          - **Current Resolved Version:** $currVer
+          - **Latest Major Version:** $latestVer
+          - **Projects Affected:** $projList
+
+          Because major updates may include breaking changes, manual validation is recommended before upgrading.
+          "@
+                gh issue create --title $title --body $body
+              }
+            } catch {
+              Write-Warning "Failed to check/create issue for $pkgId : $_"
+            }
+          }
 
       # --------------------------------------------------------------
       #  **If** something changed → push a PR
       # --------------------------------------------------------------
+      - name: Generate dependency update description
+        if: steps.changes.outputs.CHANGES == 'true'
+        shell: pwsh
+        run: |
+          ./.github/scripts/New-DependencyUpdateBody.ps1 -OutputPath "$env:RUNNER_TEMP/dependency-update-body.md"
+
       - name: Create Pull Request (only when updates exist)
         if: steps.changes.outputs.CHANGES == 'true'
         uses: peter-evans/create-pull-request@v5
@@ -146,20 +280,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: Update NuGet packages"
           title: "chore: Update NuGet packages"
-          body: |
-            This PR was generated automatically by the **Update dependencies** workflow.
-            It contains the latest NuGet package upgrades.
-            
-            **Packages that were upgraded** (generated by the workflow):
-            
-            See the diff for the full list of changes.
-    
-            **What to check before merging**
-
-            1. Verify that the solution builds on all target platforms (Desktop, Android, iOS, Browser).  
-            2. Run the unit‑test suite (`dotnet test`).  
-            3. Ensure no breaking API changes affect the sample app (run the app locally if possible).
-
+          body-path: ${{ runner.temp }}/dependency-update-body.md
           branch: update-nuget-packages
           base: main
           # Optional – keep the PR tidy

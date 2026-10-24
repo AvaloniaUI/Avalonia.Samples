@@ -2658,7 +2658,7 @@ If you set any <code>PasswordChar</code> to any <code>TextBox</code> you will ge
     <span class="k">private</span> <span class="k">void</span> <span class="nf">NavigateNext</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="c1">// get the current index and add 1</span>
-        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">CurrentPage</span><span class="p">)</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Array</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">Pages</span><span class="p">,</span> <span class="n">CurrentPage</span><span class="p">)</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
 
         <span class="c1">//  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\</span>
         <span class="n">CurrentPage</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
@@ -2672,7 +2672,7 @@ If you set any <code>PasswordChar</code> to any <code>TextBox</code> you will ge
     <span class="k">private</span> <span class="k">void</span> <span class="nf">NavigatePrevious</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="c1">// get the current index and subtract 1</span>
-        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">CurrentPage</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">index</span> <span class="p">=</span> <span class="n">Array</span><span class="p">.</span><span class="nf">IndexOf</span><span class="p">(</span><span class="n">Pages</span><span class="p">,</span> <span class="n">CurrentPage</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
 
         <span class="c1">//  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\</span>
         <span class="n">CurrentPage</span> <span class="p">=</span> <span class="n">Pages</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
@@ -2797,7 +2797,7 @@ Do you see the content of the last page? This happens because we didn&#8217;t de
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-11 20:39:52 UTC
+Last updated 2026-09-06 12:05:18 UTC
 </div>
 </div>
 </body>

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SharedControls.Services;
 
 namespace AdvancedToDoList.ViewModels;
@@ -27,4 +28,9 @@ public class MainViewModel : ViewModelBase, IDialogParticipant
     /// Provides access to theme settings, data import/export, and database management.
     /// </summary>
     public SettingsViewModel SettingsViewModel { get; } = new();
+
+    /// <summary>
+    /// Gets a task that represents the asynchronous initialization of the child ViewModels.
+    /// </summary>
+    public Task InitializationTask => Task.WhenAll(CategoriesViewModel.InitializationTask, ToDoItemsViewModel.InitializationTask);
 }

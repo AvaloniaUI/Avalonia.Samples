@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using AdvancedToDoList.ViewModels;
 using AdvancedToDoList.Views;
 using Avalonia.Controls;
 using Avalonia.Headless.XUnit;
+using Avalonia.Threading;
 using Xunit;
 
 namespace AdvancedToDoListTests.ViewTests;
@@ -50,8 +52,9 @@ public class ManageToDoItemsViewTest : TestBase
         var window = new Window { Content = view };
         window.Show();
 
-        // Give some time for view initialization
-        await Task.Delay(100);
+        // Await initialization and flush dispatcher jobs
+        await vm.InitializationTask;
+        Dispatcher.UIThread.RunJobs();
 
         // Act
         var listBox = view.FindControl<ListBox>("ToDoItemsListBox");

@@ -1,5 +1,5 @@
-using DynamicData;
 using ReactiveUI;
+using System;
 using System.Windows.Input;
 
 namespace BasicViewLocatorSample.ViewModels
@@ -47,7 +47,7 @@ namespace BasicViewLocatorSample.ViewModels
         private void NavigateNext()
         {
             // get the current index and add 1
-            var index = Pages.IndexOf(CurrentPage) + 1;
+            var index = Array.IndexOf(Pages, CurrentPage) + 1;
 
             //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
             CurrentPage = Pages[index];
@@ -61,7 +61,7 @@ namespace BasicViewLocatorSample.ViewModels
         private void NavigatePrevious()
         {
             // get the current index and subtract 1
-            var index = Pages.IndexOf(CurrentPage) - 1;
+            var index = Array.IndexOf(Pages, CurrentPage) - 1;
 
             //  /!\ Be aware that we have no check if the index is valid. You may want to add it on your own. /!\
             CurrentPage = Pages[index];
