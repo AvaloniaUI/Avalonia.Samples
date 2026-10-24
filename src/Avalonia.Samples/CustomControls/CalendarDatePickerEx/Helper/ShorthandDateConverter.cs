@@ -4,13 +4,17 @@ using Avalonia.Data.Converters;
 
 namespace CalendarDatePickerEx.Helper;
 
-public class AdvancedDateTimeParser : IValueConverter
+public class ShorthandDateConverter : IValueConverter
 {
-    public static AdvancedDateTimeParser Instance { get; } = new AdvancedDateTimeParser();
+    public static ShorthandDateConverter Instance { get; } = new ShorthandDateConverter();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value?.ToString();
+        if (value is not DateTime dateTime)
+            return null;
+
+        DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+        return dateTime.ToString(dtfi.ShortDatePattern, dtfi);
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -19,6 +23,10 @@ public class AdvancedDateTimeParser : IValueConverter
             return null;
 
         text = text.Trim();
+        if (text.Length == 0)
+            return null;
+
+        // Try shorthand formats first, then fall back to general date parsing.
 
         // Try numeric offset: 0 = today, 1 = tomorrow, -1 = yesterday, etc.
         if (int.TryParse(text, out int offset))
@@ -36,13 +44,21 @@ public class AdvancedDateTimeParser : IValueConverter
             string dayPart = text.Substring(dotIdx + 1);
             if (int.TryParse(dayPart, out int parsedDay))
             {
+                // Validate day offset is within range 1-7 (Monday-Sunday)
+                if (parsedDay < 1 || parsedDay > 7)
+                    return null;
                 dayOffset = parsedDay;
             }
         }
 
         if (weekText.Length >= 2 && weekText[weekText.Length - 1] == 'w' && int.TryParse(weekText.Substring(0, weekText.Length - 1), out int weekOffset))
         {
-            return DateTime.Today.AddDays(weekOffset * 7).AddDays(dayOffset);
+            // Find Monday of the current week first, then add weekOffset weeks, then add dayOffset to reach the target day
+            // dayOffset is 1-based: 1=Monday, 2=Tuesday, etc. (0 means no offset specified, default to Monday)
+            int daysSinceMonday = (int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday;
+            DateTime mondayThisWeek = DateTime.Today.AddDays(-daysSinceMonday);
+            DateTime monday = mondayThisWeek.AddDays(weekOffset * 7);
+            return monday.AddDays(dayOffset > 0 ? dayOffset - 1 : 0);
         }
 
         // Try ISO week formats:
@@ -76,6 +92,9 @@ public class AdvancedDateTimeParser : IValueConverter
                 string dayPart = rest.Substring(isoDotIdx + 1);
                 if (int.TryParse(dayPart, out int parsedDay))
                 {
+                    // Validate day offset is within range 1-7 (Monday-Sunday)
+                    if (parsedDay < 1 || parsedDay > 7)
+                        return null;
                     isoDayOffset = parsedDay;
                 }
             }
@@ -89,8 +108,23 @@ public class AdvancedDateTimeParser : IValueConverter
                         year = parsedYear >= 100 ? parsedYear : 2000 + parsedYear;
                     }
                 }
-                return GetMondayOfIsoWeek(year, weekNumber).AddDays(isoDayOffset);
+                // isoDayOffset is 1-based: 1=Monday, 2=Tuesday, etc. (0 means no offset, default to Monday)
+                return GetMondayOfIsoWeek(year, weekNumber).AddDays(isoDayOffset > 0 ? isoDayOffset - 1 : 0);
             }
+        }
+
+        // Fallback: try general date parsing using the culture passed by the framework
+        try
+        {
+            DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+            if (DateTime.TryParse(text, dtfi, DateTimeStyles.None, out DateTime parsedDate))
+            {
+                return parsedDate;
+            }
+        }
+        catch
+        {
+            // Ignore parsing errors and return null
         }
 
         return null;
@@ -107,4 +141,5 @@ public class AdvancedDateTimeParser : IValueConverter
         // Add weeks to reach the target week
         return mondayWeek1.AddDays((weekNumber - 1) * 7);
     }
+
 }

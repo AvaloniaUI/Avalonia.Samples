@@ -4,6 +4,7 @@
         xmlns:helper="using:CalendarDatePickerEx.Helper"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:CalendarDatePickerEx.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CalendarDatePickerEx.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -13,11 +14,33 @@
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-<StackPanel>
-    <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
-                        TextConverter="{x:Static helper:AdvancedDateTimeParser.Instance}"></CalendarDatePicker>
-</StackPanel>
+    <StackPanel>
+        <TextBlock xml:space="preserve" TextWrapping="Wrap"><Run FontSize="25">CalendarDatePicker</Run>
+Try the built-in CalendarDatePicker control and the extended CalendarDatePickerEx control below. The extended control adds buttons to select yesterday, today, or tomorrow.
+Both controls use a custom text converter to allow shorthand date entry:
+
+Days:
+    - "0" = today
+    - "-1" = yesterday
+    - "1" = tomorrow
+
+Weeks:
+    - "0w" = this week
+    - "3w.2" = tuesday in three weeks
+    - "w40.3" = wednesday in week 40
+        </TextBlock>
+        
+        <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
+                            PlaceholderText="Built-in control"
+                            UseFloatingPlaceholder="True"
+                            TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+
+        <controls:CalendarDatePickerEx SelectedDate="{Binding SelectedDate}"
+                                       PlaceholderText="Extended control"
+                                       UseFloatingPlaceholder="True"
+                                       TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+    </StackPanel>
 </Window>
