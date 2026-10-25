@@ -1,0 +1,165 @@
+= Enter the Title here
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+ifndef::env-github[]
+:toc: left
+endif::[]
+
+ifdef::env-github[]
+:toc:
+:toc-placement!:
+endif::[]
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+ifndef::env-github[]
+:icons: font
+endif::[]
+// ----------------------------------------------------------
+
+
+
+// Write a short summary here what this examples does
+This example will show you how to extend any Avalonia control and add new functionality to it. In this case we will extend the CalendarDatePicker control and add a custom parser to it as well as additional commands.
+
+The custom parser will allow us to enter dates as relative dates, e.g. "0" for today, "-1" for yesterday, "+1" for tomorrow, etc. The additional commands will allow us to quickly set the date to today, yesterday or tomorrow.
+
+
+// --- D O N ' T    T O U C H   T H I S    S E C T I O N ---
+toc::[]
+// ---------------------------------------------------------
+
+
+[discrete]
+=== Difficulty
+// Choose one of the below difficulties. You can just delete the ones you don't need.
+🐔 Normal 🐔
+
+
+
+[discrete]
+=== Buzz-Words
+
+// Write some buzz-words here. You can separate them by ", "
+custom control, extending controls, custom parser, custom control theme
+
+== Before we start
+
+You should have a basic knowledge about Avalonia controls, styles, templates and control themes. If you are not familiar with these topics, please read the link:../RatingControlSample/[[Rating Control Sample\]] before you continue with this sample.
+
+
+== The Solution 
+
+// This is where you explain the possible solution you provide in this sample. 
+// If you have more than one option to solve the issue, use Approach 1, Approach 2, ... 
+
+=== Step 1: Set up a new Avalonia project
+
+In this sample we will create a new Avalonia project and add a new custom control to it. In a real world scenario you would probably add the custom control to a shared library and reference it from your main project.
+
+=== Step 2: Create a custom parser
+
+We want to extend the CalendarDatePicker control and add a custom parser to it. The custom parser will allow us to enter dates in a different format than the default one. To gain a better understanding of how to extend the CalendarDatePicker control, we will first look up the API documentation of the CalendarDatePicker control. You can find the API documentation here: [https://docs.avaloniaui.net/api/avalonia/controls/calendardatepicker]. 
+
+TIP: Avalonia is open source, so you can also grab the source code of the control you want to extend to understand how it works. You can find the source code of the CalendarDatePicker control here: [https://github.com/AvaloniaUI/Avalonia/tree/main/src/Avalonia.Controls/CalendarDatePicker].
+
+In the link:https://docs.avaloniaui.net/api/avalonia/controls/calendardatepicker#uid-de14fbd1f9[[API docs\]] we found, that the CalendarDatePicker control has a property called `TextConverter`, which accepts an object of type `IValueConverter`. This property is used to convert the text entered by the user into a DateTime object. We will create a new class called `ShorthandDateConverter` inside the `Helper` folder, that implements the `IValueConverter` interface and add our custom parsing logic to it.
+
+Below is a reduced version of the `ShorthandDateConverter` class. You can find the full source code of the class in the sample project.
+
+[source,csharp]
+.ShorthandDateConverter.cs
+----
+// Note: We need to use a partial class, because we will use a source generator to generate the regex patterns for the shorthand date formats. The source generator will generate a partial class with the same name and add the regex patterns to it.
+public partial class ShorthandDateConverter : IValueConverter
+{
+    // A static instance of the converter for easy access without needing to create a new instance each time.
+    public static ShorthandDateConverter Instance { get; } = new();
+    
+    // A regex pattern to match numeric offsets, e.g. "0", "-1", "+1", etc. The pattern allows for an optional "+" or "-" sign followed by one or more digits.
+    [GeneratedRegex(@"^[+-]?(\d+)$")]
+    private static partial Regex NumericOffsetRegex();
+    
+    // this method is called when the control needs to convert a DateTime object to a string for display in the TextBox.
+    // culture is passed by the framework and can be used to format the date according to the user's locale.
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not DateTime dateTime)
+            return null;
+
+        var dtfi = culture.DateTimeFormat;
+        return dateTime.ToString(dtfi.ShortDatePattern, dtfi);
+    }
+
+    // this method is called when the user enters text into the TextBox and the control needs to convert it back to a DateTime object.
+    // here we implement our custom parsing logic to handle shorthand date formats.
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        // ensure the value is a non-empty string
+        if (value is not string text || string.IsNullOrWhiteSpace(text))
+            return null;
+
+        // trim whitespace from the input string
+        text = text.Trim();
+
+        // Try shorthand formats first
+        if (TryParseNumericOffset(text, out var numericDate))
+            return numericDate;
+        
+        // ... other shorthand parsing methods can be added here, e.g., week offsets, ISO week formats, etc.
+
+        // Fallback: try general date parsing using the culture passed by the framework
+        var dtfi = culture.DateTimeFormat;
+        if (DateTime.TryParse(text, dtfi, DateTimeStyles.None, out var parsedDate))
+        {
+            return parsedDate;
+        }
+
+        throw new FormatException($"Cannot parse the given text to a date: {text}");
+    }
+    
+    // A private method that attempts to parse a numeric offset from the input string. If successful, it returns true and outputs the resulting DateTime; otherwise, it returns false.
+    private static bool TryParseNumericOffset(string text, out DateTime result)
+    {
+        result = default;
+
+        // check if the text matches the numeric offset regex.
+        if (!NumericOffsetRegex().IsMatch(text))
+            return false;
+
+        // try to parse the text as an integer. If it fails, throw a FormatException.
+        if (!int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offset))
+            throw new FormatException($"Day offset '{text}' is out of range.");
+
+        // try to add the offset to today's date. If it fails, throw a FormatException.
+        if (!DateTimeHelper.TryAddDays(DateTime.Today, offset, out result))
+            throw new FormatException($"Day offset {offset} is out of range.");
+
+        // if everything succeeded, return true.
+        return true;
+    }
+}
+----
+
+
+
+=== Step 3: 
+
+
+== Related 
+
+// Any related information or further readings goes here.
+
+
+
+// --------------- Ascii-Doc Cheat-Sheet ------------------
+
+// visit: https://asciidoc.org 
+// visit: https://powerman.name/doc/asciidoc-compact
+
+// VS-Code has a great Add-In for Ascii docs: https://github.com/asciidoctor/asciidoctor-vscode/
