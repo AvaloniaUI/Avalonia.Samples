@@ -16,7 +16,8 @@
         <FluentTheme />
         
         <Style Selector="CalendarDatePicker, controls|CalendarDatePickerEx">
-            <Setter Property="MinWidth" Value="200"></Setter>
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="IsTodayHighlighted" Value="True" />
         </Style>
     </Application.Styles>
 </Application>

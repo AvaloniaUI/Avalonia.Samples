@@ -31,8 +31,9 @@ Weeks:
     - "0w" = this week
     - "3w.2" = tuesday in three weeks
     - "w40.3" = wednesday in week 40
+    - "w3/26" = monday in week 3 of 2026
         </TextBlock>
-        
+
         <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
                             PlaceholderText="Built-in control"
                             UseFloatingPlaceholder="True"
