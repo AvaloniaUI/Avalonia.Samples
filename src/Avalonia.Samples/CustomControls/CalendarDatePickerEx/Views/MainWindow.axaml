@@ -5,11 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:CalendarDatePickerEx.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Width="600" SizeToContent="Height"
+        mc:Ignorable="d"
         x:Class="CalendarDatePickerEx.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CalendarDatePickerEx">
+        Title="CalendarDatePicker">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -17,31 +18,65 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-        <TextBlock xml:space="preserve" TextWrapping="Wrap"><Run FontSize="25">CalendarDatePicker</Run>
-Try the built-in CalendarDatePicker control and the extended CalendarDatePickerEx control below. The extended control adds buttons to select yesterday, today, or tomorrow.
-Both controls use a custom text converter to allow shorthand date entry:
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="16">
+            <TextBlock FontSize="24" 
+                       FontWeight="SemiBold" 
+                       Foreground="{DynamicResource SystemAccentColor}">
+                CalendarDatePickerEx-Sample
+            </TextBlock>
 
-Days:
-    - "0" = today
-    - "-1" = yesterday
-    - "1" = tomorrow
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}">
+                Try the built-in <Run FontWeight="SemiBold">CalendarDatePicker</Run> control and the extended
+                <Run FontWeight="SemiBold">CalendarDatePickerEx</Run> control below. The extended control adds buttons to select yesterday, today, or tomorrow. It also adds a better validation logic.
+            </TextBlock>
 
-Weeks:
-    - "0w" = this week
-    - "3w.2" = tuesday in three weeks
-    - "w40.3" = wednesday in week 40
-    - "w3/26" = monday in week 3 of 2026
-        </TextBlock>
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}">
+                Both controls use a custom text converter to allow shorthand date entry:
+            </TextBlock>
 
-        <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
-                            PlaceholderText="Built-in control"
-                            UseFloatingPlaceholder="True"
-                            TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+            <Border Padding="16"
+                    xml:space="preserve"
+                    CornerRadius="8"
+                    Background="{DynamicResource SystemControlBackgroundListLowBrush}">
+                <StackPanel Spacing="6">
+                    <TextBlock FontWeight="SemiBold">Days</TextBlock>
+                    <StackPanel Margin="12,0,0,0" Spacing="4">
+                        <SelectableTextBlock><Run FontFamily="Monospace">    0</Run><Run> - today</Run></SelectableTextBlock>
+                        <SelectableTextBlock><Run FontFamily="Monospace">   -1</Run><Run> - yesterday</Run></SelectableTextBlock>
+                        <SelectableTextBlock><Run FontFamily="Monospace">   +1</Run><Run> - tomorrow</Run></SelectableTextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
 
-        <controls:CalendarDatePickerEx SelectedDate="{Binding SelectedDate}"
-                                       PlaceholderText="Extended control"
-                                       UseFloatingPlaceholder="True"
-                                       TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
-    </StackPanel>
+            <Border Padding="16"
+                    xml:space="preserve"
+                    CornerRadius="8"
+                    Background="{DynamicResource SystemControlBackgroundListLowBrush}">
+                <StackPanel Spacing="6">
+                    <TextBlock FontWeight="SemiBold">Weeks</TextBlock>
+                    <StackPanel Margin="12,0,0,0" Spacing="4">
+                        <SelectableTextBlock><Run FontFamily="Monospace">   0w</Run><Run> - this week</Run></SelectableTextBlock>
+                        <SelectableTextBlock><Run FontFamily="Monospace"> 3w.2</Run><Run> - Tuesday in three weeks</Run></SelectableTextBlock>
+                        <SelectableTextBlock><Run FontFamily="Monospace">w40.3</Run><Run> - Wednesday in week 40</Run></SelectableTextBlock>
+                        <SelectableTextBlock><Run FontFamily="Monospace">w3/26</Run><Run> - Monday in week 3 of 2026</Run></SelectableTextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Spacing="4">
+                <TextBlock FontWeight="SemiBold">Build-in control</TextBlock>
+                <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
+                                    PlaceholderText="Enter a shorthand date"
+                                    TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+
+                <Separator Margin="0,8" />
+
+                <TextBlock FontWeight="SemiBold">Extended control</TextBlock>
+                <controls:CalendarDatePickerEx SelectedDate="{Binding SelectedDate}"
+                                               PlaceholderText="Enter a shorthand date"
+                                               TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Window>

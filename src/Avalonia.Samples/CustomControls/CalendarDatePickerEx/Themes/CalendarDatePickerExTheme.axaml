@@ -76,23 +76,26 @@
                           DisplayDate="{TemplateBinding DisplayDate}"
                           DisplayDateStart="{TemplateBinding DisplayDateStart}"
                           DisplayDateEnd="{TemplateBinding DisplayDateEnd}" />
-                <UniformGrid Grid.Row="1" Columns="3" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
-                  <UniformGrid.Styles>
+                <StackPanel Grid.Row="1" Spacing="1" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                  <StackPanel.Styles>
                     <Style Selector="Button">
                       <Setter Property="HorizontalAlignment" Value="Stretch" />
                       <Setter Property="HorizontalContentAlignment" Value="Center" />
+                      <Setter Property="CornerRadius" Value="0" />
                     </Style>
-                  </UniformGrid.Styles>
-                  <Button Content="Yesterday"
-                          Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
-                          CommandParameter="-1"/>
-                  <Button Content="Today"
-                          Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
-                          CommandParameter="0"/>
-                  <Button Content="Tomorrow"
-                          Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
-                          CommandParameter="1"/>
-                </UniformGrid>
+                  </StackPanel.Styles>
+                  <UniformGrid Columns="3">
+                    <Button Content="Yesterday"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="-1"/>
+                    <Button Content="Today"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="0"/>
+                    <Button Content="Tomorrow"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="1"/>
+                  </UniformGrid>
+                </StackPanel>
                 </Grid>
               </Popup>
             </Grid>
