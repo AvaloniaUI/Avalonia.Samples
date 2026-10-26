@@ -19,6 +19,7 @@ public class CalendarDatePickerEx : CalendarDatePicker
     private string? _lastInvalidText;
     private bool _hasValidationError;
     private bool _isRollingBack;
+    private bool _pendingRestorationCanceled;
     
     static CalendarDatePickerEx()
     {
@@ -72,13 +73,18 @@ public class CalendarDatePickerEx : CalendarDatePicker
         // The base parser will rollback the Text property after this method returns.
         // We need to restore the invalid text AFTER the base parsing completes.
         // Use Dispatcher to schedule the restoration after the current processing cycle.
+        // Cancel any pending restoration from a previous error, as this new error replaces it.
+        CancelPendingRestoration();
+
         if (_lastInvalidText != null)
         {
+            // Reset the cancellation flag so the new restoration callback is not immediately canceled
+            _pendingRestorationCanceled = false;
             _isRollingBack = true;
             Dispatcher.UIThread.Post(() =>
             {
-                // Restore the invalid text into the TextBox so it does not get reverted to SelectedDate
-                if (_textBox != null)
+                // Only restore if this restoration hasn't been canceled by a valid selection
+                if (!_pendingRestorationCanceled && _textBox != null )
                 {
                     _textBox.Text = _lastInvalidText;
                 }
@@ -88,23 +94,10 @@ public class CalendarDatePickerEx : CalendarDatePicker
     }
     
     /// <inheritdoc />
-    protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
-    {
-        base.UpdateDataValidation(property, state, error);
-
-        // Forward the error to the DataValidationErrors wrapper for the TextProperty
-        if (property == TextProperty && _textBox != null)
-        {
-            DataValidationErrors.SetError(_textBox, error);
-        }
-    }
-    
-    /// <inheritdoc />
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
-        // Clear validation errors when Text changes (user is typing a new value)
         if (change.Property == TextProperty)
         {
             // If we're currently rolling back from invalid input, don't clear the error state
@@ -117,11 +110,33 @@ public class CalendarDatePickerEx : CalendarDatePicker
             // If the user modified the text away from the invalid input, clear the error state
             if (_hasValidationError && change.GetNewValue<string?>() != _lastInvalidText)
             {
+                CancelPendingRestoration();
                 _hasValidationError = false;
                 _lastInvalidText = null;
                 UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
             }
         }
+        else if (change.Property == SelectedDateProperty)
+        {
+            // When a valid date is selected (e.g., via a shortcut button), cancel any pending
+            // invalid text restoration and clear the validation error state.
+            CancelPendingRestoration();
+            if (_hasValidationError)
+            {
+                _hasValidationError = false;
+                _lastInvalidText = null;
+                UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Cancels any pending invalid text restoration scheduled via the dispatcher.
+    /// This is called when a valid date is selected or the user starts typing a new value.
+    /// </summary>
+    private void CancelPendingRestoration()
+    {
+        _pendingRestorationCanceled = true;
     }
     
     /// <summary>

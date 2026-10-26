@@ -14,9 +14,13 @@
     </Application.Resources>
     <Application.Styles>
         <FluentTheme />
-        
+
+        <Style Selector="DataValidationErrors">
+            <Setter Property="Theme" Value="{StaticResource TooltipDataValidationErrors}" />
+        </Style>
+
         <Style Selector="CalendarDatePicker, controls|CalendarDatePickerEx">
-            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="MinWidth" Value="300" />
             <Setter Property="IsTodayHighlighted" Value="True" />
         </Style>
     </Application.Styles>
