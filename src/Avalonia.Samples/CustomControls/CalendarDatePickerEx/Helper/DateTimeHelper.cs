@@ -39,16 +39,29 @@ public static class DateTimeHelper
     /// <returns>The calculated date, or null if the input values are invalid.</returns>
     public static DateTime? GetDateOfIsoWeek(int year, int weekNumber, DayOfWeek dayOfWeek = DayOfWeek.Monday)
     {
-        // Validate year and week number are within the valid range
+        // Validate year is within DateTime range
         if (year is < 1 or > 9999)
             return null;
 
-        if (weekNumber < 1 || weekNumber > ISOWeek.GetWeeksInYear(year))
+        // Validate week number is within valid ISO range (1–53)
+        if (weekNumber < 1 || weekNumber > 53)
+            return null;
+
+        // Check that the requested year actually has the requested week
+        if (weekNumber > ISOWeek.GetWeeksInYear(year))
             return null;
 
         try
         {
-            return ISOWeek.ToDateTime(year, weekNumber, dayOfWeek);
+            var result = ISOWeek.ToDateTime(year, weekNumber, dayOfWeek);
+
+            // Verify the resulting date's ISO year matches the requested year.
+            // ISOWeek.ToDateTime may return a date whose ISO year differs from
+            // the requested year for edge cases near year boundaries.
+            if (ISOWeek.GetYear(result) != year)
+                return null;
+
+            return result;
         }
         catch
         {

@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using Avalonia.Threading;
 using CalendarDatePickerEx.Helper;
 
 namespace CalendarDatePickerEx.Controls;
@@ -17,7 +18,7 @@ public class CalendarDatePickerEx : CalendarDatePicker
     private TextBox? _textBox;
     private string? _lastInvalidText;
     private bool _hasValidationError;
-    private bool _isValidatingError;
+    private bool _isRollingBack;
     
     static CalendarDatePickerEx()
     {
@@ -56,7 +57,73 @@ public class CalendarDatePickerEx : CalendarDatePicker
             SetCurrentValue(SelectedDateProperty, selectedDate);
         }
     }
+    
+    /// <inheritdoc />
+    protected override void OnDateValidationError(CalendarDatePickerDateValidationErrorEventArgs e)
+    {
+        base.OnDateValidationError(e);
 
+        _hasValidationError = true;
+        _lastInvalidText = e.Text;
+
+        // Feed the exception to Avalonia's visual validation adorners
+        UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, e.Exception);
+
+        // The base parser will rollback the Text property after this method returns.
+        // We need to restore the invalid text AFTER the base parsing completes.
+        // Use Dispatcher to schedule the restoration after the current processing cycle.
+        if (_lastInvalidText != null)
+        {
+            _isRollingBack = true;
+            Dispatcher.UIThread.Post(() =>
+            {
+                // Restore the invalid text into the TextBox so it does not get reverted to SelectedDate
+                if (_textBox != null)
+                {
+                    _textBox.Text = _lastInvalidText;
+                }
+                _isRollingBack = false;
+            });
+        }
+    }
+    
+    /// <inheritdoc />
+    protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
+    {
+        base.UpdateDataValidation(property, state, error);
+
+        // Forward the error to the DataValidationErrors wrapper for the TextProperty
+        if (property == TextProperty && _textBox != null)
+        {
+            DataValidationErrors.SetError(_textBox, error);
+        }
+    }
+    
+    /// <inheritdoc />
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        // Clear validation errors when Text changes (user is typing a new value)
+        if (change.Property == TextProperty)
+        {
+            // If we're currently rolling back from invalid input, don't clear the error state
+            // The rollback is the base parser reverting the text, not a user correction
+            if (_isRollingBack)
+            {
+                return;
+            }
+
+            // If the user modified the text away from the invalid input, clear the error state
+            if (_hasValidationError && change.GetNewValue<string?>() != _lastInvalidText)
+            {
+                _hasValidationError = false;
+                _lastInvalidText = null;
+                UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
+            }
+        }
+    }
+    
     /// <summary>
     /// A helper method to parse the offset value into an integer. It supports various input types,
     /// including int, string, and any object that can be converted to an integer.
@@ -88,51 +155,6 @@ public class CalendarDatePickerEx : CalendarDatePicker
                 {
                     return false;
                 }
-        }
-    }
-
-    /// <summary>
-    /// Overrides the base DateValidationError handler to feed validation errors to the
-    /// DataValidationErrors wrapper in the control template, so the user sees the error message.
-    /// The base CalendarDatePicker only fires an event but never calls UpdateDataValidation.
-    /// </summary>
-    protected override void OnDateValidationError(CalendarDatePickerDateValidationErrorEventArgs e)
-    {
-        base.OnDateValidationError(e);
-
-        _isValidatingError = true;
-        _hasValidationError = true;
-        _lastInvalidText = e.Text;
-
-        // Feed the exception to Avalonia's visual validation adorners
-        UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, e.Exception);
-
-        // Restore the invalid text into the TextBox so it does not get reverted to SelectedDate
-        if (_textBox != null && _lastInvalidText != null)
-        {
-            _textBox.Text = _lastInvalidText;
-        }
-        
-        _isValidatingError = false;
-    }
-
-    /// <summary>
-    /// Clears validation errors when the text property changes successfully.
-    /// </summary>
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        // Clear validation errors when Text changes (user is typing a new value)
-        if (change.Property == TextProperty && !_isValidatingError)
-        {
-            // If the user modified the text away from the invalid input, clear the error state
-            if (_hasValidationError && change.GetNewValue<string?>() != _lastInvalidText)
-            {
-                _hasValidationError = false;
-                _lastInvalidText = null;
-                UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
-            }
         }
     }
 }
