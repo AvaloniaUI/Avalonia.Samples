@@ -49,7 +49,8 @@ public class CalendarDatePickerEx : CalendarDatePicker
         // Close the popup first. Otherwise, the parsing will kick in and override the selected date.
         SetCurrentValue(IsDropDownOpenProperty, false);
 
-        if (DateTimeHelper.TryAddDays(DateTime.Today, offsetInt, out var selectedDate))
+        if (DateTimeHelper.TryAddDays(DateTime.Today, offsetInt, out var selectedDate)
+            && BlackoutDates?.Contains(selectedDate) != true)
         {
             // Set the selected date to today + offset
             SetCurrentValue(SelectedDateProperty, selectedDate);
