@@ -186,7 +186,7 @@ public partial class ShorthandDateConverter : IValueConverter
         if (match.Groups[3].Success)
         {
             if (!int.TryParse(match.Groups[3].Value, NumberStyles.Integer, CultureInfo.InvariantCulture,
-                    out var parsedYear) || parsedYear is < 1 or > 9999)
+                    out var parsedYear) || parsedYear is < 0 or > 9999)
                 throw new FormatException($"Invalid year in shorthand date: {text}.");
 
             year = parsedYear >= 100 ? parsedYear : 2000 + parsedYear;
