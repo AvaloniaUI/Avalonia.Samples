@@ -2038,17 +2038,18 @@ pre.rouge .gs {
 <li><a href="#_before_we_start">Before we start</a>
 <ul class="sectlevel2">
 <li><a href="#_communitytoolkit_mvvm">CommunityToolkit.MVVM</a></li>
-<li><a href="#_preparation_work">Preparation work</a></li>
+<li><a href="#_preparation">Preparation</a></li>
 </ul>
 </li>
 <li><a href="#_the_solution">The Solution</a>
 <ul class="sectlevel2">
-<li><a href="#_step_1_create_and_set_up_a_new_project">Step 1: Create and set up a new project</a></li>
-<li><a href="#_step_2_set_up_the_model">Step 2: Set up the Model</a></li>
-<li><a href="#_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</a></li>
-<li><a href="#_step_4_set_up_the_view">Step 4: Set up the View</a></li>
-<li><a href="#_step_5_optional_add_some_styles_to_improve_the_ui">Step 5 (Optional): Add some Styles to improve the UI</a></li>
-<li><a href="#_step_7_optional_data_persistence">Step 7 (Optional): Data Persistence</a></li>
+<li><a href="#_step_1_create_a_new_project">Step 1: Create a new project</a></li>
+<li><a href="#_step_2_set_up_the_model">Step 2: Set up the model</a></li>
+<li><a href="#_step_3_set_up_the_view_models">Step 3: Set up the view models</a></li>
+<li><a href="#_step_4_set_up_the_view">Step 4: Set up the view</a></li>
+<li><a href="#_step_5_running_the_app_and_making_improvements">Step 5: Running the app and making improvements</a></li>
+<li><a href="#_step_6_optional_styling_the_ui">Step 6 (Optional): Styling the UI</a></li>
+<li><a href="#_step_7_optional_persisting_data">Step 7 (Optional): Persisting data</a></li>
 </ul>
 </li>
 <li><a href="#_related">Related</a></li>
@@ -2087,42 +2088,23 @@ pre.rouge .gs {
 <p>Some basics about C# and <a href="https://docs.avaloniaui.net/docs/get-started/test-drive/">[XAML]</a></p>
 </li>
 <li>
-<p>What the <a href="../../MVVM/BasicMvvmSample">[MVVM -pattern]</a> (Model-View-ViewModel) is and how it works</p>
+<p>What the <a href="../../MVVM/BasicMvvmSample">[MVVM pattern]</a> (Model-View-ViewModel) is and how it works</p>
 </li>
 <li>
 <p>What a <a href="../../MVVM/CommandSample">[Command]</a> is and how it works</p>
 </li>
 <li>
-<p>What a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0">[ObservableCollection]</a> is and how it works</p>
+<p>What an <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-8.0">[ObservableCollection]</a> is and how it works</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Some sections are optional. You can skip these if you want to.
-</td>
-</tr>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_communitytoolkit_mvvm">CommunityToolkit.MVVM</h3>
 <div class="paragraph">
-<p>The <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">[CommunityToolkit.MVVM]</a>-package is one of many third-party packages for MVVM-Apps. We will use it in this sample as it is very lightweight. In addition, it comes with built-in source generators, which allow us to write less boilerplate code.</p>
+<p>The <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/">[CommunityToolkit.MVVM]</a> package is one of many third-party packages for MVVM apps. We will use it in this sample as it is very lightweight. In addition, it comes with built-in source generators, which allow us to write less boilerplate code.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>For example, we can annotate private fields or partial properties with the <code>[ObservableProperty]</code>-attribute which will let the source generator create a property for us:</p>
+<p>For example, we can annotate private fields or partial properties with the <code>[ObservableProperty]</code> attribute, which will let the source generator create a property for us:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2140,10 +2122,6 @@ Some sections are optional. You can skip these if you want to.
 <span class="p">}</span></code></pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2151,70 +2129,59 @@ Some sections are optional. You can skip these if you want to.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you want to learn more about how these source generators work, please see <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview">[here]</a> and <a href="https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview">[here]</a>.
+If you want to learn more about how these source generators work, please see the Microsoft documentation on <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/overview">[MVVM source generators]</a> and <a href="https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview">[.NET compiler source generators]</a>.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_preparation_work">Preparation work</h3>
+<h3 id="_preparation">Preparation</h3>
 <div class="paragraph">
-<p>Before we start with the actual implementation of the App, we need to define a list of requirements and a sketch of the UI.</p>
+<p>Before we start with the implementation of the app, we need to define a list of requirements and a sketch of the UI.</p>
 </div>
-<div class="paragraph">
-<p><strong>Must-Haves</strong></p>
-</div>
+<div class="sect3">
+<h4 id="_must_haves">Must-haves</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>The user must be able to view a list of to-do items</p>
+<p>The user must be able to view a list of to-do items.</p>
 </li>
 <li>
-<p>All items must be easily discoverable</p>
+<p>All items must be easily discoverable.</p>
 </li>
 <li>
-<p>The user must be able to check and uncheck the to-do items</p>
+<p>The user must be able to check and uncheck the to-do items.</p>
 </li>
 <li>
-<p>The user must be able to add new items</p>
+<p>The user must be able to add new items.</p>
 </li>
 <li>
-<p>The user must be able to delete an existing item</p>
+<p>The user must be able to delete an existing item.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Nice-To-Haves</strong></p>
 </div>
+<div class="sect3">
+<h4 id="_nice_to_haves">Nice-to-haves</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>The user should have visual feedback when hovering a to-do item</p>
+<p>The user should have visual feedback when hovering a to-do item.</p>
 </li>
 <li>
-<p>The user should have visual feedback if a new item can be added or not</p>
-</li>
-<li>
-<p>The user should be able to save and load a to-do-list (not a scope of this tutorial)</p>
-</li>
-<li>
-<p>The user should be able to edit an existing item (not a scope of this tutorial)</p>
+<p>The user should have visual feedback if a new item can be added or not.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Draft UI Layout</strong></p>
 </div>
-<div class="paragraph">
-<p>It would be nice to have a single-page user interface (UI) where the user can interact with the to-do list. We will use the operating system&#8217;s window frame to present our App. In the bottom of the page, the user will have a <code>TextBox</code> where they can type any new item content to add. A <code>PlaceholderText</code> or <code>ToolTip</code> shall indicate that visually. As soon as we receive valid input for a new item, a <code>Button</code> next to the input field should be enabled. If the user invokes this <code>Button</code>, the new item will be added into our list. The list itself will fill the available space. In case the space is not enough to render all items, a <code>ScrollBar</code> will enable vertical scrolling.
-Each item in the list is going to be represented by a <code>CheckBox</code> followed by the content and a <code>Button</code> to delete the item.</p>
-</div>
+<div class="sect3">
+<h4 id="_sketch_of_ui_layout">Sketch of UI layout</h4>
 <div class="imageblock">
 <div class="content">
 <img src="_docs/Sketch.png" alt="Sketch of the UI">
 </div>
-<div class="title">Figure 1. Sketch of the UI</div>
+</div>
 </div>
 </div>
 </div>
@@ -2235,66 +2202,27 @@ In this sample we will use the MVVM (Model-View-ViewModel) approach, where we wi
 </table>
 </div>
 <div class="sect2">
-<h3 id="_step_1_create_and_set_up_a_new_project">Step 1: Create and set up a new project</h3>
+<h3 id="_step_1_create_a_new_project">Step 1: Create a new project</h3>
 <div class="paragraph">
-<p>Choose your favorite IDE to create a new Avalonia-MVVM project.</p>
+<p>In your preferred IDE, create a new Avalonia MVVM project with the <code>CommunityToolkit.MVVM</code> toolkit. You can install the toolkit manually via <a href="https://www.nuget.org/packages/CommunityToolkit.Mvvm">[NuGet]</a> if you are using the command line.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Depending on the IDE used to create your project, you may see a file structure that differs from the one seen in this tutorial.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This tutorial shows Visual Studio in use. The exact file structure you see may vary if you use a different IDE.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-When you create a new project from the IDE you can choose the MVVM package you prefer. If you didn&#8217;t choose the <code>CommunityToolkit.MVVM</code>-package, you may need to install <code>CommunityToolkit.MVVM</code> via NuGet to be able to use the source generators in this tutorial.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>For more information on creating new Avalonia projects, see the <a href="https://docs.avaloniaui.net/docs/get-started/create-your-first-project">[Avalonia documentation]</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_set_up_the_model">Step 2: Set up the Model</h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-In our case we need the model for I/O operations. If you have no use for the model in your own App, feel free to skip that part.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-In case the folder <code>Models</code> is missing on your side, just add it to your project.
-</td>
-</tr>
-</table>
+<h3 id="_step_2_set_up_the_model">Step 2: Set up the model</h3>
+<div class="paragraph">
+<p>Inside your <code>Models</code> folder, add a new file <code>ToDoItem.cs</code>. This is the class file for the <code>ToDoItem</code> class, which is used to save and restore the user&#8217;s ToDo list.</p>
 </div>
 <div class="paragraph">
-<p>The Model will be quite simple in our case. We want to have one class called <code>ToDoItem</code>, which has two <code>Properties</code>. This model will also be used to save and restore the users ToDo-List later on. Inside the folder <code>Models</code>, add a new class called <code>ToDoItem</code>:</p>
+<p>Give the class two properties: one for the content of the item and one for whether it is checked or not.</p>
 </div>
 <div class="listingblock">
-<div class="title">Models/ToDoItem.cs</div>
+<div class="title"><strong>Models/ToDoItem.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// This is our Model for a simple ToDoItem.</span>
@@ -2315,11 +2243,11 @@ In case the folder <code>Models</code> is missing on your side, just add it to y
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_set_up_the_viewmodel">Step 3: Set up the ViewModel</h3>
+<h3 id="_step_3_set_up_the_view_models">Step 3: Set up the view models</h3>
 <div class="sect3">
-<h4 id="_the_todoitem_viewmodel">The ToDoItem-ViewModel</h4>
+<h4 id="_todoitem_view_model">ToDoItem view model</h4>
 <div class="paragraph">
-<p>Our next task is to create a <code>ViewModel</code> for our to-do-items, which we will use as an intermediate layer between the <code>View</code> and the <code>Model</code>. Inside the folder <code>ViewModels</code> add a new class <code>ToDoItemViewModel</code> which inherits <code>ViewModelBase</code>.</p>
+<p>Our next task is to create a <code>ViewModel</code> for our to-do items, which we will use as an intermediate layer between the <code>View</code> and the <code>Model</code>. Inside the folder <code>ViewModels</code>, add a new class <code>ToDoItemViewModel</code>, which inherits from <code>ViewModelBase</code>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -2328,15 +2256,19 @@ In case the folder <code>Models</code> is missing on your side, just add it to y
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-If you want to use the source generators, remember to mark the class as <code>partial</code>.
+<strong>Important:</strong> If you want to use the source generators, remember to mark the class as <code>partial</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
-<div class="title">ViewModels/ToDoItemViewModel.cs</div>
+<div class="title"><strong>ViewModels/ToDoItemViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">SimpleToDoList.ViewModels</span><span class="p">;</span>
+
+<span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// This is a ViewModel which represents a &lt;see cref="Models.ToDoItem"/&gt;</span>
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ToDoItemViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
@@ -2363,21 +2295,25 @@ If you want to use the source generators, remember to mark the class as <code>pa
 </div>
 </div>
 <div class="paragraph">
-<p>Our <code>ViewModel</code> is not yet connected to our <code>Model</code>. To create a new <code>ToDoItemViewModel</code> from an existing <code>ToDoItem</code>, we can add a constructor that takes the <code>ToDoItem</code> as an argument.</p>
+<p>At this point, <code>ToDoItemViewModel</code> is not yet connected to the <code>ToDoItem</code> model.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. Therefore, we also add a parameterless constructor.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>In <code>ToDoItemViewModel.cs</code>, add a <code>using</code> statement to the top of the file to use the <code>Models</code> in your namespace.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/ToDoItemViewModel.cs</strong></div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">SimpleToDoList.Models</span><span class="p">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To create a new <code>ToDoItemViewModel</code> from an existing <code>ToDoItem</code>, add a constructor to the <code>ViewModel</code> class that takes the <code>ToDoItem</code> as an argument.</p>
+</div>
+<div class="paragraph">
+<p>We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. Therefore, we also add a parameterless constructor.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>ViewModels/ToDoItemViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Creates a new blank ToDoItemViewModel</span>
@@ -2400,9 +2336,10 @@ We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. T
 </div>
 </div>
 <div class="paragraph">
-<p>Okay, now we also need a way to get the updated <code>Model</code> back, if the user made some changes. We can do this, for example, using a read-only property or a method like shown below:</p>
+<p>Lastly, the view model needs a way to get the updated model back, if the user makes changes to it. Add a method that does this to the <code>ViewModel</code> class:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/ToDoItemViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Gets a ToDoItem of this ViewModel</span>
@@ -2418,11 +2355,14 @@ We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. T
 <span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>See <a href="https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/ToDoItemViewModel.cs">[<code>ToDoItemViewModel</code>]</a> for the completed view model file.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_the_mainviewmodel">The MainViewModel</h4>
+<h4 id="_main_view_model">Main view model</h4>
 <div class="paragraph">
-<p>Depending on the template used to create the project you should see a file called <code>MainViewModel</code> or <code>MainWindowViewModel</code>. Open this file to edit it.</p>
+<p>Avalonia templates automatically create <code>MainViewModel.cs</code> in a new project. Open this file to edit it.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2431,39 +2371,42 @@ We also want to be able to create a new, empty <code>ToDoItemViewModel</code>. T
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-If you see a property called <code>Greetings</code>, feel free to delete it as we don&#8217;t need that in our App.
+<strong>Tip:</strong> If you see a property called <code>Greeting</code>, feel free to delete it. We don&#8217;t need it for this app.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s add an <code>ObservableCollection</code> called <code>ToDoItems</code>. As the collection will notify the UI whenever an item was added or removed, we can make this property readonly. Thus, a getter is enough here.</p>
+<p>Within the <code>public partial class MainViewModel</code>, add an <code>ObservableCollection</code> called <code>ToDoItems</code>. This collection will notify the UI whenever an item is added or removed. Only a getter is needed, as the property can be read-only.</p>
+</div>
+<div class="paragraph">
+<p>You also need to add two <code>using</code> statements to the file to be able to use the <code>ObservableCollection</code>.</p>
 </div>
 <div class="listingblock">
-<div class="title">ViewModels/MainViewModel.cs</div>
+<div class="title"><strong>ViewModels/MainViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
-<span class="c1">/// Gets a collection of &lt;see cref="ToDoItem"/&gt; which allows adding and removing items</span>
-<span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;</span> <span class="n">ToDoItems</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;();</span></code></pre>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">System.Collections.ObjectModel</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.ComponentModel</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">SimpleToDoList.ViewModels</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">MainViewModel</span> <span class="p">:</span> <span class="n">ViewModelBase</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Gets a collection of &lt;see cref="ToDoItem"/&gt; which allows adding and removing items</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;</span> <span class="n">ToDoItems</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObservableCollection</span><span class="p">&lt;</span><span class="n">ToDoItemViewModel</span><span class="p">&gt;();</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Well, now we have a collection of <code>ToDoItems</code> but how can we add new items to it? In our case this is quite simple as we only expect a non-empty <code>string</code> as content to construct a new item. We will add a helper property called <code>NewItemContent</code>. If that <code>string</code> is not empty, a command called <code>AddItemCommand</code> will be enabled.</p>
+<p>To add new items to the <code>ToDoItems</code> collection, we need a helper property. In the case of this to-do list, the helper property is only expected to accept a non-empty string as content to construct a new item.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The command and the properties will be created using the source generator provided by the MVVM-toolkit we use. Remember to make the <code>MainViewModel</code> <code>partial</code>.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>In the <code>MainViewModel</code>, add a new observable property and give it a name such as <code>NewItemContent</code>. Give it a command called <code>AddItemCommand</code>, which adds the item if it is a non-empty string. The command and property will be created by the source generator provided by <code>CommunityToolkit.MVVM</code> so long as the <code>MainViewModel</code> is <code>partial</code>.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/MainViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Gets or set the content for new Items to add. If this string is not empty, the AddItemCommand will be enabled automatically</span>
@@ -2474,9 +2417,10 @@ The command and the properties will be created using the source generator provid
 </div>
 </div>
 <div class="paragraph">
-<p>Next step is to create a method or a property that returns a <code>bool</code> indicating whether the <code>AddItemCommand</code> can execute:</p>
+<p>Next step is to create a <code>bool</code> method or a property that indicates whether the <code>AddItemCommand</code> can execute, i.e., whether the string is empty:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/MainViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Returns if a new Item can be added. We require to have the NewItem some Text</span>
@@ -2485,11 +2429,22 @@ The command and the properties will be created using the source generator provid
 </div>
 </div>
 <div class="paragraph">
-<p>Last but not least we can add the <code>Command</code>. If we annotate a <code>void</code> or a <code>Task</code> with the <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand">[<code>RelayCommand</code>-attribute]</a>, a new <code>RelayCommand</code> will be generated for us. In our case we use a <code>void</code> called <code>AddItem</code> which will add a new item into <code>ToDoItems</code>-collection. After that we want to reset the <code>NewItemContent</code>, so that the input field is cleared for the next item to be added.</p>
+<p>Now you can add the <code>Command</code> itself. With <code>CommunityToolkit.MVVM</code>, you can use the <a href="https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand">[<code>RelayCommand</code> attribute]</a> to generate a command from a <code>void</code> or a <code>Task</code>.</p>
+</div>
+<div class="paragraph">
+<p>In this tutorial, <code>AddItem</code> is created as a <code>void</code>. Other than adding a new item to the <code>ToDoItems</code> collection, it also resets the <code>NewItemContent</code> property, so that the input field is cleared and ready for the next item.</p>
+</div>
+<div class="paragraph">
+<p>Be sure to also add another <code>using</code> statement to the top of <code>MainViewModel.cs</code> to allow <code>RelayCommand</code> to be used.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/MainViewModel.cs</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
+<pre class="rouge highlight"><code data-lang="cs"><span class="k">using</span> <span class="nn">CommunityToolkit.Mvvm.Input</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// This command is used to add a new Item to the List</span>
 <span class="c1">/// &lt;/summary&gt;</span>
 <span class="p">[</span><span class="nf">RelayCommand</span> <span class="p">(</span><span class="n">CanExecute</span> <span class="p">=</span> <span class="k">nameof</span><span class="p">(</span><span class="n">CanAddItem</span><span class="p">))]</span>
@@ -2504,7 +2459,10 @@ The command and the properties will be created using the source generator provid
 </div>
 </div>
 <div class="paragraph">
-<p>Adding items is possible now, but we also want to be able to remove items. So we will add another <code>Command</code> for that. However, we need to know which item to remove. So we will pass the item to remove as a <code>CommandParameter</code>.</p>
+<p><code>AddItemCommand</code> makes it possible to add items to the collection, but we also want to be able to remove items from it. For that, a second command is needed.</p>
+</div>
+<div class="paragraph">
+<p>Create another <code>RelayCommand</code> named <code>RemoveItem</code>. Pass the item to remove as a <code>CommandParameter</code> to specify what the command should remove.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2513,12 +2471,13 @@ The command and the properties will be created using the source generator provid
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-According to our App draft, we want to add the <code>Delete-Button</code> next to each item. Therefore, we can be sure that always a valid <code>CommandParameter</code> is sent to the <code>Command</code>. Therefore, we don&#8217;t need to set <code>CanExecute</code> in this case.
+<strong>Note:</strong> According to the app draft, we want to add the Delete button next to each item. Therefore, we don&#8217;t need to set <code>CanExecute</code> on the removal command, as we can be certain that the button only ever appears when there is a valid <code>CommandParameter</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
+<div class="title"><strong>ViewModels/MainViewModel.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cs"><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// Removes the given Item from the list</span>
@@ -2532,10 +2491,13 @@ According to our App draft, we want to add the <code>Delete-Button</code> next t
 <span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>See <a href="https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/ViewModels/MainViewModel.cs">[<code>MainViewModel</code>]</a> for the completed view model file.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_4_set_up_the_view">Step 4: Set up the View</h3>
+<h3 id="_step_4_set_up_the_view">Step 4: Set up the view</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2543,22 +2505,21 @@ According to our App draft, we want to add the <code>Delete-Button</code> next t
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Depending on the template you used to create your project, you may see a file called <code>MainView</code> alongside <code>MainWindow</code>. In this case, please use <code>MainView</code> to add the content shown below. <code>MainWindow</code> will present this view for you.
+<strong>Note:</strong> Depending on the template you used, you may have a file called <code>MainView.axaml</code> as well as <code>MainWindow.axaml</code>. If this is the case, carry out the steps in this section in <code>MainView.axaml</code>. <code>MainWindow</code> will present the view automatically.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s recall the App-design we planned:</p>
+<p>Let&#8217;s review the app design. The UI is intended to have a header at the top, a content body in the middle that occupies most of the space in the window, and a footer with an input field to add new items.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_docs/Sketch.png" alt="Our sketch of the App-design">
+<img src="_docs/Sketch.png" alt="Sketch of the UI">
 </div>
-<div class="title">Figure 2. Our sketch of the App-design</div>
 </div>
 <div class="paragraph">
-<p>As shown above, we need a header at the top, a presentation of the items in the middle (which takes as much space as possible) and a footer with an input-field for adding new items. In Avalonia we use <a href="https://docs.avaloniaui.net/docs/basics/user-interface/building-layouts/#panels">[<code>Panels</code>]</a> to achieve different layouts. In our case we can use a <code>DockPanel</code> or a <code>Grid</code>. We will use a <code>Grid</code> as this offers the most flexible layout.</p>
+<p>In Avalonia, each window accepts one control only. To have multiple controls in a view, you must nest them within a <a href="https://docs.avaloniaui.net/controls">[layout control]</a>, such as a <code>Panel</code> or <code>Grid</code>. For this tutorial, use a <code>Grid</code>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2567,43 +2528,13 @@ Depending on the template you used to create your project, you may see a file ca
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>A <code>Grid-Row</code> or <code>Grid-Column</code> can have different <code>GridSizes</code>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://docs.avaloniaui.net/docs/reference/controls/grid/#absolute-size-definitions">Absolute Size Definition</a></p>
-</li>
-<li>
-<p><a href="https://docs.avaloniaui.net/docs/reference/controls/grid/#proportional-size-definitions">Proportional Size Definitions</a></p>
-</li>
-<li>
-<p><a href="https://docs.avaloniaui.net/docs/reference/controls/grid/#automatic-size-definitions">Automatic Size Definitions</a></p>
-</li>
-</ul>
-</div>
+<strong>Tip:</strong> For more information on how to use grids, see the <a href="https://docs.avaloniaui.net/controls/layout/panels/grid">[<code>Grid</code> control reference]</a>.
 </td>
 </tr>
 </table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properties on every child control to define the exact cell where the control should be shown.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Here is our basic layout:</p>
 </div>
 <div class="listingblock">
-<div class="title">Views/MainWindow.axaml</div>
+<div class="title"><strong>Views/MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- Leave the root-Node untouched beside setting Width, Height and Padding --&gt;</span>
 <span class="nt">&lt;Window</span> <span class="na">xmlns=</span><span class="s">"https://github.com/avaloniaui"</span>
@@ -2640,20 +2571,27 @@ You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properti
 <span class="nt">&lt;/Window&gt;</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_step_5_running_the_app_and_making_improvements">Step 5: Running the app and making improvements</h3>
+<div class="sect3">
+<h4 id="_adding_a_button">Adding a button</h4>
 <div class="paragraph">
-<p>We are now good to go and run our App for the first time. You should see something similar to this:</p>
+<p>It is now possible to run the app, now that it has a view, model and view model set up. If you do that, you should see something similar to this:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_docs/First_Run.png" alt="First App run">
+<img src="_docs/First_Run.png" alt="First app run">
 </div>
-<div class="title">Figure 3: First App run</div>
-</div>
-<div class="paragraph">
-<p>We can see the title <code>TextBlock</code> is there and also the entry field for new items to add. We can add some text into the <code>TextBox</code>, however we have no button to add it into our list yet. Let&#8217;s fix that.</p>
 </div>
 <div class="paragraph">
-<p>In Avalonia a TextBox can add <code>InnerLeftContent</code> and <code>InnerRightContent</code>, which can be used to add any content you like. For example, we can add a button to it. The <code>Button</code> will execute the <code>AddItemCommand</code>. For convenience, we also want to allow adding items using the keyboard. That is what <a href="https://docs.avaloniaui.net/docs/concepts/input/hotkeys">[<code>KeyBindings</code> and <code>HotKeys</code>]</a> can be used for.</p>
+<p>The app has a title, an empty content body and an input field. We can enter text into the input field. However, there is no button to add it to the to-do list, and the content area stays empty as a consequence.</p>
+</div>
+<div class="paragraph">
+<p>For the app to be usable, it must have a confirmation button. In Avalonia, a <code>TextBox</code> can have an <code>InnerLeftContent</code> or <code>InnerRightContent</code>, which can host a button. Use this property to add a <code>Button</code> that executes the <code>AddItemCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>For convenience, you can also allow confirmation using the keyboard. To do this, set a <a href="https://docs.avaloniaui.net/docs/input-interaction/mouse-and-keyboard-shortcuts#key-bindings">[key binding]</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2662,15 +2600,19 @@ You can set <code>Grid.Row</code> and <code>Grid.Column</code>-attached properti
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-We use <code>KeyBindings</code> here as a <code>HotKey</code> would be available for the whole view, where we want it only to work when the <code>TextBox</code> is focused.
+<strong>Tip:</strong> Hotkeys can also be set to allow command execution from the keyboard. In this case, <code>KeyBinding</code> is preferred over <code>HotKey</code>, because <code>HotKey</code> applies to the whole view, whereas <code>KeyBinding</code> fits the expected behavior of only working when the <code>TextBox</code> is focused.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Here is what our modified input box looks like:</p>
+<p>Modify the <code>TextBox</code> in <code>MainWindow.axaml</code> by setting an <code>InnerRightContent</code> within its tags. Place a <code>Button</code> as the content, and bind it to <code>AddItemCommand</code>. For the key binding, separately set a <code>KeyBinding</code> within the <code>TextBox</code> tags and also bind it to <code>AddItemCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>You should end up with a <code>Grid</code> like this:</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>Views/MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;TextBox</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
          <span class="na">Text=</span><span class="s">"{Binding NewItemContent}"</span>
@@ -2688,46 +2630,34 @@ We use <code>KeyBindings</code> here as a <code>HotKey</code> would be available
 <span class="nt">&lt;/TextBox&gt;</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_defining_a_data_template">Defining a data template</h4>
 <div class="paragraph">
-<p>Now, if you run your App again, you will notice that we have a Button which is grayed out if the input field is empty and gets enabled as soon as you start typing. Invoking the <code>Button</code> will add a new item to our list above.</p>
+<p>If you run the app again after adding the button, you can see that the window now has an <strong>Add</strong> button that is grayed out if the input field is empty and enabled if you start typing. You can now add items to the content area by clicking the button or pressing Enter.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_docs/Second_Run.png" alt="Second App run">
+<img src="_docs/Second_Run.png" alt="Second app run">
 </div>
-<div class="title">Figure 4: Second App run</div>
-</div>
-<div class="paragraph">
-<p>Great, we can add new items to our list. However, they don&#8217;t display themselves as we wanted them to. Instead of showing the content, we see the name of the <code>ItemViewModel</code>. We can fix that by defining the <code>ItemTemplate</code> for the <code>ItemsControl</code>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you want to learn more about <code>DataTemplates</code>, see these samples: <a href="https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples">[DataTemplate-Samples]</a>
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
-<p>Our <code>DataTemplate</code> uses a <code>CheckBox</code> where the <code>Content</code> is bound to <code>ToDoItemViewModel.Content</code> and <code>IsChecked</code> is bound to <code>ToDoItemViewModel.IsChecked</code>. Next to it, we will add a <code>Button</code> which is there to delete the given item. The <code>Command</code> is bound to the <code>MainViewModel.DeleteCommand</code> and the <code>CommandParameter</code> is the <code>ToDoItemViewModel</code> itself.</p>
+<p>At this point, if you try to add an item, you may notice that the actual text you enter is not displayed. Instead of something like "Item 1", you see the name of the ToDoItemViewModel`.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Inside the <code>ItemTemplate</code> we can only use members of our <code>ItemViewModel</code>. However, the <code>DeleteCommand</code> is part of our <code>MainViewModel</code>. We can access this by accessing the parents or named controls <code>DataContext</code>. As we use compiled bindings, we have to <a href="https://docs.avaloniaui.net/docs/basics/data/data-binding/compiled-bindings#type-casting">[cast the <code>DataContext</code>]</a>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>To make the app display the expected input, we must define an <code>ItemTemplate</code> for the <code>ItemsControl</code>, i.e., the control  on row 1 of the <code>Grid</code> which displays the to-do list.</p>
+</div>
+<div class="paragraph">
+<p>To create the data template, add an <code>ItemTemplate</code> within the <code>ItemsControl</code> tags. The <code>ItemTemplate</code> itself can then host a <code>DataTemplate</code> that takes data from the <code>ToDoITemViewModel</code>. In the <code>DataTemplate</code>, place a <code>Grid</code> that holds the controls with which to display the data from the view model.</p>
+</div>
+<div class="paragraph">
+<p>Add a <code>CheckBox</code> to the <code>Grid</code>. Bind <code>ToDoItemViewModel.Content</code> as its <code>Content</code> and <code>ToDoItemViewModel.IsChecked</code> as its <code>IsChecked</code> status. Then, add a <code>Button</code> bound to <code>RemoveItemCommand</code> so that a "Delete" button is provided next to each list item.</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Because we set the <code>DataTemplate</code> to use <code>vm:ToDoItemViewModel</code>, only data from <code>ToDoItemViewModel</code> can be used in the ItemTemplate by default. However, <code>RemoveItemCommand</code> is in <code>MainViewModel</code>. To circumvent this, we can use <a href="https://docs.avaloniaui.net/docs/data-binding/compiled-bindings#explicit-type-casting">[explicit type casting]</a> to access the required data context.</p>
 </div>
 <div class="listingblock">
+<div class="title"><strong>Views/MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;ItemsControl</span> <span class="na">ItemsSource=</span><span class="s">"{Binding ToDoItems}"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;ItemsControl.ItemTemplate&gt;</span>
@@ -2750,40 +2680,59 @@ Inside the <code>ItemTemplate</code> we can only use members of our <code>ItemVi
 <span class="nt">&lt;/ItemsControl&gt;</span></code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To learn more about <code>DataTemplates</code>, see the <a href="https://github.com/AvaloniaUI/Avalonia.Samples?tab=readme-ov-file#%EF%B8%8F-datatemplate-samples">[data template samples]</a> or the <a href="https://docs.avaloniaui.net/docs/data-templates/introduction-to-data-templates">[data template documentation]</a>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>If we now run the App once again, we will see that the items are now displayed as intended. Moreover, we can now check and uncheck them as well as delete them.</p>
+<p>Run the app a third time. Now, the app functions as intended, allowing you to add, delete, check and uncheck items.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_docs/Third_Run.png" alt="Third App run">
+<img src="_docs/Third_Run.png" alt="Third app run">
 </div>
-<div class="title">Figure 5: Third App run</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_5_optional_add_some_styles_to_improve_the_ui">Step 5 (Optional): Add some Styles to improve the UI</h3>
+<h3 id="_step_6_optional_styling_the_ui">Step 6 (Optional): Styling the UI</h3>
 <div class="paragraph">
-<p>While our App is now fully functional, and we are done with all must-haves, we can still improve the user experience. The following parts of our UI are not really user-friendly:</p>
+<p>The app is now fully functional and fulfils all of the stated must-haves. However, you may feel that some parts of the UI could be improved, for example:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The Title looks exactly as any other content, this should be improved</p>
+<p>The title looks exactly the same as the list content.</p>
 </li>
 <li>
-<p>The Buttons have English-only content. Having symbols would make them more understandable for all folks.</p>
+<p>The item targeted by the pointer has no highlight, which could make it hard for the user to select their intended item.</p>
 </li>
 <li>
-<p>It would be nice if the item that the pointer is over were highlighted. This would help the user to click the intended item.</p>
+<p>The buttons display English text. Symbols would be more appropriate for a global userbase.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>For the header text we can use <a href="https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class">[<code>Style.Classes</code>]</a>.
-In <code>App.axaml</code> add the following Style:</p>
+<p>Avalonia&#8217;s styling system provides the tools to make these improvements to the app. For more information on styling, see the <a href="https://docs.avaloniaui.net/docs/styling/styles">[Styles documentation]</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_improving_the_header_text">Improving the header text</h4>
+<div class="paragraph">
+<p>For the header text, use a <a href="https://docs.avaloniaui.net/docs/reference/styles/style-selector-syntax#by-style-class">[style class]</a> to create an H1 header style.</p>
+</div>
+<div class="paragraph">
+<p>In <code>App.axaml</code>, add a style to <code>Application.Styles</code> and define the desired font properties:</p>
 </div>
 <div class="listingblock">
-<div class="title">App.axaml</div>
+<div class="title"><strong>App.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
     <span class="c">&lt;!-- Do not touch this --&gt;</span>
@@ -2800,29 +2749,26 @@ In <code>App.axaml</code> add the following Style:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Usage:</p>
+<p>To use your H1 style, set <code>Classes</code> on the title <code>TextBlock</code> in XAML:</p>
 </div>
 <div class="listingblock">
-<div class="title">Views/MainWindow.axaml</div>
+<div class="title"><strong>Views/MainWindow.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!--  This is our title text block. We use Style.Classes to style it accordingly  --&gt;</span>
 <span class="nt">&lt;TextBlock</span> <span class="na">Classes=</span><span class="s">"h1"</span> <span class="na">Text=</span><span class="s">"My ToDo-List"</span> <span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>For the <code>CheckBox</code> we want to add two different <code>Styles</code>. One that applies to each <code>CheckBox</code> and sets the <code>HorizontalAlignment</code> to fill the entire available space and another one that sets a highlight color to it&#8217;s background on pointer-over.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Avalonia has pseudo-class selectors that can be used to style a control according to its visual state. See <a href="https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes">[docs]</a> for more info.
-</td>
-</tr>
-</table>
+<div class="sect3">
+<h4 id="_adding_checklist_highlights">Adding checklist highlights</h4>
+<div class="paragraph">
+<p>For the next improvement, use styles to display a highlight when the pointer moves over a checklist item.</p>
+</div>
+<div class="paragraph">
+<p>Two styles are needed for this design, both targeting the <code>CheckBox</code> control. The first sets <code>HorizontalAlignment</code> to fill the entire available width of the window. The second sets a highlight color for the background on the pointer-over state.</p>
+</div>
+<div class="paragraph">
+<p>To target that state, you can use one of Avalonia&#8217;s pseudoclass selectors, specifically, the <code>:pointerover</code> pseudoclass. For more information, see <a href="https://docs.avaloniaui.net/docs/styling/pseudoclasses">[Pseudoclasses]</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2832,37 +2778,21 @@ Avalonia has pseudo-class selectors that can be used to style a control accordin
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Sometimes you need to apply a style to a visual child of the control template (see <a href="https://docs.avaloniaui.net/docs/reference/styles/pseudo-classes">[docs]</a>).
-To understand which selector to use, you may use <a href="https://docs.avaloniaui.net/tools/developer-tools/installation">[developer tools]</a>.
-Moreover, you can look up the original styles on <a href="https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls">[GitHub in source]</a></p>
+<p>Sometimes, you need to apply a style to a visual child of the control template.
+To understand which selector to use, you may use the <a href="https://docs.avaloniaui.net/tools/developer-tools/installation">[developer tools]</a>. You can also look up the original styles on <a href="https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Controls">[GitHub in source]</a>.</p>
 </div>
 <div class="paragraph">
-<p>Press <code>[F12]</code> and you can expand the visual tree to see the visual children of all controls in your view</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_docs/DevTools.png" alt="DevTools">
-</div>
-<div class="title">Figure 6: DevTools in action</div>
+<p>Press <code>[F12]</code> to open the developer tools. View the <a href="https://docs.avaloniaui.net/tools/developer-tools/elements-tool">[Elements Tree]</a> to see the visual children of all controls in your view.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Instead of hard-coding colors and brushes, you can use <a href="https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources">[<code>DynamicResources</code>]</a> which will make sure style follows the overall App-design. To explore the available ones from <code>FluentTheme</code>, look them up on <a href="https://github.com/AvaloniaUI/Avalonia/tree/master/src/Avalonia.Themes.Fluent/Accents">[GitHub in source]</a>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>In <code>App.axaml</code>, add the two new styles. Note that a <a href="https://docs.avaloniaui.net/docs/guides/styles-and-resources/resources#using-resources">[dynamic resource]</a> is used for the background color. Dynamic resources help avoid the need to hard-code colors and ensure the visual style of your app is consistent with the system.</p>
 </div>
 <div class="listingblock">
-<div class="title">App.axaml</div>
+<div class="title"><strong>App.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
     <span class="c">&lt;!-- ... other styles ... --&gt;</span>
@@ -2879,7 +2809,13 @@ Instead of hard-coding colors and brushes, you can use <a href="https://docs.ava
 </div>
 </div>
 <div class="paragraph">
-<p>To display icons we can use <code>PathIcon</code> which accepts any path-data. This data can be taken from a svg-file.</p>
+<p>In this case, it is not necessary to set your styles in XAML. They are automatically applied to new instances of <code>CheckBox</code> created when the user adds new list items.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changing_button_text_to_icons">Changing button text to icons</h4>
+<div class="paragraph">
+<p>To display icons, use <a href="https://docs.avaloniaui.net/controls/media/pathicon">[<code>PathIcon</code>]</a>. <code>PathIcon</code> is a control that accepts path data, like you might get from an SVG file.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -2888,38 +2824,48 @@ Instead of hard-coding colors and brushes, you can use <a href="https://docs.ava
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you use an icon from one of several online available icon galleries, make sure the license suits your needs.
+<strong>Warning:</strong> If you use an icon from an online icon gallery, make sure the license suits your needs.
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Start by defining the icon data as <code>StreamGeometry</code> in your <code>Application.Resources</code>. You can use any icon data you wish, but to replicate the icons used in this sample, you can refer to <a href="https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Samples/CompleteApps/SimpleToDoList/App.axaml">[the completed <code>App.axaml</code> file</a>].</p>
+</div>
 <div class="listingblock">
-<div class="title">App.axaml</div>
+<div class="title"><strong>App.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Resources&gt;</span>
     <span class="c">&lt;!--  These are re-usable Icon data. You can get the path data from svg-files for example  --&gt;</span>
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"DeleteIconData"</span><span class="nt">&gt;</span>The path data<span class="nt">&lt;/StreamGeometry&gt;</span>
-    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"AcceptIconData"</span><span class="nt">&gt;</span>The path data<span class="nt">&lt;/StreamGeometry&gt;</span>
+    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"DeleteIconData"</span><span class="nt">&gt;</span>Path data<span class="nt">&lt;/StreamGeometry&gt;</span>
+    <span class="nt">&lt;StreamGeometry</span> <span class="na">x:Key=</span><span class="s">"AcceptIconData"</span><span class="nt">&gt;</span>Path data<span class="nt">&lt;/StreamGeometry&gt;</span>
 <span class="nt">&lt;/Application.Resources&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To display the icons in our App we add them as our <code>Buttons</code> content:</p>
+<p>Then, to display the icons on the UI, replace the text in each <code>Button</code> with the corresponding <code>PathIcon</code> in XAML.</p>
 </div>
 <div class="listingblock">
-<div class="title">Views/MainWindow.axaml</div>
+<div class="title"><strong>Views/MainWindow.axaml</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="c">&lt;!-- The same applies for the Delete-Button --&gt;</span>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding #Root.((vm:MainViewModel)DataContext).RemoveItemCommand}"</span>
+        <span class="na">CommandParameter=</span><span class="s">"{Binding .}"</span>
+        <span class="na">Grid.Column=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{DynamicResource DeleteIconData}"</span> <span class="na">Foreground=</span><span class="s">"Red"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Button&gt;</span>
+
+...
+
 <span class="nt">&lt;Button</span> <span class="na">Command=</span><span class="s">"{Binding AddItemCommand}"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{DynamicResource AcceptIconData}"</span> <span class="na">Foreground=</span><span class="s">"Green"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/Button&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We want our icons to become semi-transparent if a <code>Button</code> is disabled. We can use yet another <code>Style</code> for that:</p>
+<p>You may want the icons to dim when a <code>Button</code> is disabled, to clearly indicate it is not usable. This can be done by adding yet another style in <code>App.axaml</code>:</p>
 </div>
 <div class="listingblock">
-<div class="title">App.axaml</div>
+<div class="title"><strong>App.axaml</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;Application.Styles&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
@@ -2931,18 +2877,18 @@ If you use an icon from one of several online available icon galleries, make sur
 <span class="nt">&lt;/Application.Styles&gt;</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>And here is the final result:</p>
 </div>
+<div class="sect3">
+<h4 id="_final_result">Final result</h4>
 <div class="imageblock">
 <div class="content">
 <img src="_docs/Final_Result.png" alt="Final result">
 </div>
-<div class="title">Figure 6: The final result</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_7_optional_data_persistence">Step 7 (Optional): Data Persistence</h3>
+<h3 id="_step_7_optional_persisting_data">Step 7 (Optional): Persisting data</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2950,25 +2896,19 @@ If you use an icon from one of several online available icon galleries, make sur
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We will be storing the data as a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0">[JSON-File]</a>. You can apply the same approach to any other file-format you prefer.
+<strong>Note:</strong> This tutorial shows how to store the data as a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.text.json?view=net-8.0">[JSON file]</a>. You can apply the same approach to any other file format you prefer.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Right now every time we close the App, all data is lost. For a simple demo that is all fine, but what if we wanted to start using this App for our daily to-do&#8217;s? Well, we can add basic data persistence as we already made sure our <code>Model</code> is able to handle that. For the actual file-operations we will use a helper class which is used as a service. So add a folder called <code>Services</code> and inside a new class called <code>ToDoListFileService.cs</code>.</p>
+<p>Right now, every time the app closes, all data is lost. For the app to be usable in a real-world setting, it must have data persistence so that the user&#8217;s input is saved between sessions. Storing data can be handled by the <code>Model</code>, which is already set up for such a task.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-We can make this class <code>static</code> in our case. In a more complex App this may better be handled using <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview">[Dependency Injection]</a>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>For file operations, we can use a service helper class. Add a folder called <code>Services</code>. Inside this folder, create a new class and name it <code>ToDoListFileService.cs</code>.</p>
+</div>
+<div class="paragraph">
+<p>For this simple to-do list, the class can be <code>static</code>. In a more complex app, consider using <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview">[dependency injection]</a> instead.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -2977,16 +2917,13 @@ We can make this class <code>static</code> in our case. In a more complex App th
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-We use a hard-coded filename here. This may not be the perfect solution, as the path may vary by user settings or platform limitations. However, this is not a part we want to cover in this sample
+<strong>Warning:</strong> In this example, a hardcoded filename is used for simplicity. This is not recommended in a real cross-platform app, where file paths may vary by user or platform conventions.
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>This is how we can save a list of <code>Todo-Items</code>:</p>
-</div>
 <div class="listingblock">
-<div class="title">Services/ToDoListFileService</div>
+<div class="title"><strong>Services/ToDoListFileService.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
@@ -3022,10 +2959,13 @@ We use a hard-coded filename here. This may not be the perfect solution, as the 
 </div>
 </div>
 <div class="paragraph">
-<p>To actually save the file, we need a way to call the <code>SaveToFileAsync</code>-method when the App is terminating. As we only target <code>Desktop</code>, we can do so in an event called <code>ShutdownRequested</code>. Moreover, we need a reference to the <code>MainViewModel</code> to be accessible form the event, and thus we store it in a private field instead of creating in inline.</p>
+<p>The above class defines the rules to save the user&#8217;s to-do list to disc. To trigger the app to execute the task and actually save the file, the <code>SaveToFileAsync</code> method must be called. In this case, use the event <code>ShutdownRequested</code> to trigger save when the app is terminating on desktop platforms.</p>
+</div>
+<div class="paragraph">
+<p>A <code>private readonly</code> field can be used to reference the <code>MainViewModel</code>. An alternative is to use <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview">[dependency injection]</a>.</p>
 </div>
 <div class="listingblock">
-<div class="title">App.axaml.cs</div>
+<div class="title"><strong>App.axaml.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="c1">// This is a reference to our MainViewModel which we use to save the list on shutdown. You can also use Dependency Injection</span>
 <span class="c1">// in your App.</span>
@@ -3049,22 +2989,13 @@ We use a hard-coded filename here. This may not be the perfect solution, as the 
 </div>
 </div>
 <div class="paragraph">
-<p>In the event itself we cancel the event as long as <code>_canClose</code> is not set to true.</p>
+<p>Set the shutdown event itself to cancel. Doing this allows you to perform the save operation first, and then go back and close the window for real by changing <code>_canClose</code> to <code>true</code>.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is highly recommended to run I/O-operations <a href="https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o">[<code>async</code>]</a>.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>It is highly recommended to run I/O operations <a href="https://learn.microsoft.com/en-us/dotnet/standard/io/asynchronous-file-i-o">[<code>async</code>]</a>.</p>
 </div>
 <div class="listingblock">
-<div class="title">App.axaml.cs</div>
+<div class="title"><strong>App.axaml.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="c1">// We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed</span>
 <span class="c1">// before we can actually close this window</span>
@@ -3091,10 +3022,10 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 </div>
 </div>
 <div class="paragraph">
-<p>If you run the App, add some items and close it, you should see a new file in <code>%APPDATA%\Avalonia.SimpleToDoList</code> called <code>MyToDoList.txt</code> with a content similar to this:</p>
+<p>Try running your app now. Add some items to the to-do list, then close the app. If you go to the app directory, you should now find a file called <code>MyToDoList.json</code> that contains content similar to this:</p>
 </div>
 <div class="listingblock">
-<div class="title">MyToDoList.txt</div>
+<div class="title"><strong>MyToDoList.json</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -3109,10 +3040,10 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 </div>
 </div>
 <div class="paragraph">
-<p>Loading the stored file can also be done in a similar way:</p>
+<p>Now that the app can save data to a JSON file, it must also be able to load the same data from the stored file. To do this, open <code>ToDoListFileService.cs</code> again and add the following:</p>
 </div>
 <div class="listingblock">
-<div class="title">Services/ToDoListFileService</div>
+<div class="title"><strong>Services/ToDoListFileService.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">ToDoListFileService</span>
 <span class="p">{</span>
@@ -3141,8 +3072,11 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Next, set the app to use the file service to load the stored data on startup. Using the JSON file as reference, the user&#8217;s saved list items can be recreated on the UI.</p>
+</div>
 <div class="listingblock">
-<div class="title">App.axaml.cs</div>
+<div class="title"><strong>App.axaml.cs</strong></div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="c#"><span class="k">public</span> <span class="k">override</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">OnFrameworkInitializationCompleted</span><span class="p">()</span>
 <span class="p">{</span>
@@ -3168,6 +3102,9 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This concludes the Simple To-do List tutorial.</p>
+</div>
 </div>
 </div>
 </div>
@@ -3175,14 +3112,17 @@ It is highly recommended to run I/O-operations <a href="https://learn.microsoft.
 <h2 id="_related">Related</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to explore more samples, please also visit <a href="https://github.com/AvaloniaCommunity/awesome-avalonia" class="bare">https://github.com/AvaloniaCommunity/awesome-avalonia</a>.</p>
+<p>A more advanced ToDo-List tutorial can be found <a href="https://avaloniaui.github.io/Avalonia.Samples/src/Avalonia.Samples/CompleteApps/AdvancedToDoList/">[here]</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you want to explore more samples, please visit <a href="https://github.com/AvaloniaCommunity/awesome-avalonia" class="bare">https://github.com/AvaloniaCommunity/awesome-avalonia</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-13 10:46:34 UTC
+Last updated 2026-10-24 14:10:39 UTC
 </div>
 </div>
 </body>
