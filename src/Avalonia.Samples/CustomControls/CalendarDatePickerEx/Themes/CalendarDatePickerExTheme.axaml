@@ -1,0 +1,107 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:CalendarDatePickerEx.Controls">
+    <Design.PreviewWith>
+        <Border Padding="10" Width="500" Height="500">
+            <StackPanel>
+                <controls:CalendarDatePickerEx />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+    
+    <ControlTheme x:Key="{x:Type controls:CalendarDatePickerEx}" 
+                  TargetType="controls:CalendarDatePickerEx"
+                  BasedOn="{StaticResource {x:Type CalendarDatePicker}}">
+      <!-- Copy the CalendarDatePicker template and modify it to add the needed buttons -->
+      <Setter Property="Template">
+      <ControlTemplate TargetType="controls:CalendarDatePickerEx">
+        <DataValidationErrors>
+          <Panel x:Name="LayoutRoot"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch">
+            <Border x:Name="Background"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="{TemplateBinding Background}" />
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBox Name="PART_TextBox"
+                       Foreground="{TemplateBinding Foreground}"
+                       Background="Transparent"
+                       BorderBrush="Transparent"
+                       BorderThickness="0"
+                       CornerRadius="{TemplateBinding CornerRadius}"
+                       Margin="{TemplateBinding BorderThickness}"
+                       Padding="{TemplateBinding Padding}"
+                       PlaceholderText="{TemplateBinding PlaceholderText}"
+                       PlaceholderForeground="{TemplateBinding PlaceholderForeground}"
+                       UseFloatingPlaceholder="{TemplateBinding UseFloatingPlaceholder}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                       Grid.Column="0">
+                <TextBox.Styles>
+                  <Style Selector="TextBox#PART_TextBox:focus /template/ Border#PART_BorderElement">
+                    <!-- By default the TextBox has its own focused state, override this to disable it here -->
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                  </Style>
+                  <Style Selector="TextBox#PART_TextBox:disabled">
+                    <Style Selector="^ /template/ Border#PART_BorderElement">
+                      <!-- By default the TextBox has its own disabled state, override this to make the border background show through -->
+                      <Setter Property="Background" Value="Transparent" />
+                      <Setter Property="BorderBrush" Value="Transparent" />
+                    </Style>
+                    <Style Selector="^ /template/ TextBlock#PART_Placeholder, ^ TextBlock#PART_FloatingPlaceholder">
+                      <Setter Property="TextElement.Foreground" Value="{DynamicResource CalendarDatePickerTextForegroundDisabled}" />
+                    </Style>
+                  </Style>
+                </TextBox.Styles>
+              </TextBox>
+              <Button Name="PART_Button"
+                      Theme="{StaticResource FluentCalendarDatePickerButton}"
+                      Grid.Column="1"
+                      Focusable="False" />
+              <Popup Name="PART_Popup"
+                     PlacementTarget="{TemplateBinding}"
+                     IsLightDismissEnabled="True">
+                <Grid RowDefinitions="*, Auto">
+                  
+                <Calendar Name="PART_Calendar"
+                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                          SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedDate, Mode=TwoWay}"
+                          DisplayDate="{TemplateBinding DisplayDate}"
+                          DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                          DisplayDateEnd="{TemplateBinding DisplayDateEnd}" />
+                <StackPanel Grid.Row="1" Spacing="1" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                  <StackPanel.Styles>
+                    <Style Selector="Button">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                      <Setter Property="HorizontalContentAlignment" Value="Center" />
+                      <Setter Property="CornerRadius" Value="0" />
+                    </Style>
+                  </StackPanel.Styles>
+                  <UniformGrid Columns="3">
+                    <Button Content="Yesterday"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="-1"/>
+                    <Button Content="Today"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="0"/>
+                    <Button Content="Tomorrow"
+                            Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectDayOffset}"
+                            CommandParameter="1"/>
+                  </UniformGrid>
+                </StackPanel>
+                </Grid>
+              </Popup>
+            </Grid>
+          </Panel>
+        </DataValidationErrors>
+      </ControlTemplate>
+    </Setter>
+    </ControlTheme>
+</ResourceDictionary>
