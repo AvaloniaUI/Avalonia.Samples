@@ -16,10 +16,6 @@ namespace CalendarDatePickerEx.Controls;
 public class CalendarDatePickerEx : CalendarDatePicker
 {
     private TextBox? _textBox;
-    private string? _lastInvalidText;
-    private bool _hasValidationError;
-    private bool _isRollingBack;
-    private bool _pendingRestorationCanceled;
     
     static CalendarDatePickerEx()
     {
@@ -28,6 +24,10 @@ public class CalendarDatePickerEx : CalendarDatePicker
             typeof(CalendarDatePickerEx), ShorthandDateConverter.Instance);
     }
 
+    // Uncomment the following line if you want your control to reuse the style of the base CalendarDatePicker control.
+    // Otherwise, you will need to ship your own ControlTheme. 
+    // protected override Type StyleKeyOverride => typeof(CalendarDatePicker);
+    
     /// <inheritdoc />
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
@@ -54,8 +54,15 @@ public class CalendarDatePickerEx : CalendarDatePicker
         if (DateTimeHelper.TryAddDays(DateTime.Today, offsetInt, out var selectedDate)
             && BlackoutDates?.Contains(selectedDate) != true)
         {
-            // Set the selected date to today + offset
             SetCurrentValue(SelectedDateProperty, selectedDate);
+            ClearValidationError();
+
+            var formattedText = FormatDate(selectedDate);
+            SetCurrentValue(TextProperty, formattedText);
+            if (_textBox != null)
+            {
+                _textBox.Text = formattedText;
+            }
         }
     }
     
@@ -64,33 +71,19 @@ public class CalendarDatePickerEx : CalendarDatePicker
     {
         base.OnDateValidationError(e);
 
-        _hasValidationError = true;
-        _lastInvalidText = e.Text;
-
-        // Feed the exception to Avalonia's visual validation adorners
+        // Reset the selected date to null on invalid input while retaining the validation error
+        SetCurrentValue(SelectedDateProperty, null);
         UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, e.Exception);
 
-        // The base parser will rollback the Text property after this method returns.
-        // We need to restore the invalid text AFTER the base parsing completes.
-        // Use Dispatcher to schedule the restoration after the current processing cycle.
-        // Cancel any pending restoration from a previous error, as this new error replaces it.
-        CancelPendingRestoration();
-
-        if (_lastInvalidText != null)
+        // Keep the invalid text in the TextBox
+        var invalidText = e.Text;
+        Dispatcher.UIThread.Post(() =>
         {
-            // Reset the cancellation flag so the new restoration callback is not immediately canceled
-            _pendingRestorationCanceled = false;
-            _isRollingBack = true;
-            Dispatcher.UIThread.Post(() =>
+            if (_textBox != null && SelectedDate == null)
             {
-                // Only restore if this restoration hasn't been canceled by a valid selection
-                if (!_pendingRestorationCanceled && _textBox != null )
-                {
-                    _textBox.Text = _lastInvalidText;
-                }
-                _isRollingBack = false;
-            });
-        }
+                _textBox.Text = invalidText;
+            }
+        });
     }
     
     /// <inheritdoc />
@@ -98,47 +91,44 @@ public class CalendarDatePickerEx : CalendarDatePicker
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == TextProperty)
+        if (change.Property == SelectedDateProperty && change.GetNewValue<DateTime?>() != null)
         {
-            // If we're currently rolling back from invalid input, don't clear the error state
-            // The rollback is the base parser reverting the text, not a user correction
-            if (_isRollingBack)
-            {
-                return;
-            }
-
-            // If the user modified the text away from the invalid input, clear the error state
-            if (_hasValidationError && change.GetNewValue<string?>() != _lastInvalidText)
-            {
-                CancelPendingRestoration();
-                _hasValidationError = false;
-                _lastInvalidText = null;
-                UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
-            }
+            ClearValidationError();
         }
-        else if (change.Property == SelectedDateProperty)
+        else if (change.Property == TextProperty && string.IsNullOrEmpty(change.GetNewValue<string?>()))
         {
-            // When a valid date is selected (e.g., via a shortcut button), cancel any pending
-            // invalid text restoration and clear the validation error state.
-            CancelPendingRestoration();
-            if (_hasValidationError)
-            {
-                _hasValidationError = false;
-                _lastInvalidText = null;
-                UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
-            }
+            ClearValidationError();
         }
     }
 
-    /// <summary>
-    /// Cancels any pending invalid text restoration scheduled via the dispatcher.
-    /// This is called when a valid date is selected or the user starts typing a new value.
-    /// </summary>
-    private void CancelPendingRestoration()
+    private void ClearValidationError()
     {
-        _pendingRestorationCanceled = true;
+        UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, null);
     }
     
+    /// <summary>
+    /// Formats a DateTime into a string based on the configured TextConverter or SelectedDateFormat.
+    /// </summary>
+    /// <param name="date">the date to format.</param>
+    /// <returns>the formatted string representation of the date.</returns>
+    private string? FormatDate(DateTime date)
+    {
+        if (TextConverter != null)
+        {
+            return TextConverter.Convert(date, typeof(string), null, CultureInfo.CurrentCulture) as string;
+        }
+
+        return SelectedDateFormat switch
+        {
+            CalendarDatePickerFormat.Short => date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern, CultureInfo.CurrentCulture),
+            CalendarDatePickerFormat.Long => date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.LongDatePattern, CultureInfo.CurrentCulture),
+            CalendarDatePickerFormat.Custom => string.IsNullOrEmpty(CustomDateFormatString)
+                ? date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern, CultureInfo.CurrentCulture)
+                : date.ToString(CustomDateFormatString, CultureInfo.CurrentCulture),
+            _ => date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern, CultureInfo.CurrentCulture)
+        };
+    }
+
     /// <summary>
     /// A helper method to parse the offset value into an integer. It supports various input types,
     /// including int, string, and any object that can be converted to an integer.
