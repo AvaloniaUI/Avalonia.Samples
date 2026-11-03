@@ -146,9 +146,62 @@ public partial class ShorthandDateConverter : IValueConverter
 }
 ----
 
+=== Step 3: Use the custom parser in the CalendarDatePicker control
 
+It is really easy to attach the custom parser to the CalendarDatePicker control. We just need to set the `TextConverter` property of the CalendarDatePicker control to our custom parser. This can be done in place or by a `Style` or `ControlTheme`. In this sample we will use it in place.
 
-=== Step 3: 
+[source,xml]
+.App.axaml
+----
+<!-- Remember to add the namespace of the helper class to the root element of the XAML file -->
+<!-- xmlns:helper="using:CalendarDatePickerEx.Helper" -->
+<CalendarDatePicker SelectedDate="{Binding SelectedDate}"
+                    PlaceholderText="Enter a shorthand date"
+                    TextConverter="{x:Static helper:ShorthandDateConverter.Instance}" />
+----
+
+=== Step 4: Add additional commands to the CalendarDatePicker control
+
+You might want to further optimize the user experience by adding additional commands to the CalendarDatePicker control. In this sample we will add three commands to the control: "Set Today", "Set Yesterday" and "Set Tomorrow". These will be accessible via buttons inside the dropdown of the CalendarDatePicker control. To do this we will create a new class inside the folder `Controls` called `CalendarDatePickerEx` that inherits from the `CalendarDatePicker` control. 
+
+==== Step 4.1: Override default values
+
+We want our custom control to use the custom parser by default, so we will override the default value of the `TextConverter` property in the static constructor of the `CalendarDatePickerEx` class.
+
+[source,csharp]
+CalendarDatePickerEx.cs
+----
+public class CalendarDatePickerEx : CalendarDatePicker
+{
+    static CalendarDatePickerEx()
+    {
+        TextConverterProperty.OverrideDefaultValue(typeof(CalendarDatePickerEx), ShorthandDateConverter.Instance);
+    }
+}
+----
+
+==== Step 4.2: Add additional commands
+
+We will add one additional method to the `CalendarDatePickerEx` control called `SelectDayOffset`. This method accepts an integer offset and sets the selected date to today + offset. 
+
+TIP: In this sample we accept any object as the offset parameter and try to parse it into an integer. This allows us to use the method as a command in XAML and pass the offset as a string, e.g. "0", "-1", "+1", etc.
+
+For the full source code of the `CalendarDatePickerEx` class, please refer to the sample project.
+
+==== Step 4.3: Add buttons to the dropdown of the CalendarDatePicker control
+
+In Avalonia any `TemplatedControl` needs a `ControlTheme` to define its visual appearance. In case we don't need to alter the visual appearance of the control, we can just use the default `ControlTheme` of the base class. After that, you can just run the sample and should see the control already.
+
+[source,csharp]
+.CalendarDatePickerEx.cs
+----
+protected override Type StyleKeyOverride => typeof(CalendarDatePicker);
+----
+
+However, we want to add three buttons to the dropdown of the CalendarDatePicker control, so we need to create a new `ControlTheme` for our custom control. We will create a new file called `CalendarDatePickerExTheme.axaml` inside the folder `Themes` and define our custom theme there. 
+
+WARNING: Remember to comment out or delete the `StyleKeyOverride` property in the `CalendarDatePickerEx` class, otherwise our custom theme will not be applied to the control.
+
 
 
 == Related 
