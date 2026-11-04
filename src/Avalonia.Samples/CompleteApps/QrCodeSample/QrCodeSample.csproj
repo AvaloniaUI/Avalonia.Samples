@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\"/>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.1.0" />
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="12.1.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.0" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CodeGlyphX" Version="1.6.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
+    </ItemGroup>
+</Project>
