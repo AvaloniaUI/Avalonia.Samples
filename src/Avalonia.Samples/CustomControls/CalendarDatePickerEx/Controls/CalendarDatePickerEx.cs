@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -16,6 +17,7 @@ namespace CalendarDatePickerEx.Controls;
 public class CalendarDatePickerEx : CalendarDatePicker
 {
     private TextBox? _textBox;
+    private CancellationTokenSource? _restoreTextCts;
     
     static CalendarDatePickerEx()
     {
@@ -32,6 +34,8 @@ public class CalendarDatePickerEx : CalendarDatePicker
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
+        _restoreTextCts?.Cancel();
+        _restoreTextCts = null;
         _textBox = e.NameScope.Find<TextBox>("PART_TextBox");
     }
 
@@ -75,14 +79,21 @@ public class CalendarDatePickerEx : CalendarDatePicker
         SetCurrentValue(SelectedDateProperty, null);
         UpdateDataValidation(TextProperty, BindingValueType.DataValidationError, e.Exception);
 
-        // Keep the invalid text in the TextBox
+        // Keep the invalid text in the TextBox, but guard against the text being cleared
+        // or changed before this callback runs by cancelling any pending restoration first.
         var invalidText = e.Text;
+        _restoreTextCts?.Cancel();
+        var cts = new CancellationTokenSource();
+        _restoreTextCts = cts;
         Dispatcher.UIThread.Post(() =>
         {
+            if (cts.IsCancellationRequested) return;
             if (_textBox != null && SelectedDate == null)
             {
                 _textBox.Text = invalidText;
             }
+            if (_restoreTextCts == cts)
+                _restoreTextCts = null;
         });
     }
     
@@ -95,9 +106,16 @@ public class CalendarDatePickerEx : CalendarDatePicker
         {
             ClearValidationError();
         }
-        else if (change.Property == TextProperty && string.IsNullOrEmpty(change.GetNewValue<string?>()))
+        else if (change.Property == TextProperty)
         {
-            ClearValidationError();
+            // Cancel any pending text restoration so stale text isn't written after a new edit.
+            _restoreTextCts?.Cancel();
+            _restoreTextCts = null;
+
+            if (string.IsNullOrEmpty(change.GetNewValue<string?>()))
+            {
+                ClearValidationError();
+            }
         }
     }
 
