@@ -2,15 +2,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net11.0-android</TargetFramework>
-    <AndroidMinSdkVersion>23</AndroidMinSdkVersion>
-    <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
+    <AndroidMinSdkVersion>24</AndroidMinSdkVersion>
+    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ApplicationId>com.CompanyName.AdvancedToDoList</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <RunAOTCompilation>true</RunAOTCompilation>
+    <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
