@@ -14,7 +14,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="12.2.999-cibuild0101319-alpha" />
         <PackageReference Include="Avalonia.Desktop" Version="12.2.999-cibuild0101319-alpha" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.2.999-cibuild0101319-alpha" />
+        <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.999-cibuild0101319-alpha" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="12.2.999-cibuild0101319-alpha" />
         <!-- See https://docs.avaloniaui.net/tools/developer-tools/installation -->
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />

@@ -10,7 +10,7 @@
     </Application.DataTemplates>
   
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
         <StyleInclude Source="avares://MusicStore/Icons.axaml" />
     </Application.Styles>
 </Application>

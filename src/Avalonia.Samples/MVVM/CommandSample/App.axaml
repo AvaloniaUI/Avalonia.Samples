@@ -4,6 +4,6 @@
              x:Class="CommandSample.App">
 
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 </Application>
