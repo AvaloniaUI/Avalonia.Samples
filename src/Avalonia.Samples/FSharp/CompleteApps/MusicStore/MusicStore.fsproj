@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <!-- Own the reference so dependency tools can update it without editing SDK imports. -->
         <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <ApplicationManifest>app.manifest</ApplicationManifest>
