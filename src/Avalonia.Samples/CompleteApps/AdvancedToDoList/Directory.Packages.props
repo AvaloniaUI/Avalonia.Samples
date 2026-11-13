@@ -18,6 +18,9 @@
     <PackageVersion Include="Avalonia.Android" Version="$(AvaloniaVersion)" />
     <!-- Avalonia diagnostics package -->
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
+    <!-- SkiaSharp 4 for .NET 11 WASM compatibility -->
+    <PackageVersion Include="SkiaSharp" Version="4.151.2" />
+    <PackageVersion Include="SkiaSharp.NativeAssets.WebAssembly" Version="4.151.2" />
     <!-- Android packages -->
     <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15" />
     <!-- ViewModel-related packages-->
