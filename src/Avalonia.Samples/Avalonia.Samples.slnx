@@ -9,6 +9,7 @@
     <Project Path="CompleteApps/SimpleToDoList/SimpleToDoList.csproj" />
   </Folder>
   <Folder Name="/CompleteApps/AdvancedToDoList/">
+    <File Path="CompleteApps\AdvancedToDoList\AdvancedToDoList.slnx" />
     <File Path="CompleteApps\AdvancedToDoList\ReadMe.adoc" />
   </Folder>
   <Folder Name="/CustomControls/">

@@ -6,6 +6,6 @@
              <!-- This App uses "Dark" Theme only since the snowflakes are White and thus better visible on a dark Background -->
              
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 </Application>

@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <OutputType>WinExe</OutputType>
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.1.6" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.6" />
+        <PackageReference Include="Avalonia" Version="12.2.999-cibuild0101319-alpha" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.2.999-cibuild0101319-alpha" />
+        <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.999-cibuild0101319-alpha" />
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     </ItemGroup>
 </Project>

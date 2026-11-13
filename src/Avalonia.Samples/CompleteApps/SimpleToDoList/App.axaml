@@ -11,7 +11,7 @@
      </Application.Resources>
   
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
         
         <!-- Some custom Styles -->
         <!-- Our header Style -->

@@ -6,7 +6,7 @@
              x:Class="DialogManagerSample.App">
 
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
     
     <Application.DataTemplates>

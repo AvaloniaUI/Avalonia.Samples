@@ -4,6 +4,6 @@
              x:Class="IDataTemplateSample.App">
 
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 </Application>

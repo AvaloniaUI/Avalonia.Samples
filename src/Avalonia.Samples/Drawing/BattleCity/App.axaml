@@ -3,6 +3,6 @@
              RequestedThemeVariant="Light"
              xmlns="https://github.com/avaloniaui">
   <Application.Styles>
-    <FluentTheme />
+    <Fluent2Theme />
   </Application.Styles>
 </Application>

@@ -39,12 +39,12 @@ jobs:
           fetch-depth: '0' # Fetch all history for all branches and tags
 
       # --------------------------------------------------------------
-      #  Install .NET SDK 10.x (the latest 10.x version at run time)
+      #  Install .NET SDK 11.x (the latest 11.x version at run time)
       # --------------------------------------------------------------
       - name: Set up .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.0.x'
 
       # --------------------------------------------------------------
       #  Java (required by Android tooling) + Android SDK
