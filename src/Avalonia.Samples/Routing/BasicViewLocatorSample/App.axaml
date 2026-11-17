@@ -8,6 +8,6 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 </Application>

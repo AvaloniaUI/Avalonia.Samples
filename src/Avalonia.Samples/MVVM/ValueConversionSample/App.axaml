@@ -4,7 +4,7 @@
              x:Class="ValueConversionSample.App">
 
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
 
 		<!--This Style is fully optional-->
 		<Style Selector="TextBlock">

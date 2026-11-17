@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IncludeAvaloniaGenerators>true</IncludeAvaloniaGenerators>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.6" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.6" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
+    <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.999-cibuild0101319-alpha" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.2.999-cibuild0101319-alpha" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.2.999-cibuild0101319-alpha" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
-    <PackageReference Include="Avalonia.Remote.Protocol" Version="12.1.6" />
+    <PackageReference Include="Avalonia.Remote.Protocol" Version="12.2.999-cibuild0101319-alpha" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
 

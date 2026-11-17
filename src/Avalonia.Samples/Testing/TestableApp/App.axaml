@@ -2,6 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="TestableApp.App">
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 </Application>

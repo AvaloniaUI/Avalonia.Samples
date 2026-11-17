@@ -508,7 +508,7 @@ In `App.axaml`, add a style to `Application.Styles` and define the desired font 
 ----
 <Application.Styles>
     <!-- Do not touch this -->
-    <FluentTheme />
+    <Fluent2Theme />
 
     <!--  Some custom Styles  -->
     <!--  Our header Style  -->

@@ -6,7 +6,7 @@
              x:DataType="local:App"
              RequestedThemeVariant="Default">
     <Application.Styles>
-        <FluentTheme />
+        <Fluent2Theme />
     </Application.Styles>
 
     <TrayIcon.Icons>

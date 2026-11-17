@@ -13,6 +13,6 @@
   </Application.Resources>
 
   <Application.Styles>
-    <FluentTheme />
+    <Fluent2Theme />
   </Application.Styles>
 </Application>
