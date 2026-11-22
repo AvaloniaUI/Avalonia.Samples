@@ -5,6 +5,7 @@ using ReactiveUI;
 using System.Linq;
 using System.Threading.Tasks;
 using ReactiveUI.Avalonia;
+using ReactiveUI.Binding;
 
 namespace MvvmDialogSample.Views
 {

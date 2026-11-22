@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System;
 using System.ComponentModel.DataAnnotations;
+using ReactiveUI.Binding;
 
 namespace BasicViewLocatorSample.ViewModels
 {

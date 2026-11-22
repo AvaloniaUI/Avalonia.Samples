@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ReactiveUI.Binding;
 
 namespace MvvmDialogSample.ViewModels
 {

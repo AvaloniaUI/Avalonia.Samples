@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ReactiveUI.Binding;
 
 namespace CommandSample.ViewModels
 {
