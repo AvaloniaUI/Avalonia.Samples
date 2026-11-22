@@ -39,12 +39,13 @@ jobs:
           fetch-depth: '0' # Fetch all history for all branches and tags
 
       # --------------------------------------------------------------
-      #  Install .NET SDK 10.x (the latest 10.x version at run time)
+      #  Install .NET SDK (version must match global.json so that
+      #  workload installs apply to the same SDK that the project uses)
       # --------------------------------------------------------------
       - name: Set up .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.0.x'
+          global-json-file: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/global.json
 
       # --------------------------------------------------------------
       #  Java (required by Android tooling) + Android SDK
