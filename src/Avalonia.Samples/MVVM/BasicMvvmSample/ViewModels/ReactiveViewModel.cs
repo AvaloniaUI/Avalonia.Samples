@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using ReactiveUI.Binding;
 
 namespace BasicMvvmSample.ViewModels
 {

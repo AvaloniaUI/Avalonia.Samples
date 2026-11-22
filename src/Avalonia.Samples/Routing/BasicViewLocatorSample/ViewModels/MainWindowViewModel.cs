@@ -1,6 +1,7 @@
 using ReactiveUI;
 using System;
 using System.Windows.Input;
+using ReactiveUI.Binding;
 
 namespace BasicViewLocatorSample.ViewModels
 {
