@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/global.json
+          global-json-file: global.json
 
       - name: Setup Android SDK
         uses: actions/setup-java@v5

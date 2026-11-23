@@ -39,12 +39,12 @@ jobs:
           fetch-depth: '0' # Fetch all history for all branches and tags
 
       # --------------------------------------------------------------
-      #  Install .NET SDK (version from global.json)
+      #  Install .NET SDK (version from global.json at repo root)
       # --------------------------------------------------------------
       - name: Set up .NET
         uses: actions/setup-dotnet@v5
         with:
-          global-json-file: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/global.json
+          global-json-file: global.json
 
       # --------------------------------------------------------------
       #  Java (required by Android tooling) + Android SDK
@@ -69,10 +69,38 @@ jobs:
       #   to the exact SDK version the project uses)
       # --------------------------------------------------------------
       - name: Install workloads for Mobile and Wasm projects
+        shell: pwsh
         run: |
+          dotnet --version
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      # --------------------------------------------------------------
+      #  Verify workloads are installed before running dotnet-outdated
+      #  (Fail fast if workloads are missing to avoid NETSDK1147 errors)
+      # --------------------------------------------------------------
+      - name: Verify .NET SDK and workloads
+        shell: pwsh
+        run: |
+          dotnet --version
+          $workloadList = dotnet workload list
+          Write-Host "$workloadList"
+          if ($workloadList -notmatch 'android') {
+            Write-Host "::error::Android workload is not installed!"
+            exit 1
+          }
+          if ($workloadList -notmatch 'ios') {
+            Write-Host "::error::iOS workload is not installed!"
+            exit 1
+          }
+          if ($workloadList -notmatch 'wasm-tools') {
+            Write-Host "::error::Wasm workload is not installed!"
+            exit 1
+          }
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
