@@ -39,16 +39,12 @@ jobs:
           fetch-depth: '0' # Fetch all history for all branches and tags
 
       # --------------------------------------------------------------
-      #  Install .NET SDK with workloads for Mobile and Wasm projects
-      #  (version from global.json ensures workloads apply to the SDK
-      #   that the project uses; the workloads parameter installs them
-      #   reliably before any other dotnet commands run)
+      #  Install .NET SDK (version from global.json)
       # --------------------------------------------------------------
       - name: Set up .NET
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: src/Avalonia.Samples/CompleteApps/AdvancedToDoList/global.json
-          workloads: android,ios,wasm-tools
 
       # --------------------------------------------------------------
       #  Java (required by Android tooling) + Android SDK
@@ -66,6 +62,30 @@ jobs:
           cmdline-tools-version: '12266719'
           # The legacy 'tools' package is no longer available.
           packages: 'platform-tools'
+
+      # --------------------------------------------------------------
+      #  Install workloads for the actual SDK version in use
+      #  (rollForward may pick a different patch than global.json pins,
+      #   so we update manifests and restore workloads after SDK setup)
+      # --------------------------------------------------------------
+      - name: Install workloads for Mobile and Wasm projects
+        shell: pwsh
+        run: |
+          dotnet --version
+          # Refresh workload manifests for the actual SDK version in use
+          dotnet workload update
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          # Install workloads
+          dotnet workload install android ios wasm-tools
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet workload list
+          # Restore workloads for each project
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
