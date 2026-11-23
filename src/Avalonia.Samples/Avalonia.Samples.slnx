@@ -12,6 +12,7 @@
     <File Path="CompleteApps\AdvancedToDoList\ReadMe.adoc" />
   </Folder>
   <Folder Name="/CustomControls/">
+    <Project Path="CustomControls/CalendarDatePickerEx/CalendarDatePickerEx.csproj" />
     <Project Path="CustomControls/RatingControlSample/RatingControlSample.csproj" />
     <Project Path="CustomControls/SnowflakesControlSample/SnowflakesControlSample.csproj" />
   </Folder>
