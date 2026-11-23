@@ -65,20 +65,34 @@ jobs:
           packages: 'platform-tools'
 
       # --------------------------------------------------------------
-      #  Install mobile‑specific workloads (iOS / Android / Wasm)
+      #  Install mobile and Wasm workloads (Android, iOS, Wasm)
       # --------------------------------------------------------------
-      - name: Install mobile / wasm workloads
+      - name: Install mobile and Wasm workloads
+        shell: pwsh
         run: |
           dotnet workload install android ios wasm-tools
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to install workloads. Aborting."
+            exit $LASTEXITCODE
+          }
+
+          dotnet workload list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       # --------------------------------------------------------------
-      #  Restore mobile‑specific workloads for project TFM targets
+      #  Restore workloads for each mobile and Wasm project
       # --------------------------------------------------------------
-      - name: Restore mobile / wasm workloads
+      - name: Restore workloads for all projects
+        shell: pwsh
         run: |
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
-          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
