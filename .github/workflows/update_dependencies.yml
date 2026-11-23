@@ -64,28 +64,15 @@ jobs:
           packages: 'platform-tools'
 
       # --------------------------------------------------------------
-      #  Install workloads for the actual SDK version in use
-      #  (rollForward may pick a different patch than global.json pins,
-      #   so we update manifests and restore workloads after SDK setup)
+      #  Install workloads for Mobile and Wasm projects
+      #  (SDK version is pinned in global.json, so workloads apply
+      #   to the exact SDK version the project uses)
       # --------------------------------------------------------------
       - name: Install workloads for Mobile and Wasm projects
-        shell: pwsh
         run: |
-          dotnet --version
-          # Refresh workload manifests for the actual SDK version in use
-          dotnet workload update
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          # Install workloads
-          dotnet workload install android ios wasm-tools
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          dotnet workload list
-          # Restore workloads for each project
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
