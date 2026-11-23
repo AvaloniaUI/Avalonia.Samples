@@ -1,42 +1,27 @@
 name: Update dependencies
 
-# ----------------------------------------------------------------------
-#  Permissions (explicitly request write access for PR creation)
-# ----------------------------------------------------------------------
 permissions:
-  contents: write          # needed for committing & pushing changes
-  pull-requests: write    # needed for the create‑pull‑request action
-  issues: write           # needed for creating tracking issues for major updates
-  
-# ----------------------------------------------------------------------
-#  Triggers
-# ----------------------------------------------------------------------
+  contents: write
+  pull-requests: write
+  issues: write
+
 on:
   schedule:
-    - cron: '0 2 * * *' # Every day at 02:00 UTC
-  workflow_dispatch:   # Allows manual runs from the UI
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
-# ----------------------------------------------------------------------
-#  Jobs
-# ----------------------------------------------------------------------
 jobs:
   update-nuget:
-    if: github.repository == 'AvaloniaUI/Avalonia.Samples' # Only run this workflow on the main repo (not forks)
+    if: github.repository == 'AvaloniaUI/Avalonia.Samples'
     runs-on: windows-latest
     name: Update latest NuGets
 
-    # ------------------------------------------------------------------
-    #  Steps
-    # ------------------------------------------------------------------
     steps:
-      # --------------------------------------------------------------
-      #  Checkout the repo (using the default GITHUB_TOKEN)
-      # --------------------------------------------------------------
       - name: Checkout
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: '0' # Fetch all history for all branches and tags
+          fetch-depth: '0'
 
       # --------------------------------------------------------------
       #  Install .NET SDK (version from global.json at repo root)
@@ -46,9 +31,6 @@ jobs:
         with:
           global-json-file: global.json
 
-      # --------------------------------------------------------------
-      #  Java (required by Android tooling) + Android SDK
-      # --------------------------------------------------------------
       - name: Set up Java (Zulu 17)
         uses: actions/setup-java@v5
         with:
@@ -58,16 +40,10 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
-          # Keep command-line tools 16.0 with the existing Java 17 setup.
           cmdline-tools-version: '12266719'
-          # The legacy 'tools' package is no longer available.
           packages: 'platform-tools'
 
-      # --------------------------------------------------------------
-      #  Install workloads for Mobile and Wasm projects
-      #  (SDK version is pinned in global.json, so workloads apply
-      #   to the exact SDK version the project uses)
-      # --------------------------------------------------------------
+      # Explicitly install Android so dotnet-outdated can load Android projects.
       - name: Install workloads for Mobile and Wasm projects
         shell: pwsh
         run: |
@@ -106,25 +82,21 @@ jobs:
       #  Install dotnet‑outdated **and put it on PATH**
       # --------------------------------------------------------------
       - name: Install dotnet-outdated tool
+        shell: pwsh
         run: |
           dotnet tool install --global dotnet-outdated-tool
-          # Add the global‑tool folder to PATH for the remainder of the job
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
           $toolPath = "$HOME/.dotnet/tools"
           if (Test-Path $toolPath) {
             Add-Content -Path $env:GITHUB_PATH -Value $toolPath
           }
-        shell: pwsh
 
-      # --------------------------------------------------------------
-      # Run dotnet‑outdated once per project, including F# and mobile projects
-      # --------------------------------------------------------------
       - name: Run dotnet-outdated (upgrade)
         shell: pwsh
         run: |
-          # Packages that must **not** be upgraded – add or remove as needed
           $exclude = "Xamarin.AndroidX.Core.SplashScreen"
 
-          # Enumerate projects directly so solution formats do not affect coverage.
           $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
                     -Include *.csproj,*.fsproj -File |
                     Select-Object -ExpandProperty FullName
@@ -136,59 +108,46 @@ jobs:
 
           foreach ($proj in $files) {
             Write-Host "🔎 Checking $proj"
-            # Update related packages together. The Restore after upgrades step
-            # validates the final dependency graph. `-vl Major` restricts upgrades
-            # to minor and patch versions only.
+
             dotnet outdated "$proj" --upgrade --exclude $exclude -vl Major
             if ($LASTEXITCODE -ne 0) {
               $upgradeExitCode = $LASTEXITCODE
               Write-Host "::error::Dependency upgrade failed for $proj (exit code $upgradeExitCode)."
-              # Surface restore diagnostics that the tool's summary may omit.
+
               dotnet restore "$proj" --verbosity normal
               exit $upgradeExitCode
             }
           }
 
-      # --------------------------------------------------------------
-      #  Detect whether any file changed after the upgrade step
-      # --------------------------------------------------------------
       - name: Detect changes
         id: changes
         shell: pwsh
         run: |
-          # Run the diff – we only care about the exit code, not the output
           git diff --quiet
-          
-          # $LASTEXITCODE holds the numeric exit code from the last native command
+
           if ($LASTEXITCODE -eq 0) {
-            # No changes
             Write-Host "✅ No repository changes detected."
             "CHANGES=false" >> $env:GITHUB_OUTPUT
           }
           else {
-            # At least one change
             Write-Host "🔄 Changes detected."
             "CHANGES=true" >> $env:GITHUB_OUTPUT
           }
-          # Explicitly end with a success code (optional – PowerShell will return 0
-          # if the script reaches the end without throwing a terminating error)
+
           exit 0
-          
+
       - name: Restore after upgrades
         shell: pwsh
         run: |
-          # Restore every inspected project, including those outside the root solution.
           $files = Get-ChildItem -Path "./src/Avalonia.Samples" -Recurse `
                     -Include *.csproj,*.fsproj -File |
                     Select-Object -ExpandProperty FullName
+
           foreach ($proj in $files) {
             dotnet restore "$proj"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
 
-      # --------------------------------------------------------------
-      #  Check for available major version upgrades and open issues
-      # --------------------------------------------------------------
       - name: Notify on major package updates
         shell: pwsh
         env:
@@ -219,9 +178,9 @@ jobs:
                         if ($fw.topLevelPackages) {
                           foreach ($pkg in $fw.topLevelPackages) {
                             if ($pkg.resolvedVersion -and $pkg.latestVersion) {
-                              # Extract major version, handling pre-release versions
                               $currMajor = ($pkg.resolvedVersion -split '\.')[0] -replace '[^0-9].*', ''
                               $latestMajor = ($pkg.latestVersion -split '\.')[0] -replace '[^0-9].*', ''
+
                               if ([int]::TryParse($currMajor, [ref]$null) -and [int]::TryParse($latestMajor, [ref]$null)) {
                                 if ([int]$latestMajor -gt [int]$currMajor) {
                                   $key = "$($pkg.id)@$latestMajor"
@@ -234,6 +193,7 @@ jobs:
                                       Projects = @()
                                     }
                                   }
+
                                   $projName = Split-Path -Leaf $proj
                                   if ($majorUpdates[$key].Projects -notcontains $projName) {
                                     $majorUpdates[$key].Projects += $projName
@@ -271,7 +231,7 @@ jobs:
             Write-Host "Checking if issue already exists for $pkgId (major $majorVer)..."
             try {
               $existingIssues = gh issue list --state all --search "$pkgId $majorVer in:title" --json number,title 2>$null | ConvertFrom-Json
-              
+
               if ($existingIssues -and $existingIssues.Count -gt 0) {
                 Write-Host "ℹ️ Issue already exists for $pkgId $majorVer. Skipping."
               } else {
@@ -294,9 +254,6 @@ jobs:
             }
           }
 
-      # --------------------------------------------------------------
-      #  **If** something changed → push a PR
-      # --------------------------------------------------------------
       - name: Generate dependency update description
         if: steps.changes.outputs.CHANGES == 'true'
         shell: pwsh
@@ -313,6 +270,5 @@ jobs:
           body-path: ${{ runner.temp }}/dependency-update-body.md
           branch: update-nuget-packages
           base: main
-          # Optional – keep the PR tidy
           delete-branch: true
           signoff: true
