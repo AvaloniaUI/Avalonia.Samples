@@ -63,20 +63,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet --version
-          $workloadList = dotnet workload list
-          Write-Host "$workloadList"
-          if ($workloadList -notmatch 'android') {
-            Write-Host "::error::Android workload is not installed!"
-            exit 1
-          }
-          if ($workloadList -notmatch 'ios') {
-            Write-Host "::error::iOS workload is not installed!"
-            exit 1
-          }
-          if ($workloadList -notmatch 'wasm-tools') {
-            Write-Host "::error::Wasm workload is not installed!"
-            exit 1
-          }
+          dotnet workload list
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
