@@ -71,6 +71,11 @@ jobs:
       - name: Install workloads for Mobile and Wasm projects
         run: |
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+          dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
         working-directory: ./
