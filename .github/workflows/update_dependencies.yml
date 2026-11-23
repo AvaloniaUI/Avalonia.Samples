@@ -65,20 +65,15 @@ jobs:
           packages: 'platform-tools'
 
       # --------------------------------------------------------------
-      #  Install mobile‑specific workloads (iOS / Android / Wasm)
+      #  Restore workloads for Mobile and Wasm projects
+      #  (dotnet workload restore installs missing workloads automatically)
       # --------------------------------------------------------------
-      - name: Install mobile / wasm workloads
-        run: |
-          dotnet workload install android ios wasm-tools
-
-      # --------------------------------------------------------------
-      #  Restore mobile‑specific workloads for project TFM targets
-      # --------------------------------------------------------------
-      - name: Restore mobile / wasm workloads
+      - name: Install workloads for Mobile and Wasm projects
         run: |
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Android/AdvancedToDoList.Android.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.Browser/AdvancedToDoList.Browser.csproj
           dotnet workload restore ./src/Avalonia.Samples/CompleteApps/AdvancedToDoList/AdvancedToDoList.iOS/AdvancedToDoList.iOS.csproj
+        working-directory: ./
       
       # --------------------------------------------------------------
       #  Install dotnet‑outdated **and put it on PATH**
