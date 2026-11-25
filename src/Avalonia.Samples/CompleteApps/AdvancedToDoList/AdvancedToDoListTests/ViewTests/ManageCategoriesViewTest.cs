@@ -58,9 +58,12 @@ public class ManageCategoriesViewTest : TestBase
 
         // Act
         var listBox = view.FindControl<ListBox>("CategoriesListBox");
+        var commandBar = view.FindControl<CommandBar>("CategoriesCommandBar");
 
         // Assert
         Assert.NotNull(listBox);
+        Assert.NotNull(commandBar);
+        Assert.Equal(5, commandBar.PrimaryCommands.Count);
         Assert.Equal(vm.Categories.Count, listBox.ItemCount);
     }
 }

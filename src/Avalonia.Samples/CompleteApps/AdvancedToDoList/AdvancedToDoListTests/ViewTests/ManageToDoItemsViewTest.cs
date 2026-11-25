@@ -58,9 +58,12 @@ public class ManageToDoItemsViewTest : TestBase
 
         // Act
         var listBox = view.FindControl<ListBox>("ToDoItemsListBox");
+        var commandBar = view.FindControl<CommandBar>("ToDoItemsCommandBar");
 
         // Assert
         Assert.NotNull(listBox);
+        Assert.NotNull(commandBar);
+        Assert.Equal(9, commandBar.PrimaryCommands.Count);
         Assert.Equal(vm.ToDoItems.Count, listBox.ItemCount);
     }
 }

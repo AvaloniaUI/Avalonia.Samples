@@ -11,7 +11,7 @@ using AdvancedToDoList.Views;
 using AdvancedToDoList.Properties;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Themes.Fluent;
+using Avalonia.Themes.Fluent2;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdvancedToDoList;
@@ -33,7 +33,7 @@ namespace AdvancedToDoList;
 /// - Design mode uses a separate service collection to avoid runtime dependencies
 /// 
 /// Theme management:
-/// - Accent color from settings is applied to all FluentTheme palettes
+/// - Accent color from settings is applied to all Fluent2Theme palettes
 /// - Changes are reactive — updating settings updates the UI immediately
 /// 
 /// Data validation:
@@ -177,13 +177,13 @@ public partial class App : Application
     }
 
     /// <summary>
-    /// Updates the FluentTheme accent color across all palettes.
+    /// Updates the Fluent2Theme accent color across all palettes.
     /// This makes the app match the user's selected accent color.
     /// </summary>
     /// <param name="accentColor">The new accent color from settings</param>
     /// <remarks>
     /// How it works:
-    /// - Finds the FluentTheme in the application styles
+    /// - Finds the Fluent2Theme in the application styles
     /// - Updates every palette's Accent property (Primary, Secondary, etc.)
     /// - Avalonia automatically re-renders with the new color
     /// 
@@ -194,7 +194,7 @@ public partial class App : Application
     /// </remarks>
     private void UpdateAccentColor(Color? accentColor)
     {
-        var fluenttheme = Styles.OfType<FluentTheme>().FirstOrDefault();
+        var fluenttheme = Styles.OfType<Fluent2Theme>().FirstOrDefault();
         if (fluenttheme is null || accentColor is null)
             return;
         foreach (var palette in fluenttheme.Palettes.Values)

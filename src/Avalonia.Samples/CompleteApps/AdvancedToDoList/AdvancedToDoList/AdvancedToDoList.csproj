@@ -22,7 +22,7 @@
 
     <ItemGroup>
         <PackageReference Include="Avalonia"/>
-        <PackageReference Include="Avalonia.Themes.Fluent"/>
+        <PackageReference Include="Avalonia.Themes.Fluent2"/>
         <PackageReference Include="Avalonia.Fonts.Inter"/>
         <PackageReference Include="Avalonia.Controls.ColorPicker"/>
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" />

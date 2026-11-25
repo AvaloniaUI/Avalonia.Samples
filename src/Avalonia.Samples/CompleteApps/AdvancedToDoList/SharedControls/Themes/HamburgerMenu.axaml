@@ -104,10 +104,10 @@
             </Setter>
         </Style>
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
         </Style>
         <Style Selector="^:pressed">
-            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
         </Style>
     </ControlTheme>
 
@@ -150,20 +150,20 @@
         </Setter>
 
         <Style Selector="^:selected /template/ Rectangle#PART_Indicator">
-            <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentMediumBrush}" />
+            <Setter Property="Fill" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
         </Style>
 
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListLowBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
             <Style Selector="^ /template/ Rectangle#PART_Indicator">
-                <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentLowBrush}" />
+                <Setter Property="Fill" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
             </Style>
         </Style>
 
         <Style Selector="^:pressed">
-            <Setter Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
             <Style Selector="^ /template/ Rectangle#PART_Indicator">
-                <Setter Property="Fill" Value="{DynamicResource SystemControlHighlightListAccentHighBrush}" />
+                <Setter Property="Fill" Value="{DynamicResource AccentFillColorDefaultBrush}" />
             </Style>
         </Style>
     </ControlTheme>
@@ -180,7 +180,7 @@
         <Setter Property="Content" Value="{Binding $self.SelectedMenuItem.Tag}" />
         <Setter Property="HeaderTemplate" Value="{Binding $self.SelectedMenuItem.LabelTemplate}" />
         <Setter Property="PaneBackground" Value="{DynamicResource HamburgerMenuPaneBrush}" />
-        <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
         <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="OpenPaneLength" Value="200"></Setter>
         <Setter Property="CornerRadius" Value="5,0,0,0"></Setter>
