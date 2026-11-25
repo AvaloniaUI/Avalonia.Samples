@@ -131,17 +131,17 @@ namespace ValidationSample.ViewModels
 
 === Step 4: Set up the view
 
-In `MainWindow.axaml`, add a `TabControl`. Inside the `TabItem`, add a single `TextBox` which binds to our property `EMail`. 
+In `MainWindow.axaml`, add a `TabbedPage`. Inside a new `ContentPage`, add a single `TextBox` which binds to our property `EMail`. 
 
 .*MainWindow.axaml*
 [source,xml]
 ----
-<TabControl TabStripPlacement="Bottom">
+<TabbedPage>
     <!--Validation using DataAnnotations-->
-    <TabItem Header="DataAnnotations">
+    <ContentPage Header="DataAnnotations">
         <TextBox Text="{Binding ValidationUsingDataAnnotationViewModel.EMail}" />
-    </TabItem>
-</TabControl>
+    </ContentPage>
+</TabbedPage>
 ----
 
 === Step 5: Run the app
@@ -354,17 +354,17 @@ See https://github.com/AvaloniaUI/Avalonia.Samples/blob/main/src/Avalonia.Sample
 
 === Step 5: Set up the view
 
-Let's add another `TabItem` to the `TabControl` in `MainWindow.axaml`:
+Let's add another `ContentPage` to the `TabbedPage` in `MainWindow.axaml`:
 
 .*MainWindow.axaml*
 [source,xml]
 ----
-<TabControl TabStripPlacement="Bottom">
+<TabbedPage TabStripPlacement="Bottom">
     <!--Validation using INotifyDataErrorInfo-->
-    <TabItem Header="INotifyDataErrorInfo">
+    <ContentPage Header="INotifyDataErrorInfo">
         <TextBox Text="{Binding ValidationUsingINotifyDataErrorInfoViewModel.EMail}" />
-    </TabItem>
-</TabControl>
+    </ContentPage>
+</TabbedPage>
 ----
 
 === Step 6: Run the app
@@ -447,17 +447,17 @@ TIP: *Tip:* Depending on your IDE settings, the debugger may stop execution when
 
 === Step 3: Set up the view
 
-Add another `TabItem` to the `TabControl` in `MainWindow.axaml`.
+Add another `ContentPage` to the `TabControl` in `MainWindow.axaml`.
 
 .*MainWindow.axaml*
 [source,xml]
 ----
-<TabControl TabStripPlacement="Bottom">
+<TabbedPage>
     <!--Validation using Exceptions in setter-->
-    <TabItem Header="ExceptionInsideSetter">
+    <ContentPage Header="ExceptionInsideSetter">
         <TextBox Text="{Binding ValidationUsingExceptionInsideSetterViewModel.EMail}" />
-    </TabItem>
-</TabControl>
+    </ContentPage>
+</TabbedPage>
 ----
 
 === Step 4: Run the app

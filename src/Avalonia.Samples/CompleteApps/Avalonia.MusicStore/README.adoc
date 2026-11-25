@@ -77,7 +77,7 @@ This tutorial uses the messaging features of the CommunityToolkit.Mvvm to manage
 
 == The Solution
 
-=== 1, Create a New Project
+=== Create a New Project
 
 Before you can start programming, you will have to create a new project for the app. Please see the https://docs.avaloniaui.net/docs/get-started/[[getting started guide\]] if you need help installing Avalonia and setting up your IDE.
 
@@ -107,9 +107,9 @@ Avalonia version no older than 11.3.0 or 12.0.0.
 .Update nuget packages
 [source,xml]
 ----
-<PackageReference Include="Avalonia" Version="12.0.0" />
-<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
-<PackageReference Include="Avalonia.Themes.Fluent2" Version="12.0.0" />
+<PackageReference Include="Avalonia" Version="12.2.0" />
+<PackageReference Include="Avalonia.Desktop" Version="12.2.0" />
+<PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.0" />
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 ----
 

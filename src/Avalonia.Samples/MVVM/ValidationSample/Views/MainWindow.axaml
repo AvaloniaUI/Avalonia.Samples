@@ -22,21 +22,21 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl TabStripPlacement="Bottom">
+	<TabbedPage>
 		<!--Validation using DataAnnotations-->
-		<TabItem Header="DataAnnotations">
+		<ContentPage Header="DataAnnotations">
 			<TextBox Text="{Binding ValidationUsingDataAnnotationViewModel.EMail}" />
-		</TabItem>
+		</ContentPage>
 
 		<!--Validation using INotifyDataErrorInfo-->
-		<TabItem Header="INotifyDataErrorInfo">
+		<ContentPage Header="INotifyDataErrorInfo">
 			<TextBox Text="{Binding ValidationUsingINotifyDataErrorInfoViewModel.EMail}" />
-		</TabItem>
+		</ContentPage>
 
 		<!--Validation using Exceptions in setter-->
-		<TabItem Header="ExceptionInsideSetter">
+		<ContentPage Header="ExceptionInsideSetter">
 			<TextBox Text="{Binding ValidationUsingExceptionInsideSetterViewModel.EMail}" />
-		</TabItem>
-	</TabControl>
+		</ContentPage>
+	</TabbedPage>
 
 </Window>

@@ -377,7 +377,7 @@ public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
 
 === Step 4: Modify the View 
 
-We can use both `ViewModels` side by side. To demonstrate this, we will wrap both `Views` in a `TabControl`. As our properties have the same names, we can just copy & paste the view we have and modify the `DataContext`.  Modify `MainWindow.axaml` to add the `ReactiveUI` view and to wrap both the `ReactiveUI` and `SimpleViewModel` controls in a `TabControl` as shown below:
+We can use both `ViewModels` side by side. To demonstrate this, we will wrap both `Views` in a `TabbedPage`. As our properties have the same names, we can just copy & paste the view we have and modify the `DataContext`.  Modify `MainWindow.axaml` to add the `ReactiveUI` view and to wrap both the `ReactiveUI` and `SimpleViewModel` controls in a `TabControl` as shown below:
 
 [source,xml]
 ----
@@ -398,10 +398,10 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
         	<vm:MainWindowViewModel/>
     	</Design.DataContext>
 
-	<TabControl>
+	<TabbedPage>
 		
 		<!-- Our Simple ViewModel -->
-		<TabItem Header="Simple ViewModel" >
+		<ContentPage Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
@@ -409,10 +409,10 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
 						 IsReadOnly="True"
 						 FontWeight="Bold" />
 			</StackPanel>
-		</TabItem>
+		</ContentPage>
 
 		<!-- Our ReactiveViewModel -->
-		<TabItem Header="Reactive UI" >
+		<ContentPage Header="Reactive UI" >
 			<StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
@@ -420,9 +420,9 @@ We can use both `ViewModels` side by side. To demonstrate this, we will wrap bot
 						 IsReadOnly="True"
 						 FontWeight="Bold" />
 			</StackPanel>
-		</TabItem>
+		</ContentPage>
 		
-	</TabControl>
+	</TabbedPage>
 </Window>
 ----
 === Step 5: See it in action

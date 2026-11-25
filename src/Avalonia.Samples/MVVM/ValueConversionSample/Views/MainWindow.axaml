@@ -22,8 +22,8 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TabControl>
-        <TabItem Header="IValueConverter">
+    <TabbedPage>
+        <ContentPage Header="IValueConverter">
             <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Number 1" />
@@ -35,9 +35,9 @@
                 <NumericUpDown Grid.Row="1" Grid.Column="1"
                                Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource MyConverterParameter}}" />
             </Grid>
-        </TabItem>
+        </ContentPage>
 
-        <TabItem Header="IMultiValueConverter">
+        <ContentPage Header="IMultiValueConverter">
             <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
@@ -69,9 +69,9 @@
                     </NumericUpDown.Value>
                 </NumericUpDown>
             </Grid>
-        </TabItem>
+        </ContentPage>
         
-        <TabItem Header="FuncValueConverter">
+        <ContentPage Header="FuncValueConverter">
             <StackPanel Spacing="5">
                 <TextBox PlaceholderText="Type the color to parse (e.g.: red, green, blue, #FF112233)" >
                     <TextBox.InnerLeftContent>
@@ -84,7 +84,7 @@
                     </TextBox.InnerLeftContent>
                 </TextBox>
             </StackPanel>
-        </TabItem>
-    </TabControl>
+        </ContentPage>
+    </TabbedPage>
 
 </Window>

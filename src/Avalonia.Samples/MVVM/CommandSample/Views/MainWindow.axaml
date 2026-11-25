@@ -16,13 +16,13 @@
 		<viewModels:MainViewModel />
 	</Design.DataContext>
 	
-	<TabControl>
-		<TabItem Header="ReactiveUI">
+	<TabbedPage>
+		<ContentPage Header="ReactiveUI">
 			<views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" />
-		</TabItem>
+		</ContentPage>
 		
-		<TabItem Header="CommunityToolkit-MVVM">
+		<ContentPage Header="CommunityToolkit-MVVM">
 			<views:CommunityToolkitCommandsSampleView DataContext="{Binding CommunityToolkitCommandsViewModel}" />
-		</TabItem>
-	</TabControl>
+		</ContentPage>
+	</TabbedPage>
 </Window>
