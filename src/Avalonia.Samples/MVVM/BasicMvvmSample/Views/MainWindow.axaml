@@ -16,10 +16,9 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl>
-		
+	<TabbedPage>
 		<!-- Our Simple ViewModel -->
-		<TabItem Header="Simple ViewModel" >
+		<ContentPage Header="Simple ViewModel" >
 			<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
@@ -27,10 +26,10 @@
 						 IsReadOnly="True"
 						 FontWeight="Bold" />
 			</StackPanel>
-		</TabItem>
+		</ContentPage>
 
 		<!-- Our ReactiveViewModel -->
-		<TabItem Header="Reactive UI" >
+		<ContentPage Header="Reactive UI" >
 			<StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
 				<TextBlock>Enter your Name:</TextBlock>
 				<TextBox Text="{Binding Name}" />
@@ -38,7 +37,7 @@
 						 IsReadOnly="True"
 						 FontWeight="Bold" />
 			</StackPanel>
-		</TabItem>
+		</ContentPage>
 		
-	</TabControl>
+	</TabbedPage>
 </Window>

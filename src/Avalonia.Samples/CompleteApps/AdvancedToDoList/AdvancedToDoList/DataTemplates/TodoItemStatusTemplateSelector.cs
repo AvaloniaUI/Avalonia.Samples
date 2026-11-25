@@ -53,7 +53,7 @@ public class ToDoItemStatusTemplateSelector : IDataTemplate
                 new PathIcon()
                 {
                     Data = ResourcesHelper.GetAppResource<Geometry>("PhosphorIcons.WarningCircleLight"),
-                    Foreground = ResourcesHelper.GetAppResource<IBrush>("SystemControlErrorTextForegroundBrush"),
+                    Foreground = ResourcesHelper.GetAppResource<IBrush>("SystemFillColorCriticalBrush"),
                     [ToolTip.TipProperty] = "Delayed"
                 },
             

@@ -28,7 +28,7 @@
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" />
-        <Setter Property="Background" Value="{DynamicResource SystemControlPageBackgroundAltHighBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <controls:DialogHost x:Name="OverlayBorder"
@@ -50,7 +50,7 @@
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               FontSize="16"
                                               FontWeight="Bold"
-                                              Foreground="{DynamicResource SystemControlBackgroundAccentBrush}" />
+                                              Foreground="{DynamicResource AccentFillColorDefaultBrush}" />
 
                             <ContentPresenter Grid.Row="1"
                                               Content="{TemplateBinding Content}"

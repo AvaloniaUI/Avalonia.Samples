@@ -15,12 +15,12 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl>
-		<TabItem Header="Interaction">
+	<TabbedPage>
+		<ContentPage Header="Interaction">
 			<v:InteractionView DataContext="{Binding InteractionSample}" />
-		</TabItem>
-		<TabItem Header="Custom Interaction">
+		</ContentPage>
+		<ContentPage Header="Custom Interaction">
 			<v:CustomInteractionView DataContext="{Binding CustomInteractionViewModel}" />
-		</TabItem>
-	</TabControl>
+		</ContentPage>
+	</TabbedPage>
 </Window>

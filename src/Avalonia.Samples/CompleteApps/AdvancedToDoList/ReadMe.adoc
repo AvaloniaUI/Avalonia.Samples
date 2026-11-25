@@ -31,6 +31,7 @@ This sample shows how to create a cross-platform todo-list application built wit
 ** Desktop (Windows, Linux, macOS)
 ** Mobile (Android, iOS) and
 ** Browser via WebAssembly (WASM)
+* Fluent 2 styling with native CommandBars for task and category actions
 * Service layer pattern for clean separation of concerns
 * Using a shared Controls-Library which can be reused for other projects
 * Full unit test coverage support
@@ -53,7 +54,7 @@ _This sample is considered "Hard" since the ReadMe will not cover every step. In
 [discrete]
 === Buzz-Words
 
-Todo-List, Cross-Platform, WebAssembly (WASM), SQLite, Service Pattern, Dependency Injection, MVVM Pattern, IndexedDB, Unit Testing, Headless Testing, Persistent Storage, Controls-Library
+Todo-List, Cross-Platform, WebAssembly (WASM), SQLite, Fluent 2, CommandBar, Service Pattern, Dependency Injection, MVVM Pattern, IndexedDB, Unit Testing, Headless Testing, Persistent Storage, Controls-Library
 
 == Before we start
 

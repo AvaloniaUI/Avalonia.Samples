@@ -78,61 +78,67 @@
     </UserControl.Resources>
 
     <DockPanel VerticalSpacing="5">
-        <!-- The ToolBar  -->
-        <Border DockPanel.Dock="Top"
-                Padding="4"
-                Margin="10,5"
-                Background="{DynamicResource CommandBarBackground}"
-                CornerRadius="20"
-                BoxShadow="2 2 5 1 gray">
-            <WrapPanel ItemSpacing="5">
-                <Button Classes="toolBar"
-                        Content="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}"
-                        Command="{Binding RefreshCommand}"
-                        ToolTip.Tip="Refresh the List" />
-
-                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
-                           Margin="0,5" />
-
-                <Button Classes="toolBar"
-                        Content="{DynamicResource PhosphorIcons.PlusCircleLight}"
-                        Command="{Binding AddNewToDoItemCommand}"
-                        ToolTip.Tip="New Item" />
-                <Button Classes="toolBar"
-                        Content="{DynamicResource PhosphorIcons.NotePencilLight}"
-                        Command="{Binding EditToDoItemCommand}"
-                        CommandParameter="{Binding SelectedToDoItem}"
-                        ToolTip.Tip="Edit Item" />
-                <Button Classes="toolBar"
-                        Content="{DynamicResource PhosphorIcons.TrashLight}"
-                        Command="{Binding DeleteToDoItemCommand}"
-                        CommandParameter="{Binding SelectedToDoItem}"
-                        ToolTip.Tip="Delete Item" />
-
-                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
-                           Margin="0,5" />
-
-                <ToggleButton Classes="toolBar"
-                              Command="{Binding RefreshCommand}"
-                              IsChecked="{Binding ShowAlsoCompletedItems}"
-                              Content="{DynamicResource PhosphorIcons.ChecksLight}"
-                              ToolTip.Tip="Show also completed Items" />
-
-                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
-                           Margin="0,5" />
-
-                <controls:LabeledControl Header="Search:" HeaderPosition="Left">
-                    <TextBox CornerRadius="8"
+        <CommandBar x:Name="ToDoItemsCommandBar"
+                    DockPanel.Dock="Top"
+                    Margin="10,5"
+                    Background="{DynamicResource SubtleFillColorSecondaryBrush}"
+                    IsDynamicOverflowEnabled="True">
+            <CommandBar.Content>
+                <controls:LabeledControl Header="Search:" HeaderPosition="Left"
+                                         VerticalAlignment="Center">
+                    <TextBox Width="160"
+                             CornerRadius="8"
                              Text="{Binding FilterString}"
                              PlaceholderText="Find Items..." />
                 </controls:LabeledControl>
-                
-                <Separator VerticalAlignment="Stretch" Width="1" Height="NaN"
-                           Margin="0,5" />
-                
-                <Button Classes="toolBar" 
-                        Content="{DynamicResource PhosphorIcons.CaretUpDownLight}"
-                        ToolTip.Tip="Sort Items">
+            </CommandBar.Content>
+            <CommandBar.PrimaryCommands>
+                <CommandBarButton Label="Refresh"
+                                  ToolTip.Tip="Refresh the List"
+                                  Command="{Binding RefreshCommand}">
+                    <CommandBarButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.ArrowCounterClockwiseLight}" />
+                    </CommandBarButton.Icon>
+                </CommandBarButton>
+                <CommandBarSeparator />
+                <CommandBarButton Label="New Item"
+                                  ToolTip.Tip="New Item"
+                                  Command="{Binding AddNewToDoItemCommand}">
+                    <CommandBarButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.PlusCircleLight}" />
+                    </CommandBarButton.Icon>
+                </CommandBarButton>
+                <CommandBarButton Label="Edit Item"
+                                  ToolTip.Tip="Edit Item"
+                                  Command="{Binding EditToDoItemCommand}"
+                                  CommandParameter="{Binding SelectedToDoItem}">
+                    <CommandBarButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.NotePencilLight}" />
+                    </CommandBarButton.Icon>
+                </CommandBarButton>
+                <CommandBarButton Label="Delete Item"
+                                  ToolTip.Tip="Delete Item"
+                                  Command="{Binding DeleteToDoItemCommand}"
+                                  CommandParameter="{Binding SelectedToDoItem}">
+                    <CommandBarButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.TrashLight}" />
+                    </CommandBarButton.Icon>
+                </CommandBarButton>
+                <CommandBarSeparator />
+                <CommandBarToggleButton Label="Show completed"
+                                         ToolTip.Tip="Show also completed Items"
+                                         Command="{Binding RefreshCommand}"
+                                         IsChecked="{Binding ShowAlsoCompletedItems}">
+                    <CommandBarToggleButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.ChecksLight}" />
+                    </CommandBarToggleButton.Icon>
+                </CommandBarToggleButton>
+                <CommandBarSeparator />
+                <CommandBarButton Label="Sort Items"
+                                  ToolTip.Tip="Sort Items">
+                    <CommandBarButton.Icon>
+                        <PathIcon Data="{DynamicResource PhosphorIcons.CaretUpDownLight}" />
+                    </CommandBarButton.Icon>
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Spacing="5" Grid.IsSharedSizeScope="True"
@@ -152,9 +158,9 @@
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
-                </Button>
-            </WrapPanel>
-        </Border>
+                </CommandBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
 
         <!-- The Items list -->
         <ListBox x:Name="ToDoItemsListBox" 
@@ -185,7 +191,7 @@
                                     VerticalAlignment="Center"
                                     CornerRadius="{Binding $self.Bounds, Converter={x:Static converters:BoundsToCornerRadiusConverter.Instance}}"
                                     BorderThickness="1"
-                                    Background="{DynamicResource SystemControlHighlightAltBaseLowBrush}">
+                                    Background="{DynamicResource ControlFillColorTertiaryBrush}">
                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                     <ContentControl Content="{Binding Priority}"
                                                     ContentTemplate="{x:Static dataTemplates:ToDoItemPriorityIconTemplateSelector.Instance}"/>
@@ -220,7 +226,7 @@
                                         CornerRadius="20"
                                         Padding="4"
                                         VerticalAlignment="Bottom"
-                                        Background="{DynamicResource SystemControlBackgroundAltMediumBrush}"
+                                        Background="{DynamicResource SubtleFillColorSecondaryBrush}"
                                         Content="{Binding CurrentStatus}"
                                         ContentTemplate="{x:Static dataTemplates:ToDoItemStatusTemplateSelector.Instance}" />
                         

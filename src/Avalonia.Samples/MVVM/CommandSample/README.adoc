@@ -428,11 +428,11 @@ The `UserControl` itself will be added into the file `Views ► MainWindow` or `
 .MainWindow.axaml
 [source,xml]
 ----
-<TabControl>
-	<TabItem Header="ReactiveUI">
+<TabbedPage>
+	<ContentPage Header="ReactiveUI">
 		<views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" />
-	</TabItem>
-</TabControl>
+	</ContentPage>
+</TabbedPage>
 ----
 
 
@@ -642,14 +642,14 @@ The `UserControl` itself will be added into the file `Views ► MainWindow` or `
 .MainWindow.axaml
 [source,xml]
 ----
-<TabControl>
-	<TabItem Header="ReactiveUI">
+<TabbedPage>
+	<ContentPage Header="ReactiveUI">
 		<views:ReactiveUiCommandsSampleView DataContext="{Binding ReactiveUiCommandsViewModel}" />
-	</TabItem>
-    <TabItem Header="CommunityToolkit-MVVM">
+	</ContentPage>
+    <ContentPage Header="CommunityToolkit-MVVM">
         <views:CommunityToolkitCommandsSampleView DataContext="{Binding CommunityToolkitCommandsViewModel}" />
-    </TabItem>
-</TabControl>
+    </ContentPage>
+</TabbedPage>
 ----
 
 

@@ -77,7 +77,7 @@ This tutorial uses the messaging features of the CommunityToolkit.Mvvm to manage
 
 == The Solution
 
-=== 1, Create a New Project
+=== Create a New Project
 
 Before you can start programming, you will have to create a new project for the app. Please see the https://docs.avaloniaui.net/docs/get-started/[[getting started guide\]] if you need help installing Avalonia and setting up your IDE.
 
@@ -102,14 +102,14 @@ Let's make sure you use correct version of CommunityToolkit.Mvvm:
 
 [[prepare-project-for-partial-properties, Setup the project]]
 In the opened .csproj file, ensure you have the correct CommunityToolkit.Mvvm package version no older than 8.4.2 and 
-Avalonia version no older than 11.3.0 or 12.0.0.
+Avalonia version no older than 12.0.0.
 
 .Update nuget packages
 [source,xml]
 ----
-<PackageReference Include="Avalonia" Version="12.0.0" />
-<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
-<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+<PackageReference Include="Avalonia" Version="12.2.0" />
+<PackageReference Include="Avalonia.Desktop" Version="12.2.0" />
+<PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.0" />
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 ----
 
@@ -1925,7 +1925,7 @@ private async void LoadAlbums()
 
 As you can see this method uses the album service to load the list of albums from the disk cache. It then transforms each data model (`Album` class) into a view model (`AlbumViewModel` class). After this all the album view models are added to the observable collection - this will instantly update the UI with the text data for the albums.
 
-Your next step is to schedule the `LoadAlbum` method to run when the app starts:
+Your next step is to schedule the `LoadAlbums` method to run when the app starts:
 
 - Keep the **MainViewModel.cs** file open.
 - Call LoadAlbums() from the MainViewModel constructor:
