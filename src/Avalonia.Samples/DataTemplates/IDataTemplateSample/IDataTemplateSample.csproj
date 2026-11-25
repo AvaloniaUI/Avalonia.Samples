@@ -9,7 +9,7 @@
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.7" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.9" />
     <PackageReference Include="Avalonia" Version="12.2.0" />
     <PackageReference Include="Avalonia.Desktop" Version="12.2.0" />
     <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.0" />

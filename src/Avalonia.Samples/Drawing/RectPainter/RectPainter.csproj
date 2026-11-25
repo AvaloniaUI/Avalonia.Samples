@@ -16,7 +16,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="12.2.0" />
     <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.0" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.2.0" />
-    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.7" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.9" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
   </ItemGroup>
 </Project>

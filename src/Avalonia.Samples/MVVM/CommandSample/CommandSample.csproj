@@ -13,7 +13,7 @@
     <PackageReference Include="Avalonia" Version="12.2.0" />
     <PackageReference Include="Avalonia.Desktop" Version="12.2.0" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
-    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.7" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.9" />
     <PackageReference Include="Avalonia.Themes.Fluent2" Version="12.2.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
